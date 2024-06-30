@@ -62,34 +62,38 @@
 <body>
     <div class="container">
         <h1><i class="fas fa-cogs"></i> Sajeevan Veeriah</h1>
-        <p>Highton, VIC 3216, Australia | +61 498 586 654 | sajeevanveeriah@gmail.com | <a href="https://www.linkedin.com/in/sajeevan-veeriah/"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
+        <p>Highton, VIC 3216 | 0498 586 654 | sajeevanveeriah@gmail.com | <a href="https://www.linkedin.com/in/sajeevan-veeriah/"><i class="fab fa-linkedin"></i> LinkedIn</a></p>
         
         <div class="section">
             <h2><i class="fas fa-user-circle"></i> Professional Summary</h2>
-            <p>Innovative Mechatronics Engineer specializing in robotics, automation, and control systems. Expertise in electromechanical systems, PLC and microcontroller solutions, and IoT technologies.</p>
+            <p>Innovative Mechatronics Engineer with expertise in IoT, quality assurance, and production processes. Proven ability to improve efficiency and quality through technical solutions and process improvements.</p>
         </div>
         
         <div class="section">
             <h2><i class="fas fa-briefcase"></i> Professional Experience</h2>
             <div class="job">
-                <p class="job-title"><i class="fas fa-network-wired"></i> IoT Projects Administrator | DuxTel Pty Ltd | Feb 2024 – Jun 2024</p>
+                <p class="job-title"><i class="fas fa-network-wired"></i> IoT Projects Administrator | DuxTel Pty Ltd, Geelong, VIC | Feb 2024 – Jun 2024</p>
                 <ul>
-                    <li>Improved IoT system efficiency by 30% through device integration</li>
-                    <li>Developed data integration scripts and interactive dashboards</li>
+                    <li>Led PoC integrating commercial sensors with ChirpStack, InfluxDB, and Grafana, improving IoT system efficiency by 30%</li>
+                    <li>Designed ESP32-based GPS tracking system with temperature/humidity monitoring using DHT11 sensors</li>
+                    <li>Developed data integration scripts and interactive dashboards for enhanced decision-making</li>
                 </ul>
             </div>
             <div class="job">
-                <p class="job-title"><i class="fas fa-industry"></i> Production Worker & Cellar Hand | IDL | Aug 2022 - Feb 2024</p>
+                <p class="job-title"><i class="fas fa-industry"></i> Production Worker & Cellar Hand | IDL, Geelong, VIC | Aug 2022 - Feb 2024</p>
                 <ul>
-                    <li>Increased production line efficiency by 15%</li>
-                    <li>Reduced defect rates by 25% through quality control measures</li>
+                    <li>Increased production line efficiency by 15% through process improvements</li>
+                    <li>Reduced defect rates by 25% by implementing quality control measures</li>
+                    <li>Transitioned from production line worker to cellar hand, demonstrating adaptability</li>
                 </ul>
             </div>
             <div class="job">
-                <p class="job-title"><i class="fas fa-hard-hat"></i> Undergraduate Engineer | Thornton Engineering Australia Pty Ltd | Mar 2018 - Mar 2020</p>
+                <p class="job-title"><i class="fas fa-hard-hat"></i> Undergraduate Engineer | Thornton Engineering Australia Pty Ltd, VIC | Mar 2018 - Mar 2020</p>
                 <ul>
-                    <li>Reduced material waste by 20% in steel fabrication designs</li>
-                    <li>Implemented quality control system, improving product quality by 35%</li>
+                    <li>Managed quality assurance processes, including ITPs and MDRs implementation</li>
+                    <li>Reduced material waste by 20% in steel fabrication designs through innovative CAD techniques</li>
+                    <li>Implemented document control system, improving traceability and information management</li>
+                    <li>Contributed to 35% improvement in product quality through rigorous quality control measures</li>
                 </ul>
             </div>
         </div>
@@ -97,21 +101,25 @@
         <div class="section">
             <h2><i class="fas fa-graduation-cap"></i> Education</h2>
             <ul>
-                <li>Bachelor of Mechatronics Engineering (Honours), Deakin University, Australia (Expected July 2025)</li>
+                <li>Bachelor of Mechatronics Engineering (Honours), Deakin University, Geelong, VIC (Expected July 2025)</li>
                 <li>Higher National Diploma in Mechatronics, Robotics, and Automation Engineering, ICBT, Sri Lanka (2014 - 2016)</li>
             </ul>
         </div>
         
         <div class="section">
-            <h2><i class="fas fa-tools"></i> Technical Skills</h2>
+            <h2><i class="fas fa-tools"></i> Key Skills</h2>
             <div class="skill-icons">
                 <div class="skill-icon">
-                    <i class="fas fa-robot"></i>
-                    <p>Robotics</p>
+                    <i class="fas fa-project-diagram"></i>
+                    <p>IoT</p>
                 </div>
                 <div class="skill-icon">
-                    <i class="fas fa-microchip"></i>
-                    <p>PLCs</p>
+                    <i class="fas fa-check-double"></i>
+                    <p>Quality Assurance</p>
+                </div>
+                <div class="skill-icon">
+                    <i class="fas fa-robot"></i>
+                    <p>Mechatronics</p>
                 </div>
                 <div class="skill-icon">
                     <i class="fas fa-code"></i>
@@ -122,16 +130,8 @@
                     <p>CAD/CAM</p>
                 </div>
                 <div class="skill-icon">
-                    <i class="fas fa-project-diagram"></i>
-                    <p>IoT</p>
-                </div>
-                <div class="skill-icon">
-                    <i class="fas fa-cog"></i>
-                    <p>Automation</p>
-                </div>
-                <div class="skill-icon">
                     <i class="fas fa-microchip"></i>
-                    <p>Control Systems</p>
+                    <p>Electrical</p>
                 </div>
             </div>
             <div class="skill-chart">
@@ -145,10 +145,10 @@
         var skillChart = new Chart(ctx, {
             type: 'radar',
             data: {
-                labels: ['Mechatronics', 'Robotics', 'IoT', 'Programming', 'CAD/CAM', 'Automation', 'Control Systems', 'PLC'],
+                labels: ['IoT', 'Quality Assurance', 'Mechatronics', 'Programming', 'CAD/CAM', 'Electrical'],
                 datasets: [{
                     label: 'Skill Proficiency',
-                    data: [95, 90, 85, 80, 75, 92, 88, 78],
+                    data: [95, 90, 88, 85, 80, 82],
                     backgroundColor: 'rgba(52, 152, 219, 0.2)',
                     borderColor: 'rgba(52, 152, 219, 1)',
                     pointBackgroundColor: 'rgba(52, 152, 219, 1)',
