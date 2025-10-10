@@ -11,7 +11,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%2292%22 x=%2210%22 font-size=%2296%22>⚙️</text></svg>">
 
   <!-- Chart.js for radar chart -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" integrity="sha384-9lq2V7Yg/1k2a+uY9+q2wG4x2h3b6m5lH4u8YxJ2nVJbXJqF3N1Ww4yqdO5K7Y8T" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" crossorigin="anonymous"></script>
 
   <style>
     :root{
@@ -71,6 +71,13 @@
     /* Mobile tweaks */
     @media (max-width:900px){.row{grid-template-columns:1fr}}
     @media (max-width:768px){.card{padding:24px} h1{font-size:2rem}}
+
+    /* Ensure the radar canvas has space before Chart.js measures it */
+    #radar{
+      width:100%;
+      height:360px;
+      display:block;
+    }
   </style>
 </head>
 <body>
@@ -95,7 +102,6 @@
           <a href="#interests">Interests</a>
         </nav>
         <div class="cta">
-          <!-- Replace the href with your PDF filename after you add it to the repo -->
           <a class="btn" href="Sajeevan_Veeriah_Resume.pdf" download>Download PDF resume</a>
           <a class="btn" href="mailto:sajeevanveeriah@gmail.com?subject=Enquiry%20from%20resume%20site">Contact me</a>
         </div>
@@ -104,7 +110,7 @@
       <section id="summary" class="section">
         <h2>Professional Summary</h2>
         <p>
-          Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ADR, ISO 9001, IEC 60601, and ISO 13485. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium, and SolidWorks.
+          Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ADR, ISO, IEC, AS/NZS, EN and ASME. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium and SolidWorks.
         </p>
         <div class="note" role="note">
           The spider web chart uses counts of explicitly listed tools or topics per skill cluster. It shows scope of exposure, not a self rating.
@@ -148,7 +154,7 @@
               </div>
               <div class="skill">
                 <h4>Quality and Safety</h4>
-                <p>ISO 9001, ISO 13485, IEC 60601, AS or NZS 4024, ASME IX, FMEA, ITP and MDR, OH and S, Lean Six Sigma Foundation</p>
+                <p>ADR, ISO, IEC, AS/NZS, EN, ASME, FMEA, ITP and MDR, OH&amp;S, Lean Six Sigma Foundation</p>
               </div>
             </div>
 
@@ -162,7 +168,7 @@
           <!-- Right: radar chart -->
           <div class="panel" aria-label="Spider web skill chart">
             <h3>Spider web of skill clusters</h3>
-            <canvas id="radar" height="340" aria-label="Radar chart"></canvas>
+            <canvas id="radar" aria-label="Radar chart"></canvas>
             <p class="muted" style="margin-top:8px">
               Values are counts of distinct items listed in each cluster.
             </p>
@@ -199,7 +205,7 @@
           <li>Operated and maintained winery systems processing 10000 cans per hour and 50 kegs per hour, maintaining hygiene and safety compliance.</li>
           <li>Performed quality and chemical testing on samples, maintaining batch records for 100 percent traceability.</li>
           <li>Monitored multi stage production quality, escalating deviations to protect product standards.</li>
-          <li>Upheld AS or NZS 4024 safety expectations and corrective actions, contributing to a zero incident record during tenure.</li>
+          <li>Upheld AS/NZS safety expectations and corrective actions, contributing to a zero incident record during tenure.</li>
           <li>Operated automated bottling and packaging lines sustaining 10000 unit per hour throughput with consistent efficiency.</li>
           <li>Supervised production checkpoints to maintain process stability and product uniformity across runs.</li>
           <li>Packaged and labelled products with zero recorded labelling errors across 500 plus batches.</li>
@@ -235,7 +241,7 @@
       <section id="education" class="section">
         <h2>Education</h2>
         <div class="job-title">Bachelor of Mechatronics Engineering, Honours</div>
-        <div class="job-meta">Deakin University, Geelong, VIC | 2025</div>
+        <div class="job-meta">Deakin University, Geelong VIC | 2025</div>
 
         <div class="job-title" style="margin-top:10px;">Higher National Diploma, Mechatronics, Robotics and Automation</div>
         <div class="job-meta">Cardiff Metropolitan University, UK | 2016</div>
@@ -243,12 +249,12 @@
 
       <section id="memberships" class="section">
         <h2>Professional Memberships and Standards Training</h2>
-        <p>Engineers Australia Student Member, ISO 9001 and ISO 13485 exposure, AS or NZS 4024 machine safety awareness, ADR test practice training, Lean Six Sigma Foundation</p>
+        <p>Engineers Australia Student Member, ISO, IEC, AS/NZS, EN and ASME exposure, ADR test practice training, Lean Six Sigma Foundation</p>
       </section>
 
       <section id="leadership" class="section">
         <h2>Leadership</h2>
-        <p>Past President of Rotaract Club of Colombo East, Sri Lanka National Hockey Captain, Under 19</p>
+        <p>Past President of Rotaract Club of Colombo East, Sri Lanka National Hockey Caption, Under 19</p>
       </section>
 
       <section id="interests" class="section">
@@ -263,7 +269,7 @@
   </div>
 
   <script>
-    // Data strictly derived from the comma separated items in your resume skill clusters
+    // Data strictly derived from the items listed in your resume skill clusters
     const clusters = {
       "Controls and Robotics": [
         "ROS 2","SLAM","motion planning","PID tuning","Kalman filtering","state estimation","system identification","PLC and SCADA"
@@ -287,7 +293,7 @@
         "SolidWorks","Fusion 360","FEA","3D printing"
       ],
       "Quality and Safety": [
-        "ISO 9001","ISO 13485","IEC 60601","AS or NZS 4024","ASME IX","FMEA","ITP and MDR","OH and S","Lean Six Sigma Foundation"
+        "ADR","ISO","IEC","AS/NZS","EN","ASME","FMEA","ITP and MDR","OH&S","Lean Six Sigma Foundation"
       ]
     };
 
@@ -305,59 +311,48 @@
       chipsHost.appendChild(chip);
     });
 
-    // Radar chart from counts
-    const labels = Object.keys(clusters);
-    const counts = labels.map(k => clusters[k].length);
+    // Build the radar after layout is ready so canvas has width and height
+    window.addEventListener("load", () => {
+      const labels = Object.keys(clusters);
+      const counts = labels.map(k => clusters[k].length);
+      const ctx = document.getElementById("radar").getContext("2d");
 
-    const ctx = document.getElementById('radar');
-    // Create high DPI safe canvas size
-    function sizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      const c = ctx;
-      const styleHeight = 320;
-      c.style.height = styleHeight + "px";
-      c.height = styleHeight * dpr;
-      c.width = c.clientWidth * dpr;
-    }
-    sizeCanvas();
-    window.addEventListener("resize", sizeCanvas);
-
-    const radar = new Chart(ctx, {
-      type: 'radar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Count of items per cluster',
-          data: counts,
-          // leave default colors for accessibility, do not set custom colors
-          fill: true,
-          pointRadius: 3,
-          borderWidth: 2
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          r: {
-            beginAtZero: true,
-            ticks: { stepSize: 1 },
-            grid: { circular: true }
-          }
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels,
+          datasets: [{
+            label: "Count of items per cluster",
+            data: counts,
+            fill: true,
+            pointRadius: 3,
+            borderWidth: 2
+          }]
         },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              afterLabel: (ctx) => {
-                const key = labels[ctx.dataIndex];
-                const items = clusters[key];
-                return `\nItems: ${items.join(", ")}`;
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 },
+              grid: { circular: true }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                afterLabel: (ctx) => {
+                  const key = labels[ctx.dataIndex];
+                  const items = clusters[key];
+                  return `\nItems: ${items.join(", ")}`;
+                }
               }
             }
           }
         }
-      }
+      });
     });
   </script>
 </body>
