@@ -47,9 +47,6 @@
     .skill{background:#fbfcfe;border-left:3px solid var(--accent);padding:12px;border-radius:10px}
     .skill h4{margin:0 0 6px 0;font-size:1rem;color:var(--ink)}
     .skill p{margin:0;color:#555;font-size:.95rem;line-height:1.5}
-    .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
-    .chip{display:inline-block;background:var(--chip);border:1px solid #d6e7ff;border-radius:999px;padding:4px 10px;margin:3px 6px 3px 0;font-size:.9rem;cursor:pointer}
-    .chip:hover{background:#dff0ff}
     .muted{color:var(--muted)}
     .row{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
     .panel{background:#f9fbff;border:1px solid var(--rule);border-radius:12px;padding:14px}
@@ -74,13 +71,30 @@
     .chart-wrap{
       position:relative;
       width:100%;
-      height:360px;   /* control the chart height here */
+      height:360px;
     }
     .chart-wrap canvas{
       width:100% !important;
       height:100% !important;
       display:block;
     }
+
+    .chips{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .chip{
+      display:inline-block;
+      background:var(--chip);
+      border:1px solid #d6e7ff;
+      border-radius:999px;
+      padding:4px 10px;
+      font-size:.9rem;
+      cursor:pointer;
+    }
+    .chip:hover{background:#dff0ff}
   </style>
 </head>
 <body>
@@ -116,7 +130,7 @@
           Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ADR, ISO, IEC, AS/NZS, EN and ASME. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium and SolidWorks.
         </p>
         <div class="note" role="note">
-          The spider web chart uses counts of explicitly listed tools or topics per skill cluster. It shows scope of exposure, not a self rating.
+          The spider web chart can use automatic counts from the lists, or manual values that you set below.
         </div>
       </section>
 
@@ -124,6 +138,7 @@
         <h2>Core Skills</h2>
 
         <div class="row">
+          <!-- Left column: text lists -->
           <div>
             <div class="skills-grid" aria-label="Skill clusters">
               <div class="skill">
@@ -159,22 +174,21 @@
                 <p>ADR, ISO, IEC, AS/NZS, EN, ASME, FMEA, ITP and MDR, OH&amp;S, Lean Six Sigma Foundation</p>
               </div>
             </div>
-
-            <div class="panel" style="margin-top:14px">
-              <h3>Explore items by cluster</h3>
-              <div id="clusterChips"></div>
-              <div id="clusterItems" class="muted" style="margin-top:6px">Click a cluster chip to reveal its items.</div>
-            </div>
           </div>
 
+          <!-- Right column: radar, chips moved UNDER the chart -->
           <div class="panel" aria-label="Spider web skill chart">
             <h3>Spider web of skill clusters</h3>
             <div class="chart-wrap">
               <canvas id="radar" aria-label="Radar chart"></canvas>
             </div>
             <p class="muted" style="margin-top:8px">
-              Values are counts of distinct items listed in each cluster.
+              Values are counts of distinct items per cluster by default. You can override with manual values in the code.
             </p>
+
+            <h3 style="margin-top:14px">Explore items by cluster</h3>
+            <div id="clusterChips" class="chips"></div>
+            <div id="clusterItems" class="muted" style="margin-top:6px">Click a cluster chip to reveal its items.</div>
           </div>
         </div>
       </section>
@@ -272,7 +286,7 @@
   </div>
 
   <script>
-    // Cluster data
+    // Cluster lists for chips and for default automatic counts
     const clusters = {
       "Controls and Robotics": [
         "ROS 2","SLAM","motion planning","PID tuning","Kalman filtering","state estimation","system identification","PLC and SCADA"
@@ -300,7 +314,22 @@
       ]
     };
 
-    // Chips panel
+    // ===== Manual values switch =====
+    // Set to true to use your own values for the radar. Keys must match the labels below exactly.
+    const USE_MANUAL_VALUES = true;
+    const manualValues = {
+      "Controls and Robotics": 8,
+      "Embedded and Firmware": 7,
+      "Software and Programming": 8,
+      "Automotive and Validation": 6,
+      "Electronics and PCB": 7,
+      "IoT and Data": 8,
+      "Mechanical and CAD": 5,
+      "Quality and Safety": 7
+    };
+    // =================================
+
+    // Build chips under the radar panel
     const chipsHost = document.getElementById("clusterChips");
     const detailsHost = document.getElementById("clusterItems");
     Object.entries(clusters).forEach(([name, items])=>{
@@ -314,23 +343,26 @@
       chipsHost.appendChild(chip);
     });
 
-    // Build radar once
+    // Radar build after layout
     window.addEventListener("load", () => {
       const labels = Object.keys(clusters);
-      const counts = labels.map(k => clusters[k].length);
-      const ctx = document.getElementById("radar").getContext("2d");
+      const defaultCounts = labels.map(k => clusters[k].length);
 
-      if (window.radarChart) {
-        window.radarChart.destroy();
-      }
+      // choose data source
+      const values = USE_MANUAL_VALUES
+        ? labels.map(l => Number(manualValues[l] ?? 0))
+        : defaultCounts;
+
+      const ctx = document.getElementById("radar").getContext("2d");
+      if (window.radarChart) window.radarChart.destroy();
 
       window.radarChart = new Chart(ctx, {
         type: "radar",
         data: {
           labels,
           datasets: [{
-            label: "Count of items per cluster",
-            data: counts,
+            label: USE_MANUAL_VALUES ? "Manual values" : "Count of items per cluster",
+            data: values,
             fill: true,
             pointRadius: 3,
             borderWidth: 2
@@ -338,11 +370,12 @@
         },
         options: {
           responsive: true,
-          maintainAspectRatio: false,  // fit the .chart-wrap height
+          maintainAspectRatio: false,
           animation: { duration: 0 },
           scales: {
             r: {
               beginAtZero: true,
+              suggestedMax: Math.max(...values) + 1,
               ticks: { stepSize: 1 },
               grid: { circular: true }
             }
