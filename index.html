@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sajeevan Veeriah, Mechatronics Engineer</title>
+
+  <!-- Meta -->
+  <meta name="description" content="Resume website of Sajeevan Veeriah, Mechatronics Engineer. Embedded systems, robotics, IoT, controls, automotive testing.">
+  <meta name="author" content="Sajeevan Veeriah">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%2292%22 x=%2210%22 font-size=%2296%22>⚙️</text></svg>">
+
+  <!-- Chart.js for radar chart -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" integrity="sha384-9lq2V7Yg/1k2a+uY9+q2wG4x2h3b6m5lH4u8YxJ2nVJbXJqF3N1Ww4yqdO5K7Y8T" crossorigin="anonymous"></script>
+
+  <style>
+    :root{
+      --ink:#223147;
+      --accent:#1f8dd6;
+      --text:#2b2b2b;
+      --muted:#5b6770;
+      --panel:#ffffff;
+      --bg:#f5f7fb;
+      --rule:#e3e8ee;
+      --chip:#eef6ff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;line-height:1.6}
+    .container{max-width:1040px;margin:0 auto;padding:28px}
+    .card{background:var(--panel);padding:38px;border-radius:16px;box-shadow:0 6px 30px rgba(20,32,56,0.08)}
+    header{border-bottom:3px solid var(--ink);padding-bottom:16px;margin-bottom:22px}
+    h1{margin:0 0 6px 0;font-size:2.4rem;color:var(--ink);letter-spacing:.2px}
+    .subtitle{color:var(--accent);font-weight:700}
+    .contact{margin-top:6px;font-size:0.98rem;color:var(--muted)}
+    .contact a{color:var(--accent);text-decoration:none}
+    .contact a:hover{text-decoration:underline}
+    nav{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    nav a{font-size:.92rem;background:var(--chip);padding:6px 10px;border-radius:999px;color:#0b62a4;text-decoration:none;border:1px solid #d6e7ff}
+    nav a:hover{background:#dff0ff}
+    h2{margin:26px 0 12px 0;padding-bottom:8px;border-bottom:2px solid var(--accent);font-size:1.5rem;color:var(--ink)}
+    .section{margin-bottom:22px}
+    .job-title{font-weight:800;color:var(--ink)}
+    .job-meta{color:var(--muted);font-style:italic;margin-bottom:8px}
+    ul{margin:8px 0 0 22px}
+    li{margin-bottom:7px}
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px}
+    .skill{background:#fbfcfe;border-left:3px solid var(--accent);padding:12px;border-radius:10px}
+    .skill h4{margin:0 0 6px 0;font-size:1rem;color:var(--ink)}
+    .skill p{margin:0;color:#555;font-size:.95rem;line-height:1.5}
+    .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+    .chip{display:inline-block;background:var(--chip);border:1px solid #d6e7ff;border-radius:999px;padding:4px 10px;margin:3px 6px 3px 0;font-size:.9rem;cursor:pointer}
+    .chip:hover{background:#dff0ff}
+    .muted{color:var(--muted)}
+    .row{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    .panel{background:#f9fbff;border:1px solid var(--rule);border-radius:12px;padding:14px}
+    .panel h3{margin:0 0 8px 0;font-size:1.1rem;color:var(--ink)}
+    .note{font-size:.9rem;color:#425466;background:#fff7e6;border:1px solid #ffe1a6;padding:10px;border-radius:8px}
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .btn{background:var(--accent);color:#fff;text-decoration:none;border-radius:999px;padding:8px 12px;font-weight:600;border:1px solid #0b62a4}
+    .btn:hover{filter:brightness(0.95)}
+    footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--rule);text-align:center;color:#777}
+    /* Print */
+    @media print{
+      body{background:#fff}
+      .container{max-width:none;padding:0}
+      .card{box-shadow:none;padding:18mm}
+      a[href]:after{content:""}
+      nav{display:none}
+      .panel{page-break-inside:avoid}
+    }
+    /* Mobile tweaks */
+    @media (max-width:900px){.row{grid-template-columns:1fr}}
+    @media (max-width:768px){.card{padding:24px} h1{font-size:2rem}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" role="main">
+      <header>
+        <h1>Sajeevan Veeriah</h1>
+        <div class="subtitle">Mechatronics Engineer, Embedded Systems, Robotics, IoT, Control Systems</div>
+        <div class="contact">
+          Highton, VIC 3216 | +61 498 586 654 |
+          <a href="mailto:sajeevanveeriah@gmail.com" aria-label="Email Sajeevan">sajeevanveeriah@gmail.com</a> |
+          <a href="https://www.linkedin.com/in/sajeevan-veeriah/" target="_blank" rel="noopener" aria-label="LinkedIn profile">linkedin.com/in/sajeevan-veeriah</a>
+        </div>
+        <nav aria-label="Section navigation">
+          <a href="#summary">Summary</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#projects">Projects</a>
+          <a href="#education">Education</a>
+          <a href="#memberships">Memberships</a>
+          <a href="#leadership">Leadership</a>
+          <a href="#interests">Interests</a>
+        </nav>
+        <div class="cta">
+          <!-- Replace the href with your PDF filename after you add it to the repo -->
+          <a class="btn" href="Sajeevan_Veeriah_Resume.pdf" download>Download PDF resume</a>
+          <a class="btn" href="mailto:sajeevanveeriah@gmail.com?subject=Enquiry%20from%20resume%20site">Contact me</a>
+        </div>
+      </header>
+
+      <section id="summary" class="section">
+        <h2>Professional Summary</h2>
+        <p>
+          Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ADR, ISO 9001, IEC 60601, and ISO 13485. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium, and SolidWorks.
+        </p>
+        <div class="note" role="note">
+          The spider web chart uses counts of explicitly listed tools or topics per skill cluster. It shows scope of exposure, not a self rating.
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <h2>Core Skills</h2>
+
+        <div class="row">
+          <!-- Left: clusters and details -->
+          <div>
+            <div class="skills-grid" aria-label="Skill clusters">
+              <div class="skill">
+                <h4>Controls and Robotics</h4>
+                <p>ROS 2, SLAM, motion planning, PID tuning, Kalman filtering, state estimation, system identification, PLC and SCADA</p>
+              </div>
+              <div class="skill">
+                <h4>Embedded and Firmware</h4>
+                <p>ESP32, STM32, FreeRTOS, UART, I2C, SPI, ADC, PWM, motor control</p>
+              </div>
+              <div class="skill">
+                <h4>Software and Programming</h4>
+                <p>C and C++, Python, MATLAB and Simulink, LabVIEW</p>
+              </div>
+              <div class="skill">
+                <h4>Automotive and Validation</h4>
+                <p>AVL test systems, CAN FD, CANoe, CANalyzer, Humanetics ADAS targets, ADR workflows</p>
+              </div>
+              <div class="skill">
+                <h4>Electronics and PCB</h4>
+                <p>Altium, KiCad, power and signal conditioning, oscilloscope, logic analyser</p>
+              </div>
+              <div class="skill">
+                <h4>IoT and Data</h4>
+                <p>LoRaWAN and ChirpStack, MQTT, InfluxDB, Grafana, REST, edge compute</p>
+              </div>
+              <div class="skill">
+                <h4>Mechanical and CAD</h4>
+                <p>SolidWorks, Fusion 360, FEA, 3D printing</p>
+              </div>
+              <div class="skill">
+                <h4>Quality and Safety</h4>
+                <p>ISO 9001, ISO 13485, IEC 60601, AS or NZS 4024, ASME IX, FMEA, ITP and MDR, OH and S, Lean Six Sigma Foundation</p>
+              </div>
+            </div>
+
+            <div class="panel" style="margin-top:14px">
+              <h3>Explore items by cluster</h3>
+              <div id="clusterChips"></div>
+              <div id="clusterItems" class="muted" style="margin-top:6px">Click a cluster chip to reveal its items.</div>
+            </div>
+          </div>
+
+          <!-- Right: radar chart -->
+          <div class="panel" aria-label="Spider web skill chart">
+            <h3>Spider web of skill clusters</h3>
+            <canvas id="radar" height="340" aria-label="Radar chart"></canvas>
+            <p class="muted" style="margin-top:8px">
+              Values are counts of distinct items listed in each cluster.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="section">
+        <h2>Experience</h2>
+
+        <div class="job-title">Technical Assistant</div>
+        <div class="job-meta">ABMARC, Geelong, VIC | Jul 2024 to Aug 2025</div>
+        <ul>
+          <li>Executed emissions and compliance testing on approximately 2 vehicles per week, aligned to ADR and EURO standards.</li>
+          <li>Operated AVL and CAN based test instrumentation for high fidelity acquisition, contributing to an 89 percent first pass success rate across a 100 vehicle batch.</li>
+          <li>Authored compliance and quality documentation supporting ADR validation and regulatory submissions.</li>
+          <li>Collaborated across compliance and engineering to improve vehicle checklists and on boarding and off boarding workflow consistency.</li>
+        </ul>
+
+        <div class="job-title" style="margin-top:14px;">IoT Projects Administrator</div>
+        <div class="job-meta">DuxTel Pty Ltd, Geelong, VIC | Feb 2024 to Jun 2024</div>
+        <ul>
+          <li>Designed and deployed 5 end to end IoT systems integrating sensors, gateways, and data pipelines for reliable connectivity.</li>
+          <li>Developed real time dashboards in InfluxDB and Grafana, reducing device latency via strategic router placement and improving troubleshooting speed.</li>
+          <li>Delivered hands on training to 5 clients and authored detailed SOPs to standardise setup and support.</li>
+          <li>Configured and integrated 20 plus LoRaWAN and ChirpStack devices, accelerating onboarding and achieving stable network uptime.</li>
+          <li>Built an ESP32 based GPS and environmental sensing tracker, shortening prototype lead time with modular firmware reuse.</li>
+          <li>Collaborated with engineering and operations to prototype smart city and safety solutions for rapid demonstrations.</li>
+        </ul>
+
+        <div class="job-title" style="margin-top:14px;">Production Team and Cellar Hand</div>
+        <div class="job-meta">IDL, Geelong, VIC | Aug 2022 to Feb 2024</div>
+        <ul>
+          <li>Operated and maintained winery systems processing 10000 cans per hour and 50 kegs per hour, maintaining hygiene and safety compliance.</li>
+          <li>Performed quality and chemical testing on samples, maintaining batch records for 100 percent traceability.</li>
+          <li>Monitored multi stage production quality, escalating deviations to protect product standards.</li>
+          <li>Upheld AS or NZS 4024 safety expectations and corrective actions, contributing to a zero incident record during tenure.</li>
+          <li>Operated automated bottling and packaging lines sustaining 10000 unit per hour throughput with consistent efficiency.</li>
+          <li>Supervised production checkpoints to maintain process stability and product uniformity across runs.</li>
+          <li>Packaged and labelled products with zero recorded labelling errors across 500 plus batches.</li>
+          <li>Maintained a 5S compliant workspace to ensure sanitation and audit readiness.</li>
+        </ul>
+
+        <div class="job-title" style="margin-top:14px;">Undergraduate Engineer and QA Assistant</div>
+        <div class="job-meta">Thornton Engineering, Geelong, VIC | Mar 2018 to Mar 2020</div>
+        <ul>
+          <li>Executed QA inspections for structural fabrication projects, ensuring compliance with design specifications and welding codes.</li>
+          <li>Developed and compiled ITPs and MDRs for all active structural projects during tenure, improving traceability and audit readiness.</li>
+          <li>Coordinated with engineers and project managers to streamline document control and ensure on time delivery.</li>
+          <li>Facilitated third party NDT, mechanical testing, and welder qualification documentation across multiple contracts.</li>
+        </ul>
+      </section>
+
+      <section id="projects" class="section">
+        <h2>Projects</h2>
+
+        <div class="job-title">Clinical Ataxia Assessment Device</div>
+        <ul>
+          <li>ESP32 device with IMU, time of flight, Hall and magnetometer sensors for clinical motion tracking with approximately plus or minus 2 mm precision, documented to IEC 60601 and ISO 13485 expectations.</li>
+          <li>MATLAB analytics and Android app for real time assessment and logging enabled repeatable testing and basic clinical reporting.</li>
+        </ul>
+
+        <div class="job-title" style="margin-top:14px;">Autonomous Navigation Rover</div>
+        <ul>
+          <li>ROS 2 stack with LiDAR, IMU, and depth camera for SLAM and sensor fusion.</li>
+          <li>OpenCV nodes for perception, localisation stability improvement via Kalman tuning, and control optimisation on varied terrain.</li>
+        </ul>
+      </section>
+
+      <section id="education" class="section">
+        <h2>Education</h2>
+        <div class="job-title">Bachelor of Mechatronics Engineering, Honours</div>
+        <div class="job-meta">Deakin University, Geelong, VIC | 2025</div>
+
+        <div class="job-title" style="margin-top:10px;">Higher National Diploma, Mechatronics, Robotics and Automation</div>
+        <div class="job-meta">Cardiff Metropolitan University, UK | 2016</div>
+      </section>
+
+      <section id="memberships" class="section">
+        <h2>Professional Memberships and Standards Training</h2>
+        <p>Engineers Australia Student Member, ISO 9001 and ISO 13485 exposure, AS or NZS 4024 machine safety awareness, ADR test practice training, Lean Six Sigma Foundation</p>
+      </section>
+
+      <section id="leadership" class="section">
+        <h2>Leadership</h2>
+        <p>Past President of Rotaract Club of Colombo East, Sri Lanka National Hockey Captain, Under 19</p>
+      </section>
+
+      <section id="interests" class="section">
+        <h2>Interests</h2>
+        <p>Robotics and autonomous systems, embedded firmware and real time control, mechatronic system integration, sensor fusion and perception, industrial automation and PLCs, product design and rapid prototyping</p>
+      </section>
+
+      <footer>
+        <p><em>Last updated: 10 October 2025</em></p>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Data strictly derived from the comma separated items in your resume skill clusters
+    const clusters = {
+      "Controls and Robotics": [
+        "ROS 2","SLAM","motion planning","PID tuning","Kalman filtering","state estimation","system identification","PLC and SCADA"
+      ],
+      "Embedded and Firmware": [
+        "ESP32","STM32","FreeRTOS","UART","I2C","SPI","ADC","PWM","motor control"
+      ],
+      "Software and Programming": [
+        "C and C++","Python","MATLAB and Simulink","LabVIEW"
+      ],
+      "Automotive and Validation": [
+        "AVL test systems","CAN FD","CANoe","CANalyzer","Humanetics ADAS targets","ADR workflows"
+      ],
+      "Electronics and PCB": [
+        "Altium","KiCad","power and signal conditioning","oscilloscope","logic analyser"
+      ],
+      "IoT and Data": [
+        "LoRaWAN and ChirpStack","MQTT","InfluxDB","Grafana","REST","edge compute"
+      ],
+      "Mechanical and CAD": [
+        "SolidWorks","Fusion 360","FEA","3D printing"
+      ],
+      "Quality and Safety": [
+        "ISO 9001","ISO 13485","IEC 60601","AS or NZS 4024","ASME IX","FMEA","ITP and MDR","OH and S","Lean Six Sigma Foundation"
+      ]
+    };
+
+    // Populate chips and detail panel
+    const chipsHost = document.getElementById("clusterChips");
+    const detailsHost = document.getElementById("clusterItems");
+    Object.entries(clusters).forEach(([name, items])=>{
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = `${name} (${items.length})`;
+      chip.title = "Click to view items";
+      chip.addEventListener("click", ()=>{
+        detailsHost.innerHTML = `<strong>${name} items</strong>: ${items.join(", ")}`;
+      });
+      chipsHost.appendChild(chip);
+    });
+
+    // Radar chart from counts
+    const labels = Object.keys(clusters);
+    const counts = labels.map(k => clusters[k].length);
+
+    const ctx = document.getElementById('radar');
+    // Create high DPI safe canvas size
+    function sizeCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const c = ctx;
+      const styleHeight = 320;
+      c.style.height = styleHeight + "px";
+      c.height = styleHeight * dpr;
+      c.width = c.clientWidth * dpr;
+    }
+    sizeCanvas();
+    window.addEventListener("resize", sizeCanvas);
+
+    const radar = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Count of items per cluster',
+          data: counts,
+          // leave default colors for accessibility, do not set custom colors
+          fill: true,
+          pointRadius: 3,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { circular: true }
+          }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              afterLabel: (ctx) => {
+                const key = labels[ctx.dataIndex];
+                const items = clusters[key];
+                return `\nItems: ${items.join(", ")}`;
+              }
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
