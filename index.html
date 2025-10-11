@@ -68,32 +68,11 @@
     @media (max-width:768px){.card{padding:24px} h1{font-size:2rem}}
 
     /* Stable chart sizing */
-    .chart-wrap{
-      position:relative;
-      width:100%;
-      height:360px;
-    }
-    .chart-wrap canvas{
-      width:100% !important;
-      height:100% !important;
-      display:block;
-    }
+    .chart-wrap{ position:relative; width:100%; height:360px; }
+    .chart-wrap canvas{ width:100% !important; height:100% !important; display:block; }
 
-    .chips{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .chip{
-      display:inline-block;
-      background:var(--chip);
-      border:1px solid #d6e7ff;
-      border-radius:999px;
-      padding:4px 10px;
-      font-size:.9rem;
-      cursor:pointer;
-    }
+    .chips{ margin-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .chip{ display:inline-block; background:var(--chip); border:1px solid #d6e7ff; border-radius:999px; padding:4px 10px; font-size:.9rem; cursor:pointer; }
     .chip:hover{background:#dff0ff}
   </style>
 </head>
@@ -110,6 +89,7 @@
         </div>
         <nav aria-label="Section navigation">
           <a href="#summary">Summary</a>
+          <a href="#work-eligibility">Work eligibility</a>
           <a href="#skills">Skills</a>
           <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
@@ -127,11 +107,13 @@
       <section id="summary" class="section">
         <h2>Professional Summary</h2>
         <p>
-          Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ADR, ISO, IEC, AS/NZS, EN and ASME. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium and SolidWorks.
+          Mechatronics Engineer delivering embedded systems, controls, robotics, IoT, and automotive testing from lab to field with Lean Six Sigma foundation. Drove gains in test accuracy, telemetry uptime, analysis speed, and defect reduction while aligning with ISO, IEC, AS/NZS, EN, ASME, EURO and ADR. Committed to continuous learning, improvement, and adapting to new skills. Fluent with ESP32 and STM32, ROS 2, MATLAB and Simulink, C and C++, Python, CAN bus workflows, Altium and SolidWorks.
         </p>
-       <!-- <div class="note" role="note">
-          The spider web chart can use automatic counts from the lists, or manual values that you set below.
-        </div> -->
+      </section>
+
+      <section id="work-eligibility" class="section">
+        <h2>Work Eligibility</h2>
+        <p>Available for immediate full time employment. Graduate visa in progress.</p>
       </section>
 
       <section id="skills" class="section">
@@ -151,11 +133,11 @@
               </div>
               <div class="skill">
                 <h4>Software and Programming</h4>
-                <p>C and C++, Python, MATLAB and Simulink, LabVIEW</p>
+                <p>C and C++, Python, MATLAB and Simulink, LabVIEW, MS Office</p>
               </div>
               <div class="skill">
                 <h4>Automotive and Validation</h4>
-                <p>AVL test systems, CAN FD, CANoe, CANalyzer, Humanetics ADAS targets, ADR workflows</p>
+                <p>AVL test systems, CAN FD, CANoe, CANalyzer, Humanetics ADAS targets, ADR and EURO workflows, ICE, EV, PHEV</p>
               </div>
               <div class="skill">
                 <h4>Electronics and PCB</h4>
@@ -171,12 +153,16 @@
               </div>
               <div class="skill">
                 <h4>Quality and Safety</h4>
-                <p>ADR, ISO, IEC, AS/NZS, EN, ASME, FMEA, ITP and MDR, OH&amp;S, Lean Six Sigma Foundation</p>
+                <p>ISO, IEC, AS/NZS, EN, ASME, ADR, EURO, FMEA, ITP and MDR, OH and S, Lean Six Sigma Foundation, JIIRA, Agile, KAIZEN Foundations, RCA and CI</p>
+              </div>
+              <div class="skill">
+                <h4>Soft Skills</h4>
+                <p>Cross functional collaboration, stakeholder communication, adaptability, problem solving, attention to detail, mentoring support, documentation discipline</p>
               </div>
             </div>
           </div>
 
-          <!-- Right column: radar, chips moved UNDER the chart -->
+          <!-- Right column: radar, chips under the chart -->
           <div class="panel" aria-label="Spider web skill chart">
             <h3>Spider web of skill clusters</h3>
             <div class="chart-wrap">
@@ -199,9 +185,9 @@
         <div class="job-title">Technical Assistant</div>
         <div class="job-meta">ABMARC, Geelong, VIC | Jul 2024 to Aug 2025</div>
         <ul>
-          <li>Executed emissions and compliance testing on approximately 2 vehicles per week, aligned to ADR and EURO standards.</li>
+          <li>Executed emissions and compliance testing on approximately 2 vehicles per week, aligned to ADR and EURO standards, including ADAS testing.</li>
           <li>Operated AVL and CAN based test instrumentation for high fidelity acquisition, contributing to an 89 percent first pass success rate across a 100 vehicle batch.</li>
-          <li>Authored compliance and quality documentation supporting ADR validation and regulatory submissions.</li>
+          <li>Authored compliance and quality documentation supporting ADR and EURO validation and regulatory submissions.</li>
           <li>Collaborated across compliance and engineering to improve vehicle checklists and on boarding and off boarding workflow consistency.</li>
         </ul>
 
@@ -258,7 +244,7 @@
       <section id="education" class="section">
         <h2>Education</h2>
         <div class="job-title">Bachelor of Mechatronics Engineering, Honours</div>
-        <div class="job-meta">Deakin University, Geelong VIC | 2025</div>
+        <div class="job-meta">Deakin University, Geelong, VIC | Completed: October 2025</div>
 
         <div class="job-title" style="margin-top:10px;">Higher National Diploma, Mechatronics, Robotics and Automation</div>
         <div class="job-meta">Cardiff Metropolitan University, UK | 2016</div>
@@ -266,12 +252,12 @@
 
       <section id="memberships" class="section">
         <h2>Professional Memberships and Standards Training</h2>
-        <p>Engineers Australia Student Member, ISO, IEC, AS/NZS, EN and ASME exposure, ADR test practice training, Lean Six Sigma Foundation</p>
+        <p>Engineers Australia Student Member, ISO, IEC, AS/NZS, EN and ASME exposure, ADR and EURO test practice training, Lean Six Sigma Foundation</p>
       </section>
 
       <section id="leadership" class="section">
         <h2>Leadership</h2>
-        <p>Past President of Rotaract Club of Colombo East, Sri Lanka National Hockey Caption, Under 19</p>
+        <p>Past President of Rotaract Club of Colombo East, Sri Lanka National Hockey Captain, Under 19</p>
       </section>
 
       <section id="interests" class="section">
@@ -280,7 +266,7 @@
       </section>
 
       <footer>
-        <p><em>Last updated: 10 October 2025</em></p>
+        <p><em>Last updated: 11 October 2025</em></p>
       </footer>
     </div>
   </div>
@@ -295,10 +281,10 @@
         "ESP32","STM32","FreeRTOS","UART","I2C","SPI","ADC","PWM","motor control"
       ],
       "Software and Programming": [
-        "C and C++","Python","MATLAB and Simulink","LabVIEW"
+        "C and C++","Python","MATLAB and Simulink","LabVIEW","MS Office"
       ],
       "Automotive and Validation": [
-        "AVL test systems","CAN FD","CANoe","CANalyzer","Humanetics ADAS targets","ADR workflows"
+        "AVL test systems","CAN FD","CANoe","CANalyzer","Humanetics ADAS targets","ADR and EURO workflows","ICE","EV","PHEV"
       ],
       "Electronics and PCB": [
         "Altium","KiCad","power and signal conditioning","oscilloscope","logic analyser"
@@ -310,7 +296,10 @@
         "SolidWorks","Fusion 360","FEA","3D printing"
       ],
       "Quality and Safety": [
-        "ADR","ISO","IEC","AS/NZS","EN","ASME","FMEA","ITP and MDR","OH&S","Lean Six Sigma Foundation"
+        "ISO","IEC","AS/NZS","EN","ASME","ADR","EURO","FMEA","ITP and MDR","OH and S","Lean Six Sigma Foundation","JIIRA","Agile","KAIZEN Foundations","RCA","CI"
+      ],
+      "Soft Skills": [
+        "Cross functional collaboration","stakeholder communication","adaptability","problem solving","attention to detail","mentoring support","documentation discipline"
       ]
     };
 
@@ -321,11 +310,12 @@
       "Controls and Robotics": 8,
       "Embedded and Firmware": 7,
       "Software and Programming": 8,
-      "Automotive and Validation": 6,
+      "Automotive and Validation": 7,
       "Electronics and PCB": 7,
       "IoT and Data": 8,
       "Mechanical and CAD": 5,
-      "Quality and Safety": 7
+      "Quality and Safety": 9,
+      "Soft Skills": 8
     };
     // =================================
 
