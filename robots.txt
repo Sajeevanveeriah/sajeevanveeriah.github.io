@@ -1,0 +1,11 @@
+# robots.txt for sajeevanveeriah.github.io
+# Allow all search engines to crawl the entire site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://sajeevanveeriah.github.io/sitemap.xml
+
+# Crawl delay (optional, prevents overwhelming the server)
+Crawl-delay: 1
