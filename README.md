@@ -1,45 +1,47 @@
-# Sajeevan Veeriah
+# Sajeevan Veeriah Portfolio
 
-Mechatronics, Robotics, Automation and AI/ML Engineer based in Geelong, Victoria.
+Recruiter-facing engineering portfolio for Sajeevan Veeriah, a Mechatronics, Robotics, Automation and AI/ML Engineer based in Geelong, Victoria.
 
-I work across the full stack of physical engineering systems: mechanics, electronics, embedded firmware, control systems, robotics software, industrial automation, IoT, data pipelines and applied machine learning.
+The portfolio positions Sajeevan around connected physical systems: robotics, industrial automation, control systems, embedded firmware, IoT telemetry, automotive validation, manufacturing support, QA documentation and applied data workflows.
 
-My core engineering focus is systems integration. I am interested in how sensors, actuators, embedded devices, control logic, robotics software, operator interfaces, production data and real-world workflows come together into reliable technical systems.
+## Portfolio Positioning
 
-## Core Engineering Areas
+Sajeevan integrates physical engineering systems across sensors, actuators, drives, embedded devices, control logic, HMI, SCADA and MES layers, robotics software, vehicle networks, production data and operator workflows.
 
-- Robotics and autonomous systems
-- ROS 2, Gazebo, RViz and robot simulation
-- SLAM, A* path planning, Kalman/EKF state estimation and sensor fusion
-- Industrial automation, PLC fundamentals, HMI, SCADA, MES and batch systems
-- Embedded systems using ESP32, STM32 concepts, embedded C/C++ and Python
-- IoT systems using LoRaWAN, MQTT, ChirpStack, InfluxDB and Grafana
-- CAN bus, Vector CANoe, CANalyzer and vehicle software validation
-- CAD, mechanical integration, SolidWorks, Fusion 360 and technical drawings
-- Testing, verification, validation, FAT, SAT and commissioning support
-- QA documentation, traceability, Australian Standards, ISO/IEC/AS/NZS exposure
-- Data analysis, test automation, applied ML fundamentals and technical reporting
+The site uses defensible wording for broader capability, including hands-on experience, practical capability, working knowledge, exposure, supported, contributed to and built concepts using.
 
-## Selected Projects
+## Site Structure
 
-### Autonomous Navigation and ROS 2 Robotics
-Robotics software concepts using ROS 2, Gazebo, RViz, A* path planning, SLAM, Kalman/EKF-based state estimation, odometry and IMU fusion.
+- Hero with availability, location, membership and resume actions
+- Capability map covering eight multidisciplinary engineering pillars
+- Project portfolio across robotics, embedded sensing, IoT, smart factory systems and vehicle validation
+- Engineering domains overview
+- Concise experience timeline
+- Structured technical stack matrix
+- Education, membership, training, licence and languages
+- Contact details and resume download
 
-### ESP32 Clinical Ataxia Assessment Concept
-Embedded measurement concept using ESP32, IMU, ToF, Hall-effect and magnetometer sensing with firmware logic, data acquisition and analysis workflows.
+## Technical Constraints
 
-### IoT GPS and Environmental Monitoring Platform
-ESP32 GPS and environmental sensing using LoRaWAN/MQTT telemetry, gateway configuration, InfluxDB/Grafana dashboards and deployment documentation.
+- Plain HTML, CSS and vanilla JavaScript
+- No framework, package manager, bundler or build step
+- No runtime third party requests
+- Local WOFF2 fonts from `assets/fonts/`
+- GitHub Pages compatible files served from the repository root
 
-### Smart Factory and Process Visualisation
-Industrial automation exposure across HMI/process visualisation, MES, batch execution, production reporting, operator workflows, diagnostics and maintainability.
+## Preserved Assets
 
-### Vehicle Software and ADAS Validation
-Feature vehicle, breadboard and regression testing for vehicle software integration and ADAS validation using CAN data, Vector CANoe, CANalyzer and diagnostic tools.
+- `robots.txt`
+- `sitemap.xml`
+- `BingSiteAuth.xml`
+- `googlebcce96f6b520ab1f.html`
+- `assets/Resume_Sajeevan_Veeriah.pdf`
+- `assets/fonts/*`
 
-## Professional Direction
+## Links
 
-I am focused on robotics, automation, embedded systems, control systems, mechatronics, industrial software, IoT, systems integration, validation and advanced manufacturing.
+Portfolio: <https://sajeevanveeriah.github.io/>
 
-Portfolio: https://sajeevanveeriah.github.io  
-LinkedIn: https://www.linkedin.com/in/sajeevan-veeriah
+LinkedIn: <https://www.linkedin.com/in/sajeevan-veeriah/>
+
+GitHub: <https://github.com/Sajeevanveeriah>

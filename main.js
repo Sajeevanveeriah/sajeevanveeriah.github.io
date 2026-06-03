@@ -1,8 +1,38 @@
 (function () {
     "use strict";
 
+    var body = document.body;
     var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var revealItems = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+    var navToggle = document.querySelector("[data-nav-toggle]");
+    var siteNav = document.querySelector("[data-site-nav]");
+
+    function closeNavigation() {
+        body.classList.remove("nav-open");
+        if (navToggle) {
+            navToggle.setAttribute("aria-expanded", "false");
+        }
+    }
+
+    if (navToggle && siteNav) {
+        navToggle.addEventListener("click", function () {
+            var expanded = navToggle.getAttribute("aria-expanded") === "true";
+            body.classList.toggle("nav-open", !expanded);
+            navToggle.setAttribute("aria-expanded", String(!expanded));
+        });
+
+        siteNav.addEventListener("click", function (event) {
+            if (event.target && event.target.matches("a")) {
+                closeNavigation();
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeNavigation();
+            }
+        });
+    }
 
     if (reduceMotion || !("IntersectionObserver" in window)) {
         revealItems.forEach(function (item) {
