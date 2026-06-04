@@ -309,6 +309,7 @@ ul {
 }
 
 .hero {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
     align-items: center;
@@ -316,7 +317,65 @@ ul {
     min-height: calc(92svh - var(--nav-height));
     padding-top: clamp(48px, 7vw, 84px);
     padding-bottom: clamp(56px, 8vw, 96px);
+    color: #ECE9E0;
+    background:
+        radial-gradient(circle at 82% 18%, rgba(232, 84, 43, 0.16), transparent 24rem),
+        linear-gradient(135deg, rgba(236, 233, 224, 0.08) 1px, transparent 1px),
+        #10151A;
+    background-size: auto, 44px 44px, auto;
+    border-right: 1px solid rgba(236, 233, 224, 0.12);
+    border-bottom: 1px solid rgba(236, 233, 224, 0.12);
+    border-left: 1px solid rgba(236, 233, 224, 0.12);
+    border-radius: 0 0 6px 6px;
 }
+
+.hero .eyebrow,
+.hero .metadata-strip,
+.hero .hero-lede,
+.hero .hero-support {
+    color: #ECE9E0;
+}
+
+.hero .hero-support {
+    max-width: 64ch;
+    margin-top: 12px;
+    color: rgba(236, 233, 224, 0.78);
+    font-size: clamp(1rem, 1.2vw, 1.12rem);
+}
+
+.hero .metadata-strip li,
+.hero .system-visual,
+.hero .visual-label,
+.hero .visual-readout span,
+.hero .module-card rect {
+    border-color: rgba(236, 233, 224, 0.16);
+    background: rgba(236, 233, 224, 0.06);
+}
+
+.hero .module-card rect {
+    fill: rgba(236, 233, 224, 0.06);
+    stroke: rgba(236, 233, 224, 0.2);
+}
+
+.hero .button:not(.button-primary) {
+    color: #ECE9E0;
+    background: transparent;
+}
+
+.hero .path-trace,
+.hero .module-card text {
+    color: #ECE9E0;
+    fill: #ECE9E0;
+}
+
+.hero .module-card text + text {
+    fill: rgba(236, 233, 224, 0.7);
+}
+
+.hero .trace-node {
+    fill: #10151A;
+}
+
 
 .eyebrow,
 .card-label,
@@ -542,7 +601,8 @@ h1 {
 .project-grid,
 .education-grid,
 .stack-grid,
-.domain-grid {
+.domain-grid,
+.detail-grid {
     display: grid;
     gap: 16px;
 }
@@ -570,6 +630,7 @@ h1 {
 }
 
 .project-card,
+.project-detail,
 .capability-card,
 .education-card,
 .stack-card,
@@ -584,6 +645,7 @@ h1 {
 }
 
 .project-card:hover,
+.project-detail:hover,
 .capability-card:hover,
 .education-card:hover,
 .stack-card:hover,
@@ -598,6 +660,7 @@ h1 {
 }
 
 .project-card h3,
+.project-detail h3,
 .capability-card h3,
 .education-card h3,
 .stack-card h3,
@@ -610,6 +673,7 @@ h1 {
 .capability-card p,
 .education-card p,
 .stack-card p,
+.project-card p,
 .project-facts dd,
 .timeline-content li,
 .timeline-content .organisation,
@@ -896,5 +960,103 @@ h1 {
     .reveal {
         opacity: 1;
         transform: none;
+    }
+}
+
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: clamp(24px, 5vw, 64px);
+    align-items: start;
+}
+
+.intro-copy {
+    display: grid;
+    gap: 18px;
+    color: var(--muted);
+    font-size: 1.05rem;
+}
+
+.compact-grid {
+    margin-top: 12px;
+}
+
+.project-media-card {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.project-media-card .card-label,
+.project-media-card h3,
+.project-media-card p {
+    margin-right: clamp(20px, 3vw, 30px);
+    margin-left: clamp(20px, 3vw, 30px);
+}
+
+.project-media-card p:last-child {
+    margin-bottom: clamp(20px, 3vw, 30px);
+}
+
+.project-media-card h3 a {
+    text-decoration: none;
+}
+
+.project-image-link {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--panel);
+}
+
+.project-image-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1448 / 1086;
+    object-fit: cover;
+    transition: transform 220ms ease;
+}
+
+.project-card:hover .project-image-link img {
+    transform: scale(1.018);
+}
+
+.detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 16px;
+}
+
+.project-detail {
+    scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.tools-grid .stack-card,
+.bring-grid .domain-item {
+    background: var(--bg);
+}
+
+.tool-list {
+    display: grid;
+    gap: 8px;
+    padding-left: 18px;
+    color: var(--muted);
+}
+
+.tool-list li::marker {
+    color: var(--accent);
+}
+
+.contact-panel span {
+    color: var(--muted);
+}
+
+@media (max-width: 980px) {
+    .intro-grid,
+    .detail-grid {
+        grid-template-columns: 1fr;
     }
 }
