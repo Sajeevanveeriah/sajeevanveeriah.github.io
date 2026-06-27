@@ -75,10 +75,20 @@
           "name": "Cardiff Metropolitan University"
         }
       ],
-      "memberOf": {
-        "@type": "Organization",
-        "name": "Engineers Australia"
-      },
+      "memberOf": [
+        {
+          "@type": "Organization",
+          "name": "Engineers Australia"
+        },
+        {
+          "@type": "Organization",
+          "name": "Mars Rover Team, Deakin University"
+        },
+        {
+          "@type": "Organization",
+          "name": "Deakin University Student Association (DUSA)"
+        }
+      ],
       "knowsAbout": [
         "Robotics",
         "Industrial automation",
@@ -104,7 +114,10 @@
         "Reinforcement learning",
         "Predictive maintenance",
         "Anomaly detection",
-        "OEE"
+        "OEE",
+        "Mars Rover Team",
+        "Mentoring",
+        "Capstone project"
       ]
     }
     </script>
@@ -125,7 +138,9 @@
                 <a href="#approach">Approach</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#skills">Skills</a>
+                <a href="#disciplines">Disciplines</a>
                 <a href="#experience">Experience</a>
+                <a href="#leadership">Leadership</a>
                 <a href="#certifications">Certifications</a>
                 <a href="#contact">Contact</a>
             </nav>
@@ -157,44 +172,37 @@
                 <div class="hero-stat"><span class="stat-num" data-target="5">0</span><span class="stat-label">Industries</span></div>
                 <div class="hero-stat"><span class="stat-num" data-target="6">0</span><span class="stat-label">Major roles</span></div>
             </div>
-            <div class="system-visual reveal" aria-label="Systems integration diagram">
-                <div class="visual-grid" aria-hidden="true"></div>
-                <p class="visual-label">Hardware plus software identity</p>
-                <svg class="path-trace" viewBox="0 0 620 420" role="img" aria-labelledby="visual-title visual-desc">
-                    <title id="visual-title">Engineering systems trace</title>
-                    <desc id="visual-desc">A restrained technical diagram linking sensors, control logic, software validation, dashboards and operator workflows.</desc>
-                    <path class="axis-line" d="M72 330 L540 330"></path>
-                    <path class="axis-line" d="M90 350 L90 72"></path>
-                    <path class="trace-line" d="M92 292 C150 214 184 246 236 186 S348 118 410 160 S492 252 546 94"></path>
-                    <circle class="trace-node" cx="92" cy="292" r="9"></circle>
-                    <circle class="trace-node" cx="236" cy="186" r="9"></circle>
-                    <circle class="trace-node accent-node" cx="410" cy="160" r="9"></circle>
-                    <circle class="trace-node" cx="546" cy="94" r="9"></circle>
-                    <g class="module-card" transform="translate(112 86)">
-                        <rect width="148" height="64" rx="5"></rect>
-                        <text x="16" y="28">Sense</text>
-                        <text x="16" y="46">IMU / LiDAR / CAN</text>
-                    </g>
-                    <g class="module-card" transform="translate(318 230)">
-                        <rect width="170" height="64" rx="5"></rect>
-                        <text x="16" y="28">Control</text>
-                        <text x="16" y="46">PLC / ROS 2 / HMI</text>
-                    </g>
-                    <g class="module-card" transform="translate(204 176)">
-                        <rect width="158" height="64" rx="5"></rect>
-                        <text x="16" y="28">Decide</text>
-                        <text x="16" y="46">ML / ROS 2 / Nav2</text>
-                    </g>
-                    <circle class="trace-node" cx="350" cy="220" r="7"></circle>
-                </svg>
-                <div class="visual-readout" aria-label="Integrated layers">
-                    <span>Firmware</span>
-                    <span>Controls</span>
-                    <span>Robotics</span>
-                    <span>AI/ML</span>
-                    <span>Data</span>
-                    <span>Validation</span>
+            <div class="capability-map reveal" aria-labelledby="map-title">
+                <div class="map-head">
+                    <p class="map-title" id="map-title">Engineering Capability Map</p>
+                    <p class="map-sub">One systems capability across twenty disciplines</p>
                 </div>
+                <div class="map-stage" data-competency-map>
+                    <ul class="map-fallback" aria-label="Engineering domains">
+                        <li>Mechatronics Systems</li>
+                        <li>Mechanical Design</li>
+                        <li>Electrical and Power</li>
+                        <li>Electronics and PCB</li>
+                        <li>Embedded and Firmware</li>
+                        <li>Control Systems</li>
+                        <li>Robotics and Autonomy</li>
+                        <li>Industrial Automation and SCADA</li>
+                        <li>Instrumentation and Sensors</li>
+                        <li>IoT and Telemetry</li>
+                        <li>AI and Machine Learning</li>
+                        <li>Computer Vision</li>
+                        <li>Data and Analytics</li>
+                        <li>Software and DevOps</li>
+                        <li>Simulation and Digital Twin</li>
+                        <li>Automotive and CAN</li>
+                        <li>Functional Safety and Standards</li>
+                        <li>Quality, Validation and Test</li>
+                        <li>Manufacturing and Production</li>
+                        <li>Systems Integration</li>
+                        <li>Project and Commissioning</li>
+                    </ul>
+                </div>
+                <p class="map-caption">Hover, tap or use arrow keys to explore each engineering domain.</p>
             </div>
             <canvas class="hero-particles" aria-hidden="true" data-particles></canvas>
         </section>
@@ -294,13 +302,14 @@
                         <h3><a href="#autonomous-navigation-detail">Autonomous Navigation and ROS 2 Robotics</a></h3>
                         <p>ROS 2 autonomy concepts using SLAM, A* path planning, odometry, IMU fusion and modular navigation logic.</p>
                     </article>
+                    <!-- TODO: Saj to confirm exact capstone title, supervisor and year if he wants them shown -->
                     <article class="project-card project-media-card reveal" id="clinical-ataxia">
                         <a class="project-image-link" href="#clinical-ataxia-detail" aria-label="Read details for ESP32 Clinical Ataxia Assessment Concept">
                             <img src="assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Embedded clinical ataxia assessment concept showing sensors and movement data capture">
                         </a>
-                        <p class="card-label">Embedded sensing</p>
+                        <p class="card-label">Capstone project</p>
                         <h3><a href="#clinical-ataxia-detail">ESP32 Clinical Ataxia Assessment Concept</a></h3>
-                        <p>Embedded sensing concept using ESP32, IMU, ToF, Hall effect and magnetometer signals for movement assessment support.</p>
+                        <p>Final-year Mechatronics capstone at Deakin University: an embedded sensing concept using ESP32, IMU, ToF, Hall effect and magnetometer signals for movement assessment support.</p>
                     </article>
                     <article class="project-card project-media-card reveal" id="iot-monitoring">
                         <a class="project-image-link" href="#iot-monitoring-detail" aria-label="Read details for IoT GPS and Environmental Monitoring Platform">
@@ -348,9 +357,10 @@
                         <dl class="project-facts"><dt>Problem</dt><dd>Autonomous systems need reliable localisation, mapping and obstacle-aware navigation.</dd><dt>Situation</dt><dd>Built as a robotics project combining simulation concepts and physical-system thinking.</dd><dt>Plan</dt><dd>Combine ROS 2, Gazebo, RViz, SLAM, A* planning, odometry and IMU fusion into a modular stack.</dd><dt>Action</dt><dd>Developed navigation logic, structured nodes, tuned control behaviour and validated sensing workflows.</dd><dt>Output</dt><dd>Produced a working autonomy concept with realistic path visualisation and repeatable navigation behaviour.</dd></dl>
                     </article>
                     <article class="project-detail reveal" id="clinical-ataxia-detail">
-                        <p class="card-label">Project detail</p>
+                        <p class="card-label">Capstone project detail</p>
                         <h3>ESP32 Clinical Ataxia Assessment Concept</h3>
-                        <dl class="project-facts"><dt>Problem</dt><dd>Movement assessment benefits from clearer, repeatable and sensor-based measurement.</dd><dt>Situation</dt><dd>Built as an embedded concept focused on capturing motion and coordination signals.</dd><dt>Plan</dt><dd>Combine ESP32 control with IMU, ToF, Hall effect and magnetometer sensing.</dd><dt>Action</dt><dd>Developed firmware logic, integrated sensors and captured movement data for analysis.</dd><dt>Output</dt><dd>Produced a proof-of-concept measurement platform for repeatable motion assessment support.</dd></dl>
+                        <!-- TODO: Saj to confirm exact capstone title, supervisor and year if he wants them shown -->
+                        <dl class="project-facts"><dt>Problem</dt><dd>Movement assessment benefits from clearer, repeatable and sensor-based measurement.</dd><dt>Situation</dt><dd>Built as Sajeevan's final-year Mechatronics capstone project at Deakin University, focused on capturing motion and coordination signals.</dd><dt>Plan</dt><dd>Combine ESP32 control with IMU, ToF, Hall effect and magnetometer sensing.</dd><dt>Action</dt><dd>Developed firmware logic, integrated sensors and captured movement data for analysis.</dd><dt>Output</dt><dd>Produced a proof-of-concept measurement platform for repeatable motion assessment support.</dd></dl>
                     </article>
                     <article class="project-detail reveal" id="iot-monitoring-detail">
                         <p class="card-label">Project detail</p>
@@ -464,10 +474,142 @@
             </div>
         </section>
 
+        <section class="section-block" id="disciplines" aria-labelledby="disciplines-title">
+            <div class="section-wrap">
+                <div class="section-heading reveal">
+                    <p class="section-kicker"><span>05</span> Engineering Disciplines</p>
+                    <h2 id="disciplines-title">The full breadth, one discipline at a time.</h2>
+                    <p>A complete reference to the engineering domains behind the capability map, each framed honestly as hands-on work, practical capability, working knowledge or exposure. Tools and standards are drawn from the skills and projects on this page.</p>
+                </div>
+                <div class="discipline-grid">
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Mechanical and electrical</p>
+                        <h3>Mechanical Design</h3>
+                        <p>Hands-on CAD, mechanism and part design for mechatronic assemblies.</p>
+                        <ul class="chip-row"><li class="chip">SolidWorks</li><li class="chip">Fusion 360</li><li class="chip">GD&amp;T</li><li class="chip">Mechanism design</li><li class="chip">FEA exposure</li><li class="chip">3D printing (FDM)</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Mechanical and electrical</p>
+                        <h3>Electrical and Power</h3>
+                        <p>Practical motor control, drives and control-panel wiring.</p>
+                        <ul class="chip-row"><li class="chip">VFDs and motor drives</li><li class="chip">Control schematics</li><li class="chip">Instrumentation wiring</li><li class="chip">Signal conditioning</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Embedded and electronics</p>
+                        <h3>Electronics and PCB</h3>
+                        <p>Working capability from schematic capture and PCB layout to board bring-up.</p>
+                        <ul class="chip-row"><li class="chip">Altium</li><li class="chip">KiCad</li><li class="chip">Schematic capture</li><li class="chip">Board-level bring-up</li><li class="chip">Signal conditioning</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Embedded and electronics</p>
+                        <h3>Embedded and Firmware</h3>
+                        <p>Hands-on microcontroller firmware in C and C++ on ESP32 and STM32.</p>
+                        <ul class="chip-row"><li class="chip">ESP32 / ESP32-S3</li><li class="chip">STM32</li><li class="chip">Embedded C/C++</li><li class="chip">FreeRTOS</li><li class="chip">UART, I2C, SPI</li><li class="chip">ADC, PWM</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Controls and automation</p>
+                        <h3>Control Systems</h3>
+                        <p>Practical control loops, state estimation and PLC logic.</p>
+                        <ul class="chip-row"><li class="chip">PID control</li><li class="chip">Kalman and EKF</li><li class="chip">IEC 61131-3</li><li class="chip">MATLAB and Simulink</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Robotics and autonomy</p>
+                        <h3>Robotics and Autonomy</h3>
+                        <p>Hands-on ROS 2 autonomy across mapping, planning and sensor fusion.</p>
+                        <ul class="chip-row"><li class="chip">ROS 2 (Humble)</li><li class="chip">Nav2</li><li class="chip">MoveIt 2</li><li class="chip">Gazebo</li><li class="chip">RViz</li><li class="chip">SLAM</li><li class="chip">A* path planning</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Controls and automation</p>
+                        <h3>Industrial Automation and SCADA</h3>
+                        <p>Delivery experience in PLC, HMI, SCADA and MES for regulated plants.</p>
+                        <ul class="chip-row"><li class="chip">Siemens TIA Portal</li><li class="chip">WinCC</li><li class="chip">PCS 7</li><li class="chip">iFIX</li><li class="chip">PVI+</li><li class="chip">MES and batch</li><li class="chip">Modbus</li><li class="chip">Profinet</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Embedded and electronics</p>
+                        <h3>Instrumentation and Sensors</h3>
+                        <p>Practical sensor integration, signal conditioning and data capture.</p>
+                        <ul class="chip-row"><li class="chip">IMU</li><li class="chip">LiDAR</li><li class="chip">Depth cameras</li><li class="chip">ToF</li><li class="chip">Hall effect</li><li class="chip">Magnetometer</li><li class="chip">Sensor fusion</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Embedded and electronics</p>
+                        <h3>IoT and Telemetry</h3>
+                        <p>Hands-on low-power telemetry from device through to dashboard.</p>
+                        <ul class="chip-row"><li class="chip">ESP32</li><li class="chip">LoRaWAN</li><li class="chip">MQTT</li><li class="chip">GPS</li><li class="chip">InfluxDB</li><li class="chip">Grafana</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">AI, data and software</p>
+                        <h3>AI and Machine Learning</h3>
+                        <p>Applied ML for anomaly detection and predictive maintenance.</p>
+                        <ul class="chip-row"><li class="chip">Anomaly detection</li><li class="chip">Feature extraction</li><li class="chip">Statistical modelling</li><li class="chip">scikit-learn</li><li class="chip">Predictive maintenance</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Robotics and autonomy</p>
+                        <h3>Computer Vision</h3>
+                        <p>Working knowledge of vision pipelines for perception.</p>
+                        <ul class="chip-row"><li class="chip">OpenCV</li><li class="chip">Depth cameras</li><li class="chip">Sensor fusion</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">AI, data and software</p>
+                        <h3>Data and Analytics</h3>
+                        <p>Practical time-series pipelines, dashboards and OEE analytics.</p>
+                        <ul class="chip-row"><li class="chip">Python (NumPy, Pandas)</li><li class="chip">InfluxDB</li><li class="chip">Grafana</li><li class="chip">OEE analytics</li><li class="chip">Statistical modelling</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">AI, data and software</p>
+                        <h3>Software and DevOps</h3>
+                        <p>Practical Python and C/C++ with Git, Linux and test automation.</p>
+                        <ul class="chip-row"><li class="chip">Python</li><li class="chip">Embedded C/C++</li><li class="chip">Git</li><li class="chip">Linux</li><li class="chip">REST APIs</li><li class="chip">Test automation</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">AI, data and software</p>
+                        <h3>Simulation and Digital Twin</h3>
+                        <p>Concept-level simulation and real-time digital-twin modelling.</p>
+                        <ul class="chip-row"><li class="chip">Gazebo</li><li class="chip">RViz</li><li class="chip">MATLAB and Simulink</li><li class="chip">Digital twin concept</li><li class="chip">OEE analytics</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Validation and quality</p>
+                        <h3>Automotive and CAN</h3>
+                        <p>Validation experience with CAN analysis and ADAS features.</p>
+                        <ul class="chip-row"><li class="chip">Vector CANoe</li><li class="chip">Vector CANalyzer</li><li class="chip">CAN bus</li><li class="chip">CAN FD</li><li class="chip">ADAS validation</li><li class="chip">OTA regression</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Validation and quality</p>
+                        <h3>Functional Safety and Standards</h3>
+                        <p>Working knowledge of machinery, security and quality standards.</p>
+                        <ul class="chip-row"><li class="chip">ISO 13849</li><li class="chip">IEC 62443</li><li class="chip">GAMP 5</li><li class="chip">FDA 21 CFR Part 11</li><li class="chip">IEC 61131-3</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Validation and quality</p>
+                        <h3>Quality, Validation and Test</h3>
+                        <p>Structured, evidence-based testing and QA documentation.</p>
+                        <ul class="chip-row"><li class="chip">FAT</li><li class="chip">SAT</li><li class="chip">FMEA</li><li class="chip">QA records</li><li class="chip">ITPs</li><li class="chip">MDRs</li><li class="chip">Test automation</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Delivery and manufacturing</p>
+                        <h3>Manufacturing and Production</h3>
+                        <p>Production-floor, traceability and inspection experience.</p>
+                        <ul class="chip-row"><li class="chip">Production workflows</li><li class="chip">Traceability</li><li class="chip">Inspection planning</li><li class="chip">Drawing review</li><li class="chip">3D printing (FDM)</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Delivery and manufacturing</p>
+                        <h3>Systems Integration</h3>
+                        <p>Hands-on integration of sensors, actuators, control logic and data flows.</p>
+                        <ul class="chip-row"><li class="chip">Sensor and actuator integration</li><li class="chip">Field devices</li><li class="chip">Control logic</li><li class="chip">Data pipelines</li><li class="chip">HMI, SCADA, MES</li></ul>
+                    </article>
+                    <article class="discipline-card reveal">
+                        <p class="card-label">Delivery and manufacturing</p>
+                        <h3>Project and Commissioning</h3>
+                        <p>Delivery through FAT, SAT, commissioning and handover.</p>
+                        <ul class="chip-row"><li class="chip">FAT</li><li class="chip">SAT</li><li class="chip">Commissioning</li><li class="chip">Qualification</li><li class="chip">Handover</li><li class="chip">GMP / GAMP 5</li></ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <section class="section-block" id="experience" aria-labelledby="experience-title">
             <div class="section-wrap">
                 <div class="section-heading reveal">
-                    <p class="section-kicker"><span>05</span> Experience</p>
+                    <p class="section-kicker"><span>06</span> Experience</p>
                     <h2 id="experience-title">Concise timeline across automation, validation, IoT, manufacturing and QA.</h2>
                 </div>
                 <div class="timeline">
@@ -481,10 +623,47 @@
             </div>
         </section>
 
+        <section class="section-block" id="leadership" aria-labelledby="leadership-title">
+            <div class="section-wrap">
+                <div class="section-heading reveal">
+                    <p class="section-kicker"><span>07</span> Leadership, Teams and Community</p>
+                    <h2 id="leadership-title">Teamwork, mentoring and multidisciplinary collaboration.</h2>
+                    <p>Student engineering teams, peer mentoring and community involvement that build the teamwork, communication and cross-discipline collaboration behind the technical breadth.</p>
+                </div>
+                <!-- TODO: Saj to confirm exact roles, dates and any leadership titles for Mars Rover Team, Math Mentors, Peer Support and DUSA -->
+                <div class="leadership-grid">
+                    <article class="leadership-card reveal">
+                        <p class="card-label">Student engineering team</p>
+                        <h3>Mars Rover Team, Deakin University</h3>
+                        <p class="org-meta">Deakin University, Geelong VIC</p>
+                        <p>Member of the multidisciplinary student rover team, contributing to an engineering project spanning mechanical, electronics, control and software work.</p>
+                    </article>
+                    <article class="leadership-card reveal">
+                        <p class="card-label">Peer mentoring</p>
+                        <h3>Math Mentors</h3>
+                        <p class="org-meta">Deakin University, Geelong VIC</p>
+                        <p>Peer mathematics mentor supporting fellow students with problem solving, study skills and exam preparation.</p>
+                    </article>
+                    <article class="leadership-card reveal">
+                        <p class="card-label">Student volunteering</p>
+                        <h3>Peer Support</h3>
+                        <p class="org-meta">Deakin University, Geelong VIC</p>
+                        <p>Peer support volunteer helping fellow students settle in, stay connected and find the right help.</p>
+                    </article>
+                    <article class="leadership-card reveal">
+                        <p class="card-label">Student association</p>
+                        <h3>Deakin University Student Association (DUSA)</h3>
+                        <p class="org-meta">Deakin University, Geelong VIC</p>
+                        <p>Involvement with the student association and campus community activities alongside study.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <section class="section-block" id="bring" aria-labelledby="bring-title">
             <div class="section-wrap">
                 <div class="section-heading reveal">
-                    <p class="section-kicker"><span>06</span> What I Bring</p>
+                    <p class="section-kicker"><span>08</span> What I Bring</p>
                     <h2 id="bring-title">Engineering strengths suited to robotics, automation and AI/ML roles.</h2>
                 </div>
                 <div class="domain-grid bring-grid">
@@ -501,7 +680,7 @@
         <section class="section-block" id="certifications" aria-labelledby="certifications-title">
             <div class="section-wrap">
                 <div class="section-heading reveal">
-                    <p class="section-kicker"><span>07</span> Certifications, Training and Standards</p>
+                    <p class="section-kicker"><span>09</span> Certifications, Training and Standards</p>
                     <h2 id="certifications-title">Qualifications, membership and standards I work to.</h2>
                     <p>Listed where defensible from formal study, professional membership and applied project and industry experience.</p>
                 </div>
@@ -537,7 +716,7 @@
         <section class="section-block" id="writing" aria-labelledby="writing-title">
             <div class="section-wrap">
                 <div class="section-heading reveal">
-                    <p class="section-kicker"><span>08</span> Selected Writing and Notes</p>
+                    <p class="section-kicker"><span>10</span> Selected Writing and Notes</p>
                     <h2 id="writing-title">Engineering notes and project write-ups.</h2>
                     <p>Short technical notes and case studies. This section will grow as write-ups are published.</p>
                 </div>
@@ -555,7 +734,7 @@
         <section class="section-block" id="contact" aria-labelledby="contact-title">
             <div class="section-wrap contact-grid">
                 <div class="section-heading reveal">
-                    <p class="section-kicker"><span>09</span> Contact</p>
+                    <p class="section-kicker"><span>11</span> Contact</p>
                     <h2 id="contact-title">Available immediately for robotics, automation and AI/ML engineering roles.</h2>
                     <p>Based in Geelong, Victoria, Australia. Open to roles across robotics, automation, embedded systems, AI/ML and smart factory engineering. Open to relocation within Australia. Subclass 485 visa, full Australian work rights, no employer sponsorship required.</p>
                 </div>
@@ -579,6 +758,8 @@
             <a class="footer-mark" href="#top" aria-label="Back to top">SV</a>
             <p>Sajeevan Veeriah, mechatronics engineer specialising in robotics, automation, AI/ML, embedded systems and smart factory engineering.</p>
             <div class="footer-links" aria-label="Footer links">
+                <a href="#disciplines">Disciplines</a>
+                <a href="#leadership">Leadership</a>
                 <a href="mailto:sajeevanveeriah@gmail.com">Email</a>
                 <a href="assets/Resume_Sajeevan_Veeriah.pdf" download>Resume</a>
                 <a href="https://github.com/Sajeevanveeriah" rel="noopener">GitHub</a>
@@ -588,6 +769,7 @@
         </div>
     </footer>
 
+    <script src="assets/js/competency-map.js" defer></script>
     <script src="main.js" defer></script>
 </body>
 </html>
