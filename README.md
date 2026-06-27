@@ -12,12 +12,14 @@ The site uses defensible wording for broader capability, including hands-on expe
 
 ## Site Structure
 
-- Hero with availability, location, membership and resume actions
+- Hero with availability, location, membership and resume actions, plus an interactive engineering capability map that explores twenty domains around a Mechatronics Systems hub (hover, tap or keyboard, with a static no-JS fallback)
 - About summary across robotics, automation and AI/ML
 - How I Work capability path from concept to commissioned
-- Project portfolio including a digital twin and industrial AI concept, plus robotics, embedded sensing, IoT, smart factory systems and vehicle validation
+- Project portfolio including a digital twin and industrial AI concept, plus robotics, the ESP32 ataxia capstone, IoT, smart factory systems and vehicle validation
 - Skills and tools matrix grouped by domain
+- Engineering Disciplines reference section laying out the full breadth, one discipline at a time
 - Concise experience timeline
+- Leadership, Teams and Community section covering the Mars Rover Team, peer mentoring and student community involvement
 - Engineering strengths overview
 - Certifications, training and standards
 - Selected writing and notes
