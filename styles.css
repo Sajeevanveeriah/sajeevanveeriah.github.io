@@ -67,6 +67,7 @@
     --ink: #16150F;
     --muted: #6B6A60;
     --accent: #E8542B;
+    --on-accent: #16150F;
     --hairline: rgba(22, 21, 15, 0.12);
     --hairline-strong: rgba(22, 21, 15, 0.28);
     --surface: rgba(255, 252, 244, 0.54);
@@ -455,7 +456,7 @@ h1 {
 
 .button-primary {
     border-color: var(--accent);
-    color: var(--bg);
+    color: var(--on-accent);
     background: var(--accent);
 }
 
@@ -562,8 +563,8 @@ h1 {
 }
 
 .section-block {
-    padding-top: clamp(56px, 7vw, 96px);
-    padding-bottom: clamp(56px, 7vw, 96px);
+    padding-top: clamp(48px, 8vw, 116px);
+    padding-bottom: clamp(48px, 8vw, 116px);
     border-top: 1px solid var(--hairline);
     scroll-margin-top: calc(var(--nav-height) + 24px);
 }
@@ -1002,7 +1003,29 @@ h1 {
 }
 
 .project-media-card h3 a {
+    position: relative;
+    display: inline-block;
     text-decoration: none;
+}
+
+.project-media-card h3 a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+}
+
+.project-media-card:hover h3 a::after,
+.project-media-card:focus-within h3 a::after,
+.project-media-card h3 a:hover::after,
+.project-media-card h3 a:focus-visible::after {
+    transform: scaleX(1);
 }
 
 .project-image-link {
@@ -1016,7 +1039,7 @@ h1 {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 1448 / 1086;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 220ms ease;
 }
@@ -1039,15 +1062,32 @@ h1 {
     background: var(--bg);
 }
 
+/* Tool lists rendered as dense hairline-outlined chips (Tools and Technologies matrix) */
 .tool-list {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
-    padding-left: 18px;
+    padding-left: 0;
     color: var(--muted);
 }
 
-.tool-list li::marker {
+.tool-list li {
+    list-style: none;
+    padding: 6px 10px;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    line-height: 1.2;
+    background: var(--panel);
+    transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.tool-list li:hover {
+    border-color: var(--accent);
     color: var(--accent);
+    background: var(--bg);
 }
 
 .contact-panel span {
@@ -1153,7 +1193,7 @@ h1 {
 }
 .skill-tab.is-active {
     border-color: var(--accent);
-    color: var(--bg);
+    color: var(--on-accent);
     background: var(--accent);
 }
 /* Tools grid: support 6 cards in 3 columns then 2 */
@@ -1272,5 +1312,177 @@ h1 {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+}
+
+/* ===================================================================
+   New sections: How I Work, Certifications, Tools chips, Writing
+   All built from existing palette tokens so dark mode adapts.
+   =================================================================== */
+
+/* How I Work / Approach */
+.approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.approach-card {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    min-height: 100%;
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    background: var(--surface);
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.approach-card:hover {
+    border-color: var(--hairline-strong);
+    transform: translateY(-2px);
+}
+
+.approach-card .card-label {
+    margin-bottom: 0;
+}
+
+.approach-card p:not(.card-label) {
+    color: var(--muted);
+}
+
+/* Certifications, Training and Standards */
+.creds-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.creds-card {
+    min-height: 100%;
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    background: var(--surface);
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.creds-card:hover {
+    border-color: var(--hairline-strong);
+    transform: translateY(-2px);
+}
+
+.creds-list {
+    display: grid;
+    gap: 12px;
+    padding-left: 18px;
+    color: var(--muted);
+}
+
+.creds-list li::marker {
+    color: var(--accent);
+}
+
+/* Reusable hairline-outlined chips */
+.chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding-left: 0;
+}
+
+.chip {
+    list-style: none;
+    padding: 6px 10px;
+    border: 1px solid var(--hairline);
+    border-radius: 4px;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    line-height: 1.2;
+    background: var(--panel);
+    transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--bg);
+}
+
+/* Selected Writing and Notes */
+.writing-list {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.writing-item {
+    list-style: none;
+    padding: clamp(20px, 3vw, 30px);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    background: var(--surface);
+    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.writing-item:hover {
+    border-color: var(--hairline-strong);
+    transform: translateY(-2px);
+}
+
+.writing-item h3 {
+    margin-top: 8px;
+    margin-bottom: 10px;
+    font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+    line-height: 1.16;
+}
+
+.writing-item h3 a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.writing-item h3 a::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+}
+
+.writing-item:hover h3 a::after,
+.writing-item h3 a:hover::after,
+.writing-item h3 a:focus-visible::after {
+    transform: scaleX(1);
+}
+
+.writing-item p:not(.card-label) {
+    color: var(--muted);
+}
+
+/* Responsive collapse for the new grids */
+@media (max-width: 980px) {
+    .approach-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .creds-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .approach-grid {
+        grid-template-columns: 1fr;
     }
 }
