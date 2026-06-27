@@ -73,7 +73,7 @@ Motion
 - Inter or Roboto must not be the only typeface. Avoid uniform large radius
   corners and heavy shadows everywhere.
 - Do not fabricate metrics, employers, certifications, dates or claims. The
-  resume `assets/Sajeevan_Veeriah_Resume.pdf` is the source of truth. If a site
+  resume `assets/Resume_Sajeevan_Veeriah.pdf` is the source of truth. If a site
   claim conflicts with the resume, prefer the resume and add an HTML comment
   `<!-- TODO: verify against resume -->`.
 
@@ -83,7 +83,7 @@ Motion
 - `sitemap.xml` (keep canonical `https://sajeevanveeriah.github.io/`)
 - `BingSiteAuth.xml`
 - `googlebcce96f6b520ab1f.html`
-- `assets/Sajeevan_Veeriah_Resume.pdf`
+- `assets/Resume_Sajeevan_Veeriah.pdf`
 - Keep and upgrade the JSON-LD `Person` schema. `jobTitle` is "Robotics
   Engineer". Do not claim current employment via `worksFor`. Keep `sameAs`,
   `alumniOf` Deakin, the Geelong and Highton VIC AU address and email.

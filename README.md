@@ -13,12 +13,14 @@ The site uses defensible wording for broader capability, including hands-on expe
 ## Site Structure
 
 - Hero with availability, location, membership and resume actions
-- Capability map covering eight multidisciplinary engineering pillars
-- Project portfolio across robotics, embedded sensing, IoT, smart factory systems and vehicle validation
-- Engineering domains overview
+- About summary across robotics, automation and AI/ML
+- How I Work capability path from concept to commissioned
+- Project portfolio including a digital twin and industrial AI concept, plus robotics, embedded sensing, IoT, smart factory systems and vehicle validation
+- Skills and tools matrix grouped by domain
 - Concise experience timeline
-- Structured technical stack matrix
-- Education, membership, training, licence and languages
+- Engineering strengths overview
+- Certifications, training and standards
+- Selected writing and notes
 - Contact details and resume download
 
 ## Technical Constraints

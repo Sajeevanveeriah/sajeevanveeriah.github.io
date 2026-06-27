@@ -100,10 +100,10 @@
             var domain = tab.getAttribute("data-tab");
             skillTabs.forEach(function (t) {
                 t.classList.remove("is-active");
-                t.setAttribute("aria-selected", "false");
+                t.setAttribute("aria-pressed", "false");
             });
             tab.classList.add("is-active");
-            tab.setAttribute("aria-selected", "true");
+            tab.setAttribute("aria-pressed", "true");
             skillCards.forEach(function (card) {
                 if (domain === "all" || card.getAttribute("data-domain") === domain) {
                     card.removeAttribute("data-hidden");
