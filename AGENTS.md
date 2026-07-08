@@ -84,6 +84,19 @@ Motion
 - `BingSiteAuth.xml`
 - `googlebcce96f6b520ab1f.html`
 - `assets/Resume_Sajeevan_Veeriah.pdf`
-- Keep and upgrade the JSON-LD `Person` schema. `jobTitle` is "Robotics
-  Engineer". Do not claim current employment via `worksFor`. Keep `sameAs`,
-  `alumniOf` Deakin, the Geelong and Highton VIC AU address and email.
+- Keep and upgrade the JSON-LD `Person` schema. `jobTitle` is "Mechatronics,
+  Robotics, Automation and AI/ML Engineer" (broad complete-package positioning,
+  per the July 2026 redesign direction). Do not claim current employment via
+  `worksFor`. Keep `sameAs`, `alumniOf` Deakin, the Geelong and Highton VIC AU
+  address and email.
+
+## Evidence tiers (site-wide honesty system)
+
+Capability claims use five tiers, rendered with `.tier` badges and used in the
+Domain Atlas (`assets/js/domain-atlas.js`), Systems Stack, Skills and project
+details: Delivered (professional or project delivery evidence), Hands-on
+(built, tested, configured or used directly), Working knowledge (credible
+study or coursework), Adjacent (transferable exposure from nearby systems),
+Target (strategic growth domain). Never promote a claim above its evidence.
+Ford must only ever appear as "Ford Motor Company via Invenio contract
+placement", never as direct Ford employment.
