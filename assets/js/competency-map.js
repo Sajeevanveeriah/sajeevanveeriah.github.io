@@ -17,28 +17,23 @@
     var motionQuery = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
     var reduceMotion = motionQuery ? motionQuery.matches : false;
 
-    /* Real domains. Skill lists are pulled from the on-page Skills section. */
+    /* Fourteen high-level domains for the hero map. Full depth lives in the
+       Domain Atlas; this map stays deliberately readable. */
     var DOMAINS = [
-        { name: "Mechanical Design", label: "Mechanical", desc: "Hands-on CAD, mechanism and part design for mechatronic assemblies.", skills: ["SolidWorks", "Fusion 360", "GD&T", "Mechanism design", "FEA exposure", "3D printing (FDM)"] },
-        { name: "Electrical and Power", label: "Electrical", desc: "Practical motor control, drives and control-panel wiring.", skills: ["VFDs and motor drives", "Control schematics", "Instrumentation wiring", "Signal conditioning"] },
-        { name: "Electronics and PCB", label: "Electronics", desc: "Working capability from schematic capture and PCB layout to board bring-up.", skills: ["Altium", "KiCad", "Schematic capture", "Board-level bring-up", "Signal conditioning"] },
-        { name: "Embedded and Firmware", label: "Firmware", desc: "Hands-on microcontroller firmware in C and C++ on ESP32 and STM32.", skills: ["ESP32 / ESP32-S3", "STM32", "Embedded C/C++", "FreeRTOS", "UART, I2C, SPI", "ADC, PWM"] },
-        { name: "Control Systems", label: "Control", desc: "Practical control loops, state estimation and PLC logic.", skills: ["PID control", "Kalman and EKF", "IEC 61131-3", "MATLAB and Simulink"] },
-        { name: "Robotics and Autonomy", label: "Robotics", desc: "Hands-on ROS 2 autonomy across mapping, planning and sensor fusion.", skills: ["ROS 2 (Humble)", "Nav2", "MoveIt 2", "Gazebo", "RViz", "SLAM", "A* path planning"] },
-        { name: "Industrial Automation and SCADA", label: "Automation", desc: "Delivery experience in PLC, HMI, SCADA and MES for regulated plants.", skills: ["Siemens TIA Portal", "WinCC", "PCS 7", "iFIX", "PVI+", "MES and batch", "Modbus", "Profinet"] },
-        { name: "Instrumentation and Sensors", label: "Sensors", desc: "Practical sensor integration, signal conditioning and data capture.", skills: ["IMU", "LiDAR", "Depth cameras", "ToF", "Hall effect", "Magnetometer", "Sensor fusion"] },
-        { name: "IoT and Telemetry", label: "IoT", desc: "Hands-on low-power telemetry from device through to dashboard.", skills: ["ESP32", "LoRaWAN", "MQTT", "GPS", "InfluxDB", "Grafana"] },
-        { name: "AI and Machine Learning", label: "AI/ML", desc: "Applied ML for anomaly detection and predictive maintenance.", skills: ["Anomaly detection", "Feature extraction", "Statistical modelling", "scikit-learn", "Predictive maintenance"] },
-        { name: "Computer Vision", label: "Vision", desc: "Working knowledge of vision pipelines for perception.", skills: ["OpenCV", "Depth cameras", "Sensor fusion"] },
-        { name: "Data and Analytics", label: "Data", desc: "Practical time-series pipelines, dashboards and OEE analytics.", skills: ["Python (NumPy, Pandas)", "InfluxDB", "Grafana", "OEE analytics", "Statistical modelling"] },
-        { name: "Software and DevOps", label: "Software", desc: "Practical Python and C/C++ with Git, Linux and test automation.", skills: ["Python", "Embedded C/C++", "Git", "Linux", "REST APIs", "Test automation"] },
-        { name: "Simulation and Digital Twin", label: "Simulation", desc: "Concept-level simulation and real-time digital-twin modelling.", skills: ["Gazebo", "RViz", "MATLAB and Simulink", "Digital twin concept", "OEE analytics"] },
-        { name: "Automotive and CAN", label: "CAN bus", desc: "Validation experience with CAN analysis and ADAS features.", skills: ["Vector CANoe", "Vector CANalyzer", "CAN bus", "CAN FD", "ADAS validation", "OTA regression"] },
-        { name: "Functional Safety and Standards", label: "Safety", desc: "Working knowledge of machinery, security and quality standards.", skills: ["ISO 13849", "IEC 62443", "GAMP 5", "FDA 21 CFR Part 11", "IEC 61131-3"] },
-        { name: "Quality, Validation and Test", label: "Quality", desc: "Structured, evidence-based testing and QA documentation.", skills: ["FAT", "SAT", "FMEA", "QA records", "ITPs", "MDRs", "Test automation"] },
-        { name: "Manufacturing and Production", label: "Manufacturing", desc: "Production-floor, traceability and inspection experience.", skills: ["Production workflows", "Traceability", "Inspection planning", "Drawing review", "3D printing (FDM)"] },
-        { name: "Systems Integration", label: "Integration", desc: "Hands-on integration of sensors, actuators, control logic and data flows.", skills: ["Sensor and actuator integration", "Field devices", "Control logic", "Data pipelines", "HMI, SCADA, MES"] },
-        { name: "Project and Commissioning", label: "Commissioning", desc: "Delivery through FAT, SAT, commissioning and handover.", skills: ["FAT", "SAT", "Commissioning", "Qualification", "Handover", "GMP / GAMP 5"] }
+        { name: "Mechanical Design", label: "Mechanical", desc: "Hands-on CAD, mechanism and part design for mechatronic assemblies.", skills: ["SolidWorks", "Fusion 360", "GD&T", "Mechanism design", "3D printing (FDM)"] },
+        { name: "Electrical and Power", label: "Electrical", desc: "Practical motor control, drives, panels and instrumentation wiring.", skills: ["VFDs and motor drives", "Control schematics", "Instrumentation wiring", "Signal conditioning"] },
+        { name: "Electronics and PCB", label: "Electronics", desc: "Schematic capture and PCB layout through to board bring-up and sensing.", skills: ["Altium", "KiCad", "Board-level bring-up", "IMU, LiDAR, ToF sensors", "Signal conditioning"] },
+        { name: "Embedded and Firmware", label: "Firmware", desc: "Hands-on microcontroller firmware in C and C++ on ESP32 and STM32.", skills: ["ESP32 / ESP32-S3", "STM32", "Embedded C/C++", "FreeRTOS", "UART, I2C, SPI, CAN"] },
+        { name: "Control Systems", label: "Control", desc: "Delivered control loops, state estimation and PLC logic.", skills: ["PID control", "Kalman and EKF", "IEC 61131-3", "MATLAB and Simulink"] },
+        { name: "Automation and SCADA", label: "Automation", desc: "Delivery experience in PLC, HMI, SCADA and MES for regulated plants.", skills: ["Siemens TIA Portal", "WinCC", "PCS 7", "iFIX", "PVI+", "MES and batch"] },
+        { name: "Robotics and Autonomy", label: "Robotics", desc: "Full ROS 2 autonomy stack across mapping, planning and sensor fusion.", skills: ["ROS 2 (Humble)", "Nav2", "MoveIt 2", "Gazebo", "SLAM", "A* path planning"] },
+        { name: "AI, ML and Vision", label: "AI/ML", desc: "Applied ML for anomaly detection, prediction and machine vision.", skills: ["Anomaly detection", "scikit-learn", "OpenCV and YOLO", "Predictive maintenance"] },
+        { name: "Software and Data", label: "Software", desc: "Practical Python, C/C++ and TypeScript with pipelines and dashboards.", skills: ["Python", "REST APIs", "Git and Linux", "InfluxDB", "Grafana"] },
+        { name: "IoT and Telemetry", label: "IoT", desc: "Delivered low-power telemetry from device through to dashboard.", skills: ["ESP32", "LoRaWAN", "ChirpStack", "MQTT", "GPS"] },
+        { name: "Automotive and Validation", label: "Automotive", desc: "OEM-programme ADAS validation plus emissions and compliance testing.", skills: ["Vector CANoe", "CANalyzer", "CAN FD", "ADAS validation", "ADR and EURO exposure"] },
+        { name: "Manufacturing and QA", label: "Manufacturing", desc: "Production-floor, traceability and structured QA documentation.", skills: ["ITPs", "MDRs", "Traceability", "FMEA", "Lean"] },
+        { name: "Safety and Standards", label: "Standards", desc: "Working knowledge of machinery, security and quality standards.", skills: ["ISO 13849", "IEC 62443", "GAMP 5", "FDA 21 CFR Part 11"] },
+        { name: "Commissioning and Delivery", label: "Delivery", desc: "Delivery through FAT, SAT, commissioning, qualification and handover.", skills: ["FAT", "SAT", "Qualification", "Handover", "GMP / GAMP 5"] }
     ];
 
     var N = DOMAINS.length;
@@ -141,7 +136,7 @@
     var DEFAULT_DETAIL =
         '<p class="map-detail-kicker">Engineering capability</p>' +
         '<h3 class="map-detail-name">Mechatronics Systems</h3>' +
-        '<p class="map-detail-desc">Select a domain to see the concrete tools and standards behind it. Twenty disciplines feed into one integrated systems capability.</p>';
+        '<p class="map-detail-desc">Select a domain to see the concrete tools and standards behind it. Fourteen domains feed one integrated systems capability.</p>';
 
     function renderDetail(index) {
         if (index < 0) {

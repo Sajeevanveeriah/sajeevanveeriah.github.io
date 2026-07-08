@@ -81,7 +81,7 @@
             targets: ["Functional-safety-rated firmware practices", "Rust for embedded"]
         },
         {
-            cluster: "Controls and automation",
+            cluster: "Controls and robotics",
             name: "Control Systems",
             tier: "delivered",
             summary: "Feedback control from classical PID and loop tuning in delivered PLC logic through to state estimation and model-based design from degree and project work.",
@@ -92,7 +92,7 @@
             targets: ["Model predictive control in production", "Formal control-loop performance auditing"]
         },
         {
-            cluster: "Controls and automation",
+            cluster: "Controls and robotics",
             name: "Industrial Automation, PLC and SCADA",
             tier: "delivered",
             summary: "Professional delivery of PLC, HMI, SCADA, MES and batch systems for regulated plants, including a full SCADA platform migration verified against the validated system.",
@@ -103,7 +103,7 @@
             targets: ["Allen-Bradley and Rockwell platforms", "Ignition SCADA"]
         },
         {
-            cluster: "Robotics and intelligence",
+            cluster: "Controls and robotics",
             name: "Robotics and Autonomy",
             tier: "delivered",
             tierNote: "project delivery",
@@ -115,7 +115,7 @@
             targets: ["Commercial robot deployment and fleet operations", "Learning-based perception in production"]
         },
         {
-            cluster: "Robotics and intelligence",
+            cluster: "Software and intelligence",
             name: "AI, ML and Data Science",
             tier: "handson",
             summary: "Applied machine learning where it earns its keep: anomaly detection, predictive-maintenance logic, computer vision and time-series analytics wired into real telemetry.",
@@ -126,7 +126,7 @@
             targets: ["Production MLOps", "Edge inference on embedded targets"]
         },
         {
-            cluster: "Software and data",
+            cluster: "Software and intelligence",
             name: "Software Engineering and DevOps",
             tier: "handson",
             summary: "Practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.",
@@ -137,7 +137,7 @@
             targets: ["Cloud architecture certification", "Containerised deployment at scale"]
         },
         {
-            cluster: "Software and data",
+            cluster: "Software and intelligence",
             name: "IoT and Edge-to-Cloud Telemetry",
             tier: "delivered",
             summary: "Professional end-to-end IoT delivery: embedded sensing devices, LoRaWAN networks, MQTT brokers, time-series storage and live operational dashboards.",
@@ -148,7 +148,7 @@
             targets: ["Industrial IoT at plant scale (OPC UA)", "Cellular and satellite backhaul systems"]
         },
         {
-            cluster: "Vehicles and mobility",
+            cluster: "Sectors",
             name: "Automotive Systems and Validation",
             tier: "delivered",
             summary: "Professional vehicle software and ADAS validation on major OEM programmes, plus regulated emissions and compliance testing, grounded in CAN-level evidence.",
@@ -159,7 +159,7 @@
             targets: ["AUTOSAR literacy", "ISO 26262 functional safety"]
         },
         {
-            cluster: "Regulated sectors",
+            cluster: "Sectors",
             name: "Biomedical and Clinical Devices",
             tier: "handson",
             summary: "Embedded clinical sensing built and validated against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.",
@@ -170,7 +170,7 @@
             targets: ["IEC 62304 software lifecycle", "Clinical trial support engineering"]
         },
         {
-            cluster: "Regulated sectors",
+            cluster: "Sectors",
             name: "Manufacturing, Production and Quality",
             tier: "delivered",
             summary: "Years on real production floors across food and beverage, carbon-fibre and structural-steel manufacturing: operations, QA, traceability and disciplined documentation.",
@@ -181,7 +181,7 @@
             targets: ["Six Sigma Green Belt", "Production line ownership"]
         },
         {
-            cluster: "Regulated sectors",
+            cluster: "Sectors",
             name: "Process, Pharma and Regulated Manufacturing",
             tier: "delivered",
             summary: "Smart-factory and control engineering delivered for pharmaceutical, biotech and food clients under GMP, with GAMP 5 validation discipline through to qualification and handover.",
@@ -192,7 +192,7 @@
             targets: ["CQV engineering roles", "Process engineering depth in pharma"]
         },
         {
-            cluster: "Adjacent sectors",
+            cluster: "Sectors",
             name: "Civil, Structural and Infrastructure Awareness",
             tier: "adjacent",
             summary: "Transferable exposure from structural-steel fabrication QA: reading structural drawings, weld and inspection documentation, and standards-driven fabrication workflows.",
@@ -203,7 +203,7 @@
             targets: ["Infrastructure automation and monitoring systems"]
         },
         {
-            cluster: "Adjacent sectors",
+            cluster: "Sectors",
             name: "Aerospace, Space, Marine, Rail, Defence, Mining, Agriculture and Energy",
             tier: "adjacent",
             summary: "Sector adjacencies reached through rover robotics, field IoT and hands-on farm work, held honestly as adjacent exposure and strategic growth targets rather than delivery claims.",
@@ -214,7 +214,7 @@
             targets: ["Mining autonomy programmes", "Defence-adjacent autonomous systems", "Renewable energy plant automation"]
         },
         {
-            cluster: "Assurance",
+            cluster: "Assurance and delivery",
             name: "Safety, Reliability, Standards and Cyber-physical Security",
             tier: "working",
             summary: "Working knowledge of the machinery-safety, industrial-cybersecurity and quality standards that frame the delivered automation and validation work, applied through documentation and test practice.",
@@ -225,7 +225,7 @@
             targets: ["Functional safety certification (TUV style)", "IEC 62443 practitioner depth"]
         },
         {
-            cluster: "Delivery",
+            cluster: "Assurance and delivery",
             name: "Project Delivery, Commissioning and Handover",
             tier: "delivered",
             summary: "Taking systems over the line: structured FAT and SAT, site commissioning, fault resolution, stakeholder communication and complete qualification and handover packages.",
@@ -263,12 +263,24 @@
     var wrap = document.createElement("div");
     wrap.className = "atlas";
 
+    var CLUSTERS = [];
+    DOMAINS.forEach(function (d) {
+        if (CLUSTERS.indexOf(d.cluster) === -1) CLUSTERS.push(d.cluster);
+    });
+
     var controls = document.createElement("div");
     controls.className = "atlas-controls";
     controls.innerHTML =
         '<div class="atlas-search">' +
         '<label class="atlas-search-label" for="atlas-search-input">Search domains, tools and methods</label>' +
         '<input type="search" id="atlas-search-input" class="atlas-search-input" placeholder="Try SLAM, GAMP 5, CAN, PCB, LoRaWAN" autocomplete="off">' +
+        "</div>" +
+        '<div class="atlas-cluster">' +
+        '<label class="atlas-search-label" for="atlas-cluster-select">Domain cluster</label>' +
+        '<select id="atlas-cluster-select" class="atlas-cluster-select">' +
+        '<option value="all">All clusters</option>' +
+        CLUSTERS.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + "</option>"; }).join("") +
+        "</select>" +
         "</div>" +
         '<div class="atlas-filters" role="group" aria-label="Filter domains by evidence tier">' +
         '<button type="button" class="skill-tab is-active" data-tier="all" aria-pressed="true">All tiers</button>' +
@@ -289,9 +301,10 @@
         var card = document.createElement("article");
         card.className = "atlas-card";
         card.setAttribute("data-tier", d.tier);
+        card.setAttribute("data-cluster", d.cluster);
         card.setAttribute("data-search", searchText(d));
         card.innerHTML =
-            '<details class="atlas-details"' + (i === 0 ? " open" : "") + ">" +
+            '<details class="atlas-details">' +
             '<summary class="atlas-summary">' +
             '<span class="atlas-summary-head"><span class="card-label">' + esc(d.cluster) + "</span>" + tierBadge(d.tier, d.tierNote) + "</span>" +
             '<span class="atlas-name">' + esc(d.name) + "</span>" +
@@ -317,6 +330,7 @@
 
     /* ── Filtering ── */
     var activeTier = "all";
+    var activeCluster = "all";
     var query = "";
     var tierButtons;
 
@@ -324,12 +338,14 @@
         var shown = 0;
         cards.forEach(function (card) {
             var tierOk = activeTier === "all" || card.getAttribute("data-tier") === activeTier;
+            var clusterOk = activeCluster === "all" || card.getAttribute("data-cluster") === activeCluster;
             var textOk = !query || card.getAttribute("data-search").indexOf(query) !== -1;
-            var visible = tierOk && textOk;
+            var visible = tierOk && clusterOk && textOk;
             card.hidden = !visible;
             if (visible) shown++;
         });
         status.textContent = "Showing " + shown + " of " + DOMAINS.length + " domains" +
+            (activeCluster !== "all" ? " in cluster: " + activeCluster : "") +
             (activeTier !== "all" ? " at tier: " + TIERS[activeTier] : "") +
             (query ? ' matching "' + query + '"' : "") + ".";
     }
@@ -349,6 +365,12 @@
     var searchInput = controls.querySelector("#atlas-search-input");
     searchInput.addEventListener("input", function () {
         query = searchInput.value.trim().toLowerCase();
+        applyFilters();
+    });
+
+    var clusterSelect = controls.querySelector("#atlas-cluster-select");
+    clusterSelect.addEventListener("change", function () {
+        activeCluster = clusterSelect.value;
         applyFilters();
     });
 

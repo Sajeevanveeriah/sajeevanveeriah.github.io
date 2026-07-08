@@ -230,7 +230,7 @@
             particles.forEach(function (p) {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = "rgba(232, 84, 43, " + p.alpha + ")";
+                ctx.fillStyle = "rgba(65, 201, 228, " + p.alpha + ")";
                 ctx.fill();
                 p.x += p.vx;
                 p.y += p.vy;
@@ -249,7 +249,7 @@
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = "rgba(232, 84, 43, " + ((1 - dist / 90) * 0.12) + ")";
+                        ctx.strokeStyle = "rgba(65, 201, 228, " + ((1 - dist / 90) * 0.12) + ")";
                         ctx.lineWidth = 0.7;
                         ctx.stroke();
                     }
