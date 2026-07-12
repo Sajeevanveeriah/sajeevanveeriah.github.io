@@ -1,5 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SV monogram">
-  <rect width="64" height="64" rx="4" fill="#12100D"></rect>
-  <text x="32" y="34" font-family="&#39;Space Grotesk&#39;, sans-serif" font-size="26" font-weight="700" letter-spacing="-1" text-anchor="middle" dominant-baseline="central" fill="#F3EFE7">SV</text>
-  <rect x="16" y="47" width="32" height="3" fill="#E2A24B"></rect>
+  <style>
+    .fav-bg { fill: #12100D; }
+    .fav-ink { fill: #F3EFE7; }
+    .fav-accent { fill: #E2A24B; }
+    @media (prefers-color-scheme: light) {
+      .fav-bg { fill: #F4F2ED; }
+      .fav-ink { fill: #211D18; }
+      .fav-accent { fill: #B26A0B; }
+    }
+  </style>
+  <rect class="fav-bg" width="64" height="64" rx="4"></rect>
+  <text x="32" y="34" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" letter-spacing="-1" text-anchor="middle" dominant-baseline="central" class="fav-ink">SV</text>
+  <rect class="fav-accent" x="16" y="47" width="32" height="3"></rect>
 </svg>

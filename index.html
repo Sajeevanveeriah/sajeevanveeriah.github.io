@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
     <title>Sajeevan Veeriah | Mechatronics, Robotics, Automation and AI/ML Engineer</title>
     <meta name="title" content="Sajeevan Veeriah | Mechatronics, Robotics, Automation and AI/ML Engineer">
-    <meta name="description" content="Portfolio of Sajeevan Veeriah, a Geelong-based Mechatronics, Robotics, Automation and AI/ML Engineer working across the full stack: mechanical, electrical, electronics, embedded firmware, controls, PLC and SCADA, ROS 2 robotics, IoT, software, data, CAN validation and regulated commissioning.">
-    <meta name="keywords" content="Sajeevan Veeriah, Saj Veeriah, Mechatronics Engineer, Robotics Engineer, Automation Engineer, AI ML Engineer, Control Systems, Embedded Systems, Electronics, PCB, ROS 2, SCADA, HMI, MES, IoT, CAN validation, Systems Engineering, Commissioning, Geelong, Victoria, Australia">
+    <meta name="description" content="Portfolio of Sajeevan Veeriah, a Mechatronics, Robotics, Automation and AI/ML Engineer working across the full stack: mechanical, electrical, electronics, embedded firmware, controls, PLC and SCADA, ROS 2 robotics, IoT, software, data, CAN validation and regulated commissioning.">
+    <meta name="keywords" content="Sajeevan Veeriah, Saj Veeriah, Mechatronics Engineer, Robotics Engineer, Automation Engineer, AI ML Engineer, Control Systems, Embedded Systems, Electronics, PCB, ROS 2, SCADA, HMI, MES, IoT, CAN validation, Systems Engineering, Commissioning">
     <meta name="author" content="Sajeevan Veeriah">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#121110">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121110">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F4F2ED">
     <link rel="canonical" href="https://sajeevanveeriah.github.io/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <script>
+    /* Apply a stored manual theme override before first paint to avoid a
+       flash of the wrong theme. Auto (no override) needs no attribute.
+       The js class reveals JS-only controls such as the theme switcher. */
+    (function () {
+        document.documentElement.classList.add("js");
+        try {
+            var t = localStorage.getItem("theme");
+            if (t === "light" || t === "dark") {
+                document.documentElement.setAttribute("data-theme", t);
+            }
+        } catch (e) { /* storage unavailable: stay on Auto */ }
+    }());
+    </script>
     <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/hanken-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
@@ -31,8 +47,6 @@
     <meta name="twitter:description" content="Complete-package engineer across mechanical, electrical, electronics, embedded, controls, robotics, software, data and AI/ML, with delivery evidence in ROS 2, SCADA, IoT, CAN validation and GMP smart factory systems.">
     <meta name="twitter:image" content="https://sajeevanveeriah.github.io/assets/image/Digital_Twin_Industrial_AI_Rev00.png">
     <meta name="twitter:image:alt" content="Real-time factory digital twin concept with AI agents, anomaly detection and OEE analytics for Sajeevan Veeriah portfolio">
-    <meta name="geo.region" content="AU-VIC">
-    <meta name="geo.placename" content="Geelong">
 
     <!-- knowsAbout entries are anchored to the resume and on-page content -->
     <script type="application/ld+json">
@@ -43,27 +57,7 @@
       "alternateName": "Saj",
       "url": "https://sajeevanveeriah.github.io/",
       "jobTitle": "Mechatronics, Robotics, Automation and AI/ML Engineer",
-      "description": "Geelong-based Mechatronics, Robotics, Automation and AI/ML Engineer working across mechanical, electrical, electronics, embedded firmware, control systems, industrial automation, ROS 2 robotics, IoT, software, data and validation, with delivery experience in SCADA, CAN validation, vehicle emissions testing and GMP smart factory systems.",
-      "email": "mailto:sajeevanveeriah@gmail.com",
-      "telephone": "+61 498 586 654",
-      "sameAs": [
-        "https://www.linkedin.com/in/sajeevan-veeriah/",
-        "https://github.com/Sajeevanveeriah"
-      ],
-      "address": [
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Geelong",
-          "addressRegion": "VIC",
-          "addressCountry": "AU"
-        },
-        {
-          "@type": "PostalAddress",
-          "addressLocality": "Highton",
-          "addressRegion": "VIC",
-          "addressCountry": "AU"
-        }
-      ],
+      "description": "Mechatronics, Robotics, Automation and AI/ML Engineer working across mechanical, electrical, electronics, embedded firmware, control systems, industrial automation, ROS 2 robotics, IoT, software, data and validation, with delivery experience in SCADA, CAN validation, vehicle emissions testing and GMP smart factory systems.",
       "alumniOf": [
         {
           "@type": "EducationalOrganization",
@@ -78,14 +72,6 @@
         {
           "@type": "Organization",
           "name": "Engineers Australia"
-        },
-        {
-          "@type": "Organization",
-          "name": "Mars Rover Team, Deakin University"
-        },
-        {
-          "@type": "Organization",
-          "name": "Deakin University Student Association (DUSA)"
         }
       ],
       "knowsAbout": [
@@ -119,10 +105,7 @@
         "Predictive maintenance",
         "Anomaly detection",
         "OEE",
-        "Commissioning and handover",
-        "Mars Rover Team",
-        "Mentoring",
-        "Capstone project"
+        "Commissioning and handover"
       ]
     }
     </script>
@@ -137,16 +120,38 @@
                 <span class="brand-text">Sajeevan Veeriah</span>
             </a>
             <nav class="site-nav" id="site-nav" aria-label="Primary" data-site-nav>
-                <a href="#about">About</a>
-                <a href="#portfolio">Work</a>
-                <a href="#stack">Stack</a>
-                <a href="#skills">Skills</a>
-                <a href="#atlas">Atlas</a>
-                <a href="#experience">Experience</a>
-                <a href="#contact">Contact</a>
+                <a href="#work" data-nav-link>Work</a>
+                <a href="#capability" data-nav-link>Capability</a>
+                <a href="#experience" data-nav-link>Experience</a>
+                <a href="#toolchain" data-nav-link>Toolchain</a>
+                <a href="#beyond" data-nav-link>Beyond Engineering</a>
                 <a class="nav-resume-mobile" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Download Resume</a>
             </nav>
             <div class="nav-actions">
+                <fieldset class="theme-control" data-theme-control>
+                    <legend class="visually-hidden">Colour theme</legend>
+                    <label class="theme-option">
+                        <input type="radio" name="theme" value="auto" checked data-theme-radio>
+                        <span class="theme-option-face" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="1.3"/><path d="M7 1.8 A5.2 5.2 0 0 1 7 12.2 Z" fill="currentColor"/></svg>
+                        </span>
+                        <span class="theme-option-text">Auto</span>
+                    </label>
+                    <label class="theme-option">
+                        <input type="radio" name="theme" value="light" data-theme-radio>
+                        <span class="theme-option-face" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/><g stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><line x1="7" y1="0.8" x2="7" y2="2.4"/><line x1="7" y1="11.6" x2="7" y2="13.2"/><line x1="0.8" y1="7" x2="2.4" y2="7"/><line x1="11.6" y1="7" x2="13.2" y2="7"/><line x1="2.6" y1="2.6" x2="3.8" y2="3.8"/><line x1="10.2" y1="10.2" x2="11.4" y2="11.4"/><line x1="2.6" y1="11.4" x2="3.8" y2="10.2"/><line x1="10.2" y1="3.8" x2="11.4" y2="2.6"/></g></svg>
+                        </span>
+                        <span class="theme-option-text">Light</span>
+                    </label>
+                    <label class="theme-option">
+                        <input type="radio" name="theme" value="dark" data-theme-radio>
+                        <span class="theme-option-face" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11.8 8.6 A5.4 5.4 0 1 1 5.4 2.2 A4.4 4.4 0 0 0 11.8 8.6 Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+                        </span>
+                        <span class="theme-option-text">Dark</span>
+                    </label>
+                </fieldset>
                 <a class="nav-resume" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Resume</a>
                 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
             </div>
@@ -157,368 +162,326 @@
         <section class="hero" id="top" aria-labelledby="hero-title">
             <div class="hero-grid section-wrap">
                 <div class="hero-copy">
-                    <p class="eyebrow"><span class="eyebrow-pip" aria-hidden="true"></span>Geelong, Victoria &middot; Available immediately</p>
+                    <p class="eyebrow"><span class="eyebrow-pip" aria-hidden="true"></span>Engineering portfolio</p>
                     <h1 id="hero-title">Sajeevan<br>Veeriah</h1>
                     <p class="hero-positioning">Mechatronics, Robotics, Automation and AI/ML Engineer</p>
-                    <p class="hero-lede">A complete-package engineer across physical systems, controls, embedded, robotics, software, data and validation. Comfortable identifying which engineering layer a problem lives in and resolving it across whatever disciplines that takes.</p>
+                    <p class="hero-lede">A complete-package engineer across physical systems, electronics, embedded firmware, controls, robotics, software, data and validation. Comfortable identifying which engineering layer a problem lives in and resolving it across whatever disciplines that takes.</p>
                     <div class="hero-actions">
-                        <a class="button button-primary" href="#portfolio">View the work</a>
-                        <a class="link-arrow" href="#contact">Get in touch &rarr;</a>
+                        <a class="button button-primary" href="#work">Explore the work</a>
+                        <a class="link-arrow" href="assets/Resume_Sajeevan_Veeriah.pdf" target="_blank" rel="noopener">View resume &rarr;</a>
                     </div>
-                    <ul class="metadata-strip" aria-label="Status metadata">
+                    <ul class="metadata-strip" aria-label="Verified credentials">
                         <li>Member, Engineers Australia</li>
                         <li>&middot; Deakin Honours Distinction, 2025</li>
                     </ul>
-                    <div class="hero-stats" aria-label="Quick stats">
-                        <div class="hero-stat"><span class="stat-num">7+</span><span class="stat-label">Years in industry</span></div>
-                        <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Industries</span></div>
-                        <div class="hero-stat"><span class="stat-num">6</span><span class="stat-label">Major roles</span></div>
+                    <div class="hero-stats" aria-label="Portfolio contents">
+                        <div class="hero-stat"><span class="stat-num">7</span><span class="stat-label">Case studies</span></div>
+                        <div class="hero-stat"><span class="stat-num">19</span><span class="stat-label">Capability domains</span></div>
+                        <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Evidence tiers</span></div>
                     </div>
                 </div>
-                <div class="hero-index" aria-labelledby="hero-index-title">
-                    <div class="hero-index-head">
-                        <p class="hero-index-title" id="hero-index-title">Engineering capability index</p>
-                        <p class="hero-index-sub">Fourteen domains, one integrated systems capability</p>
+
+                <div class="system-map" aria-labelledby="system-map-title" data-system-map>
+                    <div class="system-map-head">
+                        <p class="system-map-title" id="system-map-title">Engineering system map</p>
+                        <p class="system-map-sub">One integrated capability, from the physical layer to delivery. Select a layer to open its evidence in the capability explorer.</p>
                     </div>
-                    <ol class="hero-index-grid">
-                        <li><span class="idx">01</span><span>Mechanical Design</span></li>
-                        <li><span class="idx">02</span><span>Electrical and Power</span></li>
-                        <li><span class="idx">03</span><span>Electronics and PCB</span></li>
-                        <li><span class="idx">04</span><span>Embedded and Firmware</span></li>
-                        <li><span class="idx">05</span><span>Control Systems</span></li>
-                        <li><span class="idx">06</span><span>Automation and SCADA</span></li>
-                        <li><span class="idx">07</span><span>Robotics and Autonomy</span></li>
-                        <li><span class="idx">08</span><span>AI, ML and Vision</span></li>
-                        <li><span class="idx">09</span><span>Software and Data</span></li>
-                        <li><span class="idx">10</span><span>IoT and Telemetry</span></li>
-                        <li><span class="idx">11</span><span>Automotive and Validation</span></li>
-                        <li><span class="idx">12</span><span>Manufacturing and QA</span></li>
-                        <li><span class="idx">13</span><span>Safety and Standards</span></li>
-                        <li><span class="idx">14</span><span>Commissioning and Delivery</span></li>
+                    <ol class="system-map-list">
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="physical">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">01</span>Physical system</span>
+                                    <span class="map-layer-evidence">Mechanical design, CAD, electrical and drives &middot; SolidWorks, Fusion 360, VFDs</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="embedded">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">02</span>Electronics</span>
+                                    <span class="map-layer-evidence">PCB, sensing front ends, board bring-up &middot; Altium, KiCad</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="embedded">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">03</span>Embedded</span>
+                                    <span class="map-layer-evidence">Firmware, RTOS, provisioning &middot; ESP32, STM32, FreeRTOS</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="controls">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">04</span>Controls</span>
+                                    <span class="map-layer-evidence">Feedback loops, PLC logic, estimation &middot; PID, TIA Portal, Kalman and EKF</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="controls">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">05</span>Robotics and automation</span>
+                                    <span class="map-layer-evidence">Autonomy stacks, SCADA, MES &middot; ROS 2, Nav2, SLAM, PVI+</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="software">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">06</span>Data and AI</span>
+                                    <span class="map-layer-evidence">Telemetry, analytics, applied ML &middot; InfluxDB, Grafana, OpenCV, YOLO</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="map-layer">
+                            <a class="map-layer-link" href="#capability" data-map-cluster="assurance">
+                                <span class="map-node" aria-hidden="true"></span>
+                                <span class="map-layer-body">
+                                    <span class="map-layer-name"><span class="map-idx">07</span>Validation and delivery</span>
+                                    <span class="map-layer-evidence">Test evidence, FAT and SAT, handover &middot; CANoe, ITPs, MDRs</span>
+                                </span>
+                            </a>
+                        </li>
                     </ol>
                 </div>
             </div>
         </section>
 
-        <div class="marquee" aria-label="Tools and methods ticker">
-            <div class="marquee-track">
-                <span class="marquee-group">
-                    <span>ROS 2</span><span>Nav2</span><span>SLAM</span><span>SCADA</span><span>PLC</span><span>ESP32</span><span>PCB Design</span><span>CAN Bus</span><span>LoRaWAN</span><span>Digital Twin</span><span>Anomaly Detection</span><span>GAMP 5</span><span>FAT &amp; SAT</span><span>Kalman Filter</span><span>MoveIt 2</span><span>Grafana</span>
-                </span>
-                <span class="marquee-group" aria-hidden="true">
-                    <span>ROS 2</span><span>Nav2</span><span>SLAM</span><span>SCADA</span><span>PLC</span><span>ESP32</span><span>PCB Design</span><span>CAN Bus</span><span>LoRaWAN</span><span>Digital Twin</span><span>Anomaly Detection</span><span>GAMP 5</span><span>FAT &amp; SAT</span><span>Kalman Filter</span><span>MoveIt 2</span><span>Grafana</span>
-                </span>
-            </div>
-        </div>
-
-        <section class="section-block" id="about" aria-labelledby="about-title">
-            <div class="section-wrap about-grid">
-                <div class="section-heading">
-                    <p class="section-kicker"><span>01</span>About</p>
-                    <h2 id="about-title">A complete, multidisciplinary engineer who works across the whole stack.</h2>
-                </div>
-                <div class="about-copy">
-                    <p>I am a mechatronics engineer who works fluently across the whole engineering stack: mechanical design and CAD, electrical and electromechanical systems, electronics and embedded firmware, industrial controls and automation, robotics and autonomy, and software, data and applied AI/ML. I build systems from PCB layout and control logic through to ROS 2 autonomy stacks, SCADA platforms, data pipelines and ML-informed monitoring, and I am comfortable working out which layer a problem lives in before choosing the discipline to solve it with.</p>
-                    <p>My delivery record spans smart factory automation and SCADA migration for regulated pharmaceutical and biotech clients, vehicle software and ADAS validation using CAN analysis, end-to-end IoT telemetry platforms, and robotics projects in ROS 2 with SLAM, path planning and sensor fusion. I hold a Bachelor of Mechatronics Engineering with Honours (Distinction) from Deakin University and am a Member of Engineers Australia. I have full Australian work rights on a Subclass 485 visa and am available immediately.</p>
-                    <p class="dot-strip" aria-label="Core capabilities"><span>ROS 2</span><span>Siemens TIA Portal</span><span>PCS 7</span><span>PVI+</span><span>iFIX</span><span>Nav2</span><span>MoveIt 2</span><span>SLAM</span><span>Python</span><span>Embedded C/C++</span><span>ESP32</span><span>PCB Design</span><span>GAMP 5</span><span>ML / Anomaly Detection</span><span>InfluxDB</span><span>Grafana</span></p>
-                    <div class="education-grid">
-                        <article class="education-card">
-                            <p class="mini-label">Education</p>
-                            <h3>Bachelor of Mechatronics Engineering (Honours)</h3>
-                            <p>Deakin University, VIC. Graduated with Distinction, July 2025.</p>
-                        </article>
-                        <article class="education-card">
-                            <p class="mini-label">Education</p>
-                            <h3>HND, Mechatronics, Robotics and Automation</h3>
-                            <p>Cardiff Metropolitan University, UK. Distinction, 2016.</p>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-block" id="approach" aria-labelledby="approach-title">
+        <section class="section-block" id="work" aria-labelledby="work-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>02</span>How I Work</p>
-                    <h2 id="approach-title">From concept to commissioned across robotics, automation and AI/ML.</h2>
-                    <p class="section-sub">One engineer across the full delivery path: mechanical and electronic design, control and robotics software, applied AI/ML, and structured validation through to commissioning and handover.</p>
+                    <p class="section-kicker"><span>01</span>Selected Engineering Work</p>
+                    <h2 id="work-title">Seven case studies across robotics, automation, embedded sensing, IoT, AI/ML and vehicle validation.</h2>
+                    <p class="section-sub">Professional delivery is separated from university and personal work, and every study carries its honest evidence tier. Filter by domain or read straight through.</p>
                 </div>
-                <div class="approach-grid">
-                    <article class="approach-card">
-                        <p class="approach-label">Concept and design</p>
-                        <p>Turn requirements into a workable architecture: mechanical layout, electronics, control strategy and the right robotics, automation or AI/ML approach for the problem.</p>
-                    </article>
-                    <article class="approach-card">
-                        <p class="approach-label">Build and integrate</p>
-                        <p>Develop embedded firmware, PCBs, PLC and ROS 2 logic, integrate sensors, actuators and drives, and connect field devices to data pipelines into one working system.</p>
-                    </article>
-                    <article class="approach-card">
-                        <p class="approach-label">Validate and commission</p>
-                        <p>Prove behaviour with structured testing, FAT and SAT, CAN and signal analysis, and evidence-based reporting through to commissioning and handover.</p>
-                    </article>
-                    <article class="approach-card">
-                        <p class="approach-label">Monitor and improve</p>
-                        <p>Keep systems reliable with SCADA, IoT telemetry and dashboards, and apply machine learning for anomaly detection and predictive maintenance.</p>
-                    </article>
+                <div class="work-filters" role="group" aria-label="Filter projects by engineering domain" hidden data-work-filters>
+                    <button class="filter-pill is-active" type="button" aria-pressed="true" data-work-filter="all">All work</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="robotics">Robotics and autonomy</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="automation">Automation and SCADA</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="embedded">Embedded and sensing</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="iot">IoT and telemetry</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="aiml">AI/ML and data</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="automotive">Automotive and validation</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="manufacturing">Manufacturing and quality</button>
                 </div>
-            </div>
-        </section>
+                <p class="filter-status" aria-live="polite" data-work-status></p>
 
-        <section class="section-block" id="portfolio" aria-labelledby="portfolio-title">
-            <div class="section-wrap">
-                <div class="section-heading">
-                    <p class="section-kicker"><span>03</span>Work</p>
-                    <h2 id="portfolio-title">Engineering projects across robotics, automation, embedded sensing, IoT and AI/ML.</h2>
-                    <p class="section-sub">Seven case studies, each with a real image, a concise summary and a full problem-to-output breakdown further down the page.</p>
-                </div>
-
-                <a class="project-featured" href="#digital-twin-detail" id="digital-twin">
+                <article class="project-featured" data-project data-domains="robotics aiml embedded">
                     <span class="project-featured-media">
-                        <img src="assets/image/Digital_Twin_Industrial_AI_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Real-time factory digital twin concept with AI agents, anomaly detection, predictive maintenance and OEE analytics dashboards">
+                        <img src="assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="ROS 2 autonomous navigation stack visualised with robot mapping and route planning">
                     </span>
-                    <span class="project-featured-copy">
-                        <span class="project-cat">Featured &middot; Digital twin / industrial AI</span>
-                        <span class="project-featured-title">Digital Twin and Industrial AI</span>
-                        <span class="project-oneliner">Real-time factory digital twin with AI agents, anomaly detection, predictive maintenance and OEE analytics, built as an engineering concept.</span>
-                        <span class="link-arrow">Read the case study &rarr;</span>
-                    </span>
-                </a>
+                    <div class="project-featured-copy">
+                        <p class="project-meta-row"><span class="project-cat">Featured &middot; Personal build</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></p>
+                        <h3 class="project-featured-title">Autonomous Navigation Rover on ROS 2</h3>
+                        <p class="project-oneliner">A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation for repeatable obstacle-aware navigation.</p>
+                        <p class="project-facts"><span class="mini-label">Domains</span>Robotics and autonomy &middot; AI/ML and data &middot; Embedded and sensing</p>
+                        <p class="project-facts"><span class="mini-label">Key tools</span>ROS 2 Humble, Nav2, Gazebo, RViz, SLAM, Kalman and EKF</p>
+                        <a class="link-arrow project-open" href="#autonomous-navigation-detail">View case study &rarr;</a>
+                    </div>
+                </article>
 
                 <div class="project-grid">
-                    <a class="project-card" href="#autonomous-navigation-detail" id="autonomous-navigation">
-                        <span class="project-media"><img src="assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="ROS 2 autonomous navigation concept with robot mapping and route planning visuals"></span>
-                        <span class="project-cat">Robotics / AI navigation</span>
-                        <span class="project-title">Autonomous Navigation and ROS 2 Robotics</span>
-                        <span class="project-oneliner">ROS 2 autonomy concepts using SLAM, A* path planning, odometry, IMU fusion and modular navigation logic.</span>
-                    </a>
-                    <a class="project-card" href="#clinical-ataxia-detail" id="clinical-ataxia">
-                        <span class="project-media"><img src="assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Embedded clinical ataxia assessment concept showing sensors and movement data capture"></span>
-                        <span class="project-cat">Capstone project</span>
-                        <span class="project-title">ESP32 Clinical Ataxia Assessment Concept</span>
-                        <span class="project-oneliner">Final-year Mechatronics capstone at Deakin University: an embedded sensing concept for movement assessment support.</span>
-                    </a>
-                    <a class="project-card" href="#iot-monitoring-detail" id="iot-monitoring">
-                        <span class="project-media"><img src="assets/image/IoT_GPS_Environmental_Monitoring_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="IoT GPS and environmental monitoring platform with telemetry dashboard concept"></span>
-                        <span class="project-cat">IoT / telemetry</span>
-                        <span class="project-title">IoT GPS and Environmental Monitoring Platform</span>
-                        <span class="project-oneliner">Low-power GPS and environmental monitoring with ESP32, LoRaWAN or MQTT telemetry and live dashboards.</span>
-                    </a>
-                    <a class="project-card" href="#smart-factory-detail" id="smart-factory">
-                        <span class="project-media"><img src="assets/image/Smart_Factory_Process_Visualisation_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Smart factory and process visualisation concept with HMI, SCADA and production data"></span>
-                        <span class="project-cat">Smart factory / SCADA</span>
-                        <span class="project-title">Smart Factory and Process Visualisation</span>
-                        <span class="project-oneliner">HMI, SCADA, MES and batch-system concepts focused on traceability, diagnostics and operator usability.</span>
-                    </a>
-                    <a class="project-card" href="#adas-validation-detail" id="adas-validation">
-                        <span class="project-media"><img src="assets/image/Vehicle_ADAS_CAN_Validation_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Vehicle ADAS and CAN validation concept with software testing and signal analysis"></span>
-                        <span class="project-cat">Automotive validation</span>
-                        <span class="project-title">Vehicle Software and ADAS Validation</span>
-                        <span class="project-oneliner">Vehicle software validation using structured test procedures, CAN analysis and evidence-based defect reporting.</span>
-                    </a>
-                    <a class="project-card" href="#emissions-testing-detail" id="emissions-testing">
-                        <span class="project-media"><img src="assets/image/Vehicle_Emissions_Compliance_Testing_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Vehicle emissions and compliance testing concept with instrumentation and reporting visuals"></span>
-                        <span class="project-cat">Compliance testing</span>
-                        <span class="project-title">Vehicle Emissions and Compliance Testing</span>
-                        <span class="project-oneliner">Repeatable emissions and compliance testing with instrumentation, data acquisition, QA records and defensible reporting.</span>
-                    </a>
+                    <article class="project-card" data-project data-domains="aiml automation manufacturing">
+                        <span class="project-media"><img src="assets/image/Digital_Twin_Industrial_AI_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Real-time factory digital twin concept with AI agents, anomaly detection and OEE analytics dashboards"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Personal concept</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></p>
+                            <h3 class="project-title">Digital Twin and Industrial AI</h3>
+                            <p class="project-oneliner">A real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>Python, anomaly detection, OEE analytics, dashboards</p>
+                            <a class="link-arrow project-open" href="#digital-twin-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="project-card" data-project data-domains="embedded">
+                        <span class="project-media"><img src="assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Embedded clinical ataxia assessment device with sensors and movement data capture"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">University capstone</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; Honours capstone</span></p>
+                            <h3 class="project-title">ESP32 Clinical Ataxia Assessment Device</h3>
+                            <p class="project-oneliner">Embedded hardware and firmware for movement assessment support, validated against clinical references.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>ESP32, IMU, ToF, Hall effect, magnetometer, MATLAB</p>
+                            <a class="link-arrow project-open" href="#clinical-ataxia-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="project-card" data-project data-domains="iot embedded aiml">
+                        <span class="project-media"><img src="assets/image/IoT_GPS_Environmental_Monitoring_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="IoT GPS and environmental monitoring platform with live telemetry dashboards"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Professional delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
+                            <h3 class="project-title">IoT GPS and Environmental Monitoring Platform</h3>
+                            <p class="project-oneliner">End-to-end ESP32 GPS and environmental sensing over LoRaWAN, delivered through to live dashboards and field deployment.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>ESP32, LoRaWAN, ChirpStack, MQTT, InfluxDB, Grafana</p>
+                            <a class="link-arrow project-open" href="#iot-monitoring-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="project-card" data-project data-domains="automation manufacturing">
+                        <span class="project-media"><img src="assets/image/Smart_Factory_Process_Visualisation_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Smart factory process visualisation with HMI, SCADA and production data screens"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Professional delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
+                            <h3 class="project-title">Smart Factory and Process Visualisation</h3>
+                            <p class="project-oneliner">GMP smart-factory automation including an iFIX to PVI+ SCADA migration verified against the validated system.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+</p>
+                            <a class="link-arrow project-open" href="#smart-factory-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="project-card" data-project data-domains="automotive">
+                        <span class="project-media"><img src="assets/image/Vehicle_ADAS_CAN_Validation_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Vehicle ADAS and CAN validation with software testing and signal analysis"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Professional delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
+                            <h3 class="project-title">Vehicle Software and ADAS Validation</h3>
+                            <p class="project-oneliner">Feature, breadboard and OTA regression testing across T6 Ranger and Everest programmes with CAN-level fault evidence.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>Vector CANoe, CANalyzer, CAN and CAN FD, instrumentation</p>
+                            <a class="link-arrow project-open" href="#adas-validation-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="project-card" data-project data-domains="automotive manufacturing">
+                        <span class="project-media"><img src="assets/image/Vehicle_Emissions_Compliance_Testing_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Vehicle emissions and compliance testing with instrumentation and reporting"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Professional delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
+                            <h3 class="project-title">Vehicle Emissions and Compliance Testing</h3>
+                            <p class="project-oneliner">Repeatable, auditable emissions testing against ADR and EURO standards with instrumentation and QA records.</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>Emissions instrumentation, data acquisition, ADR and EURO procedures</p>
+                            <a class="link-arrow project-open" href="#emissions-testing-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="case-studies" aria-label="Case study details">
                     <h3 class="case-studies-title"><span class="mini-label">Case study details</span>Problem-to-output breakdowns for each project.</h3>
+                    <details class="case-study" id="autonomous-navigation-detail">
+                        <summary>
+                            <span class="case-meta"><span class="case-cat">Personal build &middot; Robotics and autonomy</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></span>
+                            <span class="case-title">Autonomous Navigation Rover on ROS 2</span>
+                        </summary>
+                        <dl class="case-facts">
+                            <dt>Problem</dt><dd>Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before any of the higher-level behaviour matters.</dd>
+                            <dt>Context</dt><dd>A personal robotics build developed end to end, combining simulation with physical-system thinking. Not a commercial deployment.</dd>
+                            <dt>System architecture</dt><dd>Sensing and perception, LiDAR-based SLAM, Kalman and EKF state estimation with odometry and IMU fusion, A* and Nav2 path planning, motion control, and Gazebo and RViz simulation and visualisation, structured as modular ROS 2 nodes.</dd>
+                            <dt>Engineering decisions</dt><dd>Built on ROS 2 Humble for a maintained long-term base; kept perception, estimation, planning and control as separate nodes so each layer could be tuned and validated independently; used simulation-first validation before physical trials.</dd>
+                            <dt>Tools and technologies</dt><dd>ROS 2 Humble, Nav2, Gazebo, RViz, SLAM toolboxes, A* path planning, Kalman and EKF filters, LiDAR, IMU and odometry fusion, PID tuning.</dd>
+                            <dt>Validation method</dt><dd>Repeated simulation runs in Gazebo with RViz inspection of maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.</dd>
+                            <dt>Output</dt><dd>A working end-to-end autonomy stack with robust localisation and repeatable obstacle-aware navigation behaviour.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as personal project evidence. This is a complete built stack, not a production robot fleet.</dd>
+                            <dt>What it demonstrates</dt><dd>Full-stack autonomy capability: perception, state estimation, planning and control integrated and validated by one engineer.</dd>
+                        </dl>
+                    </details>
                     <details class="case-study" id="digital-twin-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">Digital twin / industrial AI</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="case-tier">Hands-on &middot; personal concept</span></span>
+                            <span class="case-meta"><span class="case-cat">Personal concept &middot; AI/ML and automation</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on &middot; concept</span></span>
                             <span class="case-title">Digital Twin and Industrial AI</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Process modelling, simulated telemetry, analytics and ML logic, dashboard visualisation.</dd>
-                            <dt>Domains and tools</dt><dd>AI/ML and data, simulation and digital twin, industrial analytics. Python, anomaly detection, predictive-maintenance logic, OEE analytics.</dd>
                             <dt>Problem</dt><dd>Factories benefit from a live, model-based view of equipment so faults are caught early and throughput and quality stay stable.</dd>
-                            <dt>Situation</dt><dd>Built as a personal engineering concept that mirrors a production line in software, not a deployment in a live plant.</dd>
-                            <dt>Plan</dt><dd>Combine a real-time digital twin, simulated sensor and OEE data, AI agents, anomaly detection and predictive maintenance logic into one monitoring concept.</dd>
-                            <dt>Action</dt><dd>Modelled equipment and process states, generated telemetry, and developed anomaly detection, predictive maintenance and OEE analytics with dashboard visualisation.</dd>
-                            <dt>Output</dt><dd>Produced a working concept that surfaces anomalies, flags maintenance needs and reports OEE in real time for an engineering demonstration.</dd>
-                        </dl>
-                    </details>
-                    <details class="case-study" id="autonomous-navigation-detail">
-                        <summary>
-                            <span class="case-meta"><span class="case-cat">Robotics / AI navigation</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; project evidence</span></span>
-                            <span class="case-title">Autonomous Navigation and ROS 2 Robotics</span>
-                        </summary>
-                        <dl class="case-facts">
-                            <dt>System layers</dt><dd>Sensing and perception, state estimation, planning, motion control, simulation and visualisation.</dd>
-                            <dt>Domains and tools</dt><dd>Robotics and autonomy, control systems, software. ROS 2 Humble, Nav2, Gazebo, RViz, SLAM, A* planning, Kalman and EKF, IMU and odometry fusion.</dd>
-                            <dt>Problem</dt><dd>Autonomous systems need reliable localisation, mapping and obstacle-aware navigation.</dd>
-                            <dt>Situation</dt><dd>Built as a robotics project combining simulation concepts and physical-system thinking.</dd>
-                            <dt>Plan</dt><dd>Combine ROS 2, Gazebo, RViz, SLAM, A* planning, odometry and IMU fusion into a modular stack.</dd>
-                            <dt>Action</dt><dd>Developed navigation logic, structured nodes, tuned control behaviour and validated sensing workflows.</dd>
-                            <dt>Output</dt><dd>Produced a working autonomy concept with realistic path visualisation and repeatable navigation behaviour.</dd>
+                            <dt>Context</dt><dd>A personal engineering concept that mirrors a production line in software. It draws on real smart-factory delivery experience but is not a deployment in a live plant.</dd>
+                            <dt>System architecture</dt><dd>Process and equipment state modelling, simulated telemetry generation, an analytics and ML layer for anomaly detection and predictive maintenance, and dashboard visualisation with OEE reporting.</dd>
+                            <dt>Engineering decisions</dt><dd>Modelled equipment states explicitly rather than learning them blind, so anomalies map to physical causes; kept the analytics layer separate from the twin so detection logic can be swapped; reported OEE the way production teams actually read it.</dd>
+                            <dt>Tools and technologies</dt><dd>Python, anomaly detection and predictive-maintenance logic, AI agents, OEE analytics, dashboard visualisation.</dd>
+                            <dt>Validation method</dt><dd>Exercised against simulated fault and drift scenarios to confirm anomalies are surfaced, maintenance needs are flagged and OEE responds correctly. Concept-level validation only.</dd>
+                            <dt>Output</dt><dd>A working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.</dd>
+                            <dt>Evidence level</dt><dd>Hands-on. A built personal concept, deliberately not claimed as a production deployment.</dd>
+                            <dt>What it demonstrates</dt><dd>The bridge between plant-floor automation experience and applied AI/ML: knowing what a factory needs from its data before modelling it.</dd>
                         </dl>
                     </details>
                     <details class="case-study" id="clinical-ataxia-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">Capstone project</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; Honours capstone</span></span>
-                            <span class="case-title">ESP32 Clinical Ataxia Assessment Concept</span>
+                            <span class="case-meta"><span class="case-cat">University capstone &middot; Embedded and sensing</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; Honours capstone</span></span>
+                            <span class="case-title">ESP32 Clinical Ataxia Assessment Device</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Sensor hardware, embedded firmware, real-time acquisition, data logging and validation analysis.</dd>
-                            <dt>Domains and tools</dt><dd>Embedded systems, electronics, biomedical sensing. ESP32, IMU, ToF, Hall effect, magnetometer, MATLAB data logging, validation against clinical references.</dd>
-                            <dt>Problem</dt><dd>Movement assessment benefits from clearer, repeatable and sensor-based measurement.</dd>
-                            <dt>Situation</dt><dd>Built as Sajeevan's final-year Mechatronics capstone project at Deakin University, focused on capturing motion and coordination signals.</dd>
-                            <dt>Plan</dt><dd>Combine ESP32 control with IMU, ToF, Hall effect and magnetometer sensing.</dd>
-                            <dt>Action</dt><dd>Developed firmware logic, integrated sensors and captured movement data for analysis.</dd>
-                            <dt>Output</dt><dd>Produced a proof-of-concept measurement platform for repeatable motion assessment support.</dd>
+                            <dt>Problem</dt><dd>Movement and coordination assessment benefits from repeatable, sensor-based measurement rather than observation alone.</dd>
+                            <dt>Context</dt><dd>Final-year Honours capstone for the Bachelor of Mechatronics Engineering at Deakin University, completed with Distinction.</dd>
+                            <dt>System architecture</dt><dd>ESP32-based sensing hardware with IMU, time-of-flight, Hall-effect and magnetometer sensors, real-time firmware for signal acquisition, and MATLAB data logging and analysis.</dd>
+                            <dt>Engineering decisions</dt><dd>Chose complementary sensor modalities so movement features are captured redundantly; designed the firmware around deterministic real-time acquisition; kept analysis offline in MATLAB where clinical comparison is easier to audit.</dd>
+                            <dt>Tools and technologies</dt><dd>ESP32, IMU, ToF, Hall-effect and magnetometer sensing, embedded C and C++, real-time signal acquisition, MATLAB data logging and signal processing.</dd>
+                            <dt>Validation method</dt><dd>Measurement validation against clinical references, checking that captured motion signals were repeatable and comparable.</dd>
+                            <dt>Output</dt><dd>A proof-of-concept measurement platform supporting repeatable motion and coordination assessment.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as an assessed Honours capstone. A clinical research support concept, not a certified medical device.</dd>
+                            <dt>What it demonstrates</dt><dd>Embedded hardware, firmware and measurement rigour applied to a safety-relevant sensing problem, with honest validation against references.</dd>
                         </dl>
                     </details>
                     <details class="case-study" id="iot-monitoring-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">IoT / telemetry</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; professional delivery</span></span>
+                            <span class="case-meta"><span class="case-cat">Professional delivery &middot; IoT and telemetry</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
                             <span class="case-title">IoT GPS and Environmental Monitoring Platform</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Embedded device and firmware, radio network, telemetry pipeline, time-series storage, operational dashboards.</dd>
-                            <dt>Domains and tools</dt><dd>IoT and telemetry, embedded systems, data. ESP32, GPS and environmental sensors, LoRaWAN, ChirpStack, MQTT, InfluxDB, Grafana.</dd>
-                            <dt>Problem</dt><dd>Remote assets need reliable location, environmental visibility and telemetry.</dd>
-                            <dt>Situation</dt><dd>Designed for field and asset tracking use cases with low-power device constraints.</dd>
-                            <dt>Plan</dt><dd>Combine ESP32, GPS, environmental sensors, telemetry and dashboard data flow.</dd>
-                            <dt>Action</dt><dd>Configured devices, telemetry, dashboards and end-to-end data ingestion workflows.</dd>
-                            <dt>Output</dt><dd>Delivered live monitoring with mapping, trends, device data and actionable operational insight.</dd>
+                            <dt>Problem</dt><dd>Remote assets need reliable location, environmental visibility and telemetry under low-power device constraints.</dd>
+                            <dt>Context</dt><dd>Professional delivery at DuxTel Pty Ltd, covering firmware, device provisioning, telemetry dashboards and field deployment.</dd>
+                            <dt>System architecture</dt><dd>ESP32 devices with GPS and environmental sensors, LoRaWAN radio networks commissioned on ChirpStack, MQTT telemetry pipelines, InfluxDB time-series storage and Grafana operational dashboards.</dd>
+                            <dt>Engineering decisions</dt><dd>Used LoRaWAN for range and battery life over cellular; standardised provisioning so devices could be commissioned repeatably; separated ingestion, storage and visualisation so each layer could be maintained independently.</dd>
+                            <dt>Tools and technologies</dt><dd>ESP32, GPS and environmental sensors, LoRaWAN, ChirpStack, MQTT, InfluxDB, Grafana.</dd>
+                            <dt>Validation method</dt><dd>Device testing through provisioning and commissioning workflows, then field deployment with live telemetry verified end to end on dashboards.</dd>
+                            <dt>Output</dt><dd>Live monitoring with mapping, trends and device telemetry delivered into operation, with documentation and handover.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as professional work.</dd>
+                            <dt>What it demonstrates</dt><dd>Edge-to-cloud ownership: one engineer from embedded firmware through network commissioning to the operational dashboard.</dd>
                         </dl>
                     </details>
                     <details class="case-study" id="smart-factory-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">Smart factory / SCADA</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; professional delivery</span></span>
+                            <span class="case-meta"><span class="case-cat">Professional delivery &middot; Automation and SCADA</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
                             <span class="case-title">Smart Factory and Process Visualisation</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Field devices and instrumentation, control logic, HMI and SCADA, MES and batch, production data flows.</dd>
-                            <dt>Domains and tools</dt><dd>Industrial automation, controls, regulated manufacturing. Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, GMP and GAMP 5 practice.</dd>
-                            <dt>Problem</dt><dd>Operations need clearer traceability, diagnostics and process visibility.</dd>
-                            <dt>Situation</dt><dd>Applied in smart factory and regulated manufacturing contexts spanning HMI, visualisation and MES.</dd>
-                            <dt>Plan</dt><dd>Connect field devices, control logic, SCADA and production data into one workflow.</dd>
-                            <dt>Action</dt><dd>Structured interfaces, diagnostics, reporting and operator-facing visual workflows.</dd>
-                            <dt>Output</dt><dd>Delivered clearer process visibility with trends, alarms, reporting and usability focus.</dd>
+                            <dt>Problem</dt><dd>Regulated production needs traceability, diagnostics and process visibility without disturbing validated behaviour.</dd>
+                            <dt>Context</dt><dd>Professional delivery at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.</dd>
+                            <dt>System architecture</dt><dd>Field devices and instrumentation integrated with control logic, HMI and SCADA layers, MES and batch execution, and production data flows, including an iFIX to PVI+ SCADA platform migration.</dd>
+                            <dt>Engineering decisions</dt><dd>Converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.</dd>
+                            <dt>Tools and technologies</dt><dd>Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC logic (IEC 61131-3), MES and batch systems, Modbus and Profinet, GMP and GAMP 5 practice.</dd>
+                            <dt>Validation method</dt><dd>FAT and SAT execution with commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.</dd>
+                            <dt>Output</dt><dd>Delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as professional work in regulated environments.</dd>
+                            <dt>What it demonstrates</dt><dd>Industrial automation delivery discipline: migrating and integrating supervisory systems where validation evidence matters as much as function.</dd>
                         </dl>
                     </details>
                     <details class="case-study" id="adas-validation-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">Automotive validation</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; professional delivery</span></span>
+                            <span class="case-meta"><span class="case-cat">Professional delivery &middot; Automotive and validation</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
                             <span class="case-title">Vehicle Software and ADAS Validation</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Vehicle instrumentation, CAN and CAN FD networks, feature software, regression and OTA test evidence.</dd>
-                            <dt>Domains and tools</dt><dd>Automotive systems, validation and quality. Vector CANoe and CANalyzer, structured test procedures, fault isolation, defect reporting.</dd>
-                            <dt>Problem</dt><dd>Vehicle features must remain stable across variants, running changes and software updates.</dd>
-                            <dt>Situation</dt><dd>Used in validation workflows for integrated vehicle and driver-assistance features.</dd>
-                            <dt>Plan</dt><dd>Instrument systems and capture CAN, diagnostics and feature behaviour evidence.</dd>
-                            <dt>Action</dt><dd>Executed regression tests, analysed traces and isolated faults through structured testing.</dd>
-                            <dt>Output</dt><dd>Produced evidence-based validation insights for ADAS and software feature readiness.</dd>
+                            <dt>Problem</dt><dd>Vehicle features must remain stable across variants, running changes and over-the-air software updates, with evidence to prove it.</dd>
+                            <dt>Context</dt><dd>Contract placement at Ford Motor Company via Invenio, validating vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.</dd>
+                            <dt>System architecture</dt><dd>Instrumented test vehicles, CAN and CAN FD networks, feature software under test, and structured feature-vehicle, breadboard and regression test workflows feeding readiness milestones and sign-off evidence.</dd>
+                            <dt>Engineering decisions</dt><dd>Captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.</dd>
+                            <dt>Tools and technologies</dt><dd>Vector CANoe and CANalyzer, CAN and CAN FD, vehicle instrumentation, OTA regression testing, structured test procedures.</dd>
+                            <dt>Validation method</dt><dd>Feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, with CAN trace capture and analysis for fault isolation.</dd>
+                            <dt>Output</dt><dd>Evidence-based defect reports and sign-off evidence supporting programme readiness decisions.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as professional contract work. Always credited as Ford Motor Company via Invenio contract placement.</dd>
+                            <dt>What it demonstrates</dt><dd>Cyber-physical validation skill: reading what a vehicle network is actually doing and turning it into defensible engineering evidence.</dd>
                         </dl>
                     </details>
                     <details class="case-study" id="emissions-testing-detail">
                         <summary>
-                            <span class="case-meta"><span class="case-cat">Compliance testing</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="case-tier">Delivered &middot; professional delivery</span></span>
+                            <span class="case-meta"><span class="case-cat">Professional delivery &middot; Automotive and compliance</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
                             <span class="case-title">Vehicle Emissions and Compliance Testing</span>
                         </summary>
                         <dl class="case-facts">
-                            <dt>System layers</dt><dd>Test instrumentation, data acquisition, procedure execution, QA documentation and reporting.</dd>
-                            <dt>Domains and tools</dt><dd>Automotive compliance, quality and validation. Emissions instrumentation, ADR and EURO standards exposure, trend and deviation analysis.</dd>
-                            <dt>Problem</dt><dd>Compliance testing requires accurate, repeatable and auditable environmental measurements.</dd>
-                            <dt>Situation</dt><dd>Applied in regulated testing environments for emissions and certification support.</dd>
-                            <dt>Plan</dt><dd>Instrument the test setup and log exhaust, operating and performance data.</dd>
-                            <dt>Action</dt><dd>Ran procedures, captured data and reviewed trends, deviations and test evidence.</dd>
-                            <dt>Output</dt><dd>Delivered defensible compliance results and structured reporting for certification work.</dd>
+                            <dt>Problem</dt><dd>Compliance testing requires accurate, repeatable and auditable measurements that survive regulatory scrutiny.</dd>
+                            <dt>Context</dt><dd>Professional work at ABMARC, conducting vehicle emissions and compliance testing against ADR and EURO standards.</dd>
+                            <dt>System architecture</dt><dd>Test instrumentation and data-acquisition systems, procedure-driven test execution, and QA and regulatory documentation workflows for certification and audits.</dd>
+                            <dt>Engineering decisions</dt><dd>Treated calibration discipline and procedure fidelity as first-class engineering tasks, because the defensibility of the final report depends on them; analysed data for deviations and trends before results left the building.</dd>
+                            <dt>Tools and technologies</dt><dd>Emissions test equipment, instrumentation, data-acquisition systems, ADR and EURO test procedures, QA records.</dd>
+                            <dt>Validation method</dt><dd>Repeatable standard procedures with instrument calibration and cross-checking, producing auditable and technically defensible results.</dd>
+                            <dt>Output</dt><dd>Defensible compliance results and structured reporting supporting certification and audit outcomes.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as professional work.</dd>
+                            <dt>What it demonstrates</dt><dd>Measurement and documentation rigour: the quality habits that carry into every regulated engineering environment.</dd>
                         </dl>
                     </details>
                 </div>
             </div>
         </section>
 
-        <section class="section-block" id="stack" aria-labelledby="stack-title">
+        <section class="section-block" id="capability" aria-labelledby="capability-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>04</span>Systems Stack</p>
-                    <h2 id="stack-title">One capability, layered from the physical world to intelligence.</h2>
-                    <p class="section-sub">Every project on this page moves through some or all of these layers, each carrying an honest evidence tier.</p>
-                </div>
-                <ol class="stack-ladder" aria-label="Systems stack from the physical layer to the intelligence layer">
-                    <li class="stack-layer" style="--indent:0%"><span class="stack-num">L1</span><div class="stack-body"><h3>Mechanics</h3><p>CAD, mechanisms, parts and prototypes for mechatronic assemblies. SolidWorks, Fusion 360, GD&amp;T, 3D printing, capstone and rover hardware.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></li>
-                    <li class="stack-layer" style="--indent:2%"><span class="stack-num">L2</span><div class="stack-body"><h3>Electrical and Electronics</h3><p>Drives, panels, instrumentation wiring, schematic capture, PCB layout and board bring-up. VFDs, Altium, KiCad, sensor front ends.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></li>
-                    <li class="stack-layer" style="--indent:4%"><span class="stack-num">L3</span><div class="stack-body"><h3>Embedded Firmware</h3><p>C and C++ on ESP32 and STM32 with FreeRTOS, peripheral drivers and field provisioning. Professional IoT firmware delivery at DuxTel.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></li>
-                    <li class="stack-layer" style="--indent:6%"><span class="stack-num">L4</span><div class="stack-body"><h3>Controls and Automation</h3><p>PID and process control, PLC logic, HMI, SCADA, MES and batch for GMP plants, including an iFIX to PVI+ SCADA migration at JAG Process Solutions.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></li>
-                    <li class="stack-layer" style="--indent:8%"><span class="stack-num">L5</span><div class="stack-body"><h3>Robotics and Autonomy</h3><p>Full ROS 2 stack: SLAM, Nav2 planning, Kalman and EKF estimation, sensor fusion, simulation and physical integration.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></li>
-                    <li class="stack-layer" style="--indent:10%"><span class="stack-num">L6</span><div class="stack-body"><h3>Software and Data</h3><p>Python, C/C++, JavaScript and TypeScript, REST APIs, Linux, Git, time-series pipelines with InfluxDB and Grafana, and a deployed Next.js web system.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></li>
-                    <li class="stack-layer" style="--indent:12%"><span class="stack-num">L7</span><div class="stack-body"><h3>AI and Machine Learning</h3><p>Anomaly detection, predictive-maintenance logic, OpenCV and YOLO vision, and OEE analytics applied to real telemetry and the digital-twin concept.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></li>
-                    <li class="stack-layer" style="--indent:14%"><span class="stack-num">L8</span><div class="stack-body"><h3>Testing, Validation and Compliance</h3><p>FAT and SAT, CAN-level ADAS regression evidence at Ford via Invenio, ADR and EURO emissions testing at ABMARC, FMEA and QA records.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></li>
-                    <li class="stack-layer" style="--indent:14%"><span class="stack-num">L9</span><div class="stack-body"><h3>Documentation and Handover</h3><p>Commissioning, qualification and handover packages, defect and compliance reporting, ITPs and MDRs, written for auditors and operators alike.</p></div><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="section-block" id="skills" aria-labelledby="skills-title">
-            <div class="section-wrap">
-                <div class="section-heading">
-                    <p class="section-kicker"><span>05</span>Skills and Tools</p>
-                    <h2 id="skills-title">The core toolkit, grouped by domain and tiered by evidence.</h2>
-                    <p class="section-sub">Filter to a single area, or see the <a href="#atlas">Domain Atlas</a> below for the full engineering landscape.</p>
-                </div>
-                <div class="skills-tabs" role="group" aria-label="Filter skills by domain" hidden data-skills-tabs>
-                    <button class="skill-tab is-active" type="button" aria-pressed="true" data-tab="all">All</button>
-                    <button class="skill-tab" type="button" aria-pressed="false" data-tab="robotics">Robotics</button>
-                    <button class="skill-tab" type="button" aria-pressed="false" data-tab="automation">Automation</button>
-                    <button class="skill-tab" type="button" aria-pressed="false" data-tab="embedded">Embedded</button>
-                    <button class="skill-tab" type="button" aria-pressed="false" data-tab="aiml">AI/ML and Data</button>
-                    <button class="skill-tab" type="button" aria-pressed="false" data-tab="mech">Mechanical</button>
-                </div>
-                <div class="skills-grid" data-skills-grid>
-                    <section class="skill-card" aria-labelledby="sk-robotics" data-domain="robotics">
-                        <p class="skill-index">01</p>
-                        <h3 id="sk-robotics">Robotics and Autonomy</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></p>
-                        <p class="dot-strip"><span>ROS 2 (Humble)</span><span>Nav2</span><span>MoveIt 2</span><span>Gazebo</span><span>RViz</span><span>SLAM</span><span>A* path planning</span><span>Kalman and EKF</span><span>Sensor fusion</span><span>LiDAR, IMU, depth cameras</span><span>OpenCV</span><span>PID control</span></p>
-                    </section>
-                    <section class="skill-card" aria-labelledby="sk-automation" data-domain="automation">
-                        <p class="skill-index">02</p>
-                        <h3 id="sk-automation">Controls and Automation</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
-                        <p class="dot-strip"><span>PLC programming (IEC 61131-3)</span><span>Siemens TIA Portal</span><span>WinCC</span><span>PCS 7</span><span>iFIX</span><span>PVI+</span><span>HMI and SCADA</span><span>MES and batch execution</span><span>Modbus TCP/RTU</span><span>Profinet</span><span>FAT, SAT and commissioning</span><span>GAMP 5 / FDA 21 CFR Part 11</span></p>
-                    </section>
-                    <section class="skill-card" aria-labelledby="sk-embedded" data-domain="embedded">
-                        <p class="skill-index">03</p>
-                        <h3 id="sk-embedded">Embedded Systems and Electronics</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; firmware</span> <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on &middot; PCB</span></p>
-                        <p class="dot-strip"><span>ESP32 and ESP32-S3</span><span>STM32</span><span>Embedded C and C++</span><span>FreeRTOS</span><span>PCB design (Altium, KiCad)</span><span>Schematic capture</span><span>UART, I2C, SPI, CAN, ADC, PWM</span><span>Signal conditioning</span><span>Sensor and actuator integration</span><span>Board-level bring-up</span></p>
-                    </section>
-                    <section class="skill-card" aria-labelledby="sk-aiml" data-domain="aiml">
-                        <p class="skill-index">04</p>
-                        <h3 id="sk-aiml">AI/ML and Data</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></p>
-                        <p class="dot-strip"><span>ML fundamentals</span><span>Anomaly detection</span><span>Statistical modelling</span><span>Feature extraction</span><span>Python (NumPy, Pandas, scikit-learn)</span><span>MATLAB and Simulink</span><span>InfluxDB</span><span>Grafana</span><span>MQTT</span><span>REST APIs</span><span>Git and Linux</span><span>Test automation</span></p>
-                    </section>
-                    <section class="skill-card" aria-labelledby="sk-mech" data-domain="mech">
-                        <p class="skill-index">05</p>
-                        <h3 id="sk-mech">Mechanical Design and CAD</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></p>
-                        <p class="dot-strip"><span>SolidWorks</span><span>Fusion 360</span><span>Part and assembly modelling</span><span>Engineering drawings and GD&amp;T</span><span>Mechanism design</span><span>FEA exposure</span><span>3D printing (FDM)</span><span>Pneumatics and hydraulics</span><span>VFDs and motor drives</span><span>Control schematics</span></p>
-                    </section>
-                    <section class="skill-card" aria-labelledby="sk-auto" data-domain="automation">
-                        <p class="skill-index">06</p>
-                        <h3 id="sk-auto">Automotive and Validation</h3>
-                        <p class="skill-tiers"><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></p>
-                        <p class="dot-strip"><span>Vector CANoe</span><span>Vector CANalyzer</span><span>CAN bus and CAN FD</span><span>ADAS validation</span><span>OTA regression testing</span><span>AVL and emissions systems</span><span>ADR and EURO exposure</span><span>QA records, ITPs, MDRs</span><span>FMEA</span><span>ISO 13849 / IEC 62443</span></p>
-                    </section>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-block" id="atlas" aria-labelledby="atlas-title">
-            <span id="disciplines" aria-hidden="true"></span>
-            <div class="section-wrap">
-                <div class="section-heading">
-                    <p class="section-kicker"><span>06</span>Engineering Domain Atlas</p>
-                    <h2 id="atlas-title">The full engineering landscape, tiered honestly by evidence.</h2>
-                    <p class="section-sub">Nineteen engineering domains. Nothing is claimed beyond its evidence: delivery is separated from hands-on build work, study, adjacency and deliberate growth targets.</p>
+                    <p class="section-kicker"><span>02</span>Complete Engineering Capability Explorer</p>
+                    <h2 id="capability-title">Nineteen capability domains, tiered honestly by evidence.</h2>
+                    <p class="section-sub">The full engineering landscape in one explorer: search it, filter it by domain, evidence tier or delivery context, and open any domain for subdomains, tools, proof and growth targets. Nothing is claimed beyond its evidence.</p>
                 </div>
                 <ul class="tier-legend" aria-label="Evidence tier legend">
                     <li><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><strong>Delivered</strong> Professional or project delivery evidence exists.</li>
@@ -528,292 +491,320 @@
                     <li><span class="tier-dot tier-dot-target" aria-hidden="true"></span><strong>Target</strong> Strategic growth domain.</li>
                 </ul>
 
-                <div class="atlas-controls" hidden data-atlas-controls>
-                    <input type="search" placeholder="Search domains, tools and methods" aria-label="Search domains, tools and methods" data-atlas-search>
-                    <select aria-label="Filter by cluster" data-atlas-cluster>
-                        <option value="all">All clusters</option>
-                        <option value="Systems">Systems</option>
-                        <option value="Physical systems">Physical systems</option>
-                        <option value="Embedded and electronics">Embedded and electronics</option>
-                        <option value="Controls and robotics">Controls and robotics</option>
-                        <option value="Software and intelligence">Software and intelligence</option>
-                        <option value="Sectors">Sectors</option>
-                        <option value="Assurance and delivery">Assurance and delivery</option>
-                    </select>
-                    <div class="atlas-tier-buttons" role="group" aria-label="Filter by evidence tier">
-                        <button class="atlas-pill is-active" type="button" aria-pressed="true" data-tier="all">All tiers</button>
-                        <button class="atlas-pill" type="button" aria-pressed="false" data-tier="delivered">Delivered</button>
-                        <button class="atlas-pill" type="button" aria-pressed="false" data-tier="handson">Hands-on</button>
-                        <button class="atlas-pill" type="button" aria-pressed="false" data-tier="working">Working knowledge</button>
-                        <button class="atlas-pill" type="button" aria-pressed="false" data-tier="adjacent">Adjacent</button>
-                        <button class="atlas-pill" type="button" aria-pressed="false" data-tier="target">Target</button>
+                <div class="cap-controls" hidden data-cap-controls>
+                    <div class="cap-controls-row">
+                        <input type="search" id="cap-search" placeholder="Search skills, tools, domains and methods" aria-label="Search skills, tools, domains and methods" data-cap-search>
+                        <label class="cap-select-label" for="cap-cluster">Domain</label>
+                        <select id="cap-cluster" data-cap-cluster>
+                            <option value="all">All domains</option>
+                            <option value="systems">Systems engineering</option>
+                            <option value="physical">Physical systems</option>
+                            <option value="embedded">Embedded and electronics</option>
+                            <option value="controls">Controls and robotics</option>
+                            <option value="software">Software and intelligence</option>
+                            <option value="sectors">Sectors</option>
+                            <option value="assurance">Assurance and delivery</option>
+                        </select>
+                    </div>
+                    <div class="cap-pill-row" role="group" aria-label="Filter by evidence tier">
+                        <button class="filter-pill is-active" type="button" aria-pressed="true" data-cap-tier="all">All tiers</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-tier="delivered">Delivered</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-tier="handson">Hands-on</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-tier="working">Working knowledge</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-tier="adjacent">Adjacent</button>
+                    </div>
+                    <div class="cap-pill-row" role="group" aria-label="Filter by delivery context">
+                        <button class="filter-pill is-active" type="button" aria-pressed="true" data-cap-context="all">Any context</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-context="professional">Professional delivery</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-context="project">University and team projects</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-context="personal">Personal builds</button>
+                        <button class="filter-pill" type="button" aria-pressed="false" data-cap-context="study">Study and coursework</button>
                     </div>
                 </div>
-                <p class="atlas-status" aria-live="polite" data-atlas-status></p>
+                <p class="filter-status" aria-live="polite" data-cap-status></p>
 
-                <div class="atlas-list" data-atlas-list>
-                    <details class="atlas-domain" data-cluster="Systems" data-tier="delivered">
+                <div class="cap-list" data-cap-list>
+                    <details class="cap-entry" id="cap-systems" data-cluster="systems" data-tier="delivered" data-context="professional project study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Systems</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Mechatronics and Systems Engineering</span>
-                            <span class="atlas-summary">The home discipline: integrating mechanical, electrical, embedded, control and software layers into one working system, then proving it with structured test and documentation.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Systems engineering</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Mechatronics and Systems Engineering</span>
+                            <span class="cap-summary">The home discipline: integrating mechanical, electrical, embedded, control and software layers into one working system, then proving it with structured test and documentation.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>System architecture and decomposition</span><span>Requirements to acceptance mapping</span><span>Electromechanical integration</span><span>Interface definition between layers</span><span>Trade-off analysis across disciplines</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Block and signal-flow modelling</span><span>MATLAB and Simulink</span><span>FMEA</span><span>FAT and SAT structures</span><span>Engineering documentation</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Bachelor of Mechatronics Engineering (Honours, Distinction), Deakin University. Integrated deliveries at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Block and signal-flow modelling</span><span>MATLAB and Simulink</span><span>FMEA</span><span>FAT and SAT structures</span><span>Engineering documentation</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#autonomous-navigation-detail">ROS 2 rover</a> and <a href="#clinical-ataxia-detail">clinical capstone</a> both required whole-stack integration from sensing to validated behaviour.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Bachelor of Mechatronics Engineering (Honours, Distinction), Deakin University. Integrated deliveries at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Knowing which layer a fault or requirement lives in is the skill that moves between every domain on this page.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Model-based systems engineering (SysML)</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Physical systems" data-tier="handson">
+                    <details class="cap-entry" id="cap-mechanical" data-cluster="physical" data-tier="handson" data-context="professional project study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Physical systems</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">Mechanical Design, Materials and Thermofluids</span>
-                            <span class="atlas-summary">Hands-on CAD, mechanism and part design for mechatronic assemblies, backed by degree-level materials, thermodynamics and fluid mechanics coursework.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Physical systems</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">Mechanical Design, Materials and Thermofluids</span>
+                            <span class="cap-summary">Hands-on CAD, mechanism and part design for mechatronic assemblies, backed by degree-level materials, thermodynamics and fluid mechanics coursework.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Part and assembly modelling</span><span>Mechanism design</span><span>Engineering drawings and GD&amp;T</span><span>3D printing and prototyping</span><span>Materials selection (Working knowledge)</span><span>Thermodynamics and fluid mechanics (Working knowledge)</span><span>FEA (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>SolidWorks</span><span>Fusion 360</span><span>GD&amp;T</span><span>FDM 3D printing</span><span>Pneumatics and hydraulics basics</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Mechanical design and CAD across university projects, the Mars Rover Team and the ESP32 capstone hardware. Drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>SolidWorks</span><span>Fusion 360</span><span>GD&amp;T</span><span>FDM 3D printing</span><span>Pneumatics and hydraulics basics</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Mechanical design and CAD across university projects, the Deakin Mars Rover Team and the <a href="#clinical-ataxia-detail">ESP32 capstone hardware</a>.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles, including pressure-vessel CAD designs at Thornton Engineering that progressed into fabrication.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Mechanism, tolerance and load thinking carries into robot hardware, fixtures, panels and production tooling.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Design for manufacture at production scale</span><span>Formal FEA validation workflows</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Physical systems" data-tier="handson">
+                    <details class="cap-entry" id="cap-electrical" data-cluster="physical" data-tier="handson" data-context="professional study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Physical systems</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">Electrical Systems and Power</span>
-                            <span class="atlas-summary">Practical motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Physical systems</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">Electrical Systems and Power</span>
+                            <span class="cap-summary">Practical motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>VFDs and motor drives</span><span>Control panel and schematic literacy</span><span>Instrumentation wiring and loop checks</span><span>Signal and power segregation</span><span>Electrical machines theory (Working knowledge)</span><span>Power systems and distribution (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>VFD commissioning</span><span>Control schematics</span><span>Multimeter and loop testing</span><span>Instrumentation datasheets</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Integrated field devices, sensors and drives with control logic at JAG Process Solutions. Motor and drive fundamentals from the mechatronics degree and HND.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>VFD commissioning</span><span>Control schematics</span><span>Multimeter and loop testing</span><span>Instrumentation datasheets</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Motor, drive and actuator integration in robotics and capstone builds.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Integrated field devices, sensors and drives with control logic at JAG Process Solutions. Motor and drive fundamentals from the mechatronics degree and HND.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Reading a schematic and tracing a loop is the same discipline whether the cabinet runs a plant, a rig or a robot.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Switchboard and panel design ownership</span><span>AS/NZS 3000 wiring rules literacy</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Embedded and electronics" data-tier="handson">
+                    <details class="cap-entry" id="cap-electronics" data-cluster="embedded" data-tier="handson" data-context="project personal">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Embedded and electronics</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">Electronics, PCB and Board Bring-up</span>
-                            <span class="atlas-summary">Working capability from schematic capture and PCB layout through to powering up, debugging and validating real boards.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Embedded and electronics</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">Electronics, PCB and Board Bring-up</span>
+                            <span class="cap-summary">Working capability from schematic capture and PCB layout through to powering up, debugging and validating real boards.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Schematic capture</span><span>PCB layout</span><span>Board-level bring-up and debug</span><span>Sensor interfacing and signal conditioning</span><span>Analog front-end design (Working knowledge)</span><span>EMC and EMI awareness (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Altium</span><span>KiCad</span><span>Oscilloscope and logic analyser use</span><span>ADC, PWM, level shifting</span><span>Signal conditioning</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Designed and brought up sensor boards for the ESP32 clinical capstone and personal robotics and IoT builds, including IMU, ToF, Hall-effect and magnetometer front ends.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Altium</span><span>KiCad</span><span>Oscilloscope and logic analyser use</span><span>ADC, PWM, level shifting</span><span>Signal conditioning</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Designed and brought up sensor boards for the <a href="#clinical-ataxia-detail">ESP32 clinical capstone</a> and personal robotics and IoT builds, including IMU, ToF, Hall-effect and magnetometer front ends.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Sensor and instrumentation interfacing carried into professional IoT device work at DuxTel.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Clean sensing and grounding habits underpin reliable data in every downstream control, telemetry and ML layer.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Multi-layer high-speed layout</span><span>Formal EMC pre-compliance testing</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Embedded and electronics" data-tier="delivered">
+                    <details class="cap-entry" id="cap-embedded" data-cluster="embedded" data-tier="delivered" data-context="professional project personal">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Embedded and electronics</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Embedded Systems and Firmware</span>
-                            <span class="atlas-summary">Microcontroller firmware in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning and field deployment.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Embedded and electronics</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Embedded Systems and Firmware</span>
+                            <span class="cap-summary">Microcontroller firmware in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning and field deployment.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Embedded C and C++</span><span>RTOS task design (FreeRTOS)</span><span>Peripheral drivers: UART, I2C, SPI, CAN, ADC, PWM</span><span>Low-power and battery-aware design</span><span>Device provisioning and field deployment</span><span>Bootloaders and OTA firmware update (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ESP32 and ESP32-S3</span><span>STM32</span><span>FreeRTOS</span><span>PlatformIO and vendor toolchains</span><span>Serial debugging</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Delivered ESP32 GPS and environmental-sensing firmware, provisioning and deployment at DuxTel. Built the capstone clinical sensing device and IoT platform firmware end to end.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ESP32 and ESP32-S3</span><span>STM32</span><span>FreeRTOS</span><span>PlatformIO and vendor toolchains</span><span>Serial debugging</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Built the <a href="#clinical-ataxia-detail">capstone clinical sensing device</a> and <a href="#iot-monitoring-detail">IoT platform firmware</a> end to end.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Delivered ESP32 GPS and environmental-sensing firmware, provisioning and deployment at DuxTel.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Real-time constraints, interrupt discipline and driver structure transfer directly into robotics, automotive and instrumentation work.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Functional-safety-rated firmware practices</span><span>Rust for embedded</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Controls and robotics" data-tier="delivered">
+                    <details class="cap-entry" id="cap-control" data-cluster="controls" data-tier="delivered" data-context="professional project study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Controls and robotics</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Control Systems</span>
-                            <span class="atlas-summary">Feedback control from classical PID and loop tuning in delivered PLC logic through to state estimation and model-based design from degree and project work.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Controls and robotics</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Control Systems</span>
+                            <span class="cap-summary">Feedback control from classical PID and loop tuning in delivered PLC logic through to state estimation and model-based design from degree and project work.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>PID design and tuning</span><span>Process control loops</span><span>Motion control basics</span><span>Kalman and EKF state estimation (Hands-on)</span><span>System modelling and simulation (Hands-on)</span><span>Modern and optimal control theory (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>MATLAB and Simulink</span><span>PID tuning in PLC and firmware</span><span>Kalman and EKF filters</span><span>Simulation-first validation</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Control logic delivered for pharmaceutical, biotech and food plants at JAG Process Solutions. Kalman and EKF estimation and PID motion control built into the ROS 2 rover project.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>MATLAB and Simulink</span><span>PID tuning in PLC and firmware</span><span>Kalman and EKF filters</span><span>Simulation-first validation</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Kalman and EKF estimation and PID motion control built into the <a href="#autonomous-navigation-detail">ROS 2 rover project</a>.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Control logic delivered for pharmaceutical, biotech and food plants at JAG Process Solutions.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>A control loop is a control loop: the same stability and disturbance thinking applies to a dosing skid, a wheel motor or a thermal chamber.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Model predictive control in production</span><span>Formal control-loop performance auditing</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Controls and robotics" data-tier="delivered">
+                    <details class="cap-entry" id="cap-plc-scada" data-cluster="controls" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Controls and robotics</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Industrial Automation, PLC and SCADA</span>
-                            <span class="atlas-summary">Professional delivery of PLC, HMI, SCADA, MES and batch systems for regulated plants, including a full SCADA platform migration verified against the validated system.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Controls and robotics</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Industrial Automation, PLC and SCADA</span>
+                            <span class="cap-summary">Professional delivery of PLC, HMI, SCADA, MES and batch systems for regulated plants, including a full SCADA platform migration verified against the validated system.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>PLC programming (IEC 61131-3)</span><span>HMI and SCADA engineering</span><span>MES and batch execution</span><span>SCADA platform migration</span><span>Industrial networks: Modbus, Profinet</span><span>FAT, SAT and commissioning</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Siemens TIA Portal</span><span>WinCC</span><span>PCS 7</span><span>iFIX</span><span>PVI+</span><span>Modbus TCP/RTU</span><span>Profinet</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Siemens TIA Portal</span><span>WinCC</span><span>PCS 7</span><span>iFIX</span><span>PVI+</span><span>Modbus TCP/RTU</span><span>Profinet</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#smart-factory-detail">smart factory case study</a> covers the delivered SCADA and process visualisation work in depth.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Alarm philosophy, operator usability and data integrity habits carry into every supervisory and telemetry system.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Allen-Bradley and Rockwell platforms</span><span>Ignition SCADA</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Controls and robotics" data-tier="delivered">
+                    <details class="cap-entry" id="cap-robotics" data-cluster="controls" data-tier="delivered" data-context="project personal">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Controls and robotics</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered &middot; project delivery</span></span>
-                            <span class="atlas-name">Robotics and Autonomy</span>
-                            <span class="atlas-summary">A complete ROS 2 autonomy stack built and validated as a personal and university project: perception, SLAM, state estimation, planning, control and simulation.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Controls and robotics</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project delivery</span></span>
+                            <span class="cap-name">Robotics and Autonomy</span>
+                            <span class="cap-summary">A complete ROS 2 autonomy stack built and validated as a personal and university project: perception, SLAM, state estimation, planning, control and simulation.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>ROS 2 architecture and nodes</span><span>SLAM and localisation</span><span>Path planning (A*, Nav2)</span><span>Manipulation basics (MoveIt 2)</span><span>Sensor fusion: LiDAR, IMU, odometry</span><span>Kinematics and dynamics</span><span>Simulation-based validation</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ROS 2 Humble</span><span>Nav2</span><span>MoveIt 2</span><span>Gazebo</span><span>RViz</span><span>SLAM toolboxes</span><span>A* planning</span><span>EKF localisation</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Built an end-to-end ROS 2 autonomous rover with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion. Contributor to the Deakin Mars Rover Team.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ROS 2 Humble</span><span>Nav2</span><span>MoveIt 2</span><span>Gazebo</span><span>RViz</span><span>SLAM toolboxes</span><span>A* planning</span><span>EKF localisation</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Built an <a href="#autonomous-navigation-detail">end-to-end ROS 2 autonomous rover</a> with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Contributor to the Deakin Mars Rover Team.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Autonomy is systems engineering at speed: timing, transforms and failure handling sharpen every other integration discipline.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Commercial robot deployment and fleet operations</span><span>Learning-based perception in production</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Software and intelligence" data-tier="handson">
+                    <details class="cap-entry" id="cap-aiml" data-cluster="software" data-tier="handson" data-context="personal project study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Software and intelligence</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">AI, ML and Data Science</span>
-                            <span class="atlas-summary">Applied machine learning where it earns its keep: anomaly detection, predictive-maintenance logic, computer vision and time-series analytics wired into real telemetry.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Software and intelligence</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">AI, ML and Data Science</span>
+                            <span class="cap-summary">Applied machine learning where it earns its keep: anomaly detection, predictive-maintenance logic, computer vision and time-series analytics wired into real telemetry.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Anomaly detection</span><span>Predictive maintenance concepts</span><span>Time-series analytics and OEE</span><span>Computer vision (OpenCV, YOLO)</span><span>Feature extraction and statistical modelling</span><span>Deep learning model training at scale (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Python: NumPy, Pandas, scikit-learn</span><span>OpenCV and YOLO</span><span>MATLAB</span><span>InfluxDB</span><span>Grafana</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept, and ML-driven monitoring on IoT sensor pipelines. Vision and estimation work in the ROS 2 rover.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Python: NumPy, Pandas, scikit-learn</span><span>OpenCV and YOLO</span><span>MATLAB</span><span>InfluxDB</span><span>Grafana</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Built anomaly detection, predictive-maintenance logic and OEE analytics into the <a href="#digital-twin-detail">digital-twin concept</a>. Vision and estimation work in the <a href="#autonomous-navigation-detail">ROS 2 rover</a>.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>ML-driven monitoring applied to IoT sensor pipelines delivered at DuxTel.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Knowing the physics behind the signal makes the models honest: sensor-aware ML beats black-box ML in engineering settings.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Production MLOps</span><span>Edge inference on embedded targets</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Software and intelligence" data-tier="handson">
+                    <details class="cap-entry" id="cap-software" data-cluster="software" data-tier="handson" data-context="professional personal">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Software and intelligence</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">Software Engineering and DevOps</span>
-                            <span class="atlas-summary">Practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Software and intelligence</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">Software Engineering and DevOps</span>
+                            <span class="cap-summary">Practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Python and C/C++ development</span><span>REST APIs and integration</span><span>Linux and scripting</span><span>Version control and CI workflows</span><span>Test automation</span><span>Web systems (Next.js, Supabase)</span><span>Databases and time-series stores</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Python</span><span>C and C++</span><span>JavaScript and TypeScript</span><span>Node.js</span><span>Git</span><span>Linux</span><span>JIRA</span><span>InfluxDB</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Test automation and CI workflows in professional validation roles. Built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, plus this portfolio.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Python</span><span>C and C++</span><span>JavaScript and TypeScript</span><span>Node.js</span><span>Git</span><span>Linux</span><span>JIRA</span><span>InfluxDB</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, plus this portfolio.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Test automation and CI workflows in professional validation roles.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Clean interfaces, version discipline and automated checks are the connective tissue between every engineering domain here.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Cloud architecture certification</span><span>Containerised deployment at scale</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Software and intelligence" data-tier="delivered">
+                    <details class="cap-entry" id="cap-iot" data-cluster="software" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Software and intelligence</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">IoT and Edge-to-Cloud Telemetry</span>
-                            <span class="atlas-summary">Professional end-to-end IoT delivery: embedded sensing devices, LoRaWAN networks, MQTT brokers, time-series storage and live operational dashboards.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Software and intelligence</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">IoT and Edge-to-Cloud Telemetry</span>
+                            <span class="cap-summary">Professional end-to-end IoT delivery: embedded sensing devices, LoRaWAN networks, MQTT brokers, time-series storage and live operational dashboards.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Low-power device design</span><span>LoRaWAN networks and provisioning</span><span>MQTT and telemetry pipelines</span><span>Gateways and edge devices</span><span>Time-series storage and dashboards</span><span>Field deployment and support</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ESP32</span><span>LoRaWAN</span><span>ChirpStack</span><span>MQTT</span><span>InfluxDB</span><span>Grafana</span><span>GPS and environmental sensors</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Designed and deployed end-to-end IoT systems at DuxTel, commissioning devices onto ChirpStack LoRaWAN networks and delivering an ESP32 GPS and environmental-sensing workflow through to dashboards.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ESP32</span><span>LoRaWAN</span><span>ChirpStack</span><span>MQTT</span><span>InfluxDB</span><span>Grafana</span><span>GPS and environmental sensors</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#iot-monitoring-detail">IoT GPS and environmental monitoring case study</a> covers the delivered platform end to end.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Designed and deployed end-to-end IoT systems at DuxTel, commissioning devices onto ChirpStack LoRaWAN networks through to dashboards and handover.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Edge-to-cloud thinking scales from a paddock sensor to a plant historian: the same ingestion, buffering and visualisation logic applies.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Industrial IoT at plant scale (OPC UA)</span><span>Cellular and satellite backhaul systems</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="delivered">
+                    <details class="cap-entry" id="cap-automotive" data-cluster="sectors" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Automotive Systems and Validation</span>
-                            <span class="atlas-summary">Professional vehicle software and ADAS validation on major OEM programmes, plus regulated emissions and compliance testing, grounded in CAN-level evidence.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Automotive Systems and Validation</span>
+                            <span class="cap-summary">Professional vehicle software and ADAS validation on major OEM programmes, plus regulated emissions and compliance testing, grounded in CAN-level evidence.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>CAN and CAN FD analysis</span><span>ADAS feature validation</span><span>OTA update regression testing</span><span>Vehicle instrumentation</span><span>Emissions and compliance testing (ADR, EURO)</span><span>Fault isolation and defect evidence</span><span>EV and HEV architectures (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Vector CANoe</span><span>Vector CANalyzer</span><span>Data-acquisition systems</span><span>Emissions instrumentation</span><span>Structured test procedures</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes at Ford Motor Company via Invenio contract placement. Emissions and compliance testing against ADR and EURO standards at ABMARC.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Vector CANoe</span><span>Vector CANalyzer</span><span>Data-acquisition systems</span><span>Emissions instrumentation</span><span>Structured test procedures</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#adas-validation-detail">ADAS validation</a> and <a href="#emissions-testing-detail">emissions testing</a> case studies break the work down.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes at Ford Motor Company via Invenio contract placement. Emissions and compliance testing against ADR and EURO standards at ABMARC.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Evidence-first validation, from a CAN trace to a certification report, is a portable habit every regulated industry pays for.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>AUTOSAR literacy</span><span>ISO 26262 functional safety</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="handson">
+                    <details class="cap-entry" id="cap-biomedical" data-cluster="sectors" data-tier="handson" data-context="project study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-handson" aria-hidden="true"></span><span class="atlas-tier">Hands-on</span></span>
-                            <span class="atlas-name">Biomedical and Clinical Devices</span>
-                            <span class="atlas-summary">Embedded clinical sensing built and validated against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span></span>
+                            <span class="cap-name">Biomedical and Clinical Devices</span>
+                            <span class="cap-summary">Embedded clinical sensing built and validated against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Embedded physiological sensing</span><span>Real-time signal acquisition</span><span>Measurement validation against references</span><span>Human factors and usability concepts (Working knowledge)</span><span>Medical device regulation awareness (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ESP32</span><span>IMU, ToF, Hall-effect, magnetometer sensing</span><span>MATLAB data logging</span><span>Signal processing</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Honours capstone at Deakin University: ESP32 clinical ataxia assessment device with real-time acquisition and measurement validation against clinical references.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ESP32</span><span>IMU, ToF, Hall-effect, magnetometer sensing</span><span>MATLAB data logging</span><span>Signal processing</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#clinical-ataxia-detail">ESP32 clinical ataxia assessment capstone</a> with real-time acquisition and measurement validation against clinical references.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Assessed Honours capstone at Deakin University, graded with Distinction.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Clinical work forces measurement rigour, repeatability and documentation discipline that generalises to any safety-relevant sensing.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>IEC 62304 software lifecycle</span><span>Clinical trial support engineering</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="delivered">
+                    <details class="cap-entry" id="cap-manufacturing" data-cluster="sectors" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Manufacturing, Production and Quality</span>
-                            <span class="atlas-summary">Years on real production floors across food and beverage, carbon-fibre and structural-steel manufacturing: operations, QA, traceability and disciplined documentation.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Manufacturing, Production and Quality</span>
+                            <span class="cap-summary">Years on real production floors across food and beverage, carbon-fibre and structural-steel manufacturing: operations, QA, traceability and disciplined documentation.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Production operations</span><span>QA records, ITPs and MDRs</span><span>Material traceability</span><span>Engineering-drawing review</span><span>Inspection planning</span><span>Lean and continuous improvement</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ITP and MDR documentation</span><span>FMEA</span><span>Lean Six Sigma Foundation</span><span>KAIZEN</span><span>Traceability systems</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ITP and MDR documentation</span><span>FMEA</span><span>Lean Six Sigma Foundation</span><span>KAIZEN</span><span>Traceability systems</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#emissions-testing-detail">compliance testing case study</a> shows the same QA discipline applied to regulated test work.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Floor-level empathy for operators and inspectors makes automation, HMI and MES design markedly better.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Six Sigma Green Belt</span><span>Production line ownership</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="delivered">
+                    <details class="cap-entry" id="cap-pharma" data-cluster="sectors" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Process, Pharma and Regulated Manufacturing</span>
-                            <span class="atlas-summary">Smart-factory and control engineering delivered for pharmaceutical, biotech and food clients under GMP, with GAMP 5 validation discipline through to qualification and handover.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Process, Pharma and Regulated Manufacturing</span>
+                            <span class="cap-summary">Smart-factory and control engineering delivered for pharmaceutical, biotech and food clients under GMP, with GAMP 5 validation discipline through to qualification and handover.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>GMP working practices</span><span>GAMP 5 validation lifecycle</span><span>Batch systems and execution</span><span>Process visualisation</span><span>Qualification and handover documentation</span><span>P&amp;ID and process design literacy (Working knowledge)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>GAMP 5</span><span>FDA 21 CFR Part 11 awareness</span><span>Batch execution systems</span><span>FAT, SAT, IQ/OQ-style documentation</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP at JAG Process Solutions, across plants, skids and packaged units.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>GAMP 5</span><span>FDA 21 CFR Part 11 awareness</span><span>Batch execution systems</span><span>FAT, SAT, IQ/OQ-style documentation</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>The <a href="#smart-factory-detail">smart factory case study</a> details the regulated delivery context.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP at JAG Process Solutions, across plants, skids and packaged units.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>If it is not documented, it did not happen: regulated-industry discipline raises the quality bar in every other sector.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>CQV engineering roles</span><span>Process engineering depth in pharma</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="adjacent">
+                    <details class="cap-entry" id="cap-civil" data-cluster="sectors" data-tier="adjacent" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-adjacent" aria-hidden="true"></span><span class="atlas-tier">Adjacent</span></span>
-                            <span class="atlas-name">Civil, Structural and Infrastructure Awareness</span>
-                            <span class="atlas-summary">Transferable exposure from structural-steel fabrication QA: reading structural drawings, weld and inspection documentation, and standards-driven fabrication workflows.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-adjacent" aria-hidden="true"></span>Adjacent</span></span>
+                            <span class="cap-name">Civil, Structural and Infrastructure Awareness</span>
+                            <span class="cap-summary">Transferable exposure from structural-steel fabrication QA: reading structural drawings, weld and inspection documentation, and standards-driven fabrication workflows.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Structural drawing review</span><span>Steel fabrication QA</span><span>ITP-driven inspection</span><span>Standards-driven documentation</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>Engineering drawings</span><span>ITPs and MDRs</span><span>Material traceability records</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>Engineering drawings</span><span>ITPs and MDRs</span><span>Material traceability records</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Pressure-vessel CAD designs that progressed into fabrication.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Standards-driven fabrication QA is a direct bridge into infrastructure, rail and energy project work.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Infrastructure automation and monitoring systems</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Sectors" data-tier="adjacent">
+                    <details class="cap-entry" id="cap-adjacent-sectors" data-cluster="sectors" data-tier="adjacent" data-context="project personal">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Sectors</span><span class="tier-dot tier-dot-adjacent" aria-hidden="true"></span><span class="atlas-tier">Adjacent</span></span>
-                            <span class="atlas-name">Aerospace, Space, Marine, Rail, Defence, Mining, Agriculture and Energy</span>
-                            <span class="atlas-summary">Sector adjacencies reached through rover robotics, field IoT and hands-on farm work, held honestly as adjacent exposure and strategic growth targets rather than delivery claims.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Sectors</span><span class="tier-chip"><span class="tier-dot tier-dot-adjacent" aria-hidden="true"></span>Adjacent</span></span>
+                            <span class="cap-name">Aerospace, Space, Marine, Rail, Defence, Mining, Agriculture and Energy</span>
+                            <span class="cap-summary">Sector adjacencies reached through rover robotics, field IoT and hands-on farm work, held honestly as adjacent exposure and strategic growth targets rather than delivery claims.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Space and field robotics (Mars Rover Team)</span><span>Agricultural sensing and AgTech</span><span>Mining automation (Target)</span><span>Rail systems and signalling (Target)</span><span>Defence systems engineering (Target)</span><span>Marine and offshore systems (Target)</span><span>Energy and renewables integration (Target)</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ROS 2 field robotics</span><span>Environmental and GPS telemetry</span><span>Remote asset monitoring patterns</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Deakin Mars Rover Team contribution, deployed environmental and GPS IoT monitoring, and practical agricultural experience as a farmhand.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ROS 2 field robotics</span><span>Environmental and GPS telemetry</span><span>Remote asset monitoring patterns</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Deakin Mars Rover Team contribution and the <a href="#iot-monitoring-detail">deployed environmental and GPS IoT monitoring platform</a>.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Practical agricultural experience as a farmhand alongside field IoT deployment work.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Autonomy, telemetry, harsh-environment sensing and regulated validation are exactly the capabilities these sectors hire for.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Mining autonomy programmes</span><span>Defence-adjacent autonomous systems</span><span>Renewable energy plant automation</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Assurance and delivery" data-tier="working">
+                    <details class="cap-entry" id="cap-safety" data-cluster="assurance" data-tier="working" data-context="professional study">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Assurance and delivery</span><span class="tier-dot tier-dot-working" aria-hidden="true"></span><span class="atlas-tier">Working knowledge</span></span>
-                            <span class="atlas-name">Safety, Reliability, Standards and Cyber-physical Security</span>
-                            <span class="atlas-summary">Working knowledge of the machinery-safety, industrial-cybersecurity and quality standards that frame the delivered automation and validation work, applied through documentation and test practice.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Assurance and delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-working" aria-hidden="true"></span>Working knowledge</span></span>
+                            <span class="cap-name">Safety, Reliability, Standards and Cyber-physical Security</span>
+                            <span class="cap-summary">Working knowledge of the machinery-safety, industrial-cybersecurity and quality standards that frame the delivered automation and validation work, applied through documentation and test practice.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>Evidence-based test documentation (Delivered)</span><span>FMEA and risk assessment (Hands-on)</span><span>Machinery safety (ISO 13849)</span><span>Industrial cybersecurity (IEC 62443)</span><span>Computerised system validation (GAMP 5, 21 CFR Part 11)</span><span>Reliability engineering methods</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>ISO 13849</span><span>IEC 62443</span><span>GAMP 5</span><span>FDA 21 CFR Part 11</span><span>IEC 61131-3</span><span>FMEA</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Standards applied through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>ISO 13849</span><span>IEC 62443</span><span>GAMP 5</span><span>FDA 21 CFR Part 11</span><span>IEC 61131-3</span><span>FMEA</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Validation methods documented in every case study above follow the same standards-aware structure.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Standards applied through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Standards literacy converts good engineering into defensible engineering: it is the language auditors and safety leads trust.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Functional safety certification (TUV style)</span><span>IEC 62443 practitioner depth</span></p></div>
                         </div>
                     </details>
-                    <details class="atlas-domain" data-cluster="Assurance and delivery" data-tier="delivered">
+                    <details class="cap-entry" id="cap-delivery" data-cluster="assurance" data-tier="delivered" data-context="professional">
                         <summary>
-                            <span class="atlas-meta"><span class="atlas-cluster">Assurance and delivery</span><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span><span class="atlas-tier">Delivered</span></span>
-                            <span class="atlas-name">Project Delivery, Commissioning and Handover</span>
-                            <span class="atlas-summary">Taking systems over the line: structured FAT and SAT, site commissioning, fault resolution, stakeholder communication and complete qualification and handover packages.</span>
+                            <span class="cap-meta"><span class="cap-cluster">Assurance and delivery</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span></span>
+                            <span class="cap-name">Project Delivery, Commissioning and Handover</span>
+                            <span class="cap-summary">Taking systems over the line: structured FAT and SAT, site commissioning, fault resolution, stakeholder communication and complete qualification and handover packages.</span>
                         </summary>
-                        <div class="atlas-body">
+                        <div class="cap-body">
                             <div><p class="mini-label">Subdomains</p><p class="dot-strip"><span>FAT and SAT execution</span><span>Site commissioning</span><span>Qualification documentation</span><span>Stakeholder and client communication</span><span>Fault resolution under time pressure</span><span>Handover and training material</span></p></div>
-                            <div><p class="mini-label">Tools and methods</p><p class="dot-strip"><span>FAT and SAT protocols</span><span>Commissioning plans</span><span>JIRA and Agile</span><span>Structured reporting</span></p></div>
-                            <div><p class="mini-label">Proof</p><p>Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence at Ford via Invenio.</p></div>
+                            <div><p class="mini-label">Tools and software</p><p class="dot-strip"><span>FAT and SAT protocols</span><span>Commissioning plans</span><span>JIRA and Agile</span><span>Structured reporting</span></p></div>
+                            <div><p class="mini-label">Project proof</p><p>Every professional case study above ends in documented validation and handover, not just working software.</p></div>
+                            <div><p class="mini-label">Experience proof</p><p>Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence at Ford via Invenio.</p></div>
                             <div><p class="mini-label">Transferable logic</p><p>Commissioning is where every discipline meets reality: it proves the breadth claimed everywhere else on this page.</p></div>
                             <div><p class="mini-label">Growth targets</p><p class="dot-strip"><span>Lead commissioning roles</span><span>Multi-discipline project engineering</span></p></div>
                         </div>
@@ -825,9 +816,9 @@
         <section class="section-block" id="experience" aria-labelledby="experience-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>07</span>Experience</p>
+                    <p class="section-kicker"><span>03</span>Professional Experience</p>
                     <h2 id="experience-title">A factual record that proves systems thinking across industries.</h2>
-                    <p class="section-sub">Automation, vehicle validation, compliance testing, IoT and manufacturing, followed by the production-floor and QA foundation underneath it. Each role exercised a different part of the stack.</p>
+                    <p class="section-sub">Automation, vehicle validation, compliance testing and IoT, built on a manufacturing and QA foundation. Each role exercised a different layer of the engineering system map.</p>
                 </div>
 
                 <div class="experience-grid">
@@ -845,12 +836,12 @@
                             <h4>JAG Process Solutions Pty Ltd</h4>
                             <div class="role-meta">
                                 <span class="role-dates">Jan 2026 to Jun 2026</span>
-                                <span class="role-location">Brunswick, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
                             </div>
                         </div>
-                        <p class="role-context">Automation, integration and smart-factory engineering for pharmaceutical, biotech, food and process clients under GMP.</p>
-                        <p class="role-story">Delivered automation and smart-factory engineering across regulated manufacturing environments where traceability, validation, operator usability and production reliability were central requirements. Worked across control logic, HMI and process visualisation, MES, batch execution, field-device integration, production data flows and validation documentation.</p>
+                        <p class="role-context">Delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Automation and SCADA &middot; Controls &middot; Regulated manufacturing &middot; Commissioning and delivery</p>
+                        <p class="role-tools"><span class="mini-label">Representative tools</span>Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, MES and batch</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -875,7 +866,6 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>iFIX to PVI+ migration</span><span>HMI and SCADA</span><span>Control logic</span><span>MES</span><span>Batch execution</span><span>FAT</span><span>SAT</span><span>Commissioning</span><span>GMP</span><span>GAMP 5</span><span>Field devices</span><span>Sensors</span><span>Drives</span><span>Diagnostics</span><span>Data integrity</span><span>Smart factory</span></p>
                     </article>
 
                     <article class="role-card">
@@ -887,12 +877,12 @@
                             <h4>Ford Motor Company via Invenio contract placement</h4>
                             <div class="role-meta">
                                 <span class="role-dates">Oct 2025 to Jan 2026</span>
-                                <span class="role-location">Little River, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
                             </div>
                         </div>
-                        <p class="role-context">Vehicle software integration and ADAS validation across T6 Ranger and Everest programmes.</p>
-                        <p class="role-story">Worked in a vehicle software and ADAS validation environment, supporting readiness milestones, OTA updates, regression testing and sign-off evidence. Instrumented test vehicles, conducted structured test drives and used CAN tooling to capture evidence, isolate faults and support validation decisions.</p>
+                        <p class="role-context">Validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes with CAN-level evidence for readiness milestones and OTA sign-off.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Automotive and validation &middot; Embedded networks &middot; Test engineering</p>
+                        <p class="role-tools"><span class="mini-label">Representative tools</span>Vector CANoe, CANalyzer, CAN and CAN FD, vehicle instrumentation</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -916,7 +906,6 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>Ford via Invenio</span><span>T6 Ranger</span><span>Everest</span><span>ADAS validation</span><span>Vehicle software</span><span>CANoe</span><span>CANalyzer</span><span>CAN bus</span><span>CAN FD</span><span>OTA regression</span><span>Test drives</span><span>Instrumentation</span><span>Fault isolation</span><span>Defect evidence</span></p>
                     </article>
 
                     <article class="role-card">
@@ -928,13 +917,12 @@
                             <h4>ABMARC</h4>
                             <div class="role-meta">
                                 <span class="role-dates">Jul 2024 to Aug 2025</span>
-                                <span class="role-location">South Geelong, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
-                                <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
                             </div>
                         </div>
-                        <p class="role-context">Vehicle emissions, compliance testing, instrumentation, data acquisition and defensible reporting.</p>
-                        <p class="role-story">Supported vehicle emissions and compliance testing using repeatable procedures, instrumentation and data-acquisition systems. Worked in an environment where the quality of the test method, captured data, calibration discipline and documentation directly affected the defensibility of the final report.</p>
+                        <p class="role-context">Conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Automotive and compliance &middot; Instrumentation and DAQ &middot; Quality and reporting</p>
+                        <p class="role-tools"><span class="mini-label">Representative tools</span>Emissions instrumentation, data-acquisition systems, QA records</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -958,7 +946,6 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>Vehicle emissions</span><span>ADR exposure</span><span>EURO exposure</span><span>Instrumentation</span><span>Data acquisition</span><span>QA records</span><span>Compliance testing</span><span>Regulatory documentation</span><span>Repeatable procedures</span><span>Trend review</span><span>Evidence gaps</span><span>Technical reporting</span></p>
                     </article>
 
                     <article class="role-card">
@@ -970,13 +957,12 @@
                             <h4>DuxTel Pty Ltd</h4>
                             <div class="role-meta">
                                 <span class="role-dates">Feb 2024 to Aug 2024</span>
-                                <span class="role-location">Greater Geelong, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
-                                <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
                             </div>
                         </div>
-                        <p class="role-context">End-to-end IoT systems connecting sensors, embedded devices, LoRaWAN networks, gateways, cloud platforms and dashboards.</p>
-                        <p class="role-story">Designed, configured and supported IoT systems that linked physical sensing hardware to cloud telemetry, data storage and dashboards. Worked across firmware configuration, device provisioning, LoRaWAN commissioning, MQTT workflows, ChirpStack integration, InfluxDB storage, Grafana visualisation and deployment handover.</p>
+                        <p class="role-context">Designed and deployed end-to-end IoT systems linking sensors, embedded devices, LoRaWAN gateways, cloud platforms and dashboards, through to field deployment and handover.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>IoT and telemetry &middot; Embedded firmware &middot; Data and dashboards</p>
+                        <p class="role-tools"><span class="mini-label">Representative tools</span>ESP32, LoRaWAN, ChirpStack, MQTT, InfluxDB, Grafana</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -1000,12 +986,11 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>IoT</span><span>ESP32</span><span>LoRaWAN</span><span>ChirpStack</span><span>MQTT</span><span>InfluxDB</span><span>Grafana</span><span>GPS tracking</span><span>Environmental sensing</span><span>Device provisioning</span><span>Firmware configuration</span><span>Gateways</span><span>Telemetry</span><span>Dashboards</span><span>Deployment documentation</span></p>
                     </article>
 
                     <div class="experience-group-heading">
-                        <p class="mini-label">2018 to 2024 &middot; Geelong region VIC</p>
-                        <h3>Foundation: manufacturing, QA and the production floor</h3>
+                        <p class="mini-label">2018 to 2024 &middot; Manufacturing, QA and the production floor</p>
+                        <h3>Foundation: manufacturing, quality and production</h3>
                     </div>
 
                     <article class="role-card">
@@ -1016,13 +1001,13 @@
                         <div class="role-head">
                             <h4>IDL</h4>
                             <div class="role-meta">
-                                <span class="role-location">Moorabool, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
                             </div>
                         </div>
-                        <p class="role-context">Food and beverage manufacturing across canning, bottling, kegging and cellar operations.</p>
-                        <p class="role-story">Started as a production line worker and progressed into a team lead and line-support role across five production lines: two canning lines, two bottling lines and one kegging line. Supported daily production execution, changeovers, run completion, KPI tracking, quality checks and first-response machine fixes, then moved into cellar operations to learn beverage making upstream of packaging.</p>
+                        <p class="role-context">Food and beverage manufacturing across five production lines, with progression from line work into team lead, line support and cellar operations.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Manufacturing and quality &middot; Machine operations &middot; Commissioning exposure</p>
+                        <p class="role-tools"><span class="mini-label">Representative context</span>Canning, bottling and kegging lines, changeovers, KPI tracking, QA checks</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -1046,7 +1031,6 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>Food and beverage manufacturing</span><span>Canning</span><span>Bottling</span><span>Kegging</span><span>Cellar operations</span><span>Changeovers</span><span>KPIs</span><span>QA checks</span><span>Traceability</span><span>Machine fixes</span><span>Commissioning support</span><span>WestRock</span><span>Fibre King</span><span>Operator workflows</span></p>
                     </article>
 
                     <article class="role-card">
@@ -1057,12 +1041,12 @@
                         <div class="role-head">
                             <h4>Carbon Revolution</h4>
                             <div class="role-meta">
-                                <span class="role-location">Waurn Ponds, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
                             </div>
                         </div>
-                        <p class="role-context">Advanced carbon-fibre automotive wheel manufacturing in a high-performance production environment.</p>
-                        <p class="role-story">Started as an automated rim layup machine operator and was soon moved closer to quality assurance and development work around the fully automated rim layup machine, with exposure to composite manufacturing, production quality and the practical realities of scaling advanced manufacturing.</p>
+                        <p class="role-context">Advanced carbon-fibre automotive wheel manufacturing, moving from automated layup operation towards quality assurance and development support.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Advanced manufacturing &middot; Quality and inspection &middot; Process development</p>
+                        <p class="role-tools"><span class="mini-label">Representative context</span>Automated rim layup, composite production, NDE and mechanical testing</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -1085,7 +1069,6 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>Carbon-fibre wheels</span><span>Advanced manufacturing</span><span>Automated rim layup</span><span>Composite production</span><span>Quality assurance</span><span>NDE</span><span>Mechanical testing</span><span>Process development</span><span>Defect awareness</span><span>Production support</span><span>Automotive manufacturing</span></p>
                     </article>
 
                     <article class="role-card">
@@ -1096,13 +1079,13 @@
                         <div class="role-head">
                             <h4>Thornton Engineering Australia Pty Ltd</h4>
                             <div class="role-meta">
-                                <span class="role-location">Corio, VIC</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered</span>
                                 <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
                             </div>
                         </div>
-                        <p class="role-context">Structural steel, pressure vessels and heavy fabrication QA in a standards-driven engineering environment.</p>
-                        <p class="role-story">Worked within the quality assurance team and operated as second to the QA manager across fabrication quality workflows, including drawing review, inspection planning, ITPs, MDRs, traceability, QA sign-off support and CAD designs for pressure vessels that progressed into fabrication.</p>
+                        <p class="role-context">Structural steel and pressure vessel QA in a standards-driven fabrication environment, operating as second to the QA manager.</p>
+                        <p class="role-domains"><span class="mini-label">Capability domains</span>Quality and documentation &middot; Mechanical and CAD &middot; Standards-driven delivery</p>
+                        <p class="role-tools"><span class="mini-label">Representative context</span>ITPs, MDRs, drawing review, pressure-vessel CAD, traceability</p>
                         <details class="role-detail">
                             <summary>Role detail</summary>
                             <div class="role-detail-body">
@@ -1129,127 +1112,169 @@
                                 </div>
                             </div>
                         </details>
-                        <p class="role-tags dot-strip"><span>Structural steel</span><span>Pressure vessels</span><span>QA sign-off</span><span>ITPs</span><span>MDRs</span><span>CAD design</span><span>Drawing review</span><span>Inspection planning</span><span>Material traceability</span><span>Fabrication QA</span><span>NDE</span><span>Mechanical testing</span><span>Compliance documentation</span><span>Standards-driven engineering</span></p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section class="section-block" id="leadership" aria-labelledby="leadership-title">
+        <section class="section-block" id="toolchain" aria-labelledby="toolchain-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>08</span>Leadership, Teams and Community</p>
-                    <h2 id="leadership-title">Teamwork, mentoring and multidisciplinary collaboration.</h2>
-                    <p class="section-sub">Student engineering teams, peer mentoring and community involvement alongside the technical breadth.</p>
+                    <p class="section-kicker"><span>04</span>Tools and Software Ecosystem</p>
+                    <h2 id="toolchain-title">One coherent toolchain across six engineering territories.</h2>
+                    <p class="section-sub">Anchor platforms are shown large with the context they were used in; the supporting toolset sits underneath. Everything listed is verified by the resume, a case study or a role on this page.</p>
                 </div>
-                <div class="leadership-grid">
-                    <article class="leadership-card">
-                        <p class="mini-label">Student engineering team</p>
-                        <h3>Mars Rover Team, Deakin University</h3>
-                        <p class="org-meta">Deakin University, Geelong VIC</p>
-                        <p>Member of the multidisciplinary student rover team, contributing to an engineering project spanning mechanical, electronics, control and software work.</p>
+                <div class="tool-grid">
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Robotics and autonomy</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span>
+                        </div>
+                        <p class="tool-anchors"><span>ROS 2 Humble</span><span>Nav2</span><span>MoveIt 2</span><span>Gazebo</span></p>
+                        <p class="tool-context">Used to build and validate the autonomous rover stack end to end.</p>
+                        <p class="dot-strip"><span>RViz</span><span>SLAM</span><span>A* path planning</span><span>Kalman and EKF</span><span>LiDAR</span><span>IMU</span><span>Depth cameras</span><span>OpenCV</span><span>YOLO</span></p>
                     </article>
-                    <article class="leadership-card">
-                        <p class="mini-label">Peer mentoring</p>
-                        <h3>Math Mentors</h3>
-                        <p class="org-meta">Deakin University, Geelong VIC</p>
-                        <p>Peer mathematics mentor supporting fellow students with problem solving, study skills and exam preparation.</p>
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Controls, automation and SCADA</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; professional</span>
+                        </div>
+                        <p class="tool-anchors"><span>Siemens TIA Portal</span><span>WinCC</span><span>PCS 7</span><span>iFIX</span><span>PVI+</span></p>
+                        <p class="tool-context">GMP smart-factory delivery at JAG Process Solutions, including the iFIX to PVI+ migration.</p>
+                        <p class="dot-strip"><span>PLC programming (IEC 61131-3)</span><span>HMI and SCADA</span><span>MES and batch systems</span><span>Modbus</span><span>Profinet</span><span>VFDs and drives</span><span>GMP</span><span>GAMP 5</span><span>FAT and SAT</span></p>
                     </article>
-                    <article class="leadership-card">
-                        <p class="mini-label">Student volunteering</p>
-                        <h3>Peer Support</h3>
-                        <p class="org-meta">Deakin University, Geelong VIC</p>
-                        <p>Peer support volunteer helping fellow students settle in, stay connected and find the right help.</p>
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Embedded and electronics</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; firmware</span>
+                        </div>
+                        <p class="tool-anchors"><span>ESP32 and ESP32-S3</span><span>STM32</span><span>FreeRTOS</span><span>Altium</span><span>KiCad</span></p>
+                        <p class="tool-context">Firmware delivered professionally at DuxTel; PCB design and bring-up across capstone and personal builds.</p>
+                        <p class="dot-strip"><span>Embedded C and C++</span><span>UART</span><span>I2C</span><span>SPI</span><span>CAN</span><span>ADC</span><span>PWM</span><span>Signal conditioning</span><span>Board bring-up</span></p>
                     </article>
-                    <article class="leadership-card">
-                        <p class="mini-label">Student association</p>
-                        <h3>Deakin University Student Association (DUSA)</h3>
-                        <p class="org-meta">Deakin University, Geelong VIC</p>
-                        <p>Involvement with the student association and campus community activities alongside study.</p>
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Software, data and AI/ML</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on</span>
+                        </div>
+                        <p class="tool-anchors"><span>Python</span><span>C and C++</span><span>MATLAB and Simulink</span><span>InfluxDB</span><span>Grafana</span></p>
+                        <p class="tool-context">Telemetry pipelines delivered at DuxTel; applied ML in the digital twin and rover projects.</p>
+                        <p class="dot-strip"><span>JavaScript</span><span>TypeScript</span><span>Node.js</span><span>REST APIs</span><span>MQTT</span><span>Linux</span><span>Git</span><span>Applied machine learning</span><span>Anomaly detection</span><span>Test automation</span><span>CI workflows</span></p>
                     </article>
-                    <article class="leadership-card">
-                        <p class="mini-label">Community leadership</p>
-                        <h3>Newcomb and District Cricket Club</h3>
-                        <p class="org-meta">Secretary</p>
-                        <p>Serves as club secretary and built and runs the club's website on Next.js and Supabase.</p>
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Automotive and validation</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; professional</span>
+                        </div>
+                        <p class="tool-anchors"><span>Vector CANoe</span><span>Vector CANalyzer</span></p>
+                        <p class="tool-context">ADAS and vehicle software validation at Ford via Invenio; emissions compliance at ABMARC.</p>
+                        <p class="dot-strip"><span>CAN and CAN FD</span><span>ADAS validation</span><span>OTA regression testing</span><span>Vehicle instrumentation</span><span>Fault isolation</span><span>Emissions instrumentation</span><span>Data acquisition</span></p>
+                    </article>
+                    <article class="tool-group">
+                        <div class="tool-group-head">
+                            <h3>Mechanical, hardware and delivery</h3>
+                            <span class="tier-chip"><span class="tier-dot tier-dot-handson" aria-hidden="true"></span>Hands-on &middot; documentation delivered</span>
+                        </div>
+                        <p class="tool-anchors"><span>SolidWorks</span><span>Fusion 360</span></p>
+                        <p class="tool-context">CAD across capstone, rover and pressure-vessel design work; delivery documentation across regulated roles.</p>
+                        <p class="dot-strip"><span>Motors, drives and actuators</span><span>Sensors and instrumentation</span><span>3D printing</span><span>ISO and IEC</span><span>AS/NZS</span><span>ADR and EURO</span><span>FMEA</span><span>ITP and MDR documentation</span><span>Commissioning and handover</span></p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section class="section-block" id="bring" aria-labelledby="bring-title">
+        <section class="section-block" id="education" aria-labelledby="education-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>09</span>What I Bring</p>
-                    <h2 id="bring-title">Engineering strengths that hold up across the whole stack.</h2>
-                </div>
-                <div class="bring-grid">
-                    <div class="bring-item"><span>01</span><p>Full-stack robotics: ROS 2, Nav2, SLAM, sensor fusion, path planning and simulation through to physical integration and commissioning.</p></div>
-                    <div class="bring-item"><span>02</span><p>Industrial automation and SCADA delivery: PLC, HMI, MES, batch systems, platform migration, FAT/SAT, and GMP-regulated validation discipline.</p></div>
-                    <div class="bring-item"><span>03</span><p>Applied AI/ML: anomaly detection, feature extraction, statistical modelling and data pipeline design integrated into real engineering workflows.</p></div>
-                    <div class="bring-item"><span>04</span><p>Embedded hardware to firmware: PCB design, ESP32/STM32, embedded C/C++, FreeRTOS, and full sensor and actuator integration.</p></div>
-                    <div class="bring-item"><span>05</span><p>Mechanical to electrical integration: SolidWorks, Fusion 360, control schematics, VFDs, instrumentation wiring and system commissioning.</p></div>
-                    <div class="bring-item"><span>06</span><p>Structured quality and validation: evidence-based testing, QA records, ITPs, MDRs, FMEA and documentation built for traceability and regulatory review.</p></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section-block" id="certifications" aria-labelledby="certifications-title">
-            <div class="section-wrap">
-                <div class="section-heading">
-                    <p class="section-kicker"><span>10</span>Certifications, Training and Standards</p>
-                    <h2 id="certifications-title">Qualifications, membership and standards I work to.</h2>
+                    <p class="section-kicker"><span>05</span>Education, Membership and Community</p>
+                    <h2 id="education-title">Formal qualifications, professional membership and the communities around them.</h2>
                 </div>
                 <div class="creds-grid">
                     <article class="creds-card">
-                        <p class="mini-label">Education</p>
+                        <p class="mini-label">Formal qualifications</p>
                         <ul class="creds-list">
-                            <li>Bachelor of Mechatronics Engineering (Honours), Distinction. Deakin University, VIC, 2025.</li>
-                            <li>Higher National Diploma, Mechatronics, Robotics and Automation, Distinction. Cardiff Metropolitan University, UK, 2016.</li>
+                            <li><strong>Bachelor of Mechatronics Engineering (Honours)</strong><br>Deakin University. Graduated with Distinction, 2025. Honours capstone: ESP32 clinical ataxia assessment device.</li>
+                            <li><strong>Higher National Diploma, Mechatronics, Robotics and Automation Engineering</strong><br>Cardiff Metropolitan University. Awarded with Distinction, 2016.</li>
                         </ul>
                     </article>
                     <article class="creds-card">
                         <p class="mini-label">Membership and short courses</p>
                         <ul class="creds-list">
-                            <li>Member, Engineers Australia.</li>
-                            <li>Short courses and certificates: Lean Six Sigma Foundation, JIRA and Agile, KAIZEN, Industrial Automation and IoT, AI/ML, CAD.</li>
+                            <li><strong>Member, Engineers Australia</strong></li>
+                            <li>Short courses, not formal qualifications: Lean Six Sigma Foundation, JIRA and Agile, KAIZEN, Industrial Automation and IoT, AI/ML, CAD.</li>
                         </ul>
                     </article>
                     <article class="creds-card">
-                        <p class="mini-label">Standards and frameworks (working knowledge)</p>
-                        <p class="dot-strip"><span>GAMP</span><span>FDA CFR</span><span>ISO</span><span>IEC</span><span>AS/NZS</span><span>EU</span><span>ASME</span></p>
+                        <p class="mini-label">Community and university involvement</p>
+                        <ul class="creds-list">
+                            <li><strong>Secretary, Newcomb and District Cricket Club.</strong> Also built and runs the club website on Next.js and Supabase.</li>
+                            <li><strong>Deakin Mars Rover Team.</strong> Multidisciplinary student rover engineering across mechanical, electronics, control and software work.</li>
+                            <li><strong>Math Mentors.</strong> Peer mathematics mentoring: problem solving, study skills and exam preparation.</li>
+                            <li><strong>Peer Support.</strong> Helping fellow students settle in, stay connected and find the right help.</li>
+                        </ul>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section class="section-block" id="writing" aria-labelledby="writing-title">
+        <section class="section-block" id="beyond" aria-labelledby="beyond-title">
             <div class="section-wrap">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>11</span>Selected Writing and Notes</p>
-                    <h2 id="writing-title">Engineering notes and project write-ups.</h2>
-                    <p class="section-sub">Short technical notes and case studies. This section will grow as write-ups are published.</p>
+                    <p class="section-kicker"><span>06</span>Beyond Engineering</p>
+                    <h2 id="beyond-title">Away from the stack.</h2>
+                    <p class="section-sub">The week does not end at the workbench. Five things that keep it balanced.</p>
                 </div>
-                <a class="writing-item" href="#digital-twin-detail">
-                    <p class="mini-label">Project note</p>
-                    <h3>Building a factory digital twin with AI agents, anomaly detection and OEE analytics</h3>
-                    <p>How the digital twin concept models equipment, generates telemetry and surfaces anomalies, maintenance needs and OEE in real time.</p>
-                </a>
+                <div class="beyond-grid">
+                    <article class="beyond-card">
+                        <span class="beyond-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M12 12 Q20 20 28 28" class="icon-accent" stroke-width="1.5" stroke-dasharray="2.5 3"/></svg>
+                        </span>
+                        <h3>Club cricket</h3>
+                        <p>Most weekends in season are spent at Newcomb and District Cricket Club, on the field and off it: Saj plays for the club and keeps it running as secretary.</p>
+                    </article>
+                    <article class="beyond-card">
+                        <span class="beyond-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M26 5 L26 24 Q26 31 19 31 L14 31" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="31" r="2.6" class="icon-accent" stroke-width="1.5"/></svg>
+                        </span>
+                        <h3>Hockey</h3>
+                        <p>Cricket's off-season counterpart. A different field, a faster ball and the same appetite for team sport.</p>
+                    </article>
+                    <article class="beyond-card">
+                        <span class="beyond-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M6 34 Q14 26 12 18 Q10 10 20 8 Q30 6 34 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 34 Q14 26 12 18 Q10 10 20 8 Q30 6 34 12" class="icon-accent" stroke-width="1.5" stroke-dasharray="1.5 5" stroke-linecap="round"/></svg>
+                        </span>
+                        <h3>Long drives</h3>
+                        <p>The reset button: an open road, no particular hurry and somewhere new at the end of it.</p>
+                    </article>
+                    <article class="beyond-card">
+                        <span class="beyond-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M15 30 V10 L30 7 V27" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="11.5" cy="30" r="3.5" class="icon-accent" stroke-width="1.5"/><circle cx="26.5" cy="27" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                        </span>
+                        <h3>Music</h3>
+                        <p>The soundtrack to those drives, and to most evenings besides. Good music is non-negotiable.</p>
+                    </article>
+                    <article class="beyond-card">
+                        <span class="beyond-icon" aria-hidden="true">
+                            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="11" y="14" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="17" cy="21" r="1.7" class="icon-accent-fill"/><circle cx="23" cy="21" r="1.7" class="icon-accent-fill"/><line x1="20" y1="14" x2="20" y2="8" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="7" r="1.6" class="icon-accent" stroke-width="1.5"/></svg>
+                        </span>
+                        <h3>Robots in the garage</h3>
+                        <p>There is always a personal robotics or hardware build half-finished on the bench. Some of them even make it onto this page.</p>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <section class="section-block section-block-last" id="contact" aria-labelledby="contact-title">
-            <div class="section-wrap contact-grid">
+        <section class="section-block section-block-last" id="resume" aria-labelledby="resume-title">
+            <div class="section-wrap resume-cta">
                 <div class="section-heading">
-                    <p class="section-kicker"><span>12</span>Contact</p>
-                    <p class="section-sub">Based in Geelong, Victoria, Australia. Open to roles across mechatronics, robotics, automation, embedded systems, controls, validation, IoT, AI/ML and smart factory engineering.</p>
+                    <p class="section-kicker"><span>07</span>Resume</p>
+                    <h2 id="resume-title">Explore the engineering evidence, then review the complete resume.</h2>
+                    <p class="section-sub">The resume carries the full professional record. It is the one document to take away from this page.</p>
                 </div>
-                <address class="contact-panel">
-                    <a class="contact-primary" href="mailto:sajeevanveeriah@gmail.com">sajeevanveeriah@gmail.com</a>
-                    <a href="https://www.linkedin.com/in/sajeevan-veeriah/" rel="noopener">linkedin.com/in/sajeevan-veeriah</a>
-                    <a href="https://github.com/Sajeevanveeriah" rel="noopener">github.com/Sajeevanveeriah</a>
-                    <span class="contact-note">Member, Engineers Australia</span>
-                </address>
+                <div class="resume-actions">
+                    <a class="button button-primary" href="assets/Resume_Sajeevan_Veeriah.pdf" target="_blank" rel="noopener">View resume</a>
+                    <a class="button button-secondary" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Download resume</a>
+                </div>
             </div>
         </section>
     </main>
@@ -1263,23 +1288,19 @@
                         <span class="brand-text">Sajeevan Veeriah</span>
                     </a>
                     <p>Mechatronics, robotics, automation and AI/ML engineer working across physical systems, controls, embedded, software and validation.</p>
-                    <p class="footer-personal">Away from the stack: club cricket and hockey most weekends, long drives with good music, and a robot always half-finished in the garage. English, Tamil and Sinhala.</p>
                 </div>
                 <div class="footer-col">
                     <p class="mini-label">Sections</p>
-                    <a href="#about">About</a>
-                    <a href="#portfolio">Work</a>
-                    <a href="#stack">Stack</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#atlas">Atlas</a>
+                    <a href="#work">Work</a>
+                    <a href="#capability">Capability</a>
                     <a href="#experience">Experience</a>
-                    <a href="#contact">Contact</a>
+                    <a href="#toolchain">Toolchain</a>
+                    <a href="#education">Education</a>
+                    <a href="#beyond">Beyond Engineering</a>
                 </div>
                 <div class="footer-col">
-                    <p class="mini-label">Connect</p>
-                    <a href="mailto:sajeevanveeriah@gmail.com">sajeevanveeriah@gmail.com</a>
-                    <a href="https://www.linkedin.com/in/sajeevan-veeriah/" rel="noopener">LinkedIn</a>
-                    <a href="https://github.com/Sajeevanveeriah" rel="noopener">GitHub</a>
+                    <p class="mini-label">Resume</p>
+                    <a href="assets/Resume_Sajeevan_Veeriah.pdf" target="_blank" rel="noopener">View resume</a>
                     <a class="footer-resume" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Download resume &darr;</a>
                 </div>
             </div>
