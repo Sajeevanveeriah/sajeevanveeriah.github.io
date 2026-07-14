@@ -1,95 +1,14 @@
-/* Sajeevan Veeriah portfolio. Vanilla JS only: three-state theme
-   controller (Auto, Light, Dark), mobile navigation, work filter,
-   capability explorer search and filters, engineering system map
-   behaviour, active-section navigation and hash deep links.
-   No external requests, no frameworks. Everything degrades to
-   readable static HTML when JavaScript is unavailable. */
+/* Sajeevan Veeriah portfolio. Vanilla JS only: mobile navigation,
+   active-section navigation, work filter, Engineering Atlas search
+   and filters, Systems Stack to Atlas pre-filtering, hash deep links
+   and a motion-safe scroll reveal. No external requests, no
+   frameworks. Everything degrades to readable static HTML when
+   JavaScript is unavailable. */
 (function () {
     "use strict";
 
     var root = document.documentElement;
     var body = document.body;
-
-    /* ---- Theme controller ----
-       Auto (default): follow the operating system, store nothing.
-       Light / Dark: manual override stored in localStorage.
-       The inline head script has already applied any stored
-       override before first paint. */
-    var THEME_KEY = "theme";
-    var THEME_COLORS = { dark: "#121110", light: "#F4F2ED" };
-    var lightQuery = window.matchMedia("(prefers-color-scheme: light)");
-    var themeRadios = Array.prototype.slice.call(document.querySelectorAll("[data-theme-radio]"));
-
-    function storedTheme() {
-        try {
-            var t = localStorage.getItem(THEME_KEY);
-            return (t === "light" || t === "dark") ? t : null;
-        } catch (err) {
-            return null;
-        }
-    }
-
-    function resolvedTheme() {
-        var manual = root.getAttribute("data-theme");
-        if (manual === "light" || manual === "dark") return manual;
-        return lightQuery.matches ? "light" : "dark";
-    }
-
-    function syncThemeColorMeta() {
-        var active = resolvedTheme();
-        var manual = root.hasAttribute("data-theme");
-        var metas = document.querySelectorAll('meta[name="theme-color"]');
-        Array.prototype.forEach.call(metas, function (meta) {
-            if (manual) {
-                meta.setAttribute("content", THEME_COLORS[active]);
-            } else {
-                var media = meta.getAttribute("media") || "";
-                meta.setAttribute("content",
-                    media.indexOf("light") !== -1 ? THEME_COLORS.light : THEME_COLORS.dark);
-            }
-        });
-    }
-
-    function applyTheme(choice) {
-        if (choice === "light" || choice === "dark") {
-            root.setAttribute("data-theme", choice);
-            try { localStorage.setItem(THEME_KEY, choice); } catch (err) { /* ignore */ }
-        } else {
-            root.removeAttribute("data-theme");
-            try { localStorage.removeItem(THEME_KEY); } catch (err) { /* ignore */ }
-        }
-        syncThemeColorMeta();
-    }
-
-    if (themeRadios.length) {
-        var initial = storedTheme() || "auto";
-        themeRadios.forEach(function (radio) {
-            radio.checked = radio.value === initial;
-            radio.addEventListener("change", function () {
-                if (radio.checked) applyTheme(radio.value);
-            });
-        });
-
-        var onSchemeChange = function () {
-            /* While in Auto the CSS media query re-themes the page;
-               only the theme-color meta needs a nudge. */
-            syncThemeColorMeta();
-        };
-        if (typeof lightQuery.addEventListener === "function") {
-            lightQuery.addEventListener("change", onSchemeChange);
-        } else if (typeof lightQuery.addListener === "function") {
-            lightQuery.addListener(onSchemeChange);
-        }
-        syncThemeColorMeta();
-    }
-
-    /* Enable colour transitions only after first paint so the
-       initial theme never animates in. */
-    window.requestAnimationFrame(function () {
-        window.requestAnimationFrame(function () {
-            root.classList.add("theme-anim");
-        });
-    });
 
     /* ---- Mobile navigation ---- */
     var navToggle = document.querySelector("[data-nav-toggle]");
@@ -151,7 +70,7 @@
         });
     }
 
-    /* ---- Selected work filter ---- */
+    /* ---- Work filter ---- */
     var workFilters = document.querySelector("[data-work-filters]");
     var workStatus = document.querySelector("[data-work-status]");
     var projects = Array.prototype.slice.call(document.querySelectorAll("[data-project]"));
@@ -170,8 +89,8 @@
             });
             if (workStatus) {
                 workStatus.textContent = key === "all"
-                    ? "Showing all " + projects.length + " projects."
-                    : "Showing " + shown + " of " + projects.length + " projects in " + label + ".";
+                    ? "Showing all " + projects.length + " work records."
+                    : "Showing " + shown + " of " + projects.length + " work records in " + label + ".";
             }
         };
 
@@ -187,7 +106,7 @@
         });
     }
 
-    /* ---- Capability explorer: search and filters ---- */
+    /* ---- Engineering Atlas: search and filters ---- */
     var capControls = document.querySelector("[data-cap-controls]");
     var capList = document.querySelector("[data-cap-list]");
     var capStatus = document.querySelector("[data-cap-status]");
@@ -233,7 +152,7 @@
             });
 
             if (capStatus) {
-                var status = "Showing " + shown + " of " + entries.length + " capability domains";
+                var status = "Showing " + shown + " of " + entries.length + " atlas domains";
                 if (activeTier !== "all") status += " at tier: " + tierNames[activeTier];
                 if (activeContext !== "all") status += " with context filter applied";
                 if (query) status += " matching \"" + (capSearch ? capSearch.value.trim() : "") + "\"";
@@ -267,31 +186,17 @@
 
         applyCapFilters();
 
-        /* Expose for the system map */
+        /* Expose for the Systems Stack pre-filter */
         capList.applyCapFilters = applyCapFilters;
     }
 
-    /* ---- Engineering system map ---- */
-    var systemMap = document.querySelector("[data-system-map]");
-    if (systemMap) {
-        var engage = function (on) {
-            systemMap.classList.toggle("map-engaged", on);
-        };
-        systemMap.addEventListener("mouseover", function (event) {
-            engage(Boolean(event.target.closest(".map-layer-link")));
-        });
-        systemMap.addEventListener("mouseleave", function () { engage(false); });
-        systemMap.addEventListener("focusin", function (event) {
-            engage(Boolean(event.target.closest(".map-layer-link")));
-        });
-        systemMap.addEventListener("focusout", function () { engage(false); });
-
-        /* Selecting a layer pre-filters the capability explorer,
-           then follows the anchor to it. */
-        systemMap.addEventListener("click", function (event) {
-            var link = event.target.closest("[data-map-cluster]");
+    /* ---- Systems Stack: selecting a layer pre-filters the Atlas ---- */
+    var stack = document.querySelector("[data-stack]");
+    if (stack) {
+        stack.addEventListener("click", function (event) {
+            var link = event.target.closest("[data-stack-cluster]");
             if (!link || !capClusterSelect) return;
-            capClusterSelect.value = link.getAttribute("data-map-cluster");
+            capClusterSelect.value = link.getAttribute("data-stack-cluster");
             if (capList && typeof capList.applyCapFilters === "function") {
                 capList.applyCapFilters();
             }
@@ -318,4 +223,34 @@
 
     window.addEventListener("hashchange", openTargetDisclosure);
     openTargetDisclosure();
+
+    /* ---- Motion-safe scroll reveal ----
+       Armed only when IntersectionObserver exists and the user has
+       not requested reduced motion; the CSS is additionally gated
+       behind html.reveal-armed, so content is never hidden without
+       JavaScript. */
+    var motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (motionOk && "IntersectionObserver" in window) {
+        var revealTargets = Array.prototype.slice.call(document.querySelectorAll(
+            ".section-heading, .project-featured, .project-card, .tool-group, " +
+            ".role-card, .creds-card, .beyond-card, .stack-layer, .contact-panel-wrap"
+        ));
+        if (revealTargets.length) {
+            root.classList.add("reveal-armed");
+            var revealObserver = new IntersectionObserver(function (obsEntries) {
+                obsEntries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-in");
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+
+            revealTargets.forEach(function (el) {
+                el.classList.add("reveal");
+                /* Anything already in view reveals immediately on load. */
+                revealObserver.observe(el);
+            });
+        }
+    }
 }());

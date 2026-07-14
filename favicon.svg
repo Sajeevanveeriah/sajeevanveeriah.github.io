@@ -1,13 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SV monogram">
   <style>
-    .fav-bg { fill: #12100D; }
-    .fav-ink { fill: #F3EFE7; }
-    .fav-accent { fill: #E2A24B; }
-    @media (prefers-color-scheme: light) {
-      .fav-bg { fill: #F4F2ED; }
-      .fav-ink { fill: #211D18; }
-      .fav-accent { fill: #B26A0B; }
-    }
+    .fav-bg { fill: #0B0D12; }
+    .fav-ink { fill: #ECE9E1; }
+    .fav-accent { fill: #D0B274; }
   </style>
   <rect class="fav-bg" width="64" height="64" rx="4"></rect>
   <text x="32" y="34" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" letter-spacing="-1" text-anchor="middle" dominant-baseline="central" class="fav-ink">SV</text>
