@@ -50,7 +50,7 @@ Domains are never omitted for being resume-light and never promoted above their 
 Single page, `index.html`, in section order:
 
 1. Hero: name, positioning, complete-package lede, four actions (View work, Explore atlas, Download resume, Contact), verified stats and the closed-loop signal panel (Sense, Estimate, Control, Actuate, Verify)
-2. Work (`#work`): eight proof-backed records: one featured build (ROS 2 rover), six project cards and a manufacturing and QA foundation record, with domain filtering, each opening a problem-to-output case study disclosure (Problem, Context, System architecture, Engineering decisions, Tools, Validation method, Output, Evidence level, What it demonstrates)
+2. Work (`#work`): nine proof-backed records: Engineering Mastery Lab as the featured engineering software build, the ROS 2 rover and six other project cards, plus a manufacturing and QA foundation record, with domain filtering, each opening a problem-to-output case study disclosure (Problem, Context, System architecture, Engineering decisions, Tools, Validation method, Output, Evidence level, What it demonstrates)
 3. Engineering Atlas (`#atlas`): nineteen capability domains in a compact two-column card grid with search, domain filter, evidence-tier filter, delivery-context filter, a live result count and stable ids for deep linking
 4. Systems Stack (`#stack`): ten layers from mechanical to AI/ML to validation and documentation; selecting a layer pre-filters the Atlas
 5. Skill Library (`#skills`): six tool territories, each with anchor platforms, usage context and a supporting toolset
