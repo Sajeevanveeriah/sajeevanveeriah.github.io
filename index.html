@@ -150,7 +150,7 @@
                         <li>&middot; Deakin Honours Distinction, 2025</li>
                     </ul>
                     <div class="hero-stats" aria-label="Portfolio contents">
-                        <div class="hero-stat"><span class="stat-num">8</span><span class="stat-label">Work records</span></div>
+                        <div class="hero-stat"><span class="stat-num">9</span><span class="stat-label">Work records</span></div>
                         <div class="hero-stat"><span class="stat-num">19</span><span class="stat-label">Atlas domains</span></div>
                         <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Evidence tiers</span></div>
                     </div>
@@ -208,11 +208,12 @@
             <div class="section-wrap">
                 <div class="section-heading">
                     <p class="section-kicker"><span>01</span>Work</p>
-                    <h2 id="work-title">Eight proof-backed records across robotics, automation, embedded sensing, IoT, AI/ML, vehicle validation and manufacturing.</h2>
-                    <p class="section-sub">Professional delivery is separated from university and personal work, and every record carries its honest evidence tier. Filter by domain or read straight through.</p>
+                    <h2 id="work-title">Nine proof-backed records across engineering software, robotics, automation, embedded sensing, IoT, AI/ML, vehicle validation and manufacturing.</h2>
+                    <p class="section-sub">Professional delivery is separated from university and personal work, including engineering tools, and every record carries its honest evidence tier. Filter by domain or read straight through.</p>
                 </div>
                 <div class="work-filters" role="group" aria-label="Filter projects by engineering domain" hidden data-work-filters>
                     <button class="filter-pill is-active" type="button" aria-pressed="true" data-work-filter="all">All work</button>
+                    <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="software">Software and engineering tools</button>
                     <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="robotics">Robotics and autonomy</button>
                     <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="automation">Automation and SCADA</button>
                     <button class="filter-pill" type="button" aria-pressed="false" data-work-filter="embedded">Embedded and sensing</button>
@@ -223,21 +224,35 @@
                 </div>
                 <p class="filter-status" aria-live="polite" data-work-status></p>
 
-                <article class="project-featured" data-project data-domains="robotics aiml embedded">
+                <article class="project-featured project-featured-wide" data-project data-domains="software automation">
                     <span class="project-featured-media">
-                        <img src="assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="ROS 2 autonomous navigation stack visualised with robot mapping and route planning">
+                        <img src="assets/image/Engineering_Mastery_Lab_Command_Centre_Rev00.svg" width="1435" height="660" loading="lazy" decoding="async" alt="Engineering Mastery Lab dashboard showing the Parametric CAD Studio, Engineering Toolbox, Project Workbench and PID Control Lab.">
                     </span>
                     <div class="project-featured-copy">
-                        <p class="project-meta-row"><span class="project-cat">Featured &middot; Personal build</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></p>
-                        <h3 class="project-featured-title">Autonomous Navigation Rover on ROS 2</h3>
-                        <p class="project-oneliner">A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation for repeatable obstacle-aware navigation.</p>
-                        <p class="project-facts"><span class="mini-label">Domains</span>Robotics and autonomy &middot; AI/ML and data &middot; Embedded and sensing</p>
-                        <p class="project-facts"><span class="mini-label">Key tools</span>ROS 2 Humble, Nav2, Gazebo, RViz, SLAM, Kalman and EKF</p>
-                        <a class="link-arrow project-open" href="#autonomous-navigation-detail">View case study &rarr;</a>
+                        <p class="project-meta-row"><span class="project-cat">Personal open-source build</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></p>
+                        <h3 class="project-featured-title">Engineering Mastery Lab</h3>
+                        <p class="project-oneliner">A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.</p>
+                        <p class="project-facts"><span class="mini-label">Key tools</span>React, TypeScript, Three.js, Vite, Tauri 2, Rust, Vitest</p>
+                        <div class="project-actions">
+                            <a class="link-arrow project-open" href="#engineering-mastery-lab-detail">View case study &rarr;</a>
+                            <a class="link-arrow project-open" href="https://sajeevanveeriah.github.io/Engineering-Mastery-Lab/" target="_blank" rel="noopener noreferrer">Open live app &rarr;</a>
+                            <a class="link-arrow project-open" href="https://github.com/Sajeevanveeriah/Engineering-Mastery-Lab" target="_blank" rel="noopener noreferrer">View source &rarr;</a>
+                        </div>
                     </div>
                 </article>
 
                 <div class="project-grid">
+                    <article class="project-card" data-project data-domains="robotics aiml embedded">
+                        <span class="project-media"><img src="assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="ROS 2 autonomous navigation stack visualised with robot mapping and route planning"></span>
+                        <div class="project-body">
+                            <p class="project-meta-row"><span class="project-cat">Featured &middot; Personal build</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></p>
+                            <h3 class="project-title">Autonomous Navigation Rover on ROS 2</h3>
+                            <p class="project-oneliner">A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation for repeatable obstacle-aware navigation.</p>
+                            <p class="project-facts"><span class="mini-label">Domains</span>Robotics and autonomy &middot; AI/ML and data &middot; Embedded and sensing</p>
+                            <p class="project-facts"><span class="mini-label">Key tools</span>ROS 2 Humble, Nav2, Gazebo, RViz, SLAM, Kalman and EKF</p>
+                            <a class="link-arrow project-open" href="#autonomous-navigation-detail">View case study &rarr;</a>
+                        </div>
+                    </article>
                     <article class="project-card" data-project data-domains="automation manufacturing">
                         <span class="project-media"><img src="assets/image/Smart_Factory_Process_Visualisation_Rev00.png" width="1600" height="1200" loading="lazy" decoding="async" alt="Smart factory process visualisation with HMI, SCADA and production data screens"></span>
                         <div class="project-body">
@@ -330,6 +345,23 @@
 
                 <div class="case-studies" aria-label="Case study details">
                     <h3 class="case-studies-title"><span class="mini-label">Case study details</span>Problem-to-output breakdowns for each record.</h3>
+                    <details class="case-study" id="engineering-mastery-lab-detail">
+                        <summary>
+                            <span class="case-meta"><span class="case-cat">Personal open-source build &middot; Software and engineering tools</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></span>
+                            <span class="case-title">Engineering Mastery Lab</span>
+                        </summary>
+                        <dl class="case-facts">
+                            <dt>Problem</dt><dd>Engineering learning, calculation, CAD, simulation, skills tracking and evidence workflows are often fragmented across disconnected tools and notes.</dd>
+                            <dt>Context</dt><dd>A personal open-source engineering application deployed publicly through GitHub Pages. The shared React and TypeScript interface runs in the browser and in an optional Tauri 2 desktop shell. Version 0.2.0 is a functional completion candidate, not certified or production engineering software.</dd>
+                            <dt>System architecture</dt><dd>A React and TypeScript frontend built with Vite and HashRouter for GitHub Pages, pure TypeScript calculation and simulation engines, a Three.js bounded parametric CAD layer, browser-local storage, and a controlled Tauri and Rust boundary for authorised local workspaces, external engineering tools and evidence capture.</dd>
+                            <dt>Engineering decisions</dt><dd>Kept the browser experience local-first with no required account, backend or telemetry. Exposed governing assumptions and validation warnings instead of hiding engineering limits. Implemented bounded parametric templates rather than presenting a simplified modeller as general CAD. Kept desktop filesystem and process authority behind an allow-listed Rust boundary with workspace containment and deterministic evidence handling.</dd>
+                            <dt>Tools and technologies</dt><dd>React 18, TypeScript, Vite 8, React Router 6, Three.js, Vitest, Tauri 2, Rust, GitHub Actions, optional ngspice and KiCad CLI integration.</dd>
+                            <dt>Validation method</dt><dd>Automated Vitest suites, TypeScript checks, production builds and GitHub Actions gates, supported by rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. No engineering-standards certification is claimed.</dd>
+                            <dt>Output</dt><dd>A working public web application with a browser-first engineering toolbox, bounded parametric CAD, guided learning system and evidence-focused project workflow, plus a desktop-capable source architecture.</dd>
+                            <dt>Evidence level</dt><dd>Delivered, as personal project evidence. A live public build and public source repository exist. The current v0.2.0 code remains a functional completion candidate and is not claimed as certified or production engineering software.</dd>
+                            <dt>What it demonstrates</dt><dd>The ability to integrate engineering-domain logic, simulation, CAD geometry, software architecture, security boundaries, validation discipline and accessible product design into one coherent engineering system.</dd>
+                        </dl>
+                    </details>
                     <details class="case-study" id="autonomous-navigation-detail">
                         <summary>
                             <span class="case-meta"><span class="case-cat">Personal build &middot; Robotics and autonomy</span><span class="tier-chip"><span class="tier-dot tier-dot-delivered" aria-hidden="true"></span>Delivered &middot; project evidence</span></span>

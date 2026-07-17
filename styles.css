@@ -781,6 +781,25 @@ button {
     align-items: center;
 }
 
+.project-featured-wide {
+    grid-template-columns: 1fr;
+}
+
+.project-featured-wide .project-featured-media {
+    display: block;
+    padding: clamp(8px, 1.2vw, 14px);
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.project-featured-wide .project-featured-media img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border: 0;
+}
+
 .project-featured-media img,
 .project-media img {
     border-radius: var(--radius);
@@ -907,6 +926,13 @@ button {
 
 .project-open {
     margin-top: 4px;
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 14px;
 }
 
 /* ---- Case studies ---- */
