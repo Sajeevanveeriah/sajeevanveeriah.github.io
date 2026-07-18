@@ -1,7 +1,7 @@
 /* Sajeevan Veeriah portfolio. Vanilla JS only: mobile navigation,
    active-section navigation, work filter, Engineering Atlas search
    and filters, Systems Stack to Atlas pre-filtering, hash deep links
-   and a motion-safe scroll reveal. No external requests, no
+   and cinematic motion-safe interaction. No external requests, no
    frameworks. Everything degrades to readable static HTML when
    JavaScript is unavailable. */
 (function () {
@@ -224,12 +224,106 @@
     window.addEventListener("hashchange", openTargetDisclosure);
     openTargetDisclosure();
 
-    /* ---- Motion-safe scroll reveal ----
-       Armed only when IntersectionObserver exists and the user has
-       not requested reduced motion; the CSS is additionally gated
-       behind html.reveal-armed, so content is never hidden without
-       JavaScript. */
+    /* ---- Cinematic, motion-safe interaction system ----
+       All movement is driven by load, scroll or direct pointer input.
+       Nothing loops continuously, content is never hidden without
+       JavaScript and reduced-motion users receive the static site. */
     var motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (motionOk) {
+        root.classList.add("motion-ready");
+
+        var progressRail = document.createElement("div");
+        progressRail.className = "scroll-progress";
+        progressRail.setAttribute("aria-hidden", "true");
+        body.appendChild(progressRail);
+
+        var hero = document.querySelector(".hero");
+        var signalPanel = document.querySelector("[data-signal-panel]");
+        var mediaItems = Array.prototype.slice.call(document.querySelectorAll(
+            ".project-media img, .project-featured-media img"
+        ));
+        var previousScroll = window.scrollY;
+        var motionTicking = false;
+        var header = document.querySelector(".site-header");
+
+        var clamp = function (value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        };
+
+        var updateScrollMotion = function () {
+            var scrollY = window.scrollY;
+            var maxScroll = Math.max(1, root.scrollHeight - window.innerHeight);
+            var pageProgress = clamp(scrollY / maxScroll, 0, 1);
+            root.style.setProperty("--scroll-progress", pageProgress.toFixed(4));
+
+            if (hero) {
+                var heroHeight = Math.max(1, hero.offsetHeight);
+                var heroProgress = clamp(scrollY / heroHeight, 0, 1);
+                hero.style.setProperty("--grid-shift", (heroProgress * 34).toFixed(1) + "px");
+                hero.style.setProperty("--hero-copy-shift", (heroProgress * 74).toFixed(1) + "px");
+                hero.style.setProperty("--hero-copy-opacity", (1 - heroProgress * 0.72).toFixed(3));
+                hero.style.setProperty("--signal-shift", (heroProgress * -46).toFixed(1) + "px");
+                hero.style.setProperty("--hero-aura", (0.82 - heroProgress * 0.5).toFixed(3));
+            }
+
+            mediaItems.forEach(function (image) {
+                var rect = image.getBoundingClientRect();
+                if (rect.bottom > -100 && rect.top < window.innerHeight + 100) {
+                    var centreDelta = (rect.top + rect.height / 2) - window.innerHeight / 2;
+                    var mediaShift = clamp(centreDelta / window.innerHeight, -1, 1) * -18;
+                    image.style.setProperty("--media-shift", mediaShift.toFixed(1) + "px");
+                }
+            });
+
+            if (header) {
+                var travellingDown = scrollY > previousScroll;
+                header.classList.toggle("is-hidden", travellingDown && scrollY > 180);
+            }
+            previousScroll = scrollY;
+            motionTicking = false;
+        };
+
+        var requestMotionUpdate = function () {
+            if (motionTicking) return;
+            motionTicking = true;
+            window.requestAnimationFrame(updateScrollMotion);
+        };
+
+        window.addEventListener("scroll", requestMotionUpdate, { passive: true });
+        window.addEventListener("resize", requestMotionUpdate);
+        updateScrollMotion();
+
+        if (hero) {
+            hero.addEventListener("pointermove", function (event) {
+                var rect = hero.getBoundingClientRect();
+                var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) * 100;
+                var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) * 100;
+                hero.style.setProperty("--spot-x", x.toFixed(1) + "%");
+                hero.style.setProperty("--spot-y", y.toFixed(1) + "%");
+            });
+        }
+
+        if (signalPanel && window.matchMedia("(pointer: fine)").matches) {
+            signalPanel.addEventListener("pointermove", function (event) {
+                var rect = signalPanel.getBoundingClientRect();
+                var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) - 0.5;
+                var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) - 0.5;
+                signalPanel.style.setProperty("--signal-tilt-x", (-y * 5).toFixed(2) + "deg");
+                signalPanel.style.setProperty("--signal-tilt-y", (x * 6).toFixed(2) + "deg");
+            });
+            signalPanel.addEventListener("pointerleave", function () {
+                signalPanel.style.setProperty("--signal-tilt-x", "0deg");
+                signalPanel.style.setProperty("--signal-tilt-y", "0deg");
+            });
+        }
+
+        window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+                root.classList.add("motion-loaded");
+            });
+        });
+    }
+
     if (motionOk && "IntersectionObserver" in window) {
         var revealTargets = Array.prototype.slice.call(document.querySelectorAll(
             ".section-heading, .project-featured, .project-card, .tool-group, " +
@@ -244,11 +338,11 @@
                         revealObserver.unobserve(entry.target);
                     }
                 });
-            }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+            }, { rootMargin: "0px 0px -7% 0px", threshold: 0.06 });
 
-            revealTargets.forEach(function (el) {
+            revealTargets.forEach(function (el, index) {
                 el.classList.add("reveal");
-                /* Anything already in view reveals immediately on load. */
+                el.style.setProperty("--reveal-delay", String((index % 3) * 70) + "ms");
                 revealObserver.observe(el);
             });
         }
