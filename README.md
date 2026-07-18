@@ -17,7 +17,7 @@ A posh engineering command centre. One committed dark identity, no light theme:
 - Champagne gold `#D0B274` as the primary accent (kickers, CTAs, delivered dots, dates) and steel blue `#8FB0CE` as the secondary accent (category labels, hands-on dots, in-copy links).
 - Precision hairlines at `rgba(236,233,225,0.08)` and `0.22`, a faint technical grid behind the hero, numbered mono section kickers and 4 to 6 px radii.
 - Typography: Space Grotesk (display), Hanken Grotesk (body), IBM Plex Mono (system labels), all self-hosted woff2.
-- Controlled motion only: hover states, a motion-safe scroll reveal, no continuous animation.
+- Controlled motion only: hover states, one-time hero choreography, motion-safe scroll-linked depth and directional reveals, no continuous animation.
 
 Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, purple gradients, glassmorphism overload, cyberpunk clutter, chip soup, skill bars, fake logos and fake screenshots.
 
