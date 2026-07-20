@@ -106,7 +106,7 @@
     --dur-editorial: 0.6s;
     --dur-settle: 0.9s;
     --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-    --ease-settle: var(--ease-settle);
+    --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
     --dist-sm: 8px;
     --dist-md: 14px;
@@ -2261,6 +2261,7 @@ html.js .signal-node {
 
 @media (prefers-reduced-motion: no-preference) {
     html.motion-ready .project-card.filter-enter,
+    html.motion-ready .project-featured.filter-enter,
     html.motion-ready .cap-entry.filter-enter {
         animation: filter-enter var(--dur-standard) var(--ease-settle);
     }
