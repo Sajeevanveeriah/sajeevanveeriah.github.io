@@ -22,10 +22,26 @@
         el.classList.remove("filter-enter");
         void el.offsetWidth;
         el.classList.add("filter-enter");
-        el.addEventListener("animationend", function handler() {
+        var settle = function () {
             el.classList.remove("filter-enter");
-            el.removeEventListener("animationend", handler);
-        });
+            el.removeEventListener("animationend", settle);
+            el.removeEventListener("animationcancel", settle);
+        };
+        el.addEventListener("animationend", settle);
+        el.addEventListener("animationcancel", settle);
+    }
+
+    /* Run an optional enhancement in isolation. If it throws, the
+       failure handler restores a fully visible static page and later
+       independent features still initialise. */
+    function safeInit(init, onFail) {
+        try {
+            init();
+        } catch (err) {
+            if (onFail) {
+                try { onFail(); } catch (ignore) { /* fail open silently */ }
+            }
+        }
     }
 
     /* ---- Mobile navigation ---- */
@@ -107,6 +123,8 @@
                 if (visible) {
                     shown += 1;
                     if (wasHidden) playFilterEnter(card);
+                } else {
+                    card.classList.remove("filter-enter");
                 }
             });
             if (workStatus) {
@@ -174,6 +192,8 @@
                 if (visible) {
                     shown += 1;
                     if (wasHidden) playFilterEnter(entry);
+                } else {
+                    entry.classList.remove("filter-enter");
                 }
             });
 
@@ -293,68 +313,89 @@
        reduced-motion users open and close instantly through the native
        control. Easings mirror --ease-settle and --ease-exit. */
     if (motionOk && typeof Element.prototype.animate === "function") {
-        var OPEN_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
-        var CLOSE_EASE = "cubic-bezier(0.4, 0, 1, 1)";
-        var disclosures = Array.prototype.slice.call(
-            document.querySelectorAll(".case-study, .cap-entry, .role-detail")
-        );
+        safeInit(function () {
+            var OPEN_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+            var CLOSE_EASE = "cubic-bezier(0.4, 0, 1, 1)";
+            var disclosures = Array.prototype.slice.call(
+                document.querySelectorAll(".case-study, .cap-entry, .role-detail")
+            );
 
-        disclosures.forEach(function (details) {
-            var summary = details.querySelector("summary");
-            if (!summary) return;
-            var content = summary.nextElementSibling;
-            if (!content) return;
-            var current = null;
-            var closing = false;
+            disclosures.forEach(function (details) {
+                var summary = details.querySelector("summary");
+                if (!summary) return;
+                var content = summary.nextElementSibling;
+                if (!content) return;
+                var current = null;
+                var closing = false;
 
-            var reset = function () {
-                content.style.overflow = "";
-                content.style.height = "";
-                current = null;
-            };
-
-            summary.addEventListener("click", function (event) {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-                    return;
-                }
-                event.preventDefault();
-
-                var startHeight = content.getBoundingClientRect().height;
-                if (current) {
-                    current.cancel();
-                    current = null;
-                }
-                content.style.overflow = "hidden";
-
-                if (!details.open || closing) {
-                    closing = false;
-                    if (!details.open) details.open = true;
-                    var target = content.scrollHeight;
-                    current = content.animate(
-                        [
-                            { height: startHeight + "px", opacity: startHeight ? 1 : 0 },
-                            { height: target + "px", opacity: 1 }
-                        ],
-                        { duration: 300, easing: OPEN_EASE }
-                    );
-                    current.onfinish = reset;
-                    current.oncancel = reset;
-                } else {
-                    closing = true;
-                    current = content.animate(
-                        [
-                            { height: startHeight + "px", opacity: 1 },
-                            { height: "0px", opacity: 0 }
-                        ],
-                        { duration: 260, easing: CLOSE_EASE }
-                    );
-                    current.onfinish = function () {
-                        details.open = false;
-                        closing = false;
-                        reset();
+                /* Only the animation that still owns the disclosure may
+                   clear the inline styles: a cancelled run must not wipe
+                   the state of the run that interrupted it. */
+                var resetFor = function (anim) {
+                    return function () {
+                        if (current !== anim) return;
+                        content.style.overflow = "";
+                        content.style.height = "";
+                        current = null;
                     };
-                    current.oncancel = reset;
-                }
+                };
+
+                summary.addEventListener("click", function (event) {
+                    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                        return;
+                    }
+                    event.preventDefault();
+
+                    var wasOpen = details.open;
+                    try {
+                        var startHeight = content.getBoundingClientRect().height;
+                        if (current) {
+                            var stale = current;
+                            current = null;
+                            stale.cancel();
+                        }
+                        content.style.overflow = "hidden";
+
+                        if (!details.open || closing) {
+                            closing = false;
+                            if (!details.open) details.open = true;
+                            var target = content.scrollHeight;
+                            current = content.animate(
+                                [
+                                    { height: startHeight + "px", opacity: startHeight ? 1 : 0 },
+                                    { height: target + "px", opacity: 1 }
+                                ],
+                                { duration: 300, easing: OPEN_EASE }
+                            );
+                            current.onfinish = resetFor(current);
+                            current.oncancel = resetFor(current);
+                        } else {
+                            closing = true;
+                            current = content.animate(
+                                [
+                                    { height: startHeight + "px", opacity: 1 },
+                                    { height: "0px", opacity: 0 }
+                                ],
+                                { duration: 260, easing: CLOSE_EASE }
+                            );
+                            var closeReset = resetFor(current);
+                            current.onfinish = function () {
+                                details.open = false;
+                                closing = false;
+                                closeReset();
+                            };
+                            current.oncancel = closeReset;
+                        }
+                    } catch (err) {
+                        /* Fail open to the native toggle so a runtime error
+                           can never leave disclosure content stuck. */
+                        content.style.overflow = "";
+                        content.style.height = "";
+                        closing = false;
+                        current = null;
+                        details.open = !wasOpen;
+                    }
+                });
             });
         });
     }
@@ -366,7 +407,7 @@
        line transitions under motion and snaps immediately under reduced
        motion. The underlying ordered list stays valid and readable with
        no JavaScript; state is purely additive. */
-    (function initSignalPath() {
+    safeInit(function initSignalPath() {
         var panel = document.querySelector("[data-signal-panel]");
         if (!panel) return;
         var flow = panel.querySelector(".signal-flow");
@@ -408,153 +449,198 @@
         if (finePointer) {
             flow.addEventListener("pointerleave", clearPath);
         }
-    }());
+    });
 
     /* ---- Cinematic, motion-safe interaction system ----
        All movement is driven by load, scroll or direct pointer input.
        Nothing loops continuously, content is never hidden without
        JavaScript and reduced-motion users receive the static site. */
     if (motionOk) {
-        root.classList.add("motion-ready");
+        safeInit(function () {
+            root.classList.add("motion-ready");
 
-        var progressRail = document.createElement("div");
-        progressRail.className = "scroll-progress";
-        progressRail.setAttribute("aria-hidden", "true");
-        body.appendChild(progressRail);
+            var progressRail = document.createElement("div");
+            progressRail.className = "scroll-progress";
+            progressRail.setAttribute("aria-hidden", "true");
+            body.appendChild(progressRail);
 
-        var hero = document.querySelector(".hero");
-        var signalPanel = document.querySelector("[data-signal-panel]");
-        var mediaItems = Array.prototype.slice.call(document.querySelectorAll(
-            ".project-media img, .project-featured-media img"
-        ));
+            var hero = document.querySelector(".hero");
+            var signalPanel = document.querySelector("[data-signal-panel]");
+            var mediaItems = Array.prototype.slice.call(document.querySelectorAll(
+                ".project-media img, .project-featured-media img"
+            ));
 
-        /* Only media currently in or near the viewport is parallaxed, so the
-           scroll handler measures a small active set rather than every image
-           on every frame. will-change is toggled with the same lifecycle. */
-        var activeMedia = mediaItems;
-        if ("IntersectionObserver" in window) {
-            activeMedia = [];
-            var mediaObserver = new IntersectionObserver(function (obs) {
-                obs.forEach(function (obsEntry) {
-                    var img = obsEntry.target;
-                    var pos = activeMedia.indexOf(img);
-                    if (obsEntry.isIntersecting) {
-                        if (pos === -1) activeMedia.push(img);
-                        img.classList.add("is-parallaxing");
-                    } else {
-                        if (pos !== -1) activeMedia.splice(pos, 1);
-                        img.classList.remove("is-parallaxing");
-                    }
+            /* Only media currently in or near the viewport is parallaxed, so the
+               scroll handler measures a small active set rather than every image
+               on every frame. will-change is toggled with the same lifecycle. */
+            var activeMedia = mediaItems;
+            if ("IntersectionObserver" in window) {
+                activeMedia = [];
+                var mediaObserver = new IntersectionObserver(function (obs) {
+                    obs.forEach(function (obsEntry) {
+                        var img = obsEntry.target;
+                        var pos = activeMedia.indexOf(img);
+                        if (obsEntry.isIntersecting) {
+                            if (pos === -1) activeMedia.push(img);
+                            img.classList.add("is-parallaxing");
+                        } else {
+                            if (pos !== -1) activeMedia.splice(pos, 1);
+                            img.classList.remove("is-parallaxing");
+                        }
+                    });
+                }, { rootMargin: "200px 0px 200px 0px" });
+                mediaItems.forEach(function (img) { mediaObserver.observe(img); });
+            }
+
+            var previousScroll = window.scrollY;
+            var motionTicking = false;
+            var header = document.querySelector(".site-header");
+
+            var clamp = function (value, min, max) {
+                return Math.min(max, Math.max(min, value));
+            };
+
+            var updateScrollMotion = function () {
+                var scrollY = window.scrollY;
+                var maxScroll = Math.max(1, root.scrollHeight - window.innerHeight);
+                var pageProgress = clamp(scrollY / maxScroll, 0, 1);
+                root.style.setProperty("--scroll-progress", pageProgress.toFixed(4));
+
+                if (hero) {
+                    var heroHeight = Math.max(1, hero.offsetHeight);
+                    var heroProgress = clamp(scrollY / heroHeight, 0, 1);
+                    hero.style.setProperty("--grid-shift", (heroProgress * 34).toFixed(1) + "px");
+                    hero.style.setProperty("--hero-copy-shift", (heroProgress * 74).toFixed(1) + "px");
+                    hero.style.setProperty("--hero-copy-opacity", (1 - heroProgress * 0.72).toFixed(3));
+                    hero.style.setProperty("--signal-shift", (heroProgress * -46).toFixed(1) + "px");
+                    hero.style.setProperty("--hero-aura", (0.82 - heroProgress * 0.5).toFixed(3));
+                }
+
+                activeMedia.forEach(function (image) {
+                    var rect = image.getBoundingClientRect();
+                    var centreDelta = (rect.top + rect.height / 2) - window.innerHeight / 2;
+                    var mediaShift = clamp(centreDelta / window.innerHeight, -1, 1) * -18;
+                    image.style.setProperty("--media-shift", mediaShift.toFixed(1) + "px");
                 });
-            }, { rootMargin: "200px 0px 200px 0px" });
-            mediaItems.forEach(function (img) { mediaObserver.observe(img); });
-        }
 
-        var previousScroll = window.scrollY;
-        var motionTicking = false;
-        var header = document.querySelector(".site-header");
+                if (header) {
+                    var travellingDown = scrollY > previousScroll;
+                    var focusInHeader = header.contains(document.activeElement);
+                    header.classList.toggle(
+                        "is-hidden",
+                        travellingDown && scrollY > 180 && !focusInHeader && !body.classList.contains("nav-open")
+                    );
+                }
+                previousScroll = scrollY;
+                motionTicking = false;
+            };
 
-        var clamp = function (value, min, max) {
-            return Math.min(max, Math.max(min, value));
-        };
+            var requestMotionUpdate = function () {
+                if (motionTicking) return;
+                motionTicking = true;
+                window.requestAnimationFrame(updateScrollMotion);
+            };
 
-        var updateScrollMotion = function () {
-            var scrollY = window.scrollY;
-            var maxScroll = Math.max(1, root.scrollHeight - window.innerHeight);
-            var pageProgress = clamp(scrollY / maxScroll, 0, 1);
-            root.style.setProperty("--scroll-progress", pageProgress.toFixed(4));
+            window.addEventListener("scroll", requestMotionUpdate, { passive: true });
+            window.addEventListener("resize", requestMotionUpdate);
+            updateScrollMotion();
 
             if (hero) {
-                var heroHeight = Math.max(1, hero.offsetHeight);
-                var heroProgress = clamp(scrollY / heroHeight, 0, 1);
-                hero.style.setProperty("--grid-shift", (heroProgress * 34).toFixed(1) + "px");
-                hero.style.setProperty("--hero-copy-shift", (heroProgress * 74).toFixed(1) + "px");
-                hero.style.setProperty("--hero-copy-opacity", (1 - heroProgress * 0.72).toFixed(3));
-                hero.style.setProperty("--signal-shift", (heroProgress * -46).toFixed(1) + "px");
-                hero.style.setProperty("--hero-aura", (0.82 - heroProgress * 0.5).toFixed(3));
+                hero.addEventListener("pointermove", function (event) {
+                    var rect = hero.getBoundingClientRect();
+                    var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) * 100;
+                    var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) * 100;
+                    hero.style.setProperty("--spot-x", x.toFixed(1) + "%");
+                    hero.style.setProperty("--spot-y", y.toFixed(1) + "%");
+                });
             }
 
-            activeMedia.forEach(function (image) {
-                var rect = image.getBoundingClientRect();
-                var centreDelta = (rect.top + rect.height / 2) - window.innerHeight / 2;
-                var mediaShift = clamp(centreDelta / window.innerHeight, -1, 1) * -18;
-                image.style.setProperty("--media-shift", mediaShift.toFixed(1) + "px");
-            });
-
-            if (header) {
-                var travellingDown = scrollY > previousScroll;
-                var focusInHeader = header.contains(document.activeElement);
-                header.classList.toggle(
-                    "is-hidden",
-                    travellingDown && scrollY > 180 && !focusInHeader && !body.classList.contains("nav-open")
-                );
+            if (signalPanel && window.matchMedia("(pointer: fine)").matches) {
+                signalPanel.addEventListener("pointermove", function (event) {
+                    var rect = signalPanel.getBoundingClientRect();
+                    var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) - 0.5;
+                    var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) - 0.5;
+                    signalPanel.style.setProperty("--signal-tilt-x", (-y * 5).toFixed(2) + "deg");
+                    signalPanel.style.setProperty("--signal-tilt-y", (x * 6).toFixed(2) + "deg");
+                });
+                signalPanel.addEventListener("pointerleave", function () {
+                    signalPanel.style.setProperty("--signal-tilt-x", "0deg");
+                    signalPanel.style.setProperty("--signal-tilt-y", "0deg");
+                });
             }
-            previousScroll = scrollY;
-            motionTicking = false;
-        };
 
-        var requestMotionUpdate = function () {
-            if (motionTicking) return;
-            motionTicking = true;
-            window.requestAnimationFrame(updateScrollMotion);
-        };
-
-        window.addEventListener("scroll", requestMotionUpdate, { passive: true });
-        window.addEventListener("resize", requestMotionUpdate);
-        updateScrollMotion();
-
-        if (hero) {
-            hero.addEventListener("pointermove", function (event) {
-                var rect = hero.getBoundingClientRect();
-                var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) * 100;
-                var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) * 100;
-                hero.style.setProperty("--spot-x", x.toFixed(1) + "%");
-                hero.style.setProperty("--spot-y", y.toFixed(1) + "%");
-            });
-        }
-
-        if (signalPanel && window.matchMedia("(pointer: fine)").matches) {
-            signalPanel.addEventListener("pointermove", function (event) {
-                var rect = signalPanel.getBoundingClientRect();
-                var x = clamp((event.clientX - rect.left) / rect.width, 0, 1) - 0.5;
-                var y = clamp((event.clientY - rect.top) / rect.height, 0, 1) - 0.5;
-                signalPanel.style.setProperty("--signal-tilt-x", (-y * 5).toFixed(2) + "deg");
-                signalPanel.style.setProperty("--signal-tilt-y", (x * 6).toFixed(2) + "deg");
-            });
-            signalPanel.addEventListener("pointerleave", function () {
-                signalPanel.style.setProperty("--signal-tilt-x", "0deg");
-                signalPanel.style.setProperty("--signal-tilt-y", "0deg");
-            });
-        }
-
-        window.requestAnimationFrame(function () {
             window.requestAnimationFrame(function () {
-                root.classList.add("motion-loaded");
+                window.requestAnimationFrame(function () {
+                    root.classList.add("motion-loaded");
+                });
             });
+
+            /* Bounded fail-safe: if the completion class has not
+               arrived promptly (a stalled frame or an unexpected
+               error), reveal the hero anyway. Idempotent. */
+            window.setTimeout(function () {
+                root.classList.add("motion-loaded");
+            }, 1500);
+        }, function () {
+            /* Fail open: never leave the hero in its armed hidden
+               entrance state if the motion system cannot run. */
+            root.classList.remove("motion-ready");
+            root.classList.remove("motion-loaded");
         });
     }
 
     if (motionOk && "IntersectionObserver" in window) {
-        var revealTargets = Array.prototype.slice.call(document.querySelectorAll(
-            ".section-heading, .project-featured, .project-card, .tool-group, " +
-            ".role-card, .creds-card, .beyond-card, .stack-layer, .contact-panel-wrap"
-        ));
-        if (revealTargets.length) {
-            root.classList.add("reveal-armed");
-            var revealObserver = new IntersectionObserver(function (obsEntries) {
-                obsEntries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("is-in");
-                        revealObserver.unobserve(entry.target);
+        safeInit(function () {
+            var revealTargets = Array.prototype.slice.call(document.querySelectorAll(
+                ".section-heading, .project-featured, .project-card, .tool-group, " +
+                ".role-card, .creds-card, .beyond-card, .stack-layer, .contact-panel-wrap"
+            ));
+            if (revealTargets.length) {
+                var revealObserver = new IntersectionObserver(function (obsEntries) {
+                    obsEntries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("is-in");
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { rootMargin: "0px 0px -7% 0px", threshold: 0.06 });
+
+                /* When the page opens part-way down (deep link or restored
+                   scroll position), content at or above the entry viewport
+                   is shown immediately rather than waiting to animate in. */
+                var entryTop = window.scrollY;
+                if (window.location.hash.length > 1) {
+                    try {
+                        var anchor = document.getElementById(
+                            decodeURIComponent(window.location.hash.slice(1))
+                        );
+                        if (anchor) {
+                            entryTop = Math.max(
+                                entryTop,
+                                anchor.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2
+                            );
+                        }
+                    } catch (ignore) { /* malformed hash: keep scroll position */ }
+                }
+
+                revealTargets.forEach(function (el, index) {
+                    el.classList.add("reveal");
+                    el.style.setProperty("--reveal-delay", String((index % 3) * 70) + "ms");
+                    var docTop = el.getBoundingClientRect().top + window.scrollY;
+                    if (entryTop > 0 && docTop < entryTop + window.innerHeight) {
+                        el.classList.add("is-in");
+                    } else {
+                        revealObserver.observe(el);
                     }
                 });
-            }, { rootMargin: "0px 0px -7% 0px", threshold: 0.06 });
 
-            revealTargets.forEach(function (el, index) {
-                el.classList.add("reveal");
-                el.style.setProperty("--reveal-delay", String((index % 3) * 70) + "ms");
-                revealObserver.observe(el);
-            });
-        }
+                /* Arm the hidden reveal state only after every target is
+                   successfully observed, so content can never be hidden
+                   without an observer that will show it again. */
+                root.classList.add("reveal-armed");
+            }
+        }, function () {
+            root.classList.remove("reveal-armed");
+        });
     }
 }());
