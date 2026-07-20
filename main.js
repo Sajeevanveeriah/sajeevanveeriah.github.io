@@ -10,6 +10,24 @@
     var root = document.documentElement;
     var body = document.body;
 
+    /* Shared reduced-motion signal. Every enhancement checks this so a
+       reduced-motion user receives an immediate, complete static site. */
+    var reduceMotionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var motionOk = !reduceMotionMq.matches;
+
+    /* Re-run a short entry animation on an element, safely restarting it
+       for rapid successive calls. No-op under reduced motion. */
+    function playFilterEnter(el) {
+        if (!motionOk) return;
+        el.classList.remove("filter-enter");
+        void el.offsetWidth;
+        el.classList.add("filter-enter");
+        el.addEventListener("animationend", function handler() {
+            el.classList.remove("filter-enter");
+            el.removeEventListener("animationend", handler);
+        });
+    }
+
     /* ---- Mobile navigation ---- */
     var navToggle = document.querySelector("[data-nav-toggle]");
     var siteNav = document.querySelector("[data-site-nav]");
@@ -84,8 +102,12 @@
             projects.forEach(function (card) {
                 var domains = (card.getAttribute("data-domains") || "").split(/\s+/);
                 var visible = key === "all" || domains.indexOf(key) !== -1;
+                var wasHidden = card.hidden;
                 card.hidden = !visible;
-                if (visible) shown += 1;
+                if (visible) {
+                    shown += 1;
+                    if (wasHidden) playFilterEnter(card);
+                }
             });
             if (workStatus) {
                 workStatus.textContent = key === "all"
@@ -147,8 +169,12 @@
                 var contextOk = activeContext === "all" || contexts.indexOf(activeContext) !== -1;
                 var textOk = !query || entry.searchText.indexOf(query) !== -1;
                 var visible = tierOk && clusterOk && contextOk && textOk;
+                var wasHidden = entry.hidden;
                 entry.hidden = !visible;
-                if (visible) shown += 1;
+                if (visible) {
+                    shown += 1;
+                    if (wasHidden) playFilterEnter(entry);
+                }
             });
 
             if (capStatus) {
@@ -192,6 +218,27 @@
 
     /* ---- Systems Stack: selecting a layer pre-filters the Atlas ---- */
     var stack = document.querySelector("[data-stack]");
+    var stackLayers = Array.prototype.slice.call(
+        document.querySelectorAll(".stack-layer")
+    );
+
+    function clearStackActive() {
+        stackLayers.forEach(function (layer) {
+            layer.classList.remove("is-active");
+        });
+    }
+
+    function flashAtlasRegion() {
+        if (!motionOk || !capList) return;
+        capList.classList.remove("is-region-flash");
+        void capList.offsetWidth;
+        capList.classList.add("is-region-flash");
+        capList.addEventListener("animationend", function handler() {
+            capList.classList.remove("is-region-flash");
+            capList.removeEventListener("animationend", handler);
+        });
+    }
+
     if (stack) {
         stack.addEventListener("click", function (event) {
             var link = event.target.closest("[data-stack-cluster]");
@@ -200,7 +247,21 @@
             if (capList && typeof capList.applyCapFilters === "function") {
                 capList.applyCapFilters();
             }
+            clearStackActive();
+            var layer = link.closest(".stack-layer");
+            if (layer) layer.classList.add("is-active");
+            /* The anchor scrolls to #atlas natively; flash the region once
+               it has arrived. Skipped entirely under reduced motion. */
+            if (motionOk) {
+                window.setTimeout(flashAtlasRegion, 520);
+            }
         });
+    }
+
+    /* If the Atlas domain is changed directly, the Stack highlight no
+       longer reflects the filter, so clear it. */
+    if (capClusterSelect) {
+        capClusterSelect.addEventListener("change", clearStackActive);
     }
 
     /* ---- Open a linked disclosure when navigated to ---- */
@@ -224,11 +285,135 @@
     window.addEventListener("hashchange", openTargetDisclosure);
     openTargetDisclosure();
 
+    /* ---- B. Native disclosure open and close transitions ----
+       Progressive enhancement only. Native <details>/<summary> semantics
+       are preserved: we intercept the toggle, drive the inner content
+       height with the Web Animations API, and always clear the inline
+       height afterwards so no stale fixed height is left. Deep links and
+       reduced-motion users open and close instantly through the native
+       control. Easings mirror --ease-settle and --ease-exit. */
+    if (motionOk && typeof Element.prototype.animate === "function") {
+        var OPEN_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+        var CLOSE_EASE = "cubic-bezier(0.4, 0, 1, 1)";
+        var disclosures = Array.prototype.slice.call(
+            document.querySelectorAll(".case-study, .cap-entry, .role-detail")
+        );
+
+        disclosures.forEach(function (details) {
+            var summary = details.querySelector("summary");
+            if (!summary) return;
+            var content = summary.nextElementSibling;
+            if (!content) return;
+            var current = null;
+            var closing = false;
+
+            var reset = function () {
+                content.style.overflow = "";
+                content.style.height = "";
+                current = null;
+            };
+
+            summary.addEventListener("click", function (event) {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+                    return;
+                }
+                event.preventDefault();
+
+                var startHeight = content.getBoundingClientRect().height;
+                if (current) {
+                    current.cancel();
+                    current = null;
+                }
+                content.style.overflow = "hidden";
+
+                if (!details.open || closing) {
+                    closing = false;
+                    if (!details.open) details.open = true;
+                    var target = content.scrollHeight;
+                    current = content.animate(
+                        [
+                            { height: startHeight + "px", opacity: startHeight ? 1 : 0 },
+                            { height: target + "px", opacity: 1 }
+                        ],
+                        { duration: 300, easing: OPEN_EASE }
+                    );
+                    current.onfinish = reset;
+                    current.oncancel = reset;
+                } else {
+                    closing = true;
+                    current = content.animate(
+                        [
+                            { height: startHeight + "px", opacity: 1 },
+                            { height: "0px", opacity: 0 }
+                        ],
+                        { duration: 260, easing: CLOSE_EASE }
+                    );
+                    current.onfinish = function () {
+                        details.open = false;
+                        closing = false;
+                        reset();
+                    };
+                    current.oncancel = reset;
+                }
+            });
+        });
+    }
+
+    /* ---- A. Closed-loop signal panel path ----
+       Hovering (fine pointer) or keyboard-focusing a node progressively
+       lights the engineering path up to that node and marks it engaged.
+       Reaching Verify emphasises the return/feedback path. The gold fill
+       line transitions under motion and snaps immediately under reduced
+       motion. The underlying ordered list stays valid and readable with
+       no JavaScript; state is purely additive. */
+    (function initSignalPath() {
+        var panel = document.querySelector("[data-signal-panel]");
+        if (!panel) return;
+        var flow = panel.querySelector(".signal-flow");
+        if (!flow) return;
+        var nodes = Array.prototype.slice.call(flow.querySelectorAll(".signal-node"));
+        if (nodes.length < 2) return;
+        var last = nodes.length - 1;
+        var finePointer = window.matchMedia("(pointer: fine)").matches;
+
+        var engage = function (index) {
+            flow.style.setProperty("--signal-reach", (index / last).toFixed(3));
+            nodes.forEach(function (node, i) {
+                node.classList.toggle("is-lit", i <= index);
+                node.classList.toggle("is-engaged", i === index);
+            });
+            panel.classList.toggle("is-loop-complete", index === last);
+        };
+
+        var clearPath = function () {
+            flow.style.setProperty("--signal-reach", "0");
+            nodes.forEach(function (node) {
+                node.classList.remove("is-lit");
+                node.classList.remove("is-engaged");
+            });
+            panel.classList.remove("is-loop-complete");
+        };
+
+        nodes.forEach(function (node, i) {
+            node.setAttribute("tabindex", "0");
+            node.addEventListener("focus", function () { engage(i); });
+            if (finePointer) {
+                node.addEventListener("pointerenter", function () { engage(i); });
+            }
+        });
+
+        flow.addEventListener("focusout", function (event) {
+            if (!flow.contains(event.relatedTarget)) clearPath();
+        });
+        if (finePointer) {
+            flow.addEventListener("pointerleave", clearPath);
+        }
+    }());
+
     /* ---- Cinematic, motion-safe interaction system ----
        All movement is driven by load, scroll or direct pointer input.
        Nothing loops continuously, content is never hidden without
        JavaScript and reduced-motion users receive the static site. */
-    var motionOk = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (motionOk) {
         root.classList.add("motion-ready");
 
@@ -242,6 +427,29 @@
         var mediaItems = Array.prototype.slice.call(document.querySelectorAll(
             ".project-media img, .project-featured-media img"
         ));
+
+        /* Only media currently in or near the viewport is parallaxed, so the
+           scroll handler measures a small active set rather than every image
+           on every frame. will-change is toggled with the same lifecycle. */
+        var activeMedia = mediaItems;
+        if ("IntersectionObserver" in window) {
+            activeMedia = [];
+            var mediaObserver = new IntersectionObserver(function (obs) {
+                obs.forEach(function (obsEntry) {
+                    var img = obsEntry.target;
+                    var pos = activeMedia.indexOf(img);
+                    if (obsEntry.isIntersecting) {
+                        if (pos === -1) activeMedia.push(img);
+                        img.classList.add("is-parallaxing");
+                    } else {
+                        if (pos !== -1) activeMedia.splice(pos, 1);
+                        img.classList.remove("is-parallaxing");
+                    }
+                });
+            }, { rootMargin: "200px 0px 200px 0px" });
+            mediaItems.forEach(function (img) { mediaObserver.observe(img); });
+        }
+
         var previousScroll = window.scrollY;
         var motionTicking = false;
         var header = document.querySelector(".site-header");
@@ -266,18 +474,20 @@
                 hero.style.setProperty("--hero-aura", (0.82 - heroProgress * 0.5).toFixed(3));
             }
 
-            mediaItems.forEach(function (image) {
+            activeMedia.forEach(function (image) {
                 var rect = image.getBoundingClientRect();
-                if (rect.bottom > -100 && rect.top < window.innerHeight + 100) {
-                    var centreDelta = (rect.top + rect.height / 2) - window.innerHeight / 2;
-                    var mediaShift = clamp(centreDelta / window.innerHeight, -1, 1) * -18;
-                    image.style.setProperty("--media-shift", mediaShift.toFixed(1) + "px");
-                }
+                var centreDelta = (rect.top + rect.height / 2) - window.innerHeight / 2;
+                var mediaShift = clamp(centreDelta / window.innerHeight, -1, 1) * -18;
+                image.style.setProperty("--media-shift", mediaShift.toFixed(1) + "px");
             });
 
             if (header) {
                 var travellingDown = scrollY > previousScroll;
-                header.classList.toggle("is-hidden", travellingDown && scrollY > 180);
+                var focusInHeader = header.contains(document.activeElement);
+                header.classList.toggle(
+                    "is-hidden",
+                    travellingDown && scrollY > 180 && !focusInHeader && !body.classList.contains("nav-open")
+                );
             }
             previousScroll = scrollY;
             motionTicking = false;
