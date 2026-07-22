@@ -72,24 +72,20 @@
     font-display: swap;
 }
 
-/* ---- Design tokens ---- */
+/* ---- Design tokens ----
+   Two committed themes share one token contract: "Midnight Command"
+   (dark, the default) and "Daylight Command" (light). Every colour on
+   the page is a custom property so the themes stay in lock-step. The
+   active theme follows the operating system by default
+   (prefers-color-scheme) and can be overridden per visitor by the
+   header control, which sets data-theme on the root element. Colour
+   tokens split fill accents (--gold, --steel: used for buttons, dots
+   and borders, identical in both themes) from text accents
+   (--gold-text, --steel-text: darkened in the light theme so mono
+   labels and links keep WCAG AA contrast on a pale background).
+   See AGENTS.md before changing this system. */
 :root {
-    color-scheme: dark;
-    --bg: #0B0D12;
-    --surface: #10131A;
-    --surface-2: #151923;
-    --ink: #ECE9E1;
-    --ink-soft: #A6AAB3;
-    --faint: #83878F;
-    --line: rgba(236, 233, 225, 0.08);
-    --line-strong: rgba(236, 233, 225, 0.22);
-    --gold: #D0B274;
-    --gold-soft: rgba(208, 178, 116, 0.13);
-    --steel: #8FB0CE;
-    --steel-soft: rgba(143, 176, 206, 0.12);
-    --on-gold: #221806;
-    --header-bg: rgba(11, 13, 18, 0.9);
-
+    /* Theme-independent tokens: type, layout and the motion grammar. */
     --font-display: "Space Grotesk", system-ui, sans-serif;
     --font-body: "Hanken Grotesk", system-ui, sans-serif;
     --font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -118,6 +114,104 @@
     --reveal-stagger: 70ms;
 }
 
+/* ---- Midnight Command: the dark theme (default) ---- */
+:root,
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0B0D12;
+    --surface: #10131A;
+    --surface-2: #151923;
+    --ink: #ECE9E1;
+    --ink-soft: #A6AAB3;
+    --faint: #83878F;
+    --line: rgba(236, 233, 225, 0.08);
+    --line-strong: rgba(236, 233, 225, 0.22);
+    --gold: #D0B274;
+    --gold-bright: #DEC28A;
+    --gold-text: #D0B274;
+    --gold-soft: rgba(208, 178, 116, 0.13);
+    --steel: #8FB0CE;
+    --steel-text: #8FB0CE;
+    --steel-soft: rgba(143, 176, 206, 0.12);
+    --on-gold: #221806;
+    --header-bg: rgba(11, 13, 18, 0.86);
+    --grid-line: rgba(236, 233, 225, 0.028);
+    --tier-working-fill: rgba(236, 233, 225, 0.42);
+    --hairline-gold: rgba(208, 178, 116, 0.55);
+    --shadow-strong: rgba(0, 0, 0, 0.9);
+    --shadow-card: rgba(143, 176, 206, 0.5);
+    --shadow-soft: rgba(0, 0, 0, 0.55);
+    --particle-a: rgba(208, 178, 116, 0.75);
+    --particle-b: rgba(143, 176, 206, 0.62);
+    --particle-link: rgba(208, 178, 116, 0.16);
+}
+
+/* ---- Daylight Command: the light theme ----
+   Applied when the visitor forces light, or when the operating system
+   prefers light and no explicit choice has been stored. The two blocks
+   below are kept byte-for-byte identical: update both together. */
+:root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #F3F1EB;
+    --surface: #FBFAF6;
+    --surface-2: #FFFFFF;
+    --ink: #1A1C22;
+    --ink-soft: #4C515A;
+    --faint: #767B84;
+    --line: rgba(26, 28, 34, 0.1);
+    --line-strong: rgba(26, 28, 34, 0.2);
+    --gold: #C9A65E;
+    --gold-bright: #B8913F;
+    --gold-text: #7A5C1F;
+    --gold-soft: rgba(184, 145, 63, 0.16);
+    --steel: #6E93B4;
+    --steel-text: #33628F;
+    --steel-soft: rgba(110, 147, 180, 0.14);
+    --on-gold: #241A07;
+    --header-bg: rgba(243, 241, 235, 0.86);
+    --grid-line: rgba(26, 28, 34, 0.05);
+    --tier-working-fill: rgba(26, 28, 34, 0.32);
+    --hairline-gold: rgba(184, 145, 63, 0.6);
+    --shadow-strong: rgba(26, 28, 34, 0.16);
+    --shadow-card: rgba(40, 55, 75, 0.16);
+    --shadow-soft: rgba(26, 28, 34, 0.1);
+    --particle-a: rgba(150, 116, 46, 0.6);
+    --particle-b: rgba(64, 104, 142, 0.52);
+    --particle-link: rgba(120, 92, 40, 0.13);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        color-scheme: light;
+        --bg: #F3F1EB;
+        --surface: #FBFAF6;
+        --surface-2: #FFFFFF;
+        --ink: #1A1C22;
+        --ink-soft: #4C515A;
+        --faint: #767B84;
+        --line: rgba(26, 28, 34, 0.1);
+        --line-strong: rgba(26, 28, 34, 0.2);
+        --gold: #C9A65E;
+        --gold-bright: #B8913F;
+        --gold-text: #7A5C1F;
+        --gold-soft: rgba(184, 145, 63, 0.16);
+        --steel: #6E93B4;
+        --steel-text: #33628F;
+        --steel-soft: rgba(110, 147, 180, 0.14);
+        --on-gold: #241A07;
+        --header-bg: rgba(243, 241, 235, 0.86);
+        --grid-line: rgba(26, 28, 34, 0.05);
+        --tier-working-fill: rgba(26, 28, 34, 0.32);
+        --hairline-gold: rgba(184, 145, 63, 0.6);
+        --shadow-strong: rgba(26, 28, 34, 0.16);
+        --shadow-card: rgba(40, 55, 75, 0.16);
+        --shadow-soft: rgba(26, 28, 34, 0.1);
+        --particle-a: rgba(150, 116, 46, 0.6);
+        --particle-b: rgba(64, 104, 142, 0.52);
+        --particle-link: rgba(120, 92, 40, 0.13);
+    }
+}
+
 /* ---- Reset and base ---- */
 *,
 *::before,
@@ -140,11 +234,13 @@ html {
 body {
     font-family: var(--font-body);
     font-size: 1.0625rem;
-    line-height: 1.65;
+    line-height: 1.7;
     color: var(--ink);
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    transition: background-color 0.4s var(--ease-settle), color 0.4s var(--ease-settle);
 }
 
 img {
@@ -241,7 +337,7 @@ button {
     display: inline-block;
     font-family: var(--font-mono);
     font-size: 0.88rem;
-    color: var(--gold);
+    color: var(--gold-text);
     border-bottom: 1px solid transparent;
     padding-bottom: 2px;
     transition: border-color 0.2s ease, color 0.2s ease;
@@ -273,8 +369,8 @@ button {
 }
 
 .button-primary:hover {
-    background: #DEC28A;
-    border-color: #DEC28A;
+    background: var(--gold-bright);
+    border-color: var(--gold-bright);
 }
 
 .button-secondary {
@@ -285,7 +381,7 @@ button {
 
 .button-secondary:hover {
     border-color: var(--steel);
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 /* ---- Evidence tier dots and chips ---- */
@@ -316,7 +412,7 @@ button {
 }
 
 .tier-dot-working {
-    background: rgba(236, 233, 225, 0.42);
+    background: var(--tier-working-fill);
 }
 
 .tier-dot-adjacent {
@@ -364,7 +460,7 @@ button {
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--gold);
+    color: var(--gold-text);
     border: 1px solid var(--line-strong);
     border-radius: var(--radius);
     background: var(--surface);
@@ -397,7 +493,7 @@ button {
 }
 
 .site-nav a.is-active {
-    color: var(--gold);
+    color: var(--gold-text);
     border-color: var(--gold);
 }
 
@@ -418,7 +514,7 @@ button {
 }
 
 .nav-resume:hover {
-    background: #DEC28A;
+    background: var(--gold-bright);
 }
 
 .nav-toggle {
@@ -438,7 +534,7 @@ button {
 /* ---- Hero ---- */
 .hero {
     position: relative;
-    padding: clamp(64px, 9vw, 120px) 0 clamp(56px, 7vw, 96px);
+    padding: clamp(80px, 10vw, 148px) 0 clamp(72px, 8vw, 116px);
     border-bottom: 1px solid var(--line);
     overflow: hidden;
 }
@@ -449,8 +545,8 @@ button {
     inset: 0;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(236, 233, 225, 0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(236, 233, 225, 0.028) 1px, transparent 1px);
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 56px 56px;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 85%);
@@ -458,9 +554,10 @@ button {
 
 .hero-grid {
     position: relative;
+    z-index: 2;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: clamp(40px, 6vw, 88px);
+    gap: clamp(44px, 6vw, 96px);
     align-items: start;
 }
 
@@ -486,16 +583,16 @@ button {
 .hero h1 {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(3.1rem, 7.2vw, 6.1rem);
-    line-height: 0.98;
-    letter-spacing: -0.03em;
-    margin-bottom: 22px;
+    font-size: clamp(3.3rem, 7.6vw, 6.6rem);
+    line-height: 0.96;
+    letter-spacing: -0.032em;
+    margin-bottom: 24px;
 }
 
 .hero-positioning {
     font-family: var(--font-mono);
     font-size: clamp(0.95rem, 1.4vw, 1.08rem);
-    color: var(--gold);
+    color: var(--gold-text);
     letter-spacing: 0.02em;
     margin-bottom: 18px;
 }
@@ -562,7 +659,7 @@ button {
     border: 1px solid var(--line-strong);
     border-radius: 6px;
     padding: clamp(24px, 3vw, 34px);
-    box-shadow: 0 24px 60px -40px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 24px 60px -40px var(--shadow-strong);
 }
 
 .signal-panel::before {
@@ -572,7 +669,7 @@ button {
     left: 24px;
     right: 24px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(208, 178, 116, 0.55), transparent);
+    background: linear-gradient(90deg, transparent, var(--hairline-gold), transparent);
 }
 
 .signal-head {
@@ -584,7 +681,7 @@ button {
     font-size: 0.78rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: 8px;
 }
 
@@ -692,9 +789,13 @@ button {
 
 /* ---- Sections ---- */
 .section-block {
-    padding: clamp(72px, 9vw, 128px) 0;
+    padding: clamp(92px, 11vw, 172px) 0;
     border-bottom: 1px solid var(--line);
     scroll-margin-top: calc(var(--header-h) + 8px);
+    /* Skip rendering work for sections far below the fold. The intrinsic
+       size keeps the scrollbar honest and prevents layout jumps. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
 }
 
 .section-block-last {
@@ -702,8 +803,8 @@ button {
 }
 
 .section-heading {
-    max-width: 880px;
-    margin-bottom: clamp(36px, 5vw, 56px);
+    max-width: 920px;
+    margin-bottom: clamp(46px, 6vw, 78px);
 }
 
 .section-kicker {
@@ -714,7 +815,7 @@ button {
     font-size: 0.78rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--gold-text);
     margin-bottom: 18px;
 }
 
@@ -734,10 +835,11 @@ button {
 .section-heading h2 {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(1.55rem, 3vw, 2.3rem);
-    line-height: 1.22;
-    letter-spacing: -0.015em;
-    margin-bottom: 14px;
+    font-size: clamp(1.72rem, 3.4vw, 2.75rem);
+    line-height: 1.16;
+    letter-spacing: -0.018em;
+    margin-bottom: 16px;
+    text-wrap: balance;
 }
 
 .section-sub {
@@ -777,7 +879,7 @@ button {
 .filter-pill.is-active {
     background: var(--gold-soft);
     border-color: var(--gold);
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .filter-status {
@@ -847,7 +949,7 @@ button {
     font-size: 0.72rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 .project-oneliner {
@@ -902,8 +1004,8 @@ button {
     justify-content: center;
     aspect-ratio: 4 / 3;
     background:
-        linear-gradient(rgba(236, 233, 225, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(236, 233, 225, 0.025) 1px, transparent 1px),
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
         var(--surface-2);
     background-size: 28px 28px, 28px 28px, auto;
     color: var(--ink-soft);
@@ -1007,11 +1109,11 @@ button {
 
 .case-study[open] summary::after {
     content: "\2212";
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .case-study summary:hover .case-title {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .case-meta {
@@ -1027,7 +1129,7 @@ button {
     font-size: 0.72rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 .case-title {
@@ -1064,14 +1166,14 @@ button {
 
 .case-facts a,
 .cap-body a {
-    color: var(--steel);
+    color: var(--steel-text);
     border-bottom: 1px solid rgba(143, 176, 206, 0.4);
     transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .case-facts a:hover,
 .cap-body a:hover {
-    color: var(--gold);
+    color: var(--gold-text);
     border-color: var(--gold);
 }
 
@@ -1200,7 +1302,7 @@ button {
 
 .cap-entry[open] summary::after {
     content: "\2212";
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .cap-meta {
@@ -1216,7 +1318,7 @@ button {
     font-size: 0.7rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 .cap-name {
@@ -1229,7 +1331,7 @@ button {
 }
 
 .cap-entry summary:hover .cap-name {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .cap-summary {
@@ -1306,7 +1408,7 @@ button {
     width: 30px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .stack-body {
@@ -1477,7 +1579,7 @@ button {
     font-size: 0.76rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 .role-head {
@@ -1504,7 +1606,7 @@ button {
 .role-dates {
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--gold);
+    color: var(--gold-text);
     letter-spacing: 0.04em;
 }
 
@@ -1530,7 +1632,7 @@ button {
     gap: 8px;
     font-family: var(--font-mono);
     font-size: 0.82rem;
-    color: var(--gold);
+    color: var(--gold-text);
     cursor: pointer;
     padding: 10px 0;
     list-style: none;
@@ -1548,7 +1650,7 @@ button {
 
 .role-detail[open] summary::after {
     content: "\2212";
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .role-detail-body {
@@ -1569,7 +1671,7 @@ button {
 }
 
 .role-detail-body ::marker {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 /* ---- Education and community ---- */
@@ -1677,7 +1779,7 @@ button {
     left: 24px;
     right: 24px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(208, 178, 116, 0.55), transparent);
+    background: linear-gradient(90deg, transparent, var(--hairline-gold), transparent);
 }
 
 .contact-primary {
@@ -1691,19 +1793,19 @@ button {
 }
 
 .contact-primary:hover {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .contact-link {
     font-family: var(--font-mono);
     font-size: 0.9rem;
-    color: var(--steel);
+    color: var(--steel-text);
     transition: color 0.2s ease;
     overflow-wrap: anywhere;
 }
 
 .contact-link:hover {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .contact-note {
@@ -1759,11 +1861,11 @@ button {
 }
 
 .footer-col a:hover {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .footer-resume {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .footer-bottom {
@@ -1785,7 +1887,7 @@ button {
 }
 
 .footer-bottom a:hover {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 /* Scroll reveal is defined once in the cinematic motion block below,
@@ -1863,7 +1965,7 @@ button {
 
     .site-nav a.nav-resume-mobile {
         display: block;
-        color: var(--gold);
+        color: var(--gold-text);
     }
 
     html.js .nav-toggle {
@@ -2016,7 +2118,7 @@ button {
 
     html.motion-ready .signal-panel:hover {
         border-color: rgba(208, 178, 116, 0.42);
-        box-shadow: 0 34px 90px -48px rgba(143, 176, 206, 0.48);
+        box-shadow: 0 34px 90px -48px var(--shadow-card);
     }
 
     html.motion-ready:not(.motion-loaded) .eyebrow,
@@ -2101,20 +2203,23 @@ button {
 
     html.reveal-armed .reveal {
         opacity: 0;
-        transform: translate3d(0, var(--dist-lg), 0);
+        transform: translate3d(0, var(--dist-lg), 0) scale(0.965);
+        filter: blur(7px);
         transition:
             opacity var(--dur-settle) var(--ease-settle),
-            transform var(--dur-settle) var(--ease-settle);
+            transform var(--dur-settle) var(--ease-spring),
+            filter var(--dur-settle) var(--ease-settle);
         transition-delay: var(--reveal-delay, 0ms);
     }
 
     html.reveal-armed .section-heading.reveal {
-        transform: translate3d(0, calc(var(--dist-lg) + 8px), 0);
+        transform: translate3d(0, calc(var(--dist-lg) + 10px), 0) scale(0.98);
     }
 
     html.reveal-armed .reveal.is-in {
         opacity: 1;
         transform: none;
+        filter: none;
     }
 
     html.motion-ready .project-media,
@@ -2134,6 +2239,19 @@ button {
         will-change: transform;
     }
 
+    /* Native scroll-driven parallax. Where the browser supports view()
+       timelines the image rise runs entirely off the main thread on the
+       compositor, so main.js drops its JS media parallax (guarded by the
+       same CSS.supports check) and the scroll handler stays cheap. */
+    @supports (animation-timeline: view()) {
+        html.motion-ready .project-media img,
+        html.motion-ready .project-featured-media img {
+            animation: media-rise linear both;
+            animation-timeline: view();
+            animation-range: cover 0% cover 100%;
+        }
+    }
+
     html.motion-ready .project-card,
     html.motion-ready .role-card,
     html.motion-ready .tool-group,
@@ -2147,7 +2265,7 @@ button {
         html.motion-ready .project-card:hover,
         html.motion-ready .role-card:hover {
             transform: translateY(var(--lift-strong));
-            box-shadow: 0 24px 70px -44px rgba(143, 176, 206, 0.5);
+            box-shadow: 0 24px 70px -44px var(--shadow-card);
         }
     }
 
@@ -2162,10 +2280,30 @@ button {
     }
 
     @media (pointer: fine) {
-        html.motion-ready .button:hover,
+        html.motion-ready .button:not([data-magnetic]):hover,
         html.motion-ready .filter-pill:hover,
         html.motion-ready .link-arrow:hover {
             transform: translateY(-2px);
+        }
+    }
+
+    /* Magnetic pull: main.js sets --mag-x / --mag-y from the pointer
+       offset while hovering, and the label counter-translates a little
+       less so the text trails the button. Fine pointers only; the vars
+       default to zero so the control is perfectly still at rest. */
+    @media (pointer: fine) {
+        html.motion-ready [data-magnetic] {
+            transform: translate3d(var(--mag-x, 0px), var(--mag-y, 0px), 0);
+            transition: transform 0.3s var(--ease-spring),
+                        background-color var(--dur-standard) ease,
+                        border-color var(--dur-standard) ease,
+                        color var(--dur-standard) ease;
+        }
+
+        html.motion-ready [data-magnetic] .mag-label {
+            display: inline-block;
+            transform: translate3d(var(--mag-lx, 0px), var(--mag-ly, 0px), 0);
+            transition: transform 0.3s var(--ease-spring);
         }
     }
 
@@ -2234,16 +2372,16 @@ html.js .signal-node {
 
 .signal-node.is-lit .signal-name,
 .signal-node.is-engaged .signal-name {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 .signal-node.is-lit .signal-idx {
-    color: var(--steel);
+    color: var(--steel-text);
 }
 
 .signal-panel.is-loop-complete .signal-return,
 .signal-panel.is-loop-complete .signal-return-line {
-    color: var(--gold);
+    color: var(--gold-text);
     border-color: var(--gold);
 }
 
@@ -2275,7 +2413,7 @@ html.js .signal-node {
 
 .stack-layer.is-active .stack-idx,
 .stack-layer.is-active .stack-name {
-    color: var(--gold);
+    color: var(--gold-text);
 }
 
 @keyframes atlas-region-flash {
@@ -2291,5 +2429,235 @@ html.js .signal-node {
     html.motion-ready .cap-list.is-region-flash {
         border-radius: 6px;
         animation: atlas-region-flash 1.3s var(--ease-settle);
+    }
+}
+
+/* Compositor-only keyframe for the native scroll-driven media parallax. */
+@keyframes media-rise {
+    from { transform: translate3d(0, -3.4%, 0) scale(1.075); }
+    to { transform: translate3d(0, 3.4%, 0) scale(1.075); }
+}
+
+/* ============================================================
+   Theme control, count-up, particle field and utility controls
+   ============================================================ */
+
+/* ---- Smooth theme cross-fade ----
+   main.js adds .theme-transition to <html> for a short window when the
+   visitor changes theme, so surfaces ease between palettes instead of
+   snapping. It is never present during normal browsing, so there is no
+   standing transition cost, and the particle canvas is excluded. */
+html.theme-transition,
+html.theme-transition *:not(.hero-particles) {
+    transition: background-color 0.45s var(--ease-settle),
+                border-color 0.45s var(--ease-settle),
+                color 0.45s var(--ease-settle),
+                box-shadow 0.45s var(--ease-settle) !important;
+}
+
+/* ---- Theme toggle (System, Light, Dark) ---- */
+.theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--gold-text);
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--gold);
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+    display: none;
+}
+
+.theme-toggle[data-mode="system"] .ti-system,
+.theme-toggle[data-mode="light"] .ti-light,
+.theme-toggle[data-mode="dark"] .ti-dark {
+    display: block;
+}
+
+/* Fallback before main.js stamps a mode: show the system icon. */
+.theme-toggle:not([data-mode]) .ti-system {
+    display: block;
+}
+
+/* ---- Count-up stats: stop width jitter while the number ticks ---- */
+.stat-num {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---- Hero particle field ----
+   A capped constellation of champagne and steel points that drift and
+   link near the pointer. main.js only builds it on a fine pointer with
+   motion allowed, pauses it whenever the hero leaves the viewport, and
+   never runs it under reduced motion, so it stays cheap and calm. */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s var(--ease-settle);
+}
+
+.hero-particles.is-live {
+    opacity: 1;
+}
+
+/* ---- Back-to-top control ---- */
+.to-top {
+    position: fixed;
+    right: clamp(16px, 3vw, 32px);
+    bottom: clamp(16px, 3vw, 32px);
+    z-index: 90;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--gold-text);
+    box-shadow: 0 12px 30px -18px var(--shadow-strong);
+    opacity: 0;
+    transform: translateY(14px) scale(0.9);
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease-settle),
+                transform 0.3s var(--ease-spring),
+                border-color 0.2s ease, color 0.2s ease;
+}
+
+.to-top.is-visible {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+.to-top:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.to-top svg {
+    width: 20px;
+    height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .to-top {
+        transition: opacity 0.2s linear;
+        transform: none;
+    }
+}
+
+/* ---- Click-to-copy email ---- */
+.copy-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 6px 12px;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.copy-email:hover {
+    border-color: var(--steel);
+    color: var(--ink);
+}
+
+.copy-email svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+}
+
+.copy-email.is-copied {
+    border-color: var(--gold);
+    color: var(--gold-text);
+    background: var(--gold-soft);
+}
+
+.copy-email .copy-label[data-copied-label] {
+    display: none;
+}
+
+.copy-email.is-copied .copy-label[data-default-label] {
+    display: none;
+}
+
+.copy-email.is-copied .copy-label[data-copied-label] {
+    display: inline;
+}
+
+/* ---- Print: a clean, ink-on-paper rendering of the whole page ----
+   main.js opens every disclosure before printing and restores them
+   after, so the printout carries the full record. */
+@media print {
+    .site-header,
+    .to-top,
+    .theme-toggle,
+    .hero-particles,
+    .scroll-progress,
+    .nav-toggle,
+    .work-filters,
+    .filter-status,
+    [data-cap-controls],
+    .signal-return,
+    .copy-email,
+    .skip-link {
+        display: none !important;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        background-image: none !important;
+    }
+
+    .section-block,
+    .hero {
+        padding: 24px 0 !important;
+        break-inside: avoid;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
     }
 }

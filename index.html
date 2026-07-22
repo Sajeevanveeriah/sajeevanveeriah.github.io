@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light dark">
     <title>Sajeevan Veeriah | Mechatronics, Robotics, Automation and AI/ML Engineer</title>
     <meta name="title" content="Sajeevan Veeriah | Mechatronics, Robotics, Automation and AI/ML Engineer">
     <meta name="description" content="Portfolio of Sajeevan Veeriah, a Mechatronics, Robotics, Automation and AI/ML Engineer working across the full stack: mechanical, electrical, electronics, embedded firmware, controls, PLC and SCADA, ROS 2 robotics, IoT, software, data, CAN validation and regulated commissioning.">
     <meta name="keywords" content="Sajeevan Veeriah, Saj Veeriah, Mechatronics Engineer, Robotics Engineer, Automation Engineer, AI ML Engineer, Control Systems, Embedded Systems, Electronics, PCB, ROS 2, SCADA, HMI, MES, IoT, CAN validation, Systems Engineering, Commissioning">
     <meta name="author" content="Sajeevan Veeriah">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0B0D12">
+    <meta name="theme-color" content="#0B0D12" media="(prefers-color-scheme: dark)" data-theme-color>
+    <meta name="theme-color" content="#F3F1EB" media="(prefers-color-scheme: light)" data-theme-color>
     <link rel="canonical" href="https://sajeevanveeriah.github.io/">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <script>
@@ -18,6 +19,20 @@
        menu) and arms the subtle scroll-reveal treatment. Everything
        remains fully readable without it. */
     document.documentElement.classList.add("js");
+    /* No-flash theme resolution. Runs before first paint: a stored
+       "light" or "dark" choice is stamped on data-theme so the correct
+       palette is committed immediately; "system" or no stored choice is
+       left to the prefers-color-scheme media queries in styles.css.
+       Wrapped in try/catch so a blocked localStorage never breaks the
+       page: the site simply falls back to the system preference. */
+    (function () {
+        try {
+            var choice = localStorage.getItem("theme");
+            if (choice === "light" || choice === "dark") {
+                document.documentElement.setAttribute("data-theme", choice);
+            }
+        } catch (e) { /* fall back to the system colour scheme */ }
+    })();
     </script>
     <link rel="preload" href="assets/fonts/space-grotesk-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/hanken-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -125,6 +140,19 @@
                 <a class="nav-resume-mobile" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Download Resume</a>
             </nav>
             <div class="nav-actions">
+                <button class="theme-toggle" type="button" data-theme-toggle aria-label="Colour theme: follow system" title="Colour theme: follow system">
+                    <svg class="ti-system" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8.4"></circle>
+                        <path d="M12 3.6v16.8a8.4 8.4 0 0 0 0-16.8z" fill="currentColor" stroke="none"></path>
+                    </svg>
+                    <svg class="ti-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.2"></circle>
+                        <path d="M12 2.4v2.6M12 19v2.6M4.2 4.2l1.9 1.9M17.9 17.9l1.9 1.9M2.4 12H5M19 12h2.6M4.2 19.8l1.9-1.9M17.9 6.1l1.9-1.9"></path>
+                    </svg>
+                    <svg class="ti-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M20.5 14.8A8.2 8.2 0 1 1 9.2 3.5a6.4 6.4 0 0 0 11.3 11.3z"></path>
+                    </svg>
+                </button>
                 <a class="nav-resume" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Resume</a>
                 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>Menu</button>
             </div>
@@ -133,6 +161,7 @@
 
     <main id="main">
         <section class="hero" id="top" aria-labelledby="hero-title">
+            <canvas class="hero-particles" data-hero-particles aria-hidden="true"></canvas>
             <div class="hero-grid section-wrap">
                 <div class="hero-copy">
                     <p class="eyebrow"><span class="eyebrow-pip" aria-hidden="true"></span>Engineering portfolio</p>
@@ -140,8 +169,8 @@
                     <p class="hero-positioning">Mechatronics, Robotics, Automation and AI/ML Engineer</p>
                     <p class="hero-lede">A complete-package engineer across physical systems, electronics, embedded firmware, controls, robotics, software, data and validation. Comfortable identifying which engineering layer a problem lives in and resolving it across whatever disciplines that takes.</p>
                     <div class="hero-actions">
-                        <a class="button button-primary" href="#work">View work</a>
-                        <a class="button button-secondary" href="#atlas">Explore atlas</a>
+                        <a class="button button-primary" href="#work" data-magnetic><span class="mag-label">View work</span></a>
+                        <a class="button button-secondary" href="#atlas" data-magnetic><span class="mag-label">Explore atlas</span></a>
                         <a class="link-arrow" href="assets/Resume_Sajeevan_Veeriah.pdf" download>Download resume &darr;</a>
                         <a class="link-arrow" href="#contact">Contact &rarr;</a>
                     </div>
@@ -150,9 +179,9 @@
                         <li>&middot; Deakin Honours Distinction, 2025</li>
                     </ul>
                     <div class="hero-stats" aria-label="Portfolio contents">
-                        <div class="hero-stat"><span class="stat-num">9</span><span class="stat-label">Work records</span></div>
-                        <div class="hero-stat"><span class="stat-num">19</span><span class="stat-label">Atlas domains</span></div>
-                        <div class="hero-stat"><span class="stat-num">5</span><span class="stat-label">Evidence tiers</span></div>
+                        <div class="hero-stat"><span class="stat-num" data-countup="9">9</span><span class="stat-label">Work records</span></div>
+                        <div class="hero-stat"><span class="stat-num" data-countup="19">19</span><span class="stat-label">Atlas domains</span></div>
+                        <div class="hero-stat"><span class="stat-num" data-countup="5">5</span><span class="stat-label">Evidence tiers</span></div>
                     </div>
                 </div>
 
@@ -1422,6 +1451,14 @@
                 <div class="contact-panel-wrap">
                     <address class="contact-panel">
                         <a class="contact-primary" href="mailto:sajeevanveeriah@gmail.com">sajeevanveeriah@gmail.com</a>
+                        <button class="copy-email" type="button" data-copy-email="sajeevanveeriah@gmail.com" aria-label="Copy email address to clipboard" hidden>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+                                <path d="M5 15V5a2 2 0 0 1 2-2h10"></path>
+                            </svg>
+                            <span class="copy-label" data-default-label>Copy email</span>
+                            <span class="copy-label" data-copied-label>Copied</span>
+                        </button>
                         <a class="contact-link" href="https://www.linkedin.com/in/sajeevan-veeriah/" rel="noopener">linkedin.com/in/sajeevan-veeriah</a>
                         <a class="contact-link" href="https://github.com/Sajeevanveeriah" rel="noopener">github.com/Sajeevanveeriah</a>
                         <span class="contact-note">Member, Engineers Australia</span>
@@ -1470,6 +1507,11 @@
         </div>
     </footer>
 
+    <a class="to-top" href="#top" data-to-top aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5M6 11l6-6 6 6"></path>
+        </svg>
+    </a>
     <script src="main.js" defer></script>
 </body>
 </html>

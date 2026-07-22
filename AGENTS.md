@@ -13,26 +13,52 @@ Write in Australian and UK spelling. Do not use em dashes or en dashes anywhere,
 use commas, colons or full stops. Write date ranges as "Jan 2026 to Jun 2026".
 Never use the word "Present" for a role.
 
-## Design system: Midnight Command (do not revert)
+## Design system: Command, dual theme (do not revert)
 
-One committed premium dark identity driven by the tokens at the top of
-`styles.css`. There is no light theme and no theme switcher; do not add one.
+One premium identity rendered in two committed themes that share a single
+token contract at the top of `styles.css`: Midnight Command (dark) and
+Daylight Command (light). The active theme follows the operating system by
+default via `prefers-color-scheme`, and the header control lets a visitor
+force System, Light or Dark, stored in `localStorage` under `theme` and
+applied before first paint by the inline script in the head. Keep this
+system based default and keep both themes in lock step; the two light
+token blocks in `styles.css` (the `:root[data-theme="light"]` block and
+the `prefers-color-scheme: light` block) must stay byte for byte identical.
 
-- Background `#0B0D12` midnight carbon; surfaces `#10131A` and `#151923`.
-- Text `#ECE9E1` ivory, muted `#A6AAB3`, faint `#83878F`; hairlines
-  `rgba(236,233,225,0.08)` and `0.22`.
-- Primary accent: champagne gold `#D0B274` (kickers, CTAs, delivered dots,
-  dates, active states). Secondary accent: steel blue `#8FB0CE` (category
-  labels, hands-on dots, in-copy links). Keep both restrained.
+- Colour is driven entirely by custom properties. Fill accents (`--gold`,
+  `--steel`: buttons, dots, borders) are shared; text accents
+  (`--gold-text`, `--steel-text`: mono kickers, dates, in-copy links) are
+  darkened in the light theme so they hold WCAG AA on a pale background. Do
+  not hard-code colours in component rules; add a token and set it in every
+  theme block.
+- Midnight Command: background `#0B0D12`; surfaces `#10131A` and `#151923`;
+  text `#ECE9E1` ivory, muted `#A6AAB3`, faint `#83878F`.
+- Daylight Command: background `#F3F1EB` warm gallery paper (not a beige
+  worksheet); surfaces `#FBFAF6` and `#FFFFFF`; text `#1A1C22`, muted
+  `#4C515A`, faint `#767B84`; `--gold-text` deepens to `#7A5C1F` and
+  `--steel-text` to `#33628F`.
+- Primary accent: champagne gold (kickers, CTAs, delivered dots, dates,
+  active states). Secondary accent: steel blue (category labels, hands-on
+  dots, in-copy links). Keep both restrained.
 - Numbered mono section kickers, hairline panels, 4 to 6 px radii, the faint
   hero grid, the closed-loop signal panel and the ten-layer Systems Stack are
   the visual signature. Keep them.
 
+Motion is expressive but disciplined and always motion safe. The signature
+motion pieces are the hero particle field (a capped, pointer-reactive
+constellation that pauses off screen and when the tab is hidden, fine
+pointer only), native scroll-driven media parallax with a JS fallback,
+magnetic hero buttons, blur and scale scroll reveals, and count-up stats.
+Everything must be gated behind `prefers-reduced-motion: no-preference`,
+stay off the main thread where possible, and degrade to a complete static
+page. Do not add continuous, unpaused, always-on animation, autoplaying
+video or marquees.
+
 Hard bans: orange as the dominant accent, beige or worksheet backgrounds,
 purple, violet or indigo, gradient-filled text, glassmorphism, glowing cards,
 emoji, Font Awesome, skill percentage bars, fabricated charts, fake logos,
-fake screenshots, marquees or continuous animation, chip walls ("chip soup"),
-"Hi, I'm ..." heroes and stock taglines.
+fake screenshots, chip walls ("chip soup"), "Hi, I'm ..." heroes and stock
+taglines.
 
 ## Truthful career representation (binding)
 
@@ -64,9 +90,13 @@ visa, work-rights or availability statements, `geo.*` metadata, or JSON-LD
   Stack (`#stack`), Skill Library (`#skills`), Experience (`#experience`),
   Education (`#education`), Beyond (`#beyond`), Contact (`#contact`).
 - Case studies, Atlas entries and role details are static `details`
-  disclosures in `index.html`; `main.js` only adds search, filters, counts
-  and the motion-safe reveal on top. Everything must stay readable with
-  JavaScript disabled and under `prefers-reduced-motion`.
+  disclosures in `index.html`; `main.js` adds search, filters, counts, the
+  colour-theme controller, count-up stats, click-to-copy email, the
+  back-to-top control, the hero particle field, magnetic buttons and the
+  motion-safe reveal on top. Every one of these is progressive enhancement:
+  the site must stay complete and readable with JavaScript disabled and
+  under `prefers-reduced-motion`, and no-JS visitors still get the system
+  colour scheme through the `prefers-color-scheme` blocks in the CSS.
 - Keep the preserve list intact: `robots.txt`, `sitemap.xml` (canonical
   `https://sajeevanveeriah.github.io/`), `BingSiteAuth.xml`,
   `googlebcce96f6b520ab1f.html`, the resume PDF, project images and fonts.

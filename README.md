@@ -8,16 +8,17 @@ Live site: <https://sajeevanveeriah.github.io/>
 
 The site presents Saj as a complete-package engineer across the full engineering landscape: physical systems, electronics, embedded firmware, controls, robotics and automation, software, data and AI/ML, and validation and delivery. A recruiter can scan the hero, the work records and the Systems Stack in minutes; an engineering manager can go deep through the Engineering Atlas, case-study disclosures and role details. The resume at `assets/Resume_Sajeevan_Veeriah.pdf` is the factual source of truth for every claim.
 
-## Design direction: "Midnight Command"
+## Design direction: "Command", dual theme
 
-A posh engineering command centre. One committed dark identity, no light theme:
+A posh engineering command centre rendered in two committed themes that share one token contract, so the whole palette stays in lock step:
 
-- Midnight carbon background `#0B0D12` with layered panel surfaces `#10131A` and `#151923`.
-- Ivory typography `#ECE9E1`, with muted `#A6AAB3` and faint `#83878F` support tones.
-- Champagne gold `#D0B274` as the primary accent (kickers, CTAs, delivered dots, dates) and steel blue `#8FB0CE` as the secondary accent (category labels, hands-on dots, in-copy links).
-- Precision hairlines at `rgba(236,233,225,0.08)` and `0.22`, a faint technical grid behind the hero, numbered mono section kickers and 4 to 6 px radii.
+- **Midnight Command (dark):** midnight carbon background `#0B0D12` with layered panel surfaces `#10131A` and `#151923`, ivory typography `#ECE9E1` with muted `#A6AAB3` and faint `#83878F` support tones.
+- **Daylight Command (light):** warm gallery-paper background `#F3F1EB` (deliberately not a beige worksheet) with surfaces `#FBFAF6` and `#FFFFFF`, deep ink text `#1A1C22` with muted `#4C515A` and faint `#767B84`.
+- **Theme selection:** follows the operating system by default through `prefers-color-scheme`. A header control lets a visitor force System, Light or Dark; the choice is stored in `localStorage` (`theme`) and applied before first paint by a tiny inline script, so there is no flash. With JavaScript disabled the site still honours the system colour scheme.
+- Champagne gold as the primary accent (kickers, CTAs, delivered dots, dates) and steel blue as the secondary accent (category labels, hands-on dots, in-copy links). Fill accents (`--gold`, `--steel`) are shared across themes; text accents (`--gold-text`, `--steel-text`) darken in the light theme to hold WCAG AA on paper.
+- Precision hairlines, a faint technical grid behind the hero, numbered mono section kickers and 4 to 6 px radii.
 - Typography: Space Grotesk (display), Hanken Grotesk (body), IBM Plex Mono (system labels), all self-hosted woff2.
-- Controlled motion only: hover states, one-time hero choreography, motion-safe scroll-linked depth and directional reveals, no continuous animation.
+- Expressive but disciplined, motion-safe motion: a capped pointer-reactive hero particle field (fine pointer only, paused off screen and when the tab is hidden), native scroll-driven media parallax on the compositor with a JS fallback, magnetic hero buttons, blur-and-scale scroll reveals, count-up stats and one-time hero choreography. No continuous, always-on animation; everything is gated behind `prefers-reduced-motion` and degrades to a complete static page.
 
 Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, purple gradients, glassmorphism overload, cyberpunk clutter, chip soup, skill bars, fake logos and fake screenshots.
 
@@ -28,7 +29,7 @@ Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, p
 - Zero runtime third-party requests: fonts (`assets/fonts/*.woff2`) and all images are self-hosted. No analytics or tracking.
 - Australian and UK spelling. No em dashes or en dashes; date ranges are written "Jan 2026 to Jun 2026".
 - The site must stay readable with JavaScript disabled: filters hide themselves, disclosures fall back to native `details` behaviour, the scroll reveal only arms itself when JS runs, and all content is server-rendered in the HTML.
-- Accessibility target is WCAG 2.2 AA: semantic landmarks, one `h1`, skip link, full keyboard access, visible focus, live filter status, reduced-motion support and verified contrast on the dark surfaces.
+- Accessibility target is WCAG 2.2 AA: semantic landmarks, one `h1`, skip link, full keyboard access, visible focus, live filter status, reduced-motion support and verified contrast on both the dark and light surfaces.
 - Performance targets: LCP 2.5 s or less (text-first hero, preloaded display font), INP 200 ms or less (small vanilla JS), CLS 0.1 or less (explicit image dimensions, transform-only animation).
 
 ## Evidence-tier model
@@ -78,7 +79,7 @@ Review each hit manually; the only acceptable matches are this documentation its
 | --- | --- |
 | `index.html` | The whole site: content, markup, metadata and JSON-LD |
 | `styles.css` | Midnight Command tokens and all component styles |
-| `main.js` | Mobile nav, active nav, work filter, Atlas search and filters, Stack pre-filter, hash deep links, scroll reveal |
+| `main.js` | Mobile nav, active nav, work filter, Atlas search and filters, Stack pre-filter, hash deep links, colour-theme controller, count-up stats, click-to-copy email, back-to-top, magnetic buttons, hero particle field, print expansion, scroll reveal |
 | `favicon.svg` | SV monogram on the midnight plaque with the champagne underline |
 | `assets/fonts/` | Self-hosted Space Grotesk, Hanken Grotesk, IBM Plex Mono |
 | `assets/image/` | Project case study images (PNG, explicit dimensions) |
