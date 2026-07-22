@@ -47,8 +47,13 @@ the `prefers-color-scheme: light` block) must stay byte for byte identical.
 Motion is expressive but disciplined and always motion safe. The signature
 motion pieces are the hero particle field (a capped, pointer-reactive
 constellation that pauses off screen and when the tab is hidden, fine
-pointer only), native scroll-driven media parallax with a JS fallback,
-magnetic hero buttons, blur and scale scroll reveals, and count-up stats.
+pointer only, sharing its canvas with travelling signal packets on the
+links and a pointer-reactive two segment robot arm solved with inverse
+kinematics that reaches toward the cursor, hands a packet off on each
+reach and eases to a ready pose when idle, with a fainter companion arm
+beside it so the pair reads as a robotic cell), native scroll-driven
+media parallax with a JS fallback, magnetic
+hero buttons, blur and scale scroll reveals, and count-up stats.
 Everything must be gated behind `prefers-reduced-motion: no-preference`,
 stay off the main thread where possible, and degrade to a complete static
 page. Do not add continuous, unpaused, always-on animation, autoplaying
