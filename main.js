@@ -895,9 +895,11 @@
        the hero a living depth. Riding the same canvas: small signal
        packets that travel the live links, and a pointer-reactive two
        segment robot arm solved with inverse kinematics that reaches its
-       gripper toward the cursor and eases to a ready pose when idle, a
-       nod to the robotics and industrial automation work on this page.
-       Built only for fine-pointer visitors with motion allowed; it pauses
+       gripper toward the cursor, hands a packet off into the network on
+       each reach, and eases to a ready pose when idle, with a fainter
+       companion arm breathing beside it so the pair reads as a robotic
+       cell. A nod to the robotics and industrial automation work on this
+       page. Built only for fine-pointer visitors with motion allowed; it pauses
        whenever the hero leaves the viewport or the tab is hidden, caps its
        density and device pixel ratio, and reads its colours from the active
        theme so it recolours with light and dark. */
@@ -957,8 +959,21 @@
                 target: { x: 0, y: 0 },
                 rest: { x: 0, y: 0 }
             };
+            /* A fainter, smaller companion arm that holds a slow idle pose
+               beside the primary, so the pair reads as a robotic cell. Only
+               built on wider heroes. */
+            var arm2 = {
+                enabled: false,
+                base: { x: 0, y: 0 },
+                seg: [0, 0],
+                reach: 0,
+                target: { x: 0, y: 0 },
+                rest: { x: 0, y: 0 }
+            };
+            var idlePhase = 0;
+            var handoffCd = 0;
             var packets = [];
-            var PACKET_CAP = 7;
+            var PACKET_CAP = 9;
 
             var build = function () {
                 var rect = hero.getBoundingClientRect();
@@ -1003,6 +1018,19 @@
                     arm.target.y = arm.rest.y;
                     arm.ready = true;
                 }
+
+                /* Companion idle arm, sitting just left of the primary and
+                   leaning away from it so the two splay out like a cell. */
+                arm2.enabled = width >= 1200 && height >= 430;
+                arm2.base.x = Math.round(width * 0.4);
+                arm2.base.y = arm.base.y;
+                arm2.reach = arm.reach * 0.6;
+                arm2.seg = [arm2.reach * 0.55, arm2.reach * 0.45];
+                arm2.rest.x = arm2.base.x - arm2.reach * 0.5;
+                arm2.rest.y = arm2.base.y - arm2.reach * 0.86;
+                arm2.target.x = arm2.rest.x;
+                arm2.target.y = arm2.rest.y;
+
                 packets = [];
             };
 
@@ -1015,10 +1043,10 @@
                carries a clean, visible bend. The elbow bulges outward on
                whichever side the target sits, so the reach reads naturally
                either way. */
-            var solveArm = function (tx, ty) {
-                var b = arm.base;
-                var l1 = arm.seg[0];
-                var l2 = arm.seg[1];
+            var solveArm = function (a, tx, ty) {
+                var b = a.base;
+                var l1 = a.seg[0];
+                var l2 = a.seg[1];
                 var dx = tx - b.x;
                 var dy = ty - b.y;
                 var d = Math.sqrt(dx * dx + dy * dy);
@@ -1046,31 +1074,27 @@
                 return [{ x: b.x, y: b.y }, elbow, wrist];
             };
 
-            var drawArm = function () {
-                if (!arm.enabled) return;
-                var want = pointer.active
-                    ? { x: pointer.x, y: pointer.y }
-                    : arm.rest;
-                arm.target.x += (want.x - arm.target.x) * 0.12;
-                arm.target.y += (want.y - arm.target.y) * 0.12;
-                var pts = solveArm(arm.target.x, arm.target.y);
+            /* Draw one arm at a target and opacity, tapering the segments and
+               capping the elbow and wrist with gold pivots and a gripper.
+               Returns the wrist point so the caller can hand a packet off. */
+            var renderArm = function (a, tx, ty, alpha, widths, gripLen) {
+                var pts = solveArm(a, tx, ty);
+                var i;
                 ctx.lineCap = "round";
                 ctx.lineJoin = "round";
                 /* base housing and mounting plate */
                 ctx.fillStyle = colours.steel;
-                ctx.globalAlpha = 0.9;
+                ctx.globalAlpha = alpha * 0.9;
                 ctx.beginPath();
-                ctx.moveTo(arm.base.x - 22, arm.base.y + 6);
-                ctx.lineTo(arm.base.x - 14, arm.base.y - 15);
-                ctx.lineTo(arm.base.x + 14, arm.base.y - 15);
-                ctx.lineTo(arm.base.x + 22, arm.base.y + 6);
+                ctx.moveTo(a.base.x - 22, a.base.y + 6);
+                ctx.lineTo(a.base.x - 14, a.base.y - 15);
+                ctx.lineTo(a.base.x + 14, a.base.y - 15);
+                ctx.lineTo(a.base.x + 22, a.base.y + 6);
                 ctx.closePath();
                 ctx.fill();
                 /* arm segments, tapering from shoulder to wrist */
                 ctx.strokeStyle = colours.steel;
-                ctx.globalAlpha = 1;
-                var widths = [8, 6, 4.2];
-                var i;
+                ctx.globalAlpha = alpha;
                 for (i = 0; i < pts.length - 1; i++) {
                     ctx.beginPath();
                     ctx.moveTo(pts[i].x, pts[i].y);
@@ -1079,7 +1103,7 @@
                     ctx.stroke();
                 }
                 /* joint pivots */
-                var jr = [5.4, 4.4, 3.4];
+                var jr = [widths[0] - 2.6, widths[1] - 1.6];
                 for (i = 0; i < pts.length - 1; i++) {
                     ctx.fillStyle = colours.steel;
                     ctx.beginPath();
@@ -1087,20 +1111,20 @@
                     ctx.fill();
                     ctx.fillStyle = colours.gold;
                     ctx.beginPath();
-                    ctx.arc(pts[i].x, pts[i].y, jr[i] - 0.8, 0, Math.PI * 2);
+                    ctx.arc(pts[i].x, pts[i].y, Math.max(1, jr[i] - 0.8), 0, Math.PI * 2);
                     ctx.fill();
                 }
                 /* gripper at the end effector */
-                var end = pts[pts.length - 1];
-                var prev = pts[pts.length - 2];
+                var end = pts[2];
+                var prev = pts[1];
                 var dir = Math.atan2(end.y - prev.y, end.x - prev.x);
                 var perp = dir + Math.PI / 2;
-                var gx = Math.cos(dir) * 13;
-                var gy = Math.sin(dir) * 13;
-                var ox = Math.cos(perp) * 6.5;
-                var oy = Math.sin(perp) * 6.5;
+                var gx = Math.cos(dir) * gripLen;
+                var gy = Math.sin(dir) * gripLen;
+                var ox = Math.cos(perp) * (gripLen * 0.5);
+                var oy = Math.sin(perp) * (gripLen * 0.5);
                 ctx.strokeStyle = colours.gold;
-                ctx.lineWidth = 3.2;
+                ctx.lineWidth = widths[1] * 0.5;
                 ctx.beginPath();
                 ctx.moveTo(end.x + ox, end.y + oy);
                 ctx.lineTo(end.x + ox + gx, end.y + oy + gy);
@@ -1110,6 +1134,55 @@
                 ctx.lineTo(end.x - ox, end.y - oy);
                 ctx.stroke();
                 ctx.globalAlpha = 1;
+                return end;
+            };
+
+            /* Hand a signal packet off from a point (the gripper) to the
+               nearest particle: the arm placing data into the network. */
+            var spawnHandoff = function (x, y) {
+                if (packets.length >= PACKET_CAP) return;
+                var best = -1;
+                var bestD = 240;
+                for (var k = 0; k < particles.length; k++) {
+                    var ddx = x - particles[k].x;
+                    var ddy = y - particles[k].y;
+                    var dd = Math.sqrt(ddx * ddx + ddy * ddy);
+                    if (dd < bestD) { bestD = dd; best = k; }
+                }
+                if (best >= 0) {
+                    packets.push({ a: -1, ax: x, ay: y, b: best, t: 0, sp: 0.013 + Math.random() * 0.012, big: true });
+                }
+            };
+
+            var drawArms = function () {
+                /* companion idle arm first, behind and fainter, breathing
+                   slowly around its ready pose */
+                if (arm2.enabled) {
+                    idlePhase += 0.011;
+                    var sx = arm2.rest.x + Math.cos(idlePhase) * arm2.reach * 0.1;
+                    var sy = arm2.rest.y + Math.sin(idlePhase * 0.9) * arm2.reach * 0.05;
+                    arm2.target.x += (sx - arm2.target.x) * 0.06;
+                    arm2.target.y += (sy - arm2.target.y) * 0.06;
+                    renderArm(arm2, arm2.target.x, arm2.target.y, 0.34, [5.5, 4], 10);
+                }
+                if (!arm.enabled) return;
+                var want = pointer.active
+                    ? { x: pointer.x, y: pointer.y }
+                    : arm.rest;
+                arm.target.x += (want.x - arm.target.x) * 0.12;
+                arm.target.y += (want.y - arm.target.y) * 0.12;
+                var wrist = renderArm(arm, arm.target.x, arm.target.y, 1, [9, 6.8], 14);
+                /* hand a packet off from the gripper on a gentle cadence while
+                   the pointer is engaging the arm */
+                if (pointer.active) {
+                    handoffCd--;
+                    if (handoffCd <= 0) {
+                        spawnHandoff(wrist.x, wrist.y);
+                        handoffCd = 55 + (Math.random() * 45 | 0);
+                    }
+                } else if (handoffCd < 20) {
+                    handoffCd = 20;
+                }
             };
 
             /* Small packets that travel a live link between two near
@@ -1134,15 +1207,16 @@
                 for (var m = packets.length - 1; m >= 0; m--) {
                     var pk = packets[m];
                     pk.t += pk.sp;
-                    if (pk.t >= 1 || pk.a >= particles.length || pk.b >= particles.length) {
+                    if (pk.t >= 1 || pk.b >= particles.length || (pk.a >= 0 && pk.a >= particles.length)) {
                         packets.splice(m, 1);
                         continue;
                     }
-                    var pa = particles[pk.a];
+                    var sxp = pk.a >= 0 ? particles[pk.a].x : pk.ax;
+                    var syp = pk.a >= 0 ? particles[pk.a].y : pk.ay;
                     var pb = particles[pk.b];
                     ctx.globalAlpha = Math.sin(pk.t * Math.PI);
                     ctx.beginPath();
-                    ctx.arc(pa.x + (pb.x - pa.x) * pk.t, pa.y + (pb.y - pa.y) * pk.t, 2.1, 0, Math.PI * 2);
+                    ctx.arc(sxp + (pb.x - sxp) * pk.t, syp + (pb.y - syp) * pk.t, pk.big ? 2.7 : 2.1, 0, Math.PI * 2);
                     ctx.fill();
                 }
                 ctx.globalAlpha = 1;
@@ -1193,7 +1267,7 @@
                 }
                 ctx.globalAlpha = 1;
                 updatePackets();
-                drawArm();
+                drawArms();
                 rafId = window.requestAnimationFrame(frame);
             };
 

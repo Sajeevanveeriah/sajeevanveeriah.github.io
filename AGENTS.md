@@ -49,8 +49,10 @@ motion pieces are the hero particle field (a capped, pointer-reactive
 constellation that pauses off screen and when the tab is hidden, fine
 pointer only, sharing its canvas with travelling signal packets on the
 links and a pointer-reactive two segment robot arm solved with inverse
-kinematics that reaches toward the cursor and eases to a ready pose when
-idle), native scroll-driven media parallax with a JS fallback, magnetic
+kinematics that reaches toward the cursor, hands a packet off on each
+reach and eases to a ready pose when idle, with a fainter companion arm
+beside it so the pair reads as a robotic cell), native scroll-driven
+media parallax with a JS fallback, magnetic
 hero buttons, blur and scale scroll reveals, and count-up stats.
 Everything must be gated behind `prefers-reduced-motion: no-preference`,
 stay off the main thread where possible, and degrade to a complete static
