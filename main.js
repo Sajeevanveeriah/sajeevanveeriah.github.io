@@ -889,14 +889,18 @@
         }
     });
 
-    /* ---- Hero particle field ----
+    /* ---- Hero particle field, signal packets and robot arm ----
        A capped constellation of champagne and steel points that drift,
        link to near neighbours and expand away from the pointer, giving
-       the hero a living depth. Built only for fine-pointer visitors with
-       motion allowed; it pauses whenever the hero leaves the viewport or
-       the tab is hidden, caps its density and device pixel ratio, and
-       reads its colours from the active theme so it recolours with light
-       and dark. */
+       the hero a living depth. Riding the same canvas: small signal
+       packets that travel the live links, and a pointer-reactive two
+       segment robot arm solved with inverse kinematics that reaches its
+       gripper toward the cursor and eases to a ready pose when idle, a
+       nod to the robotics and industrial automation work on this page.
+       Built only for fine-pointer visitors with motion allowed; it pauses
+       whenever the hero leaves the viewport or the tab is hidden, caps its
+       density and device pixel ratio, and reads its colours from the active
+       theme so it recolours with light and dark. */
     if (motionOk) {
         safeInit(function initParticles() {
             var canvas = document.querySelector("[data-hero-particles]");
@@ -918,7 +922,9 @@
             var colours = {
                 a: "rgba(208,178,116,0.75)",
                 b: "rgba(143,176,206,0.62)",
-                link: "rgba(208,178,116,0.16)"
+                link: "rgba(208,178,116,0.16)",
+                gold: "#D0B274",
+                steel: "#8FB0CE"
             };
 
             var readColours = function () {
@@ -926,10 +932,33 @@
                 var a = cs.getPropertyValue("--particle-a").trim();
                 var b = cs.getPropertyValue("--particle-b").trim();
                 var link = cs.getPropertyValue("--particle-link").trim();
+                var gold = cs.getPropertyValue("--gold").trim();
+                var steel = cs.getPropertyValue("--steel").trim();
                 if (a) colours.a = a;
                 if (b) colours.b = b;
                 if (link) colours.link = link;
+                if (gold) colours.gold = gold;
+                if (steel) colours.steel = steel;
             };
+
+            /* Pointer-reactive robot arm and travelling signal packets share
+               this canvas and inherit its pause discipline. The arm is a
+               two-bone articulated manipulator (upper arm and forearm) solved
+               with analytic inverse kinematics: its gripper reaches toward the
+               pointer and eases to a calm ready pose when the pointer is away.
+               A representation of the mechatronics, robotics and industrial
+               automation work behind this portfolio. */
+            var arm = {
+                enabled: false,
+                ready: false,
+                base: { x: 0, y: 0 },
+                seg: [0, 0],
+                reach: 0,
+                target: { x: 0, y: 0 },
+                rest: { x: 0, y: 0 }
+            };
+            var packets = [];
+            var PACKET_CAP = 7;
 
             var build = function () {
                 var rect = hero.getBoundingClientRect();
@@ -940,7 +969,7 @@
                 canvas.style.width = width + "px";
                 canvas.style.height = height + "px";
                 ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                var count = Math.min(72, Math.round((width * height) / 16000));
+                var count = Math.min(94, Math.round((width * height) / 13000));
                 particles = [];
                 for (var i = 0; i < count; i++) {
                     particles.push({
@@ -952,10 +981,172 @@
                         gold: Math.random() > 0.5
                     });
                 }
+
+                /* Robot arm geometry, scaled to the hero. The arm is only
+                   built when the hero is large enough to carry it without
+                   crowding the copy; smaller heroes keep the constellation
+                   alone. The eased target persists across rebuilds so a
+                   resize never snaps the pose. */
+                arm.enabled = width >= 820 && height >= 430;
+                arm.base.x = Math.round(width * 0.53);
+                /* Anchor the base to the bottom of the visible fold, not the
+                   full hero height, so the whole arm stays above the fold
+                   even when the hero is taller than the viewport. */
+                var fold = window.innerHeight || height;
+                arm.base.y = Math.round(Math.min(height - 4, fold - 10));
+                arm.reach = Math.max(170, Math.min(fold * 0.42, 360));
+                arm.seg = [arm.reach * 0.55, arm.reach * 0.45];
+                arm.rest.x = arm.base.x + arm.reach * 0.3;
+                arm.rest.y = arm.base.y - arm.reach * 0.8;
+                if (!arm.ready) {
+                    arm.target.x = arm.rest.x;
+                    arm.target.y = arm.rest.y;
+                    arm.ready = true;
+                }
+                packets = [];
             };
 
             var LINK_DIST = 118;
             var POINTER_DIST = 150;
+
+            /* Analytic two-bone inverse kinematics: an upper arm and a
+               forearm solved with the law of cosines so the wrist points
+               exactly at the (reach-clamped) target and the elbow always
+               carries a clean, visible bend. The elbow bulges outward on
+               whichever side the target sits, so the reach reads naturally
+               either way. */
+            var solveArm = function (tx, ty) {
+                var b = arm.base;
+                var l1 = arm.seg[0];
+                var l2 = arm.seg[1];
+                var dx = tx - b.x;
+                var dy = ty - b.y;
+                var d = Math.sqrt(dx * dx + dy * dy);
+                var minR = Math.abs(l1 - l2) + 10;
+                /* Never fully straighten: cap the reach short of full
+                   extension so the elbow always keeps a machine-like bend. */
+                var maxR = (l1 + l2) * 0.86;
+                if (d < minR) d = minR;
+                if (d > maxR) d = maxR;
+                var baseAng = Math.atan2(dy, dx);
+                var cosA = (d * d + l1 * l1 - l2 * l2) / (2 * d * l1);
+                if (cosA > 1) cosA = 1;
+                if (cosA < -1) cosA = -1;
+                var a1 = Math.acos(cosA);
+                var sign = tx < b.x ? 1 : -1;
+                var shoulder = baseAng + sign * a1;
+                var elbow = {
+                    x: b.x + Math.cos(shoulder) * l1,
+                    y: b.y + Math.sin(shoulder) * l1
+                };
+                var wrist = {
+                    x: b.x + Math.cos(baseAng) * d,
+                    y: b.y + Math.sin(baseAng) * d
+                };
+                return [{ x: b.x, y: b.y }, elbow, wrist];
+            };
+
+            var drawArm = function () {
+                if (!arm.enabled) return;
+                var want = pointer.active
+                    ? { x: pointer.x, y: pointer.y }
+                    : arm.rest;
+                arm.target.x += (want.x - arm.target.x) * 0.12;
+                arm.target.y += (want.y - arm.target.y) * 0.12;
+                var pts = solveArm(arm.target.x, arm.target.y);
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                /* base housing and mounting plate */
+                ctx.fillStyle = colours.steel;
+                ctx.globalAlpha = 0.9;
+                ctx.beginPath();
+                ctx.moveTo(arm.base.x - 22, arm.base.y + 6);
+                ctx.lineTo(arm.base.x - 14, arm.base.y - 15);
+                ctx.lineTo(arm.base.x + 14, arm.base.y - 15);
+                ctx.lineTo(arm.base.x + 22, arm.base.y + 6);
+                ctx.closePath();
+                ctx.fill();
+                /* arm segments, tapering from shoulder to wrist */
+                ctx.strokeStyle = colours.steel;
+                ctx.globalAlpha = 1;
+                var widths = [8, 6, 4.2];
+                var i;
+                for (i = 0; i < pts.length - 1; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(pts[i].x, pts[i].y);
+                    ctx.lineTo(pts[i + 1].x, pts[i + 1].y);
+                    ctx.lineWidth = widths[i];
+                    ctx.stroke();
+                }
+                /* joint pivots */
+                var jr = [5.4, 4.4, 3.4];
+                for (i = 0; i < pts.length - 1; i++) {
+                    ctx.fillStyle = colours.steel;
+                    ctx.beginPath();
+                    ctx.arc(pts[i].x, pts[i].y, jr[i] + 1.4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = colours.gold;
+                    ctx.beginPath();
+                    ctx.arc(pts[i].x, pts[i].y, jr[i] - 0.8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                /* gripper at the end effector */
+                var end = pts[pts.length - 1];
+                var prev = pts[pts.length - 2];
+                var dir = Math.atan2(end.y - prev.y, end.x - prev.x);
+                var perp = dir + Math.PI / 2;
+                var gx = Math.cos(dir) * 13;
+                var gy = Math.sin(dir) * 13;
+                var ox = Math.cos(perp) * 6.5;
+                var oy = Math.sin(perp) * 6.5;
+                ctx.strokeStyle = colours.gold;
+                ctx.lineWidth = 3.2;
+                ctx.beginPath();
+                ctx.moveTo(end.x + ox, end.y + oy);
+                ctx.lineTo(end.x + ox + gx, end.y + oy + gy);
+                ctx.moveTo(end.x - ox, end.y - oy);
+                ctx.lineTo(end.x - ox + gx, end.y - oy + gy);
+                ctx.moveTo(end.x + ox, end.y + oy);
+                ctx.lineTo(end.x - ox, end.y - oy);
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+            };
+
+            /* Small packets that travel a live link between two near
+               particles, fading in and out: data moving through the loop. */
+            var updatePackets = function () {
+                if (packets.length < PACKET_CAP && Math.random() < 0.16) {
+                    var src = (Math.random() * particles.length) | 0;
+                    var best = -1;
+                    var bestD = LINK_DIST;
+                    for (var k = 0; k < particles.length; k++) {
+                        if (k === src) continue;
+                        var ddx = particles[src].x - particles[k].x;
+                        var ddy = particles[src].y - particles[k].y;
+                        var dd = Math.sqrt(ddx * ddx + ddy * ddy);
+                        if (dd < bestD) { bestD = dd; best = k; }
+                    }
+                    if (best >= 0) {
+                        packets.push({ a: src, b: best, t: 0, sp: 0.012 + Math.random() * 0.014 });
+                    }
+                }
+                ctx.fillStyle = colours.a;
+                for (var m = packets.length - 1; m >= 0; m--) {
+                    var pk = packets[m];
+                    pk.t += pk.sp;
+                    if (pk.t >= 1 || pk.a >= particles.length || pk.b >= particles.length) {
+                        packets.splice(m, 1);
+                        continue;
+                    }
+                    var pa = particles[pk.a];
+                    var pb = particles[pk.b];
+                    ctx.globalAlpha = Math.sin(pk.t * Math.PI);
+                    ctx.beginPath();
+                    ctx.arc(pa.x + (pb.x - pa.x) * pk.t, pa.y + (pb.y - pa.y) * pk.t, 2.1, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.globalAlpha = 1;
+            };
 
             var frame = function () {
                 if (!running) return;
@@ -1001,6 +1192,8 @@
                     }
                 }
                 ctx.globalAlpha = 1;
+                updatePackets();
+                drawArm();
                 rafId = window.requestAnimationFrame(frame);
             };
 
