@@ -466,9 +466,14 @@
 
             var hero = document.querySelector(".hero");
             var signalPanel = document.querySelector("[data-signal-panel]");
-            var mediaItems = Array.prototype.slice.call(document.querySelectorAll(
-                ".project-media img, .project-featured-media img"
-            ));
+            /* Where the browser drives the media parallax natively with a
+               view() timeline (styles.css), the JS parallax stands down so
+               the scroll handler never touches the images at all. */
+            var supportsViewTimeline = !!(window.CSS && CSS.supports &&
+                CSS.supports("animation-timeline", "view()"));
+            var mediaItems = supportsViewTimeline ? [] : Array.prototype.slice.call(
+                document.querySelectorAll(".project-media img, .project-featured-media img")
+            );
 
             /* Only media currently in or near the viewport is parallaxed, so the
                scroll handler measures a small active set rather than every image
@@ -641,6 +646,429 @@
             }
         }, function () {
             root.classList.remove("reveal-armed");
+        });
+    }
+
+    /* ---- Colour theme controller ----
+       Default is "system": no data-theme attribute, so the
+       prefers-color-scheme media queries in styles.css choose the
+       palette. The header control cycles system, light then dark and
+       stores the choice. A short .theme-transition window eases the
+       change; the first application on load is instant so there is no
+       entry flicker. The browser chrome colour is kept in sync for all
+       three states, including a forced theme that opposes the system. */
+    safeInit(function initTheme() {
+        var toggle = document.querySelector("[data-theme-toggle]");
+        var storageKey = "theme";
+        var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+        var stored = null;
+        try { stored = localStorage.getItem(storageKey); } catch (e) { /* ignore */ }
+        var mode = (stored === "light" || stored === "dark") ? stored : "system";
+
+        var themeColorMeta = null;
+        var pair = Array.prototype.slice.call(
+            document.querySelectorAll('meta[name="theme-color"][data-theme-color]')
+        );
+        if (pair.length) {
+            pair.forEach(function (m, i) { if (i > 0 && m.parentNode) m.parentNode.removeChild(m); });
+            themeColorMeta = pair[0];
+            themeColorMeta.removeAttribute("media");
+        }
+
+        var colours = { dark: "#0B0D12", light: "#F3F1EB" };
+        var labels = {
+            system: "Colour theme: follow system",
+            light: "Colour theme: light",
+            dark: "Colour theme: dark"
+        };
+
+        var effective = function () {
+            if (mode === "light" || mode === "dark") return mode;
+            return systemDark.matches ? "dark" : "light";
+        };
+
+        var apply = function (animate) {
+            if (mode === "system") {
+                root.removeAttribute("data-theme");
+            } else {
+                root.setAttribute("data-theme", mode);
+            }
+            if (themeColorMeta) themeColorMeta.setAttribute("content", colours[effective()]);
+            if (toggle) {
+                toggle.setAttribute("data-mode", mode);
+                toggle.setAttribute("aria-label", labels[mode]);
+                toggle.setAttribute("title", labels[mode]);
+            }
+            if (animate && motionOk) {
+                root.classList.add("theme-transition");
+                window.setTimeout(function () {
+                    root.classList.remove("theme-transition");
+                }, 480);
+            }
+        };
+
+        apply(false);
+
+        if (toggle) {
+            var order = ["system", "light", "dark"];
+            toggle.addEventListener("click", function () {
+                mode = order[(order.indexOf(mode) + 1) % order.length];
+                try {
+                    if (mode === "system") localStorage.removeItem(storageKey);
+                    else localStorage.setItem(storageKey, mode);
+                } catch (e) { /* ignore */ }
+                apply(true);
+            });
+        }
+
+        var onSystemChange = function () { if (mode === "system") apply(false); };
+        if (systemDark.addEventListener) systemDark.addEventListener("change", onSystemChange);
+        else if (systemDark.addListener) systemDark.addListener(onSystemChange);
+    });
+
+    /* ---- Count-up statistics ----
+       Figures ease from zero to their target the first time they enter
+       the viewport. Reduced-motion visitors, and anyone without an
+       observer, see the final number immediately. */
+    safeInit(function initCountUp() {
+        var nums = Array.prototype.slice.call(document.querySelectorAll("[data-countup]"));
+        if (!nums.length) return;
+        if (!motionOk || !("IntersectionObserver" in window)) {
+            nums.forEach(function (el) { el.textContent = el.getAttribute("data-countup"); });
+            return;
+        }
+        var run = function (el) {
+            var target = parseInt(el.getAttribute("data-countup"), 10) || 0;
+            var duration = 1100;
+            var start = null;
+            var step = function (ts) {
+                if (start === null) start = ts;
+                var p = Math.min(1, (ts - start) / duration);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = String(Math.round(eased * target));
+                if (p < 1) window.requestAnimationFrame(step);
+                else el.textContent = String(target);
+            };
+            window.requestAnimationFrame(step);
+        };
+        var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    run(entry.target);
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.6 });
+        nums.forEach(function (el) { obs.observe(el); });
+    });
+
+    /* ---- Click-to-copy email ----
+       Hidden until enhanced, so no-JS visitors only ever see the working
+       mailto link. Uses the async clipboard API with a legacy fallback. */
+    safeInit(function initCopyEmail() {
+        var btn = document.querySelector("[data-copy-email]");
+        if (!btn) return;
+        btn.hidden = false;
+        var value = btn.getAttribute("data-copy-email") || "";
+        var resetTimer = null;
+        var mark = function () {
+            btn.classList.add("is-copied");
+            btn.setAttribute("aria-label", "Email address copied");
+            if (resetTimer) window.clearTimeout(resetTimer);
+            resetTimer = window.setTimeout(function () {
+                btn.classList.remove("is-copied");
+                btn.setAttribute("aria-label", "Copy email address to clipboard");
+            }, 1800);
+        };
+        var fallbackCopy = function (text) {
+            try {
+                var ta = document.createElement("textarea");
+                ta.value = text;
+                ta.setAttribute("readonly", "");
+                ta.style.position = "absolute";
+                ta.style.left = "-9999px";
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                return true;
+            } catch (e) { return false; }
+        };
+        btn.addEventListener("click", function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(value).then(mark, function () {
+                    if (fallbackCopy(value)) mark();
+                });
+            } else if (fallbackCopy(value)) {
+                mark();
+            }
+        });
+    });
+
+    /* ---- Back-to-top control ----
+       Works as a plain #top anchor with no JS; the script only reveals it
+       past a threshold, so it serves reduced-motion visitors too. */
+    safeInit(function initBackToTop() {
+        var btn = document.querySelector("[data-to-top]");
+        if (!btn) return;
+        var shown = false;
+        var ticking = false;
+        var update = function () {
+            var show = window.scrollY > window.innerHeight * 0.9;
+            if (show !== shown) {
+                shown = show;
+                btn.classList.toggle("is-visible", show);
+            }
+            ticking = false;
+        };
+        var onScroll = function () {
+            if (ticking) return;
+            ticking = true;
+            window.requestAnimationFrame(update);
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        update();
+    });
+
+    /* ---- Magnetic controls ----
+       While hovering a [data-magnetic] control on a fine pointer, the
+       button eases toward the cursor and its label trails a little, then
+       both settle back on leave. Purely additive and motion-gated. */
+    if (motionOk && window.matchMedia("(pointer: fine)").matches) {
+        safeInit(function initMagnetic() {
+            var controls = Array.prototype.slice.call(document.querySelectorAll("[data-magnetic]"));
+            controls.forEach(function (el) {
+                var label = el.querySelector(".mag-label");
+                el.addEventListener("pointermove", function (event) {
+                    var rect = el.getBoundingClientRect();
+                    var mx = (event.clientX - rect.left) / rect.width - 0.5;
+                    var my = (event.clientY - rect.top) / rect.height - 0.5;
+                    el.style.setProperty("--mag-x", (mx * 12).toFixed(2) + "px");
+                    el.style.setProperty("--mag-y", (my * 10).toFixed(2) + "px");
+                    if (label) {
+                        label.style.setProperty("--mag-lx", (mx * 5).toFixed(2) + "px");
+                        label.style.setProperty("--mag-ly", (my * 4).toFixed(2) + "px");
+                    }
+                });
+                el.addEventListener("pointerleave", function () {
+                    el.style.setProperty("--mag-x", "0px");
+                    el.style.setProperty("--mag-y", "0px");
+                    if (label) {
+                        label.style.setProperty("--mag-lx", "0px");
+                        label.style.setProperty("--mag-ly", "0px");
+                    }
+                });
+            });
+        });
+    }
+
+    /* ---- Print: expand every disclosure so the printout is complete ---- */
+    safeInit(function initPrintExpansion() {
+        var opened = [];
+        var expand = function () {
+            opened = [];
+            Array.prototype.slice.call(document.querySelectorAll("details:not([open])")).forEach(function (d) {
+                opened.push(d);
+                d.open = true;
+            });
+        };
+        var restore = function () {
+            opened.forEach(function (d) { d.open = false; });
+            opened = [];
+        };
+        window.addEventListener("beforeprint", expand);
+        window.addEventListener("afterprint", restore);
+        if (window.matchMedia) {
+            var printMq = window.matchMedia("print");
+            if (printMq.addEventListener) {
+                printMq.addEventListener("change", function (e) {
+                    if (e.matches) expand(); else restore();
+                });
+            }
+        }
+    });
+
+    /* ---- Hero particle field ----
+       A capped constellation of champagne and steel points that drift,
+       link to near neighbours and expand away from the pointer, giving
+       the hero a living depth. Built only for fine-pointer visitors with
+       motion allowed; it pauses whenever the hero leaves the viewport or
+       the tab is hidden, caps its density and device pixel ratio, and
+       reads its colours from the active theme so it recolours with light
+       and dark. */
+    if (motionOk) {
+        safeInit(function initParticles() {
+            var canvas = document.querySelector("[data-hero-particles]");
+            if (!canvas) return;
+            var hero = document.querySelector(".hero");
+            if (!hero) return;
+            if (!window.matchMedia("(pointer: fine)").matches) return;
+            var ctx = canvas.getContext("2d");
+            if (!ctx) return;
+
+            var dpr = Math.min(window.devicePixelRatio || 1, 2);
+            var width = 0;
+            var height = 0;
+            var particles = [];
+            var pointer = { x: -9999, y: -9999, active: false };
+            var running = false;
+            var heroInView = true;
+            var rafId = null;
+            var colours = {
+                a: "rgba(208,178,116,0.75)",
+                b: "rgba(143,176,206,0.62)",
+                link: "rgba(208,178,116,0.16)"
+            };
+
+            var readColours = function () {
+                var cs = getComputedStyle(document.documentElement);
+                var a = cs.getPropertyValue("--particle-a").trim();
+                var b = cs.getPropertyValue("--particle-b").trim();
+                var link = cs.getPropertyValue("--particle-link").trim();
+                if (a) colours.a = a;
+                if (b) colours.b = b;
+                if (link) colours.link = link;
+            };
+
+            var build = function () {
+                var rect = hero.getBoundingClientRect();
+                width = Math.max(1, rect.width);
+                height = Math.max(1, rect.height);
+                canvas.width = Math.round(width * dpr);
+                canvas.height = Math.round(height * dpr);
+                canvas.style.width = width + "px";
+                canvas.style.height = height + "px";
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                var count = Math.min(72, Math.round((width * height) / 16000));
+                particles = [];
+                for (var i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.22,
+                        vy: (Math.random() - 0.5) * 0.22,
+                        r: Math.random() * 1.6 + 0.8,
+                        gold: Math.random() > 0.5
+                    });
+                }
+            };
+
+            var LINK_DIST = 118;
+            var POINTER_DIST = 150;
+
+            var frame = function () {
+                if (!running) return;
+                ctx.clearRect(0, 0, width, height);
+                var i, j, p, q;
+                for (i = 0; i < particles.length; i++) {
+                    p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+                    if (pointer.active) {
+                        var dx = p.x - pointer.x;
+                        var dy = p.y - pointer.y;
+                        var d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < POINTER_DIST && d > 0.01) {
+                            var force = (POINTER_DIST - d) / POINTER_DIST * 0.9;
+                            p.x += (dx / d) * force;
+                            p.y += (dy / d) * force;
+                        }
+                    }
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = p.gold ? colours.a : colours.b;
+                    ctx.fill();
+                }
+                ctx.strokeStyle = colours.link;
+                ctx.lineWidth = 1;
+                for (i = 0; i < particles.length; i++) {
+                    p = particles[i];
+                    for (j = i + 1; j < particles.length; j++) {
+                        q = particles[j];
+                        var lx = p.x - q.x;
+                        var ly = p.y - q.y;
+                        var ld = Math.sqrt(lx * lx + ly * ly);
+                        if (ld < LINK_DIST) {
+                            ctx.globalAlpha = 1 - ld / LINK_DIST;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(q.x, q.y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                ctx.globalAlpha = 1;
+                rafId = window.requestAnimationFrame(frame);
+            };
+
+            var start = function () {
+                if (running) return;
+                running = true;
+                canvas.classList.add("is-live");
+                rafId = window.requestAnimationFrame(frame);
+            };
+            var stop = function () {
+                running = false;
+                if (rafId) window.cancelAnimationFrame(rafId);
+                rafId = null;
+            };
+
+            readColours();
+            build();
+
+            if ("IntersectionObserver" in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (e) {
+                        heroInView = e.isIntersecting;
+                        if (heroInView && !document.hidden) start();
+                        else stop();
+                    });
+                }, { threshold: 0 });
+                io.observe(hero);
+            } else {
+                start();
+            }
+
+            hero.addEventListener("pointermove", function (e) {
+                var rect = hero.getBoundingClientRect();
+                pointer.x = e.clientX - rect.left;
+                pointer.y = e.clientY - rect.top;
+                pointer.active = true;
+            });
+            hero.addEventListener("pointerleave", function () {
+                pointer.active = false;
+                pointer.x = -9999;
+                pointer.y = -9999;
+            });
+
+            document.addEventListener("visibilitychange", function () {
+                if (document.hidden) stop();
+                else if (heroInView) start();
+            });
+
+            var resizeTimer = null;
+            window.addEventListener("resize", function () {
+                if (resizeTimer) window.clearTimeout(resizeTimer);
+                resizeTimer = window.setTimeout(function () {
+                    dpr = Math.min(window.devicePixelRatio || 1, 2);
+                    build();
+                }, 200);
+            });
+
+            var systemScheme = window.matchMedia("(prefers-color-scheme: dark)");
+            if (systemScheme.addEventListener) {
+                systemScheme.addEventListener("change", readColours);
+            }
+            if ("MutationObserver" in window) {
+                var mo = new MutationObserver(readColours);
+                mo.observe(document.documentElement, {
+                    attributes: true,
+                    attributeFilter: ["data-theme"]
+                });
+            }
         });
     }
 }());
