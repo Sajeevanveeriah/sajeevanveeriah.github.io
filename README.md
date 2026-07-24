@@ -18,7 +18,7 @@ A posh engineering command centre rendered in two committed themes that share on
 - Champagne gold as the primary accent (kickers, CTAs, delivered dots, dates) and steel blue as the secondary accent (category labels, hands-on dots, in-copy links). Fill accents (`--gold`, `--steel`) are shared across themes; text accents (`--gold-text`, `--steel-text`) darken in the light theme to hold WCAG AA on paper.
 - Precision hairlines, a faint technical grid behind the hero, numbered mono section kickers and 4 to 6 px radii.
 - Typography: Space Grotesk (display), Hanken Grotesk (body), IBM Plex Mono (system labels), all self-hosted woff2.
-- Expressive but disciplined, motion-safe motion: a capped pointer-reactive hero particle field (fine pointer only, paused off screen and when the tab is hidden) that shares its canvas with travelling signal packets on the links and a pointer-reactive two-segment robot arm solved with inverse kinematics (reaches its gripper toward the cursor, hands a packet off into the network on each reach, eases to a ready pose when idle, with a fainter companion arm beside it so the pair reads as a robotic cell), native scroll-driven media parallax on the compositor with a JS fallback, magnetic hero buttons, blur-and-scale scroll reveals, count-up stats and one-time hero choreography. No continuous, always-on animation; everything is gated behind `prefers-reduced-motion` and degrades to a complete static page.
+- Expressive but disciplined, motion-safe motion: a capped pointer-reactive hero robotics theatre (fine pointer only, paused off screen and when the tab is hidden) that shares one canvas across an inverse-kinematics robot cell, a restrained rover path for perception, planning and control, and travelling signal packets through the network, native scroll-driven media parallax on the compositor with a JS fallback, magnetic hero buttons, blur-and-scale scroll reveals, count-up stats and one-time hero choreography. No continuous, always-on animation; everything is gated behind `prefers-reduced-motion` and degrades to a complete static page.
 
 Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, purple gradients, glassmorphism overload, cyberpunk clutter, chip soup, skill bars, fake logos and fake screenshots.
 
@@ -26,7 +26,7 @@ Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, p
 
 - Static GitHub Pages only, served from the default branch root. No build step.
 - Plain HTML, CSS and a small vanilla `main.js`. No framework, bundler or package manager.
-- Zero runtime third-party requests: fonts (`assets/fonts/*.woff2`) and all images are self-hosted. No analytics or tracking.
+- Zero runtime third-party requests: fonts (`assets/fonts/*.woff2`) and all images are self-hosted. No analytics or tracking. Open Graph and Twitter preview images use crawlable self-hosted assets.
 - Australian and UK spelling. No em dashes or en dashes; date ranges are written "Jan 2026 to Jun 2026".
 - The site must stay readable with JavaScript disabled: filters hide themselves, disclosures fall back to native `details` behaviour, the scroll reveal only arms itself when JS runs, and all content is server-rendered in the HTML.
 - Accessibility target is WCAG 2.2 AA: semantic landmarks, one `h1`, skip link, full keyboard access, visible focus, live filter status, reduced-motion support and verified contrast on both the dark and light surfaces.
@@ -51,7 +51,7 @@ Domains are never omitted for being resume-light and never promoted above their 
 Single page, `index.html`, in section order:
 
 1. Hero: name, positioning, complete-package lede, four actions (View work, Explore atlas, Download resume, Contact), verified stats and the closed-loop signal panel (Sense, Estimate, Control, Actuate, Verify)
-2. Work (`#work`): nine proof-backed records: Engineering Mastery Lab as the featured engineering software build, the ROS 2 rover and six other project cards, plus a manufacturing and QA foundation record, with domain filtering, each opening a problem-to-output case study disclosure (Problem, Context, System architecture, Engineering decisions, Tools, Validation method, Output, Evidence level, What it demonstrates)
+2. Work (`#work`): nine proof-backed records: Engineering Mastery Lab as the featured engineering software build, the ROS 2 rover, the DuxTel agricultural equipment health and location field-trial platform and five other project cards, plus a manufacturing and QA foundation record, with domain filtering, each opening a problem-to-output case study disclosure (Problem, Context, System architecture, Engineering decisions, Tools, Validation method, Output, Evidence level, What it demonstrates)
 3. Engineering Atlas (`#atlas`): nineteen capability domains in a compact two-column card grid with search, domain filter, evidence-tier filter, delivery-context filter, a live result count and stable ids for deep linking
 4. Systems Stack (`#stack`): ten layers from mechanical to AI/ML to validation and documentation; selecting a layer pre-filters the Atlas
 5. Skill Library (`#skills`): six tool territories, each with anchor platforms, usage context and a supporting toolset
@@ -82,7 +82,7 @@ Review each hit manually; the only acceptable matches are this documentation its
 | `main.js` | Mobile nav, active nav, work filter, Atlas search and filters, Stack pre-filter, hash deep links, colour-theme controller, count-up stats, click-to-copy email, back-to-top, magnetic buttons, hero particle field, print expansion, scroll reveal |
 | `favicon.svg` | SV monogram on the midnight plaque with the champagne underline |
 | `assets/fonts/` | Self-hosted Space Grotesk, Hanken Grotesk, IBM Plex Mono |
-| `assets/image/` | Project case study images (PNG, explicit dimensions) |
+| `assets/image/` | Project case study images (PNG or SVG, explicit dimensions) |
 | `assets/Resume_Sajeevan_Veeriah.pdf` | Resume, source of truth for all claims |
 | `sitemap.xml`, `robots.txt` | SEO plumbing, canonical `https://sajeevanveeriah.github.io/` |
 | `BingSiteAuth.xml`, `googlebcce96f6b520ab1f.html` | Search engine verification files, do not remove |
@@ -119,7 +119,7 @@ Before committing changes:
 2. Serve locally and load with the browser console open: zero errors, zero external requests in the Network tab
 3. Check desktop and a 390 px viewport: no horizontal scroll, nav opens and closes, filters and search update the live result counts
 4. Click every nav anchor, work filter, Atlas filter, Stack layer and project link; confirm the resume opens and downloads and the mailto, LinkedIn and GitHub links are correct
-5. Validate the JSON-LD block parses (paste into a JSON parser after stripping the script tags)
+5. Validate every JSON-LD block parses as JSON and keeps one connected `@graph` with WebSite, ProfilePage and Person nodes
 6. `grep -n $'\u2013\|\u2014' index.html README.md AGENTS.md styles.css main.js` must return nothing (no en/em dashes; the pattern uses bash unicode escapes so this file stays clean itself)
 7. Run the privacy grep above and review every hit
 8. Confirm no claim was promoted above its evidence tier and Ford is still "via Invenio contract placement"
@@ -131,3 +131,10 @@ GitHub user Pages serves the default branch root directly; merging to the defaul
 ## Rollback
 
 Every change is a plain git commit. To roll back the redesign, revert the redesign commit(s) on the default branch (`git revert <sha>`), or restore the previous state with `git checkout <previous-sha> -- index.html styles.css main.js favicon.svg sitemap.xml` and commit. No caches or build artefacts are involved.
+
+### SEO maintenance notes
+
+- Keep the home-page title concise with `Sajeevan Veeriah` first, keep one visible `h1`, and keep the exact name visible in the hero, footer and JSON-LD without keyword stuffing.
+- Do not re-add a meta keywords tag. Google Search Central documentation does not list it as a supported ranking signal, so visible, accurate content and valid structured data are preferred.
+- Keep the canonical URL and sitemap aligned. For this single-page site, `sitemap.xml` should list only `https://sajeevanveeriah.github.io/` with the actual content-change date and no fragment URLs.
+- Keep DuxTel public wording as an active professional field trial. Do not name the trial contact or unspecified sensors, protocols, microcontrollers, databases, dashboards or field metrics.

@@ -2661,3 +2661,103 @@ html.theme-transition *:not(.hero-particles) {
         filter: none !important;
     }
 }
+
+/* ---- 2026 robotics portfolio refinement ---- */
+.hero-copy {
+    position: relative;
+    max-width: 760px;
+}
+
+.hero-copy::after {
+    content: "Robotics cell | CAN telemetry | Linux edge";
+    display: inline-flex;
+    min-height: 34px;
+    align-items: center;
+    margin: 4px 0 24px;
+    padding: 7px 12px;
+    border: 1px solid var(--line-strong);
+    border-left-color: var(--gold);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--steel-text);
+    background: var(--surface);
+}
+
+.hero-positioning {
+    max-width: 58ch;
+}
+
+.project-card,
+.project-featured,
+.case-study,
+.cap-entry,
+.role-card,
+.tool-group {
+    isolation: isolate;
+}
+
+.project-card::after,
+.project-featured::after,
+.cap-entry::after,
+.role-card::after,
+.tool-group::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(135deg, var(--steel-soft), transparent 28%, transparent 72%, var(--gold-soft));
+    opacity: 0.32;
+}
+
+.project-card .tier-chip,
+.project-featured .tier-chip,
+.role-card .tier-chip {
+    min-height: 32px;
+}
+
+.project-open,
+.link-arrow,
+.contact-link,
+.footer-col a,
+.nav-resume,
+.nav-resume-mobile,
+.button,
+.filter-pill,
+.theme-toggle,
+.nav-toggle,
+.copy-email,
+.to-top,
+summary,
+.stack-layer {
+    min-height: 44px;
+}
+
+.project-open,
+.link-arrow,
+.contact-link,
+.footer-col a,
+.nav-resume,
+.nav-resume-mobile {
+    display: inline-flex;
+    align-items: center;
+}
+
+@media (max-width: 520px) {
+    .hero-actions .button,
+    .hero-actions .link-arrow,
+    .work-filters .filter-pill,
+    .cap-tier-filter .filter-pill,
+    .cap-context-filter .filter-pill {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .metadata-strip li {
+        width: 100%;
+    }
+}

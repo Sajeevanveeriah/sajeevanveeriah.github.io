@@ -974,6 +974,7 @@
             var handoffCd = 0;
             var packets = [];
             var PACKET_CAP = 9;
+            var roverPhase = 0;
 
             var build = function () {
                 var rect = hero.getBoundingClientRect();
@@ -1185,6 +1186,63 @@
                 }
             };
 
+
+            /* Restrained autonomous rover motif: a small chassis follows a
+               closed path with sensor rays and waypoints, representing
+               perception, planning and control without adding another loop. */
+            var drawRover = function () {
+                if (width < 760 || height < 420) return;
+                roverPhase = (roverPhase + 0.0028) % 1;
+                var cx = width * 0.72;
+                var cy = Math.min(height * 0.58, (window.innerHeight || height) * 0.58);
+                var rx = Math.min(210, width * 0.16);
+                var ry = Math.min(76, height * 0.1);
+                ctx.save();
+                ctx.globalAlpha = 0.56;
+                ctx.strokeStyle = colours.link;
+                ctx.lineWidth = 1;
+                ctx.setLineDash([6, 8]);
+                ctx.beginPath();
+                ctx.ellipse(cx, cy, rx, ry, -0.18, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                for (var i = 0; i < 5; i++) {
+                    var a = i / 5 * Math.PI * 2 - 0.18;
+                    var wx = cx + Math.cos(a) * rx;
+                    var wy = cy + Math.sin(a) * ry;
+                    ctx.fillStyle = i % 2 ? colours.gold : colours.steel;
+                    ctx.globalAlpha = 0.7;
+                    ctx.beginPath();
+                    ctx.arc(wx, wy, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                var t = roverPhase * Math.PI * 2 - 0.18;
+                var x = cx + Math.cos(t) * rx;
+                var y = cy + Math.sin(t) * ry;
+                var heading = Math.atan2(Math.cos(t) * ry, -Math.sin(t) * rx);
+                ctx.translate(x, y);
+                ctx.rotate(heading);
+                ctx.globalAlpha = 0.86;
+                ctx.fillStyle = colours.steel;
+                ctx.strokeStyle = colours.gold;
+                ctx.lineWidth = 1.2;
+                ctx.fillRect(-13, -8, 26, 16);
+                ctx.strokeRect(-13, -8, 26, 16);
+                ctx.fillStyle = colours.gold;
+                ctx.fillRect(8, -3, 9, 6);
+                ctx.globalAlpha = 0.32;
+                ctx.strokeStyle = colours.steel;
+                ctx.beginPath();
+                ctx.moveTo(16, 0);
+                ctx.lineTo(46, -18);
+                ctx.moveTo(16, 0);
+                ctx.lineTo(50, 0);
+                ctx.moveTo(16, 0);
+                ctx.lineTo(46, 18);
+                ctx.stroke();
+                ctx.restore();
+            };
+
             /* Small packets that travel a live link between two near
                particles, fading in and out: data moving through the loop. */
             var updatePackets = function () {
@@ -1267,6 +1325,7 @@
                 }
                 ctx.globalAlpha = 1;
                 updatePackets();
+                drawRover();
                 drawArms();
                 rafId = window.requestAnimationFrame(frame);
             };
