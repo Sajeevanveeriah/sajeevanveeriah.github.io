@@ -136,7 +136,7 @@ export const projects: readonly Project[] = [
     category: 'Featured, Personal build',
     images: [
       {
-        src: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.png',
+        src: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.jpg',
         alt: 'ROS 2 autonomous navigation stack visualised with robot mapping and route planning',
         width: 1448,
         height: 1086,
@@ -175,7 +175,7 @@ export const projects: readonly Project[] = [
     category: 'Professional delivery',
     images: [
       {
-        src: '/assets/image/Smart_Factory_Process_Visualisation_Rev00.png',
+        src: '/assets/image/Smart_Factory_Process_Visualisation_Rev00.jpg',
         alt: 'Smart factory process visualisation with HMI, SCADA and production data screens',
         width: 1448,
         height: 1086,
@@ -215,7 +215,7 @@ export const projects: readonly Project[] = [
     category: 'Professional delivery',
     images: [
       {
-        src: '/assets/image/Vehicle_ADAS_CAN_Validation_Rev00.png',
+        src: '/assets/image/Vehicle_ADAS_CAN_Validation_Rev00.jpg',
         alt: 'Vehicle ADAS and CAN validation with software testing and signal analysis',
         width: 1448,
         height: 1086,
@@ -254,7 +254,7 @@ export const projects: readonly Project[] = [
     category: 'Professional delivery',
     images: [
       {
-        src: '/assets/image/Vehicle_Emissions_Compliance_Testing_Rev00.png',
+        src: '/assets/image/Vehicle_Emissions_Compliance_Testing_Rev00.jpg',
         alt: 'Vehicle emissions and compliance testing with instrumentation and reporting',
         width: 1448,
         height: 1086,
@@ -340,7 +340,7 @@ export const projects: readonly Project[] = [
     category: 'University capstone',
     images: [
       {
-        src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.png',
+        src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.jpg',
         alt: 'Embedded clinical ataxia assessment device with sensors and movement data capture',
         width: 1448,
         height: 1086,
