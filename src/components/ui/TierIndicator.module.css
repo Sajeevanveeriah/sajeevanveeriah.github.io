@@ -1,0 +1,103 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Base dot. Every tier differs in geometry as well as colour, so the set
+   survives greyscale and colour-blind rendering. */
+.dot {
+  --size: 9px;
+  width: var(--size);
+  height: var(--size);
+  flex: none;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* Delivered: solid fill, the strongest reading. */
+.solid {
+  background: var(--accent-fill);
+}
+
+/* Hands-on: half filled, split down the vertical. */
+.half {
+  border: 1.5px solid var(--status);
+  background: linear-gradient(
+    to right,
+    var(--status) 0 50%,
+    transparent 50% 100%
+  );
+}
+
+/* Working knowledge: ring with a centred core. */
+.ringed {
+  border: 1.5px solid var(--text-muted);
+  background:
+    radial-gradient(circle, var(--text-muted) 0 1.5px, transparent 1.5px);
+}
+
+/* Adjacent: hollow outline, no core. */
+.hollow {
+  border: 1.5px solid var(--text-faint);
+  background: transparent;
+}
+
+/* Target: dashed outline on a rotated square. Structurally different from
+   every circular tier above, so intent never reads as capability held. */
+.dashed {
+  border: 1.5px dashed var(--accent-text);
+  border-radius: 1px;
+  background: transparent;
+  transform: rotate(45deg);
+}
+
+.legend {
+  display: grid;
+  gap: var(--space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .legend:not(.legendCompact) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-1) var(--space-4);
+  }
+}
+
+.legendItem {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.legendItem .dot {
+  align-self: center;
+}
+
+.legendLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.legendDef {
+  color: var(--text-muted);
+}
+
+.legendCompact .legendDef {
+  display: none;
+}

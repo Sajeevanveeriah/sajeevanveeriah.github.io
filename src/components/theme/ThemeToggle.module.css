@@ -1,0 +1,28 @@
+.toggle,
+.placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo),
+    background-color var(--dur-interaction) var(--ease-servo);
+}
+
+.placeholder {
+  cursor: default;
+}
+
+.toggle:hover {
+  color: var(--accent-text);
+  border-color: var(--accent-fill);
+  background: var(--accent-muted);
+}
