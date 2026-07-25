@@ -15,7 +15,8 @@ import { join, extname, basename, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'assets', 'image')
-const files = (await readdir(dir)).filter((f) => extname(f).toLowerCase() === '.png')
+const rasterExts = new Set(['.png', '.jpg', '.jpeg'])
+const files = (await readdir(dir)).filter((f) => rasterExts.has(extname(f).toLowerCase()))
 
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`
 let before = 0
@@ -25,6 +26,7 @@ for (const file of files) {
   const src = join(dir, file)
   const stem = basename(file, extname(file))
   const original = (await stat(src)).size
+  const originalLabel = extname(file).slice(1).toLowerCase()
   before += original
 
   const avifPath = join(dir, `${stem}.avif`)
@@ -38,12 +40,12 @@ for (const file of files) {
   after += a
 
   console.log(
-    `${stem}\n  png ${kb(original).padStart(9)}  ->  avif ${kb(a).padStart(8)}  webp ${kb(w).padStart(8)}  ` +
+    `${stem}\n  ${originalLabel} ${kb(original).padStart(9)}  ->  avif ${kb(a).padStart(8)}  webp ${kb(w).padStart(8)}  ` +
       `(avif ${(100 - (a / original) * 100).toFixed(1)}% smaller)`,
   )
 }
 
 console.log(
-  `\nTotal PNG ${kb(before)}  ->  total AVIF ${kb(after)}  ` +
+  `\nTotal originals ${kb(before)}  ->  total AVIF ${kb(after)}  ` +
     `(${(100 - (after / before) * 100).toFixed(1)}% smaller across ${files.length} images)`,
 )
