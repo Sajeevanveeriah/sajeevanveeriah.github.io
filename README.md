@@ -24,9 +24,9 @@ Explicitly banned: orange as the dominant accent, beige worksheet backgrounds, p
 
 ## Technical constraints
 
-- Static GitHub Pages only, served from the default branch root. No build step.
-- Plain HTML, CSS and a small vanilla `main.js`. No framework, bundler or package manager.
-- Zero runtime third-party requests: fonts (`assets/fonts/*.woff2`) and all images are self-hosted. No analytics or tracking. Open Graph and Twitter preview images use crawlable self-hosted assets.
+- Static GitHub Pages only, served at the domain root. Next.js 15 App Router, TypeScript strict, Tailwind CSS v4, compiled by `next build` to a fully static export in `out/` and published by GitHub Actions. No server, no API routes, no database, no runtime environment variables.
+- Static-export constraints are binding: `output: 'export'`, `trailingSlash: true`, `images: { unoptimized: true }`, `public/.nojekyll`, `generateStaticParams` on every dynamic route, `not-found.tsx` to emit `404.html`, and no `basePath` (a user site is served from `/`).
+- Zero runtime third-party requests: fonts (`public/assets/fonts/*.woff2`, loaded through `next/font/local`) and all images are self-hosted. Next.js telemetry is disabled. No analytics or tracking. Open Graph and Twitter preview images use crawlable self-hosted assets.
 - Australian and UK spelling. No em dashes or en dashes; date ranges are written "Jan 2026 to Jun 2026".
 - The site must stay readable with JavaScript disabled: filters hide themselves, disclosures fall back to native `details` behaviour, the scroll reveal only arms itself when JS runs, and all content is server-rendered in the HTML.
 - Accessibility target is WCAG 2.2 AA: semantic landmarks, one `h1`, skip link, full keyboard access, visible focus, live filter status, reduced-motion support and verified contrast on both the dark and light surfaces.
@@ -107,30 +107,39 @@ Edit `details.cap-entry` blocks in `#atlas`. Each needs `data-cluster`, `data-ti
 ## Local preview
 
 ```sh
-python3 -m http.server 8000
-# then open http://localhost:8000/
+npm install
+npm run dev
+# then open http://localhost:3000/
+```
+
+To check exactly what Pages will serve, build and serve the export:
+
+```sh
+npm run build
+npx serve out
 ```
 
 ## Validation checklist
 
 Before committing changes:
 
-1. `node --check main.js`
-2. Serve locally and load with the browser console open: zero errors, zero external requests in the Network tab
-3. Check desktop and a 390 px viewport: no horizontal scroll, nav opens and closes, filters and search update the live result counts
-4. Click every nav anchor, work filter, Atlas filter, Stack layer and project link; confirm the resume opens and downloads and the mailto, LinkedIn and GitHub links are correct
-5. Validate every JSON-LD block parses as JSON and keeps one connected `@graph` with WebSite, ProfilePage and Person nodes
-6. `grep -n $'\u2013\|\u2014' index.html README.md AGENTS.md styles.css main.js` must return nothing (no en/em dashes; the pattern uses bash unicode escapes so this file stays clean itself)
-7. Run the privacy grep above and review every hit
-8. Confirm no claim was promoted above its evidence tier and Ford is still "via Invenio contract placement"
+1. `npm run typecheck` and `npm run lint`
+2. `npm run build`: the contrast gate must report zero failing pairs, and `out/` must contain `index.html`, `404.html`, `.nojekyll`, `BingSiteAuth.xml`, `googlebcce96f6b520ab1f.html`, `robots.txt`, `sitemap.xml` and `assets/`
+3. Serve `out/` locally and load with the browser console open: zero errors, zero external requests in the Network tab
+4. Check desktop and a 390 px viewport: no horizontal scroll, nav opens and closes, filters and search update the live result counts
+5. Click every nav anchor, work filter, Atlas filter, Stack layer and project link; confirm the resume opens and downloads and the mailto, LinkedIn and GitHub links are correct
+6. Validate every JSON-LD block parses as JSON and keeps one connected `@graph` with WebSite, ProfilePage and Person nodes
+7. `grep -n $'\u2013\|\u2014' index.html README.md AGENTS.md styles.css main.js` must return nothing (no en/em dashes; the pattern uses bash unicode escapes so this file stays clean itself)
+8. Run the privacy grep above and review every hit
+9. Confirm no claim was promoted above its evidence tier and Ford is still "via Invenio contract placement"
 
 ## Deployment
 
-GitHub user Pages serves the default branch root directly; merging to the default branch is the deployment. There is no build pipeline to run or invalidate.
+GitHub Actions builds the static export and publishes it, using `actions/configure-pages`, `actions/upload-pages-artifact` pointed at `./out` and `actions/deploy-pages`. There is no `gh-pages` branch. Pages must be set to "Deploy from GitHub Actions" in repository settings; merging to the default branch triggers the workflow.
 
 ## Rollback
 
-Every change is a plain git commit. To roll back the redesign, revert the redesign commit(s) on the default branch (`git revert <sha>`), or restore the previous state with `git checkout <previous-sha> -- index.html styles.css main.js favicon.svg sitemap.xml` and commit. No caches or build artefacts are involved.
+Every change is a plain git commit and `out/` is a build artefact, never committed. To roll back, revert the offending commit(s) on the default branch (`git revert <sha>`) and let the workflow rebuild and redeploy. The previous buildless site remains in git history and can be restored with `git checkout <previous-sha> -- index.html styles.css main.js`.
 
 ### SEO maintenance notes
 

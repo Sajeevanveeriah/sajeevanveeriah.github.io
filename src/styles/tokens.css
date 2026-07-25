@@ -1,0 +1,268 @@
+/* ============================================================
+   Design tokens: the Command system, dual theme.
+
+   Source of truth is AGENTS.md and the token block of the previous
+   styles.css. Champagne gold is the single accent, steel blue the single
+   status and signal colour, rendered in two committed themes: Midnight
+   (dark, default) and Daylight (light).
+
+   Structure, in three layers:
+
+   1. RAW PALETTE. Every literal colour appears exactly once, namespaced
+      --midnight-* or --daylight-*. Nothing else in the codebase may use a
+      literal colour.
+   2. ROLE TOKENS. Components reference these only, never a raw value and
+      never a theme-specific value.
+   3. THEME MAPPINGS. Three thin blocks bind roles to raw values: the dark
+      default, the forced-light override, and the no-JavaScript system-light
+      fallback. Because the mappings reference the raw palette rather than
+      restating hexes, the old requirement that two light blocks stay
+      byte-for-byte identical is gone: there is only one place to edit.
+
+   Contrast: every pair below is measured by scripts/check-contrast.mjs,
+   which fails the build on any pair under its WCAG 2.2 AA threshold.
+   Three Daylight values are corrected against the previous site, which
+   shipped them failing. Each is measured against all three backgrounds it
+   renders on, not just --surface:
+     --text-faint   #767B84 -> #686D75  (was 4.07:1 on surface, needs 4.5)
+     --accent-fill  new token #A88338   (--gold was 2.21:1, needs 3.0)
+     --status fill  new token #658DB0   (--steel was 2.86:1 on the page
+                                        background, needs 3.0)
+   The two new fill tokens exist so the shared --gold and --steel values are
+   not darkened globally: --accent-text already passed at 5.95:1, and moving
+   the shared value would have changed every gold and steel surface on the
+   site. --gold and --steel are retained for purely decorative large fills
+   where the 3:1 non-text threshold does not apply.
+   No Midnight value is changed.
+   ============================================================ */
+
+:root {
+  /* ---------- 1. RAW PALETTE ---------- */
+
+  /* Midnight Command, unchanged from the previous site. */
+  --midnight-bg: #0b0d12;
+  --midnight-surface: #10131a;
+  --midnight-surface-raised: #151923;
+  --midnight-ink: #ece9e1;
+  --midnight-ink-soft: #a6aab3;
+  --midnight-faint: #83878f;
+  --midnight-line: rgb(236 233 225 / 0.08);
+  --midnight-line-strong: rgb(236 233 225 / 0.22);
+  --midnight-gold: #d0b274;
+  --midnight-gold-bright: #dec28a;
+  --midnight-gold-text: #d0b274;
+  --midnight-gold-soft: rgb(208 178 116 / 0.13);
+  --midnight-steel: #8fb0ce;
+  --midnight-steel-bright: #a8c4dc;
+  --midnight-steel-text: #8fb0ce;
+  --midnight-steel-soft: rgb(143 176 206 / 0.12);
+  --midnight-on-gold: #221806;
+  --midnight-grid: rgb(236 233 225 / 0.028);
+
+  /* Daylight Command. Two values corrected for contrast, noted above. */
+  --daylight-bg: #f3f1eb;
+  --daylight-surface: #fbfaf6;
+  --daylight-surface-raised: #ffffff;
+  --daylight-ink: #1a1c22;
+  --daylight-ink-soft: #4c515a;
+  --daylight-faint: #686d75; /* corrected from #767B84 */
+  --daylight-line: rgb(26 28 34 / 0.1);
+  --daylight-line-strong: rgb(26 28 34 / 0.2);
+  --daylight-gold: #c9a65e; /* decorative large fills only */
+  --daylight-gold-fill: #a88338; /* corrected: meaningful non-text UI */
+  --daylight-gold-bright: #b8913f;
+  --daylight-gold-text: #7a5c1f;
+  --daylight-gold-soft: rgb(184 145 63 / 0.16);
+  --daylight-steel: #6e93b4; /* decorative large fills only */
+  --daylight-steel-fill: #658db0; /* corrected: meaningful non-text UI */
+  --daylight-steel-bright: #557da0;
+  --daylight-steel-text: #33628f;
+  --daylight-steel-soft: rgb(110 147 180 / 0.14);
+  --daylight-on-gold: #241a07;
+  --daylight-grid: rgb(26 28 34 / 0.05);
+
+  /* ---------- 2. THEME-INDEPENDENT TOKENS ---------- */
+
+  /* Typography. Families are bound to the next/font CSS variables in
+     layout.tsx, so the woff2 files stay self-hosted and no third-party
+     request is ever made. */
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-body: var(--font-hanken-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+
+  /* Fluid type scale. Every step is clamp()ed between a 375px floor and a
+     1440px ceiling so nothing needs a per-breakpoint override. */
+  --text-xs: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem);
+  --text-sm: clamp(0.8125rem, 0.79rem + 0.11vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.91rem + 0.14vw, 1rem);
+  --text-lg: clamp(1.0625rem, 1.01rem + 0.24vw, 1.1875rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.42vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.32rem + 0.78vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.53rem + 1.47vw, 2.75rem);
+  --text-4xl: clamp(2.25rem, 1.63rem + 2.65vw, 3.75rem);
+  --text-5xl: clamp(2.75rem, 1.68rem + 4.57vw, 5.25rem);
+
+  --leading-tight: 1.06;
+  --leading-snug: 1.22;
+  --leading-body: 1.62;
+  --tracking-tight: -0.022em;
+  --tracking-snug: -0.012em;
+  --tracking-mono: 0.08em;
+
+  /* Layout. 8px spacing scale, used without exception. */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 2.5rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-10: 5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+  --space-20: 10rem;
+
+  --wrap: 1200px;
+  --measure: 68ch;
+  --radius: 4px;
+  --radius-lg: 6px;
+  --header-h: 72px;
+
+  /* Section rhythm: 96px to 160px vertical on desktop. Sits at roughly
+     105px at 1440px so stacked sections do not push routes past the scroll
+     rule; the hero opts into the taller end separately. */
+  --section-y: clamp(var(--space-6), 3rem + 4vw, var(--space-16));
+
+  /* ---------- MOTION GRAMMAR ----------
+     Servo easing only: controlled actuation, no overshoot, no elastic
+     return. Every curve below is monotonic with both control-point y
+     values inside [0, 1], so nothing can travel past its target. The
+     previous site's --ease-spring (0.34, 1.4, 0.64, 1) overshot by design
+     and is deliberately not carried over. */
+  --ease-servo: cubic-bezier(0.33, 0, 0.2, 1); /* default actuation */
+  --ease-servo-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* symmetric travel */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1); /* arrive and hold */
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1); /* leave, no deceleration */
+
+  /* Durations, keyed to the motion tiers in AGENTS.md. */
+  --dur-micro: 120ms;
+  --dur-interaction: 200ms; /* tier 2: hover, focus, nav underline */
+  --dur-rung: 240ms; /* systems stack rung selection, under 250ms */
+  --dur-reveal: 320ms; /* tier 1: scroll reveal */
+  --dur-route: 380ms; /* tool path route transition, under 400ms */
+  --dur-ambient: 900ms; /* tier 3 only */
+  --reveal-stagger: 70ms;
+
+  --lift: -3px;
+  --lift-strong: -7px;
+
+  /* Depth. A very low opacity grain sits over both themes. */
+  --grain-opacity: 0.035;
+
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+}
+
+/* ---------- 3. THEME MAPPINGS ---------- */
+
+/* Midnight Command: the default. Applies with no attribute set, and when
+   the visitor or their system resolves to dark. */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: var(--midnight-bg);
+  --surface: var(--midnight-surface);
+  --surface-raised: var(--midnight-surface-raised);
+
+  --text: var(--midnight-ink);
+  --text-muted: var(--midnight-ink-soft);
+  --text-faint: var(--midnight-faint);
+
+  --border: var(--midnight-line);
+  --border-strong: var(--midnight-line-strong);
+
+  --accent: var(--midnight-gold);
+  --accent-hover: var(--midnight-gold-bright);
+  --accent-text: var(--midnight-gold-text);
+  --accent-fill: var(--midnight-gold);
+  --accent-muted: var(--midnight-gold-soft);
+  --on-accent: var(--midnight-on-gold);
+
+  --status: var(--midnight-steel);
+  --status-hover: var(--midnight-steel-bright);
+  --status-text: var(--midnight-steel-text);
+  --status-muted: var(--midnight-steel-soft);
+
+  --grid-line: var(--midnight-grid);
+  --header-bg: rgb(11 13 18 / 0.86);
+  --focus-ring: var(--midnight-gold);
+}
+
+/* Daylight Command: forced by the header control. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: var(--daylight-bg);
+  --surface: var(--daylight-surface);
+  --surface-raised: var(--daylight-surface-raised);
+
+  --text: var(--daylight-ink);
+  --text-muted: var(--daylight-ink-soft);
+  --text-faint: var(--daylight-faint);
+
+  --border: var(--daylight-line);
+  --border-strong: var(--daylight-line-strong);
+
+  --accent: var(--daylight-gold);
+  --accent-hover: var(--daylight-gold-bright);
+  --accent-text: var(--daylight-gold-text);
+  --accent-fill: var(--daylight-gold-fill);
+  --accent-muted: var(--daylight-gold-soft);
+  --on-accent: var(--daylight-on-gold);
+
+  --status: var(--daylight-steel-fill);
+  --status-hover: var(--daylight-steel-text);
+  --status-text: var(--daylight-steel-text);
+  --status-muted: var(--daylight-steel-soft);
+
+  --grid-line: var(--daylight-grid);
+  --header-bg: rgb(243 241 235 / 0.86);
+  --focus-ring: var(--daylight-gold-text);
+}
+
+/* No-JavaScript fallback. next-themes stamps data-theme before first paint,
+   so this only ever applies when scripting is off. It maps the same raw
+   palette, so it cannot drift from the block above. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+
+    --bg: var(--daylight-bg);
+    --surface: var(--daylight-surface);
+    --surface-raised: var(--daylight-surface-raised);
+
+    --text: var(--daylight-ink);
+    --text-muted: var(--daylight-ink-soft);
+    --text-faint: var(--daylight-faint);
+
+    --border: var(--daylight-line);
+    --border-strong: var(--daylight-line-strong);
+
+    --accent: var(--daylight-gold);
+    --accent-hover: var(--daylight-gold-bright);
+    --accent-text: var(--daylight-gold-text);
+    --accent-fill: var(--daylight-gold-fill);
+    --accent-muted: var(--daylight-gold-soft);
+    --on-accent: var(--daylight-on-gold);
+
+    --status: var(--daylight-steel-fill);
+    --status-hover: var(--daylight-steel-text);
+    --status-text: var(--daylight-steel-text);
+    --status-muted: var(--daylight-steel-soft);
+
+    --grid-line: var(--daylight-grid);
+    --header-bg: rgb(243 241 235 / 0.86);
+    --focus-ring: var(--daylight-gold-text);
+  }
+}

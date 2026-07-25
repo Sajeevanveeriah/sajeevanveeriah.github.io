@@ -3,11 +3,24 @@
 Operating guide for this repository. Read this before editing. It reflects the
 July 2026 "Midnight Command" redesign and is binding.
 
-This is a GitHub user Pages site served directly from the default branch root.
-The stack is buildless: plain HTML, CSS and a small amount of vanilla JS. Keep
-it buildless. Do not add a framework, bundler, package manager, build step or
-GitHub Actions deploy. The site must make zero runtime third-party requests:
-all fonts and assets are self-hosted.
+This is a GitHub user Pages site served at the domain root. The stack is
+Next.js 15 with the App Router, TypeScript in strict mode and Tailwind CSS v4,
+compiled to a fully static export (`output: 'export'`) and published to Pages
+by GitHub Actions from the `out/` directory. There is no server, no API route,
+no database, no runtime environment variable and no client-side data fetching.
+
+Keep it static. The export must keep working, so these are binding:
+`trailingSlash: true`; `images: { unoptimized: true }`; `public/.nojekyll` so
+Jekyll does not strip `_next`; a `generateStaticParams` on every dynamic route
+returning all slugs; a `not-found.tsx` so the export emits `404.html`; and no
+`basePath` or `assetPrefix`, because a user site is served from `/` and either
+would break every asset path. Confirm against the absence of a CNAME file
+before changing this.
+
+The site must make zero runtime third-party requests: all fonts and assets are
+self-hosted, Next.js telemetry is disabled, and no analytics or tracking of any
+kind may be added. Content lives in a typed layer under `src/content/`; no copy
+is hard-coded in a component.
 
 Write in Australian and UK spelling. Do not use em dashes or en dashes anywhere,
 use commas, colons or full stops. Write date ranges as "Jan 2026 to Jun 2026".
@@ -25,18 +38,22 @@ system based default and keep both themes in lock step; the two light
 token blocks in `styles.css` (the `:root[data-theme="light"]` block and
 the `prefers-color-scheme: light` block) must stay byte for byte identical.
 
-- Colour is driven entirely by custom properties. Fill accents (`--gold`,
-  `--steel`: buttons, dots, borders) are shared; text accents
+- Colour is driven entirely by custom properties. Text accents
   (`--gold-text`, `--steel-text`: mono kickers, dates, in-copy links) are
-  darkened in the light theme so they hold WCAG AA on a pale background. Do
-  not hard-code colours in component rules; add a token and set it in every
-  theme block.
+  darkened in the light theme so they hold WCAG AA on a pale background.
+  Meaningful non-text UI (tier dots, status indicators, informational
+  borders) uses the dedicated `--accent-fill` and `--status` fill tokens,
+  which are darkened in Daylight to clear 3:1; `--gold` and `--steel` remain
+  for purely decorative large fills only. Do not hard-code colours in
+  component rules; add a token and set it in every theme block.
 - Midnight Command: background `#0B0D12`; surfaces `#10131A` and `#151923`;
   text `#ECE9E1` ivory, muted `#A6AAB3`, faint `#83878F`.
 - Daylight Command: background `#F3F1EB` warm gallery paper (not a beige
   worksheet); surfaces `#FBFAF6` and `#FFFFFF`; text `#1A1C22`, muted
-  `#4C515A`, faint `#767B84`; `--gold-text` deepens to `#7A5C1F` and
-  `--steel-text` to `#33628F`.
+  `#4C515A`, faint `#686D75`; `--gold-text` deepens to `#7A5C1F` and
+  `--steel-text` to `#33628F`; the Daylight fill tokens are `#A88338`
+  (accent) and `#658DB0` (status). The previous faint `#767B84`, `--gold`
+  fill and `--steel` fill failed WCAG AA and were corrected.
 - Primary accent: champagne gold (kickers, CTAs, delivered dots, dates,
   active states). Secondary accent: steel blue (category labels, hands-on
   dots, in-copy links). Keep both restrained.

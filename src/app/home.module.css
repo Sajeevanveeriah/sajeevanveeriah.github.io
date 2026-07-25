@@ -1,0 +1,75 @@
+.hero { padding-block: clamp(var(--space-5), 2.5rem + 3vw, var(--space-10)); position: relative; }
+.heroGrid { display: grid; gap: var(--space-6); align-items: start; }
+@media (min-width: 900px) {
+  /* Asymmetric: copy takes the wide column, the instrument panel the narrow. */
+  .heroGrid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--space-8); }
+}
+.heroCopy { display: grid; gap: var(--space-2); }
+.heroTitle { letter-spacing: var(--tracking-tight); }
+.positioning {
+  font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500;
+  color: var(--accent-text); letter-spacing: var(--tracking-snug);
+}
+.lede { color: var(--text-muted); font-size: var(--text-lg); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-1); }
+.primary, .secondary {
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
+  text-transform: uppercase; border-radius: var(--radius); padding: 0.7rem 1.1rem;
+  transition: transform var(--dur-interaction) var(--ease-servo), background-color var(--dur-interaction) var(--ease-servo);
+}
+.primary { background: var(--accent-fill); color: var(--on-accent); border: 1px solid var(--accent-fill); }
+.secondary { color: var(--text); border: 1px solid var(--border-strong); }
+.primary:hover, .secondary:hover { transform: translateY(var(--lift)); }
+.secondary:hover { border-color: var(--accent-fill); }
+
+.credentials {
+  display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); list-style: none;
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
+  text-transform: uppercase; color: var(--text-faint); margin-top: var(--space-2);
+}
+
+.signal {
+  display: grid; gap: var(--space-2);
+  padding: var(--space-3); background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.signalSummary { color: var(--text-muted); font-size: var(--text-sm); }
+.signalFlow { list-style: none; display: grid; gap: var(--space-2); margin: 0; padding: 0; }
+.signalNode { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2); align-items: start; }
+.signalDot {
+  width: 7px; height: 7px; border-radius: 50%; margin-top: 0.45rem;
+  background: var(--status); flex: none;
+}
+.signalName {
+  display: flex; align-items: baseline; gap: 0.75ch;
+  font-family: var(--font-display); font-weight: 600; color: var(--text); font-size: var(--text-base);
+}
+.signalIdx { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); letter-spacing: var(--tracking-mono); }
+.signalDetail { display: block; font-size: var(--text-sm); color: var(--text-muted); }
+
+.strip {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 0; padding: 0;
+}
+.stripItem {
+  display: inline-flex; align-items: baseline; gap: 0.6ch;
+  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
+  text-transform: uppercase; color: var(--text-muted);
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 0.4rem 0.7rem;
+}
+.stripIdx { color: var(--accent-text); }
+
+.cta {
+  display: grid; gap: var(--space-3);
+  padding: var(--space-5); border: 1px solid var(--border-strong); border-radius: var(--radius);
+  background: var(--surface);
+}
+
+/* Ambient anchors. The hero is the only place the kinematic chain, point
+   cloud and sensor sweep appear anywhere on the site. */
+.hero { isolation: isolate; overflow: clip; }
+.hero > .wrap { position: relative; z-index: 1; }
+.sweepAnchor {
+  position: absolute; top: -12%; right: -8%; z-index: 0;
+  display: grid; place-items: center; pointer-events: none;
+}
+.chainSlot { display: grid; justify-items: start; margin-block: var(--space-1); }
