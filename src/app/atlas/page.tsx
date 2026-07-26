@@ -9,7 +9,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Engineering Atlas',
   description:
-    'Nineteen engineering capability domains, tiered honestly by evidence. Search and filter by discipline, systems layer or evidence tier.',
+    'My engineering capability atlas covers nineteen domains, each tiered honestly by evidence and filterable by discipline, systems layer or evidence tier.',
   alternates: { canonical: '/atlas/' },
   openGraph: { title: 'Engineering Atlas', url: '/atlas/' },
 }
@@ -20,8 +20,8 @@ export default function AtlasPage() {
       <div className="wrap">
         <PageHeader
           kicker="02 / Engineering Atlas"
-          title="Nineteen capability domains, tiered honestly by evidence."
-          lede="The full engineering landscape in one atlas: search it, filter it by discipline, systems layer or evidence tier, and open any domain for subdomains, tools, proof and growth targets. Nothing is claimed beyond its evidence."
+          title="My capability atlas, tiered honestly by evidence."
+          lede="I organise my engineering landscape in one atlas. Search it, filter it by discipline, systems layer or evidence tier, and open any domain for my subdomains, tools, proof and growth targets. I do not claim anything beyond its evidence."
         >
           <div className={s.railBlock}>
             <TierLegend compact />
