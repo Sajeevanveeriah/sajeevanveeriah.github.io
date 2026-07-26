@@ -64,7 +64,7 @@ export const projects: readonly Project[] = [
     slug: 'engineering-mastery-lab',
     title: 'Engineering Mastery Lab',
     summary:
-      'A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.',
+      'I built a browser-first engineering workbench that combines input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.',
     role: 'TODO: Saj to supply.',
     period: null, // TODO: Saj to supply.
     domain: 'Software and engineering tools',
@@ -73,21 +73,21 @@ export const projects: readonly Project[] = [
     problem:
       'Engineering learning, calculation, CAD, simulation, skills tracking and evidence workflows are often fragmented across disconnected tools and notes.',
     context:
-      'A personal open-source engineering application deployed publicly through GitHub Pages. The shared React and TypeScript interface runs in the browser and in an optional Tauri 2 desktop shell. Version 0.2.0 is a functional completion candidate, not certified or production engineering software.',
+      'I developed this as a personal open-source engineering application and deployed it publicly through GitHub Pages. I use a shared React and TypeScript interface in the browser and an optional Tauri 2 desktop shell. Version 0.2.0 is my functional completion candidate, not certified or production engineering software.',
     approach: [
       'A React and TypeScript frontend built with Vite and HashRouter for GitHub Pages, pure TypeScript calculation and simulation engines, a Three.js bounded parametric CAD layer, browser-local storage, and a controlled Tauri and Rust boundary for authorised local workspaces, external engineering tools and evidence capture.',
-      'Kept the browser experience local-first with no required account, backend or telemetry. Exposed governing assumptions and validation warnings instead of hiding engineering limits. Implemented bounded parametric templates rather than presenting a simplified modeller as general CAD. Kept desktop filesystem and process authority behind an allow-listed Rust boundary with workspace containment and deterministic evidence handling.',
+      'I kept the browser experience local-first with no required account, backend or telemetry. Exposed governing assumptions and validation warnings instead of hiding engineering limits. Implemented bounded parametric templates rather than presenting a simplified modeller as general CAD. Kept desktop filesystem and process authority behind an allow-listed Rust boundary with workspace containment and deterministic evidence handling.',
     ],
     toolsNote:
       'React 18, TypeScript, Vite 8, React Router 6, Three.js, Vitest, Tauri 2, Rust, GitHub Actions, optional ngspice and KiCad CLI integration.',
     validation:
-      'Automated Vitest suites, TypeScript checks, production builds and GitHub Actions gates, supported by rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. No engineering-standards certification is claimed.',
+      'I validated it with automated Vitest suites, TypeScript checks, production builds, GitHub Actions gates and rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. I do not claim engineering-standards certification.',
     outcome:
-      'A working public web application with a browser-first engineering toolbox, bounded parametric CAD, guided learning system and evidence-focused project workflow, plus a desktop-capable source architecture.',
+      'I delivered a working public web application with a browser-first engineering toolbox, bounded parametric CAD, a guided learning system, an evidence-focused project workflow and a desktop-capable source architecture.',
     evidenceNote:
-      'Delivered, as personal project evidence. A live public build and public source repository exist. The current v0.2.0 code remains a functional completion candidate and is not claimed as certified or production engineering software.',
+      'I present this as Delivered personal project evidence. I provide a live public build and public source repository. My current v0.2.0 code remains a functional completion candidate, and I do not claim it as certified or production engineering software.',
     demonstrates:
-      'The ability to integrate engineering-domain logic, simulation, CAD geometry, software architecture, security boundaries, validation discipline and accessible product design into one coherent engineering system.',
+      'This demonstrates my ability to integrate engineering-domain logic, simulation, CAD geometry, software architecture, security boundaries, validation discipline and accessible product design into one coherent engineering system.',
     evidenceTier: 'delivered',
     category: 'Personal open-source build',
     links: [
@@ -108,7 +108,7 @@ export const projects: readonly Project[] = [
     slug: 'autonomous-navigation-rover',
     title: 'Autonomous Navigation Rover on ROS 2',
     summary:
-      'A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation for repeatable obstacle-aware navigation.',
+      'I built a complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, then validated it in simulation for repeatable obstacle-aware navigation.',
     role: 'TODO: Saj to supply.',
     period: null, // TODO: Saj to supply.
     domain: 'Robotics and autonomy',
@@ -117,21 +117,21 @@ export const projects: readonly Project[] = [
     problem:
       'Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before any of the higher-level behaviour matters.',
     context:
-      'A personal robotics build developed end to end, combining simulation with physical-system thinking. Not a commercial deployment.',
+      'I developed this personal robotics build end to end, combining simulation with physical-system thinking. I do not present it as a commercial deployment.',
     approach: [
       'Sensing and perception, LiDAR-based SLAM, Kalman and EKF state estimation with odometry and IMU fusion, A* and Nav2 path planning, motion control, and Gazebo and RViz simulation and visualisation, structured as modular ROS 2 nodes.',
-      'Built on ROS 2 Humble for a maintained long-term base; kept perception, estimation, planning and control as separate nodes so each layer could be tuned and validated independently; used simulation-first validation before physical trials.',
+      'I built on ROS 2 Humble for a maintained long-term base; kept perception, estimation, planning and control as separate nodes so each layer could be tuned and validated independently; used simulation-first validation before physical trials.',
     ],
     toolsNote:
       'ROS 2 Humble, Nav2, Gazebo, RViz, SLAM toolboxes, A* path planning, Kalman and EKF filters, LiDAR, IMU and odometry fusion, PID tuning.',
     validation:
-      'Repeated simulation runs in Gazebo with RViz inspection of maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
+      'I ran repeated Gazebo simulations and used RViz to inspect maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
     outcome:
-      'A working end-to-end autonomy stack with robust localisation and repeatable obstacle-aware navigation behaviour.',
+      'I delivered a working end-to-end autonomy stack with robust localisation and repeatable obstacle-aware navigation behaviour.',
     evidenceNote:
-      'Delivered, as personal project evidence. This is a complete built stack, not a production robot fleet.',
+      'I present this as Delivered personal project evidence. I built the complete stack, but I do not present it as a production robot fleet.',
     demonstrates:
-      'Full-stack autonomy capability: perception, state estimation, planning and control integrated and validated by one engineer.',
+      'This demonstrates my full-stack autonomy capability across perception, state estimation, planning and control, integrated and validated by me.',
     evidenceTier: 'delivered',
     category: 'Featured, Personal build',
     images: [
@@ -148,7 +148,7 @@ export const projects: readonly Project[] = [
     slug: 'jag-smart-factory',
     title: 'JAG Smart Factory and iFIX to PVI+ Migration',
     summary:
-      'GMP smart-factory automation including an iFIX to PVI+ SCADA migration verified against the validated system.',
+      'I delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration that I verified against the validated system.',
     role: 'Automation and Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
     domain: 'Automation and SCADA',
@@ -157,20 +157,20 @@ export const projects: readonly Project[] = [
     problem:
       'Regulated production needs traceability, diagnostics and process visibility without disturbing validated behaviour.',
     context:
-      'Professional delivery at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.',
+      'I delivered this work at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.',
     approach: [
       'Field devices and instrumentation integrated with control logic, HMI and SCADA layers, MES and batch execution, and production data flows, including an iFIX to PVI+ SCADA platform migration.',
-      'Converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.',
+      'I converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.',
     ],
     toolsNote:
       'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC logic (IEC 61131-3), MES and batch systems, Modbus and Profinet, GMP and GAMP 5 practice.',
     validation:
-      'FAT and SAT execution with commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.',
+      'I executed FAT and SAT activities and produced commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.',
     outcome:
-      'Delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.',
-    evidenceNote: 'Delivered, as professional work in regulated environments.',
+      'I delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.',
+    evidenceNote: 'I present this as Delivered professional work in regulated environments.',
     demonstrates:
-      'Industrial automation delivery discipline: migrating and integrating supervisory systems where validation evidence matters as much as function.',
+      'This demonstrates my industrial automation delivery discipline: I migrate and integrate supervisory systems where validation evidence matters as much as function.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -187,7 +187,7 @@ export const projects: readonly Project[] = [
     slug: 'adas-can-validation',
     title: 'Ford via Invenio: ADAS and CAN Validation',
     summary:
-      'Feature, breadboard and OTA regression testing across T6 Ranger and Everest programmes with CAN-level fault evidence.',
+      'I conducted feature, breadboard and OTA regression testing across the T6 Ranger and Everest programmes, supported by CAN-level fault evidence.',
     role: 'Product Development Test Engineer (Contract)',
     period: 'Oct 2025 to Jan 2026',
     domain: 'Automotive and validation',
@@ -196,21 +196,21 @@ export const projects: readonly Project[] = [
     problem:
       'Vehicle features must remain stable across variants, running changes and over-the-air software updates, with evidence to prove it.',
     context:
-      'Contract placement at Ford Motor Company via Invenio contract placement, validating vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
+      'I completed this work at Ford Motor Company via Invenio contract placement, validating vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
     approach: [
       'Instrumented test vehicles, CAN and CAN FD networks, feature software under test, and structured feature-vehicle, breadboard and regression test workflows feeding readiness milestones and sign-off evidence.',
-      'Captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
+      'I captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
     ],
     toolsNote:
       'Vector CANoe and CANalyzer, CAN and CAN FD, vehicle instrumentation, OTA regression testing, structured test procedures.',
     validation:
-      'Feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, with CAN trace capture and analysis for fault isolation.',
+      'I ran feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, capturing and analysing CAN traces for fault isolation.',
     outcome:
-      'Evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
+      'I delivered evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
     evidenceNote:
-      'Delivered, as professional contract work. Always credited as Ford Motor Company via Invenio contract placement.',
+      'I present this as Delivered professional contract work and always credit it as Ford Motor Company via Invenio contract placement.',
     demonstrates:
-      'Cyber-physical validation skill: reading what a vehicle network is actually doing and turning it into defensible engineering evidence.',
+      'This demonstrates my cyber-physical validation skill: I read what a vehicle network is actually doing and turn it into defensible engineering evidence.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -227,7 +227,7 @@ export const projects: readonly Project[] = [
     slug: 'emissions-compliance-testing',
     title: 'ABMARC Emissions and Compliance Testing',
     summary:
-      'Repeatable, auditable emissions testing against ADR and EURO standards with instrumentation and QA records.',
+      'I conducted repeatable, auditable emissions testing against ADR and EURO standards, supported by instrumentation and QA records.',
     role: 'Technical Assistant',
     period: 'Jul 2024 to Aug 2025',
     domain: 'Automotive and compliance',
@@ -236,20 +236,20 @@ export const projects: readonly Project[] = [
     problem:
       'Compliance testing requires accurate, repeatable and auditable measurements that survive regulatory scrutiny.',
     context:
-      'Professional work at ABMARC, conducting vehicle emissions and compliance testing against ADR and EURO standards.',
+      'I completed this professional work at ABMARC, conducting vehicle emissions and compliance testing against ADR and EURO standards.',
     approach: [
       'Test instrumentation and data-acquisition systems, procedure-driven test execution, and QA and regulatory documentation workflows for certification and audits.',
-      'Treated calibration discipline and procedure fidelity as first-class engineering tasks, because the defensibility of the final report depends on them; analysed data for deviations and trends before results left the building.',
+      'I treated calibration discipline and procedure fidelity as first-class engineering tasks, because the defensibility of the final report depends on them; analysed data for deviations and trends before results left the building.',
     ],
     toolsNote:
       'Emissions test equipment, instrumentation, data-acquisition systems, ADR and EURO test procedures, QA records.',
     validation:
-      'Repeatable standard procedures with instrument calibration and cross-checking, producing auditable and technically defensible results.',
+      'I followed repeatable standard procedures, calibrated and cross-checked instrumentation, and produced auditable and technically defensible results.',
     outcome:
-      'Defensible compliance results and structured reporting supporting certification and audit outcomes.',
-    evidenceNote: 'Delivered, as professional work.',
+      'I delivered defensible compliance results and structured reporting supporting certification and audit outcomes.',
+    evidenceNote: 'I present this as Delivered professional work.',
     demonstrates:
-      'Measurement and documentation rigour: the quality habits that carry into every regulated engineering environment.',
+      'This demonstrates my measurement and documentation rigour, including the quality habits I carry into regulated engineering environments.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -266,7 +266,7 @@ export const projects: readonly Project[] = [
     slug: 'iot-monitoring-platform',
     title: 'DuxTel Agricultural Equipment Health and Location Platform',
     summary:
-      'A custom PCB-based field telemetry system combining CAN capture, GPS and equipment condition sensing with MikroTik connectivity and a Linux server, giving operators remote status and maintenance visibility for machinery left across large agricultural sites.',
+      'I designed and deployed a custom PCB-based field telemetry system combining CAN capture, GPS and equipment condition sensing with MikroTik connectivity and a Linux server, giving operators remote status and maintenance visibility for machinery left across large agricultural sites.',
     role: 'Consultant Engineer, IoT and Projects Administrator',
     period: 'Feb 2024 to Aug 2024',
     domain: 'IoT and telemetry',
@@ -282,20 +282,20 @@ export const projects: readonly Project[] = [
     problem:
       'Agricultural machinery may be left across large fields, making its location and current condition difficult to confirm before the next visit.',
     context:
-      'Professional DuxTel Pty Ltd project, designed and deployed by Sajeevan Veeriah, currently in an active field trial.',
+      'I designed and deployed this professional DuxTel Pty Ltd project, which is currently in an active field trial.',
     approach: [
       'Agricultural equipment CAN connection and trace capture, a complete custom PCB, GPS or GNSS location capability, condition-sensor inputs, MikroTik edge connectivity, multiple data capture and transport paths, and a Linux-based server for remote status collection.',
-      'Consolidated field interfaces on a purpose-built board, preserved traceable CAN and sensor data, used rugged edge connectivity and separated acquisition, transport and server responsibilities.',
+      'I consolidated field interfaces on a purpose-built board, preserved traceable CAN and sensor data, used rugged edge connectivity and separated acquisition, transport and server responsibilities.',
     ],
     toolsNote:
       'Custom PCB design, CAN capture and trace, GPS or GNSS, sensor interfacing, MikroTik and Linux. Data capture and transfer protocols are kept generic because the exact protocols are not public evidence.',
     validation:
-      'End-to-end device, CAN, location, sensor, connectivity and server-path checks during deployment and the ongoing field trial.',
+      'I validated the device, CAN, location, sensor, connectivity and server paths end to end during deployment and the ongoing field trial.',
     outcome:
-      'A working deployed trial system that provides available location and condition information to support maintenance preparation before a return to the asset.',
-    evidenceNote: 'Delivered, active professional field trial.',
+      'I delivered a working trial system that provides available location and condition information to support maintenance preparation before a return to the asset.',
+    evidenceNote: 'I present this as a Delivered professional system in an active field trial.',
     demonstrates:
-      'End-to-end ownership across electronics, PCB design, embedded and vehicle interfaces, communications, Linux integration, deployment and field validation.',
+      'This demonstrates my end-to-end ownership across electronics, PCB design, embedded and vehicle interfaces, communications, Linux integration, deployment and field validation.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -312,7 +312,7 @@ export const projects: readonly Project[] = [
     slug: 'ataxia-assessment-device',
     title: 'ESP32 Clinical Ataxia Assessment Device',
     summary:
-      'Embedded hardware and firmware for movement assessment support, validated against clinical references.',
+      'I developed embedded hardware and firmware for movement assessment support and validated it against clinical references.',
     role: 'TODO: Saj to supply.',
     period: null, // TODO: Saj to supply.
     domain: 'Embedded and sensing',
@@ -321,21 +321,21 @@ export const projects: readonly Project[] = [
     problem:
       'Movement and coordination assessment benefits from repeatable, sensor-based measurement rather than observation alone.',
     context:
-      'Final-year Honours capstone for the Bachelor of Mechatronics Engineering at Deakin University, completed with Distinction.',
+      'I completed this as my final-year Honours capstone for the Bachelor of Mechatronics Engineering at Deakin University, graduating with Distinction.',
     approach: [
       'ESP32-based sensing hardware with IMU, time-of-flight, Hall-effect and magnetometer sensors, real-time firmware for signal acquisition, and MATLAB data logging and analysis.',
-      'Chose complementary sensor modalities so movement features are captured redundantly; designed the firmware around deterministic real-time acquisition; kept analysis offline in MATLAB where clinical comparison is easier to audit.',
+      'I chose complementary sensor modalities so movement features are captured redundantly; designed the firmware around deterministic real-time acquisition; kept analysis offline in MATLAB where clinical comparison is easier to audit.',
     ],
     toolsNote:
       'ESP32, IMU, ToF, Hall-effect and magnetometer sensing, embedded C and C++, real-time signal acquisition, MATLAB data logging and signal processing.',
     validation:
-      'Measurement validation against clinical references, checking that captured motion signals were repeatable and comparable.',
+      'I validated measurements against clinical references, checking that captured motion signals were repeatable and comparable.',
     outcome:
-      'A proof-of-concept measurement platform supporting repeatable motion and coordination assessment.',
+      'I delivered a proof-of-concept measurement platform supporting repeatable motion and coordination assessment.',
     evidenceNote:
-      'Delivered, as an assessed Honours capstone. A clinical research support concept, not a certified medical device.',
+      'I present this as a Delivered, assessed Honours capstone and a clinical research support concept, not a certified medical device.',
     demonstrates:
-      'Embedded hardware, firmware and measurement rigour applied to a safety-relevant sensing problem, with honest validation against references.',
+      'This demonstrates how I apply embedded hardware, firmware and measurement rigour to a safety-relevant sensing problem, with honest validation against references.',
     evidenceTier: 'delivered',
     category: 'University capstone',
     images: [
@@ -352,7 +352,7 @@ export const projects: readonly Project[] = [
     slug: 'digital-twin-industrial-ai',
     title: 'Digital Twin and Industrial AI',
     summary:
-      'A real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
+      'I built a real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
     role: 'TODO: Saj to supply.',
     period: null, // TODO: Saj to supply.
     domain: 'AI/ML and automation',
@@ -361,21 +361,21 @@ export const projects: readonly Project[] = [
     problem:
       'Factories benefit from a live, model-based view of equipment so faults are caught early and throughput and quality stay stable.',
     context:
-      'A personal engineering concept that mirrors a production line in software. It draws on real smart-factory delivery experience but is not a deployment in a live plant.',
+      'I developed this personal engineering concept to mirror a production line in software. I drew on my smart-factory delivery experience, but I do not present it as a deployment in a live plant.',
     approach: [
       'Process and equipment state modelling, simulated telemetry generation, an analytics and ML layer for anomaly detection and predictive maintenance, and dashboard visualisation with OEE reporting.',
-      'Modelled equipment states explicitly rather than learning them blind, so anomalies map to physical causes; kept the analytics layer separate from the twin so detection logic can be swapped; reported OEE the way production teams actually read it.',
+      'I modelled equipment states explicitly rather than learning them blind, so anomalies map to physical causes; kept the analytics layer separate from the twin so detection logic can be swapped; reported OEE the way production teams actually read it.',
     ],
     toolsNote:
       'Python, anomaly detection and predictive-maintenance logic, AI agents, OEE analytics, dashboard visualisation.',
     validation:
-      'Exercised against simulated fault and drift scenarios to confirm anomalies are surfaced, maintenance needs are flagged and OEE responds correctly. Concept-level validation only.',
+      'I exercised it against simulated fault and drift scenarios to confirm that anomalies were surfaced, maintenance needs were flagged and OEE responded correctly. I classify this as concept-level validation only.',
     outcome:
-      'A working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.',
+      'I delivered a working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.',
     evidenceNote:
-      'Hands-on. A built personal concept, deliberately not claimed as a production deployment.',
+      'I present this as Hands-on personal project evidence and deliberately do not claim it as a production deployment.',
     demonstrates:
-      'The bridge between plant-floor automation experience and applied AI/ML: knowing what a factory needs from its data before modelling it.',
+      'This demonstrates how I bridge plant-floor automation experience and applied AI/ML by understanding what a factory needs from its data before modelling it.',
     evidenceTier: 'hands-on',
     category: 'Personal concept',
     images: [
@@ -392,7 +392,7 @@ export const projects: readonly Project[] = [
     slug: 'manufacturing-qa-foundation',
     title: 'Manufacturing and QA Foundation',
     summary:
-      'Six years across food and beverage, carbon-fibre and structural-steel production: operations, QA, traceability, robotic automation and commissioning.',
+      'I built six years of experience across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.',
     role: 'TODO: Saj to supply.',
     period: '2018 to 2024',
     domain: 'Manufacturing and quality',
@@ -401,21 +401,21 @@ export const projects: readonly Project[] = [
     problem:
       'Automation, validation and commissioning engineers are only as good as their understanding of how production floors, operators and quality systems actually behave.',
     context:
-      'Six years of production and quality work from 2018 to 2024 at IDL, Carbon Revolution and Thornton Engineering Australia Pty Ltd, running alongside formal engineering study.',
+      'I completed six years of production and quality work from 2018 to 2024 at IDL, Carbon Revolution and Thornton Engineering Australia Pty Ltd while undertaking formal engineering study.',
     approach: [
       'High-throughput packaged beverage production lines, a carbon-fibre rim layup line moving onto KUKA-based robotic cells, and standards-driven structural-steel and pressure-vessel fabrication, each with its own quality, traceability and documentation system.',
-      'Progressed deliberately from operating machines to leading lines and owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
+      'I progressed deliberately from operating machines to leading lines and owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
     ],
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, KUKA-based automated rim layup, NDE and mechanical testing exposure, ITP and MDR documentation, drawing review, KPI tracking, Lean practice.',
     validation:
-      'Daily production KPIs, QA checks, inspection evidence and documented sign-off, including installation and commissioning support for WestRock and Fibre King equipment during a canning line upgrade, and hands-on involvement as a legacy rim layup machine was replaced by KUKA-based robotic cells.',
+      'I validated my work through daily production KPIs, QA checks, inspection evidence and documented sign-off. This included installation and commissioning support for WestRock and Fibre King equipment during a canning line upgrade, plus hands-on involvement as KUKA-based robotic cells replaced a legacy rim layup machine.',
     outcome:
-      'A working production and quality instinct: line recovery, changeover logic, operator empathy and audit-ready documentation habits.',
+      'I developed a working production and quality instinct across line recovery, changeover logic, operator empathy and audit-ready documentation.',
     evidenceNote:
-      'Delivered, as professional employment across three manufacturers. Detailed role records are in the Experience section.',
+      'I present this as Delivered professional employment across three manufacturers. My detailed role records are in the Experience section.',
     demonstrates:
-      'The foundation under every later delivery: automation designed by someone who has run the line, fixed the jam and signed the QA record.',
+      'This is the foundation under my later engineering delivery: I have run the line, fixed the jam and signed the QA record.',
     evidenceTier: 'delivered',
     category: 'Professional foundation',
     deepDives: [
@@ -431,7 +431,7 @@ export const projects: readonly Project[] = [
     slug: 'carbon-revolution-rim-layup',
     title: 'Carbon Revolution: Robotic Rim Layup Automation',
     summary:
-      'Hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
+      'I worked hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
     role: 'Automated Rim Layup Operator to Robotic Automation, Quality and Development Support',
     period: null, // TODO: Saj to supply.
     domain: 'Advanced manufacturing and robotics',
@@ -445,21 +445,21 @@ export const projects: readonly Project[] = [
     problem:
       'Scaling carbon-fibre wheel production means taking repeatable fibre layup, and the handling of hot, heavy, safety-critical tooling, off manual work and onto robots, without losing the quality a structural wheel depends on.',
     context:
-      'Advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution in Waurn Ponds, Geelong. Hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells, while moving from layup operation towards quality assurance and development support.',
+      'I worked in advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution. I was hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells, while moving from layup operation towards quality assurance and development support.',
     approach: [
       'KUKA robotic cells for automated rim layup and robotic demoulding of tooling that runs hot and heavy, feeding the downstream composite cure, machining, NDE and mechanical-test flow, each with its own quality and traceability checks.',
-      'Treated the change as a systems problem, not a machine swap: moving hot, heavy tooling handling onto robots to take it off operators, and leaning on trials, first-off checks and defect inspection to prove the robotic cell held layup repeatability before the line was allowed to ramp.',
+      'I treated the change as a systems problem, not a machine swap: moving hot, heavy tooling handling onto robots to take it off operators, and leaning on trials, first-off checks and defect inspection to prove the robotic cell held layup repeatability before the line was allowed to ramp.',
     ],
     toolsNote:
       'KUKA robotic cells, automated rim layup, robotic demoulding, carbon-fibre composite production, NDE and mechanical testing, production quality and defect-inspection systems.',
     validation:
-      'Trials, first-off and in-process quality checks, defect inspection, changeover and line recovery as the KUKA line was commissioned and ramped into production. Hands-on involvement and support, not ownership of the robot-cell design or programming.',
+      'I supported trials, first-off and in-process quality checks, defect inspection, changeover and line recovery as the KUKA line was commissioned and ramped into production. My contribution was hands-on involvement and support, not ownership of the robot-cell design or programming.',
     outcome:
-      'A hands-on, floor-level understanding of moving a production line onto industrial robotics: what changes for operators, quality and throughput when robots take over layup and demoulding.',
+      'I developed a hands-on, floor-level understanding of moving a production line onto industrial robotics, including what changes for operators, quality and throughput when robots take over layup and demoulding.',
     evidenceNote:
-      'Hands-on, as professional employment. Involvement in and support of the automation transition; never claimed as owning the KUKA cell design or programming.',
+      'I present this as Hands-on professional employment evidence. I supported the automation transition and do not claim ownership of the KUKA cell design or programming.',
     demonstrates:
-      'Real industrial robotics exposure sitting underneath the ROS 2 and controls work on this page: robotics on a factory floor, where safety, repeatability and ramp matter as much as the kinematics.',
+      'This demonstrates my real industrial robotics exposure beneath the ROS 2 and controls work in this portfolio: robotics on a factory floor, where safety, repeatability and ramp matter as much as kinematics.',
     evidenceTier: 'hands-on',
     category: 'Professional foundation',
     featured: false,
@@ -468,7 +468,7 @@ export const projects: readonly Project[] = [
     slug: 'idl-canning-line',
     title: 'IDL: Canning Line Upgrade and Commissioning',
     summary:
-      'Hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
+      'I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
     role: 'Production Line Worker to Team Lead / Line Support to Cellar Hand',
     period: null, // TODO: Saj to supply.
     domain: 'Manufacturing and packaging automation',
@@ -481,7 +481,7 @@ export const projects: readonly Project[] = [
     problem:
       'A high-throughput beverage plant has to lift capacity and reliability across canning, bottling and kegging without long downtime, which means installing and commissioning new packaging automation on a live production site.',
     context:
-      'Food and beverage manufacturing at IDL across five lines: two canning, two bottling and one kegging. Hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade, with progression from line work into team lead, line support and cellar operations.',
+      'I worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade, while progressing from line work into team lead, line support and cellar operations.',
     approach: [
       'High-throughput packaging lines with fillers, seamers and conveyors, the WestRock and Fibre King equipment added for the canning line upgrade, and the upstream cellar processes that turn raw product into a finished, packaged beverage.',
       "Treated changeovers, first-response fixes and run recovery as engineering problems rather than chores; supported install and commissioning so the new equipment held rate and quality; learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
@@ -489,13 +489,13 @@ export const projects: readonly Project[] = [
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, changeover and KPI tracking, quality checks and first-response machine fixes.',
     validation:
-      'Daily production KPIs, quality checks, first-response fixes, and installation and commissioning checks as new equipment was brought up to rate on the canning line.',
+      'I used daily production KPIs, quality checks, first-response fixes and installation and commissioning checks as new equipment was brought up to rate on the canning line.',
     outcome:
-      'A packaging-automation and commissioning instinct: install it, prove it, recover it and hold rate on a live, high-throughput line.',
+      'I developed a packaging-automation and commissioning instinct: install it, prove it, recover it and hold rate on a live, high-throughput line.',
     evidenceNote:
-      'Delivered and Hands-on, as professional employment: installation and commissioning support, production operations and quality.',
+      'I present this as Delivered and Hands-on professional employment evidence across installation and commissioning support, production operations and quality.',
     demonstrates:
-      'The operator-and-commissioning half of automation: why usability, changeover design, line recovery and traceable QA matter, feeding straight into controls, commissioning and smart-factory work.',
+      'This demonstrates my operator and commissioning perspective on automation: why usability, changeover design, line recovery and traceable QA matter, and how they feed into controls, commissioning and smart-factory work.',
     evidenceTier: 'delivered',
     category: 'Professional foundation',
     featured: false,
