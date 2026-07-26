@@ -30,7 +30,7 @@ function PersonSchema() {
         url: `${site.url}/`,
         name: site.name,
         description:
-          'Robotics, mechatronics, automation and AI/ML engineering portfolio for Sajeevan Veeriah.',
+          'I work across robotics, mechatronics, automation and AI/ML engineering, from physical systems and embedded electronics to controls, software and validation.',
         publisher: { '@id': `${site.url}/#person` },
         inLanguage: site.lang,
       },
@@ -40,7 +40,7 @@ function PersonSchema() {
         url: `${site.url}/`,
         name: 'Sajeevan Veeriah engineering portfolio',
         description:
-          'Portfolio page for Sajeevan Veeriah, covering mechatronics, robotics, automation, embedded systems, IoT telemetry, AI/ML and validation work.',
+          'I present my work across mechatronics, robotics, automation, embedded systems, IoT telemetry, AI/ML and validation.',
         isPartOf: { '@id': `${site.url}/#website` },
         mainEntity: { '@id': `${site.url}/#person` },
         inLanguage: site.lang,
@@ -162,7 +162,7 @@ export default function HomePage() {
         <div className="wrap">
           <div className={s.header}>
             <p className="mono-label">Featured work</p>
-            <h2 id="featured-title">Three records that show the whole stack.</h2>
+            <h2 id="featured-title">Three records that show how I work across the whole stack.</h2>
           </div>
           <RevealGroup className={`${s.grid} ${s.grid3}`}>
             {featured.map((p) => (
@@ -192,7 +192,7 @@ export default function HomePage() {
           <div className={s.header}>
             <p className="mono-label">Capability</p>
             <h2 id="capability-title">
-              Ten systems layers, {atlas.length} atlas domains, every claim tiered by evidence.
+              Ten systems layers, {atlas.length} atlas domains, with every claim in my portfolio tiered by evidence.
             </h2>
           </div>
           <Reveal as="div"><ul className={home.strip}>
