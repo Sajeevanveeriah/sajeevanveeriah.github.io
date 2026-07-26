@@ -73,13 +73,13 @@ export default async function RolePage({ params }: { params: Promise<{ role: str
               </dd>
             </div>
             <div>
-              <dt className={s.dt}>Engineering relevance</dt>
+              <dt className={s.dt}>My engineering relevance</dt>
               <dd className={s.dd}>
                 <p>{r.relevance}</p>
               </dd>
             </div>
             <div>
-              <dt className={s.dt}>Transferable capability</dt>
+              <dt className={s.dt}>My transferable capability</dt>
               <dd className={s.dd}>
                 <p>{r.transferable}</p>
               </dd>
