@@ -9,7 +9,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Career timeline, formal qualifications, professional membership, community involvement and life beyond the workbench.',
+    'My career timeline, formal qualifications, professional membership, community involvement and life beyond the workbench.',
   alternates: { canonical: '/about/' },
   openGraph: { title: 'About', url: '/about/' },
 }
@@ -21,7 +21,7 @@ export default function AboutPage() {
     <>
       <section className="section">
         <div className="wrap">
-          <PageHeader kicker="05 / About" title="A factual record that proves systems thinking across industries." lede={narrative} />
+          <PageHeader kicker="05 / About" title="My factual record across industries and engineering systems." lede={narrative} />
 
           {groups.map((g) => (
             <div key={g} style={{ marginBottom: 'var(--space-6)' }}>
@@ -59,7 +59,7 @@ export default function AboutPage() {
         <div className="wrap">
           <div className={s.header}>
             <p className="mono-label">06 / Education, membership and community</p>
-            <h2 id="creds-title">Formal qualifications, professional membership and the communities around them.</h2>
+            <h2 id="creds-title">My formal qualifications, professional membership and engineering communities.</h2>
           </div>
           <div className={`${s.grid} ${s.grid3}`}>
             {credentials.map((c) => (
