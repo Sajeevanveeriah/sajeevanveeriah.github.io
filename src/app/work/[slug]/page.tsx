@@ -43,14 +43,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const image = p.images?.[0]
 
   const facts: readonly (readonly [string, string | readonly string[]])[] = [
-    ['Problem', p.problem],
-    ['Context', p.context],
-    ['Approach', p.approach],
-    ['Tools and technologies', p.toolsNote],
-    ['Validation method', p.validation],
-    ['Output', p.outcome],
-    ['Evidence level', p.evidenceNote],
-    ['What it demonstrates', p.demonstrates],
+    ['The problem', p.problem],
+    ['My context', p.context],
+    ['My approach', p.approach],
+    ['My tools and technologies', p.toolsNote],
+    ['How I validated it', p.validation],
+    ['What I delivered', p.outcome],
+    ['My evidence level', p.evidenceNote],
+    ['What this demonstrates about me', p.demonstrates],
   ]
 
   return (
