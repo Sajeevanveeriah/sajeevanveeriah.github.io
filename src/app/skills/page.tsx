@@ -10,7 +10,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Skills',
   description:
-    'One coherent toolchain across six engineering territories, plus the ten-layer Systems Stack linking every layer to its Atlas domains.',
+    'My engineering toolchain spans six territories and a ten-layer Systems Stack that links each layer to its Atlas domains.',
   alternates: { canonical: '/skills/' },
   openGraph: { title: 'Skills', url: '/skills/' },
 }
@@ -27,8 +27,8 @@ export default function SkillsPage() {
         <div className="wrap">
           <PageHeader
             kicker="03 / Skill Library"
-            title="One coherent toolchain across six engineering territories."
-            lede="Anchor platforms are shown with the context they were used in; the supporting toolset sits underneath. Everything listed is verified by the resume, a case study or a role on this site."
+            title="My toolchain across six engineering territories."
+            lede="I show each anchor platform in the context where I used it, with the supporting toolset underneath. Every listed capability is supported by my resume, a case study or one of my roles."
           >
             <div className={s.railBlock}>
               <TierLegend compact />
@@ -67,9 +67,9 @@ export default function SkillsPage() {
         <div className="wrap">
           <div className={s.header}>
             <p className="mono-label">04 / Systems Stack</p>
-            <h2 id="stack-title">One integrated capability, from the physical layer to the intelligence layer.</h2>
+            <h2 id="stack-title">My integrated capability, from the physical layer to the intelligence layer.</h2>
             <p className={s.lede}>
-              Ten layers, each exercised through real work. Select a layer to see the Atlas domains
+              I have exercised these ten layers through real work. Select a layer to see the Atlas domains
               operating there.
             </p>
           </div>
