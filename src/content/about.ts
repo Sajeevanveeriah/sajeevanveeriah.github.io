@@ -7,13 +7,13 @@
 
 /** Hero lede, index.html:165. */
 export const narrative =
-  'Sajeevan Veeriah builds across the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. He is comfortable identifying which engineering layer a problem lives in and resolving it across the disciplines required.'
+  'I build across the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. I identify which engineering layer a problem lives in, then work across the disciplines required to resolve it.'
 
 /** Closed-loop signal panel, index.html:183 to 227. */
 export const closedLoop = {
   title: 'Closed-loop engineering',
   summary:
-    'The discipline behind every record on this page: sense the system, estimate its state, control it, act on it and verify the result.',
+    'This is the discipline behind every record in my portfolio: I sense the system, estimate its state, control it, act on it and verify the result.',
   nodes: [
     { index: '01', name: 'Sense', detail: 'LiDAR, IMU, instrumentation, field devices' },
     {
@@ -39,11 +39,11 @@ export const credentials: readonly CredentialGroup[] = [
       {
         title: 'Bachelor of Mechatronics Engineering (Honours)',
         detail:
-          'Deakin University. Graduated with Distinction, 2025. Honours capstone: ESP32 clinical ataxia assessment device.',
+          'I graduated from Deakin University with Distinction in 2025. My Honours capstone was an ESP32 clinical ataxia assessment device.',
       },
       {
         title: 'Higher National Diploma, Mechatronics, Robotics and Automation Engineering',
-        detail: 'Cardiff Metropolitan University. Awarded with Distinction, 2016.',
+        detail: 'I completed this qualification at Cardiff Metropolitan University with Distinction in 2016.',
       },
     ],
   },
@@ -62,20 +62,20 @@ export const credentials: readonly CredentialGroup[] = [
     items: [
       {
         title: 'Secretary, Newcomb and District Cricket Club.',
-        detail: 'Also built and runs the club website on Next.js and Supabase.',
+        detail: 'I also built and run the club website on Next.js and Supabase.',
       },
       {
         title: 'Deakin Mars Rover Team.',
         detail:
-          'Multidisciplinary student rover engineering across mechanical, electronics, control and software work.',
+          'I contributed to multidisciplinary student rover engineering across mechanical, electronics, control and software work.',
       },
       {
         title: 'Math Mentors.',
-        detail: 'Peer mathematics mentoring: problem solving, study skills and exam preparation.',
+        detail: 'I supported peers with mathematics, problem solving, study skills and exam preparation.',
       },
       {
         title: 'Peer Support.',
-        detail: 'Helping fellow students settle in, stay connected and find the right help.',
+        detail: 'I helped fellow students settle in, stay connected and find the right support.',
       },
     ],
   },
@@ -83,32 +83,32 @@ export const credentials: readonly CredentialGroup[] = [
 
 export const beyondHeading = {
   title: 'Away from the stack.',
-  summary: 'The week does not end at the workbench. Five things that keep it balanced.',
+  summary: 'My week does not end at the workbench. These are five things that keep me balanced.',
 } as const
 
 export const beyond: readonly { readonly title: string; readonly body: string }[] = [
   {
     title: 'Club cricket',
-    body: 'Most weekends in season are spent at Newcomb and District Cricket Club, on the field and off it: Saj plays for the club and keeps it running as secretary.',
+    body: 'I spend most weekends in season at Newcomb and District Cricket Club, both on and off the field. I play for the club and help keep it running as secretary.',
   },
   {
     title: 'Hockey',
-    body: "Cricket's off-season counterpart. A different field, a faster ball and the same appetite for team sport.",
+    body: "Hockey is my cricket off-season counterpart: a different field, a faster ball and the same appetite for team sport.",
   },
   {
     title: 'Long drives',
-    body: 'The reset button: an open road, no particular hurry and somewhere new at the end of it.',
+    body: 'Long drives are my reset button: an open road, no particular hurry and somewhere new at the end of it.',
   },
   {
     title: 'Music',
-    body: 'The soundtrack to those drives, and to most evenings besides. Good music is non-negotiable.',
+    body: 'Music is the soundtrack to my drives and most evenings. Good music is non-negotiable for me.',
   },
   {
     title: 'Robots in the garage',
-    body: 'There is always a personal robotics or hardware build half-finished on the bench. Some of them even make it onto this page.',
+    body: 'I nearly always have a personal robotics or hardware build half-finished on the bench. Some of them make it into this portfolio.',
   },
 ] as const
 
 /** Contact section copy, index.html:1489. */
 export const contactIntro =
-  'Open to roles across mechatronics, robotics, automation, embedded systems, controls, validation, IoT, AI/ML and smart factory engineering. The resume carries the full professional record.'
+  'I work across mechatronics, robotics, automation, embedded systems, controls, validation, IoT, AI/ML and smart factory engineering. My resume carries my full professional record.'
