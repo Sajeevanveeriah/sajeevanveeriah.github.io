@@ -7,7 +7,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Contact Sajeevan Veeriah by email, LinkedIn or GitHub, and download the resume carrying the full professional record.',
+    'Contact me by email, LinkedIn or GitHub, and download my resume for my full professional record.',
   alternates: { canonical: '/contact/' },
   openGraph: { title: 'Contact', url: '/contact/' },
 }
@@ -23,7 +23,7 @@ export default function ContactPage() {
       <div className="wrap">
         <PageHeader
           kicker="08 / Contact"
-          title="Explore the engineering evidence, then start a conversation."
+          title="Explore my engineering evidence, then start a conversation."
           lede={contactIntro}
         />
 
