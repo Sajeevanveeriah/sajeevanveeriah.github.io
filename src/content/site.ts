@@ -37,10 +37,10 @@ export const site: SiteConfig = {
   jobTitle: 'Mechatronics, Robotics, Automation and AI/ML Engineer',
   // Verbatim from index.html:1523
   tagline:
-    'Mechatronics, robotics, automation and AI/ML engineer working across physical systems, controls, embedded, software and validation.',
+    'I work across mechatronics, robotics, automation and AI/ML, connecting physical systems, controls, embedded engineering, software and validation.',
   // Verbatim from index.html:9
   description:
-    'Sajeevan Veeriah portfolio: mechatronics, robotics, automation and AI/ML engineering across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.',
+    'I am a mechatronics, robotics, automation and AI/ML engineer working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.',
   url: 'https://sajeevanveeriah.github.io',
   locale: 'en_AU',
   lang: 'en-AU',
