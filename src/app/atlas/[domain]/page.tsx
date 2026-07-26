@@ -42,10 +42,10 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
   const targetLed = d.evidenceTier === 'target'
 
   const proofBlocks = [
-    ['Project proof', d.projectProof],
-    ['Experience proof', d.experienceProof],
+    ['My project proof', d.projectProof],
+    ['My experience proof', d.experienceProof],
   ] as const
-  const logicBlock = ['Transferable logic', d.transferableLogic] as const
+  const logicBlock = ['My transferable logic', d.transferableLogic] as const
 
   const ordered: readonly (readonly [string, string])[] = targetLed
     ? [logicBlock, ...proofBlocks]
@@ -77,7 +77,7 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
           <dl className={s.dl}>
             {targetLed ? (
               <div>
-                <dt className={s.dt}>Growth targets</dt>
+                <dt className={s.dt}>My growth targets</dt>
                 <dd className={s.dd}>
                   <ul className={s.chips}>
                     {d.growthTargets.map((g) => (
@@ -101,7 +101,7 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
 
             {!targetLed ? (
               <div>
-                <dt className={s.dt}>Growth targets</dt>
+                <dt className={s.dt}>My growth targets</dt>
                 <dd className={s.dd}>
                   <ul className={s.chips}>
                     {d.growthTargets.map((g) => (
