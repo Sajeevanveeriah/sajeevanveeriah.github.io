@@ -1,3 +1,4 @@
+import { InView } from '@/components/motion/InView'
 import s from './SystemDiagram.module.css'
 
 /**
@@ -57,6 +58,31 @@ const DESCRIPTION: Record<DiagramVariant, string> = {
   runs: 'Repeated measurement runs converging inside a tolerance band.',
 }
 
+/**
+ * Variants whose landscape composition cannot survive a phone column.
+ *
+ * Scaling the drawing to fit a 320px container takes its labels down with it,
+ * so the stylesheet grows the type in user units as the container narrows.
+ * For a sparse plot that is enough. For these three it is not: they carry
+ * long labels inside fixed boxes, and larger type overruns the box and clips
+ * at the plate edge. Verified at 390px: "PARAMETRIC CAD" clipped, the four
+ * transport nodes running together, "TAGS AND POINTS" overflowing its row.
+ * Each one therefore gets a portrait composition that stacks along the axis
+ * the phone actually has, rather than a squeezed copy of the wide layout.
+ */
+function portraitFor(variant: DiagramVariant) {
+  switch (variant) {
+    case 'lattice':
+      return { viewBox: '0 0 360 470', node: <LatticePortrait /> }
+    case 'hops':
+      return { viewBox: '0 0 360 552', node: <HopsPortrait /> }
+    case 'migration':
+      return { viewBox: '0 0 360 470', node: <MigrationPortrait /> }
+    default:
+      return null
+  }
+}
+
 export function SystemDiagram({
   variant,
   caption,
@@ -64,15 +90,19 @@ export function SystemDiagram({
   variant: DiagramVariant
   caption?: string
 }) {
+  const portrait = portraitFor(variant)
+
   return (
-    <figure className={s.figure}>
-      <div className={s.plate}>
+    <InView as="figure" className={s.figure} amount={0.2}>
+      {/* The figure carries the description once. Both drawings are hidden
+          from assistive technology so the alternate composition is not
+          announced twice, and only one is ever painted. */}
+      <div className={s.plate} role="img" aria-label={DESCRIPTION[variant]}>
         <svg
-          className={s.svg}
+          className={`${s.svg} ${portrait ? s.svgWide : ''}`}
           viewBox="0 0 640 300"
           preserveAspectRatio="xMidYMid meet"
-          role="img"
-          aria-label={DESCRIPTION[variant]}
+          aria-hidden="true"
         >
           {variant === 'lattice' ? <Lattice /> : null}
           {variant === 'occupancy' ? <Occupancy /> : null}
@@ -83,9 +113,173 @@ export function SystemDiagram({
           {variant === 'bus' ? <Bus /> : null}
           {variant === 'runs' ? <Runs /> : null}
         </svg>
+        {portrait ? (
+          <svg
+            className={`${s.svg} ${s.svgTall}`}
+            viewBox={portrait.viewBox}
+            preserveAspectRatio="xMidYMid meet"
+            aria-hidden="true"
+          >
+            {portrait.node}
+          </svg>
+        ) : null}
       </div>
       {caption ? <figcaption className={s.caption}>{caption}</figcaption> : null}
-    </figure>
+    </InView>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Portrait compositions. Same story, stacked down the page.
+   ------------------------------------------------------------------ */
+
+/** Core at the top, modules latching on below it in turn. */
+function LatticePortrait() {
+  const rowY = (i: number) => 150 + i * 78
+
+  return (
+    <>
+      <rect className={s.core} x="122" y="24" width="116" height="58" rx="14" />
+      <text className={s.coreLabel} x="180" y="59" textAnchor="middle">
+        Core
+      </text>
+
+      {/* One spine, drawn once, that leaves the core and runs down the left
+          edge through every module dot. Four separate centre links would
+          overdraw each other and cross the box borders and labels. */}
+      <path
+        className={s.link}
+        d={`M 180 82 C 180 110 44 104 44 132 L 44 ${rowY(MODULES.length - 1) + 29}`}
+        pathLength={1}
+        data-draw=""
+      />
+
+      {MODULES.map((mod, i) => {
+        const y = rowY(i)
+        return (
+          <g key={mod.label}>
+            <rect className={s.module} x="16" y={y} width="328" height="58" rx="12" />
+            <circle
+              className={s.moduleDot}
+              cx="44"
+              cy={y + 29}
+              r="7"
+              style={{ animationDelay: `${i * 0.4 + 0.5}s` }}
+            />
+            <text className={s.label} x="70" y={y + 35}>
+              {mod.label}
+            </text>
+          </g>
+        )
+      })}
+    </>
+  )
+}
+
+/** The transport chain read top to bottom, one hop per row. */
+function HopsPortrait() {
+  const rowH = 74
+  const gap = 34
+  const top = 16
+
+  return (
+    <>
+      {HOPS.map((label, i) => {
+        const y = top + i * (rowH + gap)
+        return (
+          <g key={label}>
+            <rect className={s.node} x="16" y={y} width="328" height={rowH} rx="12" />
+            <circle
+              className={s.nodeDot}
+              cx="46"
+              cy={y + rowH / 2}
+              r="7"
+              style={{ animationDelay: `${i * 0.6}s` }}
+            />
+            <text className={s.label} x="74" y={y + rowH / 2 + 6}>
+              {label}
+            </text>
+            {i < HOPS.length - 1 ? (
+              <>
+                <line
+                  className={s.hopLine}
+                  x1="46"
+                  y1={y + rowH}
+                  x2="46"
+                  y2={y + rowH + gap}
+                />
+                <rect
+                  className={s.packetV}
+                  x="40"
+                  y={y + rowH}
+                  width="12"
+                  height="12"
+                  rx="3"
+                  style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+                />
+              </>
+            ) : null}
+          </g>
+        )
+      })}
+
+      {/* Stacked, not merged into one run: at portrait label size a single
+          line overruns the 328 unit plate and clips. */}
+      <line className={s.axis} x1="16" y1="440" x2="344" y2="440" />
+      <text className={s.label} x="16" y="472">
+        Capture
+      </text>
+      <text className={s.label} x="16" y="502">
+        Condition and locate
+      </text>
+      <text className={s.label} x="16" y="532">
+        Remote status
+      </text>
+    </>
+  )
+}
+
+/** Source above, verified below, one converted item per band. */
+function MigrationPortrait() {
+  const bandY = (i: number) => 62 + i * 82
+
+  return (
+    <>
+      <text className={s.columnLabel} x="16" y="30">
+        iFIX
+      </text>
+      <text className={s.columnLabel} x="344" y="30" textAnchor="end">
+        PVI+ verified
+      </text>
+
+      {MIGRATION_ITEMS.map((item, i) => {
+        const y = bandY(i)
+        return (
+          <g key={item}>
+            <rect className={s.row} x="16" y={y} width="248" height="40" rx="8" />
+            <text className={s.label} x="34" y={y + 26}>
+              {item}
+            </text>
+
+            <path
+              className={s.convert}
+              d={`M 264 ${y + 20} C 282 ${y + 20} 282 ${y + 20} 300 ${y + 20}`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: `${i * 0.42}s` }}
+            />
+
+            <path
+              className={s.tick}
+              d={`M 308 ${y + 20} l 8 9 l 16 -19`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: `${i * 0.42 + 0.5}s` }}
+            />
+          </g>
+        )
+      })}
+    </>
   )
 }
 
