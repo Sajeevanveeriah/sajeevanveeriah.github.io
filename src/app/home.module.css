@@ -35,8 +35,11 @@
 
 .heroTitle {
   /* Held to a short measure so the headline breaks where it was written to
-     break, rather than wherever the container happens to end. */
-  max-width: 15ch;
+     break, rather than wherever the container happens to end. At 15ch it
+     broke into five lines opening on a two word orphan, "I build"; 19ch is
+     the width at which the sentence falls into three even lines with the
+     verbs kept together. */
+  max-width: 24ch;
   margin-block: 0.25rem;
 }
 
@@ -46,7 +49,10 @@
   font-weight: 500;
   letter-spacing: var(--tracking-snug);
   color: var(--text);
-  max-width: 30ch;
+  /* Wide enough to hold "Mechatronics, Robotics and AI/ML Engineer" on one
+     line under the full width headline. At 30ch it broke after "and", which
+     read as a second headline rather than as an attribution. */
+  max-width: 42ch;
 }
 
 .heroLede {
@@ -358,14 +364,23 @@
 }
 
 @media (min-width: 1000px) {
+  /* The headline spans the full measure; the supporting copy and the plate
+     share the row beneath it.
+
+     Beside the plate the headline had a 512px column at a 73px display size,
+     which forced five lines opening on the orphan "I build". Narrowing the
+     type to fit would have cost the opening its authority. Giving the
+     sentence the whole width instead lets it fall into three lines at full
+     size, and it closes the empty top right quadrant that centring the
+     plate against a taller text stack had opened up. */
   .heroGrid {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
     grid-template-areas:
-      'intro figure'
+      'intro intro'
       'outro figure';
     align-content: center;
     column-gap: clamp(3rem, 5vw, 5rem);
-    row-gap: var(--space-4);
+    row-gap: clamp(2.5rem, 4vw, 3.5rem);
   }
 
   .heroIntro {
@@ -380,7 +395,7 @@
 
   .heroFigure {
     grid-area: figure;
-    align-self: center;
+    align-self: start;
   }
 
   .proofGrid {
