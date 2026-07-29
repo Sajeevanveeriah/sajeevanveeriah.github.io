@@ -7,32 +7,50 @@
   width: 100%;
   max-width: 800px;
   margin-inline: auto;
+  /* Establishes the query context the label ramp below measures against, so
+     the drawing responds to the column it is placed in rather than to the
+     viewport. The same diagram sits in a narrow case-study rail and a wide
+     home entry, and only the container knows which. */
+  container-type: inline-size;
+  container-name: diagram;
 }
 
-/* The plate is full width; the drawing inside it is sized by height, not by
-   width. SVG text scales with the viewBox, so a width-driven diagram renders
-   its labels at 22px on a desktop container and 7px on a phone. Driving the
-   height instead pins the label size to a narrow band at every viewport, and
-   the plate scrolls horizontally on very narrow screens rather than shrinking
-   the drawing into illegibility. */
+/* The drawing fits the width it is given: no internal horizontal scroll at
+   any viewport. SVG text is measured in user units, so a drawing scaled down
+   to a phone would take its labels down with it, to about 7px. Rather than
+   letting the plate scroll sideways, the label ramp below grows the type in
+   user units as the container narrows, which keeps rendered label size inside
+   a narrow band from a 760px home column down to a 320px phone. */
 .plate {
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background: var(--surface);
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-block: var(--space-3);
+  overflow: hidden;
+  padding: var(--space-3) var(--space-2);
 }
 
 .svg {
   display: block;
-  height: clamp(240px, 22vw, 330px);
-  width: auto;
-  /* Overrides the global max-width:100% on svg. Without this the drawing
-     would be squeezed to the container width on a phone and letterboxed
-     inside its own plate, shrinking the labels to a few pixels. */
-  max-width: none;
+  width: 100%;
+  height: auto;
   margin-inline: auto;
+}
+
+/* Landscape and portrait compositions of the same idea. Exactly one is
+   painted; the switch is on the container, not the viewport, because the same
+   diagram sits in a wide home entry and a narrow case-study column. */
+.svgTall {
+  display: none;
+}
+
+@container diagram (max-width: 560px) {
+  .svgWide {
+    display: none;
+  }
+
+  .svgTall {
+    display: block;
+  }
 }
 
 .caption {
@@ -344,6 +362,32 @@
   }
 }
 
+/* The portrait chain runs down the page, so its packet travels on Y. */
+.packetV {
+  fill: var(--accent);
+  animation: sd-hop-v 7s var(--ease-servo) infinite;
+}
+
+@keyframes sd-hop-v {
+  0%,
+  6% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  26% {
+    transform: translateY(var(--hop));
+    opacity: 1;
+  }
+  32%,
+  100% {
+    transform: translateY(var(--hop));
+    opacity: 0;
+  }
+}
+
 /* ---- Anomaly ---- */
 
 .flagRing {
@@ -483,6 +527,71 @@
   fill: var(--accent);
 }
 
+/* Label ramp. Target is a rendered label of roughly 12px to 13px. Rendered
+   size is (user units * container width / 640), so the user-unit size needed
+   is about 8300 / container width. Each step below is that figure at the
+   midpoint of its band. */
+@container diagram (min-width: 700px) {
+  .label,
+  .columnLabel,
+  .coreLabel,
+  .flagLabel {
+    font-size: 11px;
+  }
+  .runLabel {
+    font-size: 9.5px;
+  }
+}
+
+@container diagram (max-width: 620px) {
+  .label,
+  .columnLabel,
+  .coreLabel,
+  .flagLabel {
+    font-size: 15px;
+  }
+  .runLabel {
+    font-size: 13px;
+  }
+}
+
+@container diagram (max-width: 520px) {
+  .label,
+  .columnLabel,
+  .coreLabel,
+  .flagLabel {
+    font-size: 18px;
+  }
+  .runLabel {
+    font-size: 15px;
+  }
+}
+
+@container diagram (max-width: 430px) {
+  .label,
+  .columnLabel,
+  .coreLabel,
+  .flagLabel {
+    font-size: 21px;
+    letter-spacing: 0.04em;
+  }
+  .runLabel {
+    font-size: 17px;
+    letter-spacing: 0.04em;
+  }
+}
+
+/* ---- Play only while visible ----
+   Eight diagrams looping forever off-screen reads as restless and spends
+   compositing work nobody can see. Under JavaScript the sequence is held at
+   its first frame until InView marks the figure, and released when it leaves
+   again, so a diagram always starts from the beginning of its story rather
+   than halfway through. Without JavaScript the attribute never arrives and
+   the animations simply run, which is the correct fallback. */
+:global(html[data-js]) .figure:not([data-inview]) :is(svg *, svg) {
+  animation-play-state: paused;
+}
+
 /* ---- Reduced motion ----
    Every variant settles on a complete, readable final state. */
 @media (prefers-reduced-motion: reduce) {
@@ -497,6 +606,7 @@
   .routePulse,
   .cursor,
   .packet,
+  .packetV,
   .busTrain {
     display: none;
   }
