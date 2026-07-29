@@ -25,6 +25,12 @@ export interface ProjectImage {
   readonly width: number
   readonly height: number
   readonly caption?: string
+  readonly displayMode?: 'contain' | 'cover' | 'full-bleed'
+  readonly aspectRatio?: string
+  readonly objectPosition?: string
+  readonly background?: 'light' | 'dark' | 'neutral'
+  readonly sizes?: string
+  readonly mobileSrc?: string
 }
 
 export interface ProjectLink {
@@ -55,6 +61,10 @@ export interface Project {
   readonly links?: readonly ProjectLink[]
   readonly images?: readonly ProjectImage[]
   readonly featured: boolean
+  readonly homeExcerpt?: {
+    readonly ownership: string
+    readonly outcome: string
+  }
   /** Extra verbatim fields the old site carried on a single record. */
   readonly deepDives?: readonly ProjectLink[]
 }
@@ -100,8 +110,16 @@ export const projects: readonly Project[] = [
         alt: 'Engineering Mastery Lab dashboard showing the Parametric CAD Studio, Engineering Toolbox, Project Workbench and PID Control Lab.',
         width: 1435,
         height: 660,
+        displayMode: 'contain',
+        aspectRatio: '1435 / 660',
+        background: 'dark',
+        sizes: '(max-width: 767px) 100vw, 1200px',
       },
     ],
+    homeExcerpt: {
+      ownership: 'I owned the product architecture across engineering logic, CAD geometry, software, desktop security boundaries and validation.',
+      outcome: 'A working public application spanning calculation, bounded parametric CAD, guided learning and evidence workflows.',
+    },
     featured: true,
   },
   {
@@ -140,8 +158,15 @@ export const projects: readonly Project[] = [
         alt: 'ROS 2 autonomous navigation stack visualised with robot mapping and route planning',
         width: 1448,
         height: 1086,
+        displayMode: 'contain',
+        aspectRatio: '4 / 3',
+        background: 'dark',
       },
     ],
+    homeExcerpt: {
+      ownership: 'I integrated perception, state estimation, planning and control as independently testable ROS 2 nodes.',
+      outcome: 'A repeatable simulation-validated autonomy stack with stable localisation and obstacle-aware navigation.',
+    },
     featured: true,
   },
   {

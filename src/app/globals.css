@@ -60,24 +60,8 @@ body {
   /* Ambient grain. Painted once as a CSS gradient rather than an image so
      it costs no request and no decode. Purely decorative, so it is inert
      to pointers and hidden from assistive technology. */
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in srgb, var(--text) 100%, transparent) 0.5px,
-    transparent 0
-  );
-  background-size: 3px 3px;
-  background-attachment: fixed;
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  background: inherit;
-}
 
 h1,
 h2,
@@ -137,11 +121,11 @@ picture {
 /* Monospace telemetry labels: central to the instrument aesthetic, so they
    get a token-driven treatment rather than ad-hoc styling per component. */
 .mono-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-xs);
   font-weight: 500;
   letter-spacing: var(--tracking-mono);
-  text-transform: uppercase;
+  text-transform: none;
   color: var(--text-faint);
 }
 
@@ -235,28 +219,13 @@ picture {
    into a visible grid on dense phone displays. */
 @media (max-width: 767px) {
   body {
-    background-image: linear-gradient(
-      180deg,
-      var(--bg) 0%,
-      color-mix(in srgb, var(--surface) 35%, var(--bg)) 52%,
-      var(--bg) 100%
-    );
-    background-size: 100% 100%;
-    background-attachment: scroll;
-  }
-
-  body::before {
-    opacity: 1;
-    background:
-      radial-gradient(
-        circle at 85% 12%,
-        color-mix(in srgb, var(--accent) 8%, transparent),
-        transparent 42%
-      ),
-      radial-gradient(
-        circle at 12% 72%,
-        color-mix(in srgb, var(--status) 6%, transparent),
-        transparent 48%
-      );
+    background: var(--bg);
   }
 }
+
+.project-media { display: block; width: 100%; aspect-ratio: var(--media-ratio); overflow: hidden; background: #ededee; }
+.project-media[data-background='dark'] { background: #111214; }
+.project-media picture { display: block; width: 100%; height: 100%; }
+.project-media img { width: 100%; height: 100%; object-position: var(--media-position); }
+.project-media[data-mode='contain'] img { object-fit: contain; }
+.project-media[data-mode='cover'] img, .project-media[data-mode='full-bleed'] img { object-fit: cover; }

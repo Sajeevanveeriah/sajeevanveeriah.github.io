@@ -6,6 +6,7 @@ import { TierIndicator } from '@/components/ui/TierIndicator'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { publishedProjects, getProject } from '@/content/projects'
 import { experience } from '@/content/experience'
+import { site } from '@/content/site'
 import s from '@/components/ui/shared.module.css'
 
 /** Every published slug is emitted at build time. Required for the export. */
@@ -41,6 +42,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   const roles = experience.filter((r) => r.relatedProjects.includes(p.slug))
   const image = p.images?.[0]
+  const schema = {
+    '@context': 'https://schema.org', '@graph': [
+      { '@type': 'CreativeWork', '@id': `${site.url}/work/${p.slug}/#project`, name: p.title, description: p.summary, url: `${site.url}/work/${p.slug}/`, creator: { '@id': `${site.url}/#person` }, image: image ? `${site.url}${image.src}` : undefined },
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+        { '@type': 'ListItem', position: 2, name: 'Work', item: `${site.url}/work/` },
+        { '@type': 'ListItem', position: 3, name: p.title, item: `${site.url}/work/${p.slug}/` },
+      ] },
+    ],
+  }
 
   const facts: readonly (readonly [string, string | readonly string[]])[] = [
     ['The problem', p.problem],
@@ -55,6 +66,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   return (
     <article className="section">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="wrap">
         <p style={{ marginBottom: 'var(--space-2)' }}>
           <Link href="/work/" className={s.backLink}>

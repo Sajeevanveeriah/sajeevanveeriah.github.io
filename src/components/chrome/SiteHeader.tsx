@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { navigation, site } from '@/content/site'
-import { ThemeToggle } from '@/components/theme/ThemeToggle'
-import { TelemetryStrip } from './TelemetryStrip'
 import styles from './SiteHeader.module.css'
 
 export function SiteHeader() {
@@ -25,8 +23,6 @@ export function SiteHeader() {
           </span>
           <span className={styles.brandText}>{site.name}</span>
         </Link>
-
-        <TelemetryStrip variant="header" />
 
         <nav
           id="site-nav"
@@ -52,7 +48,6 @@ export function SiteHeader() {
         </nav>
 
         <div className={styles.actions}>
-          <ThemeToggle />
           <a className={styles.resume} href={site.resumePath} download>
             Resume
           </a>
