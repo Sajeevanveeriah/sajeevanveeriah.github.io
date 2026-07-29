@@ -15,6 +15,18 @@
   align-content: start;
 }
 
+@media (pointer: coarse) {
+  .brand {
+    position: relative;
+  }
+
+  .brand::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
+}
+
 .brand {
   font-family: var(--font-display);
   font-size: var(--text-2xl);
@@ -38,6 +50,21 @@
 
 .col > :global(.label) {
   margin-bottom: 0.35rem;
+}
+
+/* Expands the hit area to 44px on a touch pointer without moving the link
+   or its underline: the box is a pseudo-element, so nothing in the footer
+   grid reflows. */
+@media (pointer: coarse) {
+  .link {
+    position: relative;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    inset: -10px -6px;
+  }
 }
 
 .link {

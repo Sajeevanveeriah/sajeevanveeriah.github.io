@@ -156,6 +156,18 @@
   overflow-wrap: anywhere;
 }
 
+@media (pointer: coarse) {
+  .link {
+    position: relative;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    inset: -10px -4px;
+  }
+}
+
 .link {
   justify-self: start;
   font-size: var(--text-sm);
@@ -368,13 +380,20 @@
 }
 
 .pill {
+  /* The archive filters are the only real control on the work index, and on
+     a phone there are twenty of them in two rows. At 37px they were under a
+     comfortable thumb; 44px is the floor, and inline-flex keeps the label
+     optically centred once the box grows. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-muted);
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.35rem 0.85rem;
+  padding: 0.35rem 0.95rem;
   cursor: pointer;
   transition:
     color var(--dur-interaction) var(--ease-servo),

@@ -34,11 +34,11 @@
 }
 
 .heroTitle {
-  /* Held to a short measure so the headline breaks where it was written to
-     break, rather than wherever the container happens to end. At 15ch it
-     broke into five lines opening on a two word orphan, "I build"; 19ch is
-     the width at which the sentence falls into three even lines with the
-     verbs kept together. */
+  /* The headline spans the full measure, so this is a cap on the line length
+     rather than the thing that sets it. At 24ch the sentence falls into two
+     lines at desktop, three at tablet and four on a phone. Beside the plate
+     it had a 512px column at a 73px display size and broke into five lines
+     opening on the two word orphan "I build". */
   max-width: 24ch;
   margin-block: 0.25rem;
 }
@@ -218,6 +218,21 @@
 
 .entryDivider {
   color: var(--border-strong);
+}
+
+/* The record title is the main way into a case study from the home page.
+   Its line box lands at 39px on a phone, so the hit area is expanded without
+   moving the type. */
+@media (pointer: coarse) {
+  .entryTitle a {
+    position: relative;
+  }
+
+  .entryTitle a::before {
+    content: '';
+    position: absolute;
+    inset: -4px -6px;
+  }
 }
 
 .entryTitle {

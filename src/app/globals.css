@@ -156,6 +156,23 @@ button {
   position: relative;
 }
 
+/* A stage that carries real weight earns more air before and after it, so
+   arriving at it reads as an event rather than as the next item in a list. */
+.section-lg {
+  padding-block: var(--section-y-lg);
+}
+
+/* A connective strip closes up against what it supports. */
+.section-sm {
+  padding-block: var(--section-y-sm);
+}
+
+/* A tinted stage already announces itself by changing ground, so it does not
+   also need the full white-to-white interval to separate it. */
+.stage-tint.section {
+  padding-block: calc(var(--section-y) * 0.88);
+}
+
 /* A quiet tinted stage. Full-bleed, so it reads as a change of ground rather
    than a floating slab inside white space. */
 .stage-tint {
@@ -231,7 +248,24 @@ button {
   transform-origin: right;
 }
 
+/* Same technique as the footer links: a pseudo-element takes the hit area to
+   44px on a touch pointer while the drawn underline stays exactly where it
+   was. Changing the box itself would have moved the underline, which is
+   positioned against the link's own bottom edge. */
+@media (pointer: coarse) {
+  .textlink::before {
+    content: '';
+    position: absolute;
+    inset: -11px -4px;
+  }
+}
+
 /* Arrow link used for "read the case study" style affordances. */
+/* The hit area is 44px tall while the mark stays its drawn size. Measured on
+   a phone the bare link was 24px, which clears the WCAG 2.5.8 minimum but is
+   well under what a thumb actually wants, and this is the primary way into
+   every case study. The negative margin keeps the added padding from
+   changing any layout it sits in. */
 .arrowlink {
   display: inline-flex;
   align-items: center;
@@ -239,6 +273,9 @@ button {
   color: var(--accent-text);
   font-weight: 500;
   font-size: var(--text-sm);
+  min-height: 44px;
+  padding-block: 0.625rem;
+  margin-block: -0.625rem;
 }
 
 .arrowlink svg {

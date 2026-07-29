@@ -192,7 +192,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------- Selected work ---------- */}
-      <section className="section" aria-labelledby="work-title">
+      <section className="section section-lg" aria-labelledby="work-title">
         <div className="wrap-wide">
           <Reveal className={home.stageHeadSplit}>
             <div>
@@ -306,7 +306,7 @@ export default function HomePage() {
       </section>
 
       {/* ---------- Close ---------- */}
-      <section className="section" aria-labelledby="cta-title">
+      <section className="section section-lg" aria-labelledby="cta-title">
         <div className={`wrap-wide ${home.cta}`}>
           <p className="label label-accent">Start a conversation</p>
           <h2 id="cta-title" className={home.ctaTitle}>

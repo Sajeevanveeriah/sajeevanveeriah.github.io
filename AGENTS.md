@@ -45,6 +45,25 @@ break where they were written to break, copy concise and stages spacious. Do
 not add grain, terminal chrome, telemetry readouts, gold or category colour
 coding, glass effects, glow, stock illustrations or dashboard decoration.
 
+A short measure means the measure the headline was written for, not the
+narrowest column available. Where a title is boxed by its column rather than
+by its character limit, give it the width instead of shrinking the type: the
+homepage headline had a 512px column at a 73px display size and broke into
+five lines on a two-word orphan, and spanning the full measure fixed the rag
+without costing the opening its authority.
+
+Space is paced, not uniform. `--section-y-sm`, `--section-y` and
+`--section-y-lg` scale the air around a stage with that stage's weight, and a
+tinted stage takes slightly less because changing ground already announces it.
+One value for every stage gave a 153px strip and a 6307px stage the same
+interval and told the reader nothing about what they were entering.
+
+Touch targets are 44px, not the 24px WCAG 2.5.8 floor. Where raising the box
+would move a drawn underline or reflow a grid, expand the hit area with an
+absolutely positioned pseudo-element under `@media (pointer: coarse)` so
+nothing visible moves. A row that carries a full-row `::after` overlay already
+satisfies this; measure the overlay, not the anchor.
+
 ### Motion
 
 Motion carries meaning: it explains sensing, planning, transport, verification
@@ -60,19 +79,59 @@ plus `src/components/motion/Reveal.tsx`:
 - `ClosedLoop`, `StackSpine`, `CareerSpine`: scroll-linked fills via
   framer-motion `useScroll`. These are normal-height blocks, never sticky
   scroll traps, so they cannot strand an empty viewport.
-- `Reveal`: CSS-driven, not framer-motion `whileInView`. The server renders the
-  visible state; the hidden state applies only under `html[data-js]`, set by
-  the inline script in `layout.tsx`. This is binding: `whileInView` ships
-  `opacity: 0` in the static HTML and blanks the page without JavaScript.
+- `Reveal` and `Stagger`: CSS-driven, not framer-motion `whileInView`. The
+  server renders the visible state; the hidden state applies only under
+  `html[data-js]`, set by the inline script in `layout.tsx`. This is binding:
+  `whileInView` ships `opacity: 0` in the static HTML and blanks the page
+  without JavaScript.
+- `InView`: marks a subtree on-screen so its ambient motion can run, and
+  off-screen so it stops. `SystemDiagram` uses it. Without it eight loops ran
+  forever three screens away. The paused state is scoped to `html[data-js]`,
+  so without JavaScript the animations simply run. It pauses rather than
+  rewinds: a diagram scrolled away and back resumes where it stopped.
+- `RouteSignature`: one mark per index route family, in the header's right
+  column. Detail routes get none, because a record's own diagram is what
+  should identify it. Marks are decorative and `aria-hidden`, each restating
+  something the adjacent title and lede already say in words. They draw once
+  and stop; a header mark that loops behind a title is a distraction.
+
+One ambient clock. Every ambient loop is phrased against `--cycle` (11s) or an
+exact division of it, so two graphics on screen together read as one system
+rather than as unrelated loops drifting past each other. Do not introduce a
+period that is not derived from `--cycle`.
+
+Reveals have a vocabulary, not one movement. `rise` is the default; `lift` is
+quieter for secondary blocks; `edge` enters from the leading edge for blocks
+that sit beside rather than under; `wipe` uncovers a plate whose frame should
+stay put. Stage headings keep `rise` as the stable rhythm the varied content
+plays against. When adding a variant, give the reduced-motion reset a selector
+of matching specificity: the variant selectors carry an extra attribute, and a
+weaker reset lets `wipe` stay clipped and permanently crop the block.
 
 Every diagram must settle on a complete, readable state under
 `prefers-reduced-motion: reduce`, and content must never be gated on an
 animation. The first authored state must remain complete without JavaScript.
 
-SVG text scales with the viewBox, so a width-driven diagram renders its labels
-at roughly 22px in a wide container and 7px on a phone. `SystemDiagram` is
-sized by height instead and its plate scrolls horizontally on narrow screens.
-Never give the diagram `width: 100%`.
+SVG text scales with the viewBox, so a width-driven diagram would render its
+labels at roughly 13px in a wide container and 6px on a phone. `SystemDiagram`
+fits the width it is given and recovers label size two ways, so no plate
+scrolls horizontally at any viewport:
+
+- A label ramp in `@container diagram` steps the type up in user units as the
+  container narrows. It is keyed to the container, not the viewport, because
+  the same diagram sits in a wide home entry and a narrow case-study rail. The
+  ramp must stay below the base `.label` rules in the file: at equal
+  specificity source order decides, and above them it silently does nothing.
+- Where the ramp is not enough, the variant gets a portrait composition. Three
+  do: `lattice`, `hops` and `migration` carry long labels inside fixed boxes,
+  and at portrait label size the text overran the box and clipped at the plate
+  edge. The portrait swaps in below a 560px container. Both drawings are
+  `aria-hidden` and the description sits once on the plate, so the alternate
+  composition is never announced twice.
+
+Measured after this change: 13.2px labels in a 766px container, 10.4px in a
+316px container, zero horizontal scrollers. Do not restore height-driven
+sizing, and check both compositions when editing a variant that has one.
 
 Accessibility: never signal state by dimming text opacity. Fading copy to mark
 an inactive stage drops it below 4.5:1; shift between two passing colours

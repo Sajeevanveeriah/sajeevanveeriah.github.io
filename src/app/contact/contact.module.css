@@ -5,6 +5,20 @@
   min-width: 0;
 }
 
+@media (pointer: coarse) {
+  .email,
+  .channel {
+    position: relative;
+  }
+
+  .email::before,
+  .channel::before {
+    content: '';
+    position: absolute;
+    inset: -10px -4px;
+  }
+}
+
 .email {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
