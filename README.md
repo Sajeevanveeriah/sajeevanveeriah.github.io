@@ -4,7 +4,7 @@ A light-first editorial engineering portfolio for Sajeevan Veeriah, built with N
 
 ## Experience and design
 
-The homepage positions Saj as a Mechatronics, Robotics and AI/ML Engineer who owns systems across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. There is no theme selector, control-room chrome, telemetry, technical grid or ambient animation.
+The homepage positions Saj as a Mechatronics, Robotics and AI/ML Engineer who owns systems across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. The hero cycles through real project evidence, pauses when it leaves the viewport and exposes direct project controls. There is no theme selector, control-room chrome, telemetry, technical grid or ambient animation.
 
 ## Architecture
 

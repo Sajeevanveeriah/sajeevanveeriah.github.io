@@ -37,8 +37,10 @@ off-white text. There is no global theme control.
 Keep navigation minimal, headings large but controlled, copy concise and stages
 spacious. Do not add grids, grain, terminal chrome, telemetry labels, gold or
 category colour coding, glass effects, gradients, glow, stock illustrations or
-dashboard decoration. Motion is limited to short reveal and interaction feedback,
-with complete reduced-motion and no-JavaScript fallbacks.
+dashboard decoration. Motion is limited to short reveals, project-media
+transitions and interaction feedback. Timed media pauses outside the viewport,
+honours document visibility and becomes static under reduced motion. The first
+authored state must remain complete without JavaScript.
 
 Project images use the typed presentation fields in `src/content/projects.ts` and
 the central `ProjectImage` component. Informative diagrams and screenshots use
