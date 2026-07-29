@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { site } from '@/content/site'
-import { narrative, closedLoop } from '@/content/about'
+import { narrative, closedLoop, homeStory } from '@/content/about'
 import { publishedProjects } from '@/content/projects'
 import { systemsStack } from '@/content/systemsStack'
 import { atlas } from '@/content/atlas'
@@ -13,6 +13,7 @@ import { PointCloud } from '@/components/robotics/PointCloud'
 import { SensorSweep } from '@/components/robotics/SensorSweep'
 import { Reveal, RevealGroup, RevealItem } from '@/components/motion/Reveal'
 import { MagneticLink } from '@/components/motion/MagneticLink'
+import { ProjectImage } from '@/components/ui/ProjectImage'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -104,22 +105,17 @@ export default function HomePage() {
         </div>
         <div className={`wrap ${home.heroGrid}`}>
           <div className={home.heroCopy}>
-            <p className="mono-label">Engineering portfolio</p>
+            <p className="mono-label">{homeStory.kicker}</p>
             <h1 id="hero-title" className={home.heroTitle}>
-              Sajeevan
-              <br />
-              Veeriah
+              {homeStory.headline}
             </h1>
-            <p className={home.positioning}>{site.jobTitle}</p>
+            <p className={home.positioning}>{site.name}</p>
             <p className={home.lede}>{narrative}</p>
             <div className={home.actions}>
               <MagneticLink href="/work/" className={home.primary}>
                 View work
               </MagneticLink>
-              <MagneticLink href="/atlas/" className={home.secondary}>
-                Explore atlas
-              </MagneticLink>
-              <a href={site.resumePath} download className={s.link}>
+              <a href={site.resumePath} download className={home.secondary}>
                 Download resume
               </a>
             </div>
@@ -157,24 +153,44 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className={`section ${home.proof}`} aria-labelledby="proof-title">
+        <div className={`wrap ${home.proofGrid}`}>
+          <p className="mono-label">{homeStory.proofKicker}</p>
+          <div>
+            <h2 id="proof-title">{homeStory.proofTitle}</h2>
+            <p className={home.proofSummary}>{homeStory.proofSummary}</p>
+          </div>
+        </div>
+      </section>
+
       {/* Featured work */}
       <section className="section" aria-labelledby="featured-title">
         <div className="wrap">
           <div className={s.header}>
-            <p className="mono-label">Featured work</p>
-            <h2 id="featured-title">Three records that show how I work across the whole stack.</h2>
+            <p className="mono-label">02 / {homeStory.featuredKicker}</p>
+            <h2 id="featured-title">{homeStory.featuredTitle}</h2>
           </div>
-          <RevealGroup className={`${s.grid} ${s.grid3}`}>
-            {featured.map((p) => (
-              <RevealItem key={p.slug} as="article" className={s.card}>
-                <div className={s.meta}>
-                  <span className={s.cat}>{p.domain}</span>
-                  <TierIndicator tier={p.evidenceTier} />
+          <RevealGroup className={home.stories}>
+            {featured.map((p, index) => (
+              <RevealItem key={p.slug} as="article" className={home.story}>
+                <div className={home.storyMedia}>
+                  {p.images?.[0] && <ProjectImage image={p.images[0]} />}
                 </div>
-                <h3 className={s.cardTitle} style={{ fontSize: 'var(--text-lg)' }}>
-                  <Link href={`/work/${p.slug}/`}>{p.title}</Link>
-                </h3>
-                <p className={s.body}>{p.summary}</p>
+                <div className={home.storyCopy}>
+                  <div className={s.meta}>
+                    <span className={s.cat}>{String(index + 1).padStart(2, '0')} / {p.domain}</span>
+                    <TierIndicator tier={p.evidenceTier} />
+                  </div>
+                  <h3 className={home.storyTitle}>{p.title}</h3>
+                  <p className={home.storySummary}>{p.problem}</p>
+                  <dl className={home.storyEvidence}>
+                    <div><dt>{homeStory.responseLabel}</dt><dd>{p.approach[1]}</dd></div>
+                    <div><dt>{homeStory.outputLabel}</dt><dd>{p.outcome}</dd></div>
+                  </dl>
+                  <Link href={`/work/${p.slug}/`} className={s.link}>
+                    {homeStory.recordLinkLabel}
+                  </Link>
+                </div>
               </RevealItem>
             ))}
           </RevealGroup>
@@ -190,10 +206,9 @@ export default function HomePage() {
       <section className="section" aria-labelledby="capability-title" style={{ paddingTop: 0 }}>
         <div className="wrap">
           <div className={s.header}>
-            <p className="mono-label">Capability</p>
-            <h2 id="capability-title">
-              Ten systems layers, {atlas.length} atlas domains, with every claim in my portfolio tiered by evidence.
-            </h2>
+            <p className="mono-label">03 / {homeStory.capabilityKicker}</p>
+            <h2 id="capability-title">{homeStory.capabilityTitle}</h2>
+            <p className={s.lede}>Ten systems layers and {atlas.length} atlas domains, with every claim tiered by evidence.</p>
           </div>
           <Reveal as="div"><ul className={home.strip}>
             {systemsStack.map((l) => (
