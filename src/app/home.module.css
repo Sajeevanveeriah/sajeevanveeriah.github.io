@@ -1,5 +1,6 @@
 .hero { padding: clamp(6rem, 13vw, 11rem) 0 clamp(5rem, 10vw, 8rem); background: var(--surface); }
-.hero h1 { max-width: 12ch; font-size: clamp(3.2rem, 8vw, 8.5rem); }
+.hero { padding-block:clamp(3rem,7vw,6rem); }
+.hero h1 { max-width: 15ch; font-size: clamp(2.75rem, 6.2vw, 6.5rem); }
 .eyebrow { color: var(--accent-text); font-weight: 600; margin-bottom: 1rem; }
 .role { font-size: var(--text-2xl); font-weight: 600; margin-top: 2rem; }
 .lede { color: var(--text-muted); font-size: var(--text-lg); margin-top: 1rem; }
@@ -11,7 +12,7 @@
 .proof { padding-block: 2rem; border-block: 1px solid var(--border); }
 .proofGrid { display: grid; gap: 1.5rem; color: var(--text-muted); }
 .stories { display: grid; gap: clamp(4rem, 9vw, 9rem); margin-top: 4rem; }
-.story { overflow: hidden; border-radius: 32px; background: var(--surface); border: 1px solid var(--border); }
+.story { overflow: hidden; }
 .storyMedia { padding: clamp(.5rem, 2vw, 1.5rem); }
 .storyCopy { display: grid; gap: 1.25rem; padding: clamp(2rem, 5vw, 5rem); }
 .storyCopy h3 { font-size: var(--text-3xl); }
@@ -21,15 +22,16 @@
 .dark { background: #111214; color: #f5f5f7; border-color: #25262a; }
 .dark .storyCopy p, .dark .eyebrow { color: #b8b8bd; }.dark .storyCopy strong { color: #f5f5f7; }.dark .storyCopy a { color: #70a7f5; }
 .problems { padding-block: var(--section-y); background: #111214; color: #f5f5f7; }
-.problemGrid { display: grid; gap: 1px; background: #343438; margin-top: 4rem; }
-.problemGrid article { background: #111214; padding: 2rem 0; }.problemGrid p { color: #b8b8bd; margin-top: .75rem; }
+.problemGrid { display: grid; margin-top: 4rem; border-top:1px solid var(--border); }
+.problemGrid article { padding: 2rem 0; border-bottom:1px solid var(--border); }.problemGrid p { color: var(--text-muted); margin-top: .75rem; }
 .capabilities { display: grid; gap: 2rem; align-items: end; }.capabilities > p { color: var(--text-muted); font-size: var(--text-lg); }
 .cta { background: var(--surface); padding-block: var(--section-y); }.cta h2 { max-width: 16ch; }.cta > div > p { margin-top: 1rem; color: var(--text-muted); }
-@media (min-width: 768px) { .proofGrid { grid-template-columns: repeat(4,1fr); }.problemGrid { grid-template-columns: repeat(2,1fr); gap: 1px 4rem; }.capabilities { grid-template-columns: 1.2fr .8fr; }.capabilities .textLinks { grid-column: 1 / -1; } }
+@media (min-width: 768px) { .proofGrid { grid-template-columns: repeat(4,1fr); }.problemGrid { grid-template-columns: repeat(2,1fr); column-gap:4rem; }.capabilities { grid-template-columns: 1.2fr .8fr; }.capabilities .textLinks { grid-column: 1 / -1; } }
 @media (min-width: 960px) {
-  .story { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; }
+  .story { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; border-top:1px solid var(--border); }
   .story1 { grid-template-columns: .75fr 1.25fr; }.story1 .storyMedia { order: 2; }
   .story2 { grid-template-columns: 1fr 1fr; }
   .story3 { grid-template-columns: 1.45fr .55fr; }.story3 .storyMedia { padding: 2.5rem; }
   .story0 { display: block; }.story0 .storyCopy { grid-template-columns: 1fr 1fr; }.story0 .storyCopy h3, .story0 .storyCopy .eyebrow, .story0 .storyCopy a { grid-column: 1 / -1; }
 }
+@media(max-width:767px){.hero h1{font-size:clamp(2.5rem,11vw,3.25rem)}.story{border-top:1px solid var(--border)}}

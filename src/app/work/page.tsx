@@ -8,7 +8,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'My proof-backed engineering records span software, robotics, automation, embedded sensing, IoT, AI/ML, vehicle validation and manufacturing, with each record carrying its honest evidence tier.',
+    'Selected engineering work across robotics, embedded sensing, intelligent automation, software and validation, with an honest evidence tier for every record.',
   alternates: { canonical: '/work/' },
   openGraph: { title: 'Work', url: '/work/' },
 }
@@ -18,9 +18,9 @@ export default function WorkPage() {
     <section className="section">
       <div className="wrap">
         <PageHeader
-          kicker="01 / Work"
-          title="My proof-backed work across the engineering stack."
-          lede="I separate my professional delivery from university and personal work, including engineering tools, and give every record an honest evidence tier. Filter my work by domain, discipline or evidence."
+          kicker="Work"
+          title="Systems built, integrated and validated."
+          lede="Start with four selected engineering stories, then use the compact archive to inspect professional, university and personal evidence."
         >
           <div className={s.railBlock}>
             <TierLegend compact />

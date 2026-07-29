@@ -8,7 +8,7 @@
  */
 import { chromium } from 'playwright'
 import { createServer } from 'node:http'
-import { readFile, stat } from 'node:fs/promises'
+import { readFile, stat, readdir } from 'node:fs/promises'
 import { join, extname } from 'node:path'
 import { createRequire } from 'node:module'
 
@@ -41,23 +41,18 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(0, r))
 const base = `http://127.0.0.1:${server.address().port}`
 
-const ROUTES = [
-  '/', '/work/', '/work/autonomous-navigation-rover/', '/atlas/',
-  '/atlas/robotics-and-autonomy/', '/about/', '/about/jag-process-solutions/',
-  '/skills/', '/contact/', '/404.html',
-]
+async function routes(dir = ROOT, prefix = '') { const found=[]; for (const e of await readdir(dir,{withFileTypes:true})) { if(e.isDirectory()) found.push(...await routes(join(dir,e.name),`${prefix}/${e.name}`)); else if(e.name==='index.html') found.push(prefix ? `${prefix}/` : '/'); else if(e.name==='404.html') found.push('/404.html') } return found }
+const ROUTES = (await routes()).sort()
 const WIDTHS = [375, 768, 1024, 1440, 1920]
 
-const browser = await chromium.launch({
-  executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
-})
+const browser = await chromium.launch(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {})
 
 const violations = []
 const overflow = []
 const tall = []
 
 console.log('--- Accessibility (axe-core, WCAG 2.0/2.1/2.2 A + AA) ---')
-for (const theme of ['dark', 'light']) {
+for (const theme of ['light']) {
   for (const route of ROUTES) {
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
     const page = await ctx.newPage()

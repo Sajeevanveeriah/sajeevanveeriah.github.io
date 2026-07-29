@@ -62,7 +62,7 @@ export const site: SiteConfig = {
   credentials: ['Member, Engineers Australia', 'Deakin Honours Distinction, 2025'],
 } as const
 
-/** Primary navigation across the nine routes. */
+/** Quiet primary navigation. Atlas remains linked from Expertise and project evidence. */
 export interface NavItem {
   readonly label: string
   readonly href: string
@@ -70,8 +70,7 @@ export interface NavItem {
 
 export const navigation: readonly NavItem[] = [
   { label: 'Work', href: '/work/' },
-  { label: 'Atlas', href: '/atlas/' },
-  { label: 'Skills', href: '/skills/' },
+  { label: 'Expertise', href: '/skills/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ] as const

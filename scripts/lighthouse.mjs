@@ -22,7 +22,7 @@ await new Promise((r) => server.listen(0, r))
 const base = `http://127.0.0.1:${server.address().port}`
 
 const chrome = await launch({
-  chromePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
+  chromePath: process.env.BROWSER_EXECUTABLE_PATH,
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })
 

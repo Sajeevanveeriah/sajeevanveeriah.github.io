@@ -53,17 +53,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     ],
   }
 
-  const facts: readonly (readonly [string, string | readonly string[]])[] = [
-    ['The problem', p.problem],
-    ['My context', p.context],
-    ['My approach', p.approach],
-    ['My tools and technologies', p.toolsNote],
-    ['How I validated it', p.validation],
-    ['What I delivered', p.outcome],
-    ['My evidence level', p.evidenceNote],
-    ['What this demonstrates about me', p.demonstrates],
-  ]
-
   return (
     <article className="section">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -87,23 +76,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         ) : null}
 
-        <div className={s.split}>
-          <dl className={s.dl}>
-            {facts
-              .filter(([, v]) => (Array.isArray(v) ? v.length > 0 : String(v).length > 0))
-              .map(([label, value]) => (
-                <div key={label}>
-                  <dt className={s.dt}>{label}</dt>
-                  <dd className={s.dd}>
-                    {Array.isArray(value) ? (
-                      value.map((para, i) => <p key={i}>{para}</p>)
-                    ) : (
-                      <p>{value as string}</p>
-                    )}
-                  </dd>
-                </div>
-              ))}
-          </dl>
+        <div className={s.caseStudy}>
+          <section className={s.caseLead}><p className="mono-label">Problem and constraints</p><h2>The engineering problem</h2><p>{p.problem}</p><p>{p.context}</p></section>
+          <section className={s.caseArchitecture}><p className="mono-label">Whole-system architecture</p><h2>How the system works</h2><p>{p.approach[0]}</p></section>
+          <section className={s.caseSplit}><div><p className="mono-label">Responsibility and ownership</p><h2>What I owned</h2><p>{p.demonstrates}</p></div><div><p className="mono-label">Decisions and trade-offs</p><h2>Why I built it this way</h2><p>{p.approach[1]}</p></div></section>
+          <section className={s.caseImplementation}><p className="mono-label">Implementation</p><h2>Across the relevant disciplines</h2><p>{p.toolsNote}</p></section>
+          <section className={s.caseValidation}><div><p className="mono-label">Testing and validation</p><h2>How I checked the work</h2><p>{p.validation}</p></div><div><p className="mono-label">Verified result</p><h2>What I delivered</h2><p>{p.outcome}</p></div></section>
+          <section className={s.caseLimit}><p className="mono-label">Limitations and honest scope</p><h2>What the evidence supports</h2><p>{p.evidenceNote}</p></section>
 
           <aside className={s.rail}>
             <div className={s.railBlock}>

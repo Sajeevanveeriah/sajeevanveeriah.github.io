@@ -44,8 +44,7 @@ const server = createServer(async (req, res) => {
 await new Promise((r) => server.listen(0, r))
 const base = `http://127.0.0.1:${server.address().port}`
 
-const EXEC = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
-const browser = await chromium.launch({ executablePath: EXEC })
+const browser = await chromium.launch(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {})
 
 const results = []
 const check = (name, pass, detail = '') => {
