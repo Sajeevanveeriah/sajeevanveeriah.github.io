@@ -23,7 +23,7 @@ export default function AboutPage() {
         <div className="wrap">
           <PageHeader kicker="05 / About" title="My factual record across industries and engineering systems." lede={narrative} />
 
-          {groups.map((g) => (
+          <div className={s.timeline} data-motion="career-timeline">{groups.map((g) => (
             <div key={g} style={{ marginBottom: 'var(--space-6)' }}>
               <div className={s.header} style={{ marginBottom: 'var(--space-3)' }}>
                 <p className="mono-label">
@@ -51,7 +51,7 @@ export default function AboutPage() {
                   ))}
               </div>
             </div>
-          ))}
+          ))}</div>
         </div>
       </section>
 

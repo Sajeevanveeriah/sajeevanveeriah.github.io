@@ -4,6 +4,7 @@ import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { MotionProvider } from '@/components/motion/MotionProvider'
 import './globals.css'
+import { fontVariables } from './fonts'
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -35,7 +36,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={site.lang}>
-      <body>
+      <body className={fontVariables}>
           <a className="skip-link" href="#main">
             Skip to content
           </a>
