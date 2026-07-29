@@ -7,7 +7,7 @@ export function HeroMedia({ projects }: { projects: readonly Project[] }) {
   if (!project?.images?.[0]) return null
 
   return (
-    <figure className={styles.figure}>
+    <figure className={styles.figure} data-motion="hero-composition">
       <div className={styles.viewport}>
         <div className={styles.frame} data-active="true">
           <ProjectImage image={project.images[0]} priority />

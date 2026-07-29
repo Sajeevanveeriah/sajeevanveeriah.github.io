@@ -18,6 +18,7 @@ export default function NotFound() {
       <div className="wrap">
         <p className="mono-label">Error 404</p>
         <h1>Page not found</h1>
+        <svg data-motion="dead-end-path" viewBox="0 0 560 100" role="img" aria-label="A route reaches a dead end and returns towards Home" style={{maxWidth:'560px',marginTop:'var(--space-3)'}}><path d="M8 50 H390 L440 20 M390 50 L440 80" fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" pathLength="1" style={{strokeDasharray:1,animation:'route-draw 600ms var(--ease-settle) both'}}/></svg>
         <p style={{ color: 'var(--text-muted)', marginBlock: 'var(--space-3)' }}>
           That route does not exist. The link may be out of date, or the page may have moved.
         </p>

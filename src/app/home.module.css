@@ -1,6 +1,6 @@
 .hero { padding: clamp(6rem, 13vw, 11rem) 0 clamp(5rem, 10vw, 8rem); background: var(--surface); }
 .hero { padding-block:clamp(3rem,7vw,6rem); }
-.hero h1 { max-width: 15ch; font-size: clamp(2.75rem, 6.2vw, 6.5rem); }
+.hero h1 { max-width: 20ch; font-size: clamp(2.75rem, 4.8vw, 4.5rem); }
 .eyebrow { color: var(--accent-text); font-weight: 600; margin-bottom: 1rem; }
 .role { font-size: var(--text-2xl); font-weight: 600; margin-top: 2rem; }
 .lede { color: var(--text-muted); font-size: var(--text-lg); margin-top: 1rem; }
@@ -19,11 +19,11 @@
 .storyCopy p { color: var(--text-muted); }
 .storyCopy strong { color: var(--text); }
 .disciplines { font-size: var(--text-sm); }
-.dark { background: #111214; color: #f5f5f7; border-color: #25262a; }
-.dark .storyCopy p, .dark .eyebrow { color: #b8b8bd; }.dark .storyCopy strong { color: #f5f5f7; }.dark .storyCopy a { color: #70a7f5; }
-.problems { padding-block: var(--section-y); background: #111214; color: #f5f5f7; }
+.dark { background: #fbfbfd; color: var(--text); border-color: var(--border); }
+.dark .storyCopy p, .dark .eyebrow { color: var(--text-muted); }.dark .storyCopy strong { color: var(--text); }.dark .storyCopy a { color: var(--accent-text); }
+.problems { padding-block: var(--section-y); background: #fbfbfd; color: var(--text); }
 .problemGrid { display: grid; margin-top: 4rem; border-top:1px solid var(--border); }
-.problemGrid article { padding: 2rem 0; border-bottom:1px solid var(--border); }.problemGrid p { color: var(--text-muted); margin-top: .75rem; }
+.problemGrid article { position:relative; padding: 2rem 0 2rem 2rem; border-bottom:1px solid var(--border); transition:border-color 180ms ease; }.problemGrid article::before{content:'';position:absolute;left:0;top:0;width:2px;height:100%;background:var(--accent);transform:scaleY(.15);transform-origin:top;transition:transform 520ms var(--ease-settle)}.problemGrid article:hover::before,.problemGrid article:focus-within::before{transform:scaleY(1)}.problemGrid p { color: var(--text-muted); margin-top: .75rem; }
 .capabilities { display: grid; gap: 2rem; align-items: end; }.capabilities > p { color: var(--text-muted); font-size: var(--text-lg); }
 .cta { background: var(--surface); padding-block: var(--section-y); }.cta h2 { max-width: 16ch; }.cta > div > p { margin-top: 1rem; color: var(--text-muted); }
 @media (min-width: 768px) { .proofGrid { grid-template-columns: repeat(4,1fr); }.problemGrid { grid-template-columns: repeat(2,1fr); column-gap:4rem; }.capabilities { grid-template-columns: 1.2fr .8fr; }.capabilities .textLinks { grid-column: 1 / -1; } }

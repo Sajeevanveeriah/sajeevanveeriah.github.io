@@ -86,11 +86,12 @@
 .caseStudy h2 { margin:.5rem 0 1.25rem; }
 .caseStudy p { color:var(--text-muted); }
 .caseLead { max-width:58rem; display:grid; gap:1rem; }
-.caseArchitecture { padding:clamp(2rem,5vw,5rem); background:#111214; color:#f7f7f8; border-radius:24px; }
-.caseArchitecture p { color:#c8c8cc; }
+.caseArchitecture { padding:clamp(2rem,5vw,5rem) 0; background:#fbfbfd; color:var(--text); border-block:1px solid var(--border); }
+.caseArchitecture p { color:var(--text-muted); }
 .caseSplit,.caseValidation { display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(2rem,6vw,7rem); }
 .caseImplementation { max-width:52rem; margin-left:auto; }
 .caseLimit { border-top:1px solid var(--border); padding-top:2rem; }
 @media(max-width:767px){.caseSplit,.caseValidation{grid-template-columns:1fr}.caseArchitecture{border-radius:16px}.caseStudy{gap:4rem}}
 .workCurated{display:grid;gap:clamp(4rem,8vw,8rem);margin-bottom:6rem}.workLead{display:grid;gap:2rem}.workLead h2{font-size:var(--text-3xl);margin-block:1rem}.workSupport{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}.workSupport:nth-child(odd) .workMedia{order:2}.workSupport h2{font-size:var(--text-2xl);margin-block:1rem}.workCurated p{color:var(--text-muted)}.workCurated .link{margin-top:1rem}.workMedia{overflow:hidden;border-radius:20px}.filterBar{display:flex;gap:1rem;flex-wrap:wrap;padding-block:2rem;border-block:1px solid var(--border)}.filterBar label{display:grid;gap:.4rem;font-size:.8rem;color:var(--text-muted)}.filterBar select{min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:.5rem}.workArchive{display:grid;margin-top:2rem}.workArchive article{display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
 @media(max-width:767px){.workSupport{grid-template-columns:1fr}.workSupport:nth-child(odd) .workMedia{order:0}.workArchive article{grid-template-columns:1fr}}
+.timeline{position:relative;padding-left:2rem}.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform-origin:top;animation:timeline-draw 650ms var(--ease-settle) both}.timeline>div{position:relative}.timeline>div::before{content:'';position:absolute;left:-2.35rem;top:.4rem;width:.75rem;height:.75rem;border-radius:50%;background:#fff;border:2px solid var(--accent)}@keyframes timeline-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}

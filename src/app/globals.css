@@ -74,7 +74,7 @@ h4 {
 
 h1 {
   font-size: var(--text-5xl);
-  font-weight: 700;
+  font-weight: 600;
 }
 h2 {
   font-size: var(--text-3xl);
@@ -114,6 +114,7 @@ picture {
   max-width: 100%;
   height: auto;
 }
+@keyframes route-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
 /* Compact supporting labels share the body face to keep the editorial system calm. */
 .mono-label {
@@ -218,7 +219,7 @@ picture {
 }
 
 .project-media { display: block; width: 100%; aspect-ratio: var(--media-ratio); overflow: hidden; background: #ededee; }
-.project-media[data-background='dark'] { background: #111214; }
+.project-media[data-background='dark'] { background: #fbfbfd; }
 .project-media picture { display: block; width: 100%; height: 100%; }
 .project-media img { width: 100%; height: 100%; object-position: var(--media-position); }
 .project-media[data-mode='contain'] img { object-fit: contain; }
