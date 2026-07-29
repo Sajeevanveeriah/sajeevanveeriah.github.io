@@ -74,3 +74,52 @@ export const navigation: readonly NavItem[] = [
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ] as const
+
+/**
+ * Mega-menu framing copy.
+ *
+ * Only the three nav items that own sub-pages get a panel. The link lists
+ * themselves are never written here: they are derived at render time from the
+ * work records, the atlas domains and the roles, so a panel can never drift
+ * out of step with the pages it points at. What lives here is the one
+ * sentence that says what the section is, because no copy belongs in a
+ * component.
+ */
+export interface NavPanelCopy {
+  /** Which nav href the panel hangs off. */
+  readonly href: string
+  /** Kicker above the link columns. */
+  readonly eyebrow: string
+  /** One sentence naming what the section contains. */
+  readonly intro: string
+  /** Heading for the derived link column. */
+  readonly listTitle: string
+  /** Label on the link back to the section index. */
+  readonly indexLabel: string
+}
+
+export const navPanels: readonly NavPanelCopy[] = [
+  {
+    href: '/work/',
+    eyebrow: 'Work',
+    intro:
+      'Case studies, each stating the problem, what I personally owned and what the evidence supports.',
+    listTitle: 'Records',
+    indexLabel: 'Every record, including the archive',
+  },
+  {
+    href: '/skills/',
+    eyebrow: 'Expertise',
+    intro:
+      'The capability atlas: every domain carries its evidence tier rather than a proficiency score.',
+    listTitle: 'Atlas domains',
+    indexLabel: 'Browse the full atlas',
+  },
+  {
+    href: '/about/',
+    eyebrow: 'About',
+    intro: 'How I work, and the roles the evidence on this site comes from.',
+    listTitle: 'Roles',
+    indexLabel: 'Read the full background',
+  },
+] as const

@@ -47,13 +47,27 @@ function useRevealOnce() {
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.setAttribute('data-shown', '')
-            observer.unobserve(entry.target)
-          }
+          if (!entry.isIntersecting) continue
+
+          // A block taller than the viewport can never reach a 15% ratio, so
+          // gating purely on the threshold would leave the longest sections
+          // on the site permanently hidden. Those reveal as soon as they
+          // intersect at all; everything else waits for the threshold.
+          const rootHeight = entry.rootBounds?.height ?? window.innerHeight
+          const tall = entry.boundingClientRect.height > rootHeight
+          if (!tall && entry.intersectionRatio < 0.15) continue
+
+          entry.target.setAttribute('data-shown', '')
+          observer.unobserve(entry.target)
         }
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.01 },
+      // 0.15 rather than a hairline threshold, so a block commits to its
+      // arrival once it is meaningfully on screen rather than the instant
+      // one pixel of it clears the fold. The negative bottom margin holds
+      // the trigger line 10% above the viewport bottom for the same reason.
+      // 0 is carried alongside 0.15 only so the taller-than-viewport case
+      // above ever receives a callback; 0.15 is the operative threshold.
+      { rootMargin: '0px 0px -10% 0px', threshold: [0, 0.15] },
     )
 
     observer.observe(el)

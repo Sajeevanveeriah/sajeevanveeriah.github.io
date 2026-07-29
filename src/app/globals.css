@@ -533,6 +533,104 @@ html[data-js] .stagger[data-shown] > * {
 }
 
 /* ============================================================
+   Layered parallax stage
+   See components/motion/ParallaxStage.tsx and motion/parallax.ts.
+
+   `--p` is the only value JavaScript writes. The composition below is what
+   turns it into movement, which is why the reduced-motion reset at the end
+   of this file can cancel the whole effect without the script knowing.
+   ============================================================ */
+
+.stage {
+  /* The server-rendered resting value. A stage that never registers, either
+     because JavaScript is off or because the visitor asked for reduced
+     motion, holds this and every layer sits at its authored position. */
+  --p: 0;
+  position: relative;
+}
+
+html[data-js] .stage__layer {
+  transform: translate3d(0, calc(-1 * var(--depth, 0) * var(--parallax-travel) * var(--p)), 0)
+    rotate(calc(var(--depth, 0) * 1.5deg * (var(--p) - 0.5)));
+}
+
+/* Promoted only while the stage is actually being ticked. Left on
+   permanently this gives every layer on the page its own compositor tile
+   for the whole session. */
+html[data-js] .stage[data-active] .stage__layer {
+  will-change: transform;
+}
+
+/* ---- Stacked composition ----
+   Every layer occupies the same grid cell, so the plate is sized by the
+   tallest layer and no layer is positioned absolutely. Absolute layers would
+   take themselves out of flow and collapse the plate to zero height before
+   the first paint, which is a guaranteed CLS event. */
+.stage-stacked {
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.stage-stacked > .stage__layer {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+/* Depths on a clipping plate are held low on purpose. Travel is always
+   upward, so nothing drawn is ever cut off at the top; what a deep layer
+   would cost is a strip of bare plate revealed at the bottom edge. At the
+   hero's deepest 0.30 that strip is 44px on a 600 unit drawing whose lowest
+   mark sits at 529, so the exposed band is empty in every layer. Raising a
+   depth here means re-checking that. */
+
+/* ---- Sequenced composition ----
+   Layers stay in normal flow and simply travel at different rates. Used
+   where each layer carries its own readable content and overlapping them
+   would make both illegible. The padding absorbs the travel so a rising
+   layer never reaches the stage above it. */
+.stage-flow {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+/* ============================================================
+   Sticky scroll stage
+   A tall outer section with a sticky inner wrapper. Used once, on the
+   selected-work stage, where the heading holds while the records pass it.
+
+   It is deliberately not applied to ClosedLoop, StackSpine or CareerSpine:
+   those are full-height graphics, and making them sticky would strand a
+   viewport containing nothing but a diagram. A sticky column beside a
+   scrolling column always has readable content on screen.
+   ============================================================ */
+
+.sticky-rail {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-4));
+  align-self: start;
+  /* Never taller than the space it is pinned into, or it stops sticking and
+     silently reverts to a static block. */
+  max-height: calc(100svh - var(--header-h) - var(--space-6));
+  overflow: visible;
+}
+
+/* Below the two-column breakpoint there is no second column to scroll past,
+   so pinning the heading would just cover the records with it. 999px, not
+   899px: the selected-work stage does not split into two columns until
+   1000px, and un-pinning at the header's breakpoint instead would leave a
+   100px band where a full-width heading tracked the viewport. */
+@media (max-width: 999px) {
+  .sticky-rail {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* ============================================================
    Motion keyframes shared across diagrams
    ============================================================ */
 
@@ -641,6 +739,25 @@ html[data-js] .stagger[data-shown] > * {
     opacity: 1;
     transform: none;
     clip-path: none;
+  }
+
+  /* Parallax is cancelled outright rather than slowed. The stage never
+     registers under reduced motion either, so this is the belt to that
+     braces: a layer rendered before the media query was consulted still
+     resolves to its authored position. */
+  html[data-js] .stage__layer {
+    transform: none;
+  }
+
+  html[data-js] .stage[data-active] .stage__layer {
+    will-change: auto;
+  }
+
+  /* A pinned rail is motion too: the heading tracking the viewport while
+     the records move past it is exactly the effect being opted out of. */
+  .sticky-rail {
+    position: static;
+    max-height: none;
   }
 
   /* Diagrams settle on their finished state rather than their first frame. */

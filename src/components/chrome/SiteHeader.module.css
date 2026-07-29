@@ -65,12 +65,35 @@
   gap: var(--space-4);
 }
 
+/* When a panel is open the bar keeps its rule even at scroll position zero,
+   so the panel does not appear to hang off nothing. */
+.headerOpen {
+  border-bottom-color: var(--border);
+}
+
+/* Deliberately not `position: relative`. The panel is full width and is
+   positioned against the header, which is sticky and therefore already the
+   containing block; making the item a containing block would shrink the
+   panel to the width of its trigger. */
+.navItem {
+  display: flex;
+  align-items: center;
+}
+
 .navLink {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: inherit;
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-muted);
   padding-block: 0.35rem;
+  padding-inline: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
   transition: color var(--dur-interaction) var(--ease-servo);
 }
 
@@ -89,13 +112,151 @@
 }
 
 .navLink:hover,
-.navLink[aria-current='page'] {
+.navLink[aria-current='page'],
+.navLink[data-active],
+.navLink[aria-expanded='true'] {
   color: var(--text);
 }
 
 .navLink:hover::after,
-.navLink[aria-current='page']::after {
+.navLink[aria-current='page']::after,
+.navLink[data-active]::after,
+.navLink[aria-expanded='true']::after {
   transform: scaleX(1);
+}
+
+/* ---- Mega-menu panel ----
+   Full width rather than a dropdown pinned under its trigger, so a
+   nineteen-item atlas list can be read in columns instead of a scrolling
+   strip. Hover never opens it: the panel is a disclosure driven by a real
+   button, which is what makes it usable by keyboard and by touch. */
+
+.chevron {
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.navLink[aria-expanded='true'] .chevron {
+  transform: translateY(1px) rotate(-135deg);
+}
+
+.panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.panelGrid {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--wrap-wide);
+  margin-inline: auto;
+  padding: var(--space-5) var(--gutter) var(--space-6);
+}
+
+.panelIntro {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.panelEyebrow {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  max-width: none;
+}
+
+.panelLede {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--text-muted);
+  /* The single-line subhead measure from the stage type scale. */
+  max-width: 34rem;
+}
+
+.panelIndex {
+  justify-self: start;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--accent-text);
+  border-bottom: 1px solid var(--accent-line);
+  padding-block: 0.2rem;
+}
+
+.panelIndex:hover {
+  border-bottom-color: var(--accent-fill);
+}
+
+.panelListTitle {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: var(--space-2);
+  max-width: none;
+}
+
+.panelLinks {
+  list-style: none;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.panelLinks a {
+  display: block;
+  /* 44px, matching every other target on the site rather than the 24px
+     WCAG 2.5.8 floor. */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0.35rem 0.6rem;
+  margin-inline: -0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  line-height: 1.35;
+  color: var(--text-muted);
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.panelLinks a:hover {
+  color: var(--text);
+  background: var(--tint);
+}
+
+@media (min-width: 900px) {
+  .panelGrid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-6);
+  }
+
+  .panelLinks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-4);
+  }
+}
+
+@media (min-width: 1200px) {
+  .panelLinks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .actions {
@@ -183,12 +344,41 @@
     border-bottom: 1px solid var(--border);
   }
 
+  .navOpen .navItem {
+    display: block;
+    width: 100%;
+  }
+
   .navOpen .navLink {
     font-family: var(--font-display);
     font-size: var(--text-2xl);
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
     color: var(--text);
+  }
+
+  /* The mobile sheet is itself an absolutely positioned block under the bar,
+     so a second absolutely positioned panel inside it would land on top of
+     the sheet rather than inside it. In the sheet the panel is just the next
+     block down. */
+  .panel {
+    position: static;
+    border-bottom: 0;
+    background: transparent;
+  }
+
+  .panelGrid {
+    padding: var(--space-2) 0 var(--space-3);
+    gap: var(--space-3);
+  }
+
+  .panelLede {
+    font-size: var(--text-sm);
+  }
+
+  .chevron {
+    width: 9px;
+    height: 9px;
   }
 }
 

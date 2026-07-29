@@ -119,6 +119,21 @@
   --dur-interaction: 200ms;
   --dur-ambient: 700ms;
 
+  /* Stage motion scale. Derived, not invented: `--ease-out` is the same
+     curve the site already settles on (`--ease-settle`) and `--ease-inout`
+     is the same curve it already glides on (`--ease-glide`), named here so
+     the stage layer reads in the vocabulary of the spec it implements
+     rather than forcing every call site to know the internal alias. */
+  --dur-fast: 180ms;
+  --dur-base: 420ms;
+  --dur-slow: 720ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Maximum vertical displacement of a parallax layer at depth 1.0 across a
+     full stage traverse. Every layer scales this by its own `--depth`. */
+  --parallax-travel: 148px;
+
   /* One ambient clock for the whole site. The hero route, the eight
      signature diagrams and every scroll-linked fill are phrased against
      `--cycle` rather than each choosing its own period, so two graphics on
@@ -134,7 +149,7 @@
      resolves well inside one ambient cycle. */
   --dur-reveal: 520ms;
   --dur-reveal-slow: 720ms;
-  --stagger: 70ms;
+  --stagger: 60ms;
   --lift: -2px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;

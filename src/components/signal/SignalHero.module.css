@@ -4,14 +4,19 @@
   gap: var(--space-2);
 }
 
+/* The frame lives on the stage, not on any one plane. Three stacked planes
+   each drawing the border would draw it three times, and the parallax would
+   then slide two of those borders across the third. `.stage-stacked` in
+   globals.css supplies the border, radius, surface and clip. */
+.plate {
+  min-width: 0;
+}
+
 .svg {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  overflow: hidden;
+  background: transparent;
 }
 
 .caption {
