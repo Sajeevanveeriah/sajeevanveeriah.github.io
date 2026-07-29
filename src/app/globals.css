@@ -2,13 +2,14 @@
 @import '../styles/tokens.css';
 
 /* Bind the role tokens into Tailwind v4's theme so utilities such as
-   bg-surface and text-muted resolve to the active theme automatically.
-   Components use these utilities or the role tokens directly; a literal
-   colour anywhere outside tokens.css is a defect. */
+   bg-surface and text-muted resolve automatically. Components use these
+   utilities or the role tokens directly; a literal colour outside
+   tokens.css is a defect. */
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-surface-raised: var(--surface-raised);
+  --color-tint: var(--tint);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
   --color-text-faint: var(--text-faint);
@@ -30,11 +31,12 @@
   --font-mono: var(--font-mono);
 
   --ease-servo: var(--ease-servo);
-  --ease-servo-in-out: var(--ease-servo-in-out);
   --ease-settle: var(--ease-settle);
 }
 
-/* ---------- Base ---------- */
+/* ============================================================
+   Base
+   ============================================================ */
 
 *,
 *::before,
@@ -45,7 +47,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + var(--space-2));
+  scroll-padding-top: calc(var(--header-h) + var(--space-3));
 }
 
 body {
@@ -55,10 +57,12 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: var(--leading-body);
+  font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
-
 
 h1,
 h2,
@@ -66,24 +70,29 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
   margin: 0;
+  color: var(--text);
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--text-5xl);
-  font-weight: 600;
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
 }
+
 h2 {
   font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
 }
+
 h3 {
   font-size: var(--text-xl);
   line-height: var(--leading-snug);
   letter-spacing: var(--tracking-snug);
 }
+
 h4 {
   font-size: var(--text-lg);
   line-height: var(--leading-snug);
@@ -114,54 +123,194 @@ picture {
   max-width: 100%;
   height: auto;
 }
-@keyframes route-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
-/* Compact supporting labels share the body face to keep the editorial system calm. */
-.mono-label {
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: var(--tracking-mono);
-  text-transform: none;
-  color: var(--text-faint);
+button {
+  font: inherit;
 }
 
-/* ---------- Layout primitives ---------- */
+::selection {
+  background: var(--accent-wash);
+  color: var(--text);
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
 
 .wrap {
   width: 100%;
-  max-width: var(--wrap);
+  max-width: calc(var(--wrap) + var(--gutter) * 2);
   margin-inline: auto;
-  padding-inline: var(--space-3);
+  padding-inline: var(--gutter);
 }
 
-@media (min-width: 768px) {
-  .wrap {
-    padding-inline: var(--space-4);
-  }
+.wrap-wide {
+  width: 100%;
+  max-width: calc(var(--wrap-wide) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
 .section {
   padding-block: var(--section-y);
   position: relative;
-  z-index: 1;
 }
 
-/* ---------- Accessibility ---------- */
+/* A quiet tinted stage. Full-bleed, so it reads as a change of ground rather
+   than a floating slab inside white space. */
+.stage-tint {
+  background: var(--tint);
+}
+
+.rule-top {
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Shared type utilities
+   ============================================================ */
+
+.label,
+.mono-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.label-accent {
+  color: var(--accent-text);
+}
+
+.lede {
+  font-size: var(--text-lede);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  color: var(--text-muted);
+  max-width: 54ch;
+}
+
+.prose {
+  color: var(--text-muted);
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Underlined text link that draws on hover instead of sitting permanently
+   underlined. */
+.textlink {
+  position: relative;
+  display: inline-block;
+  color: var(--accent-text);
+  font-weight: 500;
+  padding-bottom: 2px;
+}
+
+.textlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.textlink:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* Arrow link used for "read the case study" style affordances. */
+.arrowlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--accent-text);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+
+.arrowlink svg {
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.arrowlink:hover svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 50px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo),
+    color var(--dur-interaction) var(--ease-servo),
+    transform var(--dur-interaction) var(--ease-servo);
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--surface);
+}
+
+.btn-primary:hover {
+  background: var(--accent-fill);
+  transform: translateY(var(--lift));
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text);
+  transform: translateY(var(--lift));
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
 
 .skip-link {
   position: absolute;
   left: var(--space-2);
   top: var(--space-2);
   z-index: 100;
-  transform: translateY(-200%);
-  padding: var(--space-1) var(--space-2);
-  background: var(--surface-raised);
+  transform: translateY(-250%);
+  padding: 0.6rem 1rem;
+  background: var(--surface);
   color: var(--text);
   border: 1px solid var(--accent-fill);
   border-radius: var(--radius);
-  font-family: var(--font-mono);
   font-size: var(--text-sm);
+  font-weight: 600;
   transition: transform var(--dur-interaction) var(--ease-servo);
 }
 
@@ -172,11 +321,9 @@ picture {
 :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
 }
 
-/* Only decorative graphics are hidden from assistive technology; every
-   informative graphic carries a text equivalent instead. */
 [aria-hidden='true'] {
   pointer-events: none;
 }
@@ -193,10 +340,193 @@ picture {
   border: 0;
 }
 
-/* ---------- Reduced motion ----------
-   Tier 3 ambient motion is removed entirely; tiers 1 and 2 collapse to an
-   instant state change. Enforced globally here so no component can opt out
-   by forgetting to check. */
+/* ============================================================
+   Project media
+   ============================================================ */
+
+.project-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--media-ratio);
+  overflow: hidden;
+  background: var(--tint);
+}
+
+.project-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-position: var(--media-position);
+  transition: transform 900ms var(--ease-settle);
+}
+
+.project-media[data-mode='contain'] img {
+  object-fit: contain;
+}
+
+.project-media[data-mode='cover'] img,
+.project-media[data-mode='full-bleed'] img {
+  object-fit: cover;
+}
+
+/* Media frame shared by home, work and case-study routes. Rounded, ruled and
+   large: project imagery is never reduced to a thumbnail. */
+.media-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--tint);
+}
+
+.media-frame:hover .project-media img {
+  transform: scale(1.02);
+}
+
+/* ============================================================
+   Shared diagram styling
+   ============================================================ */
+
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.diagram text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.diagram .d-ink {
+  stroke: var(--border-strong);
+}
+
+.diagram .d-rule {
+  stroke: var(--border);
+}
+
+.diagram .d-accent {
+  stroke: var(--accent);
+}
+
+.diagram .d-fill-tint {
+  fill: var(--tint);
+}
+
+/* ============================================================
+   Scroll reveal
+   The hidden state exists only when JavaScript is running, so the
+   server-rendered page is complete and readable on its own. See
+   components/motion/Reveal.tsx.
+   ============================================================ */
+
+html[data-js] .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+html[data-js] .reveal[data-shown] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 520ms var(--ease-settle) var(--reveal-delay, 0s),
+    transform 620ms var(--ease-settle) var(--reveal-delay, 0s);
+}
+
+/* ============================================================
+   Motion keyframes shared across diagrams
+   ============================================================ */
+
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sig-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  55%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sig-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes sig-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sig-ping {
+  0% {
+    r: 6;
+    opacity: 0.55;
+  }
+  100% {
+    r: 62;
+    opacity: 0;
+  }
+}
+
+@keyframes sig-blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sig-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   Ambient loops are removed entirely; content reveals collapse to an
+   instant state change. Enforced globally so no component can opt out.
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -207,20 +537,24 @@ picture {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-@media (max-width: 767px) {
-  body {
-    background: var(--bg);
+  /* Content is never gated on a reveal that will not run. */
+  html[data-js] .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Diagrams settle on their finished state rather than their first frame. */
+  [data-draw] {
+    stroke-dashoffset: 0 !important;
+  }
+
+  [data-travel] {
+    offset-distance: 100% !important;
+    opacity: 1 !important;
   }
 }
-
-.project-media { display: block; width: 100%; aspect-ratio: var(--media-ratio); overflow: hidden; background: #ededee; }
-.project-media[data-background='dark'] { background: #fbfbfd; }
-.project-media picture { display: block; width: 100%; height: 100%; }
-.project-media img { width: 100%; height: 100%; object-position: var(--media-position); }
-.project-media[data-mode='contain'] img { object-fit: contain; }
-.project-media[data-mode='cover'] img, .project-media[data-mode='full-bleed'] img { object-fit: cover; }

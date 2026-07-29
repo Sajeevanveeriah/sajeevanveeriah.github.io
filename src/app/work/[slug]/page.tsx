@@ -1,9 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PageHeader } from '@/components/ui/PageHeader'
+import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { ProjectImage } from '@/components/ui/ProjectImage'
+import { ArrowLink } from '@/components/ui/ArrowLink'
+import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
+import { Reveal } from '@/components/motion/Reveal'
 import { publishedProjects, getProject } from '@/content/projects'
 import { experience } from '@/content/experience'
 import { site } from '@/content/site'
@@ -42,51 +45,122 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   const roles = experience.filter((r) => r.relatedProjects.includes(p.slug))
   const image = p.images?.[0]
+  const variant = diagramFor(p.slug)
+
+  const index = publishedProjects.findIndex((x) => x.slug === p.slug)
+  const next = publishedProjects[(index + 1) % publishedProjects.length]
+
+  /**
+   * The case study reads as one continuous argument: the problem, the system
+   * that answers it, the part of that system I personally owned, the
+   * decisions behind it, how it was checked and what the evidence actually
+   * supports. Empty fields drop out rather than rendering a blank chapter.
+   */
+  const chapters = [
+    { title: 'The engineering problem', body: [p.problem, p.context] },
+    { title: 'How the system works', body: [p.approach[0] ?? ''] },
+    { title: 'What I owned', body: [p.demonstrates] },
+    { title: 'Why I built it this way', body: [p.approach[1] ?? ''] },
+    { title: 'Across the relevant disciplines', body: [p.toolsNote] },
+    { title: 'How I checked the work', body: [p.validation] },
+    { title: 'What I delivered', body: [p.outcome] },
+    { title: 'What the evidence supports', body: [p.evidenceNote] },
+  ]
+    .map((c) => ({ ...c, body: c.body.filter(Boolean) }))
+    .filter((c) => c.body.length > 0)
+
   const schema = {
-    '@context': 'https://schema.org', '@graph': [
-      { '@type': 'CreativeWork', '@id': `${site.url}/work/${p.slug}/#project`, name: p.title, description: p.summary, url: `${site.url}/work/${p.slug}/`, creator: { '@id': `${site.url}/#person` }, image: image ? `${site.url}${image.src}` : undefined },
-      { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
-        { '@type': 'ListItem', position: 2, name: 'Work', item: `${site.url}/work/` },
-        { '@type': 'ListItem', position: 3, name: p.title, item: `${site.url}/work/${p.slug}/` },
-      ] },
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CreativeWork',
+        '@id': `${site.url}/work/${p.slug}/#project`,
+        name: p.title,
+        description: p.summary,
+        url: `${site.url}/work/${p.slug}/`,
+        creator: { '@id': `${site.url}/#person` },
+        image: image ? `${site.url}${image.src}` : undefined,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+          { '@type': 'ListItem', position: 2, name: 'Work', item: `${site.url}/work/` },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: p.title,
+            item: `${site.url}/work/${p.slug}/`,
+          },
+        ],
+      },
     ],
   }
 
   return (
     <article className="section">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <div className="wrap">
-        <p style={{ marginBottom: 'var(--space-2)' }}>
-          <Link href="/work/" className={s.backLink}>
-            Back to work
-          </Link>
-        </p>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <div className="wrap-wide">
+        <BackLink href="/work/">All work</BackLink>
 
-        <PageHeader kicker={`${p.category} / ${p.domain}`} title={p.title} lede={p.summary}>
-          <div className={s.meta}>
-            <TierIndicator tier={p.evidenceTier} />
-            {p.period ? <span className={s.cat}>{p.period}</span> : null}
-          </div>
-        </PageHeader>
+        <PageHeader
+          kicker={`${p.category} / ${p.domain}`}
+          title={p.title}
+          lede={p.summary}
+          longTitle
+          aside={
+            <>
+              <div className={s.railBlock}>
+                <p className="label">Evidence</p>
+                <TierIndicator tier={p.evidenceTier} />
+              </div>
+              {p.role && !p.role.startsWith('TODO') ? (
+                <div className={s.railBlock}>
+                  <p className="label">Role</p>
+                  <p className={s.rowSummary}>{p.role}</p>
+                </div>
+              ) : null}
+              {p.period ? (
+                <div className={s.railBlock}>
+                  <p className="label">Period</p>
+                  <p className={s.rowSummary}>{p.period}</p>
+                </div>
+              ) : null}
+            </>
+          }
+        />
 
         {image ? (
-          <div className={s.media} style={{ marginBottom: 'var(--space-5)' }}>
+          <Reveal className={`media-frame ${s.mediaHero}`}>
             <ProjectImage image={image} priority />
-          </div>
+          </Reveal>
         ) : null}
 
-        <div className={s.caseStudy}>
-          <section className={s.caseLead}><p className="mono-label">Problem and constraints</p><h2>The engineering problem</h2><p>{p.problem}</p><p>{p.context}</p></section>
-          <section className={s.caseArchitecture}><p className="mono-label">Whole-system architecture</p><h2>How the system works</h2><p>{p.approach[0]}</p></section>
-          <section className={s.caseSplit}><div><p className="mono-label">Responsibility and ownership</p><h2>What I owned</h2><p>{p.demonstrates}</p></div><div><p className="mono-label">Decisions and trade-offs</p><h2>Why I built it this way</h2><p>{p.approach[1]}</p></div></section>
-          <section className={s.caseImplementation}><p className="mono-label">Implementation</p><h2>Across the relevant disciplines</h2><p>{p.toolsNote}</p></section>
-          <section className={s.caseValidation}><div><p className="mono-label">Testing and validation</p><h2>How I checked the work</h2><p>{p.validation}</p></div><div><p className="mono-label">Verified result</p><h2>What I delivered</h2><p>{p.outcome}</p></div></section>
-          <section className={s.caseLimit}><p className="mono-label">Limitations and honest scope</p><h2>What the evidence supports</h2><p>{p.evidenceNote}</p></section>
+        <div className={s.detail}>
+          <div className={s.narrative}>
+            {chapters.map((c, i) => (
+              <Reveal as="section" key={c.title} className={s.chapter}>
+                <span className={s.chapterIndex}>{String(i + 1).padStart(2, '0')}</span>
+                <h2 className={s.chapterTitle}>{c.title}</h2>
+                <div className={s.chapterBody}>
+                  {c.body.map((para, j) => (
+                    <p key={j}>{para}</p>
+                  ))}
+                  {/* The signature diagram sits directly under the
+                      architecture chapter, where it shows what the prose
+                      has just described. */}
+                  {i === 1 && variant ? <SystemDiagram variant={variant} /> : null}
+                </div>
+              </Reveal>
+            ))}
+          </div>
 
-          <aside className={s.rail}>
+          <aside className={s.rail} aria-label="Record details">
             <div className={s.railBlock}>
-              <p className="mono-label">Disciplines</p>
+              <p className="label">Disciplines</p>
               <ul className={s.chips}>
                 {p.disciplines.map((d) => (
                   <li key={d} className={s.chip}>
@@ -97,7 +171,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </div>
             {p.stack.length ? (
               <div className={s.railBlock}>
-                <p className="mono-label">Key tools</p>
+                <p className="label">Key tools</p>
                 <ul className={s.chips}>
                   {p.stack.map((t) => (
                     <li key={t} className={s.chip}>
@@ -109,7 +183,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
             {roles.length ? (
               <div className={s.railBlock}>
-                <p className="mono-label">Related role</p>
+                <p className="label">Related role</p>
                 {roles.map((r) => (
                   <Link key={r.slug} href={`/about/${r.slug}/`} className={s.link}>
                     {r.company}
@@ -119,7 +193,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
             {p.links?.length ? (
               <div className={s.railBlock}>
-                <p className="mono-label">Links</p>
+                <p className="label">Links</p>
                 {p.links.map((l) => (
                   <a
                     key={l.url}
@@ -135,7 +209,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
             {p.deepDives?.length ? (
               <div className={s.railBlock}>
-                <p className="mono-label">Deep dives</p>
+                <p className="label">Deep dives</p>
                 {p.deepDives.map((l) => (
                   <Link key={l.url} href={l.url} className={s.link}>
                     {l.label}
@@ -145,6 +219,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
           </aside>
         </div>
+
+        {next && next.slug !== p.slug ? (
+          <div className={s.nextRecord}>
+            <p className="label label-accent">Next record</p>
+            <h2 className={s.nextTitle}>
+              <Link href={`/work/${next.slug}/`}>{next.title}</Link>
+            </h2>
+            <ArrowLink href={`/work/${next.slug}/`}>Read the case study</ArrowLink>
+          </div>
+        ) : null}
       </div>
     </article>
   )

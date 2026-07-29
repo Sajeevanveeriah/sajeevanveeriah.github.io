@@ -1,0 +1,237 @@
+.figure {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.caption {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: 44ch;
+  line-height: 1.5;
+}
+
+/* ---- Ground ---- */
+
+.latticeDot {
+  fill: var(--text);
+  opacity: 0.13;
+}
+
+/* ---- Sensing ---- */
+
+/* The group sits inside translate(90 470), so its local origin is the
+   vehicle and no transform-origin is needed. */
+.sweep {
+  animation: sh-rotate 11s linear infinite;
+}
+
+@keyframes sh-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ping {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0;
+  animation: sh-ping 5.5s var(--ease-glide) infinite;
+}
+
+.ping2 {
+  animation-delay: 2.75s;
+}
+
+@keyframes sh-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(13);
+    opacity: 0;
+  }
+}
+
+/* ---- Obstacles ---- */
+
+.obstacle {
+  fill: var(--tint-deep);
+  stroke: var(--border-strong);
+  stroke-width: 1.25;
+  opacity: 0;
+  animation: sh-resolve 900ms var(--ease-settle) forwards;
+}
+
+@keyframes sh-resolve {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Route ---- */
+
+.ghostRoute {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 8;
+  stroke-linecap: round;
+  opacity: 0.28;
+}
+
+.route {
+  fill: none;
+  stroke: url(#sh-route);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sh-draw 11s var(--ease-glide) infinite;
+}
+
+@keyframes sh-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  32%,
+  88% {
+    stroke-dashoffset: 0;
+  }
+  97%,
+  100% {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* The vehicle's progress: a short bright segment travelling the same path,
+   so route and pulse stay in register at any size. */
+.pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 0.055 0.945;
+  stroke-dashoffset: 0.055;
+  opacity: 0;
+  animation: sh-pulse 11s var(--ease-glide) infinite;
+}
+
+@keyframes sh-pulse {
+  0%,
+  34% {
+    stroke-dashoffset: 0.055;
+    opacity: 0;
+  }
+  38% {
+    opacity: 0.9;
+  }
+  84% {
+    opacity: 0.9;
+  }
+  88%,
+  100% {
+    stroke-dashoffset: -0.945;
+    opacity: 0;
+  }
+}
+
+/* ---- Goal and vehicle ---- */
+
+.goalRing {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 5;
+  opacity: 0.7;
+  animation: sh-rotate 22s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.goalDot {
+  fill: var(--accent);
+  opacity: 0.25;
+  animation: sh-arrive 11s var(--ease-glide) infinite;
+}
+
+@keyframes sh-arrive {
+  0%,
+  82% {
+    opacity: 0.25;
+  }
+  88%,
+  96% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.25;
+  }
+}
+
+.vehicleBody {
+  fill: var(--surface);
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.vehicleCore {
+  fill: var(--accent);
+}
+
+/* ---- Annotations ---- */
+
+/* SVG text scales with the viewBox, so on a narrow column these three
+   annotations would render at four or five pixels. Below that width the
+   figcaption carries the same information in real text instead. */
+.annotations text {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  fill: var(--text-faint);
+}
+
+@media (max-width: 720px) {
+  .annotations {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Route settles fully drawn; the travelling pulse and the sweep are
+     removed rather than frozen mid-cycle. */
+  .route {
+    stroke-dashoffset: 0;
+  }
+
+  .pulse,
+  .sweep,
+  .ping {
+    display: none;
+  }
+
+  .obstacle,
+  .goalDot {
+    opacity: 1;
+  }
+}

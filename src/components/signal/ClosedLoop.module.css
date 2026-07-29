@@ -1,0 +1,149 @@
+.root {
+  position: relative;
+  --active: 1;
+}
+
+/* ---- Connector ----
+   Vertical spine on small screens, horizontal rail from 860px. */
+
+.connector {
+  position: absolute;
+  left: 11px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--border);
+}
+
+.connectorFill {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+}
+
+.fillY {
+  display: block;
+  transform-origin: top center;
+  transform: scaleY(0);
+}
+
+.fillX {
+  display: none;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.root[data-static] .connectorFill {
+  transform: none;
+}
+
+/* ---- Stages ---- */
+
+.stages {
+  list-style: none;
+  display: grid;
+  gap: var(--space-5);
+}
+
+.stage {
+  position: relative;
+  padding-left: var(--space-5);
+}
+
+.marker {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 23px;
+  height: 23px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  transition: border-color 320ms var(--ease-servo);
+  border-color: color-mix(in srgb, var(--accent) calc(var(--active) * 100%), var(--border-strong));
+}
+
+.markerCore {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: var(--active);
+  transform: scale(calc(0.4 + var(--active) * 0.6));
+  transition:
+    opacity 320ms var(--ease-servo),
+    transform 320ms var(--ease-settle);
+}
+
+/* Activation is carried by the marker and by the index colour, never by
+   fading the text. Dimming copy to signal an inactive stage drops it below
+   the 4.5:1 threshold, so the stage label shifts between two colours that
+   both clear AA instead: --text-faint at rest, --accent-text once latched. */
+.index {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: color-mix(in srgb, var(--accent-text) calc(var(--active) * 100%), var(--text-faint));
+  transition: color 320ms var(--ease-servo);
+}
+
+.name {
+  margin-top: 0.35rem;
+  font-size: var(--text-xl);
+  color: var(--text);
+}
+
+.detail {
+  margin-top: 0.4rem;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-width: 30ch;
+}
+
+@media (min-width: 860px) {
+  .connector {
+    left: 0;
+    right: 0;
+    top: 11px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .fillY {
+    display: none;
+  }
+
+  .fillX {
+    display: block;
+  }
+
+  .stages {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .stage {
+    padding-left: 0;
+    padding-top: var(--space-5);
+  }
+
+  .marker {
+    top: 0;
+    left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root {
+    --active: 1;
+  }
+
+  .connectorFill {
+    transform: none !important;
+  }
+}

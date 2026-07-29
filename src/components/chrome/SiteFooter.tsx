@@ -5,28 +5,28 @@ import styles from './SiteFooter.module.css'
 export function SiteFooter() {
   return (
     <footer className={styles.footer}>
-      <div className={`wrap ${styles.grid}`}>
+      <div className={`wrap-wide ${styles.grid}`}>
         <div className={styles.brandCol}>
           <Link className={styles.brand} href="/">
-            <span className={styles.mark} aria-hidden="true">
-              {site.initials}
-            </span>
-            <span className={styles.brandText}>{site.name}</span>
+            {site.name}
           </Link>
           <p className={styles.tagline}>{site.tagline}</p>
         </div>
 
         <nav className={styles.col} aria-label="Footer">
-          <p className="mono-label">Sections</p>
+          <p className="label">Sections</p>
           {navigation.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link}>
               {item.label}
             </Link>
           ))}
+          <Link href="/atlas/" className={styles.link}>
+            Engineering Atlas
+          </Link>
         </nav>
 
         <div className={styles.col}>
-          <p className="mono-label">Connect</p>
+          <p className="label">Connect</p>
           <a className={styles.link} href={`mailto:${site.email}`}>
             {site.email}
           </a>
@@ -41,8 +41,9 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className={`wrap ${styles.bottom}`}>
-        <p className={styles.copyright}>&copy; 2026 {site.name}.</p>
+      <div className={`wrap-wide ${styles.bottom}`}>
+        <p className={styles.copyright}>&copy; 2026 {site.name}</p>
+        <p className={styles.credential}>{site.credentials.join('  ·  ')}</p>
       </div>
     </footer>
   )

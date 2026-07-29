@@ -1,89 +1,64 @@
 'use client'
 
-import { m } from 'framer-motion'
-import type { ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 
 /**
- * Tier 1 content reveal. Always runs, 200 to 400ms, scroll triggered once.
+ * Scroll reveal that cannot hide content.
  *
- * Tier 1 must never wait on tier 3, so this is driven purely by the
- * element's own viewport intersection and has no dependency on any ambient
- * component. Under reduced motion, MotionConfig reduces it to an opacity
- * change with no travel.
+ * The server renders the element in its finished, visible state with no
+ * inline opacity. The hidden starting state is applied by CSS only under
+ * `html[data-js]`, a flag set by a blocking inline script in the document
+ * head, so a visitor without JavaScript sees the complete page rather than a
+ * column of invisible blocks. An IntersectionObserver then sets `data-shown`
+ * once, which is what the transition runs on.
+ *
+ * This deliberately avoids framer-motion's whileInView: that ships
+ * `opacity: 0` in the server HTML, which is exactly the failure mode above.
+ * Reduced motion is handled globally in globals.css.
  */
-
-const EASE_SERVO = [0.33, 0, 0.2, 1] as const
-
 export function Reveal({
   children,
+  as: Tag = 'div',
+  className,
   delay = 0,
-  as = 'div',
-  className,
 }: {
   children: ReactNode
+  as?: 'div' | 'section' | 'article' | 'li'
+  className?: string
   delay?: number
-  as?: 'div' | 'section' | 'li' | 'article'
-  className?: string
 }) {
-  const Tag = m[as]
-  return (
-    <Tag
-      className={className}
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.32, ease: EASE_SERVO, delay }}
-    >
-      {children}
-    </Tag>
-  )
-}
+  const ref = useRef<HTMLElement | null>(null)
 
-/** Staggered group: children reveal in sequence rather than all at once. */
-export function RevealGroup({
-  children,
-  className,
-  stagger = 0.07,
-}: {
-  children: ReactNode
-  className?: string
-  stagger?: number
-}) {
-  return (
-    <m.div
-      className={className}
-      initial="hidden"
-      whileInView="shown"
-      viewport={{ once: true, margin: '-100px' }}
-      variants={{
-        hidden: {},
-        shown: { transition: { staggerChildren: stagger } },
-      }}
-    >
-      {children}
-    </m.div>
-  )
-}
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
 
-export function RevealItem({
-  children,
-  className,
-  as = 'div',
-}: {
-  children: ReactNode
-  className?: string
-  as?: 'div' | 'article' | 'li'
-}) {
-  const Tag = m[as]
-  return (
-    <Tag
-      className={className}
-      variants={{
-        hidden: { opacity: 0, y: 14 },
-        shown: { opacity: 1, y: 0, transition: { duration: 0.32, ease: EASE_SERVO } },
-      }}
-    >
-      {children}
-    </Tag>
-  )
+    if (typeof IntersectionObserver === 'undefined') {
+      el.setAttribute('data-shown', '')
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute('data-shown', '')
+            observer.unobserve(entry.target)
+          }
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.01 },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const props = {
+    ref: ref as React.Ref<never>,
+    className: `reveal ${className ?? ''}`,
+    style: delay ? ({ '--reveal-delay': `${delay}s` } as React.CSSProperties) : undefined,
+  }
+
+  return <Tag {...props}>{children}</Tag>
 }
