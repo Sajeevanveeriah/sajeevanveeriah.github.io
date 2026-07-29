@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import { ArrowLink } from '@/components/ui/ArrowLink'
+import n from './not-found.module.css'
 
 export const metadata: Metadata = {
   title: 'Page not found',
@@ -15,24 +17,35 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <section className="section">
-      <div className="wrap">
-        <p className="mono-label">Error 404</p>
-        <h1>Page not found</h1>
-        <svg data-motion="dead-end-path" viewBox="0 0 560 100" role="img" aria-label="A route reaches a dead end and returns towards Home" style={{maxWidth:'560px',marginTop:'var(--space-3)'}}><path d="M8 50 H390 L440 20 M390 50 L440 80" fill="none" stroke="var(--accent)" strokeWidth="4" strokeLinecap="round" pathLength="1" style={{strokeDasharray:1,animation:'route-draw 600ms var(--ease-settle) both'}}/></svg>
-        <p style={{ color: 'var(--text-muted)', marginBlock: 'var(--space-3)' }}>
-          That route does not exist. The link may be out of date, or the page may have moved.
+      <div className="wrap-wide">
+        <p className="label label-accent">Error 404</p>
+        <h1 className={n.title}>That route does not resolve.</h1>
+        <p className="lede">
+          The link may be out of date, or the page may have moved. The planner below has the same
+          problem, and the same answer: go back to a known point and re-plan.
         </p>
-        <Link
-          href="/"
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: 'var(--text-sm)',
-            color: 'var(--accent-text)',
-            borderBottom: '1px solid var(--accent-fill)',
-          }}
+
+        <svg
+          className={n.diagram}
+          viewBox="0 0 640 120"
+          role="img"
+          aria-label="A route runs forward, reaches a dead end and turns back towards a known point."
         >
-          Return to the home page
-        </Link>
+          <path
+            className={n.deadEnd}
+            d="M 16 60 H 420 M 452 34 L 500 82 M 452 82 L 500 34"
+            pathLength={1}
+          />
+          <path className={n.returnPath} d="M 420 60 C 340 60 340 104 240 104" pathLength={1} />
+          <circle className={n.origin} cx="16" cy="60" r="6" />
+        </svg>
+
+        <div className={n.actions}>
+          <Link href="/" className="btn btn-primary">
+            Return to the home page
+          </Link>
+          <ArrowLink href="/work/">Go to the work index</ArrowLink>
+        </div>
       </div>
     </section>
   )

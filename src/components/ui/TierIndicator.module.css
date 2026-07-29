@@ -1,12 +1,12 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5ch;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-mono);
+  gap: 0.55ch;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-faint);
   white-space: nowrap;
 }
 
@@ -29,18 +29,13 @@
 /* Hands-on: half filled, split down the vertical. */
 .half {
   border: 1.5px solid var(--status);
-  background: linear-gradient(
-    to right,
-    var(--status) 0 50%,
-    transparent 50% 100%
-  );
+  background: linear-gradient(to right, var(--status) 0 50%, transparent 50% 100%);
 }
 
 /* Working knowledge: ring with a centred core. */
 .ringed {
   border: 1.5px solid var(--text-muted);
-  background:
-    radial-gradient(circle, var(--text-muted) 0 1.5px, transparent 1.5px);
+  background: radial-gradient(circle, var(--text-muted) 0 1.5px, transparent 1.5px);
 }
 
 /* Adjacent: hollow outline, no core. */
@@ -60,7 +55,7 @@
 
 .legend {
   display: grid;
-  gap: var(--space-1);
+  gap: 0.6rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -69,7 +64,7 @@
 @media (min-width: 900px) {
   .legend:not(.legendCompact) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-1) var(--space-4);
+    gap: 0.6rem var(--space-4);
   }
 }
 
@@ -86,16 +81,21 @@
 }
 
 .legendLabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-mono);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text);
-  font-weight: 500;
 }
 
 .legendDef {
   color: var(--text-muted);
+}
+
+.legendCompact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem var(--space-3);
 }
 
 .legendCompact .legendDef {

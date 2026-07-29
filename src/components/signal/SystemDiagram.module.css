@@ -1,0 +1,523 @@
+/* The plate is capped near the drawing's natural width so it hugs the
+   diagram instead of stranding it in a wide empty frame. */
+.figure {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 800px;
+  margin-inline: auto;
+}
+
+/* The plate is full width; the drawing inside it is sized by height, not by
+   width. SVG text scales with the viewBox, so a width-driven diagram renders
+   its labels at 22px on a desktop container and 7px on a phone. Driving the
+   height instead pins the label size to a narrow band at every viewport, and
+   the plate scrolls horizontally on very narrow screens rather than shrinking
+   the drawing into illegibility. */
+.plate {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: var(--space-3);
+}
+
+.svg {
+  display: block;
+  height: clamp(240px, 22vw, 330px);
+  width: auto;
+  /* Overrides the global max-width:100% on svg. Without this the drawing
+     would be squeezed to the container width on a phone and letterboxed
+     inside its own plate, shrinking the labels to a few pixels. */
+  max-width: none;
+  margin-inline: auto;
+}
+
+.caption {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--text-faint);
+  max-width: 56ch;
+}
+
+/* ---- Shared marks ---- */
+
+.label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  fill: var(--text-faint);
+}
+
+.columnLabel {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  fill: var(--text);
+}
+
+.runLabel {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  fill: var(--text-faint);
+}
+
+.flagLabel {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  fill: var(--accent-text);
+}
+
+.axis {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.axisStrong {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.band {
+  fill: var(--accent-wash);
+}
+
+.trace {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw 7s var(--ease-glide) infinite;
+}
+
+@keyframes sd-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  45%,
+  90% {
+    stroke-dashoffset: 0;
+  }
+  99%,
+  100% {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* ---- Lattice ---- */
+
+.core {
+  fill: var(--text);
+}
+
+.coreLabel {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  fill: var(--surface);
+}
+
+.module {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.moduleDot {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sd-latch 7s var(--ease-servo) infinite;
+}
+
+@keyframes sd-latch {
+  0%,
+  8% {
+    opacity: 0.18;
+    transform: scale(0.7);
+  }
+  16%,
+  88% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  96%,
+  100% {
+    opacity: 0.18;
+    transform: scale(0.7);
+  }
+}
+
+.link {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw 7s var(--ease-glide) infinite;
+}
+
+/* ---- Occupancy ---- */
+
+.cell {
+  fill: var(--tint);
+}
+
+.cellBlocked {
+  fill: var(--text);
+  opacity: 0;
+  animation: sd-appear 7s var(--ease-servo) infinite;
+}
+
+@keyframes sd-appear {
+  0%,
+  4% {
+    opacity: 0;
+  }
+  12%,
+  90% {
+    opacity: 0.82;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cellRoute {
+  fill: var(--accent);
+  opacity: 0;
+  animation: sd-route 7s var(--ease-servo) infinite;
+}
+
+@keyframes sd-route {
+  0%,
+  14% {
+    opacity: 0;
+  }
+  22%,
+  90% {
+    opacity: 0.16;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.routeLine {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw 7s var(--ease-glide) infinite;
+}
+
+.routePulse {
+  fill: none;
+  stroke: var(--accent-deep);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 0.05 0.95;
+  stroke-dashoffset: 0.05;
+  opacity: 0;
+  animation: sd-pulse 7s var(--ease-glide) infinite;
+}
+
+@keyframes sd-pulse {
+  0%,
+  46% {
+    stroke-dashoffset: 0.05;
+    opacity: 0;
+  }
+  52% {
+    opacity: 0.85;
+  }
+  84% {
+    opacity: 0.85;
+  }
+  90%,
+  100% {
+    stroke-dashoffset: -0.95;
+    opacity: 0;
+  }
+}
+
+/* ---- Waveforms ---- */
+
+.cursor {
+  animation: sd-scan 7s linear infinite;
+}
+
+.cursor line {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+}
+
+.cursor circle {
+  fill: var(--accent);
+}
+
+@keyframes sd-scan {
+  0% {
+    transform: translateX(90px);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    transform: translateX(608px);
+    opacity: 0;
+  }
+}
+
+/* ---- Hops ---- */
+
+.node {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.nodeDot {
+  fill: var(--accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sd-latch 7s var(--ease-servo) infinite;
+}
+
+.hopLine {
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+}
+
+.packet {
+  fill: var(--accent);
+  animation: sd-hop 7s var(--ease-servo) infinite;
+}
+
+@keyframes sd-hop {
+  0%,
+  6% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  26% {
+    transform: translateX(var(--hop));
+    opacity: 1;
+  }
+  32%,
+  100% {
+    transform: translateX(var(--hop));
+    opacity: 0;
+  }
+}
+
+/* ---- Anomaly ---- */
+
+.flagRing {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sd-flag 7s var(--ease-settle) infinite;
+}
+
+.flagDot {
+  fill: var(--accent);
+  animation: sd-flag 7s var(--ease-settle) infinite;
+}
+
+.flagStem {
+  stroke: var(--accent-line);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 4;
+  animation: sd-flag 7s var(--ease-settle) infinite;
+}
+
+.flagLabel {
+  animation: sd-flag 7s var(--ease-settle) infinite;
+}
+
+@keyframes sd-flag {
+  0%,
+  38% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  46%,
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+/* ---- Migration ---- */
+
+.row {
+  fill: var(--tint);
+}
+
+.convert {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.75;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw 7s var(--ease-glide) infinite;
+}
+
+.tick {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw 7s var(--ease-servo) infinite;
+}
+
+/* ---- Bus ---- */
+
+.busLine {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.busTrain {
+  animation: sd-stream 7s linear infinite;
+}
+
+@keyframes sd-stream {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-96px);
+  }
+}
+
+.frame {
+  fill: var(--tint-deep);
+}
+
+.frame[data-flag] {
+  fill: var(--accent);
+  opacity: 0.5;
+}
+
+.captureWindow {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+  animation: sd-blink 7s var(--ease-servo) infinite;
+}
+
+.captureStem {
+  stroke: var(--accent-line);
+  stroke-width: 1.5;
+}
+
+@keyframes sd-blink {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---- Runs ---- */
+
+.run {
+  opacity: 0;
+  animation: sd-appear 7s var(--ease-settle) infinite;
+}
+
+.runStem {
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+}
+
+.runDot {
+  fill: var(--accent);
+}
+
+/* ---- Reduced motion ----
+   Every variant settles on a complete, readable final state. */
+@media (prefers-reduced-motion: reduce) {
+  .trace,
+  .link,
+  .routeLine,
+  .convert,
+  .tick {
+    stroke-dashoffset: 0;
+  }
+
+  .routePulse,
+  .cursor,
+  .packet,
+  .busTrain {
+    display: none;
+  }
+
+  .cellBlocked {
+    opacity: 0.82;
+  }
+
+  .cellRoute {
+    opacity: 0.16;
+  }
+
+  .moduleDot,
+  .nodeDot,
+  .flagRing,
+  .flagDot,
+  .flagStem,
+  .flagLabel,
+  .run,
+  .captureWindow {
+    opacity: 1;
+    transform: none;
+  }
+}

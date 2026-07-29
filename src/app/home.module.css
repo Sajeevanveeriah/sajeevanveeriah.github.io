@@ -1,37 +1,415 @@
-.hero { padding: clamp(6rem, 13vw, 11rem) 0 clamp(5rem, 10vw, 8rem); background: var(--surface); }
-.hero { padding-block:clamp(3rem,7vw,6rem); }
-.hero h1 { max-width: 20ch; font-size: clamp(2.75rem, 4.8vw, 4.5rem); }
-.eyebrow { color: var(--accent-text); font-weight: 600; margin-bottom: 1rem; }
-.role { font-size: var(--text-2xl); font-weight: 600; margin-top: 2rem; }
-.lede { color: var(--text-muted); font-size: var(--text-lg); margin-top: 1rem; }
-.actions, .textLinks { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 2rem; }
-.primary, .secondary { min-height: 48px; display: inline-flex; align-items: center; padding: .7rem 1.25rem; border-radius: 999px; }
-.primary { color: white; background: var(--accent); }
-.secondary { border: 1px solid var(--border-strong); background: var(--surface); }
-.textLinks a, .storyCopy a, .capabilities a { color: var(--accent-text); }
-.proof { padding-block: 2rem; border-block: 1px solid var(--border); }
-.proofGrid { display: grid; gap: 1.5rem; color: var(--text-muted); }
-.stories { display: grid; gap: clamp(4rem, 9vw, 9rem); margin-top: 4rem; }
-.story { overflow: hidden; }
-.storyMedia { padding: clamp(.5rem, 2vw, 1.5rem); }
-.storyCopy { display: grid; gap: 1.25rem; padding: clamp(2rem, 5vw, 5rem); }
-.storyCopy h3 { font-size: var(--text-3xl); }
-.storyCopy p { color: var(--text-muted); }
-.storyCopy strong { color: var(--text); }
-.disciplines { font-size: var(--text-sm); }
-.dark { background: #fbfbfd; color: var(--text); border-color: var(--border); }
-.dark .storyCopy p, .dark .eyebrow { color: var(--text-muted); }.dark .storyCopy strong { color: var(--text); }.dark .storyCopy a { color: var(--accent-text); }
-.problems { padding-block: var(--section-y); background: #fbfbfd; color: var(--text); }
-.problemGrid { display: grid; margin-top: 4rem; border-top:1px solid var(--border); }
-.problemGrid article { position:relative; padding: 2rem 0 2rem 2rem; border-bottom:1px solid var(--border); transition:border-color 180ms ease; }.problemGrid article::before{content:'';position:absolute;left:0;top:0;width:2px;height:100%;background:var(--accent);transform:scaleY(.15);transform-origin:top;transition:transform 520ms var(--ease-settle)}.problemGrid article:hover::before,.problemGrid article:focus-within::before{transform:scaleY(1)}.problemGrid p { color: var(--text-muted); margin-top: .75rem; }
-.capabilities { display: grid; gap: 2rem; align-items: end; }.capabilities > p { color: var(--text-muted); font-size: var(--text-lg); }
-.cta { background: var(--surface); padding-block: var(--section-y); }.cta h2 { max-width: 16ch; }.cta > div > p { margin-top: 1rem; color: var(--text-muted); }
-@media (min-width: 768px) { .proofGrid { grid-template-columns: repeat(4,1fr); }.problemGrid { grid-template-columns: repeat(2,1fr); column-gap:4rem; }.capabilities { grid-template-columns: 1.2fr .8fr; }.capabilities .textLinks { grid-column: 1 / -1; } }
-@media (min-width: 960px) {
-  .story { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; border-top:1px solid var(--border); }
-  .story1 { grid-template-columns: .75fr 1.25fr; }.story1 .storyMedia { order: 2; }
-  .story2 { grid-template-columns: 1fr 1fr; }
-  .story3 { grid-template-columns: 1.45fr .55fr; }.story3 .storyMedia { padding: 2.5rem; }
-  .story0 { display: block; }.story0 .storyCopy { grid-template-columns: 1fr 1fr; }.story0 .storyCopy h3, .story0 .storyCopy .eyebrow, .story0 .storyCopy a { grid-column: 1 / -1; }
+/* ============================================================
+   Hero
+   ============================================================ */
+
+.hero {
+  padding-block: clamp(3rem, 6vw, 5.5rem) clamp(3.5rem, 7vw, 7rem);
 }
-@media(max-width:767px){.hero h1{font-size:clamp(2.5rem,11vw,3.25rem)}.story{border-top:1px solid var(--border)}}
+
+.heroGrid {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+  align-items: center;
+}
+
+.heroIntro,
+.heroOutro {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.heroFigure {
+  min-width: 0;
+}
+
+.heroName {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  max-width: none;
+}
+
+.heroTitle {
+  /* Held to a short measure so the headline breaks where it was written to
+     break, rather than wherever the container happens to end. */
+  max-width: 15ch;
+  margin-block: 0.25rem;
+}
+
+.heroRole {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  max-width: 30ch;
+}
+
+.heroLede {
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  max-width: 52ch;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: var(--space-2);
+}
+
+/* ---- Credibility rule ---- */
+
+.proof {
+  padding-block: var(--space-4);
+  border-block: 1px solid var(--border);
+}
+
+.proofGrid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.proofItem {
+  display: grid;
+  gap: 0.3rem;
+  max-width: none;
+}
+
+.proofValue {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+}
+
+.proofNote {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-width: 34ch;
+}
+
+/* ============================================================
+   Stage headers, shared by every homepage stage
+   ============================================================ */
+
+.stageHead {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 48ch;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.stageHeadSplit {
+  display: grid;
+  gap: var(--space-3);
+  align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.stageHeadSplit h2 {
+  max-width: 18ch;
+}
+
+/* ============================================================
+   Problems I solve
+   ============================================================ */
+
+.problemList {
+  display: grid;
+  border-top: 1px solid var(--border);
+}
+
+.problem {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+  padding: var(--space-4) 0 var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.problem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0.28);
+  transform-origin: top;
+  transition: transform 620ms var(--ease-settle);
+}
+
+.problem:hover::before,
+.problem:focus-within::before {
+  transform: scaleY(1);
+}
+
+.problemIndex {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+
+.problemTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.problemBody {
+  color: var(--text-muted);
+  max-width: 44ch;
+}
+
+/* ============================================================
+   Selected work
+   ============================================================ */
+
+.entries {
+  display: grid;
+  gap: clamp(4rem, 8vw, 7rem);
+}
+
+.entry {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.entryHead {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 62ch;
+}
+
+.entryKicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  max-width: none;
+}
+
+.entryIndex {
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.entryDivider {
+  color: var(--border-strong);
+}
+
+.entryTitle {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 20ch;
+}
+
+.entryTitleLead {
+  font-size: var(--text-4xl);
+  max-width: 17ch;
+}
+
+.entryTitle a {
+  transition: color var(--dur-interaction) var(--ease-servo);
+}
+
+.entryTitle a:hover {
+  color: var(--accent-text);
+}
+
+.entrySummary {
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  max-width: 58ch;
+}
+
+.entryBody {
+  display: grid;
+  gap: var(--space-4);
+  align-items: start;
+  min-width: 0;
+}
+
+.entryDetail {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.fact {
+  display: grid;
+  gap: 0.3rem;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+.factLabel {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  max-width: none;
+}
+
+.factBody {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  /* The grid column already sets the measure; a second cap here would leave
+     a ragged gutter inside it. */
+  max-width: none;
+}
+
+.entryMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+.entryTags {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: none;
+}
+
+.entryLink {
+  margin-top: var(--space-1);
+  justify-self: start;
+}
+
+.entryFoot {
+  display: flex;
+  padding-top: var(--space-5);
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Capability handoff and closing call
+   ============================================================ */
+
+.capability {
+  display: grid;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.capabilityLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.cta {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.ctaTitle {
+  font-size: var(--text-4xl);
+  max-width: 16ch;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem var(--space-3);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (min-width: 700px) {
+  .proofGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+  }
+
+  .problemList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+@media (min-width: 1000px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    grid-template-areas:
+      'intro figure'
+      'outro figure';
+    align-content: center;
+    column-gap: clamp(3rem, 5vw, 5rem);
+    row-gap: var(--space-4);
+  }
+
+  .heroIntro {
+    grid-area: intro;
+    align-self: end;
+  }
+
+  .heroOutro {
+    grid-area: outro;
+    align-self: start;
+  }
+
+  .heroFigure {
+    grid-area: figure;
+    align-self: center;
+  }
+
+  .proofGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stageHeadSplit {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .entryBody {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  /* Alternating rhythm, so four records never read as one repeated card. */
+  .entryFlip .entryBody > :first-child {
+    order: 2;
+  }
+
+  .capability {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+@media (min-width: 1200px) {
+  .entryLead .entryBody {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+}

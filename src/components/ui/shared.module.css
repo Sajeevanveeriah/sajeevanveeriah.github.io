@@ -1,97 +1,583 @@
-.header { display: grid; gap: var(--space-2); margin-bottom: var(--space-4); }
-.kicker { display: flex; align-items: center; gap: 0.75ch; }
-.lede { color: var(--text-muted); font-size: var(--text-lg); }
+/* ============================================================
+   Page header
+   Every inner route opens the same way: a small label, one large title on a
+   controlled measure, a lede, then optional supporting matter.
+   ============================================================ */
 
-/* Asymmetric two-column body used on detail routes: content holds the prose
-   measure, meta sits in a narrower rail. */
-.split { display: grid; gap: var(--space-5); align-items: start; }
-@media (min-width: 900px) {
-  .split { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: var(--space-8); }
+.pageHead {
+  display: grid;
+  gap: var(--space-3);
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--border);
 }
 
-.grid { display: grid; gap: var(--space-3); grid-template-columns: 1fr; }
-@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .grid3, .gridDense { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.pageHeadMain {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
 
-/* Card with corner frame markers: the aesthetic doing the most work for the
-   least cost. Markers are decorative and hidden from assistive tech. */
-.card {
-  position: relative;
+.pageHead h1 {
+  max-width: 17ch;
+}
+
+.pageHeadTitleLong {
+  font-size: var(--text-4xl);
+  max-width: 20ch;
+}
+
+.pageHeadAside {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  min-width: 0;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-faint);
+  margin-bottom: var(--space-3);
+  transition: color var(--dur-interaction) var(--ease-servo);
+}
+
+.backLink:hover {
+  color: var(--accent-text);
+}
+
+.backLink svg {
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.backLink:hover svg {
+  transform: translateX(-3px);
+}
+
+.meta {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  padding: var(--space-3) 0;
-  background: transparent;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem var(--space-3);
+}
+
+.cat {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  max-width: none;
+}
+
+@media (min-width: 960px) {
+  .pageHeadSplit {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+  }
+}
+
+/* ============================================================
+   Detail layout: prose column plus a sticky meta rail
+   ============================================================ */
+
+.detail {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .detail {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+
+  .rail {
+    position: sticky;
+    top: calc(var(--header-h) + var(--space-4));
+  }
+}
+
+.rail {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+}
+
+.railBlock {
+  display: grid;
+  gap: 0.6rem;
+  padding-top: var(--space-2);
   border-top: 1px solid var(--border);
+  min-width: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Atlas rails carry long multi-word tool names. Holding these on one line
+   pushes the whole page wider than the viewport, so a chip wraps internally
+   and breaks a single over-long token rather than overflowing. */
+.chip {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-muted);
+  background: var(--tint);
+  border-radius: 12px;
+  padding: 0.28rem 0.7rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.link {
+  justify-self: start;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--accent-text);
+  border-bottom: 1px solid var(--accent-line);
+  transition: border-color var(--dur-interaction) var(--ease-servo);
+}
+
+.link:hover {
+  border-bottom-color: var(--accent-fill);
+}
+
+/* ============================================================
+   Numbered narrative used on case studies and role records
+   ============================================================ */
+
+.narrative {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  padding-block: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+
+.chapter:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.chapterIndex {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+
+.chapterTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 22ch;
+}
+
+.chapterBody {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.62;
+}
+
+.chapterBody p {
+  max-width: 64ch;
+}
+
+@media (min-width: 760px) {
+  .chapter {
+    grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+    column-gap: var(--space-5);
+  }
+
+  .chapterIndex {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .chapterTitle {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+  }
+
+  .chapterBody {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* ============================================================
+   List rows: the archive, atlas index and skills territories.
+   A ruled list, deliberately not another card grid.
+   ============================================================ */
+
+.rows {
+  display: grid;
+  border-top: 1px solid var(--border);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+  padding: var(--space-3) var(--space-2) var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--dur-interaction) var(--ease-servo);
+}
+
+.row:hover {
+  background: var(--tint);
+}
+
+.rowTitle {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  transition: color var(--dur-interaction) var(--ease-servo);
+}
+
+.row:hover .rowTitle {
+  color: var(--accent-text);
+}
+
+/* Whole-row target without nesting interactive elements. */
+.rowTitle a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.rowSummary {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: 68ch;
+}
+
+.rowMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem var(--space-3);
+}
+
+.rowArrow {
+  color: var(--text-faint);
   transition:
     transform var(--dur-interaction) var(--ease-servo),
-    border-color var(--dur-interaction) var(--ease-servo);
+    color var(--dur-interaction) var(--ease-servo);
 }
-.card:hover { border-color: var(--border-strong); }
 
-.cardTitle { margin-top: var(--space-1); }
-.cardTitle a::after { content: ''; position: absolute; inset: 0; }
-.meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); }
-.cat {
-  font-family: var(--font-mono); font-size: var(--text-xs);
-  letter-spacing: var(--tracking-mono); text-transform: uppercase; color: var(--status-text);
+.row:hover .rowArrow {
+  color: var(--accent-text);
+  transform: translateX(4px);
 }
-.body { color: var(--text-muted); font-size: var(--text-sm); }
-.chips { display: flex; flex-wrap: wrap; gap: 0.5ch var(--space-1); list-style: none; margin: 0; padding: 0; }
-.chip {
-  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
-  color: var(--text-faint); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 0.15rem 0.5rem;
-}
-.media { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-raised); }
-.media img { width: 100%; height: auto; }
 
-.dl { display: grid; gap: var(--space-8); margin: 0; }
-@media (min-width: 1100px) {
-  .dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); }
-  .dl > div:first-child, .dl > div:nth-child(2) { grid-column: 1 / -1; }
+/* Scoped to .row: .rowSummary is also used as a plain paragraph inside meta
+   rails, where a grid-column placement would drop it into a second column
+   that does not exist. */
+@media (min-width: 860px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 300px) auto;
+    align-items: baseline;
+    column-gap: var(--space-4);
+    padding-block: var(--space-3);
+  }
+
+  .row .rowHead {
+    grid-column: 1;
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .row .rowSummary {
+    grid-column: 2;
+    font-size: var(--text-sm);
+  }
+
+  .row .rowArrow {
+    grid-column: 3;
+    align-self: center;
+  }
 }
-.dt {
-  font-family: var(--font-body); font-size: var(--text-xl); letter-spacing: var(--tracking-snug);
-  font-weight: 600; color: var(--text); margin: 0 0 .75rem;
+
+/* ============================================================
+   Filter bar
+   ============================================================ */
+
+.filterBar {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  margin-bottom: var(--space-2);
 }
-.dd { margin: 0; color: var(--text-muted); display: grid; gap: var(--space-2); }
-.rail { display: grid; gap: var(--space-3); font-size: var(--text-sm); }
-.railBlock { display: grid; gap: 0.5rem; padding-block: var(--space-2); border-top: 1px solid var(--border); }
-.backLink { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono); text-transform: uppercase; color: var(--status-text); }
-.linkRow { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
-.link { font-size: var(--text-sm); color: var(--accent-text); border-bottom: 1px solid var(--accent-fill); }
-.todo {
-  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
-  color: var(--text-faint); border: 1px dashed var(--border-strong); border-radius: var(--radius);
-  padding: var(--space-2); text-transform: uppercase;
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
 }
-.count { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono); color: var(--text-faint); }
-.filterBar { display: grid; gap: var(--space-2); margin-bottom: var(--space-3); }
-.filterRow { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+.filterLabel {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-right: 0.35rem;
+  max-width: none;
+}
+
 .pill {
-  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
-  text-transform: uppercase; background: transparent; color: var(--text-muted);
-  border: 1px solid var(--border); border-radius: var(--radius); padding: 0.35rem 0.7rem; cursor: pointer;
-  transition: color var(--dur-interaction) var(--ease-servo), border-color var(--dur-interaction) var(--ease-servo);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition:
+    color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo),
+    background-color var(--dur-interaction) var(--ease-servo);
 }
-.pill:hover { color: var(--text); border-color: var(--border-strong); }
-.pillActive { color: var(--on-accent); background: var(--accent-fill); border-color: var(--accent-fill); }
+
+.pill:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.pillActive,
+.pillActive:hover {
+  color: var(--on-accent);
+  background: var(--text);
+  border-color: var(--text);
+}
+
 .search {
-  font-family: var(--font-body); font-size: var(--text-sm); color: var(--text);
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 0.5rem 0.75rem; min-width: min(100%, 320px);
+  width: 100%;
+  max-width: 26rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
 }
-.caseStudy { display:grid; gap:clamp(4rem,8vw,8rem); }
-.caseStudy h2 { margin:.5rem 0 1.25rem; }
-.caseStudy p { color:var(--text-muted); }
-.caseLead { max-width:58rem; display:grid; gap:1rem; }
-.caseArchitecture { padding:clamp(2rem,5vw,5rem) 0; background:#fbfbfd; color:var(--text); border-block:1px solid var(--border); }
-.caseArchitecture p { color:var(--text-muted); }
-.caseSplit,.caseValidation { display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(2rem,6vw,7rem); }
-.caseImplementation { max-width:52rem; margin-left:auto; }
-.caseLimit { border-top:1px solid var(--border); padding-top:2rem; }
-@media(max-width:767px){.caseSplit,.caseValidation{grid-template-columns:1fr}.caseArchitecture{border-radius:16px}.caseStudy{gap:4rem}}
-.workCurated{display:grid;gap:clamp(4rem,8vw,8rem);margin-bottom:6rem}.workLead{display:grid;gap:2rem}.workLead h2{font-size:var(--text-3xl);margin-block:1rem}.workSupport{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}.workSupport:nth-child(odd) .workMedia{order:2}.workSupport h2{font-size:var(--text-2xl);margin-block:1rem}.workCurated p{color:var(--text-muted)}.workCurated .link{margin-top:1rem}.workMedia{overflow:hidden;border-radius:20px}.filterBar{display:flex;gap:1rem;flex-wrap:wrap;padding-block:2rem;border-block:1px solid var(--border)}.filterBar label{display:grid;gap:.4rem;font-size:.8rem;color:var(--text-muted)}.filterBar select{min-height:44px;border:1px solid var(--border);border-radius:8px;background:var(--surface);padding:.5rem}.workArchive{display:grid;margin-top:2rem}.workArchive article{display:grid;grid-template-columns:1fr 2fr;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
-@media(max-width:767px){.workSupport{grid-template-columns:1fr}.workSupport:nth-child(odd) .workMedia{order:0}.workArchive article{grid-template-columns:1fr}}
-.timeline{position:relative;padding-left:2rem}.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--accent);transform-origin:top;animation:timeline-draw 650ms var(--ease-settle) both}.timeline>div{position:relative}.timeline>div::before{content:'';position:absolute;left:-2.35rem;top:.4rem;width:.75rem;height:.75rem;border-radius:50%;background:#fff;border:2px solid var(--accent)}@keyframes timeline-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+
+.search::placeholder {
+  color: var(--text-faint);
+}
+
+.count {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: none;
+}
+
+/* ============================================================
+   Featured entries on the work index
+   ============================================================ */
+
+.featured {
+  display: grid;
+  gap: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.feature {
+  display: grid;
+  gap: var(--space-4);
+  align-items: center;
+  min-width: 0;
+}
+
+.featureCopy {
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  min-width: 0;
+}
+
+.featureTitle {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+}
+
+.featureTitle a:hover {
+  color: var(--accent-text);
+}
+
+@media (min-width: 900px) {
+  .feature {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .featureFlip > :first-child {
+    order: 2;
+  }
+}
+
+.atlasGroup {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.atlasGroupTitle {
+  font-size: var(--text-label);
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: var(--space-2);
+}
+
+.archiveHead {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 48ch;
+  padding-top: clamp(2rem, 4vw, 3rem);
+  margin-bottom: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Editorial two-column split used on contact and simple stages
+   ============================================================ */
+
+.split {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .split {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+
+/* ============================================================
+   Definition-style blocks
+   ============================================================ */
+
+.blocks {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+}
+
+.blockTitle {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.blockBody {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+  color: var(--text-muted);
+}
+
+.bullets {
+  display: grid;
+  gap: 0.65rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 1.4rem;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 6px;
+  height: 1px;
+  background: var(--accent-fill);
+}
+
+.todo {
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+}
+
+/* ============================================================
+   Media
+   ============================================================ */
+
+.mediaHero {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.mediaCaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-faint);
+  max-width: 60ch;
+}
+
+/* ============================================================
+   Pagination between records
+   ============================================================ */
+
+.nextRecord {
+  display: grid;
+  gap: var(--space-2);
+  padding-top: var(--space-5);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--border);
+}
+
+.nextTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 22ch;
+}
+
+.nextTitle a:hover {
+  color: var(--accent-text);
+}

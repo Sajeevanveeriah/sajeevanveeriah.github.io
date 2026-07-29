@@ -27,16 +27,30 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { color: '#F7F7F8' },
-  ],
+  themeColor: [{ color: '#ffffff' }],
   colorScheme: 'light',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={site.lang}>
-      <body className={fontVariables}>
+    /* The font variables must live on <html>, not <body>: the type tokens in
+       tokens.css are declared on :root, and a var() inside a custom property
+       is substituted where that property is declared. On <body> the family
+       variables would be invalid at :root and every token would silently fall
+       back to the system stack. */
+    <html lang={site.lang} className={fontVariables}>
+      <head>
+        {/* Arms the scroll-reveal treatment. Without JavaScript this never
+            runs, the hidden state is never applied, and every section renders
+            complete. It is inline and blocking so no element can paint in its
+            visible state and then jump to hidden. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.setAttribute('data-js','')",
+          }}
+        />
+      </head>
+      <body>
           <a className="skip-link" href="#main">
             Skip to content
           </a>
