@@ -1,0 +1,13 @@
+.sequence { margin-block: clamp(5rem,10vw,10rem); }
+.sticky { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(2rem,5vw,6rem); align-items:center; min-height:70vh; padding:clamp(2rem,5vw,5rem); border-radius:28px; background:#111214; color:#f7f7f8; }
+.copy { display:grid; gap:1.5rem; }
+.copy h3 { font-size:clamp(2rem,4vw,4rem); }
+.kicker { color:#b8b8bd; font-size:.875rem; }
+.controls { display:grid; border-top:1px solid #444; }
+.controls button { min-height:48px; text-align:left; color:#b8b8bd; background:transparent; border:0; border-bottom:1px solid #444; cursor:pointer; }
+.controls button[aria-pressed='true'] { color:#fff; }
+.detail { color:#c9c9ce; }
+.copy a { color:#70a7f5; }
+.media { overflow:hidden; border-radius:18px; }
+.mobile { display:none; }
+@media(max-width:767px){.sticky{display:none}.mobile{display:grid;gap:0;list-style:none;border-top:1px solid var(--border)}.mobile li{padding:2rem 0;border-bottom:1px solid var(--border)}.mobile p{color:var(--text-muted);margin-top:.75rem}}

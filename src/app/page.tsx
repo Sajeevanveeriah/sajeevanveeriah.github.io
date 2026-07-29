@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { HeroMedia } from '@/components/home/HeroMedia'
+import { RosSequence } from '@/components/home/RosSequence'
 import { site } from '@/content/site'
 import { narrative } from '@/content/about'
 import { publishedProjects } from '@/content/projects'
@@ -50,7 +51,7 @@ export default function HomePage() {
 
     <section className="section" aria-labelledby="selected-title"><div className="wrap">
       <p className={home.eyebrow}>Selected engineering stories</p><h2 id="selected-title">Evidence of complete-system ownership.</h2>
-      <div className={home.stories}>{selected.map((p, index) => <article className={`${home.story} ${home[`story${index}`]} ${index === 2 ? home.dark : ''}`} key={p.slug}>
+      <div className={home.stories}>{selected.map((p, index) => index === 1 ? <RosSequence project={p} key={p.slug} /> : <article className={`${home.story} ${home[`story${index}`]} ${index === 2 ? home.dark : ''}`} key={p.slug}>
         <div className={home.storyMedia}>{p.images?.[0] ? <ProjectImage image={p.images[0]} /> : null}</div>
         <div className={home.storyCopy}><p className={home.eyebrow}>{p.domain}</p><h3>{p.title}</h3><p><strong>Problem.</strong> {p.problem}</p><p><strong>Ownership.</strong> {p.homeExcerpt?.ownership ?? p.approach[0]}</p><p><strong>Outcome.</strong> {p.homeExcerpt?.outcome ?? p.outcome}</p><p className={home.disciplines}>{p.disciplines.join(' · ')}</p><Link href={`/work/${p.slug}/`}>Read the case study</Link></div>
       </article>)}</div>

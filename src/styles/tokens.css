@@ -29,7 +29,7 @@
   --text-2xl: clamp(1.7rem, 1.3rem + 1.2vw, 2.5rem);
   --text-3xl: clamp(2.25rem, 1.5rem + 2.2vw, 4rem);
   --text-4xl: clamp(2.7rem, 1.6rem + 3.6vw, 5rem);
-  --text-5xl: clamp(3rem, 1.5rem + 5vw, 7rem);
+  --text-5xl: clamp(2.75rem, 1.5rem + 4vw, 5rem);
   --leading-tight: 1.03; --leading-snug: 1.2; --leading-body: 1.55;
   --tracking-tight: -.04em; --tracking-snug: -.02em; --tracking-mono: .01em;
   --space-1: .5rem; --space-2: 1rem; --space-3: 1.5rem; --space-4: 2rem;

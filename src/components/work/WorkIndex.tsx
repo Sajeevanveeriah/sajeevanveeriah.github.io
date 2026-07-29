@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { TIER_ORDER, TIERS, byTierStrength, type EvidenceTier } from '@/content/tiers'
 import type { Project } from '@/content/projects'
-import { RevealGroup, RevealItem } from '@/components/motion/Reveal'
+import { ProjectImage } from '@/components/ui/ProjectImage'
 import s from '@/components/ui/shared.module.css'
 
 const ALL = 'all'
@@ -38,69 +38,30 @@ export function WorkIndex({
     [projects, domain, discipline, tier],
   )
 
-  const group = (
-    label: string,
-    value: string,
-    set: (v: string) => void,
-    options: readonly { id: string; label: string }[],
-  ) => (
-    <div className={s.filterRow} role="group" aria-label={`Filter work by ${label.toLowerCase()}`}>
-      <span className="mono-label">{label}</span>
-      <button
-        type="button"
-        className={`${s.pill} ${value === ALL ? s.pillActive : ''}`}
-        aria-pressed={value === ALL}
-        onClick={() => set(ALL)}
-      >
-        All
-      </button>
-      {options.map((o) => (
-        <button
-          key={o.id}
-          type="button"
-          className={`${s.pill} ${value === o.id ? s.pillActive : ''}`}
-          aria-pressed={value === o.id}
-          onClick={() => set(o.id)}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
-  )
+  const curated = projects.filter((p) => ['engineering-mastery-lab','autonomous-navigation-rover','ataxia-assessment-device','iot-monitoring-platform'].includes(p.slug))
 
   return (
     <>
-      <div className={s.filterBar}>
-        {group(
-          'Domain',
-          domain,
-          setDomain,
-          domains.map((d) => ({ id: d, label: d })),
-        )}
-        {group(
-          'Discipline',
-          discipline,
-          setDiscipline,
-          disciplines.map((d) => ({ id: d, label: d })),
-        )}
-        {group(
-          'Evidence',
-          tier,
-          setTier,
-          TIER_ORDER.filter((t) => projects.some((p) => p.evidenceTier === t)).map((t) => ({
-            id: t,
-            label: TIERS[t as EvidenceTier].label,
-          })),
-        )}
+      <div className={s.workCurated}>
+        {curated.map((p,index)=><article className={index === 0 ? s.workLead : s.workSupport} key={p.slug}>
+          {p.images?.[0] ? <div className={s.workMedia}><ProjectImage image={p.images[0]} priority={index===0}/></div>:null}
+          <div><p className="mono-label">{p.domain}</p><h2><Link href={`/work/${p.slug}/`}>{p.title}</Link></h2><p>{p.summary}</p><Link className={s.link} href={`/work/${p.slug}/`}>Read case study</Link></div>
+        </article>)}
+      </div>
+
+      <div className={s.filterBar} aria-label="Filter project archive">
+        <label>Domain<select value={domain} onChange={e=>setDomain(e.target.value)}><option value={ALL}>All domains</option>{domains.map(d=><option key={d}>{d}</option>)}</select></label>
+        <label>Discipline<select value={discipline} onChange={e=>setDiscipline(e.target.value)}><option value={ALL}>All disciplines</option>{disciplines.map(d=><option key={d}>{d}</option>)}</select></label>
+        <label>Evidence<select value={tier} onChange={e=>setTier(e.target.value)}><option value={ALL}>All tiers</option>{TIER_ORDER.map(t=><option key={t} value={t}>{TIERS[t as EvidenceTier].label}</option>)}</select></label>
       </div>
 
       <p className={s.count} aria-live="polite">
         {shown.length} of {projects.length} records shown
       </p>
 
-      <RevealGroup className={`${s.grid} ${s.grid3}`} stagger={0.04}>
+      <div className={s.workArchive}>
         {shown.map((p) => (
-          <RevealItem key={p.slug} as="article" className={s.card}>
+          <article key={p.slug}>
             <div className={s.meta}>
               <span className={s.cat}>{p.category}</span>
               <TierIndicator tier={p.evidenceTier} />
@@ -109,16 +70,9 @@ export function WorkIndex({
               <Link href={`/work/${p.slug}/`}>{p.title}</Link>
             </h2>
             <p className={s.body}>{p.summary}</p>
-            <ul className={s.chips} aria-label="Key tools">
-              {p.stack.slice(0, 4).map((t) => (
-                <li key={t} className={s.chip}>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </RevealItem>
+          </article>
         ))}
-      </RevealGroup>
+      </div>
     </>
   )
 }

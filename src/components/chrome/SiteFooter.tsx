@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { navigation, site } from '@/content/site'
-import { TelemetryStrip } from './TelemetryStrip'
 import styles from './SiteFooter.module.css'
 
 export function SiteFooter() {
@@ -43,7 +42,6 @@ export function SiteFooter() {
       </div>
 
       <div className={`wrap ${styles.bottom}`}>
-        <TelemetryStrip variant="footer" />
         <p className={styles.copyright}>&copy; 2026 {site.name}.</p>
       </div>
     </footer>
