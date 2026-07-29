@@ -9,6 +9,23 @@
 export const narrative =
   'I build across the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. I identify which engineering layer a problem lives in, then work across the disciplines required to resolve it.'
 
+export const homeStory = {
+  kicker: 'Mechatronics, robotics and AI/ML engineering',
+  headline: 'I build intelligent systems that move, sense and decide.',
+  proofTitle: 'Engineering from first principle to verified system.',
+  proofKicker: '01 / Complete-package engineering',
+  proofSummary:
+    'My work joins mechanics, electronics, embedded software, autonomy, controls and validation. Each featured record shows the engineering need, the decisions I owned and the evidence behind the result.',
+  featuredKicker: 'Selected engineering stories',
+  featuredTitle: 'Built across disciplines. Verified in the system.',
+  responseLabel: 'Response',
+  outputLabel: 'Verified output',
+  recordLinkLabel: 'Read the engineering record',
+  capabilityKicker: 'End-to-end capability',
+  capabilityTitle:
+    'One connected practice, from physical architecture to autonomy and validation.',
+} as const
+
 /** Closed-loop signal panel, index.html:183 to 227. */
 export const closedLoop = {
   title: 'Closed-loop engineering',

@@ -5,7 +5,7 @@
   .heroGrid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: var(--space-8); }
 }
 .heroCopy { display: grid; gap: var(--space-2); }
-.heroTitle { letter-spacing: var(--tracking-tight); }
+.heroTitle { letter-spacing: var(--tracking-tight); max-width: 12ch; font-size: clamp(3rem, 2rem + 4.8vw, 6.75rem); }
 .positioning {
   font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500;
   color: var(--accent-text); letter-spacing: var(--tracking-snug);
@@ -73,3 +73,31 @@
   display: grid; place-items: center; pointer-events: none;
 }
 .chainSlot { display: grid; justify-items: start; margin-block: var(--space-1); }
+
+.proof { background: var(--surface); border-block: 1px solid var(--border); }
+.proofGrid { display: grid; gap: var(--space-3); }
+.proofSummary { color: var(--text-muted); font-size: var(--text-lg); margin-top: var(--space-2); }
+@media (min-width: 900px) {
+  .proofGrid { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.7fr); gap: var(--space-8); }
+}
+
+.stories { display: grid; gap: var(--space-8); }
+.story {
+  display: grid; gap: var(--space-4); align-items: center;
+  padding-block: var(--space-4); border-top: 1px solid var(--border);
+}
+.storyMedia { overflow: hidden; border-radius: var(--radius-lg); background: var(--surface); }
+.storyMedia img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform var(--dur-ambient) var(--ease-settle); }
+.story:hover .storyMedia img { transform: scale(1.018); }
+.storyCopy { display: grid; gap: var(--space-2); align-content: center; }
+.storyTitle { font-size: var(--text-3xl); }
+.storySummary { color: var(--text-muted); font-size: var(--text-lg); }
+.storyEvidence { display: grid; gap: var(--space-2); margin: var(--space-1) 0; }
+.storyEvidence div { padding-top: var(--space-1); border-top: 1px solid var(--border); }
+.storyEvidence dt { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono); text-transform: uppercase; color: var(--accent-text); }
+.storyEvidence dd { margin: 0.35rem 0 0; color: var(--text-muted); font-size: var(--text-sm); }
+@media (min-width: 900px) {
+  .story { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: var(--space-8); min-height: 34rem; }
+  .story:nth-child(even) .storyMedia { order: 2; }
+  .storyMedia img { aspect-ratio: 5 / 4; }
+}
