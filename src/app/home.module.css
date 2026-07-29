@@ -181,9 +181,32 @@
    Selected work
    ============================================================ */
 
+/* The sticky scroll stage. One column holds, the other scrolls. Single
+   column below 900px, where `.sticky-rail` in globals.css also un-pins
+   itself, because there is no second column for the rail to hold beside. */
+.workStage {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+.workRail {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
 .entries {
   display: grid;
   gap: clamp(4rem, 8vw, 7rem);
+  min-width: 0;
+}
+
+/* The showcase stage absorbs its own layer travel. The deeper plane rises
+   0.55 * 148px = 81px at the end of a traverse, and this keeps that
+   movement inside the record rather than letting it reach the heading of
+   the one above. */
+.showcase {
+  gap: clamp(2rem, 4vw, 3rem);
 }
 
 .entry {
@@ -420,6 +443,12 @@
   .stageHeadSplit {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .workStage {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 2fr);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
   }
 
   .entryBody {

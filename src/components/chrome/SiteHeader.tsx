@@ -1,81 +1,60 @@
-'use client'
+import { navigation, navPanels, site } from '@/content/site'
+import { publishedProjects } from '@/content/projects'
+import { atlas } from '@/content/atlas'
+import { experience } from '@/content/experience'
+import { SiteNav, type NavGroup } from './SiteNav'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { navigation, site } from '@/content/site'
-import styles from './SiteHeader.module.css'
+/**
+ * The header shell is a server component on purpose.
+ *
+ * The mega-menu lists every work record, every atlas domain and every role.
+ * Deriving those lists inside the client nav would pull `projects.ts`,
+ * `atlas.ts` and `experience.ts` into the browser bundle: tens of kilobytes
+ * of prose to render about forty short links. Building them here reduces what
+ * crosses the boundary to a label and an href per entry, and the panel markup
+ * ships in the static HTML either way.
+ *
+ * The lists are derived rather than authored, so a panel cannot drift out of
+ * step with the pages it points at when a record or a domain is added.
+ */
+function linksFor(href: string): readonly { label: string; href: string }[] {
+  switch (href) {
+    case '/work/':
+      return publishedProjects.map((p) => ({ label: p.title, href: `/work/${p.slug}/` }))
+    case '/skills/':
+      return atlas.map((d) => ({ label: d.name, href: `/atlas/${d.slug}/` }))
+    case '/about/':
+      return experience.map((r) => ({
+        label: `${r.company}, ${r.title}`,
+        href: `/about/${r.slug}/`,
+      }))
+    default:
+      return []
+  }
+}
 
 export function SiteHeader() {
-  const pathname = usePathname()
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const groups: NavGroup[] = navigation.map((item) => {
+    const copy = navPanels.find((p) => p.href === item.href)
+    const links = copy ? linksFor(item.href) : []
+    return {
+      label: item.label,
+      href: item.href,
+      // A nav item only becomes a disclosure if it actually owns sub-pages.
+      // Contact has none, so it stays a plain link rather than a button that
+      // opens an empty panel.
+      panel:
+        copy && links.length > 0
+          ? {
+              eyebrow: copy.eyebrow,
+              intro: copy.intro,
+              listTitle: copy.listTitle,
+              indexLabel: copy.indexLabel,
+              links: [...links],
+            }
+          : null,
+    }
+  })
 
-  // Close the mobile panel on navigation, so a route change never leaves an
-  // open menu covering the page it just moved to.
-  useEffect(() => setOpen(false), [pathname])
-
-  // The header rule is suppressed at the very top so the hero starts on an
-  // uninterrupted white field.
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-      <div className={`wrap-wide ${styles.shell}`}>
-        <Link className={styles.brand} href="/" aria-label={`${site.name}, home`}>
-          <span className={styles.brandName}>{site.name}</span>
-          <span className={styles.brandRole} aria-hidden="true">
-            Mechatronics, robotics and AI/ML engineer
-          </span>
-        </Link>
-
-        <nav
-          id="site-nav"
-          className={`${styles.nav} ${open ? styles.navOpen : ''}`}
-          aria-label="Primary"
-        >
-          {navigation.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(item.href)
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={styles.navLink}
-                aria-current={active ? 'page' : undefined}
-              >
-                {item.label}
-              </Link>
-            )
-          })}
-          <a className={styles.navResumeMobile} href={site.resumePath} download>
-            Download resume
-          </a>
-        </nav>
-
-        <div className={styles.actions}>
-          <a className={styles.resume} href={site.resumePath} download>
-            Resume
-          </a>
-          <button
-            type="button"
-            className={styles.menuButton}
-            aria-expanded={open}
-            aria-controls="site-nav"
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className={styles.burger} aria-hidden="true">
-              <span />
-              <span />
-            </span>
-            {open ? 'Close' : 'Menu'}
-          </button>
-        </div>
-      </div>
-    </header>
-  )
+  return <SiteNav groups={groups} siteName={site.name} resumePath={site.resumePath} />
 }
