@@ -1,4 +1,4 @@
-.hero { padding: clamp(6rem, 13vw, 12rem) 0 clamp(5rem, 10vw, 9rem); background: var(--surface); }
+.hero { padding: clamp(6rem, 13vw, 11rem) 0 clamp(5rem, 10vw, 8rem); background: var(--surface); }
 .hero h1 { max-width: 12ch; font-size: clamp(3.2rem, 8vw, 8.5rem); }
 .eyebrow { color: var(--accent-text); font-weight: 600; margin-bottom: 1rem; }
 .role { font-size: var(--text-2xl); font-weight: 600; margin-top: 2rem; }
@@ -26,4 +26,10 @@
 .capabilities { display: grid; gap: 2rem; align-items: end; }.capabilities > p { color: var(--text-muted); font-size: var(--text-lg); }
 .cta { background: var(--surface); padding-block: var(--section-y); }.cta h2 { max-width: 16ch; }.cta > div > p { margin-top: 1rem; color: var(--text-muted); }
 @media (min-width: 768px) { .proofGrid { grid-template-columns: repeat(4,1fr); }.problemGrid { grid-template-columns: repeat(2,1fr); gap: 1px 4rem; }.capabilities { grid-template-columns: 1.2fr .8fr; }.capabilities .textLinks { grid-column: 1 / -1; } }
-@media (min-width: 960px) { .story { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; }.story:nth-child(even) .storyMedia { order: 2; } }
+@media (min-width: 960px) {
+  .story { display: grid; grid-template-columns: 1.3fr .7fr; align-items: center; }
+  .story1 { grid-template-columns: .75fr 1.25fr; }.story1 .storyMedia { order: 2; }
+  .story2 { grid-template-columns: 1fr 1fr; }
+  .story3 { grid-template-columns: 1.45fr .55fr; }.story3 .storyMedia { padding: 2.5rem; }
+  .story0 { display: block; }.story0 .storyCopy { grid-template-columns: 1fr 1fr; }.story0 .storyCopy h3, .story0 .storyCopy .eyebrow, .story0 .storyCopy a { grid-column: 1 / -1; }
+}

@@ -57,9 +57,6 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Ambient grain. Painted once as a CSS gradient rather than an image so
-     it costs no request and no decode. Purely decorative, so it is inert
-     to pointers and hidden from assistive technology. */
 }
 
 
@@ -118,8 +115,7 @@ picture {
   height: auto;
 }
 
-/* Monospace telemetry labels: central to the instrument aesthetic, so they
-   get a token-driven treatment rather than ad-hoc styling per component. */
+/* Compact supporting labels share the body face to keep the editorial system calm. */
 .mono-label {
   font-family: var(--font-body);
   font-size: var(--text-xs);
@@ -215,8 +211,6 @@ picture {
   }
 }
 
-/* Calm mobile ambience: remove the high-frequency fixed grain that aliases
-   into a visible grid on dense phone displays. */
 @media (max-width: 767px) {
   body {
     background: var(--bg);
