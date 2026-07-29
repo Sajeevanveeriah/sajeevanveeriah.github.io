@@ -59,17 +59,17 @@
   color: var(--text-faint); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 0.15rem 0.5rem;
 }
-.media { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface-raised); }
+.media { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--surface-raised); }
 .media img { width: 100%; height: auto; }
 
-.dl { display: grid; gap: var(--space-3); margin: 0; }
+.dl { display: grid; gap: var(--space-8); margin: 0; }
 @media (min-width: 1100px) {
   .dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-5); }
   .dl > div:first-child, .dl > div:nth-child(2) { grid-column: 1 / -1; }
 }
 .dt {
-  font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: var(--tracking-mono);
-  text-transform: uppercase; color: var(--accent-text); margin: 0 0 0.35rem;
+  font-family: var(--font-body); font-size: var(--text-xl); letter-spacing: var(--tracking-snug);
+  font-weight: 600; color: var(--text); margin: 0 0 .75rem;
 }
 .dd { margin: 0; color: var(--text-muted); display: grid; gap: var(--space-2); }
 .rail { display: grid; gap: var(--space-3); font-size: var(--text-sm); }

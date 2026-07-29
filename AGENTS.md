@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Operating guide for this repository. Read this before editing. It reflects the
-July 2026 "Midnight Command" redesign and is binding.
+July 2026 light-first editorial redesign and is binding.
 
 This is a GitHub user Pages site served at the domain root. The stack is
 Next.js 15 with the App Router, TypeScript in strict mode and Tailwind CSS v4,
@@ -26,61 +26,24 @@ Write in Australian and UK spelling. Do not use em dashes or en dashes anywhere,
 use commas, colons or full stops. Write date ranges as "Jan 2026 to Jun 2026".
 Never use the word "Present" for a role.
 
-## Design system: Command, dual theme (do not revert)
+## Design system: editorial, light first
 
-One premium identity rendered in two committed themes that share a single
-token contract at the top of `styles.css`: Midnight Command (dark) and
-Daylight Command (light). The active theme follows the operating system by
-default via `prefers-color-scheme`, and the header control lets a visitor
-force System, Light or Dark, stored in `localStorage` under `theme` and
-applied before first paint by the inline script in the head. Keep this
-system based default and keep both themes in lock step; the two light
-token blocks in `styles.css` (the `:root[data-theme="light"]` block and
-the `prefers-color-scheme: light` block) must stay byte for byte identical.
+Use a calm, light-first engineering editorial system. The default canvas is near
+`#F7F7F8`, surfaces are white, primary text is near `#161617`, secondary text
+is near `#68686D` and the only interactive accent is deep engineering blue near
+`#1D5FBF`. Author selected robotics and technical story stages in graphite with
+off-white text. There is no global theme control.
 
-- Colour is driven entirely by custom properties. Text accents
-  (`--gold-text`, `--steel-text`: mono kickers, dates, in-copy links) are
-  darkened in the light theme so they hold WCAG AA on a pale background.
-  Meaningful non-text UI (tier dots, status indicators, informational
-  borders) uses the dedicated `--accent-fill` and `--status` fill tokens,
-  which are darkened in Daylight to clear 3:1; `--gold` and `--steel` remain
-  for purely decorative large fills only. Do not hard-code colours in
-  component rules; add a token and set it in every theme block.
-- Midnight Command: background `#0B0D12`; surfaces `#10131A` and `#151923`;
-  text `#ECE9E1` ivory, muted `#A6AAB3`, faint `#83878F`.
-- Daylight Command: background `#F3F1EB` warm gallery paper (not a beige
-  worksheet); surfaces `#FBFAF6` and `#FFFFFF`; text `#1A1C22`, muted
-  `#4C515A`, faint `#686D75`; `--gold-text` deepens to `#7A5C1F` and
-  `--steel-text` to `#33628F`; the Daylight fill tokens are `#A88338`
-  (accent) and `#658DB0` (status). The previous faint `#767B84`, `--gold`
-  fill and `--steel` fill failed WCAG AA and were corrected.
-- Primary accent: champagne gold (kickers, CTAs, delivered dots, dates,
-  active states). Secondary accent: steel blue (category labels, hands-on
-  dots, in-copy links). Keep both restrained.
-- Numbered mono section kickers, hairline panels, 4 to 6 px radii, the faint
-  hero grid, the closed-loop signal panel and the ten-layer Systems Stack are
-  the visual signature. Keep them.
+Keep navigation minimal, headings large but controlled, copy concise and stages
+spacious. Do not add grids, grain, terminal chrome, telemetry labels, gold or
+category colour coding, glass effects, gradients, glow, stock illustrations or
+dashboard decoration. Motion is limited to short reveal and interaction feedback,
+with complete reduced-motion and no-JavaScript fallbacks.
 
-Motion is expressive but disciplined and always motion safe. The signature
-motion pieces are the hero particle field (a capped, pointer-reactive
-constellation that pauses off screen and when the tab is hidden, fine
-pointer only, sharing its canvas with travelling signal packets on the
-links and a pointer-reactive two segment robot arm solved with inverse
-kinematics that reaches toward the cursor, hands a packet off on each
-reach and eases to a ready pose when idle, with a fainter companion arm
-beside it so the pair reads as a robotic cell), native scroll-driven
-media parallax with a JS fallback, magnetic
-hero buttons, blur and scale scroll reveals, and count-up stats.
-Everything must be gated behind `prefers-reduced-motion: no-preference`,
-stay off the main thread where possible, and degrade to a complete static
-page. Do not add continuous, unpaused, always-on animation, autoplaying
-video or marquees.
-
-Hard bans: orange as the dominant accent, beige or worksheet backgrounds,
-purple, violet or indigo, gradient-filled text, glassmorphism, glowing cards,
-emoji, Font Awesome, skill percentage bars, fabricated charts, fake logos,
-fake screenshots, chip walls ("chip soup"), "Hi, I'm ..." heroes and stock
-taglines.
+Project images use the typed presentation fields in `src/content/projects.ts` and
+the central `ProjectImage` component. Informative diagrams and screenshots use
+`contain`. Use `cover` only for a verified safe photographic crop. Preserve explicit
+dimensions, responsive `sizes`, aspect ratio and optional mobile art direction.
 
 ## Truthful career representation (binding)
 
@@ -108,19 +71,11 @@ visa, work-rights or availability statements, `geo.*` metadata, or JSON-LD
 
 ## Structure and behaviour
 
-- Section order: Hero, Work (`#work`), Engineering Atlas (`#atlas`), Systems
-  Stack (`#stack`), Skill Library (`#skills`), Experience (`#experience`),
-  Education (`#education`), Beyond (`#beyond`), Contact (`#contact`).
-- Case studies, Atlas entries and role details are static `details`
-  disclosures in `index.html`; `main.js` adds search, filters, counts, the
-  colour-theme controller, count-up stats, click-to-copy email, the
-  back-to-top control, the hero particle field, magnetic buttons and the
-  motion-safe reveal on top. Every one of these is progressive enhancement:
-  the site must stay complete and readable with JavaScript disabled and
-  under `prefers-reduced-motion`, and no-JS visitors still get the system
-  colour scheme through the `prefers-color-scheme` blocks in the CSS.
-- Keep the preserve list intact: `robots.txt`, `sitemap.xml` (canonical
-  `https://sajeevanveeriah.github.io/`), `BingSiteAuth.xml`,
-  `googlebcce96f6b520ab1f.html`, the resume PDF, project images and fonts.
-- Content update recipes, the validation checklist and the rollback path are
-  in README.md; run the checklist before every commit.
+The current implementation is a static Next.js App Router site. Routes live under
+`src/app/`: home, Work and project details, Atlas and domain details, Skills,
+About and role details, Contact and the static 404. Typed content lives under
+`src/content/`. Keep every critical route and link server rendered. Interactive
+filters and restrained reveal motion are progressive enhancement only.
+
+Keep the preserve list intact: `robots.txt`, `sitemap.xml`, `BingSiteAuth.xml`,
+`googlebcce96f6b520ab1f.html`, the resume PDF, project images and fonts.

@@ -24,34 +24,36 @@ export function ProjectImage({
 }) {
   const isRaster = /\.(png|jpe?g)$/i.test(image.src)
   const stem = image.src.replace(/\.(png|jpe?g)$/i, '')
+  const style = {
+    '--media-ratio': image.aspectRatio ?? `${image.width} / ${image.height}`,
+    '--media-position': image.objectPosition ?? '50% 50%',
+  } as React.CSSProperties
+  const common = {
+    width: image.width,
+    height: image.height,
+    loading: priority ? ('eager' as const) : ('lazy' as const),
+    decoding: 'async' as const,
+    fetchPriority: priority ? ('high' as const) : undefined,
+    sizes: image.sizes ?? '(max-width: 767px) 100vw, (max-width: 1279px) 90vw, 1200px',
+  }
 
   if (!isRaster) {
     // SVG sources are already compact and need no derivatives.
     return (
-      <img
-        src={image.src}
-        alt={image.alt}
-        width={image.width}
-        height={image.height}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-      />
+      <span className="project-media" data-mode={image.displayMode ?? 'contain'} data-background={image.background ?? 'neutral'} style={style}>
+        <img src={image.src} alt={image.alt} {...common} />
+      </span>
     )
   }
 
   return (
-    <picture>
-      <source srcSet={`${stem}.avif`} type="image/avif" />
-      <source srcSet={`${stem}.webp`} type="image/webp" />
-      <img
-        src={image.src}
-        alt={image.alt}
-        width={image.width}
-        height={image.height}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchPriority={priority ? 'high' : undefined}
-      />
-    </picture>
+    <span className="project-media" data-mode={image.displayMode ?? 'contain'} data-background={image.background ?? 'neutral'} style={style}>
+      <picture>
+        {image.mobileSrc ? <source media="(max-width: 767px)" srcSet={image.mobileSrc} /> : null}
+        <source srcSet={`${stem}.avif`} type="image/avif" />
+        <source srcSet={`${stem}.webp`} type="image/webp" />
+        <img src={image.src} alt={image.alt} {...common} />
+      </picture>
+    </span>
   )
 }
