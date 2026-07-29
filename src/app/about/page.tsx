@@ -23,6 +23,7 @@ export default function AboutPage() {
       <section className="section">
         <div className="wrap-wide">
           <PageHeader
+          signature="spine"
             kicker="About"
             title="Six years on production floors, then engineering delivery on top of it."
             lede={narrative}

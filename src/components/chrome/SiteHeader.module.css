@@ -22,6 +22,19 @@
   min-height: var(--header-h);
 }
 
+/* Hit area only: the brand lockup keeps its drawn size and position. */
+@media (pointer: coarse) {
+  .brand {
+    position: relative;
+  }
+
+  .brand::before {
+    content: '';
+    position: absolute;
+    inset: -9px -6px;
+  }
+}
+
 .brand {
   display: inline-flex;
   align-items: baseline;
@@ -112,7 +125,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  min-height: 40px;
+  /* 44px so the only control on a phone clears a thumb, not just the
+     24px WCAG 2.5.8 floor. */
+  min-height: 44px;
   padding: 0 0.95rem;
   font-size: var(--text-sm);
   font-weight: 600;

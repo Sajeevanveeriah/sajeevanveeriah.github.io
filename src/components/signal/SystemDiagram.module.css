@@ -121,7 +121,7 @@
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sd-draw 7s var(--ease-glide) infinite;
+  animation: sd-draw var(--cycle) var(--ease-glide) infinite;
 }
 
 @keyframes sd-draw {
@@ -163,7 +163,7 @@
   fill: var(--accent);
   transform-box: fill-box;
   transform-origin: center;
-  animation: sd-latch 7s var(--ease-servo) infinite;
+  animation: sd-latch var(--cycle) var(--ease-servo) infinite;
 }
 
 @keyframes sd-latch {
@@ -190,7 +190,7 @@
   stroke-width: 1.5;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sd-draw 7s var(--ease-glide) infinite;
+  animation: sd-draw var(--cycle) var(--ease-glide) infinite;
 }
 
 /* ---- Occupancy ---- */
@@ -202,7 +202,7 @@
 .cellBlocked {
   fill: var(--text);
   opacity: 0;
-  animation: sd-appear 7s var(--ease-servo) infinite;
+  animation: sd-appear var(--cycle) var(--ease-servo) infinite;
 }
 
 @keyframes sd-appear {
@@ -223,7 +223,7 @@
 .cellRoute {
   fill: var(--accent);
   opacity: 0;
-  animation: sd-route 7s var(--ease-servo) infinite;
+  animation: sd-route var(--cycle) var(--ease-servo) infinite;
 }
 
 @keyframes sd-route {
@@ -249,7 +249,7 @@
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sd-draw 7s var(--ease-glide) infinite;
+  animation: sd-draw var(--cycle) var(--ease-glide) infinite;
 }
 
 .routePulse {
@@ -260,7 +260,7 @@
   stroke-dasharray: 0.05 0.95;
   stroke-dashoffset: 0.05;
   opacity: 0;
-  animation: sd-pulse 7s var(--ease-glide) infinite;
+  animation: sd-pulse var(--cycle) var(--ease-glide) infinite;
 }
 
 @keyframes sd-pulse {
@@ -285,7 +285,7 @@
 /* ---- Waveforms ---- */
 
 .cursor {
-  animation: sd-scan 7s linear infinite;
+  animation: sd-scan var(--cycle) linear infinite;
 }
 
 .cursor line {
@@ -328,7 +328,7 @@
   fill: var(--accent);
   transform-box: fill-box;
   transform-origin: center;
-  animation: sd-latch 7s var(--ease-servo) infinite;
+  animation: sd-latch var(--cycle) var(--ease-servo) infinite;
 }
 
 .hopLine {
@@ -339,7 +339,7 @@
 
 .packet {
   fill: var(--accent);
-  animation: sd-hop 7s var(--ease-servo) infinite;
+  animation: sd-hop var(--cycle) var(--ease-servo) infinite;
 }
 
 @keyframes sd-hop {
@@ -365,7 +365,7 @@
 /* The portrait chain runs down the page, so its packet travels on Y. */
 .packetV {
   fill: var(--accent);
-  animation: sd-hop-v 7s var(--ease-servo) infinite;
+  animation: sd-hop-v var(--cycle) var(--ease-servo) infinite;
 }
 
 @keyframes sd-hop-v {
@@ -396,23 +396,23 @@
   stroke-width: 2;
   transform-box: fill-box;
   transform-origin: center;
-  animation: sd-flag 7s var(--ease-settle) infinite;
+  animation: sd-flag var(--cycle) var(--ease-settle) infinite;
 }
 
 .flagDot {
   fill: var(--accent);
-  animation: sd-flag 7s var(--ease-settle) infinite;
+  animation: sd-flag var(--cycle) var(--ease-settle) infinite;
 }
 
 .flagStem {
   stroke: var(--accent-line);
   stroke-width: 1.5;
   stroke-dasharray: 3 4;
-  animation: sd-flag 7s var(--ease-settle) infinite;
+  animation: sd-flag var(--cycle) var(--ease-settle) infinite;
 }
 
 .flagLabel {
-  animation: sd-flag 7s var(--ease-settle) infinite;
+  animation: sd-flag var(--cycle) var(--ease-settle) infinite;
 }
 
 @keyframes sd-flag {
@@ -445,7 +445,7 @@
   stroke-width: 1.75;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sd-draw 7s var(--ease-glide) infinite;
+  animation: sd-draw var(--cycle) var(--ease-glide) infinite;
 }
 
 .tick {
@@ -456,7 +456,7 @@
   stroke-linejoin: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sd-draw 7s var(--ease-servo) infinite;
+  animation: sd-draw var(--cycle) var(--ease-servo) infinite;
 }
 
 /* ---- Bus ---- */
@@ -467,7 +467,7 @@
 }
 
 .busTrain {
-  animation: sd-stream 7s linear infinite;
+  animation: sd-stream var(--cycle) linear infinite;
 }
 
 @keyframes sd-stream {
@@ -493,7 +493,7 @@
   stroke: var(--accent);
   stroke-width: 2;
   stroke-dasharray: 6 5;
-  animation: sd-blink 7s var(--ease-servo) infinite;
+  animation: sd-blink var(--cycle) var(--ease-servo) infinite;
 }
 
 .captureStem {
@@ -515,7 +515,7 @@
 
 .run {
   opacity: 0;
-  animation: sd-appear 7s var(--ease-settle) infinite;
+  animation: sd-appear var(--cycle) var(--ease-settle) infinite;
 }
 
 .runStem {

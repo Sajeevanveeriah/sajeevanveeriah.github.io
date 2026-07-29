@@ -18,6 +18,7 @@ export default function AtlasPage() {
     <section className="section">
       <div className="wrap-wide">
         <PageHeader
+          signature="lattice"
           kicker="Engineering Atlas"
           title="My capability landscape, tiered honestly by evidence."
           lede="Nineteen domains in one index. Search it, filter it, and open any domain for its subdomains, tools, proof and growth targets. Nothing here is claimed beyond its evidence."

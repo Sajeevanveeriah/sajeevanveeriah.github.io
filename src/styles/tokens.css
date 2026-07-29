@@ -101,7 +101,16 @@
   --radius-lg: 22px;
   --radius-xl: 30px;
   --header-h: 66px;
+
+  /* Pacing scale. Every stage previously took the same 115px at 1440
+     whether it was a 153px credentials strip or the 6307px selected work
+     stage, so a reader got no signal about the weight of what they were
+     entering. Air before a stage now scales with that stage's weight:
+     `sm` for a connective strip, the default for an ordinary stage, `lg`
+     for the one stage that carries half the page. */
+  --section-y-sm: clamp(2.75rem, 4.5vw, 5rem);
   --section-y: clamp(4.5rem, 8vw, 9rem);
+  --section-y-lg: clamp(5.5rem, 10.5vw, 11.5rem);
 
   /* ---- Motion ---- */
   --ease-servo: cubic-bezier(0.33, 0, 0.2, 1);
@@ -109,6 +118,23 @@
   --ease-glide: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-interaction: 200ms;
   --dur-ambient: 700ms;
+
+  /* One ambient clock for the whole site. The hero route, the eight
+     signature diagrams and every scroll-linked fill are phrased against
+     `--cycle` rather than each choosing its own period, so two graphics on
+     screen together read as one system breathing rather than as two
+     unrelated loops drifting past each other. Sub-beats are exact divisions
+     of it for the same reason. */
+  --cycle: 11s;
+  --cycle-half: 5.5s;
+  --beat: 1.375s; /* --cycle / 8: the unit every stagger counts in */
+
+  /* Reveal choreography. `--stagger` is the gap between siblings in a
+     cascading group; it is deliberately shorter than a beat so a list
+     resolves well inside one ambient cycle. */
+  --dur-reveal: 520ms;
+  --dur-reveal-slow: 720ms;
+  --stagger: 70ms;
   --lift: -2px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;

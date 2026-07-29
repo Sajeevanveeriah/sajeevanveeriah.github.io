@@ -156,6 +156,23 @@ button {
   position: relative;
 }
 
+/* A stage that carries real weight earns more air before and after it, so
+   arriving at it reads as an event rather than as the next item in a list. */
+.section-lg {
+  padding-block: var(--section-y-lg);
+}
+
+/* A connective strip closes up against what it supports. */
+.section-sm {
+  padding-block: var(--section-y-sm);
+}
+
+/* A tinted stage already announces itself by changing ground, so it does not
+   also need the full white-to-white interval to separate it. */
+.stage-tint.section {
+  padding-block: calc(var(--section-y) * 0.88);
+}
+
 /* A quiet tinted stage. Full-bleed, so it reads as a change of ground rather
    than a floating slab inside white space. */
 .stage-tint {
@@ -231,7 +248,24 @@ button {
   transform-origin: right;
 }
 
+/* Same technique as the footer links: a pseudo-element takes the hit area to
+   44px on a touch pointer while the drawn underline stays exactly where it
+   was. Changing the box itself would have moved the underline, which is
+   positioned against the link's own bottom edge. */
+@media (pointer: coarse) {
+  .textlink::before {
+    content: '';
+    position: absolute;
+    inset: -11px -4px;
+  }
+}
+
 /* Arrow link used for "read the case study" style affordances. */
+/* The hit area is 44px tall while the mark stays its drawn size. Measured on
+   a phone the bare link was 24px, which clears the WCAG 2.5.8 minimum but is
+   well under what a thumb actually wants, and this is the primary way into
+   every case study. The negative margin keeps the added padding from
+   changing any layout it sits in. */
 .arrowlink {
   display: inline-flex;
   align-items: center;
@@ -239,6 +273,9 @@ button {
   color: var(--accent-text);
   font-weight: 500;
   font-size: var(--text-sm);
+  min-height: 44px;
+  padding-block: 0.625rem;
+  margin-block: -0.625rem;
 }
 
 .arrowlink svg {
@@ -440,8 +477,59 @@ html[data-js] .reveal[data-shown] {
   opacity: 1;
   transform: none;
   transition:
-    opacity 520ms var(--ease-settle) var(--reveal-delay, 0s),
-    transform 620ms var(--ease-settle) var(--reveal-delay, 0s);
+    opacity var(--dur-reveal) var(--ease-settle) var(--reveal-delay, 0s),
+    transform var(--dur-reveal-slow) var(--ease-settle) var(--reveal-delay, 0s);
+}
+
+/* ---- Reveal vocabulary ----
+   One fade-up applied to every section reads as a template. These are the
+   four movements the site actually needs, chosen per stage so a heading, a
+   list, a wide plate and a full-bleed image do not all arrive the same way.
+   Each is a variation on the same settle easing, so they still feel related. */
+
+/* `lift`: a shorter, quieter arrival for secondary blocks that should not
+   compete with the stage heading above them. */
+html[data-js] .reveal[data-reveal='lift'] {
+  transform: translateY(8px);
+}
+
+/* `edge`: enters from the leading edge instead of from below. Used where a
+   block sits beside another rather than under it, so the two do not both
+   rise in parallel. */
+html[data-js] .reveal[data-reveal='edge'] {
+  transform: translateX(-18px);
+}
+
+/* `wipe`: the plate is uncovered rather than moved, which suits a diagram or
+   an image whose framing should stay put while its content is disclosed. */
+html[data-js] .reveal[data-reveal='wipe'] {
+  transform: none;
+  clip-path: inset(0 0 38% 0);
+}
+
+html[data-js] .reveal[data-reveal='wipe'][data-shown] {
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle) var(--reveal-delay, 0s),
+    clip-path var(--dur-reveal-slow) var(--ease-settle) var(--reveal-delay, 0s);
+}
+
+/* ---- Cascading groups ----
+   Children of a stagger group inherit the group's reveal and offset
+   themselves by index, so a list resolves in reading order rather than
+   snapping in as one slab. The index is set inline by the Stagger component
+   because CSS cannot count siblings into a delay. */
+html[data-js] .stagger > * {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+html[data-js] .stagger[data-shown] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle) calc(var(--i, 0) * var(--stagger)),
+    transform var(--dur-reveal-slow) var(--ease-settle) calc(var(--i, 0) * var(--stagger));
 }
 
 /* ============================================================
@@ -542,10 +630,17 @@ html[data-js] .reveal[data-shown] {
     scroll-behavior: auto !important;
   }
 
-  /* Content is never gated on a reveal that will not run. */
-  html[data-js] .reveal {
+  /* Content is never gated on a reveal that will not run. The variant
+     selectors carry an extra attribute, so the reset has to match their
+     specificity or the wipe would stay clipped at its start state and
+     permanently crop the block. */
+  html[data-js] .reveal,
+  html[data-js] .reveal[data-reveal],
+  html[data-js] .reveal[data-reveal][data-shown],
+  html[data-js] .stagger > * {
     opacity: 1;
     transform: none;
+    clip-path: none;
   }
 
   /* Diagrams settle on their finished state rather than their first frame. */

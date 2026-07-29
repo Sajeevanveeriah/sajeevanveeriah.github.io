@@ -77,7 +77,20 @@
   .pageHeadSplit {
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
     gap: clamp(2rem, 5vw, 5rem);
-    align-items: end;
+    /* Stretched, not end aligned. The aside below keeps its legend on the
+       baseline of the lede, but the column now has full height for the route
+       mark to pin to the top of, which is the quadrant the mark exists to
+       fill. End aligning the whole column dropped the mark to the bottom
+       beside the lede and left the emptiness exactly where it was. */
+    align-items: stretch;
+  }
+
+  /* Two children (mark plus legend) push apart: mark to the top of the
+     quadrant, legend down onto the lede's baseline. One child (mark only,
+     as on About and Contact) settles at the top, which is where the empty
+     space actually is. `end` would have pinned a lone mark to the bottom. */
+  .pageHeadSplit .pageHeadAside {
+    align-content: space-between;
   }
 }
 
@@ -141,6 +154,18 @@
   padding: 0.28rem 0.7rem;
   max-width: 100%;
   overflow-wrap: anywhere;
+}
+
+@media (pointer: coarse) {
+  .link {
+    position: relative;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    inset: -10px -4px;
+  }
 }
 
 .link {
@@ -355,13 +380,20 @@
 }
 
 .pill {
+  /* The archive filters are the only real control on the work index, and on
+     a phone there are twenty of them in two rows. At 37px they were under a
+     comfortable thumb; 44px is the floor, and inline-flex keeps the label
+     optically centred once the box grows. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-muted);
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.35rem 0.85rem;
+  padding: 0.35rem 0.95rem;
   cursor: pointer;
   transition:
     color var(--dur-interaction) var(--ease-servo),
