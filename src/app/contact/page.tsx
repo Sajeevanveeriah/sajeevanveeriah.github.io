@@ -23,6 +23,7 @@ export default function ContactPage() {
     <section className="section">
       <div className="wrap-wide">
         <PageHeader
+          signature="converge"
           kicker="Contact"
           title="Start a conversation."
           lede={contactIntro}

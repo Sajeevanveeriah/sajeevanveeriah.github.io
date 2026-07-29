@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
+import { RouteSignature, type SignatureVariant } from '@/components/signal/RouteSignature'
 import s from './shared.module.css'
 
 /**
@@ -13,6 +14,7 @@ export function PageHeader({
   lede,
   longTitle = false,
   aside,
+  signature,
   children,
 }: {
   kicker: string
@@ -21,17 +23,30 @@ export function PageHeader({
   /** Set for record titles, which run longer than a page title. */
   longTitle?: boolean
   aside?: ReactNode
+  /**
+   * Which route family this is, so the header can carry that family's mark.
+   * Index routes pass one; detail routes deliberately do not, because a
+   * record's own diagram is the thing that should identify it.
+   */
+  signature?: SignatureVariant
   children?: ReactNode
 }) {
+  const split = Boolean(aside || signature)
+
   return (
-    <header className={`${s.pageHead} ${aside ? s.pageHeadSplit : ''}`}>
+    <header className={`${s.pageHead} ${split ? s.pageHeadSplit : ''}`}>
       <div className={s.pageHeadMain}>
         <p className="label label-accent">{kicker}</p>
         <h1 className={longTitle ? s.pageHeadTitleLong : undefined}>{title}</h1>
         {lede ? <p className="lede">{lede}</p> : null}
         {children}
       </div>
-      {aside ? <div className={s.pageHeadAside}>{aside}</div> : null}
+      {split ? (
+        <div className={s.pageHeadAside}>
+          {signature ? <RouteSignature variant={signature} /> : null}
+          {aside}
+        </div>
+      ) : null}
     </header>
   )
 }

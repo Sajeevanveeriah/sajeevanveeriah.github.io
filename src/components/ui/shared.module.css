@@ -77,7 +77,20 @@
   .pageHeadSplit {
     grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
     gap: clamp(2rem, 5vw, 5rem);
-    align-items: end;
+    /* Stretched, not end aligned. The aside below keeps its legend on the
+       baseline of the lede, but the column now has full height for the route
+       mark to pin to the top of, which is the quadrant the mark exists to
+       fill. End aligning the whole column dropped the mark to the bottom
+       beside the lede and left the emptiness exactly where it was. */
+    align-items: stretch;
+  }
+
+  /* Two children (mark plus legend) push apart: mark to the top of the
+     quadrant, legend down onto the lede's baseline. One child (mark only,
+     as on About and Contact) settles at the top, which is where the empty
+     space actually is. `end` would have pinned a lone mark to the bottom. */
+  .pageHeadSplit .pageHeadAside {
+    align-content: space-between;
   }
 }
 

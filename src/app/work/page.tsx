@@ -34,6 +34,7 @@ export default function WorkPage() {
     <section className="section">
       <div className="wrap-wide">
         <PageHeader
+          signature="route"
           kicker="Work"
           title="Systems built, integrated and validated."
           lede="Four records lead, then the full archive. Every entry carries the evidence tier it can actually support, and nothing is promoted above it."

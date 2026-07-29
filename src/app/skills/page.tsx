@@ -22,6 +22,7 @@ export default function SkillsPage() {
       <section className="section">
         <div className="wrap-wide">
           <PageHeader
+          signature="strata"
             kicker="Expertise"
             title="My toolchain, shown in the context where I used it."
             lede="Six engineering territories. Each anchor platform is listed with the supporting toolset underneath it, and every capability here is backed by my resume, a case study or one of my roles."
