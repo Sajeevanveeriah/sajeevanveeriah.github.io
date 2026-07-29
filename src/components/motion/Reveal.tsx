@@ -1,6 +1,14 @@
 'use client'
 
-import { useEffect, useRef, type ReactNode } from 'react'
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useRef,
+  type ReactElement,
+  type ReactNode,
+} from 'react'
 
 /**
  * Scroll reveal that cannot hide content.
@@ -16,17 +24,15 @@ import { useEffect, useRef, type ReactNode } from 'react'
  * `opacity: 0` in the server HTML, which is exactly the failure mode above.
  * Reduced motion is handled globally in globals.css.
  */
-export function Reveal({
-  children,
-  as: Tag = 'div',
-  className,
-  delay = 0,
-}: {
-  children: ReactNode
-  as?: 'div' | 'section' | 'article' | 'li'
-  className?: string
-  delay?: number
-}) {
+/**
+ * Which movement a block arrives on. Chosen per stage so a heading, a list,
+ * a wide plate and an image do not all enter identically. The behaviours
+ * live in globals.css under `[data-reveal]`.
+ */
+export type RevealVariant = 'rise' | 'lift' | 'edge' | 'wipe'
+
+/** Sets `data-shown` the first time the element intersects, once. */
+function useRevealOnce() {
   const ref = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
@@ -54,11 +60,68 @@ export function Reveal({
     return () => observer.disconnect()
   }, [])
 
+  return ref
+}
+
+export function Reveal({
+  children,
+  as: Tag = 'div',
+  className,
+  delay = 0,
+  variant,
+}: {
+  children: ReactNode
+  as?: 'div' | 'section' | 'article' | 'li'
+  className?: string
+  delay?: number
+  variant?: RevealVariant
+}) {
+  const ref = useRevealOnce()
+
   const props = {
     ref: ref as React.Ref<never>,
     className: `reveal ${className ?? ''}`,
+    // 'rise' is the stylesheet default, so it needs no attribute.
+    'data-reveal': variant && variant !== 'rise' ? variant : undefined,
     style: delay ? ({ '--reveal-delay': `${delay}s` } as React.CSSProperties) : undefined,
   }
 
   return <Tag {...props}>{children}</Tag>
+}
+
+/**
+ * A group whose children resolve in reading order rather than snapping in
+ * together.
+ *
+ * The cascade is CSS transition delay driven off an inline `--i` per child,
+ * for the same reason `Reveal` avoids framer-motion's whileInView: the server
+ * must render the finished, visible state, and the offset state may only
+ * exist once `html[data-js]` is set. Children are cloned rather than wrapped
+ * so the group's own grid or flex layout is not disturbed by an extra box.
+ */
+export function Stagger({
+  children,
+  as: Tag = 'div',
+  className,
+}: {
+  children: ReactNode
+  as?: 'div' | 'ul' | 'ol' | 'section'
+  className?: string
+}) {
+  const ref = useRevealOnce()
+
+  return (
+    <Tag ref={ref as React.Ref<never>} className={`stagger ${className ?? ''}`}>
+      {Children.map(children, (child, i) =>
+        isValidElement(child)
+          ? cloneElement(child as ReactElement<{ style?: React.CSSProperties }>, {
+              style: {
+                ...(child.props as { style?: React.CSSProperties }).style,
+                ['--i' as string]: i,
+              } as React.CSSProperties,
+            })
+          : child,
+      )}
+    </Tag>
+  )
 }

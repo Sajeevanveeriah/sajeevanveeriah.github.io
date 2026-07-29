@@ -109,6 +109,23 @@
   --ease-glide: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-interaction: 200ms;
   --dur-ambient: 700ms;
+
+  /* One ambient clock for the whole site. The hero route, the eight
+     signature diagrams and every scroll-linked fill are phrased against
+     `--cycle` rather than each choosing its own period, so two graphics on
+     screen together read as one system breathing rather than as two
+     unrelated loops drifting past each other. Sub-beats are exact divisions
+     of it for the same reason. */
+  --cycle: 11s;
+  --cycle-half: 5.5s;
+  --beat: 1.375s; /* --cycle / 8: the unit every stagger counts in */
+
+  /* Reveal choreography. `--stagger` is the gap between siblings in a
+     cascading group; it is deliberately shorter than a beat so a list
+     resolves well inside one ambient cycle. */
+  --dur-reveal: 520ms;
+  --dur-reveal-slow: 720ms;
+  --stagger: 70ms;
   --lift: -2px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;

@@ -5,7 +5,7 @@ import { SignalHero } from '@/components/signal/SignalHero'
 import { ClosedLoop } from '@/components/signal/ClosedLoop'
 import { StackSpine } from '@/components/signal/StackSpine'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
-import { Reveal } from '@/components/motion/Reveal'
+import { Reveal, Stagger } from '@/components/motion/Reveal'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { site } from '@/content/site'
 import { narrative, closedLoop } from '@/content/about'
@@ -140,14 +140,14 @@ export default function HomePage() {
 
       {/* ---------- Credibility ---------- */}
       <section className={home.proof} aria-label="Credentials and evidence">
-        <div className={`wrap-wide ${home.proofGrid}`}>
+        <Stagger className={`wrap-wide ${home.proofGrid}`}>
           {PROOF.map((item) => (
             <div key={item.value} className={home.proofItem}>
               <span className={home.proofValue}>{item.value}</span>
               <span className={home.proofNote}>{item.note}</span>
             </div>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       {/* ---------- Problems I solve ---------- */}
@@ -165,7 +165,7 @@ export default function HomePage() {
             </p>
           </Reveal>
 
-          <ul className={home.problemList}>
+          <Stagger as="ul" className={home.problemList}>
             {PROBLEMS.map(([title, body], i) => (
               <li key={title} className={home.problem}>
                 <span className={home.problemIndex}>{String(i + 1).padStart(2, '0')}</span>
@@ -173,7 +173,7 @@ export default function HomePage() {
                 <p className={home.problemBody}>{body}</p>
               </li>
             ))}
-          </ul>
+          </Stagger>
         </div>
       </section>
 
@@ -214,6 +214,7 @@ export default function HomePage() {
               return (
                 <Reveal
                   as="article"
+                  variant="wipe"
                   key={p.slug}
                   className={`${home.entry} ${lead ? home.entryLead : ''} ${
                     i % 2 === 1 ? home.entryFlip : ''

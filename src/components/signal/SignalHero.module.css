@@ -33,7 +33,7 @@
 /* The group sits inside translate(90 470), so its local origin is the
    vehicle and no transform-origin is needed. */
 .sweep {
-  animation: sh-rotate 11s linear infinite;
+  animation: sh-rotate var(--cycle) linear infinite;
 }
 
 @keyframes sh-rotate {
@@ -47,11 +47,11 @@
   stroke: var(--accent);
   stroke-width: 1.5;
   opacity: 0;
-  animation: sh-ping 5.5s var(--ease-glide) infinite;
+  animation: sh-ping var(--cycle-half) var(--ease-glide) infinite;
 }
 
 .ping2 {
-  animation-delay: 2.75s;
+  animation-delay: calc(var(--cycle-half) / 2);
 }
 
 @keyframes sh-ping {
@@ -105,7 +105,7 @@
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: sh-draw 11s var(--ease-glide) infinite;
+  animation: sh-draw var(--cycle) var(--ease-glide) infinite;
 }
 
 @keyframes sh-draw {
@@ -132,7 +132,7 @@
   stroke-dasharray: 0.055 0.945;
   stroke-dashoffset: 0.055;
   opacity: 0;
-  animation: sh-pulse 11s var(--ease-glide) infinite;
+  animation: sh-pulse var(--cycle) var(--ease-glide) infinite;
 }
 
 @keyframes sh-pulse {
@@ -162,7 +162,7 @@
   stroke-width: 1.5;
   stroke-dasharray: 2 5;
   opacity: 0.7;
-  animation: sh-rotate 22s linear infinite;
+  animation: sh-rotate calc(var(--cycle) * 2) linear infinite;
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -170,7 +170,7 @@
 .goalDot {
   fill: var(--accent);
   opacity: 0.25;
-  animation: sh-arrive 11s var(--ease-glide) infinite;
+  animation: sh-arrive var(--cycle) var(--ease-glide) infinite;
 }
 
 @keyframes sh-arrive {
