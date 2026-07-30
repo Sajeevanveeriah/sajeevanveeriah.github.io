@@ -125,7 +125,7 @@
      the stage layer reads in the vocabulary of the spec it implements
      rather than forcing every call site to know the internal alias. */
   --dur-fast: 180ms;
-  --dur-base: 420ms;
+  --dur-base: 500ms;
   --dur-slow: 720ms;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
@@ -146,10 +146,17 @@
 
   /* Reveal choreography. `--stagger` is the gap between siblings in a
      cascading group; it is deliberately shorter than a beat so a list
-     resolves well inside one ambient cycle. */
+     resolves well inside one ambient cycle.
+
+     `--stagger-steps` caps how many of those gaps ever accumulate. Without a
+     cap the delay is linear in list length, so the twelfth claim in a
+     discipline group waits on eleven predecessors and the reader watches an
+     empty column. Six steps is 300ms of spread, which is enough to read as
+     reading order and short enough that the last item is never stranded. */
   --dur-reveal: 520ms;
   --dur-reveal-slow: 720ms;
-  --stagger: 60ms;
+  --stagger: 50ms;
+  --stagger-steps: 6;
   --lift: -2px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;

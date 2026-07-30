@@ -23,10 +23,13 @@ function linksFor(href: string): readonly { label: string; href: string }[] {
       return discoverableProjects.map((p) => ({ label: p.title, href: `/work/${p.slug}/` }))
     case '/skills/':
       return atlas.map((d) => ({ label: d.name, href: `/atlas/${d.slug}/` }))
-    case '/about/':
+    case '/employers/':
+      // Points at the employer pages, not at the old role URLs. Those still
+      // resolve, but they are signposts now and nothing should route a reader
+      // through one.
       return discoverableExperience.map((r) => ({
         label: `${r.company}, ${r.title}`,
-        href: `/about/${r.slug}/`,
+        href: `/employers/${r.slug}/`,
       }))
     default:
       return []

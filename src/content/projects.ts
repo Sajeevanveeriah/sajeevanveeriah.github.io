@@ -438,7 +438,10 @@ export const projects: readonly Project[] = [
       'I completed six years of production and quality work from 2018 to 2024 at IDL, Carbon Revolution and Thornton Engineering Australia Pty Ltd while undertaking formal engineering study.',
     approach: [
       'High-throughput packaged beverage production lines, a carbon-fibre rim layup line moving onto KUKA-based robotic cells, and standards-driven structural-steel and pressure-vessel fabrication, each with its own quality, traceability and documentation system.',
-      'I progressed deliberately from operating machines to leading lines and owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
+      /* "leading lines" removed: it restated the unverified line-lead
+         progression that Rev01 and Rev02 both required to stay unpublished.
+         Owning quality workflows is Thornton evidence and stays. */
+      'I progressed deliberately from operating machines to owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
     ],
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, KUKA-based automated rim layup, NDE and mechanical testing exposure, ITP and MDR documentation, drawing review, KPI tracking, Lean practice.',
@@ -503,7 +506,14 @@ export const projects: readonly Project[] = [
     title: 'IDL: Canning Line Upgrade and Commissioning',
     summary:
       'I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
-    role: 'Production Line Worker to Team Lead / Line Support to Cellar Hand',
+    /* The role line carried an unverified progression title, and the context
+       and approach below carried the trade descriptor that goes with it.
+       Both trace to third-party aggregator records rather than to anything
+       Saj has confirmed, and Rev01 and Rev02 both required them to stay
+       unpublished. They were published here anyway. The title is reduced to
+       the neutral descriptor `employers.ts` already carries for IDL; see the
+       TODO CONFIRM list on that record for exactly what was removed. */
+    role: 'Beverage production role',
     period: null, // TODO: Saj to supply.
     domain: 'Manufacturing and packaging automation',
     disciplines: ['Manufacturing', 'Automation'],
@@ -515,9 +525,9 @@ export const projects: readonly Project[] = [
     problem:
       'A high-throughput beverage plant has to lift capacity and reliability across canning, bottling and kegging without long downtime, which means installing and commissioning new packaging automation on a live production site.',
     context:
-      'I worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade, while progressing from line work into team lead, line support and cellar operations.',
+      'I worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade.',
     approach: [
-      'High-throughput packaging lines with fillers, seamers and conveyors, the WestRock and Fibre King equipment added for the canning line upgrade, and the upstream cellar processes that turn raw product into a finished, packaged beverage.',
+      'High-throughput packaging lines with fillers, seamers and conveyors, and the WestRock and Fibre King equipment added for the canning line upgrade.',
       "Treated changeovers, first-response fixes and run recovery as engineering problems rather than chores; supported install and commissioning so the new equipment held rate and quality; learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
     ],
     toolsNote:

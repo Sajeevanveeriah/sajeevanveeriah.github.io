@@ -5,9 +5,31 @@ import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { Reveal } from '@/components/motion/Reveal'
 import { experience, getRole } from '@/content/experience'
+import { getEmployerRecord } from '@/content/employers'
 import { getProject } from '@/content/projects'
 import s from '@/components/ui/shared.module.css'
 
+/**
+ * The former role detail route, kept because its URLs resolve.
+ *
+ * Employer content is authored once, in `employers.ts`, and rendered once, at
+ * `/employers/[slug]/`. Every one of these seven URLs resolved before that
+ * reconciliation and every one still resolves, but nothing links here any
+ * more: the nav panel, the career spine, the employers index and the work
+ * records all point at the employer page directly.
+ *
+ * Two behaviours, and which one applies is decided by the record, not by a
+ * list kept in step by hand:
+ *
+ *   - A published employer has a page of its own, so this URL renders a short
+ *     signpost to it and carries a canonical pointing there. No redirect is
+ *     emitted. A static export cannot issue a 301, and a meta refresh would
+ *     move a reader who followed an old bookmark before they could see why,
+ *     so the page says what happened and gives them the link.
+ *   - A suppressed employer has no employer page to point at, so this URL
+ *     keeps rendering the full record exactly as it did before, unlinked and
+ *     noindexed. Suppression is not deletion.
+ */
 export function generateStaticParams() {
   return experience.map((r) => ({ role: r.slug }))
 }
@@ -20,16 +42,24 @@ export async function generateMetadata({
   const { role } = await params
   const r = getRole(role)
   if (!r) return {}
+
+  const employer = getEmployerRecord(role)
+  const moved = Boolean(employer && !employer.suppressed)
+
   return {
     title: `${r.title}, ${r.company}`,
     description: r.summary,
-    alternates: { canonical: `/about/${r.slug}/` },
-    // A suppressed role stays reachable by direct URL but is not indexed.
-    ...(r.suppressed ? { robots: { index: false, follow: true } } : {}),
+    // A signpost is not the canonical home of this content, so it points at
+    // the page that is. A suppressed record has no other home and keeps its
+    // own canonical.
+    alternates: { canonical: moved ? `/employers/${role}/` : `/about/${r.slug}/` },
+    // Neither shape belongs in an index: a signpost has nothing of its own to
+    // rank, and a suppressed role is withheld deliberately.
+    robots: { index: false, follow: true },
     openGraph: {
       title: `${r.title}, ${r.company}`,
       description: r.summary,
-      url: `/about/${r.slug}/`,
+      url: moved ? `/employers/${role}/` : `/about/${r.slug}/`,
     },
   }
 }
@@ -38,6 +68,30 @@ export default async function RolePage({ params }: { params: Promise<{ role: str
   const { role } = await params
   const r = getRole(role)
   if (!r) notFound()
+
+  const employer = getEmployerRecord(role)
+
+  if (employer && !employer.suppressed) {
+    return (
+      <article className="section">
+        <div className="wrap-wide">
+          <BackLink href="/employers/">All employers</BackLink>
+
+          <PageHeader
+            kicker="This page moved"
+            title={r.company}
+            lede={`The record for this role now lives on the employer page, where the work is graded by evidence tier and the verified facts about the employer are kept separate from my own claims.`}
+          >
+            <p className={s.rowSummary}>
+              <Link href={`/employers/${role}/`} className={s.link}>
+                Read the {r.company} record
+              </Link>
+            </p>
+          </PageHeader>
+        </div>
+      </article>
+    )
+  }
 
   // Suppressed records are never advertised from a related-work module.
   const related = r.relatedProjects
