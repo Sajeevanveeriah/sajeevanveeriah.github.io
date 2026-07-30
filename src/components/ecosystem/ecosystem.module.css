@@ -1,0 +1,506 @@
+/* Ecosystem catalogue presentation.
+   White first, one accent, text labels rather than colour coding: every
+   lifecycle and kind reads as words, so nothing depends on hue (WCAG 1.4.1). */
+
+.notice {
+  border-left: 2px solid var(--accent-fill);
+  padding: var(--space-4) 0 var(--space-4) var(--space-5);
+  margin: var(--space-8) 0 0;
+  max-width: 62ch;
+}
+
+.noticeTitle {
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  margin: 0 0 var(--space-2);
+  color: var(--text);
+}
+
+.noticeBody {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.reviewed {
+  margin: var(--space-4) 0 0;
+  color: var(--text-faint);
+  font-size: 0.8125rem;
+}
+
+/* ---- Pillar overview grid ---- */
+
+.pillarGrid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 720px) {
+  .pillarGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pillarCard {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+}
+
+.pillarIndex {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.pillarName {
+  font-family: var(--font-display);
+  font-size: clamp(1.125rem, 2.4vw, 1.375rem);
+  line-height: 1.25;
+  margin: var(--space-2) 0 var(--space-2);
+}
+
+.pillarName a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pillarName a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.pillarName a:hover {
+  color: var(--accent-text);
+}
+
+.pillarSummary {
+  margin: 0 0 var(--space-3);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.pillarDomains {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.pillarCount {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ---- Explorer list ---- */
+
+.countRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.clearButton {
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--accent-text);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  border-color: var(--accent-fill);
+}
+
+.groupCount {
+  margin-left: var(--space-3);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.entryList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  min-height: 44px;
+}
+
+.entryLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+.entryLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.entryName {
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.entry:hover .entryName {
+  color: var(--accent-text);
+}
+
+.entryMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: baseline;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.entryVendor {
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entryTag {
+  white-space: nowrap;
+}
+
+.empty {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-5);
+  max-width: 60ch;
+}
+
+.emptyTitle {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  margin: 0 0 var(--space-2);
+}
+
+.emptyBody {
+  margin: 0 0 var(--space-4);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* ---- Entity records on a pillar page ---- */
+
+.domainBlock {
+  margin-top: var(--space-8);
+  scroll-margin-top: var(--space-6);
+}
+
+.domainHead {
+  border-top: 1px solid var(--text);
+  padding-top: var(--space-3);
+}
+
+.domainName {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.625rem);
+  line-height: 1.2;
+  margin: 0 0 var(--space-2);
+}
+
+.domainSummary {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 68ch;
+  line-height: 1.65;
+}
+
+.records {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.record {
+  border-bottom: 1px solid var(--border);
+  padding: var(--space-5) 0;
+  /* Anchored from the index, so keep the heading clear of the viewport edge. */
+  scroll-margin-top: var(--space-6);
+}
+
+.recordHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+}
+
+.recordName {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.recordTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 2px var(--space-2);
+  white-space: nowrap;
+}
+
+.tagLifecycle {
+  border-color: var(--accent-fill);
+  color: var(--accent-text);
+}
+
+.recordVendor {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  margin: var(--space-2) 0 0;
+}
+
+.recordSummary {
+  margin: var(--space-3) 0 0;
+  color: var(--text-muted);
+  max-width: 72ch;
+  line-height: 1.65;
+}
+
+.recordUseCases {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 70ch;
+}
+
+.disclosure {
+  margin-top: var(--space-4);
+}
+
+.disclosure > summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--accent-text);
+  list-style: none;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure > summary::before {
+  content: '+';
+  display: inline-block;
+  width: 1.25em;
+  font-variant-numeric: tabular-nums;
+}
+
+.disclosure[open] > summary::before {
+  content: '-';
+}
+
+.modelTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-top: var(--space-2);
+}
+
+.modelTable caption {
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  padding-bottom: var(--space-2);
+}
+
+.modelTable th,
+.modelTable td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--space-2) var(--space-3) var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.modelTable th {
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.modelTable td {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* A wide table must scroll inside its own box, never the page. */
+.tableScroll {
+  overflow-x: auto;
+}
+
+.sourceList {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.sourceList li {
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* 44px, not the 24px WCAG 2.5.8 floor. These sit in a plain list with no
+   drawn underline to displace and no grid to reflow, so the box is simply
+   made tall enough rather than overlaid with a pseudo-element. */
+.sourceList a {
+  color: var(--accent-text);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.sourceType {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  margin-left: var(--space-2);
+}
+
+.aliasLine {
+  margin: var(--space-2) 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ---- Legend ---- */
+
+.legend {
+  display: grid;
+  gap: var(--space-3) var(--space-6);
+  grid-template-columns: 1fr;
+  margin: var(--space-5) 0 0;
+  padding: 0;
+}
+
+@media (min-width: 700px) {
+  .legend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.legendTerm {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.legendDef {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* ---- Scope figures ---- */
+
+.figures {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 780px) {
+  .figures {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.figure {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+
+.figureValue {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.figureLabel {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.pillarNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.pillarNav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-size: 0.875rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.pillarNav a:hover {
+  border-color: var(--accent-fill);
+  color: var(--accent-text);
+}

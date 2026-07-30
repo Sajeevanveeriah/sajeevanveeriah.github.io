@@ -76,6 +76,12 @@ export const navigation: readonly NavItem[] = [
   // site linked to any of them. Everything a visitor could click led to the
   // thinner career copy instead, which is why the role pages read as empty.
   { label: 'Employers', href: '/employers/' },
+  // The ecosystem catalogue is a reference layer about the field rather than
+  // about Saj, so it sits after the evidence routes. It gets a plain nav
+  // entry and no mega-menu panel on purpose: eight pillars belong on the
+  // page, not in a dropdown, and dumping 31 domains into the header would
+  // make navigation worse rather than better.
+  { label: 'Ecosystem', href: '/ecosystem/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ] as const

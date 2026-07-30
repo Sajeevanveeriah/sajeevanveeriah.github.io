@@ -703,3 +703,12 @@
     transform: none !important;
   }
 }
+
+/* Short explanatory note inside a rail block, used where the rail carries a
+   sentence rather than a list of chips. */
+.railNote {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}

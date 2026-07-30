@@ -104,3 +104,18 @@
     gap: clamp(2rem, 5vw, 5rem);
   }
 }
+
+/* Contextual pointer to the ecosystem catalogue. Restrained on purpose: it
+   is a reference layer about the field, not more evidence about Saj. */
+.ecosystemLink {
+  margin-top: var(--space-10);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+  max-width: 64ch;
+}
+
+.ecosystemLink p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
