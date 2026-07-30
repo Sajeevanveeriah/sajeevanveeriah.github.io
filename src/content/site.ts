@@ -71,6 +71,11 @@ export interface NavItem {
 export const navigation: readonly NavItem[] = [
   { label: 'Work', href: '/work/' },
   { label: 'Expertise', href: '/skills/' },
+  // The employer record was reachable from nothing until this entry existed:
+  // it had a route, a sitemap line and six detail pages, and no page on the
+  // site linked to any of them. Everything a visitor could click led to the
+  // thinner career copy instead, which is why the role pages read as empty.
+  { label: 'Employers', href: '/employers/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ] as const
@@ -116,10 +121,11 @@ export const navPanels: readonly NavPanelCopy[] = [
     indexLabel: 'Browse the full atlas',
   },
   {
-    href: '/about/',
-    eyebrow: 'About',
-    intro: 'How I work, and the roles the evidence on this site comes from.',
-    listTitle: 'Roles',
-    indexLabel: 'Read the full background',
+    href: '/employers/',
+    eyebrow: 'Employers',
+    intro:
+      'Every employer on the record, with the verified facts about the place kept separate from the work I can personally evidence.',
+    listTitle: 'Employers',
+    indexLabel: 'Every employer, and the through-line',
   },
 ] as const

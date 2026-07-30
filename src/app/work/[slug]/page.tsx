@@ -193,9 +193,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ) : null}
             {roles.length ? (
               <div className={s.railBlock}>
-                <p className="label">Related role</p>
+                <p className="label">Related employer</p>
                 {roles.map((r) => (
-                  <Link key={r.slug} href={`/about/${r.slug}/`} className={s.link}>
+                  <Link key={r.slug} href={`/employers/${r.slug}/`} className={s.link}>
                     {r.company}
                   </Link>
                 ))}

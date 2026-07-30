@@ -42,10 +42,19 @@
   max-width: 40ch;
 }
 
+/* `min-width: 0` is load-bearing. The column is itself a grid, so its single
+   implicit track sizes to its widest item, and the widest item is the email
+   address at 189px of max-content. In a `minmax(0, 1fr)` footer track that is
+   161px wide at 768px, the track therefore rendered 28px wider than the box
+   holding it, and both the "Connect" label and the address hung outside their
+   own column. Measured on the pre-change build as well, so this is an
+   inherited defect rather than one this branch introduced: 189px in 161px at
+   768px, in every mode, on every page, because the footer is on every page. */
 .col {
   display: grid;
   gap: 0.65rem;
   align-content: start;
+  min-width: 0;
 }
 
 .col > :global(.label) {
@@ -71,6 +80,11 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
   justify-self: start;
+  /* Held inside the column even when the content cannot shrink to fit. The
+     email address is one unbroken token, so without a break opportunity it
+     would simply overflow a narrower box instead of wrapping. */
+  max-width: 100%;
+  overflow-wrap: anywhere;
   transition: color var(--dur-interaction) var(--ease-servo);
 }
 

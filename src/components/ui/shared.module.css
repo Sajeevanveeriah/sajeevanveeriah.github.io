@@ -613,3 +613,93 @@
 .nextTitle a:hover {
   color: var(--accent-text);
 }
+
+/* ============================================================
+   E3, rule draw. E5, hover lift.
+
+   Two effects on rules and rows that already exist in the design. No rule is
+   added: the hairlines below are the ones `.chapter` and `.rows` already
+   carried, redrawn as a scaled pseudo-element so they can animate at all. A
+   `border-top` cannot be transformed, so the border stays in the box to hold
+   the 1px it always held, turns transparent, and a 1px overlay draws in its
+   place. The box model is untouched, so this contributes zero layout shift.
+
+   Both are scoped to `html[data-js]`. Without JavaScript the borders paint
+   normally and nothing here applies, so the page is complete and correctly
+   ruled with the script disabled.
+   ============================================================ */
+
+:global(html[data-js]) .chapter,
+:global(html[data-js]) .rows {
+  position: relative;
+  border-top-color: transparent;
+}
+
+:global(html[data-js]) .chapter::before,
+:global(html[data-js]) .rows::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline: 0;
+  height: 1px;
+  background: var(--border);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+:global(html[data-js]) .chapter[data-shown]::before,
+:global(html[data-js]) .rows[data-shown]::before {
+  transform: scaleX(1);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+/* The first chapter on a page carries no rule, so it draws none either. */
+:global(html[data-js]) .chapter:first-child {
+  border-top-color: transparent;
+}
+
+:global(html[data-js]) .chapter:first-child::before {
+  content: none;
+}
+
+/* E5. Cards lift on hover, gated on a real pointer so a touch device, where
+   :hover latches after a tap, is unaffected. Transform only: the existing
+   background and colour transitions are left as they were and no shadow
+   animates. */
+@media (hover: hover) and (pointer: fine) {
+  .row {
+    transition:
+      background-color var(--dur-interaction) var(--ease-servo),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  /* The second selector is not redundant. Every row on the employers index is
+     a child of a `.stagger`, and the cascade rule that resolves a revealed
+     group, `html[data-js] .stagger[data-shown] > *`, sets `transform: none` at
+     a specificity of (0,3,1). A bare `.row:hover` is (0,2,0) and loses, so the
+     lift silently did nothing on exactly the cards it was written for:
+     measured at 1440x900, a hovered row held the stagger's transform instead
+     of taking the lift. Restating the rule through the group selector clears
+     it at (0,5,1). The plain selector stays for rows outside a stagger. */
+  .row:hover,
+  :global(html[data-js] .stagger[data-shown]) > .row:hover {
+    transform: translateY(var(--lift));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Every rule resolves drawn, with no residual offset, and the lift is
+     cancelled outright rather than shortened. */
+  :global(html[data-js]) .chapter::before,
+  :global(html[data-js]) .rows::before,
+  :global(html[data-js]) .chapter[data-shown]::before,
+  :global(html[data-js]) .rows[data-shown]::before {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+
+  .row:hover,
+  :global(html[data-js] .stagger[data-shown]) > .row:hover {
+    transform: none !important;
+  }
+}

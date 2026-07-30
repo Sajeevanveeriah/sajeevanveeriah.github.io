@@ -1,22 +1,32 @@
 import type { EvidenceTier } from './tiers'
 
 /**
- * Employer records, transcribed verbatim from the authoritative content
- * brief of 30 July 2026. This layer is additive: `experience.ts` and the
- * `/about/[role]` routes it feeds are untouched, because those carry
- * material this brief does not supply and removing it would be a content
- * deletion, not a content build.
+ * Employer records: the single authored source of truth for employer
+ * content.
+ *
+ * This file was additive when it was introduced, sitting beside an
+ * `experience.ts` that carried its own authored copy of the same six
+ * employers. Two authored copies of one career is a content defect on its
+ * own, and it had a visible cost: every human path into the site landed on
+ * the thinner copy, so the richer one was never read. `experience.ts` is now
+ * a derived view over this file and authors nothing. Everything it used to
+ * carry alone was migrated here, or dropped on the record with a reason.
  *
  * Binding rules for this file:
- *   - Every string below is transcribed, never paraphrased or extended. No
- *     claim about Saj's work is inferred from any other source.
+ *   - Every string below traces to one of exactly two places: the
+ *     authoritative content brief of 30 July 2026, or the migrated text of
+ *     the former `experience.ts`. Claims added from the resume carry an
+ *     explicit `source`. Nothing is paraphrased into a stronger statement
+ *     and no claim about Saj's work is inferred from anywhere else.
  *   - `companyFacts` are verified facts about the employer, not about Saj.
  *     Each carries the primary source domain it was verified against.
  *     "Company fact" is deliberately not an evidence tier: the five-tier
  *     model in `tiers.ts` grades Saj's own evidence and is not extended.
  *   - `todoConfirm` entries are unverified. They render as HTML source
  *     comments only and must never reach published prose.
- *   - An employer with `draft: true` is not routed and not published.
+ *   - A `suppressed` employer is withheld from publication and from every
+ *     discovery surface, but its `/about/[slug]/` URL still resolves and
+ *     still carries `noindex`. Suppression is not deletion.
  */
 
 /**
@@ -43,6 +53,15 @@ export interface EmployerClaim {
   readonly discipline: Discipline
   readonly tier: EvidenceTier
   readonly body: string
+  /**
+   * Provenance, so a claim can be traced back to the document it came from
+   * long after this run. Absent means the claim came from the original
+   * content brief of 30 July 2026. `experience.ts` marks a claim migrated
+   * from the former authored copy; `resume Rev09` marks one extracted from
+   * `public/assets/Resume_Sajeevan_Veeriah.pdf`, which is the file committed
+   * as 20260728-Sajeevan-Veeriah-Resume-Rev09.pdf and renamed in 579e7f7.
+   */
+  readonly source?: 'experience.ts' | 'resume Rev09'
 }
 
 export interface CompanyFact {
@@ -71,12 +90,38 @@ export interface Employer {
   /** The page's argument. null where the brief supplies no closing line. */
   readonly closing: string | null
   readonly todoConfirm: readonly string[]
+
+  /* ---- Migrated from the former authored `experience.ts` ----
+     These are not claims and were never graded by a tier: they are the
+     framing, the rail contents and the argument the role supports. They
+     live here because this file is now the only place employer content is
+     authored, and `experience.ts` derives its `Role` shape from them. */
+
+  /** One-sentence framing, used as the page lede and the spine summary. */
+  readonly summary: string
+  /** Capability domains, rendered as chips in the detail rail. */
+  readonly domains: readonly string[]
+  /** Label above the tools line: "Representative tools" or context. */
+  readonly toolsLabel: string
+  readonly tools: readonly string[]
+  /** What the role is relevant to, as one sentence of keywords. */
+  readonly relevance: string
+  /** What the role transferred into later work. */
+  readonly transferable: string
+  /** Which band of the career spine the role sits in. */
+  readonly group: 'recent' | 'foundation'
+  /** Work records covering the same employer. */
+  readonly relatedProjects: readonly string[]
+
   /**
-   * Withheld from publication pending a blocking confirmation. A draft
-   * employer is excluded from `publishedEmployers` and from
-   * `generateStaticParams`, so no route is emitted for it at all.
+   * Withheld from publication and from every discovery surface: nav panels,
+   * the career spine, the employers index and the sitemap. A suppressed
+   * employer is excluded from `publishedEmployers`, so no
+   * `/employers/[slug]/` route is emitted for it, and its `/about/[slug]/`
+   * URL renders in full while carrying `noindex`. The record stays in the
+   * career history and no history is rewritten.
    */
-  readonly draft?: true
+  readonly suppressed?: true
 }
 
 export const employers: readonly Employer[] = [
@@ -157,7 +202,47 @@ export const employers: readonly Employer[] = [
         tier: 'adjacent',
         body: "Work was performed for JAG's end clients in pharmaceutical, biotech and food manufacturing.",
       },
+      {
+        discipline: 'Control and automation',
+        tier: 'delivered',
+        body: 'Delivered end-to-end automation and systems integration for pharmaceutical, biotech and food manufacturing under GMP.',
+        source: 'resume Rev09',
+      },
+      {
+        discipline: 'Control and automation',
+        tier: 'hands-on',
+        body: 'Worked across control logic, HMI, SCADA, MES and batch execution.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Instrumentation and measurement',
+        tier: 'hands-on',
+        body: 'Integrated field devices, sensors, drives and process equipment with control logic and production data flows.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Project and delivery',
+        tier: 'hands-on',
+        body: 'Resolved faults raised during testing and site support with attention to diagnostics, safety, usability and data integrity.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.',
+    domains: [
+      'Automation and SCADA',
+      'Controls',
+      'Regulated manufacturing',
+      'Commissioning and delivery',
+    ],
+    toolsLabel: 'Representative tools',
+    tools: ['Siemens TIA Portal', 'WinCC', 'PCS 7', 'iFIX', 'PVI+', 'MES and batch'],
+    relevance:
+      'Industrial automation, process control, HMI and SCADA, MES, batch systems, GMP, GAMP 5, commissioning, validation, field-device integration, production data and regulated documentation.',
+    transferable:
+      'In this role, I connected controls, software, process systems, operator workflows and compliance. I worked across both the machine layer and the validation layer, building capability relevant to automation, robotics, smart factory, digital twin and regulated engineering environments.',
+    group: 'recent',
+    relatedProjects: ['jag-smart-factory'],
     closing:
       'Six months in a Swiss-standard process house is not a long time. What it bought was seeing one plant as one system: a recipe in software, a valve in the field, a robot moving material between them, and a qualification file that has to prove the whole thing behaves. Most engineers meet those four things in four different jobs.',
     todoConfirm: [
@@ -170,7 +255,72 @@ export const employers: readonly Employer[] = [
       // carrying the name would publish exactly what this item forbids.
       // The instruction is preserved; only the name is withheld.
       'Whether any client may be named publicly. Default is to name none. The one client named in the source brief must not be named: it was a JAG client, never an employer.',
+      'TODO CONFIRM: the title. Resume Rev09 reads "Automation Engineer"; both content files read "Automation and Controls Engineer". These are not contradictory, so neither was overwritten, but only Saj can say which is the title of record.',
     ],
+  },
+  {
+    /*
+     * Suppressed per Rev01 and unchanged by this run. The record moved here
+     * only because this file is now the single authored source; suppressing
+     * it in one place is what keeps it out of `publishedEmployers`, out of
+     * the employers index, out of the nav panel, out of the career spine and
+     * out of the sitemap. No `/employers/ford-via-invenio/` route is emitted.
+     * `/about/ford-via-invenio/` still resolves at its original URL and still
+     * carries `noindex`, exactly as before. Suppression is not deletion and
+     * no history is rewritten.
+     */
+    slug: 'ford-via-invenio',
+    suppressed: true,
+    company: 'Ford Motor Company via Invenio contract placement',
+    title: 'Product Development Test Engineer (Contract)',
+    period: 'Oct 2025 to Jan 2026',
+    location: 'Victoria, Australia',
+    companyFacts: [],
+    claims: [
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'delivered',
+        body: 'Validated vehicle software integration and ADAS features across T6 Ranger and Everest programmes.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'delivered',
+        body: 'Ran feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Instrumentation and measurement',
+        tier: 'hands-on',
+        body: 'Instrumented test vehicles and conducted structured test drives in controlled and real-world conditions.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Networks and data',
+        tier: 'hands-on',
+        body: 'Captured and analysed CAN bus data using Vector CANoe and CANalyzer.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Supported evidence-based defect reporting, fault isolation and verification.',
+        source: 'experience.ts',
+      },
+    ],
+    summary:
+      'I validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes, using CAN-level evidence for readiness milestones and OTA sign-off.',
+    domains: ['Automotive and validation', 'Embedded networks', 'Test engineering'],
+    toolsLabel: 'Representative tools',
+    tools: ['Vector CANoe', 'CANalyzer', 'CAN and CAN FD', 'vehicle instrumentation'],
+    relevance:
+      'Automotive validation, ADAS, vehicle networks, CAN, CAN FD, test procedures, regression testing, OTA validation, instrumentation, diagnostics and evidence-based engineering.',
+    transferable:
+      'In this role, I connected embedded systems, vehicle behaviour, test engineering and fault evidence. I strengthened my ability to validate cyber-physical systems where software, sensors, networks, control logic and real-world operation interact. I apply the same closed-loop discipline to robotics and automation: sense, estimate, control, actuate and verify against real behaviour.',
+    group: 'recent',
+    relatedProjects: ['adas-can-validation'],
+    closing: null,
+    todoConfirm: [],
   },
   {
     slug: 'abmarc',
@@ -257,7 +407,30 @@ export const employers: readonly Employer[] = [
         tier: 'adjacent',
         body: 'ADAS and driver-assist testing, noise testing and VASS engineering are ABMARC service lines.',
       },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Followed repeatable procedures for auditable and technically defensible test results.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Reviewed test data to identify deviations, trends and evidence gaps.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.',
+    domains: ['Automotive and compliance', 'Instrumentation and DAQ', 'Quality and reporting'],
+    toolsLabel: 'Representative tools',
+    tools: ['Emissions instrumentation', 'data-acquisition systems', 'QA records'],
+    relevance:
+      'Emissions testing, vehicle compliance, instrumentation, data acquisition, test repeatability, QA records, regulatory documentation, standards exposure and technical reporting.',
+    transferable:
+      'In this role, I strengthened my test discipline, evidence handling and systems-level thinking. I apply those habits wherever measurement quality, repeatability, documentation and fault interpretation matter, including robotics and automation commissioning.',
+    group: 'recent',
+    relatedProjects: ['emissions-compliance-testing'],
     closing:
       'Thirteen months of being the person who has to know whether the number is real. Every later claim about sensor fusion, EKF tuning and validated migrations rests on that habit.',
     todoConfirm: [
@@ -331,7 +504,37 @@ export const employers: readonly Employer[] = [
         tier: 'working-knowledge',
         body: 'Point to point and point to multipoint wireless design, and the RF trade-offs between LoRaWAN, WiFi and cellular for a given site.',
       },
+      {
+        discipline: 'Networks and data',
+        tier: 'hands-on',
+        body: 'Integrated multiple data capture and transfer paths into a Linux-based server for remote status collection.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Supported documentation and post-deployment handover.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I designed and deployed field telemetry systems linking custom electronics, CAN capture, location, condition sensing, MikroTik edge equipment and Linux server integration.',
+    domains: ['IoT and telemetry', 'Embedded and vehicle interfaces', 'Linux integration'],
+    toolsLabel: 'Representative tools',
+    tools: [
+      'Custom PCB design',
+      'CAN capture',
+      'GPS or GNSS',
+      'sensor interfacing',
+      'MikroTik',
+      'Linux',
+    ],
+    relevance:
+      'Embedded systems, IoT telemetry, custom PCB design, CAN trace capture, GPS or GNSS location, sensor interfacing, MikroTik connectivity, Linux servers, deployment and field validation.',
+    transferable:
+      'In this role, I bridged embedded devices, communications, cloud data and operational visibility. I worked from sensor-level hardware through network configuration to data pipelines and user-facing dashboards, using the same sensor-to-cloud backbone that robotics and automation rely on for monitoring, diagnostics and control.',
+    group: 'recent',
+    relatedProjects: ['iot-monitoring-platform'],
     closing:
       'Seven months and a complete vertical stack, from a soldered board to a dashboard a farmer looks at. This is the clearest single proof of the complete-package thesis in the whole record.',
     todoConfirm: [
@@ -395,12 +598,62 @@ export const employers: readonly Employer[] = [
         tier: 'adjacent',
         body: 'Pressure vessel and heat exchanger fabrication, stress relieving and heat treatment are Thornton capabilities.',
       },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'delivered',
+        body: 'Signed off QA documentation within the scope given.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Manufacturing and process',
+        tier: 'delivered',
+        body: 'Developed CAD designs for pressure vessels that progressed into fabrication.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Worked within the quality assurance team and operated as second to the QA manager across fabrication quality workflows.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Supported quality areas for structural-steel and pressure-vessel work.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Helped coordinate inspection evidence, non-conformance follow-up and fabrication documentation.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Supported NDE and mechanical testing evidence workflows as part of fabrication QA and inspection support.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I supported structural steel and pressure vessel QA in a standards-driven fabrication environment, operating as second to the QA manager.',
+    domains: ['Quality and documentation', 'Mechanical and CAD', 'Standards-driven delivery'],
+    toolsLabel: 'Representative context',
+    tools: ['ITPs', 'MDRs', 'drawing review', 'pressure-vessel CAD', 'traceability'],
+    relevance:
+      'Structural steel fabrication, pressure-vessel QA, CAD, drawing review, ITPs, MDRs, material traceability, welding and fabrication documentation, NDE, mechanical testing, inspection planning, QA sign-off and standards-driven delivery.',
+    transferable:
+      'In this role, I built the documentation and quality discipline behind engineering delivery. I carried clear requirements, inspection evidence, traceability, sign-offs and defensible handover documentation into later regulated automation and commissioning work, alongside the mechanical, CAD and quality rigour needed for robot hardware, fixtures, machine frames and automation structures.',
+    group: 'foundation',
+    relatedProjects: ['manufacturing-qa-foundation'],
     closing:
       'This is where the documentation instinct came from. Traceability was not a compliance chore, it was the product: a fabricated beam is worth nothing without the paperwork that proves what it is made of.',
     todoConfirm: [
       'Exact dates and exact job title.',
       'Any named project, such as a bridge or station package.',
+      'TODO CONFIRM: the title. The retired experience.ts read "Quality Assurance / Undergraduate Engineering Support", this file reads "Engineering and QA support". The word "Undergraduate" is carried nowhere else and is recorded here so retiring that file does not lose it. Resume Rev09 gives this role no separate title.',
+      'TODO CONFIRM: the legal name. The retired experience.ts read "Thornton Engineering Australia Pty Ltd", this file reads "Thornton Engineering Australia".',
+      'TODO CONFIRM: ownership of the QA sign-off claim. "Signed off QA documentation within the scope given" is carried at Delivered because the wording states a personal act, but the scope it was given is unrecorded.',
     ],
   },
   {
@@ -455,12 +708,79 @@ export const employers: readonly Employer[] = [
         tier: 'adjacent',
         body: "The plant's use of automation, robotics and AI-driven inspection.",
       },
+      {
+        discipline: 'Manufacturing and process',
+        tier: 'hands-on',
+        body: 'Operated the legacy automated rim layup machine on the carbon-fibre wheel line.',
+        source: 'experience.ts',
+      },
+      {
+        // The KUKA cell programme. Rev01 identified this as material only the
+        // former experience.ts carried, and it is the single largest piece of
+        // robotics evidence in the foundation years. Held at Hands-on, the
+        // tier the retired file already carried for the whole role: the
+        // wording says Saj was present and supporting through the programme,
+        // not that he owned the cell build.
+        discipline: 'Robotics and autonomy',
+        tier: 'hands-on',
+        body: 'Was hands-on through the automation programme that replaced the legacy rim layup machine with new KUKA-based robotic cells for automated layup and robotic demoulding of the hot, heavy wheel tooling.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Robotics and autonomy',
+        tier: 'hands-on',
+        body: 'Supported trials, changeovers, quality checks and line recovery as the new KUKA robotic manufacturing line was commissioned and brought into production.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Quality, compliance and documentation',
+        tier: 'hands-on',
+        body: 'Supported wider production areas including NDE and mechanical testing.',
+        source: 'experience.ts',
+      },
+      {
+        // "Moved closer to" states proximity, not ownership, so this sits a
+        // tier below the supporting claims above it rather than beside them.
+        discipline: 'Quality, compliance and documentation',
+        tier: 'working-knowledge',
+        body: 'Moved closer to quality assurance and development work around the automated rim layup process.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Manufacturing and process',
+        tier: 'working-knowledge',
+        body: 'Gained hands-on exposure to carbon-fibre manufacturing, industrial robotics, automated layup, production quality, defect awareness and the practical realities of scaling advanced composite manufacturing.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I worked in advanced carbon-fibre automotive wheel manufacturing and was hands-on through the automation programme that replaced the legacy rim layup machine with new KUKA-based robotic cells, while moving from layup operation towards quality assurance and development support.',
+    domains: [
+      'Advanced manufacturing',
+      'Robotics and automation',
+      'Quality and inspection',
+      'Process development',
+    ],
+    toolsLabel: 'Representative context',
+    tools: [
+      'Legacy and KUKA-based automated rim layup',
+      'robotic demoulding',
+      'composite production',
+      'NDE and mechanical testing',
+    ],
+    relevance:
+      'Advanced manufacturing, carbon-fibre composites, industrial robotics, KUKA-based robotic cells, automated layup and robotic demoulding, cell commissioning support, quality assurance, NDE, mechanical testing, defect detection, production repeatability, process development and manufacturing scale-up.',
+    transferable:
+      'In this role, I strengthened my understanding of the links between industrial robotics, automation, materials, machine behaviour and product quality. Working hands-on as KUKA-based robotic cells replaced a legacy line showed me how process variation, fibre placement, inspection, testing and operator feedback influence high-performance manufacturing.',
+    group: 'foundation',
+    relatedProjects: ['carbon-revolution-rim-layup', 'manufacturing-qa-foundation'],
     closing:
       'The bridge between the manufacturing years and the engineering years. Carbon Revolution is where digital traceability stopped being a concept and became the thing that governed the shift.',
     todoConfirm: [
       'Exact dates and exact title. Public records list Production Line Operator.',
       'Which process stage. Moulding, demoulding, machining, finishing or inspection.',
+      'TODO CONFIRM: the title. The retired experience.ts read "Automated Rim Layup Operator to Robotic Automation, Quality and Development Support". That is a progression title from the previous site with no verified source, so this file keeps the neutral "Production and quality role" and records the variant here rather than publishing it. Resume Rev09 gives this role no separate title.',
+      'TODO CONFIRM: ownership on the KUKA cell programme. The claim is held at Hands-on. Saj must confirm whether he supported the programme or owned any part of the cell build, commissioning or programming, because the tier moves if he did.',
     ],
   },
   {
@@ -482,20 +802,82 @@ export const employers: readonly Employer[] = [
         tier: 'working-knowledge',
         body: 'Food and beverage production hygiene, batch traceability and the quality regime governing a consumable product, the same regulatory logic later met at JAG in pharmaceutical and food manufacturing under GMP, approached from the plant floor.',
       },
+      {
+        discipline: 'Manufacturing and process',
+        tier: 'hands-on',
+        body: 'Supported five production lines: two canning lines, two bottling lines and one kegging line.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Manufacturing and process',
+        tier: 'hands-on',
+        body: 'Supported daily production execution, changeovers, run completion, KPI tracking, quality checks and first-response machine fixes.',
+        source: 'experience.ts',
+      },
+      {
+        discipline: 'Project and delivery',
+        tier: 'hands-on',
+        body: 'Took part in the installation and commissioning of WestRock and Fibre King packaging equipment during the canning line upgrade.',
+        source: 'experience.ts',
+      },
     ],
+    summary:
+      'I operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
+    domains: ['Manufacturing and quality', 'Machine operations', 'Installation and commissioning'],
+    toolsLabel: 'Representative context',
+    tools: [
+      'Canning, bottling and kegging lines',
+      'WestRock and Fibre King line upgrade',
+      'changeovers',
+      'KPI tracking',
+      'QA checks',
+    ],
+    relevance:
+      'High-throughput production systems, machine reliability, changeover logic, operator-centred workflows, packaging automation, equipment installation and commissioning, quality assurance and traceability.',
+    transferable:
+      'This experience taught me how operators interact with machines, how small mechanical or control issues affect throughput, and why usability, changeover design, line recovery and traceable QA matter in production systems.',
+    group: 'foundation',
+    relatedProjects: ['idl-canning-line', 'manufacturing-qa-foundation'],
     closing: null,
     todoConfirm: [
-      'BLOCKING: Full legal entity name. Third-party aggregator records associate this with a Geelong winery and a cellar hand title, but aggregators are unreliable and this is unverified. Do not publish this page until Saj confirms the entity name, the title and the dates. Scaffold the page and leave it unrouted or draft-flagged.',
+      // Redacted deliberately, and for the same reason Rev02 redacted the JAG
+      // client name: `todoConfirm` ships into the built HTML as a source
+      // comment, so naming the unverified descriptors here would publish the
+      // exact strings this entry exists to keep unpublished. The instruction
+      // is preserved in full; only the two descriptors are withheld.
+      'BLOCKING: full legal entity name, title and dates. Third-party aggregator records associate this employer with a trade descriptor and a job title that are withheld here and published nowhere, because aggregators are unreliable and none of it is verified. Resume Rev09 names IDL only inside a grouped foundation block, gives it no separate title and no separate dates. Saj must supply the entity name, the title and the dates.',
+      // Also redacted, and the redaction is the whole point: naming the
+      // removed strings here would republish them, because this list ships
+      // into the built HTML as a source comment. The first draft of this note
+      // did exactly that and put all three back on the page it had just
+      // cleaned. The removals are described by shape, never quoted. Saj has
+      // the originals in the branch diff and in the git history.
+      'TODO CONFIRM: four items were removed from the published pages this run. One progression job title with three stages, published as the role line on two pages; the sentence asserting that progression; the sentence asserting a move into an upstream production area, which named four product types; and one clause repeating the same progression inside a work record. Every one of them carried either an unverified job title or an unverified trade descriptor, both traced to third-party aggregators. They are gone from /about/idl/, /employers/idl/, /work/idl-canning-line/ and /work/manufacturing-qa-foundation/. Saj must supply the real title and the real scope before any of it returns.',
+      'TODO CONFIRM: whether IDL should be published at all. The former experience.ts published /about/idl/ with the unverified title, while this file held IDL back as a draft. Both could not be right. It is published here, stripped to what is verifiable, because the /about/idl/ URL already resolved and removing a live URL is a bigger breach than publishing a reduced page.',
+      'TODO CONFIRM: the five-line count, the two canning, two bottling and one kegging breakdown, and the WestRock and Fibre King equipment names. These come from the previous site rather than an aggregator, so they were kept, but nothing independently verifies them.',
     ],
-    draft: true,
   },
 ] as const
 
-/** Everything cleared for publication. Draft employers are excluded outright. */
-export const publishedEmployers: readonly Employer[] = employers.filter((e) => !e.draft)
+/**
+ * Everything cleared for publication. A suppressed employer is excluded
+ * outright, so no `/employers/[slug]/` route is emitted for it and no
+ * discovery surface can list it by accident.
+ */
+export const publishedEmployers: readonly Employer[] = employers.filter((e) => !e.suppressed)
 
+/** Published employers only. Never resolves a suppressed record. */
 export function getEmployer(slug: string): Employer | undefined {
   return publishedEmployers.find((e) => e.slug === slug)
+}
+
+/**
+ * Every authored record, suppressed ones included. Only the `/about/[slug]/`
+ * route uses this, because that URL resolved before this run for all seven
+ * records and must keep resolving for all seven.
+ */
+export function getEmployerRecord(slug: string): Employer | undefined {
+  return employers.find((e) => e.slug === slug)
 }
 
 /**

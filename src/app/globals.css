@@ -470,15 +470,21 @@ button {
 
 html[data-js] .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(12px);
 }
 
+/* Both channels run on `--dur-base`. They used to run on two durations, the
+   longer of which was 720ms, so the movement outlasted the fade by nearly
+   200ms and the whole arrival sat well past the 600ms this system allows
+   itself. One duration, one curve: the block fades and settles as a single
+   event. Only opacity and transform are animated, so nothing here can
+   trigger layout or paint on the main thread. */
 html[data-js] .reveal[data-shown] {
   opacity: 1;
   transform: none;
   transition:
-    opacity var(--dur-reveal) var(--ease-settle) var(--reveal-delay, 0s),
-    transform var(--dur-reveal-slow) var(--ease-settle) var(--reveal-delay, 0s);
+    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
+    transform var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
 }
 
 /* ---- Reveal vocabulary ----
@@ -510,8 +516,27 @@ html[data-js] .reveal[data-reveal='wipe'] {
 html[data-js] .reveal[data-reveal='wipe'][data-shown] {
   clip-path: inset(0 0 0 0);
   transition:
-    opacity var(--dur-reveal) var(--ease-settle) var(--reveal-delay, 0s),
-    clip-path var(--dur-reveal-slow) var(--ease-settle) var(--reveal-delay, 0s);
+    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
+    clip-path var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
+}
+
+/* Every variant resolves to the same finished state, and this reset has to
+   carry the extra attribute to get there.
+
+   `html[data-js] .reveal[data-shown]` and `html[data-js]
+   .reveal[data-reveal='lift']` are the same specificity, so source order
+   decides, and the variants are declared second. The offset therefore won and
+   never resolved: measured on /versatility/ at 1440x900, the closing stage
+   reached `data-shown` and `opacity: 1` but held `translateY(8px)`
+   permanently, sitting 8px below where the same block sits with JavaScript
+   off. `edge` had the same fault at 18px on the horizontal.
+
+   AGENTS.md already records this trap for the reduced-motion reset, which
+   carries `[data-reveal]` for exactly this reason. The resolved state needs
+   it too. */
+html[data-js] .reveal[data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
 }
 
 /* ---- Cascading groups ----
@@ -521,15 +546,23 @@ html[data-js] .reveal[data-reveal='wipe'][data-shown] {
    because CSS cannot count siblings into a delay. */
 html[data-js] .stagger > * {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(12px);
 }
 
+/* The delay is capped rather than linear in the index. A discipline group can
+   carry a dozen claims and the archive is longer still; uncapped, the last
+   item in a long list waits on every predecessor and the reader is left
+   watching an empty column for the better part of a second. `min()` holds the
+   cascade to `--stagger-steps` gaps, after which every remaining child
+   arrives together. */
 html[data-js] .stagger[data-shown] > * {
   opacity: 1;
   transform: none;
   transition:
-    opacity var(--dur-reveal) var(--ease-settle) calc(var(--i, 0) * var(--stagger)),
-    transform var(--dur-reveal-slow) var(--ease-settle) calc(var(--i, 0) * var(--stagger));
+    opacity var(--dur-base) var(--ease-out)
+      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger)),
+    transform var(--dur-base) var(--ease-out)
+      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger));
 }
 
 /* ============================================================

@@ -1,16 +1,19 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { SourceNote } from '@/components/ui/SourceNote'
 import { Reveal } from '@/components/motion/Reveal'
 import { publishedEmployers, getEmployer, DISCIPLINES } from '@/content/employers'
+import { getProject } from '@/content/projects'
+import { TIERS } from '@/content/tiers'
 import s from '@/components/ui/shared.module.css'
 import e from './employer.module.css'
 
 export function generateStaticParams() {
-  // Draft employers are absent from `publishedEmployers`, so no route is
-  // emitted for them at all.
+  // Suppressed employers are absent from `publishedEmployers`, so no route is
+  // emitted for them here at all. Their `/about/[slug]/` URL still resolves.
   return publishedEmployers.map((x) => ({ slug: x.slug }))
 }
 
@@ -22,7 +25,9 @@ export async function generateMetadata({
   const { slug } = await params
   const x = getEmployer(slug)
   if (!x) return {}
-  const description = x.closing ?? `${x.title ?? 'Role'} at ${x.company}.`
+  // The summary is the page's own lede, so it is the honest description.
+  // `closing` is the argument the page ends on, not a description of it.
+  const description = x.summary
   return {
     title: x.title ? `${x.title}, ${x.company}` : x.company,
     description,
@@ -40,15 +45,34 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
   const x = getEmployer(slug)
   if (!x) notFound()
 
-  // Two axes. Discipline is the visible grouping; every claim keeps the tier
-  // the source brief gave it, rendered as a badge on the item itself. The
-  // vocabulary order is fixed across all six pages, so a reader comparing
-  // employers meets the disciplines in the same sequence every time. A
-  // discipline with no claims for this employer renders nothing at all.
+  // Suppressed records are never advertised from a related-work module.
+  const related = x.relatedProjects
+    .map(getProject)
+    .filter((p) => p !== undefined)
+    .filter((p) => !p.suppressed)
+
+  // Two axes. Discipline is the visible grouping; every claim keeps its own
+  // tier, rendered as a badge on the item itself. The vocabulary order is
+  // fixed across all pages, so a reader comparing employers meets the
+  // disciplines in the same sequence every time. A discipline with no claims
+  // for this employer renders nothing at all.
+  //
+  // Within a discipline, claims sort by tier strength, so a group always
+  // reads down from its strongest proof. Sorting here rather than trusting
+  // authoring order means a claim appended to the content file lands in the
+  // right place instead of below a weaker one.
   const groups = DISCIPLINES.map((discipline) => ({
     discipline,
-    items: x.claims.filter((c) => c.discipline === discipline),
+    items: x.claims
+      .filter((c) => c.discipline === discipline)
+      .slice()
+      .sort((a, b) => TIERS[b.tier].strength - TIERS[a.tier].strength),
   })).filter((g) => g.items.length > 0)
+
+  // Chapter numbers are assigned to the chapters that actually render, so an
+  // employer with no verified company facts opens at 01 rather than on a gap.
+  let chapter = 0
+  const nextIndex = () => String(++chapter).padStart(2, '0')
 
   return (
     <article className="section">
@@ -58,6 +82,7 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
         <PageHeader
           kicker={x.title ?? x.company}
           title={x.company}
+          lede={x.summary}
           longTitle
           aside={
             <>
@@ -76,64 +101,119 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
           }
         />
 
-        <div className={s.narrative}>
-          {x.companyFacts.length ? (
-            <Reveal as="section" className={s.chapter} aria-labelledby="the-place">
-              <span className={s.chapterIndex}>01</span>
-              <h2 id="the-place" className={s.chapterTitle}>
-                The place
-              </h2>
-              <div className={s.chapterBody}>
-                <p className={e.factNote}>
-                  Verified facts about the employer, not claims about my work. Each carries the
-                  primary source it was checked against.
-                </p>
-                <ul className={e.facts}>
-                  {x.companyFacts.map((f, i) => (
-                    <li key={i} className={e.fact}>
-                      <p className={e.factBody}>{f.body}</p>
-                      <p className={e.factSource}>
-                        <span className="label">Source</span> {f.source}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ) : null}
-
-          <Reveal as="section" className={s.chapter} aria-labelledby="the-work">
-            <span className={s.chapterIndex}>{x.companyFacts.length ? '02' : '01'}</span>
-            <h2 id="the-work" className={s.chapterTitle}>
-              What the title says, and what the work was
-            </h2>
-            <div className={s.chapterBody}>
-              {groups.map((g) => (
-                <div key={g.discipline} className={e.tierGroup}>
-                  <h3 className={e.disciplineHead}>{g.discipline}</h3>
-                  <ul className={e.claims}>
-                    {g.items.map((c, i) => (
-                      <li key={i} className={e.claim}>
-                        <TierIndicator tier={c.tier} className={e.claimTier} />
-                        <span className={e.claimBody}>{c.body}</span>
+        <div className={s.detail}>
+          <div className={s.narrative}>
+            {x.companyFacts.length ? (
+              <Reveal as="section" className={s.chapter} aria-labelledby="the-place">
+                <span className={s.chapterIndex}>{nextIndex()}</span>
+                <h2 id="the-place" className={s.chapterTitle}>
+                  The place
+                </h2>
+                <div className={s.chapterBody}>
+                  <p className={e.factNote}>
+                    Verified facts about the employer, not claims about my work. Each carries the
+                    primary source it was checked against.
+                  </p>
+                  <ul className={e.facts}>
+                    {x.companyFacts.map((f, i) => (
+                      <li key={i} className={e.fact}>
+                        <p className={e.factBody}>{f.body}</p>
+                        <p className={e.factSource}>
+                          <span className="label">Source</span> {f.source}
+                        </p>
                       </li>
                     ))}
                   </ul>
                 </div>
-              ))}
-            </div>
-            <SourceNote label={x.company} notes={x.todoConfirm} />
-          </Reveal>
+              </Reveal>
+            ) : null}
 
-          {x.closing ? (
-            <Reveal as="section" className={s.chapter} aria-labelledby="the-argument">
-              <span className={s.chapterIndex}>{x.companyFacts.length ? '03' : '02'}</span>
-              <h2 id="the-argument" className={s.chapterTitle}>
-                What it bought
+            <Reveal as="section" className={s.chapter} aria-labelledby="the-work">
+              <span className={s.chapterIndex}>{nextIndex()}</span>
+              <h2 id="the-work" className={s.chapterTitle}>
+                What the title says, and what the work was
               </h2>
-              <p className={e.closing}>{x.closing}</p>
+              <div className={s.chapterBody}>
+                {groups.map((g) => (
+                  <div key={g.discipline} className={e.tierGroup}>
+                    <h3 className={e.disciplineHead}>{g.discipline}</h3>
+                    <ul className={e.claims}>
+                      {g.items.map((c, i) => (
+                        <li key={i} className={e.claim}>
+                          <TierIndicator tier={c.tier} className={e.claimTier} />
+                          <span className={e.claimBody}>{c.body}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <SourceNote label={x.company} notes={x.todoConfirm} />
             </Reveal>
-          ) : null}
+
+            <Reveal as="section" className={s.chapter} aria-labelledby="the-relevance">
+              <span className={s.chapterIndex}>{nextIndex()}</span>
+              <h2 id="the-relevance" className={s.chapterTitle}>
+                My engineering relevance
+              </h2>
+              <div className={s.chapterBody}>
+                <p>{x.relevance}</p>
+              </div>
+            </Reveal>
+
+            <Reveal as="section" className={s.chapter} aria-labelledby="the-transfer">
+              <span className={s.chapterIndex}>{nextIndex()}</span>
+              <h2 id="the-transfer" className={s.chapterTitle}>
+                My transferable capability
+              </h2>
+              <div className={s.chapterBody}>
+                <p>{x.transferable}</p>
+              </div>
+            </Reveal>
+
+            {x.closing ? (
+              <Reveal as="section" className={s.chapter} aria-labelledby="the-argument">
+                <span className={s.chapterIndex}>{nextIndex()}</span>
+                <h2 id="the-argument" className={s.chapterTitle}>
+                  What it bought
+                </h2>
+                <p className={e.closing}>{x.closing}</p>
+              </Reveal>
+            ) : null}
+          </div>
+
+          <aside className={s.rail} aria-label="Role details">
+            <div className={s.railBlock}>
+              <p className="label">Capability domains</p>
+              <ul className={s.chips}>
+                {x.domains.map((d) => (
+                  <li key={d} className={s.chip}>
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className={s.railBlock}>
+              <p className="label">{x.toolsLabel}</p>
+              <ul className={s.chips}>
+                {x.tools.map((t) => (
+                  <li key={t} className={s.chip}>
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {related.length ? (
+              <div className={s.railBlock}>
+                <p className="label">Related work records</p>
+                {related.map((p) => (
+                  <Link key={p.slug} href={`/work/${p.slug}/`} className={s.link}>
+                    {p.title}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
+          </aside>
         </div>
       </div>
     </article>

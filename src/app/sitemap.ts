@@ -6,7 +6,6 @@ export const dynamic = 'force-static'
 import { site } from '@/content/site'
 import { discoverableProjects } from '@/content/projects'
 import { atlas } from '@/content/atlas'
-import { discoverableExperience } from '@/content/experience'
 import { publishedEmployers } from '@/content/employers'
 
 /**
@@ -27,10 +26,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // URL, but are never advertised here.
     ...discoverableProjects.map((p) => `/work/${p.slug}/`),
     ...atlas.map((d) => `/atlas/${d.slug}/`),
-    ...discoverableExperience.map((r) => `/about/${r.slug}/`),
-    // Draft employers are absent from `publishedEmployers`, so an unrouted
+    // Suppressed employers are absent from `publishedEmployers`, so a withheld
     // record can never be advertised in the sitemap.
     ...publishedEmployers.map((x) => `/employers/${x.slug}/`),
+    // The `/about/[role]/` URLs are deliberately absent. They still resolve,
+    // for anyone holding an old link, but every one of them now carries
+    // `noindex`: six are signposts to the employer page that owns the
+    // content, and the seventh is a suppressed record. A sitemap advertises
+    // what should be indexed, and none of them should be.
   ]
 
   return routes.map((path) => ({

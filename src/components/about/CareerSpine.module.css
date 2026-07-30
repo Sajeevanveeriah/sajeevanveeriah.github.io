@@ -14,13 +14,29 @@
   background: var(--border);
 }
 
+/* E4, the timeline spine.
+   The server renders the spine already drawn, so a reader without JavaScript
+   sees a complete accent bar rather than an empty channel. The empty start
+   state exists only under `html[data-js]`, and the fill runs once when the
+   page's shared observer marks the list as arrived. `scaleY` on a 1px column
+   is a compositor-only transform: no scroll listener, no layout, and the
+   1px channel is reserved by `.spine` either way, so this contributes
+   nothing to layout shift. */
 .spineFill {
   position: absolute;
   inset: 0;
   display: block;
   background: var(--accent);
   transform-origin: top center;
+}
+
+:global(html[data-js]) .spineFill {
   transform: scaleY(0);
+}
+
+:global(html[data-js]) .list[data-shown] .spineFill {
+  transform: scaleY(1);
+  transition: transform var(--dur-base) var(--ease-out);
 }
 
 .role {
@@ -136,8 +152,32 @@
   }
 }
 
+/* E5, hover lift. Gated on a real pointer so a touch device, where :hover
+   sticks after a tap, is unaffected. Transform only: no shadow animates, and
+   the row's own colour transition is left alone. */
+@media (hover: hover) and (pointer: fine) {
+  .role {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+
+  .role:hover {
+    transform: translateY(var(--lift));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .spineFill {
+  /* The spine resolves to fully drawn, not to nothing. `scaleY(1)` rather
+     than `none`, because `none` on a bar whose start state is `scaleY(0)`
+     would leave it drawn at full height only by accident of the identity
+     transform, and the reset has to state the finished state it means. */
+  .spineFill,
+  :global(html[data-js]) .spineFill,
+  :global(html[data-js]) .list[data-shown] .spineFill {
+    transform: scaleY(1) !important;
+    transition: none !important;
+  }
+
+  .role:hover {
     transform: none !important;
   }
 }
