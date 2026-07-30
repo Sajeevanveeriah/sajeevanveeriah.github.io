@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TierLegend } from '@/components/ui/TierIndicator'
 import { AtlasIndex } from '@/components/atlas/AtlasIndex'
@@ -23,10 +24,23 @@ export default function AtlasPage() {
           title="My capability landscape, tiered honestly by evidence."
           lede="Nineteen domains in one index. Search it, filter it, and open any domain for its subdomains, tools, proof and growth targets. Nothing here is claimed beyond its evidence."
           aside={
-            <div className={s.railBlock}>
-              <p className="label">Evidence tiers</p>
-              <TierLegend />
-            </div>
+            <>
+              <div className={s.railBlock}>
+                <p className="label">Evidence tiers</p>
+                <TierLegend />
+              </div>
+              <div className={s.railBlock}>
+                <p className="label">Wider field</p>
+                <p className={s.railNote}>
+                  These nineteen domains are cut by what I can evidence. The{' '}
+                  <Link href="/ecosystem/" className={s.link}>
+                    ecosystem catalogue
+                  </Link>{' '}
+                  maps the field itself across eight pillars, as a neutral reference rather than a
+                  claim.
+                </p>
+              </div>
+            </>
           }
         />
         <AtlasIndex domains={atlas} />

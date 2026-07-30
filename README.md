@@ -10,11 +10,28 @@ The homepage positions Saj as a Mechatronics, Robotics and AI/ML Engineer who ow
 
 Routes are implemented with the App Router under `src/app/`:
 
-- `/`, `/work/`, `/skills/`, `/atlas/`, `/about/` and `/contact/`
-- `/work/[slug]/`, `/atlas/[domain]/` and `/about/[role]/`, all generated statically
+- `/`, `/work/`, `/skills/`, `/atlas/`, `/employers/`, `/ecosystem/`, `/about/` and `/contact/`
+- `/work/[slug]/`, `/atlas/[domain]/`, `/employers/[slug]/`, `/ecosystem/[pillar]/` and `/about/[role]/`, all generated statically
 - `robots.ts`, `sitemap.ts` and `not-found.tsx`
 
 Verified, typed copy lives in `src/content/`. The resume at `public/assets/Resume_Sajeevan_Veeriah.pdf` is the factual source of truth. The static export constraints in `next.config.ts` must remain intact.
+
+### Two content layers, kept apart on purpose
+
+The site carries two kinds of statement, and they must never blur together.
+
+**Evidence about Saj** lives in `skills.ts`, `atlas.ts`, `employers.ts`, `experience.ts` and `projects.ts`. Every claim carries one of the five evidence tiers in `tiers.ts`, and Saj assigns every one of them. Nothing infers a tier from a domain, a vendor, a job title or a similar technology.
+
+**Reference about the field** lives in `src/content/ecosystem/`. It is a broad engineering sweep across eight pillars and 31 domains: hardware families and their models, software, protocols, standards, algorithms and methods. Inclusion there is a fact about the field, never a claim about Saj.
+
+The separation is enforced by the type system and by `scripts/check-ecosystem.mjs` rather than by convention:
+
+- `coverageKind: 'ecosystem-reference'` is neutral. It carries no evidence tier, and the validator fails the build if its copy reads as a personal claim ("I use", "my expertise", "proficient").
+- `coverageKind: 'profile'` is the only shape that may carry a tier, and it additionally requires publishable evidence references and a scope note. There are currently zero of them: the catalogue was authored as a field sweep, and it does not feed Person JSON-LD, resume claims or any skill total.
+- A `current`, `maintained` or `preview` status needs an official source and a review date. Where status could not be confirmed the record says `unknown` and the copy stays neutral. Undated words like "latest" fail validation.
+- `scope.ts` is the completeness contract: every supplied term is recorded in its original spelling and resolved to a canonical entity, alias, model, former name, lifecycle note or correction. Coverage is therefore derived, not asserted.
+
+Run `npm run ecosystem` to validate it. That script first runs the validator against deliberately defective in-memory fixtures and confirms each one is caught, then validates the real catalogue and prints coverage. It is wired into `npm run build`, so the export cannot succeed on a broken catalogue.
 
 ## Image art direction
 
@@ -36,11 +53,23 @@ Ford must only appear as "Ford Motor Company via Invenio contract placement". JA
 npm run typecheck
 npm run lint
 npm run contrast
+npm run ecosystem
 npm run build
+node scripts/check-budget.mjs
+node scripts/verify-motion.mjs
+node scripts/audit.mjs
 npx serve out
 ```
 
-Inspect all routes at 390 x 844, 768 x 1024, 1440 x 900 and 1920 x 1080. Verify keyboard focus, reduced motion, JavaScript-disabled content, internal links, image bounds, console and network output, structured data, ASCII punctuation and privacy restrictions. The export must contain `index.html`, `404.html`, `.nojekyll`, verification files, `robots.txt`, `sitemap.xml` and assets.
+The browser-driven scripts (`audit`, `verify-motion`, `lighthouse`) need a Chromium. They honour `BROWSER_EXECUTABLE_PATH`, which is how to point them at a preinstalled browser when the bundled Playwright download is unavailable:
+
+```sh
+BROWSER_EXECUTABLE_PATH=/path/to/chromium node scripts/audit.mjs
+```
+
+`audit.mjs` gates on accessibility violations and horizontal overflow. It also measures and prints page height, but does not fail on it: the work records are deliberately long numbered narratives, and the old fixed viewport-height ceiling was failing half the site while telling nobody anything. Stranding a reader in empty scroll is prevented structurally instead, because no component here is a sticky scroll trap.
+
+Inspect all routes at 320, 375, 768, 1024, 1440 and 1920 px. Verify keyboard focus, reduced motion, JavaScript-disabled content, internal links, image bounds, console and network output, structured data, ASCII punctuation and privacy restrictions. The export must contain `index.html`, `404.html`, `.nojekyll`, verification files, `robots.txt`, `sitemap.xml` and assets.
 
 ## SEO maintenance after publication
 

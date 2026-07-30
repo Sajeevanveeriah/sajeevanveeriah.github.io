@@ -26,7 +26,15 @@ const chrome = await launch({
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })
 
-const ROUTES = ['/', '/work/', '/atlas/', '/about/', '/skills/', '/contact/',
+/* One representative route per family rather than all 63, because a full
+   Lighthouse pass costs roughly ten seconds a route. Each index is included
+   plus the heaviest detail page under it, so a regression in a shared
+   component still surfaces. `/ecosystem/` carries the largest server-rendered
+   list on the site and the pillar page carries the most records, so both are
+   here: leaving the new routes out would have made this gate quieter as the
+   site grew, which is the failure mode the audit script already had. */
+const ROUTES = ['/', '/work/', '/atlas/', '/about/', '/skills/', '/contact/', '/employers/',
+  '/ecosystem/', '/ecosystem/compute-embedded-and-low-level-software/',
   '/work/autonomous-navigation-rover/', '/atlas/robotics-and-autonomy/']
 
 console.log('Route'.padEnd(40) + 'Perf  A11y  BestP   SEO   FCP      LCP      CLS   TBT')

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { TierIndicator, TierLegend } from '@/components/ui/TierIndicator'
 import { StackSpine } from '@/components/signal/StackSpine'
@@ -85,6 +86,15 @@ export default function SkillsPage() {
             </p>
           </Reveal>
           <StackSpine layers={systemsStack} />
+
+          <Reveal className={k.ecosystemLink}>
+            <p>
+              Everything above is something I can evidence. For the wider field it sits in, the{' '}
+              <Link href="/ecosystem/">ecosystem catalogue</Link> maps eight pillars and 31 domains
+              of tooling, hardware, protocols and standards as a neutral reference. Inclusion there
+              is not a claim that I have used it.
+            </p>
+          </Reveal>
         </div>
       </section>
     </>

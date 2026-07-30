@@ -5,11 +5,12 @@
   "description": "Engineering portfolio for Sajeevan Veeriah. Static Next.js export served from GitHub Pages.",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/check-contrast.mjs && next build",
+    "build": "node scripts/check-contrast.mjs && node scripts/check-ecosystem.mjs && next build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "contrast": "node scripts/check-contrast.mjs"
+    "contrast": "node scripts/check-contrast.mjs",
+    "ecosystem": "node scripts/check-ecosystem.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",

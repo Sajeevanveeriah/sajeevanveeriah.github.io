@@ -61,7 +61,7 @@ const RAF_PROBE = `
   };
 `
 
-console.log('\n--- Gate 3: ambient motion pauses off-screen ---')
+console.log('\n--- Gate 3: ambient motion runs on screen and pauses off screen ---')
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
   const page = await ctx.newPage()
@@ -69,26 +69,67 @@ console.log('\n--- Gate 3: ambient motion pauses off-screen ---')
   await page.goto(`${base}/`, { waitUntil: 'networkidle' })
   await page.waitForTimeout(600)
 
+  /* The hero is pure SVG and CSS keyframes with no JavaScript at all (see
+     AGENTS.md), so it has no requestAnimationFrame loop to count. The old
+     check asserted one anyway and had therefore been failing on every run
+     since the hero was rewritten. What actually needs proving is that the
+     declared animations are live, so count running CSS animations instead. */
+  const running = await page.evaluate(`(() => {
+    return [...document.querySelectorAll('header svg *, main svg *')].filter((el) => {
+      const cs = getComputedStyle(el)
+      return cs.animationName !== 'none' && cs.animationPlayState === 'running'
+    }).length
+  })()`)
+  check('hero ambient CSS animations are running while visible', running > 0, `${running} running animations`)
+
+  // No JavaScript animation loop should be running at all: the ambient
+  // motion is declarative, so a rAF loop here would be an unintended cost.
   await page.evaluate('window.__rafCount = 0')
   await page.waitForTimeout(1000)
-  const onScreen = await page.evaluate('window.__rafCount')
+  const heroRaf = await page.evaluate('window.__rafCount')
+  check('no JavaScript animation loop drives the hero', heroRaf <= 2, `${heroRaf} rAF callbacks/s`)
 
-  // Scroll the hero fully out of view.
   await page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
   await page.waitForTimeout(900)
   await page.evaluate('window.__rafCount = 0')
   await page.waitForTimeout(1000)
   const offScreen = await page.evaluate('window.__rafCount')
-
   check(
-    'hero ambient rAF runs while hero is visible',
-    onScreen > 20,
-    `${onScreen} frames/s`,
-  )
-  check(
-    'hero ambient rAF stops when hero is off-screen',
+    'no ambient rAF loop runs after scrolling away',
     offScreen <= 2,
-    `${offScreen} frames/s after scrolling away`,
+    `${offScreen} rAF callbacks/s after scrolling away`,
+  )
+  await ctx.close()
+}
+
+/* The real off-screen pause is the InView wrapper, which sets `data-inview`
+   while a subtree intersects and removes it when it leaves, so the
+   stylesheets can pause the ambient animation inside. Test that on a work
+   record, where the signature diagram actually lives: asserting it from the
+   top of the home page proved nothing, because nothing is marked until
+   something scrolls into view. */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+  const page = await ctx.newPage()
+  await page.goto(`${base}/work/autonomous-navigation-rover/`, { waitUntil: 'networkidle' })
+
+  let peak = 0
+  for (let step = 0; step < 12; step++) {
+    await page.evaluate(`window.scrollTo(0, ${step} * window.innerHeight * 0.75)`)
+    await page.waitForTimeout(250)
+    const n = await page.evaluate('document.querySelectorAll("[data-inview]").length')
+    peak = Math.max(peak, n)
+    if (peak > 0) break
+  }
+  check('InView marks an ambient subtree once it scrolls on screen', peak > 0, `${peak} marked`)
+
+  await page.evaluate('window.scrollTo(0, 0)')
+  await page.waitForTimeout(600)
+  const afterTop = await page.evaluate('document.querySelectorAll("[data-inview]").length')
+  check(
+    'InView unmarks the subtree once it leaves the viewport',
+    afterTop < peak,
+    `${afterTop} marked back at the top, down from ${peak}`,
   )
   await ctx.close()
 }
@@ -108,15 +149,21 @@ console.log('\n--- Gate 3: ambient motion disabled under reduced motion ---')
   const frames = await page.evaluate('window.__rafCount')
   check('no ambient rAF loop under prefers-reduced-motion', frames <= 2, `${frames} frames/s`)
 
-  const sweepAnimated = await page.evaluate(`(() => {
-    const el = document.querySelector('svg[class*="sweep"] g[class*="sweepArm"]');
-    if (!el) return 'absent';
-    return getComputedStyle(el).animationName;
+  /* Assert against every animated element rather than one hand-written
+     selector. The previous selector had drifted out of step with the markup
+     and was silently reporting "absent", which passes without testing
+     anything. Counting live animations cannot go stale that way. */
+  const stillAnimating = await page.evaluate(`(() => {
+    return [...document.querySelectorAll('header svg *, main svg *')].filter((el) => {
+      const cs = getComputedStyle(el)
+      return cs.animationName !== 'none' && cs.animationIterationCount === 'infinite'
+        && cs.animationPlayState === 'running'
+    }).length
   })()`)
   check(
-    'sensor sweep animation is none under reduced motion',
-    sweepAnimated === 'none' || sweepAnimated === 'absent',
-    `animation-name: ${sweepAnimated}`,
+    'no infinite CSS animation runs under reduced motion',
+    stillAnimating === 0,
+    `${stillAnimating} still animating`,
   )
 
   const bootAttr = await page.evaluate('document.documentElement.getAttribute("data-boot")')
