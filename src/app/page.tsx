@@ -200,125 +200,127 @@ export default function HomePage() {
           scrolling column always has readable content on screen, where a
           pinned diagram can strand a viewport containing nothing else. */}
       <section className="section section-lg" aria-labelledby="work-title">
-        <div className={`wrap-wide ${home.workStage}`}>
-          <Reveal className={`sticky-rail ${home.workRail}`}>
-            <p className="label label-accent">Selected work</p>
-            <h2 id="work-title">Evidence of complete-system ownership.</h2>
-            <p className="lede">
-              Four records that span autonomy, engineering software, field electronics and regulated
-              industrial automation. Each one states the problem, what I personally owned and what
-              the evidence supports.
-            </p>
-          </Reveal>
+        <div className="wrap-wide">
+          <div className={home.workStage}>
+            <Reveal className={`sticky-rail ${home.workRail}`}>
+              <p className="label label-accent">Selected work</p>
+              <h2 id="work-title">Evidence of complete-system ownership.</h2>
+              <p className="lede">
+                Four records that span autonomy, engineering software, field electronics and regulated
+                industrial automation. Each one states the problem, what I personally owned and what
+                the evidence supports.
+              </p>
+            </Reveal>
 
-          <div className={home.entries}>
-            {selected.map((p, i) => {
-              const variant = diagramFor(p.slug)
-              const lead = i === 0
-              const image = p.images?.[0]
-              // The lead record is the second use of the layered parallax
-              // stage. It has both a photograph plate and a signature
-              // diagram, which is what gives the stage two real planes to
-              // separate; the other three records have one asset each and
-              // stay in ordinary flow.
-              const showcase = lead && image !== undefined && variant != null
-              return (
-                <Reveal
-                  as="article"
-                  variant="wipe"
-                  key={p.slug}
-                  className={`${home.entry} ${lead ? home.entryLead : ''} ${
-                    i % 2 === 1 ? home.entryFlip : ''
-                  }`}
-                >
-                  <div className={home.entryHead}>
-                    <p className={home.entryKicker}>
-                      <span className={home.entryIndex}>{String(i + 1).padStart(2, '0')}</span>
-                      <span className={home.entryDivider} aria-hidden="true">
-                        /
-                      </span>
-                      <span>{p.domain}</span>
-                      <span className={home.entryDivider} aria-hidden="true">
-                        /
-                      </span>
-                      <span>{p.category}</span>
-                    </p>
-                    <h3 className={`${home.entryTitle} ${lead ? home.entryTitleLead : ''}`}>
-                      <Link href={`/work/${p.slug}/`}>{p.title}</Link>
-                    </h3>
-                    <p className={home.entrySummary}>{p.summary}</p>
-                  </div>
+            <div className={home.entries}>
+              {selected.map((p, i) => {
+                const variant = diagramFor(p.slug)
+                const lead = i === 0
+                const image = p.images?.[0]
+                // The lead record is the second use of the layered parallax
+                // stage. It has both a photograph plate and a signature
+                // diagram, which is what gives the stage two real planes to
+                // separate; the other three records have one asset each and
+                // stay in ordinary flow.
+                const showcase = lead && image !== undefined && variant != null
+                return (
+                  <Reveal
+                    as="article"
+                    variant="wipe"
+                    key={p.slug}
+                    className={`${home.entry} ${lead ? home.entryLead : ''} ${
+                      i % 2 === 1 ? home.entryFlip : ''
+                    }`}
+                  >
+                    <div className={home.entryHead}>
+                      <p className={home.entryKicker}>
+                        <span className={home.entryIndex}>{String(i + 1).padStart(2, '0')}</span>
+                        <span className={home.entryDivider} aria-hidden="true">
+                          /
+                        </span>
+                        <span>{p.domain}</span>
+                        <span className={home.entryDivider} aria-hidden="true">
+                          /
+                        </span>
+                        <span>{p.category}</span>
+                      </p>
+                      <h3 className={`${home.entryTitle} ${lead ? home.entryTitleLead : ''}`}>
+                        <Link href={`/work/${p.slug}/`}>{p.title}</Link>
+                      </h3>
+                      <p className={home.entrySummary}>{p.summary}</p>
+                    </div>
 
-                  {showcase ? (
-                    /* Sequenced rather than stacked: both planes carry
-                       content that has to stay readable, so they travel at
-                       different rates side by side instead of overlapping.
-                       Each keeps its own description, and the stage names
-                       the pairing once. */
-                    <ParallaxStage
-                      role="group"
-                      label={`${p.title}: the delivered system alongside its signature diagram.`}
-                      className={`stage-flow ${home.showcase}`}
-                    >
-                      <ParallaxLayer depth={0.2}>
-                        <div className="media-frame">
-                          {/* Not priority. The only thing above the fold on
-                              this page is the hero, which is inline SVG and
-                              costs no request; preloading a photograph three
-                              screens down just took bandwidth off the fonts
-                              the headline is waiting for. Measured on
-                              throttled mobile: LCP 3.4s to 3.2s. */}
-                          <ProjectImage image={image} />
-                        </div>
-                      </ParallaxLayer>
-                      <ParallaxLayer depth={0.55}>
-                        <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
-                      </ParallaxLayer>
-                    </ParallaxStage>
-                  ) : null}
-
-                  <div className={home.entryBody}>
-                    {showcase ? null : image ? (
-                      <div className="media-frame">
-                        <ProjectImage image={image} />
-                      </div>
-                    ) : variant ? (
-                      <SystemDiagram variant={variant} />
+                    {showcase ? (
+                      /* Sequenced rather than stacked: both planes carry
+                         content that has to stay readable, so they travel at
+                         different rates side by side instead of overlapping.
+                         Each keeps its own description, and the stage names
+                         the pairing once. */
+                      <ParallaxStage
+                        role="group"
+                        label={`${p.title}: the delivered system alongside its signature diagram.`}
+                        className={`stage-flow ${home.showcase}`}
+                      >
+                        <ParallaxLayer depth={0.2}>
+                          <div className="media-frame">
+                            {/* Not priority. The only thing above the fold on
+                                this page is the hero, which is inline SVG and
+                                costs no request; preloading a photograph three
+                                screens down just took bandwidth off the fonts
+                                the headline is waiting for. Measured on
+                                throttled mobile: LCP 3.4s to 3.2s. */}
+                            <ProjectImage image={image} />
+                          </div>
+                        </ParallaxLayer>
+                        <ParallaxLayer depth={0.55}>
+                          <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
+                        </ParallaxLayer>
+                      </ParallaxStage>
                     ) : null}
 
-                    <div className={home.entryDetail}>
-                      <div className={home.fact}>
-                        <span className={home.factLabel}>The problem</span>
-                        <p className={home.factBody}>{p.problem}</p>
-                      </div>
-                      <div className={home.fact}>
-                        <span className={home.factLabel}>What I owned</span>
-                        <p className={home.factBody}>
-                          {p.homeExcerpt?.ownership ?? p.demonstrates}
-                        </p>
-                      </div>
-                      <div className={home.fact}>
-                        <span className={home.factLabel}>Verified outcome</span>
-                        <p className={home.factBody}>{p.homeExcerpt?.outcome ?? p.outcome}</p>
-                      </div>
-                      <div className={home.entryMeta}>
-                        <span className={home.entryTags}>{p.disciplines.join('  ·  ')}</span>
-                      </div>
-                      <ArrowLink href={`/work/${p.slug}/`} className={home.entryLink}>
-                        Read the case study
-                      </ArrowLink>
-                    </div>
-                  </div>
+                    <div className={home.entryBody}>
+                      {showcase ? null : image ? (
+                        <div className="media-frame">
+                          <ProjectImage image={image} />
+                        </div>
+                      ) : variant ? (
+                        <SystemDiagram variant={variant} />
+                      ) : null}
 
-                  {!showcase && image && variant ? (
-                    <SystemDiagram
-                      variant={variant}
-                      caption={diagramCaption(p.slug)}
-                    />
-                  ) : null}
-                </Reveal>
-              )
-            })}
+                      <div className={home.entryDetail}>
+                        <div className={home.fact}>
+                          <span className={home.factLabel}>The problem</span>
+                          <p className={home.factBody}>{p.problem}</p>
+                        </div>
+                        <div className={home.fact}>
+                          <span className={home.factLabel}>What I owned</span>
+                          <p className={home.factBody}>
+                            {p.homeExcerpt?.ownership ?? p.demonstrates}
+                          </p>
+                        </div>
+                        <div className={home.fact}>
+                          <span className={home.factLabel}>Verified outcome</span>
+                          <p className={home.factBody}>{p.homeExcerpt?.outcome ?? p.outcome}</p>
+                        </div>
+                        <div className={home.entryMeta}>
+                          <span className={home.entryTags}>{p.disciplines.join('  ·  ')}</span>
+                        </div>
+                        <ArrowLink href={`/work/${p.slug}/`} className={home.entryLink}>
+                          Read the case study
+                        </ArrowLink>
+                      </div>
+                    </div>
+
+                    {!showcase && image && variant ? (
+                      <SystemDiagram
+                        variant={variant}
+                        caption={diagramCaption(p.slug)}
+                      />
+                    ) : null}
+                  </Reveal>
+                )
+              })}
+            </div>
           </div>
 
           <div className={home.entryFoot}>

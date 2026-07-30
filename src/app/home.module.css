@@ -343,6 +343,14 @@
   justify-self: start;
 }
 
+/* The stage's closing affordance, and a sibling of the two column grid
+   rather than a third grid item. Inside the grid it was auto placed into
+   row 2 of column 1, under the rail; and because a sticky element's
+   containing block is the grid container, not its own grid area, the
+   pinned rail slid the full height of the stage and was painted over this
+   row, running its hairline across the live lede text. Outside the grid
+   the rail's travel stops at the records column and can never reach it.
+   Keep it a sibling: spanning the columns from inside does not help. */
 .entryFoot {
   display: flex;
   padding-top: var(--space-5);
