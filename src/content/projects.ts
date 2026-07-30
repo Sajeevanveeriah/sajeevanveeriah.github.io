@@ -61,6 +61,14 @@ export interface Project {
   readonly links?: readonly ProjectLink[]
   readonly images?: readonly ProjectImage[]
   readonly featured: boolean
+  /**
+   * Withheld from every discovery surface: nav panels, index listings,
+   * related-work modules and the sitemap. The route still builds and
+   * resolves at its original URL, deliberately, and the page carries
+   * `noindex`. Suppression is not deletion: nothing is removed from the
+   * record set and no history is rewritten.
+   */
+  readonly suppressed?: true
   readonly homeExcerpt?: {
     readonly ownership: string
     readonly outcome: string
@@ -210,7 +218,8 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'adas-can-validation',
-    title: 'Ford via Invenio: ADAS and CAN Validation',
+    suppressed: true,
+    title: 'ADAS and CAN Validation',
     summary:
       'I conducted feature, breadboard and OTA regression testing across the T6 Ranger and Everest programmes, supported by CAN-level fault evidence.',
     role: 'Product Development Test Engineer (Contract)',
@@ -221,7 +230,7 @@ export const projects: readonly Project[] = [
     problem:
       'Vehicle features must remain stable across variants, running changes and over-the-air software updates, with evidence to prove it.',
     context:
-      'I completed this work at Ford Motor Company via Invenio contract placement, validating vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
+      'I validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
     approach: [
       'Instrumented test vehicles, CAN and CAN FD networks, feature software under test, and structured feature-vehicle, breadboard and regression test workflows feeding readiness milestones and sign-off evidence.',
       'I captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
@@ -233,7 +242,7 @@ export const projects: readonly Project[] = [
     outcome:
       'I delivered evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
     evidenceNote:
-      'I present this as Delivered professional contract work and always credit it as Ford Motor Company via Invenio contract placement.',
+      'I present this as Delivered professional contract work.',
     demonstrates:
       'This demonstrates my cyber-physical validation skill: I read what a vehicle network is actually doing and turn it into defensible engineering evidence.',
     evidenceTier: 'delivered',
@@ -573,4 +582,14 @@ export function getProject(slug: string): Project | undefined {
  */
 export const publishedProjects: readonly Project[] = projects.filter(
   (p) => p.evidenceTier !== null,
+)
+
+/**
+ * What may be advertised. Suppressed records still build and still resolve
+ * at their own URL; they are simply never linked or listed. Every discovery
+ * surface reads this list, never `publishedProjects`, so a new surface
+ * cannot reintroduce a suppressed record by accident.
+ */
+export const discoverableProjects: readonly Project[] = publishedProjects.filter(
+  (p) => !p.suppressed,
 )

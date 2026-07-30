@@ -4,7 +4,7 @@ import { PageHeader } from '@/components/ui/PageHeader'
 import { Reveal } from '@/components/motion/Reveal'
 import { CareerSpine } from '@/components/about/CareerSpine'
 import { narrative, credentials, beyond, beyondHeading } from '@/content/about'
-import { experience, experienceGroups } from '@/content/experience'
+import { discoverableExperience, experienceGroups } from '@/content/experience'
 import a from './about.module.css'
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export default function AboutPage() {
                 <h2 className={a.groupTitle}>{experienceGroups[g].heading}</h2>
                 <p className={a.groupNote}>{experienceGroups[g].kicker}</p>
               </div>
-              <CareerSpine roles={experience.filter((r) => r.group === g)} />
+              <CareerSpine roles={discoverableExperience.filter((r) => r.group === g)} />
             </div>
           ))}
         </div>

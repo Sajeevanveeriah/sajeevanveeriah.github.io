@@ -4,9 +4,9 @@ import type { MetadataRoute } from 'next'
    route as dynamic and the build fails rather than emitting a static file. */
 export const dynamic = 'force-static'
 import { site } from '@/content/site'
-import { publishedProjects } from '@/content/projects'
+import { discoverableProjects } from '@/content/projects'
 import { atlas } from '@/content/atlas'
-import { experience } from '@/content/experience'
+import { discoverableExperience } from '@/content/experience'
 import { publishedEmployers } from '@/content/employers'
 
 /**
@@ -23,9 +23,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact/',
     '/employers/',
     '/versatility/',
-    ...publishedProjects.map((p) => `/work/${p.slug}/`),
+    // Suppressed records and roles still build and still resolve at their own
+    // URL, but are never advertised here.
+    ...discoverableProjects.map((p) => `/work/${p.slug}/`),
     ...atlas.map((d) => `/atlas/${d.slug}/`),
-    ...experience.map((r) => `/about/${r.slug}/`),
+    ...discoverableExperience.map((r) => `/about/${r.slug}/`),
     // Draft employers are absent from `publishedEmployers`, so an unrouted
     // record can never be advertised in the sitemap.
     ...publishedEmployers.map((x) => `/employers/${x.slug}/`),

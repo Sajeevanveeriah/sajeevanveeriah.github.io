@@ -29,6 +29,13 @@ export interface Role {
   readonly transferable: string
   readonly evidenceTiers: readonly EvidenceTier[]
   readonly group: 'recent' | 'foundation'
+  /**
+   * Withheld from every discovery surface: nav panels, the career spine and
+   * the sitemap. The route still builds and resolves at its original URL,
+   * deliberately, and the page carries `noindex`. Suppression is not
+   * deletion: the role stays in the record and no history is rewritten.
+   */
+  readonly suppressed?: true
   /** Work records covering the same employer. */
   readonly relatedProjects: readonly string[]
 }
@@ -80,6 +87,7 @@ export const experience: readonly Role[] = [
   },
   {
     slug: 'ford-via-invenio',
+    suppressed: true,
     company: 'Ford Motor Company via Invenio contract placement',
     title: 'Product Development Test Engineer (Contract)',
     period: 'Oct 2025 to Jan 2026',
@@ -256,6 +264,13 @@ export const experience: readonly Role[] = [
     relatedProjects: ['manufacturing-qa-foundation'],
   },
 ] as const
+
+/**
+ * What may be advertised. Suppressed roles still build and still resolve at
+ * their own URL; they are simply never linked or listed. Every discovery
+ * surface reads this list, never `experience`.
+ */
+export const discoverableExperience: readonly Role[] = experience.filter((r) => !r.suppressed)
 
 export function getRole(slug: string): Role | undefined {
   return experience.find((r) => r.slug === slug)

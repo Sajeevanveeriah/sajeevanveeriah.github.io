@@ -19,7 +19,28 @@ import type { EvidenceTier } from './tiers'
  *   - An employer with `draft: true` is not routed and not published.
  */
 
+/**
+ * Closed discipline vocabulary. Two axes, deliberately independent: `tier`
+ * grades the evidence and is transcribed from the source brief, `discipline`
+ * is the visible grouping. Assigning a discipline never changes a tier, and
+ * a claim that spans two disciplines takes the one its text leads with and
+ * is never duplicated.
+ */
+export const DISCIPLINES = [
+  'Control and automation',
+  'Instrumentation and measurement',
+  'Embedded and electronics',
+  'Networks and data',
+  'Robotics and autonomy',
+  'Manufacturing and process',
+  'Quality, compliance and documentation',
+  'Project and delivery',
+] as const
+
+export type Discipline = (typeof DISCIPLINES)[number]
+
 export interface EmployerClaim {
+  readonly discipline: Discipline
   readonly tier: EvidenceTier
   readonly body: string
 }
@@ -37,7 +58,13 @@ export interface Employer {
   readonly title: string | null
   /** null where the brief supplies no dates. */
   readonly period: string | null
-  /** null where the brief supplies no location. */
+  /**
+   * State and country only. AGENTS.md forbids role locations, and the source
+   * brief supplies suburb-level ones, so every value is reduced to
+   * "Victoria, Australia". Suburbs that are verified facts about an
+   * employer's own site stay in `companyFacts`, because those describe the
+   * company rather than Saj. One edit here strips all six.
+   */
   readonly location: string | null
   readonly companyFacts: readonly CompanyFact[]
   readonly claims: readonly EmployerClaim[]
@@ -58,7 +85,7 @@ export const employers: readonly Employer[] = [
     company: 'JAG Process Solutions Pty Ltd',
     title: 'Automation and Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
-    location: 'Brunswick, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [
       {
         source: 'jag-ps.com.au/en-au/company',
@@ -71,50 +98,62 @@ export const employers: readonly Employer[] = [
     ],
     claims: [
       {
+        discipline: 'Control and automation',
         tier: 'delivered',
         body: 'Executed an iFIX to PVI+ migration on a validated system, verifying functional behaviour against the pre-existing qualified baseline rather than against a specification alone.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
         body: 'Produced FAT, SAT, commissioning, qualification and handover documentation packages.',
       },
       {
+        discipline: 'Control and automation',
         tier: 'hands-on',
         body: 'Built and modified control logic and process visualisation for pharmaceutical, biotech and food manufacturing lines operating under GMP.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
         body: 'Worked across field devices, instruments and drives, including the wiring and signal path between an instrument and the controller, not only the tag in software.',
       },
       {
+        discipline: 'Robotics and autonomy',
         tier: 'hands-on',
         body: 'Supported MiR autonomous mobile robot operations and material-flow workflows in a smart-factory environment, diagnosing faults across the robot, the control system, the network and the production interface.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
         body: 'Ran verification against a validated system under GMP change control, where the burden is proving that behaviour did not change, a harder test than proving a new feature works.',
       },
       {
+        discipline: 'Control and automation',
         tier: 'working-knowledge',
         body: 'Batch control and recipe-driven production, including how a batch layer sits above equipment modules.',
       },
       {
+        discipline: 'Embedded and electronics',
         tier: 'working-knowledge',
         body: 'Control panel construction and industrial field wiring practice as executed by the JAG Group.',
       },
       {
+        discipline: 'Robotics and autonomy',
         tier: 'working-knowledge',
         body: 'Fleet-level traffic management and how AMR missions are dispatched against production demand.',
       },
       {
+        discipline: 'Networks and data',
         tier: 'working-knowledge',
         body: 'Industrial networking between control, robot and production layers, and the failure modes that appear at the seams between them.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'GMP computerised system validation lifecycle, and why traceability from requirement to test evidence is the deliverable rather than a by-product.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'adjacent',
         body: "Work was performed for JAG's end clients in pharmaceutical, biotech and food manufacturing.",
       },
@@ -126,7 +165,11 @@ export const employers: readonly Employer[] = [
       'Did Saj personally do loop checking or point-to-point testing.',
       'MiR unit count, and whether Saj did map or mission configuration or only fault diagnosis.',
       'Which fieldbus or industrial ethernet protocols Saj personally configured or traced.',
-      "Whether any client may be named publicly. Default is to name none. Do not name CSL Behring. It was a JAG client, never Saj's employer.",
+      // Redacted deliberately. The source brief names the client here, but
+      // `todoConfirm` ships into the built HTML as a source comment, so
+      // carrying the name would publish exactly what this item forbids.
+      // The instruction is preserved; only the name is withheld.
+      'Whether any client may be named publicly. Default is to name none. The one client named in the source brief must not be named: it was a JAG client, never an employer.',
     ],
   },
   {
@@ -134,7 +177,7 @@ export const employers: readonly Employer[] = [
     company: 'ABMARC',
     title: 'Technical Assistant',
     period: 'Jul 2024 to Aug 2025',
-    location: 'South Geelong, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [
       {
         source: 'abmarc.com.au/about',
@@ -155,50 +198,62 @@ export const employers: readonly Employer[] = [
     ],
     claims: [
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
         body: 'Prepared QA, regulatory and test documentation for certification and audit, holding traceable configurations, results and findings.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
         body: 'Prepared and instrumented vehicles for emissions and range testing, including fitting measurement equipment, verifying calibration state and setting up the test environment before a run.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
         body: 'Conducted real-time data acquisition during test runs and analysed results against ADR and EURO requirements.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
         body: 'Performed maintenance and fault finding on emissions test equipment to hold accuracy and reliability between programs.',
       },
       {
+        discipline: 'Networks and data',
         tier: 'hands-on',
         body: 'Used CAN tools to capture and interpret vehicle bus data during testing, correlating bus signals against measured emissions and energy consumption.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
         body: 'Tested EV and PHEV range and vehicle systems, a different measurement problem from tailpipe emissions requiring energy accounting rather than gas analysis.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
         body: 'Analysed deviations and supported evidence-based fault isolation, separating instrument fault from vehicle behaviour from test procedure error.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'working-knowledge',
         body: 'Portable emissions measurement as a discipline, including why a field instrument must be treated as a laboratory instrument that happens to be moving.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'working-knowledge',
         body: 'Powertrain behaviour across internal combustion, hybrid and battery electric vehicles as it appears in test data.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'Repeatability criteria, and what it means for a program to require a third test run when two runs disagree.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'The Australian Design Rules and the Road Vehicle Certification System as the framework the evidence has to satisfy.',
       },
       {
+        discipline: 'Instrumentation and measurement',
         tier: 'adjacent',
         body: 'ADAS and driver-assist testing, noise testing and VASS engineering are ABMARC service lines.',
       },
@@ -216,7 +271,7 @@ export const employers: readonly Employer[] = [
     company: 'DuxTel Pty Ltd',
     title: 'Consultant Engineer, IoT and Projects Administrator',
     period: 'Feb 2024 to Aug 2024',
-    location: 'Greater Geelong, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [
       {
         source: 'duxtel.com.au/hardware_overview and store.duxtel.com',
@@ -229,41 +284,50 @@ export const employers: readonly Employer[] = [
     ],
     claims: [
       {
+        discipline: 'Embedded and electronics',
         tier: 'delivered',
         body: 'Designed and deployed end-to-end IoT systems linking sensors, embedded devices, gateways, Linux services, data pipelines and dashboards. End to end means the literal chain: a sensor reading, an ESP32 firmware loop, a LoRaWAN uplink on AU915, a ChirpStack network server, an MQTT broker, a Linux service, an InfluxDB time series and a Grafana panel. Seven layers, one engineer.',
       },
       {
+        discipline: 'Project and delivery',
         tier: 'delivered',
         body: 'Ran field trials on agricultural equipment and supported provisioning, fault finding and handover to the operator.',
       },
-      { tier: 'hands-on', body: 'ESP32 firmware for sensing and telemetry.' },
-      { tier: 'hands-on', body: 'LoRaWAN AU915 radio planning and device provisioning.' },
-      { tier: 'hands-on', body: 'ChirpStack network server configuration and MQTT topic design.' },
+      { discipline: 'Embedded and electronics', tier: 'hands-on', body: 'ESP32 firmware for sensing and telemetry.' },
+      { discipline: 'Networks and data', tier: 'hands-on', body: 'LoRaWAN AU915 radio planning and device provisioning.' },
+      { discipline: 'Networks and data', tier: 'hands-on', body: 'ChirpStack network server configuration and MQTT topic design.' },
       {
+        discipline: 'Networks and data',
         tier: 'hands-on',
         body: 'Linux service deployment, InfluxDB schema and retention, and Grafana dashboard construction.',
       },
       {
+        discipline: 'Embedded and electronics',
         tier: 'hands-on',
         body: 'Designed a custom PCB for the agricultural monitoring application, integrating CAN trace capture, GPS and environmental sensing on one board.',
       },
       {
+        discipline: 'Embedded and electronics',
         tier: 'hands-on',
         body: 'Enclosure, mounting and field-hardening decisions for equipment that lives outdoors on moving machinery.',
       },
       {
+        discipline: 'Networks and data',
         tier: 'hands-on',
         body: 'MikroTik networking for the field deployment, configured inside the company that distributes and consults on the platform.',
       },
       {
+        discipline: 'Networks and data',
         tier: 'hands-on',
         body: 'Diagnosed failures in a deployed system where the fault could be firmware, radio, network server, broker, database or dashboard, with no way to know in advance which.',
       },
       {
+        discipline: 'Project and delivery',
         tier: 'hands-on',
         body: 'Administered the project alongside the engineering: scope, supplier coordination, documentation and delivery tracking.',
       },
       {
+        discipline: 'Networks and data',
         tier: 'working-knowledge',
         body: 'Point to point and point to multipoint wireless design, and the RF trade-offs between LoRaWAN, WiFi and cellular for a given site.',
       },
@@ -283,7 +347,7 @@ export const employers: readonly Employer[] = [
     title: 'Engineering and QA support',
     // The brief supplies no dates for this role and none are reconstructed.
     period: null,
-    location: 'Corio and Geelong, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [
       {
         source:
@@ -297,30 +361,37 @@ export const employers: readonly Employer[] = [
     ],
     claims: [
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
         body: 'Inspection and Test Plans, and inspection planning against them.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
         body: 'Manufacturing Data Reports, assembling the traceable evidence package for a fabricated item.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'hands-on',
         body: 'Drawing review against fabrication reality, reading structural steel detail drawings and checking them against what the shop could and would produce.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
         body: 'Material traceability, tying heat numbers and material certificates to finished members.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'AS/NZS structural steel compliance records and what an auditor looks for in them.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'working-knowledge',
         body: 'Welding as a controlled process, including why procedure qualification and welder qualification exist. Thornton employs dedicated welding engineers, so this is proximity to the discipline, not practice of it.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'adjacent',
         body: 'Pressure vessel and heat exchanger fabrication, stress relieving and heat treatment are Thornton capabilities.',
       },
@@ -338,7 +409,7 @@ export const employers: readonly Employer[] = [
     title: 'Production and quality role',
     // The brief supplies no dates for this role and none are reconstructed.
     period: null,
-    location: 'Waurn Ponds and Geelong, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [
       {
         source: 'carbonrev.com/company',
@@ -355,26 +426,32 @@ export const employers: readonly Employer[] = [
     ],
     claims: [
       {
+        discipline: 'Manufacturing and process',
         tier: 'hands-on',
         body: 'Operated and monitored carbon fibre production equipment through the process steps, working to the tolerances a Tier 1 automotive part demands.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
         body: 'Quality control checks within the in-process measurement regime.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'hands-on',
         body: 'First-level troubleshooting when equipment or process behaviour drifted, including knowing when to stop rather than continue.',
       },
       {
+        discipline: 'Manufacturing and process',
         tier: 'working-knowledge',
         body: 'Composite manufacturing as a controlled process, including why cure, pressure and layup discipline determine whether a structural part is sound.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'Industry 4.0 traceability in practice, having worked inside a system that records data for every unit at every station.',
       },
       {
+        discipline: 'Robotics and autonomy',
         tier: 'adjacent',
         body: "The plant's use of automation, robotics and AI-driven inspection.",
       },
@@ -392,14 +469,16 @@ export const employers: readonly Employer[] = [
     title: 'Beverage production role',
     // The brief supplies no dates for this role and none are reconstructed.
     period: null,
-    location: 'Geelong, Victoria',
+    location: 'Victoria, Australia',
     companyFacts: [],
     claims: [
       {
+        discipline: 'Manufacturing and process',
         tier: 'hands-on',
         body: 'Operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
       },
       {
+        discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
         body: 'Food and beverage production hygiene, batch traceability and the quality regime governing a consumable product, the same regulatory logic later met at JAG in pharmaceutical and food manufacturing under GMP, approached from the plant floor.',
       },

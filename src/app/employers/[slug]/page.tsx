@@ -4,8 +4,7 @@ import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { SourceNote } from '@/components/ui/SourceNote'
 import { Reveal } from '@/components/motion/Reveal'
-import { publishedEmployers, getEmployer } from '@/content/employers'
-import { TIER_ORDER, TIERS } from '@/content/tiers'
+import { publishedEmployers, getEmployer, DISCIPLINES } from '@/content/employers'
 import s from '@/components/ui/shared.module.css'
 import e from './employer.module.css'
 
@@ -41,12 +40,14 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
   const x = getEmployer(slug)
   if (!x) notFound()
 
-  // Grouped by evidence tier, which is the only grouping the source brief
-  // supplies. A discipline grouping would have to be invented, and inventing
-  // one would put a claim in a bucket Saj never assigned it to.
-  const groups = TIER_ORDER.map((tier) => ({
-    tier,
-    items: x.claims.filter((c) => c.tier === tier),
+  // Two axes. Discipline is the visible grouping; every claim keeps the tier
+  // the source brief gave it, rendered as a badge on the item itself. The
+  // vocabulary order is fixed across all six pages, so a reader comparing
+  // employers meets the disciplines in the same sequence every time. A
+  // discipline with no claims for this employer renders nothing at all.
+  const groups = DISCIPLINES.map((discipline) => ({
+    discipline,
+    items: x.claims.filter((c) => c.discipline === discipline),
   })).filter((g) => g.items.length > 0)
 
   return (
@@ -108,14 +109,14 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
             </h2>
             <div className={s.chapterBody}>
               {groups.map((g) => (
-                <div key={g.tier} className={e.tierGroup}>
-                  <div className={e.tierHead}>
-                    <TierIndicator tier={g.tier} />
-                    <span className={e.tierDef}>{TIERS[g.tier].definition}</span>
-                  </div>
-                  <ul className={s.bullets}>
+                <div key={g.discipline} className={e.tierGroup}>
+                  <h3 className={e.disciplineHead}>{g.discipline}</h3>
+                  <ul className={e.claims}>
                     {g.items.map((c, i) => (
-                      <li key={i}>{c.body}</li>
+                      <li key={i} className={e.claim}>
+                        <TierIndicator tier={c.tier} className={e.claimTier} />
+                        <span className={e.claimBody}>{c.body}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>

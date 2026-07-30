@@ -10,7 +10,7 @@ import { ParallaxStage, ParallaxLayer } from '@/components/motion/ParallaxStage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { site } from '@/content/site'
 import { narrative, closedLoop } from '@/content/about'
-import { publishedProjects } from '@/content/projects'
+import { discoverableProjects } from '@/content/projects'
 import { systemsStack } from '@/content/systemsStack'
 import home from './home.module.css'
 
@@ -99,7 +99,7 @@ const PROBLEMS = [
 
 export default function HomePage() {
   const selected = SELECTED.map((slug) =>
-    publishedProjects.find((p) => p.slug === slug),
+    discoverableProjects.find((p) => p.slug === slug),
   ).filter((p) => p !== undefined)
 
   return (

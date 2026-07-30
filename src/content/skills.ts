@@ -105,7 +105,7 @@ export const disciplines: readonly Discipline[] = [
   {
     slug: 'automotive-and-validation',
     name: 'Automotive and validation',
-    summary: 'ADAS and vehicle software validation at Ford via Invenio; emissions compliance at ABMARC.',
+    summary: 'ADAS and vehicle software validation; emissions compliance at ABMARC.',
     platforms: ['Vector CANoe', 'Vector CANalyzer'],
     protocols: [
       'CAN and CAN FD',

@@ -45,16 +45,51 @@
   margin-top: 0;
 }
 
-.tierHead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4em var(--space-3);
+/* Discipline is the visible grouping. The hairline belongs to the heading
+   itself, so a group that grows simply pushes the next one down. */
+.disciplineHead {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
 }
 
-.tierDef {
-  color: var(--text-faint);
-  font-size: var(--text-sm);
+.claims {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tier badge above the claim on a phone, beside it once there is room. The
+   badge column is fixed so the claim text starts on one line down the page
+   rather than stepping in and out with each label's width. */
+.claim {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 62ch;
+}
+
+@media (min-width: 620px) {
+  .claim {
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+    max-width: 74ch;
+  }
+}
+
+.claimTier {
+  align-self: start;
+}
+
+.claimBody {
+  color: var(--text-muted);
 }
 
 /* The page's argument, given weight by measure and size rather than by a

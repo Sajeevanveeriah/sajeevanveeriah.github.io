@@ -35,7 +35,11 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
   if (!d) notFound()
 
   const layers = systemsStack.filter((l) => l.cluster === d.cluster)
-  const related = d.relatedProjects.map(getProject).filter((p) => p !== undefined)
+  // Suppressed records are never advertised from a related-work module.
+  const related = d.relatedProjects
+    .map(getProject)
+    .filter((p) => p !== undefined)
+    .filter((p) => !p.suppressed)
 
   // Tier drives ordering: strong evidence leads with proof, growth targets
   // lead where the tier is aspirational.

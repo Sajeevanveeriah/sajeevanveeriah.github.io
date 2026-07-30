@@ -7,13 +7,16 @@ import { ProjectImage } from '@/components/ui/ProjectImage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { Reveal } from '@/components/motion/Reveal'
-import { publishedProjects, getProject } from '@/content/projects'
-import { experience } from '@/content/experience'
+import { publishedProjects, discoverableProjects, getProject } from '@/content/projects'
+import { discoverableExperience } from '@/content/experience'
 import { site } from '@/content/site'
 import s from '@/components/ui/shared.module.css'
 
 /** Every published slug is emitted at build time. Required for the export. */
 export function generateStaticParams() {
+  // Deliberately the published set, not the discoverable one: a suppressed
+  // record must keep building and keep resolving at its own URL. Suppression
+  // removes it from discovery, never from the export.
   return publishedProjects.map((p) => ({ slug: p.slug }))
 }
 
@@ -29,6 +32,9 @@ export async function generateMetadata({
     title: p.title,
     description: p.summary,
     alternates: { canonical: `/work/${p.slug}/` },
+    // A suppressed record stays reachable by direct URL but is not indexed.
+    // `follow: true` so its outbound links still carry, matching not-found.tsx.
+    ...(p.suppressed ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: p.title,
       description: p.summary,
@@ -43,12 +49,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const p = getProject(slug)
   if (!p || p.evidenceTier === null) notFound()
 
-  const roles = experience.filter((r) => r.relatedProjects.includes(p.slug))
+  // A suppressed role is never advertised, including from a record it worked on.
+  const roles = discoverableExperience.filter((r) => r.relatedProjects.includes(p.slug))
   const image = p.images?.[0]
   const variant = diagramFor(p.slug)
 
-  const index = publishedProjects.findIndex((x) => x.slug === p.slug)
-  const next = publishedProjects[(index + 1) % publishedProjects.length]
+  // Pagination walks the discoverable set, so it can neither land on nor
+  // advertise a suppressed record. A suppressed record is absent from the
+  // list, so `index` is -1 and no next link renders on it at all.
+  const index = discoverableProjects.findIndex((x) => x.slug === p.slug)
+  const next = discoverableProjects[(index + 1) % discoverableProjects.length]
 
   /**
    * The case study reads as one continuous argument: the problem, the system
