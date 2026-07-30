@@ -7,7 +7,7 @@ import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { Reveal } from '@/components/motion/Reveal'
 import { WorkArchive } from '@/components/work/WorkArchive'
-import { publishedProjects, projectDisciplines } from '@/content/projects'
+import { discoverableProjects, projectDisciplines } from '@/content/projects'
 import s from '@/components/ui/shared.module.css'
 
 export const metadata: Metadata = {
@@ -22,12 +22,11 @@ const FEATURED = [
   'autonomous-navigation-rover',
   'engineering-mastery-lab',
   'iot-monitoring-platform',
-  'adas-can-validation',
 ] as const
 
 export default function WorkPage() {
   const featured = FEATURED.map((slug) =>
-    publishedProjects.find((p) => p.slug === slug),
+    discoverableProjects.find((p) => p.slug === slug),
   ).filter((p) => p !== undefined)
 
   return (
@@ -90,7 +89,7 @@ export default function WorkPage() {
           </p>
         </div>
 
-        <WorkArchive projects={publishedProjects} disciplines={projectDisciplines} />
+        <WorkArchive projects={discoverableProjects} disciplines={projectDisciplines} />
       </div>
     </section>
   )

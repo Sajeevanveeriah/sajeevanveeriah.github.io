@@ -461,7 +461,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ADAS validation and emissions testing case studies break the work down.',
     experienceProof:
-      'Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes at Ford Motor Company via Invenio contract placement. Emissions and compliance testing against ADR and EURO standards at ABMARC.',
+      'Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes. Emissions and compliance testing against ADR and EURO standards at ABMARC.',
     transferableLogic:
       'Evidence-first validation, from a CAN trace to a certification report, is a portable habit every regulated industry pays for.',
     growthTargets: ['AUTOSAR literacy', 'ISO 26262 functional safety'],
@@ -674,7 +674,10 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'Every professional case study above ends in documented validation and handover, not just working software.',
     experienceProof:
-      'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence at Ford via Invenio.',
+      // TODO CONFIRM: removing the employer attribution leaves the final
+      // sentence a bare noun phrase. Not rewritten, because a replacement
+      // would be invented. Saj to reword or drop it.
+      'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence.',
     transferableLogic:
       'Commissioning is where every discipline meets reality: it proves the breadth claimed everywhere else on this page.',
     growthTargets: ['Lead commissioning roles', 'Multi-discipline project engineering'],

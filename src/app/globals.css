@@ -612,9 +612,14 @@ html[data-js] .stage[data-active] .stage__layer {
   position: sticky;
   top: calc(var(--header-h) + var(--space-4));
   align-self: start;
-  /* Never taller than the space it is pinned into, or it stops sticking and
-     silently reverts to a static block. */
-  max-height: calc(100svh - var(--header-h) - var(--space-6));
+  /* No height ceiling. A `max-height` here plus `overflow: visible` clamped
+     the box while the copy carried on rendering past it: measured at
+     1024x600 the rail box was held to 486px while its content ran to 578px,
+     so 92px of live text sat outside the element's own box and over
+     whatever followed. A sticky element taller than its viewport still
+     sticks, it simply cannot show all of itself at once, which is the
+     correct trade. `min-height` is the only height any pinned stage takes. */
+  min-height: 0;
   overflow: visible;
 }
 
@@ -626,7 +631,6 @@ html[data-js] .stage[data-active] .stage__layer {
 @media (max-width: 999px) {
   .sticky-rail {
     position: static;
-    max-height: none;
   }
 }
 
@@ -757,7 +761,6 @@ html[data-js] .stage[data-active] .stage__layer {
      the records move past it is exactly the effect being opted out of. */
   .sticky-rail {
     position: static;
-    max-height: none;
   }
 
   /* Diagrams settle on their finished state rather than their first frame. */

@@ -1,0 +1,112 @@
+/* Employer detail. Existing tokens only: no new colour, no new type face,
+   no new spacing scale. Every value below resolves to a token already
+   declared in styles/tokens.css. */
+
+.facts {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.factNote {
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  max-width: 62ch;
+}
+
+/* The hairline belongs to the item's leading edge, not to a fixed height
+   box, so a fact that wraps to more lines simply lengthens its own rule. */
+.fact {
+  border-left: 1px solid var(--border);
+  padding-left: var(--space-3);
+}
+
+.factBody {
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.factSource {
+  margin-top: var(--space-2);
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.tierGroup {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.tierGroup:first-child {
+  margin-top: 0;
+}
+
+/* Discipline is the visible grouping. The hairline belongs to the heading
+   itself, so a group that grows simply pushes the next one down. */
+.disciplineHead {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.claims {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tier badge above the claim on a phone, beside it once there is room. The
+   badge column is fixed so the claim text starts on one line down the page
+   rather than stepping in and out with each label's width. */
+.claim {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 62ch;
+}
+
+@media (min-width: 620px) {
+  .claim {
+    grid-template-columns: 11.5rem minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+    max-width: 74ch;
+  }
+}
+
+.claimTier {
+  align-self: start;
+}
+
+.claimBody {
+  color: var(--text-muted);
+}
+
+/* The page's argument, given weight by measure and size rather than by a
+   new colour or a decorative slab. */
+.closing {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1.32;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  max-width: 34ch;
+  border-left: 2px solid var(--accent-fill);
+  padding-left: var(--space-4);
+}
+
+@media (min-width: 700px) {
+  .closing {
+    max-width: 46ch;
+  }
+}

@@ -1,7 +1,7 @@
 import { navigation, navPanels, site } from '@/content/site'
-import { publishedProjects } from '@/content/projects'
+import { discoverableProjects } from '@/content/projects'
 import { atlas } from '@/content/atlas'
-import { experience } from '@/content/experience'
+import { discoverableExperience } from '@/content/experience'
 import { SiteNav, type NavGroup } from './SiteNav'
 
 /**
@@ -20,11 +20,11 @@ import { SiteNav, type NavGroup } from './SiteNav'
 function linksFor(href: string): readonly { label: string; href: string }[] {
   switch (href) {
     case '/work/':
-      return publishedProjects.map((p) => ({ label: p.title, href: `/work/${p.slug}/` }))
+      return discoverableProjects.map((p) => ({ label: p.title, href: `/work/${p.slug}/` }))
     case '/skills/':
       return atlas.map((d) => ({ label: d.name, href: `/atlas/${d.slug}/` }))
     case '/about/':
-      return experience.map((r) => ({
+      return discoverableExperience.map((r) => ({
         label: `${r.company}, ${r.title}`,
         href: `/about/${r.slug}/`,
       }))

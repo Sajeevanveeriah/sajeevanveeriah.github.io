@@ -24,6 +24,8 @@ export async function generateMetadata({
     title: `${r.title}, ${r.company}`,
     description: r.summary,
     alternates: { canonical: `/about/${r.slug}/` },
+    // A suppressed role stays reachable by direct URL but is not indexed.
+    ...(r.suppressed ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: `${r.title}, ${r.company}`,
       description: r.summary,
@@ -37,7 +39,11 @@ export default async function RolePage({ params }: { params: Promise<{ role: str
   const r = getRole(role)
   if (!r) notFound()
 
-  const related = r.relatedProjects.map(getProject).filter((p) => p !== undefined)
+  // Suppressed records are never advertised from a related-work module.
+  const related = r.relatedProjects
+    .map(getProject)
+    .filter((p) => p !== undefined)
+    .filter((p) => !p.suppressed)
 
   const chapters = [
     { title: 'What I did', bullets: r.achievements },
