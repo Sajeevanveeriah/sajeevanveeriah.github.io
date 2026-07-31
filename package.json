@@ -10,7 +10,6 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "contrast": "node scripts/check-contrast.mjs",
-    "og": "node --experimental-strip-types --no-warnings scripts/generate-og.mjs",
     "ecosystem": "node scripts/check-ecosystem.mjs"
   },
   "dependencies": {
