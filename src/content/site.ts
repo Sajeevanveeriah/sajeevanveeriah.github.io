@@ -82,6 +82,9 @@ export const navigation: readonly NavItem[] = [
   // page, not in a dropdown, and dumping 31 domains into the header would
   // make navigation worse rather than better.
   { label: 'Ecosystem', href: '/ecosystem/' },
+  // Three interactive concept demonstrations. A plain link on purpose: the
+  // lab index is the panel.
+  { label: 'Lab', href: '/lab/' },
   { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
 ] as const

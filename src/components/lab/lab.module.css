@@ -1,0 +1,414 @@
+/**
+ * Concept lab kit.
+ *
+ * Everything here composes the existing token system: white plates, the
+ * single blue accent, the ink ramp and the shared radius and focus tokens.
+ * No second hue, no glow, no dark chrome. State colours that must be
+ * distinguishable (wall, explored, path) are carried by value differences
+ * and by shape, never by hue alone.
+ */
+
+.lab {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.plate {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: clamp(1rem, 2.5vw, 1.75rem);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.compact .plate {
+  padding: 1rem;
+  gap: var(--space-2);
+}
+
+/* ---- Controls ---- */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.toolGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+.toolLabel {
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-right: 0.25rem;
+}
+
+.toolBtn {
+  font: inherit;
+  font-size: var(--text-xs);
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo),
+    background-color var(--dur-interaction) var(--ease-servo);
+  min-height: 32px;
+}
+
+/* 44px touch targets without moving the visible pill. */
+@media (pointer: coarse) {
+  .toolBtn {
+    position: relative;
+  }
+  .toolBtn::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+  }
+}
+
+.toolBtn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.toolBtnActive,
+.toolBtnActive:hover {
+  background: var(--accent-fill);
+  border-color: var(--accent-fill);
+  color: var(--on-accent);
+}
+
+.toolBtn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.runBtn {
+  composes: toolBtn;
+  border-color: var(--accent-line);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* ---- Occupancy grid ---- */
+
+.gridWrap {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2px;
+  touch-action: none;
+  user-select: none;
+  max-width: 640px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 3px;
+  background: var(--tint);
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 120ms var(--ease-servo);
+  position: relative;
+  min-width: 0;
+}
+
+.cell:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: 1px;
+  z-index: 1;
+}
+
+.cellWall {
+  background: var(--text);
+}
+
+.cellVisited {
+  background: var(--tint-deep);
+}
+
+.cellVisited::after {
+  content: '';
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+
+.cellPath {
+  background: var(--accent-muted);
+}
+
+.cellPath::after {
+  content: '';
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: var(--accent-fill);
+}
+
+.cellStart,
+.cellGoal {
+  background: var(--accent-fill);
+}
+
+.cellGoal {
+  background: var(--surface);
+  border: 2px solid var(--accent-fill);
+}
+
+.cellStart::after {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: var(--on-accent);
+}
+
+.cellGoal::after {
+  content: '';
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  border: 2px solid var(--accent-fill);
+}
+
+/* ---- Sliders ---- */
+
+.sliders {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.sliderRow {
+  display: grid;
+  grid-template-columns: minmax(9rem, 12rem) 1fr minmax(4.5rem, auto);
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.compact .sliderRow {
+  grid-template-columns: minmax(7rem, 9rem) 1fr minmax(4rem, auto);
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .sliderRow,
+  .compact .sliderRow {
+    grid-template-columns: 1fr auto;
+  }
+  .sliderRow input {
+    grid-column: 1 / -1;
+  }
+}
+
+.sliderLabel {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.sliderValue {
+  font-size: var(--text-sm);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.slider {
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--tint-deep);
+}
+
+.slider::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--tint-deep);
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  border: 0;
+  margin-top: -7.5px;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-fill);
+  border: 0;
+}
+
+.slider:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ---- Charts ---- */
+
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chartTruth {
+  fill: none;
+  stroke: var(--text-faint);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.chartRaw {
+  fill: var(--border-strong);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--accent-fill);
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chartBand {
+  fill: var(--accent-muted);
+}
+
+.chartAxis {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.chartRef {
+  stroke: var(--border-strong);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.chartTick {
+  font-size: 11px;
+  fill: var(--text-faint);
+}
+
+/* ---- Readouts ---- */
+
+.readouts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 0;
+  border-top: 1px solid var(--border-faint);
+  padding-top: var(--space-2);
+}
+
+.stat {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.statLabel {
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.statValue {
+  font-size: var(--text-lg);
+  font-family: var(--font-display);
+  color: var(--text);
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.statNote {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---- Legend and framing ---- */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  flex: none;
+}
+
+.framing {
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.embedHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.srStatus {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}

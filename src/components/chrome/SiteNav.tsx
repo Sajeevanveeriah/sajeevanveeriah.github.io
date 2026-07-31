@@ -52,10 +52,14 @@ export function SiteNav({
   groups,
   siteName,
   resumePath,
+  search,
 }: {
   groups: readonly NavGroup[]
   siteName: string
   resumePath: string
+  /** The command palette, built by the server header so the entry list is
+      derived from content rather than authored here. */
+  search?: React.ReactNode
 }) {
   const pathname = usePathname()
   const idBase = useId()
@@ -243,6 +247,7 @@ export function SiteNav({
         </nav>
 
         <div className={styles.actions}>
+          {search}
           <a className={styles.resume} href={resumePath} download>
             Resume
           </a>

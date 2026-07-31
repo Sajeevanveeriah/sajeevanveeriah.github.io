@@ -2,7 +2,9 @@ import { navigation, navPanels, site } from '@/content/site'
 import { discoverableProjects } from '@/content/projects'
 import { atlas } from '@/content/atlas'
 import { discoverableExperience } from '@/content/experience'
+import { labs } from '@/content/lab'
 import { SiteNav, type NavGroup } from './SiteNav'
+import { CommandPalette, type PaletteEntry } from './CommandPalette'
 
 /**
  * The header shell is a server component on purpose.
@@ -59,5 +61,37 @@ export function SiteHeader() {
     }
   })
 
-  return <SiteNav groups={groups} siteName={site.name} resumePath={site.resumePath} />
+  /* The palette index is derived from the same content modules the pages
+     render from, so it can never list a page that does not exist. Only a
+     label and an href per entry cross the client boundary. */
+  const paletteEntries: PaletteEntry[] = [
+    { group: 'Pages', label: 'Home', href: '/' },
+    ...navigation.map((n) => ({ group: 'Pages', label: n.label, href: n.href })),
+    { group: 'Pages', label: 'Engineering Atlas', href: '/atlas/' },
+    { group: 'Pages', label: 'Versatility', href: '/versatility/' },
+    { group: 'Pages', label: 'Now', href: '/now/' },
+    { group: 'Pages', label: 'Field notes', href: '/notes/' },
+    { group: 'Pages', label: 'Capability matrix', href: '/capability-matrix/' },
+    ...discoverableProjects.map((p) => ({
+      group: 'Work records',
+      label: p.title,
+      href: `/work/${p.slug}/`,
+    })),
+    ...atlas.map((d) => ({ group: 'Atlas domains', label: d.name, href: `/atlas/${d.slug}/` })),
+    ...discoverableExperience.map((r) => ({
+      group: 'Employers',
+      label: `${r.company}, ${r.title}`,
+      href: `/employers/${r.slug}/`,
+    })),
+    ...labs.map((l) => ({ group: 'Concept labs', label: l.title, href: `/lab/${l.slug}/` })),
+  ]
+
+  return (
+    <SiteNav
+      groups={groups}
+      siteName={site.name}
+      resumePath={site.resumePath}
+      search={<CommandPalette entries={paletteEntries} />}
+    />
+  )
 }

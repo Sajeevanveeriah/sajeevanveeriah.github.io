@@ -806,3 +806,21 @@ html[data-js] .stage[data-active] .stage__layer {
     opacity: 1 !important;
   }
 }
+
+/* ============================================================
+   Print. Chrome off, ink on: the capability matrix route depends on this,
+   and every other page benefits identically. Content is never gated on it.
+   ============================================================ */
+@media print {
+  /* Site chrome only. Both are direct children of body (the motion provider
+     renders no element), so in-page <header> blocks are untouched. */
+  body > header,
+  body > footer,
+  .skip-link {
+    display: none !important;
+  }
+
+  main {
+    padding: 0;
+  }
+}
