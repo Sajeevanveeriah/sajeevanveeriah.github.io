@@ -25,14 +25,7 @@ export async function generateMetadata({
     title: d.name,
     description: d.summary,
     alternates: { canonical: `/atlas/${d.slug}/` },
-    openGraph: {
-      title: d.name,
-      description: d.summary,
-      url: `/atlas/${d.slug}/`,
-      images: [
-        { url: `/assets/og/atlas-${d.slug}.png`, width: 1200, height: 630, alt: d.name },
-      ],
-    },
+    openGraph: { title: d.name, description: d.summary, url: `/atlas/${d.slug}/` },
   }
 }
 

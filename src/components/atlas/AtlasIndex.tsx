@@ -25,14 +25,7 @@ const CLUSTER_ORDER: readonly AtlasCluster[] = [
  * Search and filters are progressive enhancement: the server-rendered first
  * state is the complete, grouped list of every domain.
  */
-export function AtlasIndex({
-  domains,
-  recordTitles = {},
-}: {
-  domains: readonly AtlasDomain[]
-  /** Slug-to-title lookup for the evidence links, built by the server page. */
-  recordTitles?: Readonly<Record<string, string>>
-}) {
+export function AtlasIndex({ domains }: { domains: readonly AtlasDomain[] }) {
   const [query, setQuery] = useState('')
   const [cluster, setCluster] = useState<string>(ALL)
   const [tier, setTier] = useState<string>(ALL)
@@ -146,25 +139,6 @@ export function AtlasIndex({
                   </div>
                 </div>
                 <p className={s.rowSummary}>{d.summary}</p>
-                {d.relatedProjects.length > 0 ? (
-                  <p className={s.rowEvidence}>
-                    <span className={s.rowEvidenceLabel}>Evidenced by</span>
-                    {d.relatedProjects
-                      .filter((slug) => recordTitles[slug])
-                      .map((slug, i, arr) => (
-                        <span key={slug}>
-                          <Link
-                            href={`/work/${slug}/`}
-                            className={s.rowEvidenceLink}
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            {recordTitles[slug]}
-                          </Link>
-                          {i < arr.length - 1 ? ', ' : ''}
-                        </span>
-                      ))}
-                  </p>
-                ) : null}
                 <svg
                   className={s.rowArrow}
                   width="18"
