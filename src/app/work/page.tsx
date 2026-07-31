@@ -15,7 +15,11 @@ export const metadata: Metadata = {
   description:
     'Selected engineering work across robotics, embedded sensing, intelligent automation, software and validation, with an honest evidence tier for every record.',
   alternates: { canonical: '/work/' },
-  openGraph: { title: 'Work', url: '/work/' },
+  openGraph: {
+    title: 'Work',
+    url: '/work/',
+    images: [{ url: '/assets/og/work.png', width: 1200, height: 630, alt: 'Work' }],
+  },
 }
 
 const FEATURED = [

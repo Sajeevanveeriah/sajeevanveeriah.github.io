@@ -1,0 +1,166 @@
+.page {
+  /* Nothing special on screen; the print rules below carry the point. */
+}
+
+.printHead,
+.printFoot {
+  display: none;
+}
+
+.printBtn {
+  justify-self: start;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--on-accent);
+  background: var(--accent-fill);
+  border: 1px solid var(--accent-fill);
+  border-radius: 999px;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  min-height: 44px;
+  transition: background-color var(--dur-interaction) var(--ease-servo);
+}
+
+.printBtn:hover {
+  background: var(--accent-hover);
+}
+
+.printBtn:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.matrix thead th {
+  text-align: left;
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-strong);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+}
+
+.clusterRow th {
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  padding: 1.1rem 0 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.matrix td {
+  border-bottom: 1px solid var(--border-faint);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  vertical-align: middle;
+}
+
+.domainCell a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.domainCell a:hover {
+  color: var(--accent-text);
+}
+
+.domainCell a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: 3px;
+}
+
+.tierCell {
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Print: one clean A4 sheet
+   ============================================================ */
+
+@media print {
+  .page {
+    padding: 0;
+  }
+
+  .screenOnly {
+    display: none;
+  }
+
+  .printHead {
+    display: block;
+    border-bottom: 2px solid #0d0d0f;
+    padding-bottom: 4mm;
+    margin-bottom: 4mm;
+  }
+
+  .printName {
+    font-family: var(--font-display);
+    font-size: 16pt;
+    margin: 0;
+    max-width: none;
+  }
+
+  .printRole {
+    font-size: 9.5pt;
+    margin: 1mm 0 0;
+    max-width: none;
+  }
+
+  .printUrl {
+    font-size: 8.5pt;
+    color: #4e4e57;
+    margin: 1mm 0 0;
+    max-width: none;
+  }
+
+  .matrix {
+    font-size: 8.5pt;
+  }
+
+  .matrix thead th {
+    padding: 1.5mm 2mm 1.5mm 0;
+  }
+
+  .clusterRow th {
+    font-size: 10pt;
+    padding: 3mm 0 1mm;
+    break-after: avoid;
+  }
+
+  .matrix td {
+    padding: 1.2mm 2mm 1.2mm 0;
+  }
+
+  .matrix tr {
+    break-inside: avoid;
+  }
+
+  .domainCell a {
+    color: #0d0d0f;
+    text-decoration: none;
+  }
+
+  .printFoot {
+    display: block;
+    margin-top: 4mm;
+    border-top: 1px solid #4e4e57;
+    padding-top: 2mm;
+  }
+
+  .printFoot p {
+    font-size: 7.5pt;
+    color: #4e4e57;
+    max-width: none;
+    margin: 0;
+  }
+}
