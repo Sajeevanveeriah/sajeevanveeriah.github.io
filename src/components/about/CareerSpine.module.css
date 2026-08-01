@@ -109,6 +109,21 @@
   color: var(--accent-text);
 }
 
+/* The company name is the link into the employer record, and on a 320px phone
+   its own box measured 31px. The hit area is expanded with a pseudo-element
+   rather than with padding so the spine's baseline grid does not move. */
+@media (pointer: coarse) {
+  .company a {
+    position: relative;
+  }
+
+  .company a::before {
+    content: '';
+    position: absolute;
+    inset: -7px -8px;
+  }
+}
+
 .title {
   font-size: var(--text-sm);
   font-weight: 600;

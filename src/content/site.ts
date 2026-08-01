@@ -29,18 +29,36 @@ export interface SiteConfig {
   readonly credentials: readonly string[]
 }
 
+/**
+ * The single canonical professional identity string.
+ *
+ * Every page title, hero role line, header brand role, section kicker, meta
+ * description, Open Graph card, Twitter card and JSON-LD `Person.jobTitle`
+ * reads this constant rather than restating the role. Six places previously
+ * carried their own wording and four of them had already drifted apart, so
+ * changing the identity meant changing it in six files and it was never done
+ * in all six at once.
+ *
+ * The form is exact and is not to be paraphrased: Robotics leads, the
+ * separator before the final term is an ampersand rather than the word "and",
+ * and "End-To-End" is hyphenated with ASCII hyphens and a capital T. The
+ * leading order supersedes every earlier ordering used on the site.
+ */
+export const JOB_TITLE = 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' as const
+
 export const site: SiteConfig = {
   name: 'Sajeevan Veeriah',
   shortName: 'Saj',
   initials: 'SV',
-  // Verbatim from index.html:164
-  jobTitle: 'Mechatronics, Robotics, Automation and AI/ML Engineer',
+  jobTitle: JOB_TITLE,
   // Verbatim from index.html:1523
   tagline:
     'I work across mechatronics, robotics, automation and AI/ML, connecting physical systems, controls, embedded engineering, software and validation.',
-  // Verbatim from index.html:9
-  description:
-    'I am a mechatronics, robotics, automation and AI/ML engineer working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.',
+  // The role label is composed from `JOB_TITLE` so the meta description, the
+  // Open Graph card and the Twitter card can never drift from the page title.
+  // The capability clause after it is the original wording from index.html:9,
+  // unchanged.
+  description: `I am a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
   url: 'https://sajeevanveeriah.github.io',
   locale: 'en_AU',
   lang: 'en-AU',

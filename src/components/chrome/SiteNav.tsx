@@ -51,10 +51,12 @@ function focusables(root: HTMLElement): HTMLElement[] {
 export function SiteNav({
   groups,
   siteName,
+  siteRole,
   resumePath,
 }: {
   groups: readonly NavGroup[]
   siteName: string
+  siteRole: string
   resumePath: string
 }) {
   const pathname = usePathname()
@@ -158,7 +160,7 @@ export function SiteNav({
         <Link className={styles.brand} href="/" aria-label={`${siteName}, home`}>
           <span className={styles.brandName}>{siteName}</span>
           <span className={styles.brandRole} aria-hidden="true">
-            Mechatronics, robotics and AI/ML engineer
+            {siteRole}
           </span>
         </Link>
 

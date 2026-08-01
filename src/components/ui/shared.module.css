@@ -161,10 +161,43 @@
     position: relative;
   }
 
+  /* Measured on a 320px coarse-pointer viewport the anchor's own box is 21px
+     and this overlay took it to 41px, three short of the 44px this site holds
+     itself to rather than the 24px WCAG 2.5.8 floor. 12px a side lands it at
+     45px. The overlay is what moves, not the box, so the drawn underline and
+     the surrounding grid stay exactly where they were. */
   .link::before {
     content: '';
     position: absolute;
-    inset: -10px -4px;
+    inset: -12px -4px;
+  }
+
+  /* The back affordance is the primary way out of every detail route and had
+     no overlay at all: 24px measured, which is under even the WCAG floor.
+     `inline-flex` already establishes a box to hang this off, so only
+     `position` is added. */
+  .backLink {
+    position: relative;
+  }
+
+  .backLink::before {
+    content: '';
+    position: absolute;
+    inset: -10px -6px;
+  }
+
+  /* A group title is set at label size, so the anchor inside it measured 16px
+     on a phone while being the only way into that pillar's page. The overlay
+     takes it to 44 without touching the heading's own box, so the uppercase
+     rhythm of the group titles is unchanged. */
+  .atlasGroupTitle a {
+    position: relative;
+  }
+
+  .atlasGroupTitle a::before {
+    content: '';
+    position: absolute;
+    inset: -14px -8px;
   }
 }
 

@@ -4,7 +4,7 @@ A light-first editorial engineering portfolio for Sajeevan Veeriah, built with N
 
 ## Experience and design
 
-The homepage positions Saj as a Mechatronics, Robotics and AI/ML Engineer who owns systems across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. The hero cycles through real project evidence, pauses when it leaves the viewport and exposes direct project controls. There is no theme selector, control-room chrome, telemetry, technical grid or ambient animation.
+The homepage positions Saj as a Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer who owns systems across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. The hero cycles through real project evidence, pauses when it leaves the viewport and exposes direct project controls. There is no theme selector, control-room chrome, telemetry, technical grid or ambient animation.
 
 ## Architecture
 
@@ -15,6 +15,8 @@ Routes are implemented with the App Router under `src/app/`:
 - `robots.ts`, `sitemap.ts` and `not-found.tsx`
 
 Verified, typed copy lives in `src/content/`. The resume at `public/assets/Resume_Sajeevan_Veeriah.pdf` is the factual source of truth. The static export constraints in `next.config.ts` must remain intact.
+
+The professional identity string has exactly one source: `JOB_TITLE` in `src/content/site.ts`. The page titles, the hero role line, the header brand role, the About kicker, the meta description, both social cards and the JSON-LD `Person.jobTitle` all read it. Change it there and it changes everywhere; do not restate the role as a literal anywhere else.
 
 ### Two content layers, kept apart on purpose
 

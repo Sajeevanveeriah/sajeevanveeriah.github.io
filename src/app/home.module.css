@@ -49,9 +49,17 @@
   font-weight: 500;
   letter-spacing: var(--tracking-snug);
   color: var(--text);
-  /* Wide enough to hold "Mechatronics, Robotics and AI/ML Engineer" on one
-     line under the full width headline. At 30ch it broke after "and", which
-     read as a second headline rather than as an attribution. */
+  /* Holds the role line under the full width headline. At 30ch it broke after
+     a conjunction, which read as a second headline rather than as an
+     attribution.
+
+     The canonical role is now 62 characters, so at this measure it takes two
+     lines on a wide viewport and breaks after "End-To-End": the two halves are
+     "Robotics, Mechatronics, AI/ML & End-To-End" and "Automation Engineer",
+     which is a clean break at a real boundary in the title. Widening to the
+     ~64ch that would hold it on one line was rejected: at that measure the
+     attribution runs nearly the width of the headline above it and starts
+     competing with it, which is the fault this max-width exists to prevent. */
   max-width: 42ch;
 }
 
