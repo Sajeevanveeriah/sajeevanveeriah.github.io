@@ -5,12 +5,14 @@
  * 1482 (Beyond Engineering).
  */
 
+import { JOB_TITLE } from './site'
+
 /** Hero lede, index.html:165. */
 export const narrative =
   'I build across the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. I identify which engineering layer a problem lives in, then work across the disciplines required to resolve it.'
 
 export const homeStory = {
-  kicker: 'Mechatronics, robotics and AI/ML engineering',
+  kicker: JOB_TITLE,
   headline: 'I build intelligent systems that move, sense and decide.',
   proofTitle: 'Engineering from first principle to verified system.',
   proofKicker: '01 / Complete-package engineering',

@@ -400,7 +400,19 @@
   }
 }
 
-@media (min-width: 1080px) {
+/* The brand role is only drawn where it actually fits beside the navigation.
+   It used to appear from 1080px, which was sized for the shorter role string
+   the header carried before. The canonical identity is 548px set at
+   `--text-xs`, and at 1280 the shell had 1177px to divide between a 130px
+   name, that 548px role, six nav items and the resume button: the role ran
+   straight under "Work". Measured, the lockup needs about 1340px of shell to
+   clear the nav, and the shell is the viewport less two gutters until
+   `--wrap-wide` caps it, so 1500px is the first width where it is genuinely
+   clear. Below that the header shows the name alone, exactly as it already
+   did below 1080. Nothing is lost by hiding it: the span is `aria-hidden`
+   and decorative, and the same string is the page title, the meta
+   description, the hero role line and the JSON-LD `jobTitle`. */
+@media (min-width: 1500px) {
   .brandRole {
     display: inline;
   }

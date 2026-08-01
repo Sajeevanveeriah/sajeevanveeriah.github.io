@@ -15,7 +15,10 @@ import { systemsStack } from '@/content/systemsStack'
 import home from './home.module.css'
 
 export const metadata: Metadata = {
-  title: 'Sajeevan Veeriah | Mechatronics, Robotics and AI/ML Engineer',
+  // Next derives og:title and twitter:title from this value, so the one
+  // canonical identity string reaches the tab, the search result and both
+  // social cards from a single place.
+  title: `${site.name} | ${site.jobTitle}`,
   description:
     'Sajeevan Veeriah builds complete robotics, embedded and intelligent automation systems across mechanics, electronics, software, autonomy, controls and validation.',
   alternates: { canonical: '/' },
@@ -118,7 +121,7 @@ export default function HomePage() {
             <h1 id="hero-title" className={home.heroTitle}>
               I build intelligent systems that move, sense and decide.
             </h1>
-            <p className={home.heroRole}>Mechatronics, Robotics and AI/ML Engineer</p>
+            <p className={home.heroRole}>{site.jobTitle}</p>
           </div>
 
           <div className={home.heroFigure}>

@@ -9,7 +9,7 @@ import { fontVariables } from './fonts'
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Robotics, Mechatronics and Automation Portfolio`,
+    default: `${site.name} | ${site.jobTitle}`,
     template: `%s | ${site.name}`,
   },
   description: site.description,

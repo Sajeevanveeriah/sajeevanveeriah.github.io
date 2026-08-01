@@ -54,11 +54,20 @@
 
   /* ---- Type scale ----
      Display sizes are capped so a long headline never blows past its
-     container; body never drops below 17px. */
-  --text-label: 0.75rem;
-  --text-xs: 0.8125rem;
-  --text-sm: 0.9375rem;
-  --text-base: 1.0625rem;
+     container; body never drops below 17px.
+
+     Every step is now a clamp, so the whole scale interpolates continuously
+     and nothing on the page changes size in a jump. The four small steps
+     below used to be single fixed values: body text was 17px on a 320px
+     phone and the same 17px on a 1920px display, so the type sat correct at
+     the narrow end and visibly undersized at the wide end while the display
+     sizes around it kept growing. They are anchored 320px to 1920px, and the
+     minimum of each is its previous fixed value, so nothing anywhere on the
+     site gets smaller than it was and the 17px body floor still holds. */
+  --text-label: clamp(0.75rem, 0.7375rem + 0.0625vw, 0.8125rem);
+  --text-xs: clamp(0.8125rem, 0.8rem + 0.0625vw, 0.875rem);
+  --text-sm: clamp(0.9375rem, 0.925rem + 0.0625vw, 1rem);
+  --text-base: clamp(1.0625rem, 1.04375rem + 0.09375vw, 1.15625rem);
   --text-lg: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
   --text-lede: clamp(1.1875rem, 1.08rem + 0.5vw, 1.5rem);
   --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
@@ -77,18 +86,30 @@
   --tracking-label: 0.09em;
   --tracking-mono: 0.09em;
 
-  /* ---- Space ---- */
+  /* ---- Space ----
+     The rhythm scales with the viewport on the same 320px to 1920px anchor
+     as the type, so gaps, padding and stack spacing move with the words they
+     separate instead of holding one value from a phone to a 1920px display.
+     Each step reads 0.8x its old value at 320px, its old value at roughly
+     1400px where the layout was tuned, and 1.08x at 1920px: the wide end
+     opens up slightly, the narrow end recovers real horizontal room, and the
+     band the design was measured in is left where it was.
+
+     `--space-1` and `--space-2` stay fixed. They are hairline offsets, an 8px
+     and a 16px unit used for things like the skip-link inset and
+     scroll padding, and interpolating them would buy a pixel and a half of
+     movement in exchange for making two constants unpredictable. */
   --space-1: 0.5rem;
   --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-5: 2.5rem;
-  --space-6: 3rem;
-  --space-8: 4rem;
-  --space-10: 5rem;
-  --space-12: 6rem;
-  --space-16: 8rem;
-  --space-20: 10rem;
+  --space-3: clamp(1.2rem, 1.116rem + 0.42vw, 1.62rem);
+  --space-4: clamp(1.6rem, 1.488rem + 0.56vw, 2.16rem);
+  --space-5: clamp(2rem, 1.86rem + 0.7vw, 2.7rem);
+  --space-6: clamp(2.4rem, 2.232rem + 0.84vw, 3.24rem);
+  --space-8: clamp(3.2rem, 2.976rem + 1.12vw, 4.32rem);
+  --space-10: clamp(4rem, 3.72rem + 1.4vw, 5.4rem);
+  --space-12: clamp(4.8rem, 4.464rem + 1.68vw, 6.48rem);
+  --space-16: clamp(6.4rem, 5.952rem + 2.24vw, 8.64rem);
+  --space-20: clamp(8rem, 7.44rem + 2.8vw, 10.8rem);
 
   /* ---- Layout ---- */
   --wrap: 1180px;

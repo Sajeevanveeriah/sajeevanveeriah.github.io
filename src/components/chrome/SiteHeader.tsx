@@ -59,5 +59,15 @@ export function SiteHeader() {
     }
   })
 
-  return <SiteNav groups={groups} siteName={site.name} resumePath={site.resumePath} />
+  // The brand role is passed in rather than written in the nav component, for
+  // the same reason every other string is: no copy is hard-coded in a
+  // component, and the identity has exactly one source.
+  return (
+    <SiteNav
+      groups={groups}
+      siteName={site.name}
+      siteRole={site.jobTitle}
+      resumePath={site.resumePath}
+    />
+  )
 }
