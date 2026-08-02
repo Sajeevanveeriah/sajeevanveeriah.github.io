@@ -42,7 +42,18 @@ export interface Project {
   readonly slug: string
   readonly title: string
   readonly summary: string
-  readonly role: string
+  /**
+   * Null where Saj has not supplied one.
+   *
+   * This was a bare `string` carrying the literal `'TODO: Saj to supply.'`.
+   * The detail route guarded that placeholder out of the visible page, but
+   * `WorkArchive` is a client component, so every field of every discoverable
+   * record serialises into the RSC flight payload regardless of what is
+   * painted, and the editorial marker shipped inside the public HTML and
+   * index.txt. Null cannot leak a sentence, so the type carries the absence
+   * instead, exactly as `period` already does.
+   */
+  readonly role: string | null
   readonly period: string | null
   readonly domain: string
   readonly disciplines: readonly string[]
@@ -83,7 +94,7 @@ export const projects: readonly Project[] = [
     title: 'Engineering Mastery Lab',
     summary:
       'I built a browser-first engineering workbench that combines input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Software and engineering tools',
     disciplines: ['Software', 'Automation'],
@@ -211,7 +222,7 @@ export const projects: readonly Project[] = [
     title: 'Autonomous Navigation Rover on ROS 2',
     summary:
       'I built a complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, then validated it in simulation for repeatable obstacle-aware navigation.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Robotics and autonomy',
     disciplines: ['Robotics', 'Control', 'Embedded', 'AI/ML'],
@@ -423,7 +434,7 @@ export const projects: readonly Project[] = [
     title: 'ESP32 Clinical Ataxia Assessment Device',
     summary:
       'I developed embedded hardware and firmware for movement assessment support and validated it against clinical references.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Embedded and sensing',
     disciplines: ['Embedded', 'Electronics', 'Mechanical'],
@@ -463,7 +474,7 @@ export const projects: readonly Project[] = [
     title: 'Digital Twin and Industrial AI',
     summary:
       'I built a real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'AI/ML and automation',
     disciplines: ['AI/ML', 'Automation', 'Manufacturing'],
@@ -503,7 +514,7 @@ export const projects: readonly Project[] = [
     title: 'Manufacturing and QA Foundation',
     summary:
       'I built six years of experience across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: '2018 to 2024',
     domain: 'Manufacturing and quality',
     disciplines: ['Manufacturing', 'Mechanical'],
@@ -628,7 +639,7 @@ export const projects: readonly Project[] = [
     slug: 'ndcc-website',
     title: 'Newcomb and District Cricket Club website',
     summary: 'TODO: Saj to supply.',
-    role: 'TODO: Saj to supply.',
+    role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Software and engineering tools',
     disciplines: ['Software'],

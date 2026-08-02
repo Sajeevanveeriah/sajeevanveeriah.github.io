@@ -10,7 +10,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "contrast": "node scripts/check-contrast.mjs",
-    "ecosystem": "node scripts/check-ecosystem.mjs"
+    "ecosystem": "node scripts/check-ecosystem.mjs",
+    "visual": "node scripts/make-veerai-visual.mjs",
+    "visual:check": "node scripts/make-veerai-visual.mjs --check"
   },
   "dependencies": {
     "framer-motion": "^12.23.12",

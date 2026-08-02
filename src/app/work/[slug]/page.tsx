@@ -127,7 +127,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 <p className="label">Evidence</p>
                 <TierIndicator tier={p.evidenceTier} />
               </div>
-              {p.role && !p.role.startsWith('TODO') ? (
+              {p.role ? (
                 <div className={s.railBlock}>
                   <p className="label">Role</p>
                   <p className={s.rowSummary}>{p.role}</p>
