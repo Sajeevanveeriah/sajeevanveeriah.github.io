@@ -1,0 +1,68 @@
+/**
+ * Print and PDF export.
+ *
+ * Scope: force a light-on-white rendering regardless of the resolved theme,
+ * and nothing else. No layout change, no page-break rules, no link-URL
+ * expansion, no font substitution. A reader who prints while in Dark should
+ * get the same page a reader in Light gets, not a black rectangle.
+ *
+ * Why the selector list is what it is: the dark palette is applied by two
+ * rules in tokens.css, `html[data-theme='dark']` and, inside a
+ * prefers-color-scheme media block, `html:not([data-theme])`. A plain `:root`
+ * reset here would lose to the attribute selector on specificity, so the
+ * reset has to restate both shapes to beat them. `html[data-theme]` covers
+ * the attribute case at equal specificity and later source order; the bare
+ * `html` covers the media case.
+ *
+ * These are the light values from tokens.css. They are literals rather than
+ * aliases because the point is to be immune to whatever the theme layer did.
+ */
+
+@media print {
+  html,
+  html[data-theme],
+  html[data-theme='dark'] {
+    color-scheme: light;
+
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --tint: #f6f6f8;
+    --tint-deep: #eef0f3;
+
+    --text: #0d0d0f;
+    --text-muted: #4e4e57;
+    --text-faint: #5f5f68;
+
+    --border: rgb(13 13 15 / 0.11);
+    --border-strong: rgb(13 13 15 / 0.26);
+    --border-faint: rgb(13 13 15 / 0.06);
+
+    --accent: #0b5cd5;
+    --accent-hover: #0846a8;
+    --accent-text: #0b5cd5;
+    --accent-fill: #0b5cd5;
+    --accent-deep: #0846a8;
+    --accent-muted: rgb(11 92 213 / 0.08);
+    --accent-wash: rgb(11 92 213 / 0.08);
+    --accent-line: rgb(11 92 213 / 0.34);
+    --on-accent: #ffffff;
+    --focus-ring: #0b5cd5;
+
+    --status: #0b5cd5;
+    --status-hover: #0846a8;
+    --status-text: #0b5cd5;
+    --status-muted: rgb(11 92 213 / 0.08);
+    --header-bg: rgb(255 255 255 / 0.82);
+  }
+
+  /* The tokens above cover everything that draws through them, which is the
+     whole site. This pair covers the one thing that does not: the page
+     canvas itself, which a browser paints from the used background of the
+     root element before any token is consulted. */
+  html,
+  body {
+    background: #ffffff;
+    color: #0d0d0f;
+  }
+}

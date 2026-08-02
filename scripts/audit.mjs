@@ -51,13 +51,22 @@ const violations = []
 const overflow = []
 const tall = []
 
-/* The site has one theme. There is no theme control, no dark slab stage and
-   no `theme` key in localStorage for anything to read, so the old two-theme
-   loop was running every route twice against an identical render and
-   reporting doubled counts. Routes are already discovered from `out/`;
-   this now states the real, derived numbers rather than a hardcoded "10
-   routes x 2 themes" that stopped being true several routes ago. */
-console.log(`--- Accessibility (axe-core, WCAG 2.0/2.1/2.2 A + AA), ${ROUTES.length} routes, single light theme ---`)
+/* This audits each route once, in whatever theme the browser resolves.
+   Playwright launches with no `sv-theme` in localStorage and no forced colour
+   scheme, so the inline script in layout.tsx resolves to light and that is
+   what axe sees.
+
+   The old two-theme loop was removed because it ran every route twice
+   against an identical render and reported doubled counts, back when there
+   was no theme control at all. There is one now, so a dark pass would no
+   longer be a duplicate, but restoring it is its own piece of work with its
+   own verification burden and it is deliberately not bundled into the
+   theming change. Adding dark-mode axe coverage means setting
+   `colorScheme: 'dark'` on the context, or seeding localStorage before
+   navigation, and then deciding what a per-theme violation count means for
+   the exit code. Routes are already discovered from `out/`, so the numbers
+   below stay derived rather than hardcoded either way. */
+console.log(`--- Accessibility (axe-core, WCAG 2.0/2.1/2.2 A + AA), ${ROUTES.length} routes, resolved light theme ---`)
 for (const route of ROUTES) {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
   const page = await ctx.newPage()
