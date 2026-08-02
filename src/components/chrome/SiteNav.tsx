@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import styles from './SiteHeader.module.css'
+import { ThemeToggle } from './ThemeToggle'
 
 export interface NavPanel {
   readonly eyebrow: string
@@ -245,6 +246,10 @@ export function SiteNav({
         </nav>
 
         <div className={styles.actions}>
+          {/* Ahead of the resume link, and inside the header shell rather
+              than any page, so the control exists on every route including
+              the static 404. */}
+          <ThemeToggle />
           <a className={styles.resume} href={resumePath} download>
             Resume
           </a>

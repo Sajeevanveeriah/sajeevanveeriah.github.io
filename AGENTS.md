@@ -31,8 +31,11 @@ Never use the word "Present" for a role.
 The canvas is white. `--tint` (`#F6F6F8`) is the only banding colour and is
 used full bleed, never as a floating slab. Primary text is `#0D0D0F`, secondary
 `#4E4E57`, tertiary `#5F5F68`; every step clears 4.5:1 on white. The single
-interactive accent is deep engineering blue `#0B5CD5`. There is no global theme
-control, no dark slab stage and no second hue.
+interactive accent is deep engineering blue `#0B5CD5`. The site offers a
+System, Light and Dark control. The light appearance is unchanged. The dark
+appearance is derived from this same Signal Path palette by inverting the
+surface and ink stack and lifting the accent lightness while holding its hue.
+There is still no second hue, and no dark slab stage as a layout device.
 
 Type is a two-face pairing: Space Grotesk for display (`--font-display`),
 Hanken Grotesk for body and UI (`--font-body`). The `next/font` variables live

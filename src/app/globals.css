@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 @import '../styles/tokens.css';
+/* Last, so its @media print reset wins on source order against the theme
+   rules in tokens.css it has to override. */
+@import './print.css';
 
 /* Bind the role tokens into Tailwind v4's theme so utilities such as
    bg-surface and text-muted resolve automatically. Components use these
@@ -78,6 +81,17 @@ body {
   margin: 0;
   background-color: var(--bg);
   color: var(--text);
+  /* Softens the theme switch so the page changes ground rather than
+     snapping. Nothing else repaints the body canvas, so this transition
+     only ever runs on a theme change.
+
+     Under prefers-reduced-motion: reduce this is already neutralised by the
+     global guard at the end of this file, which forces transition-duration
+     to 0.01ms on every element with !important. Stated here so the next
+     reader does not add a second, weaker reset for it. */
+  transition:
+    background-color var(--dur-interaction) var(--ease-servo),
+    color var(--dur-interaction) var(--ease-servo);
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: var(--leading-body);

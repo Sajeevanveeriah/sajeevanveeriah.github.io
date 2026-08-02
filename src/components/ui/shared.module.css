@@ -441,7 +441,16 @@
 
 .pillActive,
 .pillActive:hover {
-  color: var(--on-accent);
+  /* --surface, not --on-accent. This is an inverted chip: it takes the ink
+     colour as its ground, so its label must be the ground colour, which is
+     what --surface is. --on-accent is the label colour for the ACCENT fill
+     and is a fixed white in both themes, so on a --text background it
+     rendered white on near-white at 1.24:1 in dark. In light both tokens
+     resolve to #ffffff, so this changes nothing about the light rendering.
+
+     This now matches how .btn-primary in globals.css and .resume in
+     SiteHeader.module.css already state the same idea. */
+  color: var(--surface);
   background: var(--text);
   border-color: var(--text);
 }

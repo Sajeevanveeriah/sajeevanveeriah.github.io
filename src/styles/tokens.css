@@ -181,4 +181,154 @@
   --lift: -2px;
   --focus-ring-width: 2px;
   --focus-ring-offset: 3px;
+
+  /* ---- Dark palette, single source of truth ----
+     Declared here and inert: nothing reads these until one of the two
+     activation blocks below aliases them onto the role tokens. Declaring
+     them once rather than repeating literals in both activation blocks is
+     deliberate. The attribute block and the media block must always agree,
+     and a duplicated literal is the one thing guaranteed to drift.
+
+     This is Signal Path inverted, not a second design. The surface stack is
+     the light ink ramp used as ground: `--dark-bg` is exactly the light
+     theme's `--text`. Nothing here is pure black, because #000000 against a
+     bright foreground maximises halation, and nothing is pure white for the
+     same reason: --dark-text is a dimmed off-white at 15.60:1 rather than
+     #ffffff at 19.42:1.
+
+     The accent holds its hue and lifts its lightness, never desaturating
+     toward grey. Measured with scripts/check-contrast.mjs: the unlifted
+     #0b5cd5 computes 3.24:1 on --dark-bg and fails the 4.5:1 link-text
+     threshold outright. #4d90f0 computes 6.07:1 at H 215.3deg against the
+     original H 215.9deg, so a link carries the same optical weight in dark
+     as the 5.99:1 it carries in light.
+
+     Hover raises contrast in both themes: light goes darker to #0846a8,
+     dark goes lighter to #7ab0ff. The direction differs, the intent does
+     not.
+
+     Rule weights mirror light rather than exceeding it. --dark-border-strong
+     could reach 3:1 at alpha 0.38, but light's --border-strong sits at
+     1.82:1 and cannot be raised without changing the shipped light
+     appearance, so raising dark alone would leave the two themes visibly
+     mismatched. See the border remediation note in the project report. */
+  --dark-bg: #0d0d0f;
+  --dark-surface: #131317;
+  --dark-surface-raised: #1a1a1f;
+  --dark-tint: #141418;
+  --dark-tint-deep: #1c1c22;
+
+  --dark-text: #e6e6ea;
+  --dark-text-muted: #a9a9b4;
+  --dark-text-faint: #9a9aa6;
+
+  --dark-border: rgb(230 230 234 / 0.14);
+  --dark-border-strong: rgb(230 230 234 / 0.30);
+  --dark-border-faint: rgb(230 230 234 / 0.08);
+
+  --dark-accent: #4d90f0;
+  --dark-accent-hover: #7ab0ff;
+  --dark-accent-text: #4d90f0;
+  --dark-accent-fill: #1d6ee8;
+  --dark-accent-deep: #7ab0ff;
+  --dark-accent-muted: rgb(77 144 240 / 0.12);
+  --dark-accent-wash: rgb(77 144 240 / 0.12);
+  --dark-accent-line: rgb(77 144 240 / 0.38);
+  --dark-on-accent: #ffffff;
+  --dark-focus-ring: #68a6ff;
+
+  --dark-status: #1d6ee8;
+  --dark-status-hover: #7ab0ff;
+  --dark-status-text: #4d90f0;
+  --dark-status-muted: rgb(77 144 240 / 0.12);
+  --dark-header-bg: rgb(13 13 15 / 0.82);
+}
+
+/* ---- Dark activation, explicit choice ----
+   The inline script in layout.tsx writes the *resolved* theme here, never
+   the mode: data-theme is only ever "light" or "dark", so this layer stays
+   two-state and "system" lives in localStorage and in React state instead.
+
+   Every declaration is an alias. Do not put a literal colour in this block:
+   the values live once on :root above. */
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: var(--dark-bg);
+  --surface: var(--dark-surface);
+  --surface-raised: var(--dark-surface-raised);
+  --tint: var(--dark-tint);
+  --tint-deep: var(--dark-tint-deep);
+
+  --text: var(--dark-text);
+  --text-muted: var(--dark-text-muted);
+  --text-faint: var(--dark-text-faint);
+
+  --border: var(--dark-border);
+  --border-strong: var(--dark-border-strong);
+  --border-faint: var(--dark-border-faint);
+
+  --accent: var(--dark-accent);
+  --accent-hover: var(--dark-accent-hover);
+  --accent-text: var(--dark-accent-text);
+  --accent-fill: var(--dark-accent-fill);
+  --accent-deep: var(--dark-accent-deep);
+  --accent-muted: var(--dark-accent-muted);
+  --accent-wash: var(--dark-accent-wash);
+  --accent-line: var(--dark-accent-line);
+  --on-accent: var(--dark-on-accent);
+  --focus-ring: var(--dark-focus-ring);
+
+  --status: var(--dark-status);
+  --status-hover: var(--dark-status-hover);
+  --status-text: var(--dark-status-text);
+  --status-muted: var(--dark-status-muted);
+  --header-bg: var(--dark-header-bg);
+}
+
+/* ---- Dark activation, no explicit choice ----
+   Scoped to `html:not([data-theme])` so it applies only while nothing has
+   been chosen, which is exactly the state the page is in when JavaScript is
+   disabled and the inline script never ran. Without this the site would
+   render light-on-white to a reader whose system is dark and whose
+   scripting is off. An explicit Light choice must still win over a dark OS
+   preference, and it does, because the attribute selector above disables
+   this one.
+
+   Aliases only, same as above. */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    color-scheme: dark;
+
+    --bg: var(--dark-bg);
+    --surface: var(--dark-surface);
+    --surface-raised: var(--dark-surface-raised);
+    --tint: var(--dark-tint);
+    --tint-deep: var(--dark-tint-deep);
+
+    --text: var(--dark-text);
+    --text-muted: var(--dark-text-muted);
+    --text-faint: var(--dark-text-faint);
+
+    --border: var(--dark-border);
+    --border-strong: var(--dark-border-strong);
+    --border-faint: var(--dark-border-faint);
+
+    --accent: var(--dark-accent);
+    --accent-hover: var(--dark-accent-hover);
+    --accent-text: var(--dark-accent-text);
+    --accent-fill: var(--dark-accent-fill);
+    --accent-deep: var(--dark-accent-deep);
+    --accent-muted: var(--dark-accent-muted);
+    --accent-wash: var(--dark-accent-wash);
+    --accent-line: var(--dark-accent-line);
+    --on-accent: var(--dark-on-accent);
+    --focus-ring: var(--dark-focus-ring);
+
+    --status: var(--dark-status);
+    --status-hover: var(--dark-status-hover);
+    --status-text: var(--dark-status-text);
+    --status-muted: var(--dark-status-muted);
+    --header-bg: var(--dark-header-bg);
+  }
 }
