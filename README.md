@@ -37,7 +37,7 @@ Run `npm run ecosystem` to validate it. That script first runs the validator aga
 
 ## Image art direction
 
-Every project image record can specify `displayMode`, `aspectRatio`, `objectPosition`, `background`, `sizes` and an optional `mobileSrc`. `ProjectImage` applies that metadata centrally with explicit intrinsic dimensions and local AVIF and WebP sources. Use `contain` for diagrams, UI and screenshots where every edge matters. Use `cover` only for photographs with a verified safe focal point. The wide Engineering Mastery Lab image retains its native 1435:660 stage.
+Every project image record can specify `displayMode`, `aspectRatio`, `objectPosition`, `background`, `sizes` and an optional `mobileSrc`. `ProjectImage` applies that metadata centrally with explicit intrinsic dimensions and local AVIF and WebP sources. Use `contain` for diagrams, UI and screenshots where every edge matters. Use `cover` only for photographs with a verified safe focal point. The wide Engineering Mastery Lab image retains its native 1435:660 stage, and the VeerAI visual its native 1672:941.
 
 ## Content updates
 

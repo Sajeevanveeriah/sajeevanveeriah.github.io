@@ -39,7 +39,8 @@
 /* Landscape and portrait compositions of the same idea. Exactly one is
    painted; the switch is on the container, not the viewport, because the same
    diagram sits in a wide home entry and a narrow case-study column. */
-.svgTall {
+.svgTall,
+.svgTallEarly {
   display: none;
 }
 
@@ -49,6 +50,20 @@
   }
 
   .svgTall {
+    display: block;
+  }
+}
+
+/* The `knowledge` variant switches at 620px rather than 560px. Its three
+   columns are 192 user units wide and its longest label is 18 characters,
+   which overruns the box once the ramp reaches its 15px step. See
+   `switchesEarly` in the component beside this file. */
+@container diagram (max-width: 620px) {
+  .svgWideEarly {
+    display: none;
+  }
+
+  .svgTallEarly {
     display: block;
   }
 }
@@ -459,6 +474,34 @@
   animation: sd-draw var(--cycle) var(--ease-servo) infinite;
 }
 
+/* ---- Knowledge ---- */
+
+/* Chevron at the destination end of each chain link. The middle row runs
+   right to left, so direction has to be drawn rather than inferred. */
+.head {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sd-draw var(--cycle) var(--ease-servo) infinite;
+}
+
+/* The evaluation feedback path. Dashed because it is a check rather than a
+   data hop, and revealed by opacity rather than by drawing, so the dash
+   pattern stays intact instead of being consumed as the draw offset. */
+.loop {
+  fill: none;
+  stroke: var(--accent-line);
+  stroke-width: 1.75;
+  stroke-dasharray: 5 5;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: sd-appear var(--cycle) var(--ease-glide) infinite;
+}
+
 /* ---- Bus ---- */
 
 .busLine {
@@ -582,7 +625,7 @@
 }
 
 /* ---- Play only while visible ----
-   Eight diagrams looping forever off-screen reads as restless and spends
+   Nine diagrams looping forever off-screen reads as restless and spends
    compositing work nobody can see. Under JavaScript the sequence is held at
    its first frame until InView marks the figure, and released when it leaves
    again, so a diagram always starts from the beginning of its story rather
@@ -599,7 +642,8 @@
   .link,
   .routeLine,
   .convert,
-  .tick {
+  .tick,
+  .head {
     stroke-dashoffset: 0;
   }
 
@@ -626,6 +670,7 @@
   .flagStem,
   .flagLabel,
   .run,
+  .loop,
   .captureWindow {
     opacity: 1;
     transform: none;
