@@ -30,7 +30,7 @@ export async function generateMetadata({
   const { pillar } = await params
   const p = getPillar(pillar)
   if (!p) return {}
-  const description = `${p.summary} Part of the engineering ecosystem catalogue: a reference sweep of the field, not a personal proficiency claim.`
+  const description = `${p.summary} Part of the engineering ecosystem reference catalogue.`
   return {
     title: p.name,
     description,
@@ -80,18 +80,11 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
         />
 
         <aside className={e.notice}>
-          <p className={e.noticeTitle}>Reference only, not a proficiency claim.</p>
+          <p className={e.noticeTitle}>About this reference</p>
           <p className={e.noticeBody}>
-            These entries describe the field. None of them asserts that I have used the thing
-            described. My own evidence, with the tier I assigned to it, is on{' '}
-            <Link href="/skills/" className={s.link}>
-              Expertise
-            </Link>{' '}
-            and in the{' '}
-            <Link href="/work/" className={s.link}>
-              work records
-            </Link>
-            .
+            These entries describe the wider engineering field. My applied experience is documented
+            separately in <Link href="/skills/" className={s.link}>Expertise</Link> and{' '}
+            <Link href="/work/" className={s.link}>Work</Link>.
           </p>
         </aside>
 
