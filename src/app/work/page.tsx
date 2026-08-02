@@ -13,7 +13,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'Selected engineering work across robotics, embedded sensing, intelligent automation, software and validation, with an honest evidence tier for every record.',
+    'Selected engineering work across robotics, embedded sensing, intelligent automation, software and validation, with the delivery context stated for each record.',
   alternates: { canonical: '/work/' },
   openGraph: { title: 'Work', url: '/work/' },
 }
@@ -41,8 +41,8 @@ export default function WorkPage() {
         <PageHeader
           signature="route"
           kicker="Work"
-          title="Systems built, integrated and validated."
-          lede="Four records lead, then the full archive. Every entry carries the evidence tier it can actually support, and nothing is promoted above it."
+          title="Systems I built, integrated and validated."
+          lede="Four records lead into the full archive. Each entry states what I owned, how I checked it and what I delivered."
           aside={
             <div className={s.railBlock}>
               <p className="label">Evidence tiers</p>
@@ -88,10 +88,10 @@ export default function WorkPage() {
 
         <div className={s.archiveHead}>
           <p className="label label-accent">Full archive</p>
-          <h2>Every published record.</h2>
+          <h2>All published work.</h2>
           <p className="lede">
-            Professional delivery, contract work, university and personal builds, filterable by
-            discipline and by the strength of the evidence behind each one.
+            Professional, university and personal engineering work, filterable by discipline and
+            evidence tier.
           </p>
         </div>
 
