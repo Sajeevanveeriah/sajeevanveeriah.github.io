@@ -14,12 +14,12 @@ export const narrative =
 export const homeStory = {
   kicker: JOB_TITLE,
   headline: 'I build intelligent systems that move, sense and decide.',
-  proofTitle: 'Engineering from first principle to verified system.',
+  proofTitle: 'Engineering from first principles to a tested system.',
   proofKicker: '01 / Complete-package engineering',
   proofSummary:
     'My work joins mechanics, electronics, embedded software, autonomy, controls and validation. Each featured record shows the engineering need, the decisions I owned and the evidence behind the result.',
   featuredKicker: 'Selected engineering stories',
-  featuredTitle: 'Built across disciplines. Verified in the system.',
+  featuredTitle: 'Built across disciplines and tested as a system.',
   responseLabel: 'Response',
   outputLabel: 'Verified output',
   recordLinkLabel: 'Read the engineering record',
@@ -32,7 +32,7 @@ export const homeStory = {
 export const closedLoop = {
   title: 'Closed-loop engineering',
   summary:
-    'This is the discipline behind every record in my portfolio: I sense the system, estimate its state, control it, act on it and verify the result.',
+    'My engineering workflow closes the loop: I sense the system, estimate its state, control it, act on it and verify the result.',
   nodes: [
     { index: '01', name: 'Sense', detail: 'LiDAR, IMU, instrumentation, field devices' },
     {
@@ -130,4 +130,4 @@ export const beyond: readonly { readonly title: string; readonly body: string }[
 
 /** Contact section copy, index.html:1489. */
 export const contactIntro =
-  'I work across mechatronics, robotics, automation, embedded systems, controls, validation, IoT, AI/ML and smart factory engineering. My resume carries my full professional record.'
+  'I work across robotics, mechatronics, AI/ML, autonomous systems, embedded intelligence and end-to-end automation engineering.'
