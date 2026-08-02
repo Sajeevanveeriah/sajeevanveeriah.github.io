@@ -31,6 +31,7 @@ export interface ProjectImage {
   readonly background?: 'light' | 'dark' | 'neutral'
   readonly sizes?: string
   readonly mobileSrc?: string
+  readonly mobileAspectRatio?: string
 }
 
 export interface ProjectLink {
@@ -292,7 +293,6 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'adas-can-validation',
-    suppressed: true,
     title: 'ADAS and CAN Validation',
     summary:
       'I conducted feature, breadboard and OTA regression testing across the T6 Ranger and Everest programmes, supported by CAN-level fault evidence.',
@@ -556,7 +556,7 @@ export const projects: readonly Project[] = [
     problem:
       'Scaling carbon-fibre wheel production means taking repeatable fibre layup, and the handling of hot, heavy, safety-critical tooling, off manual work and onto robots, without losing the quality a structural wheel depends on.',
     context:
-      'I worked in advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution. I was hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells, while moving from layup operation towards quality assurance and development support.',
+      'I worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution. I was hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
     approach: [
       'I worked with KUKA robotic cells used for automated rim layup and demoulding, alongside downstream cure, machining, NDE, mechanical testing and traceability processes.',
       'I treated the change as a systems problem, not a machine swap: moving hot, heavy tooling handling onto robots to take it off operators, and leaning on trials, first-off checks and defect inspection to prove the robotic cell held layup repeatability before the line was allowed to ramp.',
@@ -619,31 +619,64 @@ export const projects: readonly Project[] = [
     featured: false,
   },
   {
-    // TODO: Saj to supply. Every field on this record is unwritten. The only
-    // source material in the repository was two passing mentions of the club
-    // website in the previous index.html (lines 756 and 1427), which is not
-    // enough to write a case study from. Nothing here is inferred.
     slug: 'ndcc-website',
-    title: 'Newcomb and District Cricket Club website',
-    summary: 'TODO: Saj to supply.',
-    role: null, // TODO: Saj to supply.
-    period: null, // TODO: Saj to supply.
-    domain: 'Software and engineering tools',
-    disciplines: ['Software'],
-    stack: [], // TODO: Saj to supply.
-    problem: '', // TODO: Saj to supply.
-    context: '', // TODO: Saj to supply.
-    approach: [], // TODO: Saj to supply.
-    toolsNote: '', // TODO: Saj to supply.
-    validation: '', // TODO: Saj to supply.
-    outcome: '', // TODO: Saj to supply.
-    evidenceNote: '', // TODO: Saj to supply.
-    demonstrates: '', // TODO: Saj to supply.
-    evidenceTier: null, // TODO: Saj to assign evidenceTier.
-    category: 'TODO: Saj to supply.',
+    title: 'Newcomb and District Cricket Club Digital Platform',
+    summary:
+      'I designed, built and run the official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
+    role: 'Full-stack developer and platform administrator',
+    period: '2026',
+    domain: 'Full-stack software and community operations',
+    disciplines: ['Software', 'Automation', 'Validation'],
+    stack: [
+      'Next.js 14',
+      'TypeScript',
+      'React',
+      'Tailwind CSS',
+      'Supabase Postgres',
+      'PlayHQ API',
+      'Resend',
+      'Vercel',
+    ],
+    problem:
+      'The club needed one reliable digital platform for current public information and committee workflows, without forcing volunteers to maintain the same content across disconnected pages, files and services.',
+    context:
+      'I built and operate this production community platform for Newcomb and District Cricket Club. It is live at ndcc.com.au and supports public club information, fixtures, teams, news, events, facilities, membership, merchandise, sponsors, gallery, fantasy cricket and committee administration.',
+    approach: [
+      'I structured the system as a Next.js App Router application with accessible public routes, protected committee administration and Supabase Postgres as the governed source for mutable club content.',
+      'I integrated PlayHQ as the fixture source, Resend-ready transactional email, manual order and payment reconciliation, GitHub-backed single-image publishing, Supabase Storage for bulk gallery media and Vercel deployment. Server-only credentials remain outside the browser, and live CMS reads use dynamic no-store delivery so successful empty results are never replaced with stale seed content.',
+    ],
+    toolsNote:
+      'Next.js 14, TypeScript, React, Tailwind CSS, Supabase Postgres and Storage, custom committee authentication, PlayHQ Public API, Resend, Vercel, GitHub media publishing, route and content smoke tests.',
+    validation:
+      'I validate the codebase with lint and production builds, route and content smoke tests, public-site audits, asset checks, migration and schema tests, and live inspection. Credential-dependent email, authentication and external-service checks remain separate so an untested integration is never presented as passing.',
+    outcome:
+      'I delivered and continue to operate a live club platform spanning public information, fixtures, events, news, teams, facilities, membership, merchandise, sponsors, gallery, volunteering, contact, fantasy cricket and committee administration.',
+    evidenceNote:
+      'Delivered evidence includes the live production website and public source repository. Payment and email paths are described at their verified implementation state and are not claimed as live unless tested in the target environment.',
+    demonstrates:
+      'I translated community operations into a maintained full-stack product covering information architecture, data modelling, authentication, integrations, media, administration, deployment and validation.',
+    evidenceTier: 'delivered',
+    category: 'Community digital platform',
+    links: [
+      { label: 'Open live website', url: 'https://www.ndcc.com.au/' },
+      { label: 'View source', url: 'https://github.com/Sajeevanveeriah/ndcc-website' },
+    ],
+    images: [
+      {
+        src: '/assets/image/20260803-NDCC-Website-Platform-Rev00.svg',
+        mobileSrc: '/assets/image/20260803-NDCC-Website-Platform-Mobile-Rev00.svg',
+        alt: 'Architecture of the NDCC digital platform, connecting the public club website and committee CMS through a Next.js application core to Supabase data and operational integrations.',
+        width: 1435,
+        height: 660,
+        displayMode: 'contain',
+        aspectRatio: '1435 / 660',
+        mobileAspectRatio: '660 / 960',
+        background: 'light',
+        sizes: '(max-width: 767px) 100vw, 1200px',
+      },
+    ],
     featured: false,
-  },
-] as const
+  },] as const
 
 /** Domains present across the record set, for the /work filter. */
 export const projectDomains: readonly string[] = Array.from(
@@ -659,11 +692,7 @@ export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug)
 }
 
-/**
- * A record renders only when it has a tier assigned. `ndcc-website` is
- * therefore scaffolded and typed but does not appear on the site until Saj
- * supplies its content and tier.
- */
+/** A record renders only when it has a published evidence tier. */
 export const publishedProjects: readonly Project[] = projects.filter(
   (p) => p.evidenceTier !== null,
 )
