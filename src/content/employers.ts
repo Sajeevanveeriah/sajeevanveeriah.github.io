@@ -128,7 +128,7 @@ export const employers: readonly Employer[] = [
   {
     slug: 'jag-process-solutions',
     company: 'JAG Process Solutions Pty Ltd',
-    title: 'Automation and Controls Engineer',
+    title: 'Automation & Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
     location: 'Victoria, Australia',
     companyFacts: [
@@ -255,7 +255,6 @@ export const employers: readonly Employer[] = [
       // carrying the name would publish exactly what this item forbids.
       // The instruction is preserved; only the name is withheld.
       'Whether any client may be named publicly. Default is to name none. The one client named in the source brief must not be named: it was a JAG client, never an employer.',
-      'TODO CONFIRM: the title. Resume Rev09 reads "Automation Engineer"; both content files read "Automation and Controls Engineer". These are not contradictory, so neither was overwritten, but only Saj can say which is the title of record.',
     ],
   },
   {
@@ -911,7 +910,7 @@ export const versatility = {
     ],
     [
       'JAG Process Solutions',
-      'Automation and controls engineer',
+      'Automation & Controls Engineer',
       'Control logic, HMI, field devices, drives, AMR fleet operations, industrial networking, GMP qualification',
     ],
   ] as const,
