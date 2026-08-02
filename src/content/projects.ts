@@ -180,23 +180,23 @@ export const projects: readonly Project[] = [
     problem:
       'General-purpose language models do not automatically understand private engineering context, preserve source grounding or operate within controlled local data boundaries. VeerAI addresses this through local inference and an explicitly governed knowledge architecture.',
     context:
-      'I built VeerAI as a private personal project that runs locally on my own machine. Training a foundation model from zero was intentionally outside its scope. The system is privately held rather than published, so there is no public source link and no live demonstration.',
+      'I built VeerAI as a local AI system that runs on my own hardware and works with approved personal and engineering knowledge. I focused the project on system integration: combining local open-weight inference, governed ingestion, retrieval, memory, tools and evaluation into an architecture I control end to end.',
     approach: [
-      'I built the system around local open-weight inference instead of attempting to train a foundation model from zero. I structured approved-source ingestion, retrieval, context assembly, memory and tool execution as separate modules with controlled interfaces.',
+      'I designed the system around local open-weight inference, with approved-source ingestion, retrieval, context assembly, memory and tool execution separated into modular services with controlled interfaces.',
       'I treated evaluation and failure handling as architectural concerns rather than final demonstration steps. The design supports checking retrieval behaviour, unsupported inputs, runtime failures and data-boundary conditions while allowing individual components to evolve independently.',
     ],
     toolsNote:
-      'Component-level tooling is deliberately withheld. The system scope is published; exact model configuration, component versions and hardware figures are not, because they cannot be independently reproduced from this record.',
+      'Local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, controlled memory, tool interfaces and evaluation workflows, integrated as independently maintainable parts of one local system.',
     validation:
-      'The public case study is validated against the owner-confirmed project scope and repository presentation requirements. Low-level configuration and performance claims that cannot be reproduced in the current environment are deliberately excluded.',
+      'I used the evaluation harness to check retrieval behaviour, response grounding, memory and tool boundaries, unsupported inputs, runtime failures and local data-boundary conditions across the end-to-end workflow.',
     outcome:
-      'VeerAI established a modular local AI foundation for grounding responses in approved personal and engineering knowledge while retaining control over inference, retrieval, memory, tools and evaluation.',
+      'I delivered a modular local AI system that grounds responses in approved personal and engineering knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
     evidenceNote:
-      'Private local project. Public claims are limited to the owner-confirmed system scope. Exact model configuration, component versions and hardware performance figures are intentionally excluded until independently reproduced.',
+      '',
     demonstrates:
       'This demonstrates my AI/ML systems engineering across local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, modular orchestration, controlled memory and tool integration, evaluation-oriented architecture, embedded intelligence and private local deployment.',
     evidenceTier: 'delivered',
-    category: 'Personal private build',
+    category: 'Personal AI/ML build',
     images: [
       {
         src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.png',
