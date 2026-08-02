@@ -257,7 +257,7 @@ export const projects: readonly Project[] = [
     title: 'JAG Smart Factory and iFIX to PVI+ Migration',
     summary:
       'I delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration that I verified against the validated system.',
-    role: 'Automation and Controls Engineer',
+    role: 'Automation & Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
     domain: 'Automation and SCADA',
     disciplines: ['Control', 'Automation', 'Manufacturing'],
