@@ -392,12 +392,12 @@ export const atlas: readonly AtlasDomain[] = [
       'InfluxDB',
     ],
     projectProof:
-      'Built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, plus this portfolio.',
+      'I built and run the Newcomb and District Cricket Club website on Next.js and Supabase, alongside this portfolio and the Engineering Mastery Lab.',
     experienceProof: 'I used test automation and CI workflows in professional validation work.',
     transferableLogic:
       'I use clean interfaces, version discipline and automated checks to connect work across engineering domains.',
     growthTargets: ['Cloud architecture certification', 'Containerised deployment at scale'],
-    relatedProjects: ['engineering-mastery-lab'],
+    relatedProjects: ['engineering-mastery-lab', 'ndcc-website'],
   },
   {
     slug: 'iot-and-edge-to-cloud-telemetry',
