@@ -270,7 +270,6 @@ export const employers: readonly Employer[] = [
      * no history is rewritten.
      */
     slug: 'ford-via-invenio',
-    suppressed: true,
     company: 'Ford Motor Company via Invenio contract placement',
     title: 'Product Development Test Engineer (Contract)',
     period: 'Oct 2025 to Jan 2026',
@@ -547,7 +546,7 @@ export const employers: readonly Employer[] = [
   {
     slug: 'thornton-engineering',
     company: 'Thornton Engineering Australia',
-    title: 'Engineering and QA support',
+    title: 'Quality Assurance and Engineering Support',
     // The brief supplies no dates for this role and none are reconstructed.
     period: null,
     location: 'Victoria, Australia',
@@ -636,7 +635,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'I supported structural steel and pressure vessel QA in a standards-driven fabrication environment, operating as second to the QA manager.',
+      'I worked across quality assurance, engineering support, pressure-vessel CAD, drawing review, traceability and fabrication documentation in a standards-driven structural-steel and pressure-vessel environment, operating as second to the QA manager.',
     domains: ['Quality and documentation', 'Mechanical and CAD', 'Standards-driven delivery'],
     toolsLabel: 'Representative context',
     tools: ['ITPs', 'MDRs', 'drawing review', 'pressure-vessel CAD', 'traceability'],
@@ -659,7 +658,7 @@ export const employers: readonly Employer[] = [
   {
     slug: 'carbon-revolution',
     company: 'Carbon Revolution',
-    title: 'Production and quality role',
+    title: 'Production and Quality Assurance',
     // The brief supplies no dates for this role and none are reconstructed.
     period: null,
     location: 'Victoria, Australia',
@@ -742,8 +741,8 @@ export const employers: readonly Employer[] = [
         // "Moved closer to" states proximity, not ownership, so this sits a
         // tier below the supporting claims above it rather than beside them.
         discipline: 'Quality, compliance and documentation',
-        tier: 'working-knowledge',
-        body: 'I moved closer to quality assurance and development work around the automated rim layup process.',
+        tier: 'hands-on',
+        body: 'I supported quality assurance and development work around automated rim layup, including first-off checks, in-process inspection, defect review, traceability and production trials.',
         source: 'experience.ts',
       },
       {
@@ -754,7 +753,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'I worked in advanced carbon-fibre automotive wheel manufacturing and was hands-on through the automation programme that replaced the legacy rim layup machine with new KUKA-based robotic cells, while moving from layup operation towards quality assurance and development support.',
+      'I worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing, and I was hands-on through the programme that replaced the legacy rim layup machine with new KUKA-based robotic cells.',
     domains: [
       'Advanced manufacturing',
       'Robotics and automation',
