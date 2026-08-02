@@ -26,6 +26,7 @@ export function ProjectImage({
   const stem = image.src.replace(/\.(png|jpe?g)$/i, '')
   const style = {
     '--media-ratio': image.aspectRatio ?? `${image.width} / ${image.height}`,
+    '--media-ratio-mobile': image.mobileAspectRatio ?? image.aspectRatio ?? `${image.width} / ${image.height}`,
     '--media-position': image.objectPosition ?? '50% 50%',
   } as React.CSSProperties
   const common = {
@@ -38,10 +39,14 @@ export function ProjectImage({
   }
 
   if (!isRaster) {
-    // SVG sources are already compact and need no derivatives.
+    // SVG sources are already compact and need no derivatives. A mobile SVG
+    // may use a portrait composition so its labels stay readable on phones.
     return (
       <span className="project-media" data-mode={image.displayMode ?? 'contain'} data-background={image.background ?? 'neutral'} style={style}>
-        <img src={image.src} alt={image.alt} {...common} />
+        <picture>
+          {image.mobileSrc ? <source media="(max-width: 767px)" srcSet={image.mobileSrc} /> : null}
+          <img src={image.src} alt={image.alt} {...common} />
+        </picture>
       </span>
     )
   }

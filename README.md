@@ -1,10 +1,10 @@
 # Sajeevan Veeriah Portfolio
 
-A light-first editorial engineering portfolio for Sajeevan Veeriah, built with Next.js 15, React 19 and TypeScript and exported as static files for GitHub Pages.
+My light-first engineering portfolio, built with Next.js 15, React 19 and TypeScript and exported as static files for GitHub Pages.
 
 ## Experience and design
 
-The homepage positions Saj as a Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer who owns systems across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. The hero cycles through real project evidence, pauses when it leaves the viewport and exposes direct project controls. There is a System, Light and Dark theme selector, and no control-room chrome, telemetry, technical grid or ambient animation.
+The homepage presents my work as a Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer across mechanics, electronics, sensing, embedded software, autonomy, controls, data and validation. A near-white canvas, white surfaces, deep engineering blue actions and deliberately authored graphite project stages create a calm product narrative. The hero cycles through real project evidence, pauses when it leaves the viewport and exposes direct project controls. There is a System, Light and Dark theme selector, and no control-room chrome, telemetry, technical grid or ambient animation.
 
 ## Architecture
 
@@ -22,9 +22,9 @@ The professional identity string has exactly one source: `JOB_TITLE` in `src/con
 
 The site carries two kinds of statement, and they must never blur together.
 
-**Evidence about Saj** lives in `skills.ts`, `atlas.ts`, `employers.ts`, `experience.ts` and `projects.ts`. Every claim carries one of the five evidence tiers in `tiers.ts`, and Saj assigns every one of them. Nothing infers a tier from a domain, a vendor, a job title or a similar technology.
+**Evidence about my work** lives in `skills.ts`, `atlas.ts`, `employers.ts`, `experience.ts` and `projects.ts`. Every claim carries one of the five evidence tiers in `tiers.ts`, and I assign each tier from the available evidence. Nothing infers a tier from a domain, vendor, job title or similar technology.
 
-**Reference about the field** lives in `src/content/ecosystem/`. It is a broad engineering sweep across eight pillars and 31 domains: hardware families and their models, software, protocols, standards, algorithms and methods. Inclusion there is a fact about the field, never a claim about Saj.
+**Reference about the field** lives in `src/content/ecosystem/`. It covers eight pillars and 31 domains: hardware families and their models, software, protocols, standards, algorithms and methods. Inclusion describes the field, not my personal experience.
 
 The separation is enforced by the type system and by `scripts/check-ecosystem.mjs` rather than by convention:
 
@@ -51,7 +51,7 @@ It is deliberately not part of `npm run build`. Rasterisation depends on the loc
 4. Ensure each dynamic record is published by its existing `generateStaticParams` path.
 5. Run the complete validation checklist before commit.
 
-Ford must only appear as "Ford Motor Company via Invenio contract placement". JAG Process Solutions is Jan 2026 to Jun 2026. Do not add locations, telephone numbers, availability, work rights or claims not supported by the resume.
+Keep suppressed career records out of published discovery. Treat JAG Process Solutions as a past role ending in Jun 2026. Do not add locations, telephone numbers, availability, work rights or claims not supported by current evidence.
 
 ## Local development and validation
 

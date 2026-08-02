@@ -10,7 +10,7 @@ import a from './about.module.css'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'My career record across industries and engineering systems, my formal qualifications, professional membership, community involvement and life beyond the workbench.',
+    'My engineering record, qualifications, professional membership, community work and interests beyond engineering.',
   alternates: { canonical: '/about/' },
   openGraph: { title: 'About', url: '/about/' },
 }
@@ -25,7 +25,7 @@ export default function AboutPage() {
           <PageHeader
           signature="spine"
             kicker="About"
-            title="Six years on production floors, then engineering delivery on top of it."
+            title="I built my engineering practice on six years of production, quality and manufacturing experience."
             lede={narrative}
           />
 

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   // social cards from a single place.
   title: `${site.name} | ${site.jobTitle}`,
   description:
-    'Sajeevan Veeriah builds complete robotics, embedded and intelligent automation systems across mechanics, electronics, software, autonomy, controls and validation.',
+    'I build robotics, mechatronics, AI/ML and automation systems across mechanics, electronics, embedded software, autonomy, controls and validation.',
   alternates: { canonical: '/' },
 }
 
@@ -83,7 +83,7 @@ const SELECTED = [
 const PROOF = [
   { value: 'Engineers Australia', note: 'Professional membership' },
   { value: 'Honours, Distinction', note: 'Bachelor of Mechatronics Engineering, Deakin, 2025' },
-  { value: 'Architecture to validation', note: 'Complete systems, not isolated components' },
+  { value: 'Architecture to validation', note: 'Integrated systems across engineering disciplines' },
   { value: 'Four evidence sources', note: 'Professional, contract, university and open source' },
 ] as const
 
@@ -213,7 +213,7 @@ export default function HomePage() {
           <div className={home.workStage}>
             <Reveal className={`sticky-rail ${home.workRail}`}>
               <p className="label label-accent">Selected work</p>
-              <h2 id="work-title">Evidence of complete-system ownership.</h2>
+              <h2 id="work-title">Systems I built, integrated and validated.</h2>
               <p className="lede">
                 Four records that span autonomy, applied AI/ML, field electronics and regulated
                 industrial automation. Each one states the problem, what I personally owned and what

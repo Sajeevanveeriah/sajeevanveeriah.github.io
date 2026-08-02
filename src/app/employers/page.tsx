@@ -9,7 +9,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Employers',
   description:
-    'Every employer on the record, each with the verified facts about the place, the work graded by evidence tier, and what it bought.',
+    'My employment record, with company context, the work I completed and the capability I carried forward.',
   alternates: { canonical: '/employers/' },
   openGraph: { title: 'Employers', url: '/employers/' },
 }
@@ -20,8 +20,8 @@ export default function EmployersPage() {
       <div className="wrap-wide">
         <PageHeader
           kicker="Employers"
-          title="Where the work happened, and what it proves."
-          lede="Each page separates three things that usually get blurred together: verified facts about the employer, the work I can personally evidence, and the argument the role supports. Nothing is claimed beyond its tier."
+          title="Where I worked and what I delivered."
+          lede="Each page separates company background from my responsibilities, results and transferable engineering capability."
           aside={
             <div className={s.railBlock}>
               <p className="label">Evidence tiers</p>

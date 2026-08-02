@@ -26,7 +26,7 @@ import s from '@/components/ui/shared.module.css'
 import e from '@/components/ecosystem/ecosystem.module.css'
 
 const DESCRIPTION =
-  'A broad engineering field sweep across mechatronics, robotics, controls, embedded, AI and industrial automation: eight pillars, 31 domains and the hardware, software, protocols, standards and methods that make them up. A reference catalogue, not a personal proficiency claim.'
+  'A reference catalogue covering eight engineering pillars, 31 domains, and the hardware, software, protocols, standards and methods within them.'
 
 export const metadata: Metadata = {
   title: 'Ecosystem',
@@ -96,28 +96,26 @@ export default function EcosystemPage() {
           <PageHeader
             kicker="Ecosystem"
             title="The field, mapped."
-            lede="A broad engineering sweep across mechatronics, robotics, controls, embedded systems, AI and industrial automation. Eight pillars, 31 domains, and the hardware, software, protocols, standards and methods inside them."
+            lede="Explore eight engineering pillars and 31 domains spanning mechatronics, robotics, controls, embedded systems, AI and industrial automation."
             aside={
               <div className={s.railBlock}>
                 <p className="label">What this is</p>
                 <p className={e.noticeBody}>
-                  A reference catalogue of the field. It is deliberately separate from{' '}
+                  A reference catalogue of the field, kept separate from{' '}
                   <Link href="/skills/" className={s.link}>
-                    my expertise
+                    my documented experience
                   </Link>
-                  , which carries evidence tiers I set myself.
+                  .
                 </p>
               </div>
             }
           />
 
           <Reveal className={e.notice} as="div">
-            <p className={e.noticeTitle}>Inclusion here is not a proficiency claim.</p>
+            <p className={e.noticeTitle}>How to read this catalogue.</p>
             <p className={e.noticeBody}>
-              Every entry below is a neutral reference to something that exists in the field. Nothing
-              on this page says I have used it, and none of it feeds my resume, my structured
-              profile data or any skill total. Where I do claim something personally, it carries an
-              evidence tier I assigned, and it lives on{' '}
+              Entries describe technologies and methods in the wider engineering field. My own
+              applied experience is documented separately in{' '}
               <Link href="/skills/" className={s.link}>
                 Expertise
               </Link>
@@ -125,14 +123,10 @@ export default function EcosystemPage() {
               <Link href="/atlas/" className={s.link}>
                 the Atlas
               </Link>{' '}
-              and the{' '}
-              <Link href="/work/" className={s.link}>
-                work records
-              </Link>
-              .
+              and <Link href="/work/" className={s.link}>Work</Link>.
             </p>
             <p className={e.reviewed}>
-              Complete within the declared scope below. Information reviewed {ecosystemReviewedAt}.
+              Catalogue scope reviewed {ecosystemReviewedAt}.
             </p>
           </Reveal>
 

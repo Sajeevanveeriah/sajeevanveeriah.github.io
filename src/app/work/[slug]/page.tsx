@@ -71,10 +71,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     { title: 'How the system works', body: [p.approach[0] ?? ''] },
     { title: 'What I owned', body: [p.demonstrates] },
     { title: 'Why I built it this way', body: [p.approach[1] ?? ''] },
-    { title: 'Across the relevant disciplines', body: [p.toolsNote] },
+    { title: 'Tools and disciplines', body: [p.toolsNote] },
     { title: 'How I checked the work', body: [p.validation] },
     { title: 'What I delivered', body: [p.outcome] },
-    { title: 'What the evidence supports', body: [p.evidenceNote] },
+    { title: 'Scope', body: [p.evidenceNote] },
   ]
     .map((c) => ({ ...c, body: c.body.filter(Boolean) }))
     .filter((c) => c.body.length > 0)

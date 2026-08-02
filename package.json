@@ -2,7 +2,7 @@
   "name": "sajeevanveeriah-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Engineering portfolio for Sajeevan Veeriah. Static Next.js export served from GitHub Pages.",
+  "description": "My engineering portfolio, exported as a static Next.js site for GitHub Pages.",
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/check-contrast.mjs && node scripts/check-ecosystem.mjs && next build",

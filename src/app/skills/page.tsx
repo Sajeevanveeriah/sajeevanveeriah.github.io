@@ -12,7 +12,7 @@ import k from './skills.module.css'
 export const metadata: Metadata = {
   title: 'Expertise',
   description:
-    'My engineering toolchain across six territories, and the ten-layer systems stack that connects them from the physical layer to the intelligence layer.',
+    'My engineering toolchain across six territories and the ten-layer systems stack connecting physical systems, embedded intelligence, autonomy, software and validation.',
   alternates: { canonical: '/skills/' },
   openGraph: { title: 'Expertise', url: '/skills/' },
 }
@@ -25,8 +25,8 @@ export default function SkillsPage() {
           <PageHeader
           signature="strata"
             kicker="Expertise"
-            title="My toolchain, shown in the context where I used it."
-            lede="Six engineering territories. Each anchor platform is listed with the supporting toolset underneath it, and every capability here is backed by my resume, a case study or one of my roles."
+            title="My toolchain, connected to the work behind it."
+            lede="Six engineering territories, each linked to the platforms, supporting tools and evidence behind my experience."
             aside={
               <div className={s.railBlock}>
                 <p className="label">Evidence tiers</p>
@@ -77,22 +77,22 @@ export default function SkillsPage() {
             <div>
               <p className="label label-accent">Systems stack</p>
               <h2 id="stack-title">
-                One integrated capability, from the physical layer to the intelligence layer.
+                One engineering practice, from physical architecture to embedded intelligence and validation.
               </h2>
             </div>
             <p className="lede">
-              I have exercised these ten layers through real work. They are listed as one spine
-              rather than ten boxes, because that is how they actually behave.
+              I have applied these ten layers across professional, university and personal engineering
+              work. I show them as one connected stack because system behaviour depends on the
+              interfaces between them.
             </p>
           </Reveal>
           <StackSpine layers={systemsStack} />
 
           <Reveal className={k.ecosystemLink}>
             <p>
-              Everything above is something I can evidence. For the wider field it sits in, the{' '}
-              <Link href="/ecosystem/">ecosystem catalogue</Link> maps eight pillars and 31 domains
-              of tooling, hardware, protocols and standards as a neutral reference. Inclusion there
-              is not a claim that I have used it.
+              The <Link href="/ecosystem/">ecosystem catalogue</Link> maps the wider field across
+              eight pillars and 31 domains. It is a reference library, separate from the experience
+              shown here.
             </p>
           </Reveal>
         </div>

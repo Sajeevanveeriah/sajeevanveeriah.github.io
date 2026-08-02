@@ -91,7 +91,7 @@ export const atlas: readonly AtlasDomain[] = [
     experienceProof:
       'Bachelor of Mechatronics Engineering (Honours, Distinction), Deakin University. Integrated deliveries at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
     transferableLogic:
-      'Knowing which layer a fault or requirement lives in is the skill that moves between every domain on this page.',
+      'I use system decomposition to locate faults and requirements at the correct engineering layer before choosing a solution.',
     growthTargets: ['Model-based systems engineering (SysML)'],
     relatedProjects: ['autonomous-navigation-rover', 'ataxia-assessment-device'],
   },
@@ -162,7 +162,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'electronics-pcb-and-board-bring-up',
     name: 'Electronics, PCB and Board Bring-up',
     summary:
-      'Working capability from schematic capture and PCB layout through to powering up, debugging and validating real boards.',
+      'I have hands-on capability from schematic capture and PCB layout through board bring-up, debugging and validation.',
     cluster: 'embedded',
     contexts: ['project', 'personal'],
     evidenceTier: 'hands-on',
@@ -182,11 +182,11 @@ export const atlas: readonly AtlasDomain[] = [
       'Signal conditioning',
     ],
     projectProof:
-      'Designed and brought up sensor boards for the ESP32 clinical capstone and designed a complete custom PCB from scratch for the DuxTel agricultural equipment telemetry field trial.',
+      'I designed and brought up sensor hardware for the ESP32 clinical capstone and a custom PCB for an agricultural-equipment telemetry field trial.',
     experienceProof:
-      'Sensor, CAN and equipment interfacing carried into professional IoT device work at DuxTel.',
+      'I applied sensor, CAN and equipment interfacing in professional IoT device work.',
     transferableLogic:
-      'Clean sensing and grounding habits underpin reliable data in every downstream control, telemetry and ML layer.',
+      'Reliable control, telemetry and ML depend on clean sensing, grounding and signal integrity.',
     growthTargets: ['Multi-layer high-speed layout', 'Formal EMC pre-compliance testing'],
     relatedProjects: ['ataxia-assessment-device', 'iot-monitoring-platform'],
   },
@@ -217,7 +217,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'Built the capstone clinical sensing device and IoT platform firmware end to end.',
     experienceProof:
-      'Delivered DuxTel agricultural equipment telemetry work spanning custom PCB design, CAN trace capture, GPS or GNSS location, condition-sensing inputs, MikroTik connectivity and Linux server integration.',
+      'I delivered agricultural-equipment telemetry work spanning custom PCB design, CAN trace capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
     transferableLogic:
       'Real-time constraints, interrupt discipline and driver structure transfer directly into robotics, automotive and instrumentation work.',
     growthTargets: ['Functional-safety-rated firmware practices', 'Rust for embedded'],
@@ -227,7 +227,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'control-systems',
     name: 'Control Systems',
     summary:
-      'Feedback control from classical PID and loop tuning in delivered PLC logic through to state estimation and model-based design from degree and project work.',
+      'I have applied feedback control through PID and PLC logic, then extended it through state estimation and model-based design in degree and project work.',
     cluster: 'controls',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'delivered',
@@ -248,7 +248,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'Kalman and EKF estimation and PID motion control built into the ROS 2 rover project.',
     experienceProof:
-      'Control logic delivered for pharmaceutical, biotech and food plants at JAG Process Solutions.',
+      'I delivered control logic for pharmaceutical, biotechnology and food-manufacturing systems.',
     transferableLogic:
       'A control loop is a control loop: the same stability and disturbance thinking applies to a dosing skid, a wheel motor or a thermal chamber.',
     growthTargets: [
@@ -261,7 +261,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'industrial-automation-plc-and-scada',
     name: 'Industrial Automation, PLC and SCADA',
     summary:
-      'Professional delivery of PLC, HMI, SCADA, MES and batch systems for regulated plants, including a full SCADA platform migration verified against the validated system.',
+      'I delivered PLC, HMI, SCADA, MES and batch-system work for regulated plants, including a SCADA migration verified against the existing validated system.',
     cluster: 'controls',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -284,11 +284,11 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     protocols: ['Modbus TCP/RTU', 'Profinet'],
     projectProof:
-      'The JAG smart factory case study covers the delivered SCADA and process visualisation work in depth.',
+      'My smart-factory case study details the SCADA migration and process-visualisation work I delivered.',
     experienceProof:
       'Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
     transferableLogic:
-      'Alarm philosophy, operator usability and data integrity habits carry into every supervisory and telemetry system.',
+      'I carry alarm design, operator usability and data-integrity discipline into supervisory and telemetry systems.',
     growthTargets: ['Allen-Bradley and Rockwell platforms', 'Ignition SCADA'],
     relatedProjects: ['jag-smart-factory'],
   },
@@ -296,7 +296,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'robotics-and-autonomy',
     name: 'Robotics and Autonomy',
     summary:
-      'A complete ROS 2 autonomy stack built and validated as a personal and university project: perception, SLAM, state estimation, planning, control and simulation.',
+      'I built and validated a ROS 2 autonomy stack covering perception, SLAM, state estimation, planning, control and simulation.',
     cluster: 'controls',
     contexts: ['professional', 'project', 'personal'],
     evidenceTier: 'delivered',
@@ -325,7 +325,7 @@ export const atlas: readonly AtlasDomain[] = [
     experienceProof:
       'Contributor to the Deakin Mars Rover Team. Hands-on industrial robotics exposure at Carbon Revolution, working through the automation programme that replaced a legacy rim layup machine with KUKA-based robotic layup and demoulding cells.',
     transferableLogic:
-      'Autonomy is systems engineering at speed: timing, transforms and failure handling sharpen every other integration discipline, and industrial robot cells show the same thinking on the factory floor.',
+      'Robotics strengthened my discipline around timing, transforms, interfaces and failure handling across integrated systems.',
     growthTargets: [
       'Commercial robot deployment and fleet operations',
       'Learning-based perception in production',
@@ -336,7 +336,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'ai-ml-and-data-science',
     name: 'AI, ML and Data Science',
     summary:
-      'Applied machine learning where it earns its keep: anomaly detection, predictive-maintenance logic, computer vision and time-series analytics wired into real telemetry.',
+      'I apply machine learning to engineering signals through anomaly detection, predictive-maintenance logic, computer vision and time-series analytics.',
     cluster: 'software',
     contexts: ['personal', 'project', 'study'],
     evidenceTier: 'hands-on',
@@ -358,9 +358,9 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'Built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept. Vision and estimation work in the ROS 2 rover.',
     experienceProof:
-      'Monitoring concepts applied around professional IoT telemetry pipelines delivered at DuxTel; no unsupported ML claim is made for the agricultural field trial.',
+      'I applied monitoring concepts to professional IoT telemetry pipelines. The agricultural field trial did not include a claimed ML deployment.',
     transferableLogic:
-      'Knowing the physics behind the signal makes the models honest: sensor-aware ML beats black-box ML in engineering settings.',
+      'I use the physics and measurement context behind a signal to guide feature design, model choice and validation.',
     growthTargets: ['Production MLOps', 'Edge inference on embedded targets'],
     relatedProjects: ['digital-twin-industrial-ai', 'autonomous-navigation-rover'],
   },
@@ -392,18 +392,18 @@ export const atlas: readonly AtlasDomain[] = [
       'InfluxDB',
     ],
     projectProof:
-      'Built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, plus this portfolio.',
-    experienceProof: 'Test automation and CI workflows in professional validation roles.',
+      'I built and run the Newcomb and District Cricket Club website on Next.js and Supabase, alongside this portfolio and the Engineering Mastery Lab.',
+    experienceProof: 'I used test automation and CI workflows in professional validation work.',
     transferableLogic:
-      'Clean interfaces, version discipline and automated checks are the connective tissue between every engineering domain here.',
+      'I use clean interfaces, version discipline and automated checks to connect work across engineering domains.',
     growthTargets: ['Cloud architecture certification', 'Containerised deployment at scale'],
-    relatedProjects: ['engineering-mastery-lab'],
+    relatedProjects: ['engineering-mastery-lab', 'ndcc-website'],
   },
   {
     slug: 'iot-and-edge-to-cloud-telemetry',
     name: 'IoT and Edge-to-Cloud Telemetry',
     summary:
-      'Professional end-to-end IoT delivery: custom electronics, CAN capture, GPS or GNSS location, condition-sensing inputs, MikroTik connectivity and Linux server integration for an active agricultural field trial.',
+      'I delivered an end-to-end IoT field-trial system spanning custom electronics, CAN capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
     cluster: 'software',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -437,7 +437,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'automotive-systems-and-validation',
     name: 'Automotive Systems and Validation',
     summary:
-      'Professional vehicle software and ADAS validation on major OEM programmes, plus regulated emissions and compliance testing, grounded in CAN-level evidence.',
+      'I carried out vehicle-software and ADAS validation on OEM programmes, plus regulated emissions and compliance testing grounded in CAN-level evidence.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -463,7 +463,7 @@ export const atlas: readonly AtlasDomain[] = [
     experienceProof:
       'Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes. Emissions and compliance testing against ADR and EURO standards at ABMARC.',
     transferableLogic:
-      'Evidence-first validation, from a CAN trace to a certification report, is a portable habit every regulated industry pays for.',
+      'I use traceable evidence, from CAN traces to certification reports, to support validation decisions in regulated work.',
     growthTargets: ['AUTOSAR literacy', 'ISO 26262 functional safety'],
     relatedProjects: ['adas-can-validation', 'emissions-compliance-testing'],
   },
@@ -500,7 +500,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'manufacturing-production-and-quality',
     name: 'Manufacturing, Production and Quality',
     summary:
-      'Years on real production floors across food and beverage, carbon-fibre and structural-steel manufacturing: operations, QA, traceability and disciplined documentation.',
+      'I built production, QA, traceability and documentation experience across food and beverage, carbon-fibre and structural-steel manufacturing.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -537,7 +537,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'process-pharma-and-regulated-manufacturing',
     name: 'Process, Pharma and Regulated Manufacturing',
     summary:
-      'Smart-factory and control engineering delivered for pharmaceutical, biotech and food clients under GMP, with GAMP 5 validation discipline through to qualification and handover.',
+      'I delivered smart-factory and control engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP, through qualification and handover.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -557,9 +557,9 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     projectProof: 'The JAG smart factory case study details the regulated delivery context.',
     experienceProof:
-      'Delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP at JAG Process Solutions, across plants, skids and packaged units.',
+      'I delivered control, integration and smart-factory engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP across plants, skids and packaged units.',
     transferableLogic:
-      'If it is not documented, it did not happen: regulated-industry discipline raises the quality bar in every other sector.',
+      'I apply regulated-industry traceability and documentation discipline to engineering work in other sectors.',
     growthTargets: ['CQV engineering roles', 'Process engineering depth in pharma'],
     relatedProjects: ['jag-smart-factory'],
   },
@@ -613,7 +613,7 @@ export const atlas: readonly AtlasDomain[] = [
     experienceProof:
       'Practical agricultural experience as a farmhand alongside field IoT trial deployment work.',
     transferableLogic:
-      'Autonomy, telemetry, harsh-environment sensing and regulated validation are exactly the capabilities these sectors hire for.',
+      'Autonomy, telemetry, harsh-environment sensing and regulated validation transfer directly into these sectors.',
     growthTargets: [
       'Mining autonomy programmes',
       'Defence-adjacent autonomous systems',
@@ -625,7 +625,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'safety-reliability-standards-and-cyber-physical-security',
     name: 'Safety, Reliability, Standards and Cyber-physical Security',
     summary:
-      'Working knowledge of the machinery-safety, industrial-cybersecurity and quality standards that frame the delivered automation and validation work, applied through documentation and test practice.',
+      'I have working knowledge of machinery safety, industrial cybersecurity and quality standards, applied through documentation and test practice.',
     cluster: 'assurance',
     contexts: ['professional', 'study'],
     evidenceTier: 'working-knowledge',
@@ -646,7 +646,7 @@ export const atlas: readonly AtlasDomain[] = [
       'FMEA',
     ],
     projectProof:
-      'Validation methods documented in every case study above follow the same standards-aware structure.',
+      'I use a consistent, standards-aware structure for validation methods and evidence.',
     experienceProof:
       'Standards applied through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
     transferableLogic:
@@ -658,7 +658,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'project-delivery-commissioning-and-handover',
     name: 'Project Delivery, Commissioning and Handover',
     summary:
-      'Taking systems over the line: structured FAT and SAT, site commissioning, fault resolution, stakeholder communication and complete qualification and handover packages.',
+      'I take systems through FAT and SAT, site commissioning, fault resolution, stakeholder communication, qualification and handover.',
     cluster: 'assurance',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -672,14 +672,14 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     platforms: ['FAT and SAT protocols', 'Commissioning plans', 'JIRA and Agile', 'Structured reporting'],
     projectProof:
-      'Every professional case study above ends in documented validation and handover, not just working software.',
+      'My professional case studies include documented validation and handover, not only functional implementation.',
     experienceProof:
       // TODO CONFIRM: removing the employer attribution leaves the final
       // sentence a bare noun phrase. Not rewritten, because a replacement
       // would be invented. Saj to reword or drop it.
       'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence.',
     transferableLogic:
-      'Commissioning is where every discipline meets reality: it proves the breadth claimed everywhere else on this page.',
+      'I use commissioning to test interfaces, expose faults and verify how the complete system behaves in practice.',
     growthTargets: ['Lead commissioning roles', 'Multi-discipline project engineering'],
     relatedProjects: ['jag-smart-factory', 'adas-can-validation'],
   },

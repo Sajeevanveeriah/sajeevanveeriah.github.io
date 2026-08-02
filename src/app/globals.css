@@ -452,6 +452,12 @@ button {
   background: var(--tint);
 }
 
+@media (max-width: 767px) {
+  .project-media {
+    aspect-ratio: var(--media-ratio-mobile, var(--media-ratio));
+  }
+}
+
 .project-media picture {
   display: block;
   width: 100%;
