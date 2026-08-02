@@ -39,6 +39,10 @@ Run `npm run ecosystem` to validate it. That script first runs the validator aga
 
 Every project image record can specify `displayMode`, `aspectRatio`, `objectPosition`, `background`, `sizes` and an optional `mobileSrc`. `ProjectImage` applies that metadata centrally with explicit intrinsic dimensions and local AVIF and WebP sources. Use `contain` for diagrams, UI and screenshots where every edge matters. Use `cover` only for photographs with a verified safe focal point. The wide Engineering Mastery Lab image retains its native 1435:660 stage, and the VeerAI visual its native 1672:941.
 
+Most case-study images are supplied files. The VeerAI visual is the exception: it is drawn by `scripts/make-veerai-visual.mjs`, so the committed asset has a source rather than being an opaque binary. `npm run visual` rewrites the PNG, AVIF and WebP in place; `npm run visual:check` rebuilds them in memory and fails if the result differs from what is committed, which catches an edited asset or a changed generator that was never re-run.
+
+It is deliberately not part of `npm run build`. Rasterisation depends on the local librsvg and libvips, so byte equality is a guarantee on a given machine, not across every CI image, and gating the build on it would trade a real deployment for a cosmetic difference. Run it when the drawing changes.
+
 ## Content updates
 
 1. Update typed records in `src/content/`, preserving evidence tiers and verified scope.
