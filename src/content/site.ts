@@ -53,7 +53,7 @@ export const site: SiteConfig = {
   jobTitle: JOB_TITLE,
   // Verbatim from index.html:1523
   tagline:
-    'I work across mechatronics, robotics, automation and AI/ML, connecting physical systems, controls, embedded engineering, software and validation.',
+    'I work across robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
   // The role label is composed from `JOB_TITLE` so the meta description, the
   // Open Graph card and the Twitter card can never drift from the page title.
   // The capability clause after it is the original wording from index.html:9,
@@ -132,7 +132,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/work/',
     eyebrow: 'Work',
     intro:
-      'Case studies, each stating the problem, what I personally owned and what the evidence supports.',
+      'Case studies showing the problem, the work I owned, the decisions I made and the result I verified.',
     listTitle: 'Records',
     indexLabel: 'Every record, including the archive',
   },
@@ -140,7 +140,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/skills/',
     eyebrow: 'Expertise',
     intro:
-      'The capability atlas: every domain carries its evidence tier rather than a proficiency score.',
+      'My capability atlas, with each domain linked to the evidence I can show.',
     listTitle: 'Atlas domains',
     indexLabel: 'Browse the full atlas',
   },
@@ -148,7 +148,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/employers/',
     eyebrow: 'Employers',
     intro:
-      'Every employer on the record, with the verified facts about the place kept separate from the work I can personally evidence.',
+      'My employment record, separating company background from the work I personally completed.',
     listTitle: 'Employers',
     indexLabel: 'Every employer, and the through-line',
   },
