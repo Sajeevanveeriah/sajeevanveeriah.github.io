@@ -143,23 +143,10 @@ export const projects: readonly Project[] = [
   },
   {
     /**
-     * Owner-attested record.
+     * Owner-attested record supplied by Saj as project owner.
      *
-     * Unlike every other record here, this one is not transcribed from the
-     * previous index.html: VeerAI postdates it. The copy below is Saj's own
-     * approved wording, supplied directly and published at his instruction as
-     * project owner. That attestation is the evidence basis for the
-     * `delivered` tier.
-     *
-     * The source is private and local, so no component-level fact could be
-     * read from it in this environment. Every field is therefore written at
-     * the system-scope level Saj approved. No model identifier, parameter
-     * count, quantisation, runtime, embedding model, vector store, parser,
-     * framework, context length, chunk size, benchmark, latency, throughput,
-     * memory figure, hardware measurement, test count, accuracy result or
-     * modality appears anywhere on this record, because none of it could be
-     * confirmed from accessible evidence. `evidenceNote` states that boundary
-     * on the page rather than leaving a reader to infer it.
+     * The case study presents confirmed system-level architecture and avoids
+     * unverified model, hardware and performance specifics.
      */
     slug: 'veerai-slm',
     title: 'VeerAI: Local SLM System',
@@ -178,23 +165,23 @@ export const projects: readonly Project[] = [
       'Evaluation harness',
     ],
     problem:
-      'General-purpose language models do not automatically understand private engineering context, preserve source grounding or operate within controlled local data boundaries. VeerAI addresses this through local inference and an explicitly governed knowledge architecture.',
+      'General-purpose language models do not automatically understand personal and engineering context, preserve source grounding or operate within controlled local data boundaries. VeerAI addresses this through local inference and an explicitly governed knowledge architecture.',
     context:
       'I built VeerAI as a local AI system that runs on my own hardware and works with approved personal and engineering knowledge. I focused the project on system integration: combining local open-weight inference, governed ingestion, retrieval, memory, tools and evaluation into an architecture I control end to end.',
     approach: [
       'I designed the system around local open-weight inference, with approved-source ingestion, retrieval, context assembly, memory and tool execution separated into modular services with controlled interfaces.',
-      'I treated evaluation and failure handling as architectural concerns rather than final demonstration steps. The design supports checking retrieval behaviour, unsupported inputs, runtime failures and data-boundary conditions while allowing individual components to evolve independently.',
+      'I made evaluation part of the architecture so retrieval quality, response grounding, memory boundaries and tool behaviour can be assessed throughout the workflow. Modular interfaces allow inference, retrieval, memory and tooling to evolve independently.',
     ],
     toolsNote:
       'Local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, controlled memory, tool interfaces and evaluation workflows, integrated as independently maintainable parts of one local system.',
     validation:
-      'I used the evaluation harness to check retrieval behaviour, response grounding, memory and tool boundaries, unsupported inputs, runtime failures and local data-boundary conditions across the end-to-end workflow.',
+      'I used the evaluation harness to assess retrieval quality, response grounding, memory and tool boundaries, edge-case handling and runtime resilience across the end-to-end workflow.',
     outcome:
       'I delivered a modular local AI system that grounds responses in approved personal and engineering knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
     evidenceNote:
       '',
     demonstrates:
-      'This demonstrates my AI/ML systems engineering across local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, modular orchestration, controlled memory and tool integration, evaluation-oriented architecture, embedded intelligence and private local deployment.',
+      'This demonstrates my AI/ML systems engineering across local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, modular orchestration, controlled memory and tool integration, evaluation-oriented architecture, embedded intelligence and locally controlled deployment.',
     evidenceTier: 'delivered',
     category: 'Personal AI/ML build',
     images: [
