@@ -24,7 +24,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'robotics-and-autonomy',
     name: 'Robotics and autonomy',
     summary:
-      'Used to build and validate the autonomous rover stack end to end, with hands-on industrial robot cell exposure (KUKA) at Carbon Revolution.',
+      'I built and validated an autonomous ROS 2 rover stack end to end, and gained hands-on exposure to KUKA industrial robot cells in manufacturing.',
     platforms: ['ROS 2 Humble', 'Nav2', 'MoveIt 2', 'Gazebo'],
     protocols: [
       'RViz',
@@ -45,7 +45,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'controls-automation-and-scada',
     name: 'Controls, automation and SCADA',
     summary:
-      'GMP smart-factory delivery at JAG Process Solutions, including the iFIX to PVI+ migration.',
+      'I delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration.',
     platforms: ['Siemens TIA Portal', 'WinCC', 'PCS 7', 'iFIX', 'PVI+'],
     protocols: [
       'PLC programming (IEC 61131-3)',
@@ -65,7 +65,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'embedded-and-electronics',
     name: 'Embedded and electronics',
     summary:
-      'Custom PCB, CAN-connected equipment interfaces and telemetry integration delivered professionally at DuxTel; firmware and bring-up across capstone and personal builds.',
+      'I designed custom PCBs, integrated CAN-connected equipment and telemetry, and developed firmware across professional, capstone and personal builds.',
     platforms: ['ESP32 and ESP32-S3', 'STM32', 'FreeRTOS', 'Custom PCB design', 'CAN capture'],
     protocols: [
       'Embedded C and C++',
@@ -85,7 +85,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'software-data-and-ai-ml',
     name: 'Software, data and AI/ML',
     summary:
-      'Telemetry capture, transport and Linux server paths delivered at DuxTel; applied ML in the digital twin and rover projects.',
+      'I built telemetry capture, transport and Linux server paths, and applied ML in digital-twin and robotics projects.',
     platforms: ['Python', 'C and C++', 'MATLAB and Simulink', 'Linux', 'MikroTik'],
     protocols: [
       'JavaScript',
@@ -105,7 +105,7 @@ export const disciplines: readonly Discipline[] = [
   {
     slug: 'automotive-and-validation',
     name: 'Automotive and validation',
-    summary: 'ADAS and vehicle software validation; emissions compliance at ABMARC.',
+    summary: 'I carried out ADAS and vehicle-software validation, plus emissions and compliance testing.',
     platforms: ['Vector CANoe', 'Vector CANalyzer'],
     protocols: [
       'CAN and CAN FD',
@@ -123,7 +123,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'mechanical-hardware-and-delivery',
     name: 'Mechanical, hardware and delivery',
     summary:
-      'CAD across capstone, rover and pressure-vessel design work; delivery documentation across regulated roles.',
+      'I applied CAD across capstone, rover and pressure-vessel work, and produced delivery documentation in regulated environments.',
     platforms: ['SolidWorks', 'Fusion 360'],
     protocols: [
       'Motors, drives and actuators',
