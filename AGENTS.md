@@ -76,7 +76,7 @@ plus `src/components/motion/Reveal.tsx`:
 - `SignalHero`: the homepage graphic. Pure SVG and CSS keyframes, no
   JavaScript. The travelling pulse is a dash segment sweeping the same path the
   route is drawn on, so route and pulse stay in register at every size.
-- `SystemDiagram`: eight per-record signature diagrams, one per published work
+- `SystemDiagram`: nine per-record signature diagrams, one per published work
   record, keyed by slug in `BY_SLUG`. A record gets the diagram of the idea it
   is actually about; never reuse one reveal across records.
 - `ClosedLoop`, `StackSpine`, `CareerSpine`: scroll-linked fills via
@@ -88,7 +88,7 @@ plus `src/components/motion/Reveal.tsx`:
   `whileInView` ships `opacity: 0` in the static HTML and blanks the page
   without JavaScript.
 - `InView`: marks a subtree on-screen so its ambient motion can run, and
-  off-screen so it stops. `SystemDiagram` uses it. Without it eight loops ran
+  off-screen so it stops. `SystemDiagram` uses it. Without it nine loops ran
   forever three screens away. The paused state is scoped to `html[data-js]`,
   so without JavaScript the animations simply run. It pauses rather than
   rewinds: a diagram scrolled away and back resumes where it stopped.

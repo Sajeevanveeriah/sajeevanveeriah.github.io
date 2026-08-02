@@ -18,9 +18,15 @@ export const metadata: Metadata = {
   openGraph: { title: 'Work', url: '/work/' },
 }
 
+/**
+ * Four leading records. The page header has always said four; until
+ * `veerai-slm` was added this list held three, so the sentence and the code
+ * disagreed. It is four in both places now.
+ */
 const FEATURED = [
   'autonomous-navigation-rover',
   'engineering-mastery-lab',
+  'veerai-slm',
   'iot-monitoring-platform',
 ] as const
 

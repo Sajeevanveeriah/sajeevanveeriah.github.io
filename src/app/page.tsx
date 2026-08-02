@@ -64,12 +64,18 @@ function PersonSchema() {
 
 /**
  * Four selected records, chosen to span the disciplines rather than to
- * repeat one: autonomy, engineering software, field electronics and
- * regulated industrial automation.
+ * repeat one: autonomy, applied AI/ML, field electronics and regulated
+ * industrial automation.
+ *
+ * `veerai-slm` takes the slot `engineering-mastery-lab` held. The two are the
+ * closest neighbours in the set, both being personally built software
+ * systems, so swapping them keeps the selection at four while widening its
+ * span rather than doubling up. The Mastery Lab is unchanged and still leads
+ * `/work/`, so nothing is demoted out of view.
  */
 const SELECTED = [
   'autonomous-navigation-rover',
-  'engineering-mastery-lab',
+  'veerai-slm',
   'iot-monitoring-platform',
   'jag-smart-factory',
 ] as const
@@ -209,7 +215,7 @@ export default function HomePage() {
               <p className="label label-accent">Selected work</p>
               <h2 id="work-title">Evidence of complete-system ownership.</h2>
               <p className="lede">
-                Four records that span autonomy, engineering software, field electronics and regulated
+                Four records that span autonomy, applied AI/ML, field electronics and regulated
                 industrial automation. Each one states the problem, what I personally owned and what
                 the evidence supports.
               </p>
@@ -383,6 +389,8 @@ function diagramCaption(slug: string): string | undefined {
       return 'The planner at work: occupancy resolved from the LiDAR scan, then an obstacle-aware route committed across the map.'
     case 'engineering-mastery-lab':
       return 'Calculation, parametric CAD, guided labs and evidence workflows sharing one engineering core.'
+    case 'veerai-slm':
+      return 'The governed local pipeline: approved knowledge ingested and retrieved, inference run locally, and evaluation feeding back into the system.'
     case 'iot-monitoring-platform':
       return 'The transport chain I built: equipment CAN and condition sensing, through a custom board and MikroTik edge connectivity, to a Linux server.'
     case 'jag-smart-factory':

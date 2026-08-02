@@ -10,7 +10,7 @@ import s from './SystemDiagram.module.css'
  * capstone is a set of sensor traces. Each one animates the idea that record
  * is actually about.
  *
- * All eight are pure SVG plus CSS keyframes: they server render complete,
+ * All nine are pure SVG plus CSS keyframes: they server render complete,
  * need no JavaScript, and collapse to their finished state under reduced
  * motion via the global rule in globals.css plus the per-variant rules in
  * the stylesheet beside this file.
@@ -25,10 +25,12 @@ export type DiagramVariant =
   | 'migration'
   | 'bus'
   | 'runs'
+  | 'knowledge'
 
 /** Which record reads as which idea. Unlisted slugs render no diagram. */
 const BY_SLUG: Record<string, DiagramVariant> = {
   'engineering-mastery-lab': 'lattice',
+  'veerai-slm': 'knowledge',
   'autonomous-navigation-rover': 'occupancy',
   'ataxia-assessment-device': 'waveforms',
   'iot-monitoring-platform': 'hops',
@@ -56,6 +58,11 @@ const DESCRIPTION: Record<DiagramVariant, string> = {
     'Application content converted from one supervisory platform to another, each item verified against the validated system.',
   bus: 'Frames moving along a vehicle network while one frame is captured for fault evidence.',
   runs: 'Repeated measurement runs converging inside a tolerance band.',
+  /* The seven stages are named here in full. The drawn labels are compacted
+     to fit their boxes, so this description is the only place a reader on
+     assistive technology meets the complete stage names. */
+  knowledge:
+    'A closed local pipeline: approved knowledge, governed ingestion, retrieval, local inference, controlled memory and tools, then a grounded response, with evaluation observing the response and feeding back into the system.',
 }
 
 /**
@@ -78,9 +85,26 @@ function portraitFor(variant: DiagramVariant) {
       return { viewBox: '0 0 360 552', node: <HopsPortrait /> }
     case 'migration':
       return { viewBox: '0 0 360 470', node: <MigrationPortrait /> }
+    case 'knowledge':
+      return { viewBox: '0 0 360 622', node: <KnowledgePortrait /> }
     default:
       return null
   }
+}
+
+/**
+ * Variants whose landscape composition needs the switch to happen earlier.
+ *
+ * The default 560px threshold assumes a label that still fits its box at the
+ * 15px step of the ramp. `knowledge` carries seven stages in three columns,
+ * so its boxes are 192 units wide and its longest label runs 18 characters:
+ * measured, that overruns the box below roughly 620px. Switching this one
+ * variant to its portrait composition at 620px keeps the landscape drawing in
+ * the band where its labels are verified to fit, rather than widening every
+ * other diagram's threshold to suit it.
+ */
+function switchesEarly(variant: DiagramVariant): boolean {
+  return variant === 'knowledge'
 }
 
 export function SystemDiagram({
@@ -91,6 +115,7 @@ export function SystemDiagram({
   caption?: string
 }) {
   const portrait = portraitFor(variant)
+  const early = switchesEarly(variant)
 
   return (
     <InView as="figure" className={s.figure} amount={0.2}>
@@ -99,7 +124,7 @@ export function SystemDiagram({
           announced twice, and only one is ever painted. */}
       <div className={s.plate} role="img" aria-label={DESCRIPTION[variant]}>
         <svg
-          className={`${s.svg} ${portrait ? s.svgWide : ''}`}
+          className={`${s.svg} ${portrait ? (early ? s.svgWideEarly : s.svgWide) : ''}`}
           viewBox="0 0 640 300"
           preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
@@ -112,10 +137,11 @@ export function SystemDiagram({
           {variant === 'migration' ? <Migration /> : null}
           {variant === 'bus' ? <Bus /> : null}
           {variant === 'runs' ? <Runs /> : null}
+          {variant === 'knowledge' ? <Knowledge /> : null}
         </svg>
         {portrait ? (
           <svg
-            className={`${s.svg} ${s.svgTall}`}
+            className={`${s.svg} ${early ? s.svgTallEarly : s.svgTall}`}
             viewBox={portrait.viewBox}
             preserveAspectRatio="xMidYMid meet"
             aria-hidden="true"
@@ -279,6 +305,213 @@ function MigrationPortrait() {
           </g>
         )
       })}
+    </>
+  )
+}
+
+/**
+ * The seven stages, in order.
+ *
+ * `label` is the drawn text and `full` is the stage name as written in the
+ * record. Two of the seven are compacted for the drawing because the full
+ * name overruns its box at the wide end of the label ramp; the full set is
+ * announced through the figure's description, so nothing is lost to a reader
+ * who cannot see the boxes.
+ */
+const STAGES = [
+  { label: 'Approved knowledge', full: 'Approved knowledge' },
+  { label: 'Governed ingestion', full: 'Governed ingestion' },
+  { label: 'Retrieval', full: 'Retrieval' },
+  { label: 'Local inference', full: 'Local inference' },
+  { label: 'Memory and tools', full: 'Controlled memory and tools' },
+  { label: 'Grounded response', full: 'Grounded response' },
+  { label: 'Evaluation', full: 'Evaluation' },
+] as const
+
+/* ------------------------------------------------------------------
+   Knowledge: the governed local pipeline, drawn as a closed loop.
+   ------------------------------------------------------------------ */
+
+/**
+ * Serpentine, not a single run: seven stages laid left to right across the
+ * top row and right to left across the middle row, so each box is a third of
+ * the plate wide rather than a seventh. At a seventh the labels would be
+ * unreadable at every container width.
+ */
+function Knowledge() {
+  const BOX_W = 192
+  const BOX_H = 54
+  const ROW_A = 24
+  const ROW_B = 123
+  /** Three columns at 12, 224 and 436. */
+  const colX = (c: number) => 12 + c * 212
+  /** Centre of the middle column, where the evaluation row sits. */
+  const CENTRE = colX(1) + BOX_W / 2
+
+  /** Row A runs left to right, row B runs right to left. */
+  const mid = (i: number) => {
+    const x = i < 3 ? colX(i) : colX(5 - i)
+    const y = i < 3 ? ROW_A : ROW_B
+    return { x, y, cx: x + BOX_W / 2, cy: y + BOX_H / 2 }
+  }
+
+  return (
+    <>
+      {/* Chain through the first six stages. Horizontal hops inside a row,
+          then one descent at the right edge where the serpentine turns. */}
+      {[0, 1, 3, 4].map((i, k) => {
+        const a = mid(i)
+        const b = mid(i + 1)
+        const leftToRight = a.cx < b.cx
+        /* Row B runs right to left, so without a head the reader has no way
+           to tell which way the chain is travelling along it. */
+        const tip = leftToRight ? b.x : b.x + BOX_W
+        const back = leftToRight ? tip - 9 : tip + 9
+        return (
+          <g key={`h-${i}`}>
+            <path
+              className={s.link}
+              d={`M ${leftToRight ? a.x + BOX_W : a.x} ${a.cy} L ${tip} ${b.cy}`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: `${k * 0.3}s` }}
+            />
+            <path
+              className={s.head}
+              d={`M ${back} ${b.cy - 5} L ${tip} ${b.cy} L ${back} ${b.cy + 5}`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: `${k * 0.3 + 0.2}s` }}
+            />
+          </g>
+        )
+      })}
+
+      <path
+        className={s.link}
+        d={`M ${mid(2).cx} ${ROW_A + BOX_H} L ${mid(3).cx} ${ROW_B}`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '0.6s' }}
+      />
+      <path
+        className={s.head}
+        d={`M ${mid(3).cx - 5} ${ROW_B - 9} L ${mid(3).cx} ${ROW_B} L ${mid(3).cx + 5} ${
+          ROW_B - 9
+        }`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '0.8s' }}
+      />
+
+      {/* Evaluation observes the response, then feeds back into inference.
+          Dashed, because it is a check rather than a data hop. */}
+      <path
+        className={s.loop}
+        d={`M ${mid(5).cx} ${ROW_B + BOX_H} C ${mid(5).cx} 210 ${CENTRE - 60} 222 ${CENTRE - 96} 222`}
+        fill="none"
+        style={{ animationDelay: '1.5s' }}
+      />
+      <path
+        className={s.loop}
+        d={`M ${CENTRE + 96} 222 C ${CENTRE + 150} 222 ${mid(3).cx} 214 ${mid(3).cx} ${ROW_B + BOX_H}`}
+        fill="none"
+        style={{ animationDelay: '1.7s' }}
+      />
+
+      {STAGES.slice(0, 6).map((stage, i) => {
+        const p = mid(i)
+        return (
+          <g key={stage.full}>
+            <rect className={s.node} x={p.x} y={p.y} width={BOX_W} height={BOX_H} rx="12" />
+            <circle
+              className={s.nodeDot}
+              cx={p.x + 20}
+              cy={p.cy}
+              r="5"
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
+            <text className={s.label} x={p.x + 38} y={p.cy + 4}>
+              {stage.label}
+            </text>
+          </g>
+        )
+      })}
+
+      {/* Evaluation sits under the loop, centred, on its own row. */}
+      <rect className={s.node} x={colX(1)} y="195" width={BOX_W} height={BOX_H} rx="12" />
+      <circle
+        className={s.nodeDot}
+        cx={colX(1) + 20}
+        cy="222"
+        r="5"
+        style={{ animationDelay: '1.8s' }}
+      />
+      <text className={s.label} x={colX(1) + 38} y="226">
+        {STAGES[6].label}
+      </text>
+
+      <text className={s.label} x="12" y="288">
+        Local throughout
+      </text>
+    </>
+  )
+}
+
+/** The same seven stages read straight down the page, one per row. */
+function KnowledgePortrait() {
+  const rowH = 62
+  const gap = 26
+  const top = 16
+  const y = (i: number) => top + i * (rowH + gap)
+
+  return (
+    <>
+      {STAGES.map((stage, i) => (
+        <g key={stage.full}>
+          <rect className={s.node} x="16" y={y(i)} width="328" height={rowH} rx="12" />
+          <circle
+            className={s.nodeDot}
+            cx="46"
+            cy={y(i) + rowH / 2}
+            r="7"
+            style={{ animationDelay: `${i * 0.3}s` }}
+          />
+          <text className={s.label} x="74" y={y(i) + rowH / 2 + 6}>
+            {stage.label}
+          </text>
+          {i < STAGES.length - 1 ? (
+            <>
+              <line
+                className={s.hopLine}
+                x1="46"
+                y1={y(i) + rowH}
+                x2="46"
+                y2={y(i) + rowH + gap}
+              />
+              <rect
+                className={s.packetV}
+                x="40"
+                y={y(i) + rowH}
+                width="12"
+                height="12"
+                rx="3"
+                style={{ animationDelay: `${i * 0.3}s`, '--hop': `${gap - 12}px` } as never}
+              />
+            </>
+          ) : null}
+        </g>
+      ))}
+
+      {/* Evaluation feeding back into local inference, up the right margin. */}
+      <path
+        className={s.loop}
+        d={`M 344 ${y(6) + rowH / 2} L 352 ${y(6) + rowH / 2} L 352 ${y(3) + rowH / 2} L 344 ${
+          y(3) + rowH / 2
+        }`}
+        fill="none"
+        style={{ animationDelay: '2.1s' }}
+      />
     </>
   )
 }
