@@ -227,7 +227,7 @@ export const projects: readonly Project[] = [
     validation:
       'I ran repeated Gazebo simulations and used RViz to inspect maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
     outcome:
-      'I delivered a working end-to-end autonomy stack with robust localisation and repeatable obstacle-aware navigation behaviour.',
+      'I delivered a working end-to-end autonomy stack with repeatable localisation and obstacle-aware navigation behaviour.',
     evidenceNote:
       'I built and tested the complete autonomy stack as a personal project in simulation. It is not evidence of a deployed production fleet.',
     demonstrates:
