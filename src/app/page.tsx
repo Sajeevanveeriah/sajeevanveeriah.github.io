@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { SignalHero } from '@/components/signal/SignalHero'
+import { SignalMap } from '@/components/signal/SignalMap'
 import { ClosedLoop } from '@/components/signal/ClosedLoop'
 import { StackSpine } from '@/components/signal/StackSpine'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
@@ -147,6 +148,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ---------- Signal map ---------- */}
+      <SignalMap />
 
       {/* ---------- Credibility ---------- */}
       <section className={home.proof} aria-label="Credentials and evidence">

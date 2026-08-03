@@ -15,6 +15,14 @@
 .pageHeadMain {
   display: grid;
   gap: var(--space-3);
+  /* The split header stretches both columns so the aside can push its route
+     mark and legend apart, but stretch is inherited by this column's own
+     rows too, and any aside taller than the title block re-opens the title
+     block with the difference: measured on /atlas/ at 1440x900 the one-line
+     eyebrow sat in a 111px row and the visual gap to the h1 read as 117px.
+     Kicker, title and lede are one statement and keep their authored 24px
+     intervals regardless of what the aside column carries. */
+  align-content: start;
   min-width: 0;
 }
 
