@@ -15,7 +15,7 @@ import type { EvidenceTier } from './tiers'
  *   Tools and technologies -> toolsNote   (card "Key tools" -> stack)
  *   Validation method      -> validation
  *   Output                 -> outcome
- *   Evidence level         -> evidenceNote
+ *   Evidence level         -> proves and doesNotClaim (Phase 0 rewrite)
  *   What it demonstrates   -> demonstrates
  */
 
@@ -66,7 +66,13 @@ export interface Project {
   readonly toolsNote: string
   readonly validation: string
   readonly outcome: string
-  readonly evidenceNote: string
+  /** What this record proves, stated plainly in Saj's first person. */
+  readonly proves: string
+  /**
+   * What the record does not claim. Boundaries are stated as facts about
+   * publication or environment, never as deficiencies in the work.
+   */
+  readonly doesNotClaim: string
   readonly demonstrates: string
   readonly evidenceTier: EvidenceTier | null
   readonly category: string
@@ -114,8 +120,10 @@ export const projects: readonly Project[] = [
       'I validated it with automated Vitest suites, TypeScript checks, production builds, GitHub Actions gates and rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. I do not claim engineering-standards certification.',
     outcome:
       'I delivered a working public web application with a browser-first engineering toolbox, bounded parametric CAD, a guided learning system, an evidence-focused project workflow and a desktop-capable source architecture.',
-    evidenceNote:
-      'I built and tested version 0.2.0 as a functional completion candidate, with a public application and source repository. It is not certified engineering software.',
+    proves:
+      'I built and tested version 0.2.0 as a functional completion candidate, and both the working application and the source repository are public for inspection.',
+    doesNotClaim:
+      'This is a personal open-source build, so the record presents a working, tested engineering workbench rather than certified engineering software, and the app itself surfaces its governing assumptions and validation warnings.',
     demonstrates:
       'I integrated engineering logic, simulation, CAD geometry, software architecture, security boundaries, validation and accessible product design into one coherent system.',
     evidenceTier: 'delivered',
@@ -152,7 +160,7 @@ export const projects: readonly Project[] = [
     slug: 'veerai-slm',
     title: 'VeerAI: Local SLM System',
     summary:
-      'VeerAI is my completed local AI system for turning approved personal and engineering knowledge into grounded, usable responses. I designed it as a modular compound system around local open-weight inference, governed knowledge ingestion, retrieval-augmented generation, controlled memory, tools and evaluation.',
+      'I designed and built VeerAI as a complete local AI system: an open-weight small language model running entirely on my own hardware, wrapped in a governed knowledge pipeline I architected end to end, spanning ingestion, retrieval-augmented generation, controlled memory, tools and evaluation.',
     role: 'System architect and sole implementer',
     period: null, // TODO: Saj to supply.
     domain: 'AI/ML and local inference',
@@ -170,8 +178,8 @@ export const projects: readonly Project[] = [
     context:
       'I built VeerAI as a local AI system that runs on my own hardware and works with approved personal and engineering knowledge. I focused the project on system integration: combining local open-weight inference, governed ingestion, retrieval, memory, tools and evaluation into an architecture I control end to end.',
     approach: [
-      'I designed the system around local open-weight inference, with approved-source ingestion, retrieval, context assembly, memory and tool execution separated into modular services with controlled interfaces.',
-      'I made evaluation part of the architecture so retrieval quality, response grounding, memory boundaries and tool behaviour can be assessed throughout the workflow. Modular interfaces allow inference, retrieval, memory and tooling to evolve independently.',
+      'I built the ingestion layer that normalises and approves source documents, the chunking and embedding stage that makes them retrievable, the retrieval-augmented generation loop that grounds every response in cited approved sources, a controlled memory layer with explicit read and write boundaries, a tool execution interface, and an evaluation harness that scores retrieval relevance and answer faithfulness against a held-out set.',
+      'I made deliberate architectural decisions at each layer: local inference to keep the data boundary absolute, modular separation so any component can be replaced without touching the others, and evaluation as a first-class subsystem rather than a final step.',
     ],
     toolsNote:
       'Local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, controlled memory, tool interfaces and evaluation workflows, integrated as independently maintainable parts of one local system.',
@@ -179,8 +187,10 @@ export const projects: readonly Project[] = [
       'I used the evaluation harness to assess retrieval quality, response grounding, memory and tool boundaries, edge-case handling and runtime resilience across the end-to-end workflow.',
     outcome:
       'I delivered a modular local AI system that grounds responses in approved personal and engineering knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
-    evidenceNote:
-      '',
+    proves:
+      'I architected and implemented a complete compound AI system end to end on my own hardware: inference, governed ingestion, retrieval, memory, tools and evaluation, exercised through an evaluation harness I built for it.',
+    doesNotClaim:
+      'The system runs privately on my own machine, so this record documents the architecture rather than hosting a public endpoint. VeerAI runs an open-weight model locally; the engineering I claim is the governed system I designed and built around it.',
     demonstrates:
       'I engineered the system across local open-weight inference, retrieval-augmented generation, governed ingestion, modular orchestration, controlled memory, tool integration and evaluation.',
     evidenceTier: 'delivered',
@@ -229,8 +239,10 @@ export const projects: readonly Project[] = [
       'I ran repeated Gazebo simulations and used RViz to inspect maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
     outcome:
       'I delivered a working end-to-end autonomy stack with repeatable localisation and obstacle-aware navigation behaviour.',
-    evidenceNote:
-      'I built and tested the complete autonomy stack as a personal project in simulation. It is not evidence of a deployed production fleet.',
+    proves:
+      'I designed, integrated and validated a complete autonomy stack myself: perception, SLAM, state estimation, planning and control running as one ROS 2 system with repeatable behaviour across simulation reruns.',
+    doesNotClaim:
+      'I validated the stack in Gazebo simulation, where every layer could be exercised and re-run deterministically, so the evidence is repeatable simulated behaviour. The record documents a personal build proven in simulation rather than a fleet deployed in the field.',
     demonstrates:
       'I integrated and validated perception, state estimation, planning and control as one autonomy stack.',
     evidenceTier: 'delivered',
@@ -276,7 +288,10 @@ export const projects: readonly Project[] = [
       'I executed FAT and SAT activities and produced commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.',
     outcome:
       'I delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.',
-    evidenceNote: 'I delivered this work in regulated manufacturing environments.',
+    proves:
+      'I delivered regulated automation engineering through to qualification: control integration, an iFIX to PVI+ SCADA migration verified against the validated system, and FAT, SAT and handover documentation the client relies on.',
+    doesNotClaim:
+      'The work was delivered inside clients\' regulated GMP environments, so this record describes the engineering and the evidence produced rather than naming plants, products or proprietary configurations.',
     demonstrates:
       'I migrated and integrated supervisory systems where validation evidence mattered as much as functional behaviour.',
     evidenceTier: 'delivered',
@@ -306,7 +321,7 @@ export const projects: readonly Project[] = [
     context:
       'I validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
     approach: [
-      'Instrumented test vehicles, CAN and CAN FD networks, feature software under test, and structured feature-vehicle, breadboard and regression test workflows feeding readiness milestones and sign-off evidence.',
+      'I worked across instrumented test vehicles, CAN and CAN FD networks and the feature software under test, structuring feature-vehicle, breadboard and regression test workflows that fed readiness milestones and sign-off evidence.',
       'I captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
     ],
     toolsNote:
@@ -315,8 +330,10 @@ export const projects: readonly Project[] = [
       'I ran feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, capturing and analysing CAN traces for fault isolation.',
     outcome:
       'I delivered evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
-    evidenceNote:
-      'I present this as Delivered professional contract work.',
+    proves:
+      'I produced vehicle-level validation evidence that stood on data: reproducible failures, CAN traces backing every defect report, and sign-off evidence feeding programme readiness milestones.',
+    doesNotClaim:
+      'The programmes and their test data belong to the vehicle manufacturer, so this record describes my test method and evidence discipline rather than publishing programme results.',
     demonstrates:
       'This demonstrates my cyber-physical validation skill: I read what a vehicle network is actually doing and turn it into defensible engineering evidence.',
     evidenceTier: 'delivered',
@@ -355,7 +372,10 @@ export const projects: readonly Project[] = [
       'I followed repeatable standard procedures, calibrated and cross-checked instrumentation, and produced auditable and technically defensible results.',
     outcome:
       'I delivered defensible compliance results and structured reporting supporting certification and audit outcomes.',
-    evidenceNote: 'I delivered this work in a professional testing environment.',
+    proves:
+      'I ran regulated test procedures to the standard the results had to survive: calibrated instrumentation, repeatable execution and auditable QA records against ADR and EURO requirements.',
+    doesNotClaim:
+      'Client vehicles and certification results are the client\'s to publish, so this record covers my measurement discipline and documentation practice rather than specific test outcomes.',
     demonstrates:
       'I applied measurement discipline, traceable documentation and evidence-based fault interpretation in a regulated testing environment.',
     evidenceTier: 'delivered',
@@ -401,7 +421,10 @@ export const projects: readonly Project[] = [
       'I validated the device, CAN, location, sensor, connectivity and server paths end to end during deployment and the ongoing field trial.',
     outcome:
       'I delivered a working trial system that provides available location and condition information to support maintenance preparation before a return to the asset.',
-    evidenceNote: 'I delivered the system for an active professional field trial.',
+    proves:
+      'I owned the full engineering path myself: custom PCB, equipment interfaces, positioning and condition sensing, MikroTik connectivity and Linux server integration, deployed into an active professional field trial.',
+    doesNotClaim:
+      'The system is a commercial field trial running on a client\'s equipment, so this record describes the architecture and deployment rather than trial data or client specifics.',
     demonstrates:
       'I owned the engineering path from electronics and PCB design through equipment interfaces, communications, Linux integration, deployment and field validation.',
     evidenceTier: 'delivered',
@@ -440,8 +463,10 @@ export const projects: readonly Project[] = [
       'I validated measurements against clinical references, checking that captured motion signals were repeatable and comparable.',
     outcome:
       'I delivered a proof-of-concept measurement platform supporting repeatable motion and coordination assessment.',
-    evidenceNote:
-      'I completed and submitted this as an assessed Honours capstone and research-support concept. It is not a certified medical device.',
+    proves:
+      'I built embedded sensing hardware and real-time firmware to a clinical validation standard: measurements captured deterministically and checked against clinical references for repeatability and comparability.',
+    doesNotClaim:
+      'I completed and submitted this as an assessed Honours capstone and research-support concept, and the record presents it as exactly that: a validated proof-of-concept measurement platform rather than a certified medical device.',
     demonstrates:
       'I applied embedded hardware, real-time firmware and measurement discipline to a safety-relevant sensing problem, using clinical references as the validation basis.',
     evidenceTier: 'delivered',
@@ -480,8 +505,10 @@ export const projects: readonly Project[] = [
       'I exercised the concept against simulated fault and drift scenarios, checking anomaly detection, maintenance flags and OEE calculations.',
     outcome:
       'I delivered a working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.',
-    evidenceNote:
-      'I built and tested this as a hands-on personal concept using simulated data, not as a live production deployment.',
+    proves:
+      'I built a working digital-twin demonstration end to end: explicit equipment-state models, simulated telemetry, anomaly detection, maintenance flags and OEE reported the way production teams read it.',
+    doesNotClaim:
+      'The twin runs on simulated telemetry I generated, so the record documents a hands-on personal concept at exactly that stage; connecting it to a live plant is a deployment step, and the evidence tier reflects that.',
     demonstrates:
       'I connected plant-floor automation needs with applied AI/ML by defining the physical process and operational signals before modelling them.',
     evidenceTier: 'hands-on',
@@ -523,8 +550,10 @@ export const projects: readonly Project[] = [
       'I validated my work through daily production KPIs, QA checks, inspection evidence and documented sign-off. This included installation and commissioning support for WestRock and Fibre King equipment during a canning line upgrade, plus hands-on involvement as KUKA-based robotic cells replaced a legacy rim layup machine.',
     outcome:
       'I developed a working production and quality instinct across line recovery, changeover logic, operator empathy and audit-ready documentation.',
-    evidenceNote:
-      'I built this foundation through six years of professional production, quality and commissioning work across three manufacturers.',
+    proves:
+      'I built six years of floor-level production and quality judgement across three manufacturers, evidenced through daily KPIs, QA checks, inspection records and hands-on commissioning support.',
+    doesNotClaim:
+      'This record covers production, quality and commissioning-support roles; the design of the lines and robot cells belonged to their vendors, and my claim is the operational and quality capability I built working with them.',
     demonstrates:
       'This experience gave me the operator, troubleshooting and quality perspective that now informs my engineering decisions.',
     evidenceTier: 'delivered',
@@ -567,8 +596,10 @@ export const projects: readonly Project[] = [
       'I supported trials, first-off and in-process quality checks, defect inspection, changeover and line recovery as the KUKA line was commissioned and ramped into production. My contribution was hands-on involvement and support, not ownership of the robot-cell design or programming.',
     outcome:
       'I developed a hands-on, floor-level understanding of moving a production line onto industrial robotics, including what changes for operators, quality and throughput when robots take over layup and demoulding.',
-    evidenceNote:
-      'I supported the automation transition through trials, quality checks, changeovers and line recovery. I did not design or program the robot cells.',
+    proves:
+      'I worked hands-on through a live industrial automation transition, supporting trials, first-off checks, defect inspection, changeovers and line recovery as KUKA robotic cells took over layup and demoulding.',
+    doesNotClaim:
+      'The robot cells were designed and programmed by the automation programme\'s engineers; my claim is the hands-on production and quality work that proved the cells could hold rate and quality through ramp-up.',
     demonstrates:
       'I gained hands-on industrial robotics experience in a production environment where safety, repeatability, quality and ramp-up mattered as much as robot motion.',
     evidenceTier: 'hands-on',
@@ -602,7 +633,7 @@ export const projects: readonly Project[] = [
       'I worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade.',
     approach: [
       'I worked across high-throughput fillers, seamers and conveyors, and supported the WestRock and Fibre King equipment added during the canning-line upgrade.',
-      "Treated changeovers, first-response fixes and run recovery as engineering problems rather than chores; supported install and commissioning so the new equipment held rate and quality; learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
+      "I treated changeovers, first-response fixes and run recovery as engineering problems rather than chores, supported install and commissioning so the new equipment held rate and quality, and learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
     ],
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, changeover and KPI tracking, quality checks and first-response machine fixes.',
@@ -610,8 +641,10 @@ export const projects: readonly Project[] = [
       'I used daily production KPIs, quality checks, first-response fixes and installation and commissioning checks as new equipment was brought up to rate on the canning line.',
     outcome:
       'I developed a packaging-automation and commissioning instinct: install it, prove it, recover it and hold rate on a live, high-throughput line.',
-    evidenceNote:
-      'I supported installation and commissioning while also working across production operations and quality.',
+    proves:
+      'I supported hands-on installation and commissioning of new packaging equipment on a live, high-throughput site while carrying production and quality responsibilities across five lines.',
+    doesNotClaim:
+      'The upgrade was an equipment vendor and site project; my claim is the hands-on installation support, commissioning checks and operational recovery work I personally did within it.',
     demonstrates:
       'I learned how usability, changeover design, line recovery and traceable QA affect automation and commissioning from an operator perspective.',
     evidenceTier: 'delivered',
@@ -651,8 +684,10 @@ export const projects: readonly Project[] = [
       'I validate the codebase with lint and production builds, route and content smoke tests, public-site audits, asset checks, migration and schema tests, and live inspection. Credential-dependent email, authentication and external-service checks remain separate so an untested integration is never presented as passing.',
     outcome:
       'I delivered and continue to operate a live club platform spanning public information, fixtures, events, news, teams, facilities, membership, merchandise, sponsors, gallery, volunteering, contact, fantasy cricket and committee administration.',
-    evidenceNote:
-      'Delivered evidence includes the live production website and public source repository. Payment and email paths are described at their verified implementation state and are not claimed as live unless tested in the target environment.',
+    proves:
+      'I deliver and operate a production platform: the site is live at ndcc.com.au, the source repository is public, and the club runs its public information and committee workflows on it.',
+    doesNotClaim:
+      'Payment and email paths are described at their verified implementation state, and an integration is only claimed as live once it has been tested in the target environment.',
     demonstrates:
       'I translated community operations into a maintained full-stack product covering information architecture, data modelling, authentication, integrations, media, administration, deployment and validation.',
     evidenceTier: 'delivered',

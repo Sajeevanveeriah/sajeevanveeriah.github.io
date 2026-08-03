@@ -1,8 +1,10 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import { m, useScroll, useTransform, useReducedMotion, type MotionValue } from 'framer-motion'
 import { closedLoop } from '@/content/about'
+import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
 import s from './ClosedLoop.module.css'
 
 /**
@@ -82,6 +84,23 @@ function Stage({
       <span className={s.index}>{node.index}</span>
       <h3 className={s.name}>{node.name}</h3>
       <p className={s.detail}>{node.detail}</p>
+      {/* Collapsed, the stage row keeps its original shape; the depth is
+          one interaction away, and fully readable without JavaScript. */}
+      <div className={s.depth}>
+        <TechnicalDepth title={closedLoop.expandLabel}>
+          {node.depth.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+          <p className={s.depthRecords}>
+            {node.records.map((r, i) => (
+              <span key={r.href}>
+                {i > 0 ? ' / ' : 'Evidence: '}
+                <Link href={r.href}>{r.label}</Link>
+              </span>
+            ))}
+          </p>
+        </TechnicalDepth>
+      </div>
     </m.li>
   )
 }

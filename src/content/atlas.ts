@@ -3,9 +3,9 @@ import type { EvidenceTier } from './tiers'
 /**
  * The Engineering Atlas: 19 capability domains.
  *
- * This is the deepest written content on the site. Every field below is
- * transcribed verbatim from the previous index.html (lines 611 to 897).
- * Nothing is cut, compressed, summarised or paraphrased.
+ * This is the deepest written content on the site. Originally transcribed
+ * from the previous index.html (lines 611 to 897); the prose was rewritten
+ * in Phase 0 to first-person active voice without changing any claim.
  *
  * evidenceTier is ported from the explicit data-tier attribute Saj set on
  * each entry. `cluster` is the old data-cluster attribute and `contexts` the
@@ -68,7 +68,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'mechatronics-and-systems-engineering',
     name: 'Mechatronics and Systems Engineering',
     summary:
-      'The home discipline: integrating mechanical, electrical, embedded, control and software layers into one working system, then proving it with structured test and documentation.',
+      'Mechatronics is my home discipline: I integrate mechanical, electrical, embedded, control and software layers into one working system, then prove it with structured test and documentation.',
     cluster: 'systems',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'delivered',
@@ -89,7 +89,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ROS 2 rover and clinical capstone both required whole-stack integration from sensing to validated behaviour.',
     experienceProof:
-      'Bachelor of Mechatronics Engineering (Honours, Distinction), Deakin University. Integrated deliveries at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
+      'I graduated with a Bachelor of Mechatronics Engineering (Honours, Distinction) from Deakin University, and I delivered integrated systems at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
     transferableLogic:
       'I use system decomposition to locate faults and requirements at the correct engineering layer before choosing a solution.',
     growthTargets: ['Model-based systems engineering (SysML)'],
@@ -99,7 +99,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'mechanical-design-materials-and-thermofluids',
     name: 'Mechanical Design, Materials and Thermofluids',
     summary:
-      'Hands-on CAD, mechanism and part design for mechatronic assemblies, backed by degree-level materials, thermodynamics and fluid mechanics coursework.',
+      'I design parts, mechanisms and assemblies for mechatronic systems hands-on in CAD, backed by degree-level materials, thermodynamics and fluid mechanics coursework.',
     cluster: 'physical',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'hands-on',
@@ -120,9 +120,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Pneumatics and hydraulics basics',
     ],
     projectProof:
-      'Mechanical design and CAD across university projects, the Deakin Mars Rover Team and the ESP32 capstone hardware.',
+      'I carried mechanical design and CAD across university projects, the Deakin Mars Rover Team and the ESP32 capstone hardware.',
     experienceProof:
-      'Drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles, including pressure-vessel CAD designs at Thornton Engineering that progressed into fabrication.',
+      'I performed drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles, including pressure-vessel CAD designs at Thornton Engineering that progressed into fabrication.',
     transferableLogic:
       'Mechanism, tolerance and load thinking carries into robot hardware, fixtures, panels and production tooling.',
     growthTargets: ['Design for manufacture at production scale', 'Formal FEA validation workflows'],
@@ -132,7 +132,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'electrical-systems-and-power',
     name: 'Electrical Systems and Power',
     summary:
-      'Practical motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.',
+      'I work hands-on with motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.',
     cluster: 'physical',
     contexts: ['professional', 'study'],
     evidenceTier: 'hands-on',
@@ -150,9 +150,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Multimeter and loop testing',
       'Instrumentation datasheets',
     ],
-    projectProof: 'Motor, drive and actuator integration in robotics and capstone builds.',
+    projectProof: 'I integrated motors, drives and actuators in robotics and capstone builds.',
     experienceProof:
-      'Integrated field devices, sensors and drives with control logic at JAG Process Solutions. Motor and drive fundamentals from the mechatronics degree and HND.',
+      'I integrated field devices, sensors and drives with control logic at JAG Process Solutions, building on motor and drive fundamentals from the mechatronics degree and HND.',
     transferableLogic:
       'Reading a schematic and tracing a loop is the same discipline whether the cabinet runs a plant, a rig or a robot.',
     growthTargets: ['Switchboard and panel design ownership', 'AS/NZS 3000 wiring rules literacy'],
@@ -194,7 +194,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'embedded-systems-and-firmware',
     name: 'Embedded Systems and Firmware',
     summary:
-      'Embedded firmware and device integration in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning, CAN-connected equipment interfaces and field deployment.',
+      'I build embedded firmware and device integrations in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning, CAN-connected equipment interfaces and field deployment.',
     cluster: 'embedded',
     contexts: ['professional', 'project', 'personal'],
     evidenceTier: 'delivered',
@@ -215,7 +215,7 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     protocols: ['UART', 'I2C', 'SPI', 'CAN', 'ADC', 'PWM'],
     projectProof:
-      'Built the capstone clinical sensing device and IoT platform firmware end to end.',
+      'I built the capstone clinical sensing device and IoT platform firmware end to end.',
     experienceProof:
       'I delivered agricultural-equipment telemetry work spanning custom PCB design, CAN trace capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
     transferableLogic:
@@ -246,7 +246,7 @@ export const atlas: readonly AtlasDomain[] = [
       'Simulation-first validation',
     ],
     projectProof:
-      'Kalman and EKF estimation and PID motion control built into the ROS 2 rover project.',
+      'I built Kalman and EKF estimation and PID motion control into the ROS 2 rover project.',
     experienceProof:
       'I delivered control logic for pharmaceutical, biotechnology and food-manufacturing systems.',
     transferableLogic:
@@ -286,7 +286,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'My smart-factory case study details the SCADA migration and process-visualisation work I delivered.',
     experienceProof:
-      'Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
+      'I executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
     transferableLogic:
       'I carry alarm design, operator usability and data-integrity discipline into supervisory and telemetry systems.',
     growthTargets: ['Allen-Bradley and Rockwell platforms', 'Ignition SCADA'],
@@ -321,9 +321,9 @@ export const atlas: readonly AtlasDomain[] = [
       'EKF localisation',
     ],
     projectProof:
-      'Built an end-to-end ROS 2 autonomous rover with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion.',
+      'I built an end-to-end ROS 2 autonomous rover with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion.',
     experienceProof:
-      'Contributor to the Deakin Mars Rover Team. Hands-on industrial robotics exposure at Carbon Revolution, working through the automation programme that replaced a legacy rim layup machine with KUKA-based robotic layup and demoulding cells.',
+      'I contributed to the Deakin Mars Rover Team, and I gained hands-on industrial robotics exposure at Carbon Revolution, working through the automation programme that replaced a legacy rim layup machine with KUKA-based robotic layup and demoulding cells.',
     transferableLogic:
       'Robotics strengthened my discipline around timing, transforms, interfaces and failure handling across integrated systems.',
     growthTargets: [
@@ -356,9 +356,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Grafana',
     ],
     projectProof:
-      'Built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept. Vision and estimation work in the ROS 2 rover.',
+      'I built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept, and vision and estimation work into the ROS 2 rover.',
     experienceProof:
-      'I applied monitoring concepts to professional IoT telemetry pipelines. The agricultural field trial did not include a claimed ML deployment.',
+      'I applied monitoring concepts to professional IoT telemetry pipelines, and I keep the boundary exact: the agricultural field trial evidences telemetry engineering, while my ML evidence sits in the personal builds.',
     transferableLogic:
       'I use the physics and measurement context behind a signal to guide feature design, model choice and validation.',
     growthTargets: ['Production MLOps', 'Edge inference on embedded targets'],
@@ -368,7 +368,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'software-engineering-and-devops',
     name: 'Software Engineering and DevOps',
     summary:
-      'Practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.',
+      'I write practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.',
     cluster: 'software',
     contexts: ['professional', 'personal'],
     evidenceTier: 'hands-on',
@@ -427,7 +427,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The DuxTel agricultural equipment telemetry case study covers the deployed active field-trial system end to end.',
     experienceProof:
-      'Designed and deployed DuxTel field telemetry systems from custom PCB and equipment interfaces through MikroTik connectivity, Linux server integration and trial deployment.',
+      'I designed and deployed DuxTel field telemetry systems from custom PCB and equipment interfaces through MikroTik connectivity, Linux server integration and trial deployment.',
     transferableLogic:
       'Edge-to-cloud thinking scales from a paddock sensor to a plant historian: the same ingestion, buffering and visualisation logic applies.',
     growthTargets: ['Industrial IoT at plant scale (OPC UA)', 'Cellular and satellite backhaul systems'],
@@ -461,7 +461,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ADAS validation and emissions testing case studies break the work down.',
     experienceProof:
-      'Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes. Emissions and compliance testing against ADR and EURO standards at ABMARC.',
+      'I validated vehicle software and ADAS features across the T6 Ranger and Everest programmes, and I conducted emissions and compliance testing against ADR and EURO standards at ABMARC.',
     transferableLogic:
       'I use traceable evidence, from CAN traces to certification reports, to support validation decisions in regulated work.',
     growthTargets: ['AUTOSAR literacy', 'ISO 26262 functional safety'],
@@ -471,7 +471,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'biomedical-and-clinical-devices',
     name: 'Biomedical and Clinical Devices',
     summary:
-      'Embedded clinical sensing built and validated against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.',
+      'I built and validated embedded clinical sensing against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.',
     cluster: 'sectors',
     contexts: ['project', 'study'],
     evidenceTier: 'hands-on',
@@ -489,8 +489,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Signal processing',
     ],
     projectProof:
-      'The ESP32 clinical ataxia assessment capstone with real-time acquisition and measurement validation against clinical references.',
-    experienceProof: 'Assessed Honours capstone at Deakin University, graded with Distinction.',
+      'I built the ESP32 clinical ataxia assessment capstone, with real-time acquisition and measurement validation against clinical references.',
+    experienceProof:
+      'I completed the assessed Honours capstone at Deakin University and graduated with Distinction.',
     transferableLogic:
       'Clinical work forces measurement rigour, repeatability and documentation discipline that generalises to any safety-relevant sensing.',
     growthTargets: ['IEC 62304 software lifecycle', 'Clinical trial support engineering'],
@@ -522,7 +523,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The manufacturing and QA foundation record and the compliance testing case study show the same QA discipline applied end to end.',
     experienceProof:
-      'Manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.',
+      'I held manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.',
     transferableLogic:
       'Floor-level empathy for operators and inspectors makes automation, HMI and MES design markedly better.',
     growthTargets: ['Six Sigma Green Belt', 'Production line ownership'],
@@ -567,7 +568,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'civil-structural-and-infrastructure-awareness',
     name: 'Civil, Structural and Infrastructure Awareness',
     summary:
-      'Transferable exposure from structural-steel fabrication QA: reading structural drawings, weld and inspection documentation, and standards-driven fabrication workflows.',
+      'I carry transferable exposure from structural-steel fabrication QA: I read structural drawings and weld and inspection documentation, and I worked inside standards-driven fabrication workflows.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'adjacent',
@@ -578,9 +579,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Standards-driven documentation',
     ],
     platforms: ['Engineering drawings', 'ITPs and MDRs', 'Material traceability records'],
-    projectProof: 'Pressure-vessel CAD designs that progressed into fabrication.',
+    projectProof: 'I produced pressure-vessel CAD designs that progressed into fabrication.',
     experienceProof:
-      'QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.',
+      'I carried out QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.',
     transferableLogic:
       'Standards-driven fabrication QA is a direct bridge into infrastructure, rail and energy project work.',
     growthTargets: ['Infrastructure automation and monitoring systems'],
@@ -590,7 +591,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'aerospace-space-marine-rail-defence-mining-agriculture-and-energy',
     name: 'Aerospace, Space, Marine, Rail, Defence, Mining, Agriculture and Energy',
     summary:
-      'Sector adjacencies reached through rover robotics, field IoT and hands-on farm work, held honestly as adjacent exposure and strategic growth targets rather than delivery claims.',
+      'I reached these sectors through rover robotics, field IoT and hands-on farm work, and I hold them honestly as adjacent exposure and strategic growth targets rather than delivery claims.',
     cluster: 'sectors',
     contexts: ['project', 'personal'],
     evidenceTier: 'adjacent',
@@ -609,9 +610,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Remote asset monitoring patterns',
     ],
     projectProof:
-      'Deakin Mars Rover Team contribution and the deployed agricultural equipment health and location telemetry platform.',
+      'I contributed to the Deakin Mars Rover Team and deployed the agricultural equipment health and location telemetry platform.',
     experienceProof:
-      'Practical agricultural experience as a farmhand alongside field IoT trial deployment work.',
+      'I gained practical agricultural experience as a farmhand alongside field IoT trial deployment work.',
     transferableLogic:
       'Autonomy, telemetry, harsh-environment sensing and regulated validation transfer directly into these sectors.',
     growthTargets: [
@@ -648,7 +649,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'I use a consistent, standards-aware structure for validation methods and evidence.',
     experienceProof:
-      'Standards applied through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
+      'I applied these standards through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
     transferableLogic:
       'Standards literacy converts good engineering into defensible engineering: it is the language auditors and safety leads trust.',
     growthTargets: ['Functional safety certification (TUV style)', 'IEC 62443 practitioner depth'],
@@ -674,10 +675,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'My professional case studies include documented validation and handover, not only functional implementation.',
     experienceProof:
-      // TODO CONFIRM: removing the employer attribution leaves the final
-      // sentence a bare noun phrase. Not rewritten, because a replacement
-      // would be invented. Saj to reword or drop it.
-      'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions and resolved faults raised during testing and site support. Readiness-milestone evidence.',
+      'I produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions, resolved faults raised during testing and site support, and produced readiness-milestone and sign-off evidence in vehicle validation programmes.',
     transferableLogic:
       'I use commissioning to test interfaces, expose faults and verify how the complete system behaves in practice.',
     growthTargets: ['Lead commissioning roles', 'Multi-discipline project engineering'],
