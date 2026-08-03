@@ -2,8 +2,8 @@
  * The five-tier evidence model.
  *
  * Binding truthful-representation control, carried over from AGENTS.md
- * without alteration. Definitions below are transcribed verbatim from the
- * legend in the previous index.html (lines 572 to 576).
+ * without alteration. Definitions are written in Saj's first person and
+ * render wherever the legend or an indicator explains a tier.
  *
  * Saj assigns every tier. No tier is ever inferred from a description, a
  * platform list, resume text or any other content. An entry with no
@@ -20,7 +20,7 @@ export type EvidenceTier =
 export interface TierMeta {
   readonly id: EvidenceTier
   readonly label: string
-  /** Verbatim definition from the previous site's legend. */
+  /** What the tier means, in Saj's own words. */
   readonly definition: string
   /**
    * Dot treatment. Never the sole signal: every indicator also renders its
@@ -36,35 +36,35 @@ export const TIERS: Record<EvidenceTier, TierMeta> = {
   delivered: {
     id: 'delivered',
     label: 'Delivered',
-    definition: 'Professional or project delivery evidence exists.',
+    definition: 'I delivered this in professional or assessed project work, and evidence of that delivery exists.',
     dot: 'solid',
     strength: 5,
   },
   'hands-on': {
     id: 'hands-on',
     label: 'Hands-on',
-    definition: 'Built, tested, configured, analysed or used directly.',
+    definition: 'I built, tested, configured, analysed or used this directly myself.',
     dot: 'half',
     strength: 4,
   },
   'working-knowledge': {
     id: 'working-knowledge',
     label: 'Working knowledge',
-    definition: 'Credible study, coursework or self-directed learning.',
+    definition: 'I know this through credible study, coursework or self-directed learning.',
     dot: 'ringed',
     strength: 3,
   },
   adjacent: {
     id: 'adjacent',
     label: 'Adjacent',
-    definition: 'Transferable exposure from nearby systems.',
+    definition: 'I bring transferable exposure to this from nearby systems I worked on.',
     dot: 'hollow',
     strength: 2,
   },
   target: {
     id: 'target',
     label: 'Target',
-    definition: 'Strategic growth domain.',
+    definition: 'I am deliberately building toward this as a growth domain.',
     dot: 'dashed',
     strength: 1,
   },

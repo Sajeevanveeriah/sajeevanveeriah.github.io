@@ -104,6 +104,31 @@
   max-width: 30ch;
 }
 
+/* Per-stage disclosure. The summary row is kept quieter than the record
+   pages so the collapsed strip reads as cleanly as before. */
+.depth {
+  margin-top: 0.65rem;
+  max-width: 44ch;
+}
+
+.depth summary span:first-child {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.depthRecords a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.depthRecords a:hover {
+  color: var(--accent-hover);
+}
+
 @media (min-width: 860px) {
   .connector {
     left: 0;

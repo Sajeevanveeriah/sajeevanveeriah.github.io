@@ -3,8 +3,11 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
+import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
 import { Reveal } from '@/components/motion/Reveal'
 import { atlas, getDomain, CLUSTER_LABEL, CONTEXT_LABEL } from '@/content/atlas'
+import { atlasTechniques, techniquesFor } from '@/content/techniques'
+import { TIERS } from '@/content/tiers'
 import { systemsStack } from '@/content/systemsStack'
 import { getProject } from '@/content/projects'
 import s from '@/components/ui/shared.module.css'
@@ -56,6 +59,8 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
     targetLed || !proofFirst ? [logicBlock, ...proofBlocks] : [...proofBlocks, logicBlock]
   ).filter((c) => Boolean(c.body))
 
+  const depth = techniquesFor(atlasTechniques, d.slug)
+
   return (
     <article className="section">
       <div className="wrap-wide">
@@ -71,6 +76,7 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
               <div className={s.railBlock}>
                 <p className="label">Evidence</p>
                 <TierIndicator tier={d.evidenceTier} />
+                <p className={s.rowSummary}>{TIERS[d.evidenceTier].definition}</p>
               </div>
               <div className={s.railBlock}>
                 <p className="label">Delivery context</p>
@@ -98,8 +104,35 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
               </Reveal>
             ))}
 
+            {depth.length ? (
+              <Reveal as="section" className={s.chapter}>
+                <span className={s.chapterIndex}>
+                  {String(chapters.length + 1).padStart(2, '0')}
+                </span>
+                <h2 className={s.chapterTitle}>Technique deep dives</h2>
+                <div className={s.chapterBody}>
+                  <p>
+                    I wrote these treatments to make the techniques this domain names legible in
+                    full: the mechanism, the choice, the tuning and the proof. Each one opens in
+                    place.
+                  </p>
+                  <div>
+                    {depth.map((t) => (
+                      <TechnicalDepth key={t.id} title={t.name}>
+                        {t.paragraphs.map((para, k) => (
+                          <p key={k}>{para}</p>
+                        ))}
+                      </TechnicalDepth>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+            ) : null}
+
             <Reveal as="section" className={s.chapter}>
-              <span className={s.chapterIndex}>{String(chapters.length + 1).padStart(2, '0')}</span>
+              <span className={s.chapterIndex}>
+                {String(chapters.length + (depth.length ? 2 : 1)).padStart(2, '0')}
+              </span>
               <h2 className={s.chapterTitle}>My growth targets</h2>
               <div className={s.chapterBody}>
                 <ul className={s.bullets}>

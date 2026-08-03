@@ -6,8 +6,11 @@ import { TierIndicator } from '@/components/ui/TierIndicator'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
+import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
 import { Reveal } from '@/components/motion/Reveal'
 import { publishedProjects, discoverableProjects, getProject } from '@/content/projects'
+import { projectTechniques, techniquesFor } from '@/content/techniques'
+import { TIERS } from '@/content/tiers'
 import { discoverableExperience } from '@/content/experience'
 import { site } from '@/content/site'
 import s from '@/components/ui/shared.module.css'
@@ -66,15 +69,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
    * decisions behind it, how it was checked and what the evidence actually
    * supports. Empty fields drop out rather than rendering a blank chapter.
    */
-  const chapters = [
+  const depth = techniquesFor(projectTechniques, p.slug)
+
+  const chapters: { title: string; body: string[]; depth?: boolean }[] = [
     { title: 'The engineering problem', body: [p.problem, p.context] },
     { title: 'How the system works', body: [p.approach[0] ?? ''] },
     { title: 'What I owned', body: [p.demonstrates] },
     { title: 'Why I built it this way', body: [p.approach[1] ?? ''] },
+    {
+      title: 'Technique deep dives',
+      body: depth.length
+        ? ['I wrote these treatments to make the techniques this record names legible in full: the mechanism, the choice, the tuning and the proof. Each one opens in place.']
+        : [],
+      depth: true,
+    },
     { title: 'Tools and disciplines', body: [p.toolsNote] },
     { title: 'How I checked the work', body: [p.validation] },
     { title: 'What I delivered', body: [p.outcome] },
-    { title: 'Scope', body: [p.evidenceNote] },
+    { title: 'What this record proves', body: [p.proves] },
+    { title: 'What it does not claim', body: [p.doesNotClaim] },
   ]
     .map((c) => ({ ...c, body: c.body.filter(Boolean) }))
     .filter((c) => c.body.length > 0)
@@ -126,6 +139,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               <div className={s.railBlock}>
                 <p className="label">Evidence</p>
                 <TierIndicator tier={p.evidenceTier} />
+                {p.evidenceTier ? (
+                  <p className={s.rowSummary}>{TIERS[p.evidenceTier].definition}</p>
+                ) : null}
               </div>
               {p.role ? (
                 <div className={s.railBlock}>
@@ -162,7 +178,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   {/* The signature diagram sits directly under the
                       architecture chapter, where it shows what the prose
                       has just described. */}
-                  {i === 1 && variant ? <SystemDiagram variant={variant} /> : null}
+                  {c.title === 'How the system works' && variant ? (
+                    <SystemDiagram variant={variant} />
+                  ) : null}
+                  {c.depth ? (
+                    <div>
+                      {depth.map((t) => (
+                        <TechnicalDepth key={t.id} title={t.name}>
+                          {t.paragraphs.map((para, k) => (
+                            <p key={k}>{para}</p>
+                          ))}
+                        </TechnicalDepth>
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
               </Reveal>
             ))}
