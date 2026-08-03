@@ -8,6 +8,7 @@ import { discoverableProjects } from '@/content/projects'
 import { atlas } from '@/content/atlas'
 import { publishedEmployers } from '@/content/employers'
 import { allPillars } from '@/content/ecosystem'
+import { labs } from '@/content/labs'
 
 /**
  * Static sitemap, emitted as out/sitemap.xml by the export. Covers every
@@ -24,6 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/employers/',
     '/versatility/',
     '/ecosystem/',
+    '/lab/',
+    ...labs.map((l) => `/lab/${l.slug}/`),
     // Every ecosystem pillar is indexable: each is a substantial reference
     // page in its own right, and the index alone does not carry the records.
     ...allPillars.map((p) => `/ecosystem/${p.slug}/`),

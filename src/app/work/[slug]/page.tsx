@@ -8,8 +8,12 @@ import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
 import { Reveal } from '@/components/motion/Reveal'
+import { LabMount } from '@/components/lab/LabMount'
+import { StaticLab } from '@/components/lab/StaticLab'
 import { publishedProjects, discoverableProjects, getProject } from '@/content/projects'
 import { projectTechniques, techniquesFor } from '@/content/techniques'
+import { getLab, projectLabs, embedCopy } from '@/content/labs'
+import labCss from '@/components/lab/lab.module.css'
 import { TIERS } from '@/content/tiers'
 import { discoverableExperience } from '@/content/experience'
 import { site } from '@/content/site'
@@ -70,8 +74,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
    * supports. Empty fields drop out rather than rendering a blank chapter.
    */
   const depth = techniquesFor(projectTechniques, p.slug)
+  const embeds = (projectLabs[p.slug] ?? [])
+    .map(getLab)
+    .filter((l): l is NonNullable<typeof l> => l !== undefined)
 
-  const chapters: { title: string; body: string[]; depth?: boolean }[] = [
+  const chapters: { title: string; body: string[]; depth?: boolean; labs?: boolean }[] = [
     { title: 'The engineering problem', body: [p.problem, p.context] },
     { title: 'How the system works', body: [p.approach[0] ?? ''] },
     { title: 'What I owned', body: [p.demonstrates] },
@@ -82,6 +89,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         ? ['I wrote these treatments to make the techniques this record names legible in full: the mechanism, the choice, the tuning and the proof. Each one opens in place.']
         : [],
       depth: true,
+    },
+    {
+      title: embedCopy.heading,
+      body: embeds.length ? [embedCopy.intro] : [],
+      labs: true,
     },
     { title: 'Tools and disciplines', body: [p.toolsNote] },
     { title: 'How I checked the work', body: [p.validation] },
@@ -192,6 +204,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                       ))}
                     </div>
                   ) : null}
+                  {c.labs
+                    ? embeds.map((lab) => (
+                        <div key={lab.slug} className={labCss.embed}>
+                          <div className={labCss.embedHead}>
+                            <h3 className={labCss.embedTitle}>{lab.title}</h3>
+                            <ArrowLink href={`/lab/${lab.slug}/`}>{embedCopy.open}</ArrowLink>
+                          </div>
+                          <LabMount slug={lab.slug}>
+                            <StaticLab slug={lab.slug} />
+                          </LabMount>
+                        </div>
+                      ))
+                    : null}
                 </div>
               </Reveal>
             ))}
