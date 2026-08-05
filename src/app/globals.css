@@ -480,6 +480,56 @@ button {
   object-fit: cover;
 }
 
+/* Detail-page demonstration clip. The video fills the same frame the poster
+   image would, so swapping poster for footage cannot shift layout. */
+.project-media-video {
+  position: relative;
+}
+
+.project-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-position: var(--media-position, 50% 50%);
+}
+
+.project-media[data-mode='contain'] video {
+  object-fit: contain;
+}
+
+.project-media[data-mode='cover'] video {
+  object-fit: cover;
+}
+
+/* One concise control: play and pause, keyboard reachable, 44px target.
+   It sits on a constant scrim so both glyphs clear contrast on any frame. */
+.video-control {
+  position: absolute;
+  bottom: var(--space-2);
+  left: var(--space-2);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color var(--dur-interaction) var(--ease-servo);
+}
+
+.video-control:hover {
+  background: var(--tint);
+}
+
+.video-control svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
 /* Media frame shared by home, work and case-study routes. Rounded, ruled and
    large: project imagery is never reduced to a thumbnail. */
 .media-frame {

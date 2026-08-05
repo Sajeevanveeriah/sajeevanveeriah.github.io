@@ -34,6 +34,30 @@ export interface ProjectImage {
   readonly mobileAspectRatio?: string
 }
 
+/**
+ * A short muted looping demonstration clip for a record's detail page.
+ *
+ * Videos are detail-page media only: every discovery surface (home, the work
+ * archive, nav panels, Open Graph, JSON-LD) keeps reading `images[0]`, so a
+ * record with videos costs nothing on any index route. The record's first
+ * image doubles as the poster and the failure fallback unless `poster`
+ * overrides it. Adding a new clip is a data change alone: copy the file
+ * under public/assets/video/ and append an entry here.
+ */
+export interface ProjectVideo {
+  readonly src: string
+  readonly type: 'video/mp4'
+  /** Text alternative announced to assistive technology. */
+  readonly label: string
+  readonly width: number
+  readonly height: number
+  /** Overrides the record's first image as poster and fallback. */
+  readonly poster?: string
+  readonly aspectRatio?: string
+  readonly displayMode?: 'contain' | 'cover'
+  readonly background?: 'light' | 'dark' | 'neutral'
+}
+
 export interface ProjectLink {
   readonly label: string
   readonly url: string
@@ -78,6 +102,8 @@ export interface Project {
   readonly category: string
   readonly links?: readonly ProjectLink[]
   readonly images?: readonly ProjectImage[]
+  /** Detail-page demonstration clips. Never read by a discovery surface. */
+  readonly videos?: readonly ProjectVideo[]
   readonly featured: boolean
   /**
    * Withheld from every discovery surface: nav panels, index listings,
@@ -258,6 +284,19 @@ export const projects: readonly Project[] = [
         background: 'dark',
       },
     ],
+    videos: [
+      {
+        src: '/assets/video/20260604-Autonomous-Navigation-ROS2-Robotics-Rev00.mp4',
+        type: 'video/mp4',
+        label:
+          'Animated demonstration of the ROS 2 autonomous navigation stack, showing a mobile robot mapping its surroundings and planning an obstacle-aware route.',
+        width: 1662,
+        height: 1246,
+        aspectRatio: '1662 / 1246',
+        displayMode: 'contain',
+        background: 'dark',
+      },
+    ],
     homeExcerpt: {
       ownership: 'I integrated perception, state estimation, planning and control as independently testable ROS 2 nodes.',
       outcome: 'A repeatable simulation-validated autonomy stack with stable localisation and obstacle-aware navigation.',
@@ -304,6 +343,18 @@ export const projects: readonly Project[] = [
         height: 1086,
       },
     ],
+    videos: [
+      {
+        src: '/assets/video/20260604-Smart-Factory-Process-Visualisation-Rev00.mp4',
+        type: 'video/mp4',
+        label:
+          'Animated demonstration of smart-factory process visualisation, showing supervisory screens with live process, trend and production data.',
+        width: 1662,
+        height: 1246,
+        aspectRatio: '1662 / 1246',
+        displayMode: 'contain',
+      },
+    ],
     featured: true,
   },
   {
@@ -344,6 +395,18 @@ export const projects: readonly Project[] = [
         alt: 'Vehicle ADAS and CAN validation with software testing and signal analysis',
         width: 1448,
         height: 1086,
+      },
+    ],
+    videos: [
+      {
+        src: '/assets/video/20260604-Vehicle-ADAS-CAN-Validation-Rev00.mp4',
+        type: 'video/mp4',
+        label:
+          'Animated demonstration of vehicle ADAS and CAN validation, showing an instrumented vehicle and network signal analysis.',
+        width: 1662,
+        height: 1246,
+        aspectRatio: '1662 / 1246',
+        displayMode: 'contain',
       },
     ],
     featured: false,
@@ -437,6 +500,18 @@ export const projects: readonly Project[] = [
         height: 1086,
       },
     ],
+    videos: [
+      {
+        src: '/assets/video/20260604-IoT-GPS-Environmental-Monitoring-Rev00.mp4',
+        type: 'video/mp4',
+        label:
+          'Animated demonstration of the agricultural telemetry concept, showing field equipment with GPS positioning and environmental condition monitoring.',
+        width: 1662,
+        height: 1246,
+        aspectRatio: '1662 / 1246',
+        displayMode: 'contain',
+      },
+    ],
     featured: false,
   },
   {
@@ -477,6 +552,18 @@ export const projects: readonly Project[] = [
         alt: 'Embedded clinical ataxia assessment device with sensors and movement data capture',
         width: 1448,
         height: 1086,
+      },
+    ],
+    videos: [
+      {
+        src: '/assets/video/20260604-Embedded-Clinical-Ataxia-Assessment-Rev00.mp4',
+        type: 'video/mp4',
+        label:
+          'Animated demonstration of the embedded clinical ataxia assessment concept, showing the sensing device and captured movement data.',
+        width: 1662,
+        height: 1246,
+        aspectRatio: '1662 / 1246',
+        displayMode: 'contain',
       },
     ],
     featured: false,
