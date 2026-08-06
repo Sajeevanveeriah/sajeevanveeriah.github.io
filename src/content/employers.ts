@@ -142,7 +142,7 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Robotics and autonomy',
         tier: 'delivered',
-        body: 'I completed and deployed Upzy, a supervised, privacy-conscious educational routine companion browser application now used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+        body: 'I completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot now used by end-users, with a supporting browser application for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
       },
       {
         discipline: 'Networks and data',
