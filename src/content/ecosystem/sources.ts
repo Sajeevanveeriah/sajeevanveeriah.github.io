@@ -220,6 +220,34 @@ export const sources: readonly SourceRecord[] = [
     sourceType: 'official',
     reviewedAt: REVIEWED_AT,
   },
+  {
+    id: 'src-hardkernel-odroid',
+    title: 'Hardkernel: ODROID product range',
+    url: 'https://www.hardkernel.com/',
+    sourceType: 'official',
+    reviewedAt: '2026-08-06',
+  },
+  {
+    id: 'src-asus-tinker-board',
+    title: 'ASUS: Tinker Board series',
+    url: 'https://tinker-board.asus.com/series/tinker-board.html',
+    sourceType: 'official',
+    reviewedAt: '2026-08-06',
+  },
+  {
+    id: 'src-microbit-v2',
+    title: 'Micro:bit Educational Foundation: micro:bit V2 hardware',
+    url: 'https://tech.microbit.org/hardware/2-0-revision/',
+    sourceType: 'official',
+    reviewedAt: '2026-08-06',
+  },
+  {
+    id: 'src-adafruit-feather',
+    title: 'Adafruit Learning System: Feather overview',
+    url: 'https://learn.adafruit.com/adafruit-feather',
+    sourceType: 'official',
+    reviewedAt: '2026-08-06',
+  },
 
   // Standards bodies
   {
@@ -477,3 +505,9 @@ export const sources: readonly SourceRecord[] = [
     reviewedAt: REVIEWED_AT,
   },
 ] as const
+
+/** Most recent source-review date, without re-dating older source records. */
+export const CATALOGUE_UPDATED_AT = sources.reduce(
+  (latest, source) => (source.reviewedAt > latest ? source.reviewedAt : latest),
+  REVIEWED_AT,
+)
