@@ -65,20 +65,19 @@ function PersonSchema() {
 
 /**
  * Four selected records, chosen to span the disciplines rather than to
- * repeat one: autonomy, applied AI/ML, field electronics and regulated
- * industrial automation.
+ * repeat one: current mobile robotics R&D, current client engineering
+ * software, current supervised product R&D and applied AI/ML.
  *
- * `veerai-slm` takes the slot `engineering-mastery-lab` held. The two are the
- * closest neighbours in the set, both being personally built software
- * systems, so swapping them keeps the selection at four while widening its
- * span rather than doubling up. The Mastery Lab is unchanged and still leads
+ * The three current independent records took the slots the rover, the
+ * telemetry platform and the smart-factory record held. All three previous
+ * records remain published, and the rover now sits in the four that lead
  * `/work/`, so nothing is demoted out of view.
  */
 const SELECTED = [
-  'autonomous-navigation-rover',
+  'inventory-scanning-mobile-robot',
+  'swl-pricing-inventory-control',
+  'upzy-supervised-routine-companion',
   'veerai-slm',
-  'iot-monitoring-platform',
-  'jag-smart-factory',
 ] as const
 
 const PROOF = [
@@ -219,9 +218,9 @@ export default function HomePage() {
               <p className="label label-accent">Selected work</p>
               <h2 id="work-title">Systems I built, integrated and validated.</h2>
               <p className="lede">
-                Four records that span autonomy, applied AI/ML, field electronics and regulated
-                industrial automation. Each one states the problem, what I personally owned and what
-                the evidence supports.
+                Four records that span mobile robotics R&amp;D, client inventory and pricing
+                software, supervised product R&amp;D and applied AI/ML. Each one states the problem,
+                what I personally owned and what the evidence supports.
               </p>
             </Reveal>
 
@@ -399,6 +398,12 @@ function diagramCaption(slug: string): string | undefined {
       return 'The transport chain I built: equipment CAN and condition sensing, through a custom board and MikroTik edge connectivity, to a Linux server.'
     case 'jag-smart-factory':
       return 'The migration discipline: application content converted item by item, then verified against the existing validated system.'
+    case 'inventory-scanning-mobile-robot':
+      return 'The operator-support cycle: move, observe, associate item and location, then operator review, where an uncertain observation stops instead of changing records.'
+    case 'swl-pricing-inventory-control':
+      return 'The controlled workflow: supplier and ServiceM8 files mapped, compared deterministically, held at the operator approval gate, then written as candidate outputs.'
+    case 'upzy-supervised-routine-companion':
+      return 'The supervised loop: an adult-defined routine prompts the child, a button press is recorded, and the adult reviews it, with the acknowledgement kept apart from any completion claim.'
     default:
       return undefined
   }

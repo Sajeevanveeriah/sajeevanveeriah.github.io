@@ -53,7 +53,7 @@ export interface Role {
 
 export const experienceGroups = {
   recent: {
-    period: 'Feb 2024 to Jun 2026',
+    period: 'Feb 2024 onward',
     kicker: 'Automation, validation, compliance and IoT',
     heading: 'Recent engineering roles',
   },
@@ -78,6 +78,7 @@ export const experienceGroups = {
  * appended in `employers.ts` order, so adding an employer cannot drop it.
  */
 const SPINE_ORDER: readonly string[] = [
+  'independent-engineering-practice',
   'jag-process-solutions',
   'ford-via-invenio',
   'abmarc',
