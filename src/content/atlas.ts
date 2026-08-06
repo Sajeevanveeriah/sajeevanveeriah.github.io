@@ -330,7 +330,12 @@ export const atlas: readonly AtlasDomain[] = [
       'Commercial robot deployment and fleet operations',
       'Learning-based perception in production',
     ],
-    relatedProjects: ['autonomous-navigation-rover', 'carbon-revolution-rim-layup'],
+    relatedProjects: [
+      'autonomous-navigation-rover',
+      'carbon-revolution-rim-layup',
+      'inventory-scanning-mobile-robot',
+      'modular-education-testing-robot',
+    ],
   },
   {
     slug: 'ai-ml-and-data-science',
@@ -397,7 +402,12 @@ export const atlas: readonly AtlasDomain[] = [
     transferableLogic:
       'I use clean interfaces, version discipline and automated checks to connect work across engineering domains.',
     growthTargets: ['Cloud architecture certification', 'Containerised deployment at scale'],
-    relatedProjects: ['engineering-mastery-lab', 'ndcc-website'],
+    relatedProjects: [
+      'engineering-mastery-lab',
+      'ndcc-website',
+      'upzy-supervised-routine-companion',
+      'swl-pricing-inventory-control',
+    ],
   },
   {
     slug: 'iot-and-edge-to-cloud-telemetry',

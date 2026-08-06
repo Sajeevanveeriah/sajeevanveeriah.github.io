@@ -52,6 +52,26 @@ export async function generateMetadata({
   }
 }
 
+/**
+ * One sentence naming what a record's signature diagram is showing, rendered
+ * as the figure caption under the architecture chapter. Slugs without an
+ * entry render the diagram uncaptioned, exactly as before.
+ */
+function diagramCaption(slug: string): string | undefined {
+  switch (slug) {
+    case 'upzy-supervised-routine-companion':
+      return 'The supervised loop: an adult-defined routine prompts the child, a button press is recorded, and the adult reviews it, with the acknowledgement kept apart from any completion claim.'
+    case 'swl-pricing-inventory-control':
+      return 'The controlled workflow: supplier and ServiceM8 files mapped, compared deterministically, held at the operator approval gate, then written as candidate outputs.'
+    case 'inventory-scanning-mobile-robot':
+      return 'The operator-support cycle: move, observe, associate item and location, then operator review, where an uncertain observation stops instead of changing records.'
+    case 'modular-education-testing-robot':
+      return 'The repeatable test cycle: configure a module, exercise the subsystem, measure, review and iterate on the same platform.'
+    default:
+      return undefined
+  }
+}
+
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const p = getProject(slug)
@@ -200,7 +220,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                       architecture chapter, where it shows what the prose
                       has just described. */}
                   {c.title === 'How the system works' && variant ? (
-                    <SystemDiagram variant={variant} />
+                    <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
                   ) : null}
                   {c.depth ? (
                     <div>

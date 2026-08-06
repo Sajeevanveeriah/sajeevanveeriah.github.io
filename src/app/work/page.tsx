@@ -19,15 +19,15 @@ export const metadata: Metadata = {
 }
 
 /**
- * Four leading records. The page header has always said four; until
- * `veerai-slm` was added this list held three, so the sentence and the code
- * disagreed. It is four in both places now.
+ * Four leading records: the two current independent builds, then two strong
+ * robotics and AI systems. The Mastery Lab and the telemetry platform moved
+ * into the archive rather than out of view.
  */
 const FEATURED = [
+  'upzy-supervised-routine-companion',
+  'swl-pricing-inventory-control',
   'autonomous-navigation-rover',
-  'engineering-mastery-lab',
   'veerai-slm',
-  'iot-monitoring-platform',
 ] as const
 
 export default function WorkPage() {

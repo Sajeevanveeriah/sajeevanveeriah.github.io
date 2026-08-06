@@ -26,6 +26,10 @@ export type DiagramVariant =
   | 'bus'
   | 'runs'
   | 'knowledge'
+  | 'routine'
+  | 'gate'
+  | 'patrol'
+  | 'benchloop'
 
 /** Which record reads as which idea. Unlisted slugs render no diagram. */
 const BY_SLUG: Record<string, DiagramVariant> = {
@@ -38,6 +42,10 @@ const BY_SLUG: Record<string, DiagramVariant> = {
   'jag-smart-factory': 'migration',
   'adas-can-validation': 'bus',
   'emissions-compliance-testing': 'runs',
+  'upzy-supervised-routine-companion': 'routine',
+  'swl-pricing-inventory-control': 'gate',
+  'inventory-scanning-mobile-robot': 'patrol',
+  'modular-education-testing-robot': 'benchloop',
 }
 
 export function diagramFor(slug: string): DiagramVariant | null {
@@ -63,6 +71,16 @@ const DESCRIPTION: Record<DiagramVariant, string> = {
      assistive technology meets the complete stage names. */
   knowledge:
     'A closed local pipeline: approved knowledge, governed ingestion, retrieval, local inference, controlled memory and tools, then a grounded response, with evaluation observing the response and feeding back into the system.',
+  /* The drawn labels are compacted to fit their boxes; each description names
+     the full stages, so a reader on assistive technology meets the complete
+     flow even where a box shows the short form. */
+  routine:
+    'An adult-defined routine reaching a device prompt, then a button interaction, then adult review, with the recorded acknowledgement kept visibly separate from any claim of real-world completion.',
+  gate: 'Supplier and ServiceM8 files entering confirmed mapping, then deterministic comparison, then an exception and approval gate where the operator decides, then candidate outputs.',
+  patrol:
+    'A mobile robot cycle of move, observe, then associate item and location, ending at operator review, where an uncertain observation stops for review instead of changing inventory records.',
+  benchloop:
+    'A repeatable test cycle: configure a module, exercise the subsystem, measure, review, then iterate back to configuration on the same platform.',
 }
 
 /**
@@ -87,6 +105,14 @@ function portraitFor(variant: DiagramVariant) {
       return { viewBox: '0 0 360 470', node: <MigrationPortrait /> }
     case 'knowledge':
       return { viewBox: '0 0 360 622', node: <KnowledgePortrait /> }
+    case 'routine':
+      return { viewBox: '0 0 360 536', node: <RoutinePortrait /> }
+    case 'gate':
+      return { viewBox: '0 0 360 560', node: <GatePortrait /> }
+    case 'patrol':
+      return { viewBox: '0 0 360 502', node: <PatrolPortrait /> }
+    case 'benchloop':
+      return { viewBox: '0 0 360 470', node: <BenchLoopPortrait /> }
     default:
       return null
   }
@@ -104,7 +130,9 @@ function portraitFor(variant: DiagramVariant) {
  * other diagram's threshold to suit it.
  */
 function switchesEarly(variant: DiagramVariant): boolean {
-  return variant === 'knowledge'
+  /* `gate` shares the three-column, 192-unit-box geometry of `knowledge` and
+     carries labels up to 17 characters, so it needs the same earlier switch. */
+  return variant === 'knowledge' || variant === 'gate'
 }
 
 export function SystemDiagram({
@@ -138,6 +166,10 @@ export function SystemDiagram({
           {variant === 'bus' ? <Bus /> : null}
           {variant === 'runs' ? <Runs /> : null}
           {variant === 'knowledge' ? <Knowledge /> : null}
+          {variant === 'routine' ? <Routine /> : null}
+          {variant === 'gate' ? <Gate /> : null}
+          {variant === 'patrol' ? <Patrol /> : null}
+          {variant === 'benchloop' ? <BenchLoop /> : null}
         </svg>
         {portrait ? (
           <svg
@@ -896,6 +928,605 @@ function Bus() {
       </text>
       <text className={s.label} x="24" y="72">
         CAN and CAN FD
+      </text>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Routine: the supervised Upzy loop, with the acknowledgement kept
+   visibly apart from any claim of real-world completion.
+   ------------------------------------------------------------------ */
+
+/** Drawn labels are compact; the figure description carries the full flow. */
+const ROUTINE_STEPS = ['Adult routine', 'Device prompt', 'Interaction', 'Adult review'] as const
+
+function Routine() {
+  const width = 124
+  const gap = 36
+  const startX = 16
+  const y = 62
+
+  return (
+    <>
+      {ROUTINE_STEPS.map((label, i) => {
+        const x = startX + i * (width + gap)
+        return (
+          <g key={label}>
+            <rect className={s.node} x={x} y={y} width={width} height={96} rx="12" />
+            <circle
+              className={s.nodeDot}
+              cx={x + width / 2}
+              cy={y + 34}
+              r="6"
+              style={{ animationDelay: `${i * 0.6}s` }}
+            />
+            <text className={s.label} x={x + width / 2} y={y + 70} textAnchor="middle">
+              {label}
+            </text>
+            {i < ROUTINE_STEPS.length - 1 ? (
+              <>
+                <line
+                  className={s.hopLine}
+                  x1={x + width}
+                  y1={y + 48}
+                  x2={x + width + gap}
+                  y2={y + 48}
+                />
+                <rect
+                  className={s.packet}
+                  x={x + width}
+                  y={y + 42}
+                  width="12"
+                  height="12"
+                  rx="3"
+                  style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+                />
+              </>
+            ) : null}
+          </g>
+        )
+      })}
+
+      {/* The boundary the product is built around: what Done records sits on
+          one side of a divider, what it never claims sits on the other. */}
+      <line className={s.axis} x1="16" y1="216" x2="624" y2="216" />
+      <line className={s.axisStrong} x1="320" y1="200" x2="320" y2="262" />
+      <path
+        className={s.tick}
+        d="M 16 244 l 7 8 l 14 -17"
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.9s' }}
+      />
+      <text className={s.label} x="48" y="252">
+        Acknowledgement recorded
+      </text>
+      <text className={s.label} x="624" y="252" textAnchor="end">
+        Completion not claimed
+      </text>
+    </>
+  )
+}
+
+/** The same loop read down the page, boundary note at the foot. */
+function RoutinePortrait() {
+  const rowH = 74
+  const gap = 34
+  const top = 16
+  const y = (i: number) => top + i * (rowH + gap)
+  const rows = ['Adult routine', 'Device prompt', 'Button interaction', 'Adult review'] as const
+
+  return (
+    <>
+      {rows.map((label, i) => (
+        <g key={label}>
+          <rect className={s.node} x="16" y={y(i)} width="328" height={rowH} rx="12" />
+          <circle
+            className={s.nodeDot}
+            cx="46"
+            cy={y(i) + rowH / 2}
+            r="7"
+            style={{ animationDelay: `${i * 0.6}s` }}
+          />
+          <text className={s.label} x="74" y={y(i) + rowH / 2 + 6}>
+            {label}
+          </text>
+          {i < rows.length - 1 ? (
+            <>
+              <line
+                className={s.hopLine}
+                x1="46"
+                y1={y(i) + rowH}
+                x2="46"
+                y2={y(i) + rowH + gap}
+              />
+              <rect
+                className={s.packetV}
+                x="40"
+                y={y(i) + rowH}
+                width="12"
+                height="12"
+                rx="3"
+                style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+              />
+            </>
+          ) : null}
+        </g>
+      ))}
+
+      {/* The label starts at the plate margin: with the tick in front of it
+          the final word clipped at the right edge at portrait label size. */}
+      <line className={s.axis} x1="16" y1="440" x2="344" y2="440" />
+      <text className={s.label} x="16" y="474">
+        Acknowledgement recorded
+      </text>
+      <line className={s.axisStrong} x1="16" y1="490" x2="344" y2="490" />
+      <text className={s.label} x="16" y="522">
+        Completion not claimed
+      </text>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Gate: supplier and ServiceM8 files through mapping, deterministic
+   comparison and an approval gate, to candidate outputs.
+   ------------------------------------------------------------------ */
+
+function Gate() {
+  const BOX_W = 192
+  const colX = (c: number) => 12 + c * 212
+
+  return (
+    <>
+      {/* Two sources, stacked, converging on confirmed mapping. */}
+      {(['Supplier files', 'ServiceM8 files'] as const).map((label, i) => {
+        const y = i === 0 ? 10 : 64
+        return (
+          <g key={label}>
+            <rect className={s.node} x={colX(0)} y={y} width={BOX_W} height={40} rx="10" />
+            <circle
+              className={s.nodeDot}
+              cx={colX(0) + 18}
+              cy={y + 20}
+              r="5"
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
+            <text className={s.label} x={colX(0) + 34} y={y + 26}>
+              {label}
+            </text>
+            <path
+              className={s.link}
+              d={`M ${colX(0) + BOX_W} ${y + 20} C ${colX(1) - 10} ${y + 20} ${colX(1) - 26} 59 ${colX(1)} 59`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: `${i * 0.3}s` }}
+            />
+          </g>
+        )
+      })}
+
+      <rect className={s.node} x={colX(1)} y="32" width={BOX_W} height={54} rx="12" />
+      <circle className={s.nodeDot} cx={colX(1) + 20} cy="59" r="5" style={{ animationDelay: '0.5s' }} />
+      <text className={s.label} x={colX(1) + 38} y="63">
+        Confirmed mapping
+      </text>
+
+      <path
+        className={s.link}
+        d={`M ${colX(1) + BOX_W} 59 L ${colX(2) - 9} 59`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '0.7s' }}
+      />
+      <path
+        className={s.head}
+        d={`M ${colX(2) - 9} 54 L ${colX(2)} 59 L ${colX(2) - 9} 64`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '0.9s' }}
+      />
+      <rect className={s.node} x={colX(2)} y="32" width={BOX_W} height={54} rx="12" />
+      <circle className={s.nodeDot} cx={colX(2) + 20} cy="59" r="5" style={{ animationDelay: '0.9s' }} />
+      <text className={s.label} x={colX(2) + 38} y="63">
+        Comparison
+      </text>
+
+      {/* Descent into the approval gate, where the operator decides. */}
+      <path
+        className={s.link}
+        d={`M ${colX(2) + BOX_W / 2} 86 C ${colX(2) + BOX_W / 2} 140 ${colX(1) + BOX_W / 2} 124 ${colX(1) + BOX_W / 2} 169`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.1s' }}
+      />
+      <path
+        className={s.head}
+        d={`M ${colX(1) + BOX_W / 2 - 5} 160 L ${colX(1) + BOX_W / 2} 169 L ${colX(1) + BOX_W / 2 + 5} 160`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.3s' }}
+      />
+
+      <rect className={s.node} x={colX(1)} y="178" width={BOX_W} height={54} rx="12" />
+      <circle className={s.nodeDot} cx={colX(1) + 20} cy="205" r="5" style={{ animationDelay: '1.4s' }} />
+      <text className={s.label} x={colX(1) + 38} y="209">
+        Approval gate
+      </text>
+      <path
+        className={s.tick}
+        d={`M ${colX(1) + BOX_W - 40} 205 l 7 8 l 14 -17`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.6s' }}
+      />
+
+      <path
+        className={s.link}
+        d={`M ${colX(1) + BOX_W} 205 L ${colX(2) - 9} 205`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.7s' }}
+      />
+      <path
+        className={s.head}
+        d={`M ${colX(2) - 9} 200 L ${colX(2)} 205 L ${colX(2) - 9} 210`}
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '1.9s' }}
+      />
+      <rect className={s.node} x={colX(2)} y="178" width={BOX_W} height={54} rx="12" />
+      <circle className={s.nodeDot} cx={colX(2) + 20} cy="205" r="5" style={{ animationDelay: '2s' }} />
+      <text className={s.label} x={colX(2) + 38} y="209">
+        Candidate outputs
+      </text>
+
+      <text className={s.label} x="12" y="288">
+        Exceptions hold for operator review
+      </text>
+    </>
+  )
+}
+
+/** The same controlled flow read straight down the page. */
+function GatePortrait() {
+  const rowH = 62
+  const gap = 26
+  const top = 16
+  const y = (i: number) => top + i * (rowH + gap)
+  const rows = [
+    'Supplier files',
+    'ServiceM8 files',
+    'Confirmed mapping',
+    'Comparison',
+    'Approval gate',
+    'Candidate outputs',
+  ] as const
+
+  return (
+    <>
+      {rows.map((label, i) => (
+        <g key={label}>
+          <rect className={s.node} x="16" y={y(i)} width="328" height={rowH} rx="12" />
+          <circle
+            className={s.nodeDot}
+            cx="46"
+            cy={y(i) + rowH / 2}
+            r="7"
+            style={{ animationDelay: `${i * 0.3}s` }}
+          />
+          <text className={s.label} x="74" y={y(i) + rowH / 2 + 6}>
+            {label}
+          </text>
+          {label === 'Approval gate' ? (
+            <path
+              className={s.tick}
+              d={`M 296 ${y(i) + rowH / 2} l 7 8 l 14 -17`}
+              pathLength={1}
+              data-draw=""
+              style={{ animationDelay: '1.6s' }}
+            />
+          ) : null}
+          {i < rows.length - 1 ? (
+            <>
+              <line
+                className={s.hopLine}
+                x1="46"
+                y1={y(i) + rowH}
+                x2="46"
+                y2={y(i) + rowH + gap}
+              />
+              <rect
+                className={s.packetV}
+                x="40"
+                y={y(i) + rowH}
+                width="12"
+                height="12"
+                rx="3"
+                style={{ animationDelay: `${i * 0.3}s`, '--hop': `${gap - 12}px` } as never}
+              />
+            </>
+          ) : null}
+        </g>
+      ))}
+
+      <text className={s.label} x="16" y="552">
+        Exceptions hold for review
+      </text>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Patrol: move, observe, associate, operator review, with uncertainty
+   stopping at review rather than changing records.
+   ------------------------------------------------------------------ */
+
+/** "Associate" is compacted from "associate item and location"; the figure
+    description carries the full stage name. */
+const PATROL_STEPS = ['Move', 'Observe', 'Associate', 'Review'] as const
+
+function Patrol() {
+  const width = 124
+  const gap = 36
+  const startX = 16
+  const y = 62
+
+  return (
+    <>
+      {PATROL_STEPS.map((label, i) => {
+        const x = startX + i * (width + gap)
+        return (
+          <g key={label}>
+            <rect className={s.node} x={x} y={y} width={width} height={96} rx="12" />
+            <circle
+              className={s.nodeDot}
+              cx={x + width / 2}
+              cy={y + 34}
+              r="6"
+              style={{ animationDelay: `${i * 0.6}s` }}
+            />
+            <text className={s.label} x={x + width / 2} y={y + 70} textAnchor="middle">
+              {label}
+            </text>
+            {i < PATROL_STEPS.length - 1 ? (
+              <>
+                <line
+                  className={s.hopLine}
+                  x1={x + width}
+                  y1={y + 48}
+                  x2={x + width + gap}
+                  y2={y + 48}
+                />
+                <rect
+                  className={s.packet}
+                  x={x + width}
+                  y={y + 42}
+                  width="12"
+                  height="12"
+                  rx="3"
+                  style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+                />
+              </>
+            ) : null}
+          </g>
+        )
+      })}
+
+      {/* An uncertain observation leaves the chain and stops at review: the
+          dashed path ends on a hard stop bar under the review stage. */}
+      <path
+        className={s.loop}
+        d="M 398 158 L 398 204 L 546 204"
+        fill="none"
+        style={{ animationDelay: '1.9s' }}
+      />
+      <line className={s.captureStem} x1="552" y1="188" x2="552" y2="220" />
+      <text className={s.label} x="16" y="252">
+        Uncertain observations stop for review
+      </text>
+    </>
+  )
+}
+
+/** The same cycle read down the page, uncertainty held on the margin. */
+function PatrolPortrait() {
+  const rowH = 74
+  const gap = 34
+  const top = 16
+  const y = (i: number) => top + i * (rowH + gap)
+  const rows = ['Move', 'Observe', 'Associate', 'Operator review'] as const
+
+  return (
+    <>
+      {rows.map((label, i) => (
+        <g key={label}>
+          <rect className={s.node} x="16" y={y(i)} width="328" height={rowH} rx="12" />
+          <circle
+            className={s.nodeDot}
+            cx="46"
+            cy={y(i) + rowH / 2}
+            r="7"
+            style={{ animationDelay: `${i * 0.6}s` }}
+          />
+          <text className={s.label} x="74" y={y(i) + rowH / 2 + 6}>
+            {label}
+          </text>
+          {i < rows.length - 1 ? (
+            <>
+              <line
+                className={s.hopLine}
+                x1="46"
+                y1={y(i) + rowH}
+                x2="46"
+                y2={y(i) + rowH + gap}
+              />
+              <rect
+                className={s.packetV}
+                x="40"
+                y={y(i) + rowH}
+                width="12"
+                height="12"
+                rx="3"
+                style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+              />
+            </>
+          ) : null}
+        </g>
+      ))}
+
+      {/* The uncertain path leaves at "Associate" and stops on the bar at the
+          review row rather than passing it. */}
+      <path
+        className={s.loop}
+        d={`M 344 ${y(2) + 37} L 354 ${y(2) + 37} L 354 ${y(3) - 6}`}
+        fill="none"
+        style={{ animationDelay: '1.9s' }}
+      />
+      <line className={s.captureStem} x1="340" y1={y(3) - 6} x2="360" y2={y(3) - 6} />
+      <text className={s.label} x="16" y="478">
+        Uncertainty stops at review
+      </text>
+    </>
+  )
+}
+
+/* ------------------------------------------------------------------
+   Bench loop: configure, exercise, measure, review, iterate. The same
+   platform runs education and repeatable subsystem tests.
+   ------------------------------------------------------------------ */
+
+const BENCH_STEPS = ['Configure', 'Exercise', 'Measure', 'Review'] as const
+
+function BenchLoop() {
+  const width = 124
+  const gap = 36
+  const startX = 16
+  const y = 62
+
+  return (
+    <>
+      {BENCH_STEPS.map((label, i) => {
+        const x = startX + i * (width + gap)
+        return (
+          <g key={label}>
+            <rect className={s.node} x={x} y={y} width={width} height={96} rx="12" />
+            <circle
+              className={s.nodeDot}
+              cx={x + width / 2}
+              cy={y + 34}
+              r="6"
+              style={{ animationDelay: `${i * 0.6}s` }}
+            />
+            <text className={s.label} x={x + width / 2} y={y + 70} textAnchor="middle">
+              {label}
+            </text>
+            {i < BENCH_STEPS.length - 1 ? (
+              <>
+                <line
+                  className={s.hopLine}
+                  x1={x + width}
+                  y1={y + 48}
+                  x2={x + width + gap}
+                  y2={y + 48}
+                />
+                <rect
+                  className={s.packet}
+                  x={x + width}
+                  y={y + 42}
+                  width="12"
+                  height="12"
+                  rx="3"
+                  style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+                />
+              </>
+            ) : null}
+          </g>
+        )
+      })}
+
+      {/* Review feeds the next configuration: the iteration loop, dashed
+          because it is a decision rather than a data hop. */}
+      <path
+        className={s.loop}
+        d="M 558 158 C 558 232 78 232 78 170"
+        fill="none"
+        style={{ animationDelay: '1.9s' }}
+      />
+      <path
+        className={s.head}
+        d="M 73 179 L 78 170 L 83 179"
+        pathLength={1}
+        data-draw=""
+        style={{ animationDelay: '2.2s' }}
+      />
+      <text className={s.label} x="320" y="266" textAnchor="middle">
+        Iterate on the same platform
+      </text>
+    </>
+  )
+}
+
+/** The same cycle read down the page, iterating up the right margin. */
+function BenchLoopPortrait() {
+  const rowH = 74
+  const gap = 34
+  const top = 16
+  const y = (i: number) => top + i * (rowH + gap)
+  const rows = [
+    'Configure module',
+    'Exercise subsystem',
+    'Measure',
+    'Review',
+  ] as const
+
+  return (
+    <>
+      {rows.map((label, i) => (
+        <g key={label}>
+          <rect className={s.node} x="16" y={y(i)} width="328" height={rowH} rx="12" />
+          <circle
+            className={s.nodeDot}
+            cx="46"
+            cy={y(i) + rowH / 2}
+            r="7"
+            style={{ animationDelay: `${i * 0.6}s` }}
+          />
+          <text className={s.label} x="74" y={y(i) + rowH / 2 + 6}>
+            {label}
+          </text>
+          {i < rows.length - 1 ? (
+            <>
+              <line
+                className={s.hopLine}
+                x1="46"
+                y1={y(i) + rowH}
+                x2="46"
+                y2={y(i) + rowH + gap}
+              />
+              <rect
+                className={s.packetV}
+                x="40"
+                y={y(i) + rowH}
+                width="12"
+                height="12"
+                rx="3"
+                style={{ animationDelay: `${i * 0.6}s`, '--hop': `${gap - 12}px` } as never}
+              />
+            </>
+          ) : null}
+        </g>
+      ))}
+
+      <path
+        className={s.loop}
+        d={`M 344 ${y(3) + rowH / 2} L 354 ${y(3) + rowH / 2} L 354 ${y(0) + rowH / 2} L 344 ${y(0) + rowH / 2}`}
+        fill="none"
+        style={{ animationDelay: '2.1s' }}
+      />
+      <text className={s.label} x="16" y="462">
+        Iterate
       </text>
     </>
   )
