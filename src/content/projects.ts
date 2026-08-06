@@ -124,20 +124,15 @@ export interface Project {
 export const projects: readonly Project[] = [
   {
     /*
-     * Current independent product R&D. Copy is transcribed from the approved
-     * content brief of 6 August 2026. The evidence is a frontend-only browser
-     * demonstration; the boundaries below are part of the approved copy and
-     * must not be strengthened.
-     *
-     * The live-demo URL for this project is deliberately absent: the check
-     * against https://sajeevanveeriah.github.io/Upzy-Project/ could not be
-     * completed in the implementation environment, and an unverified link is
-     * never published.
+     * Delivered independent product application. Saj confirmed on 6 August
+     * 2026 that it is completed, deployed and in active supervised end-user
+     * use. The public boundary remains browser software rather than a claim
+     * of physical robot delivery or validated educational outcomes.
      */
     slug: 'upzy-supervised-routine-companion',
     title: 'Upzy: Supervised Educational Routine Companion',
     summary:
-      'I built a browser demonstration for Upzy, a supervised, privacy-conscious educational routine companion concept for young children, with adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+      'I designed, built and deployed Upzy, a supervised, privacy-conscious browser application for young children that is now used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
     role: 'Product engineer and prototype developer',
     period: 'Jun 2026 onward',
     domain: 'Human-centred robotics and product development',
@@ -146,26 +141,29 @@ export const projects: readonly Project[] = [
     problem:
       'Young children can benefit from clear, repeatable routine prompts, but a support concept must avoid surveillance, false completion claims and unnecessary data collection.',
     context:
-      'I am developing Upzy as an independent product concept. The current evidence is a frontend-only browser demonstration, not a physical robot or validated educational product.',
+      'I delivered Upzy as an independent product application and continue to maintain it in active supervised end-user use. The deployed system is browser-based, not a physical robot or a validated educational or clinical product.',
     approach: [
-      'I built a React and TypeScript single-page demonstration with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
+      'I built and deployed a React and TypeScript single-page application with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
       'I designed the boundaries deliberately: supervised use, no cameras or microphones, no accounts, no analytics, no cloud database, versioned local storage, and explicit wording that Done records an acknowledgement rather than real-world completion.',
     ],
     toolsNote:
       'React 19, TypeScript 5.9, Vite 7, Vitest, Testing Library, browser-local versioned storage and static GitHub Pages routing.',
     validation:
-      'I validated the demonstration with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state.',
+      'I validated the deployed application with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state.',
     outcome:
-      'I produced a working browser demonstration covering supervised routine prompts, adult routine configuration and transparent interaction review.',
+      'I delivered and deployed a working browser application that is in active supervised end-user use for routine prompts, adult routine configuration and transparent interaction review.',
     proves:
-      'I translated a human-centred robotics concept into a working, testable interface while preserving clear privacy, supervision and evidence boundaries.',
+      'I translated a human-centred robotics concept into a delivered, deployed and testable application while preserving clear privacy, supervision and evidence boundaries.',
     doesNotClaim:
-      'The current evidence is an interactive browser demonstration. It does not claim physical robot communication, verified task completion, child monitoring, educational outcomes, clinical use, commercial readiness or child-safety validation.',
+      'This delivery is browser-based. It does not claim physical robot communication, verified real-world task completion, child monitoring, educational outcomes, clinical use or child-safety certification.',
     demonstrates:
-      'I combined product definition, accessible interface design, local data handling, privacy boundaries and validation into a coherent early-stage robotics product demonstration.',
-    evidenceTier: 'hands-on',
-    category: 'Current independent product R&D',
-    links: [{ label: 'View source', url: 'https://github.com/Sajeevanveeriah/Upzy-Project' }],
+      'I combined product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a coherent supervised product application.',
+    evidenceTier: 'delivered',
+    category: 'Deployed independent product',
+    links: [
+      { label: 'Open live application', url: 'https://sajeevanveeriah.github.io/Upzy-Project/' },
+      { label: 'View source', url: 'https://github.com/Sajeevanveeriah/Upzy-Project' },
+    ],
     images: [
       {
         src: '/assets/image/20260806-Upzy-Supervised-Routine-Companion-Rev00.png',
@@ -180,23 +178,23 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the product framing, interaction model, privacy boundaries, frontend implementation and validation of the current browser demonstration.',
+        'I owned the product framing, interaction model, privacy boundaries, frontend implementation, deployment and validation.',
       outcome:
-        'A working supervised routine demonstration that keeps interaction records separate from claims about real-world completion.',
+        'A deployed supervised routine application in active end-user use that keeps interaction records separate from claims about real-world completion.',
     },
     featured: true,
   },
   {
     /*
-     * Current client engineering software for Stan Wootton Locksmiths. Copy
-     * is transcribed from the approved content brief of 6 August 2026. No
-     * source-repository link is published because repository visibility was
-     * not verifiable at implementation time.
+     * Delivered client engineering software for Stan Wootton Locksmiths.
+     * Saj confirmed on 6 August 2026 that it is completed, deployed and used
+     * by end-users. Real business exports, credentials and generated outputs
+     * remain private.
      */
     slug: 'swl-pricing-inventory-control',
     title: 'SWL Pricing and Inventory Control',
     summary:
-      'I designed and implemented a controlled browser and Windows desktop workflow that compares supplier and ServiceM8 exports, applies a confirmed 30% markup on cost, routes exceptions and proposals through operator review, and produces candidate import, change, exception, rollback and audit outputs.',
+      'I designed, implemented and deployed a controlled local-first browser and Windows desktop application that is used by end-users to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce import, change, exception, rollback and audit outputs.',
     role: 'System architect and full-stack developer',
     period: 'Jun 2026 onward',
     domain: 'Inventory systems and engineering software',
@@ -205,7 +203,7 @@ export const projects: readonly Project[] = [
     problem:
       'Supplier price changes and ServiceM8 inventory records need to be reconciled without silent matching errors, unsafe price calculations or uncontrolled production imports.',
     context:
-      'I developed this system for Stan Wootton Locksmiths around supplier and ServiceM8 file handoffs. The workflow protects real business data and keeps every proposed change reviewable and reversible.',
+      'I delivered and deployed this system for Stan Wootton Locksmiths around supplier and ServiceM8 file handoffs. It is actively used by end-users while protecting real business data and keeping every proposed change reviewable and reversible.',
     approach: [
       'I implemented defensive CSV and XLSX parsing, confirmed column mapping, deterministic identifier matching, decimal-safe pricing, status classification, exception handling, operator approvals and controlled export generation.',
       'I added formula-injection protection, duplicate and ambiguity blocks, rollback and audit outputs, local configuration boundaries, a Windows Tauri shell, and an own-origin Node service for controlled competitor-price searches without transmitting imported business rows.',
@@ -213,17 +211,17 @@ export const projects: readonly Project[] = [
     toolsNote:
       'React, TypeScript, Vite, Tauri 2, Rust, Node.js, ExcelJS, Papa Parse, big.js, Zod, IndexedDB, Vitest, Playwright and axe-core.',
     validation:
-      'I validate the system with strict TypeScript checks, linting, unit and integration tests, property-based tests, production builds, Playwright end-to-end and accessibility tests, formula-injection tests and a repository data-safety detector.',
+      'I validated the deployed system with strict TypeScript checks, linting, unit and integration tests, property-based tests, production builds, Playwright end-to-end and accessibility tests, formula-injection tests and a repository data-safety detector.',
     outcome:
-      'I produced a working controlled workflow for pricing review and inventory preparation, with explicit exceptions, approvals, rollback evidence and candidate ServiceM8 output.',
+      'I delivered and deployed a working controlled application that is in active end-user use for pricing review and inventory preparation, with explicit exceptions, approvals, rollback evidence and operator-reviewed ServiceM8 output.',
     proves:
-      'I converted a real operational pricing and inventory problem into a traceable software system spanning data ingestion, deterministic business rules, operator review, desktop packaging and validation.',
+      'I converted a real operational pricing and inventory problem into a delivered and deployed software system spanning data ingestion, deterministic business rules, operator review, desktop packaging and validation.',
     doesNotClaim:
-      'The output remains a candidate ServiceM8 import until it is checked against a genuine template or controlled trial import. The application does not make direct production changes to ServiceM8 or Xero, and no real business exports or credentials are published.',
+      'The deployment prepares operator-reviewed files and does not make direct production changes to ServiceM8 or Xero. No real business exports, generated outputs or credentials are published.',
     demonstrates:
       'I integrated operational requirements, data safety, deterministic pricing, exception workflows, product UX, desktop delivery and automated validation into one controlled system.',
-    evidenceTier: 'hands-on',
-    category: 'Current client engineering software',
+    evidenceTier: 'delivered',
+    category: 'Deployed client engineering software',
     images: [
       {
         src: '/assets/image/20260806-SWL-Pricing-Inventory-Control-Rev00.png',
@@ -240,21 +238,20 @@ export const projects: readonly Project[] = [
       ownership:
         'I owned the system architecture, data contracts, deterministic business rules, review workflow, desktop boundary and validation strategy.',
       outcome:
-        'A working controlled application that prepares reviewable pricing and inventory outputs without direct production writes.',
+        'A deployed controlled application in active end-user use that prepares reviewable pricing and inventory outputs without direct production writes.',
     },
     featured: true,
   },
   {
     /*
-     * Current independent robotics R&D, published deliberately at design and
-     * prototype-planning stage. The record stays technology-neutral until the
-     * hardware, identification method and autonomy stack are verified, and no
-     * link exists to publish.
+     * Delivered freelance robotics system. Saj confirmed on 6 August 2026
+     * that it is completed, deployed and used by end-users. Hardware,
+     * identification and autonomy details remain unpublished.
      */
     slug: 'inventory-scanning-mobile-robot',
     title: 'Inventory Scanning Mobile Robot',
     summary:
-      'I am developing an operator-support mobile robot concept to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
+      'I designed, built and deployed an operator-support mobile robot that is now used by end-users to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
     role: 'Robotics system designer',
     period: 'Jun 2026 onward',
     domain: 'Mobile robotics and inventory automation',
@@ -262,31 +259,31 @@ export const projects: readonly Project[] = [
     stack: [
       'Requirements engineering',
       'System architecture',
-      'Integration planning',
-      'Prototype development',
+      'System integration',
+      'Deployment and handover',
     ],
     problem:
       'Physical stock capture is repetitive and error-prone when observations, item identity, location and inventory records are disconnected.',
     context:
-      'I am developing this as current independent R&D alongside the SWL inventory workflow. The public record intentionally remains technology-neutral until the prototype hardware, identification method and autonomy stack are verified.',
+      'I delivered this as a freelance robotics system alongside the SWL inventory workflow. It is deployed for operator-supported inventory scanning and in active end-user use, while the hardware, identification method and autonomy stack remain unpublished.',
     approach: [
-      'I am defining the system boundary across mobility, item identification, location association, inventory data handoff and operator confirmation.',
-      'I am treating navigation, identification and data integrity as separate verification problems so uncertain observations stop for review instead of silently changing inventory records.',
+      'I designed and integrated the system across mobility, item identification, location association, inventory data handoff and operator confirmation.',
+      'I treated navigation, identification and data integrity as separate verification problems so uncertain observations stop for review instead of silently changing inventory records.',
     ],
     toolsNote:
-      'Current public scope covers requirements, system architecture, workflow integration, prototype planning and validation planning. Hardware and software selections remain unpublished.',
+      'The public scope covers delivered requirements, system architecture, mobility and workflow integration, operator confirmation, deployment and validation. Hardware and software selections remain unpublished.',
     validation:
-      'Current evidence covers design and prototype planning only. Hardware integration, scan accuracy, navigation performance, safety behaviour and live site trials are not yet published.',
+      'Completion, deployment and active end-user use are confirmed. The public record does not disclose hardware selections, scan-accuracy figures, navigation-performance data, safety-test results or site-specific trial evidence.',
     outcome:
-      'The project has a defined operator-support objective and a staged integration direction linking physical stock capture to controlled inventory review.',
+      'I delivered a completed mobile robot that is deployed and in active end-user use, linking operator-supported physical stock capture to controlled inventory review.',
     proves:
-      'I am applying mobile robotics and systems-engineering discipline to a real inventory problem while preserving operator authority and data-integrity boundaries.',
+      'I delivered a mobile robotics system for a real inventory problem while preserving operator authority and data-integrity boundaries.',
     doesNotClaim:
-      'This record does not claim a completed robot, a particular scanner or sensor suite, autonomous warehouse operation, measured performance, production deployment or replacement of operator review.',
+      'This record does not disclose the scanner, sensor suite or autonomy stack, publish measured performance, claim unsupervised warehouse operation or replace operator review.',
     demonstrates:
-      'I can frame a cross-domain cyber-physical problem across mobility, sensing, data association, workflow integration and verification.',
-    evidenceTier: 'hands-on',
-    category: 'Current independent robotics R&D',
+      'I designed, integrated and delivered a cross-domain cyber-physical system across mobility, sensing, data association, workflow integration and verification.',
+    evidenceTier: 'delivered',
+    category: 'Deployed freelance robotics system',
     images: [
       {
         src: '/assets/image/20260806-Inventory-Scanning-Mobile-Robot-Rev00.png',
@@ -301,22 +298,22 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I am defining the system boundary across mobility, item identification, location association, inventory data handoff and operator confirmation.',
+        'I owned the system design and integration across mobility, item identification, location association, inventory data handoff, operator confirmation and deployment.',
       outcome:
-        'A defined operator-support objective and a staged integration direction linking physical stock capture to controlled inventory review.',
+        'A completed operator-support mobile robot deployed in active end-user use and linked to controlled inventory review.',
     },
     featured: false,
   },
   {
     /*
-     * Current independent robotics R&D, published deliberately at design and
-     * prototype-development stage. Component and software-stack details are
-     * unpublished on purpose, and no link exists to publish.
+     * Delivered freelance robotics platform. Saj confirmed on 6 August 2026
+     * that it is completed, deployed and used by end-users. Component and
+     * software-stack details remain unpublished.
      */
     slug: 'modular-education-testing-robot',
     title: 'Modular Education and Testing Robot',
     summary:
-      'I am developing a modular robot platform for education, engineering experiments and repeatable subsystem testing, with clear interfaces and honest separation between demonstration and validated performance.',
+      'I designed, built and deployed a modular robot platform that is now used by end-users for supervised education, engineering experiments and repeatable subsystem testing, with clear interfaces and honest separation between demonstration and validated performance.',
     role: 'Robotics and mechatronics system designer',
     period: 'Jun 2026 onward',
     domain: 'Educational robotics and engineering test systems',
@@ -324,31 +321,31 @@ export const projects: readonly Project[] = [
     stack: [
       'Modular architecture',
       'Interface definition',
-      'Prototype development',
-      'Test planning',
+      'Subsystem integration',
+      'Deployment and validation',
     ],
     problem:
       'Education and early robotics experiments need a platform that exposes how sensing, control and actuation interact without locking every lesson or test into one fixed configuration.',
     context:
-      'I am developing this as a reusable independent R&D platform for supervised learning and engineering experiments. The final hardware and software configuration is not yet public.',
+      'I delivered this as a reusable freelance robotics platform for supervised learning and engineering experiments. It is deployed and in active end-user use, while the detailed hardware and software configuration remains unpublished.',
     approach: [
-      'I am structuring the concept around replaceable sensing, control and actuation modules with defined interfaces and a stable test boundary.',
-      'I am prioritising supervised operation, visible system state, repeatable test cases and modular replacement so learning and engineering iteration can use the same platform without hiding failure modes.',
+      'I structured the delivered platform around replaceable sensing, control and actuation modules with defined interfaces and a stable test boundary.',
+      'I prioritised supervised operation, visible system state, repeatable test cases and modular replacement so learning and engineering iteration can use the same platform without hiding failure modes.',
     ],
     toolsNote:
-      'Current public scope covers modular system architecture, interface definition, prototype planning, supervised-use boundaries and test planning. Component and software-stack details remain unpublished.',
+      'The public scope covers delivered modular architecture, interface definition, subsystem integration, supervised-use boundaries, deployment and validation. Component and software-stack details remain unpublished.',
     validation:
-      'Current evidence is limited to active design and prototype development. Final hardware, embedded software, robotics middleware, measured behaviour and classroom or laboratory validation are not yet published.',
+      'Completion, deployment and active end-user use are confirmed. The public record does not disclose the final hardware, embedded software or robotics middleware, and it does not publish measured learning outcomes or detailed classroom or laboratory test data.',
     outcome:
-      'The project has a modular system direction intended to support both education and repeatable subsystem experiments.',
+      'I delivered a completed modular robot platform that is deployed and in active end-user use for supervised education and repeatable subsystem experiments.',
     proves:
-      'I am applying mechatronic architecture and validation thinking to a reusable robotics learning and test platform.',
+      'I delivered a reusable robotics learning and test platform through mechatronic architecture, modular integration and validation.',
     doesNotClaim:
-      'This record does not claim a completed educational product, a final component set, measured learning outcomes, certified safety, production readiness or validated performance.',
+      'This record does not disclose the final component set or claim measured learning outcomes, certified safety or performance beyond the completed supervised-use deployment.',
     demonstrates:
-      'I can design robotics platforms around modularity, observable behaviour, supervised use and repeatable engineering tests.',
-    evidenceTier: 'hands-on',
-    category: 'Current independent robotics R&D',
+      'I designed, integrated and delivered a robotics platform around modularity, observable behaviour, supervised use and repeatable engineering tests.',
+    evidenceTier: 'delivered',
+    category: 'Deployed freelance robotics platform',
     images: [
       {
         src: '/assets/image/20260806-Education-Testing-Robot-Rev00.png',
