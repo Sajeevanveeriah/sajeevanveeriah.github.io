@@ -13,7 +13,7 @@ import {
   counts,
   getPillarById,
   getDomain,
-  ecosystemReviewedAt,
+  ecosystemUpdatedAt,
   KIND_LABEL,
   KIND_ORDER,
   LIFECYCLE_LABEL,
@@ -126,7 +126,7 @@ export default function EcosystemPage() {
               and <Link href="/work/" className={s.link}>Work</Link>.
             </p>
             <p className={e.reviewed}>
-              Catalogue scope reviewed {ecosystemReviewedAt}.
+              Catalogue updated {ecosystemUpdatedAt}; individual source records retain their own review dates.
             </p>
           </Reveal>
 

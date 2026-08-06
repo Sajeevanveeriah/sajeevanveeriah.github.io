@@ -10,7 +10,7 @@ import {
   entitiesInDomain,
   entitiesInPillar,
   getSource,
-  ecosystemReviewedAt,
+  ecosystemUpdatedAt,
   KIND_LABEL,
   LIFECYCLE_LABEL,
   type EcosystemEntity,
@@ -72,8 +72,8 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
                 </p>
               </div>
               <div className={s.railBlock}>
-                <p className="label">Reviewed</p>
-                <p className={e.noticeBody}>{ecosystemReviewedAt}</p>
+                <p className="label">Updated</p>
+                <p className={e.noticeBody}>{ecosystemUpdatedAt}</p>
               </div>
             </>
           }
