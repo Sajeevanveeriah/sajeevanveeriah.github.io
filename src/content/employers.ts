@@ -161,12 +161,12 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'I design, build and deploy independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
+      'I design, build and deliver independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation and practical handover.',
     domains: ['Robotics and autonomy', 'Product R&D', 'Engineering software', 'Inventory systems'],
     toolsLabel: 'Representative tools from delivered work',
     tools: ['React', 'TypeScript', 'Vite', 'Tauri 2', 'Node.js', 'Vitest', 'Playwright'],
     relevance:
-      'Current independent engineering delivery across robotics, product development, engineering software, data integrity, deployment and validation.',
+      'Current independent engineering delivery across robotics, product development, engineering software, data integrity and validation.',
     transferable:
       'This work demonstrates direct ownership of multidisciplinary systems from operating problem and architecture through implementation, review and evidence.',
     group: 'recent',
@@ -177,7 +177,7 @@ export const employers: readonly Employer[] = [
       'modular-education-testing-robot',
     ],
     closing:
-      'These projects show completed and deployed engineering systems in active end-user use while keeping validation, confidentiality and operating boundaries explicit.',
+      'These projects are completed and in active end-user use, with validation, confidentiality and operating boundaries stated explicitly.',
     todoConfirm: [],
   },
   {
