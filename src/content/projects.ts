@@ -124,44 +124,44 @@ export interface Project {
 export const projects: readonly Project[] = [
   {
     /*
-     * Completed independent product engineering work. Saj confirmed on
-     * 6 August 2026 that the browser application is deployed and used by its
-     * end-users. The public record keeps the verified browser boundary clear:
-     * it does not represent a physical robot or claim educational outcomes.
+     * Completed independent robotics and product engineering work. Saj
+     * confirmed on 6 August 2026 that the physical robot and its supporting
+     * browser application are deployed and used by end-users. The public record
+     * keeps undisclosed implementation details and outcome claims bounded.
      *
      * The live GitHub Pages deployment returned HTTP 200 on 6 August 2026.
      */
     slug: 'upzy-supervised-routine-companion',
-    title: 'Upzy: Supervised Educational Routine Companion',
+    title: 'Upzy: Supervised Educational Routine Companion Robot',
     summary:
-      'I completed and deployed Upzy, a supervised, privacy-conscious educational routine companion browser application for young children, now used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
-    role: 'Product engineer and application developer',
+      'I completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot for young children, with a supporting browser application used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+    role: 'Robotics, mechatronics and application developer',
     period: 'Jun 2026 onward',
     domain: 'Human-centred robotics and product development',
-    disciplines: ['Robotics', 'Software', 'Validation'],
-    stack: ['React 19', 'TypeScript', 'Vite', 'Vitest', 'Browser localStorage'],
+    disciplines: ['Robotics', 'Mechatronics', 'Embedded', 'Software', 'Validation'],
+    stack: ['Physical robot platform', 'Mechatronic integration', 'React 19', 'TypeScript', 'Vite', 'Vitest', 'Browser localStorage'],
     problem:
       'Young children can benefit from clear, repeatable routine prompts, but a support concept must avoid surveillance, false completion claims and unnecessary data collection.',
     context:
-      'I completed Upzy as an independent product engineering project and deployed the browser application through GitHub Pages. It is now used by end-users within the supervised routine workflow. The deployed scope is the browser application, not a physical robot or a claim of validated educational outcomes.',
+      'I completed Upzy as an independent robotics and product engineering project and deployed the physical robot with its supporting browser application. It is now used by end-users within the supervised routine workflow. The public record does not claim measured educational outcomes or disclose implementation details beyond the supporting application.',
     approach: [
-      'I built a React and TypeScript single-page demonstration with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
+      'I designed and built the physical routine-companion robot and its supporting React and TypeScript single-page application, with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
       'I designed the boundaries deliberately: supervised use, no cameras or microphones, no accounts, no analytics, no cloud database, versioned local storage, and explicit wording that Done records an acknowledgement rather than real-world completion.',
     ],
     toolsNote:
-      'React 19, TypeScript 5.9, Vite 7, Vitest, Testing Library, browser-local versioned storage and static GitHub Pages routing.',
+      'Physical robot and mechatronic integration, with public software details covering React 19, TypeScript 5.9, Vite 7, Vitest, Testing Library, browser-local versioned storage and static GitHub Pages routing. Detailed hardware and embedded implementation remain unpublished.',
     validation:
-      'I validated the application with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state, and I verified that the deployed GitHub Pages endpoint responds successfully.',
+      'I validated the supporting application with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state, and I verified that the deployed GitHub Pages endpoint responds successfully. Deployment and active end-user use provide operational evidence for the physical robot and integrated workflow, while detailed hardware test evidence remains unpublished.',
     outcome:
-      'I delivered and deployed a working browser application now used by end-users for supervised routine prompts, adult routine configuration and transparent interaction review.',
+      'I delivered and deployed a working physical routine-companion robot with a supporting browser application, now used by end-users for supervised routine prompts, adult routine configuration and transparent interaction review.',
     proves:
-      'I translated a human-centred robotics concept into a completed, deployed and actively used interface while preserving clear privacy, supervision and evidence boundaries.',
+      'I translated a human-centred robotics concept into a completed, deployed and actively used physical robot and supporting interface while preserving clear privacy, supervision and evidence boundaries.',
     doesNotClaim:
-      'The deployed scope is an interactive browser application. It does not claim physical robot communication, independently verified task completion, child monitoring, measured educational or clinical outcomes, commercial product certification or child-safety certification.',
+      'The public record does not disclose detailed hardware, electronics, embedded software or connectivity architecture. It does not claim independently verified task completion, child monitoring, measured educational or clinical outcomes, commercial product certification or child-safety certification.',
     demonstrates:
-      'I combined product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a completed robotics product application.',
+      'I combined physical robotics, mechatronics, product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a completed routine-companion system.',
     evidenceTier: 'delivered',
-    category: 'Deployed independent product engineering',
+    category: 'Deployed independent robotics and product engineering',
     links: [
       { label: 'Open deployed app', url: 'https://sajeevanveeriah.github.io/Upzy-Project/' },
       { label: 'View source', url: 'https://github.com/Sajeevanveeriah/Upzy-Project' },
@@ -180,9 +180,9 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the product framing, interaction model, privacy boundaries, implementation, deployment and validation of the completed browser application.',
+        'I owned the physical robot and product framing, mechatronic system, interaction model, privacy boundaries, supporting application, deployment and validation.',
       outcome:
-        'A deployed application in active end-user use that keeps interaction records separate from claims about real-world completion.',
+        'A completed physical robot and supporting application in active end-user use that keep interaction records separate from claims about real-world completion.',
     },
     featured: true,
   },
