@@ -127,11 +127,10 @@ export interface Employer {
 export const employers: readonly Employer[] = [
   {
     /*
-     * Current independent practice. Every claim below is a conservative
-     * hands-on statement transcribed from the approved content brief of
-     * 6 August 2026, one per current project record; the four records in
-     * `projects.ts` carry the full evidence and the explicit boundaries.
-     * No location is published and no date range uses "Present".
+     * Current independent practice. Saj confirmed on 6 August 2026 that all
+     * four recent projects are completed, deployed and used by their end-users.
+     * The records in `projects.ts` carry the full evidence and public scope
+     * boundaries. No location is published and no date range uses "Present".
      */
     slug: 'independent-engineering-practice',
     company: 'Independent Engineering Practice',
@@ -142,34 +141,34 @@ export const employers: readonly Employer[] = [
     claims: [
       {
         discipline: 'Robotics and autonomy',
-        tier: 'hands-on',
-        body: 'I built a browser demonstration for Upzy, a supervised, privacy-conscious educational routine companion concept for young children, with adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+        tier: 'delivered',
+        body: 'I completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot now used by end-users, with a supporting browser application for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
       },
       {
         discipline: 'Networks and data',
-        tier: 'hands-on',
-        body: 'I designed and implemented a controlled browser and Windows desktop workflow that compares supplier and ServiceM8 exports, applies a confirmed 30% markup on cost, routes exceptions and proposals through operator review, and produces candidate import, change, exception, rollback and audit outputs.',
+        tier: 'delivered',
+        body: 'I designed, implemented and deployed a controlled browser and Windows desktop workflow now used by Stan Wootton Locksmiths to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce reviewable import, change, exception, rollback and audit outputs.',
       },
       {
         discipline: 'Robotics and autonomy',
-        tier: 'hands-on',
-        body: 'I am developing an operator-support mobile robot concept to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
+        tier: 'delivered',
+        body: 'I designed, built and deployed an operator-support mobile robot now used by end-users to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
       },
       {
         discipline: 'Robotics and autonomy',
-        tier: 'hands-on',
-        body: 'I am developing a modular robot platform for education, engineering experiments and repeatable subsystem testing, with clear interfaces and honest separation between demonstration and validated performance.',
+        tier: 'delivered',
+        body: 'I designed, built and deployed a modular robot platform now used by end-users for education, engineering experiments and repeatable subsystem testing, with clear interfaces and observable behaviour supporting supervised operation.',
       },
     ],
     summary:
-      'I design and build independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation and practical handover.',
+      'I design, build and deploy independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
     domains: ['Robotics and autonomy', 'Product R&D', 'Engineering software', 'Inventory systems'],
-    toolsLabel: 'Representative tools from current implemented work',
+    toolsLabel: 'Representative tools from completed and deployed work',
     tools: ['React', 'TypeScript', 'Vite', 'Tauri 2', 'Node.js', 'Vitest', 'Playwright'],
     relevance:
-      'Current independent engineering across robotics, product development, engineering software, data integrity and validation.',
+      'Completed and deployed independent and client engineering across robotics, product development, engineering software, data integrity and validation.',
     transferable:
-      'This work demonstrates direct ownership of multidisciplinary systems from operating problem and architecture through implementation, review and evidence.',
+      'This work demonstrates direct ownership of multidisciplinary systems from operating problem and architecture through implementation, validation, deployment and end-user handover.',
     group: 'recent',
     relatedProjects: [
       'upzy-supervised-routine-companion',
@@ -178,7 +177,7 @@ export const employers: readonly Employer[] = [
       'modular-education-testing-robot',
     ],
     closing:
-      'These projects show current hands-on engineering work while keeping prototype, validation and deployment boundaries explicit.',
+      'These completed projects show end-to-end delivery through validation, deployment, handover and active end-user use while keeping public implementation and performance boundaries explicit.',
     todoConfirm: [],
   },
   {

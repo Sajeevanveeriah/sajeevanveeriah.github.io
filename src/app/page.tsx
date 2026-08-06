@@ -65,8 +65,8 @@ function PersonSchema() {
 
 /**
  * Four selected records, chosen to span the disciplines rather than to
- * repeat one: current mobile robotics R&D, current client engineering
- * software, current supervised product R&D and applied AI/ML.
+ * repeat one: deployed mobile robotics, deployed client engineering
+ * software, deployed supervised product engineering and applied AI/ML.
  *
  * The three current independent records took the slots the rover, the
  * telemetry platform and the smart-factory record held. All three previous
@@ -218,8 +218,8 @@ export default function HomePage() {
               <p className="label label-accent">Selected work</p>
               <h2 id="work-title">Systems I built, integrated and validated.</h2>
               <p className="lede">
-                Four records that span mobile robotics R&amp;D, client inventory and pricing
-                software, supervised product R&amp;D and applied AI/ML. Each one states the problem,
+                Four records that span deployed mobile robotics, client inventory and pricing
+                software, deployed supervised product engineering and applied AI/ML. Each one states the problem,
                 what I personally owned and what the evidence supports.
               </p>
             </Reveal>
