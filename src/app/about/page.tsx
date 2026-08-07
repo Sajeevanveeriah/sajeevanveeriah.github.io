@@ -9,8 +9,9 @@ import a from './about.module.css'
 
 export const metadata: Metadata = {
   title: 'About',
+  // Recast agentless per the owner's 7 August 2026 direction.
   description:
-    "Sajeevan's engineering record, qualifications, professional membership, community work and interests beyond engineering.",
+    'An engineering record, qualifications, professional membership, community work and interests beyond engineering.',
   alternates: { canonical: '/about/' },
   openGraph: { title: 'About', url: '/about/' },
 }
@@ -25,7 +26,7 @@ export default function AboutPage() {
           <PageHeader
           signature="spine"
             kicker="About"
-            title="Sajeevan built his engineering practice on six years of production, quality and manufacturing experience."
+            title="An engineering practice built on six years of production, quality and manufacturing experience."
             lede={narrative}
           />
 
@@ -50,8 +51,8 @@ export default function AboutPage() {
               <h2 id="creds-title">Where the formal record sits.</h2>
             </div>
             <p className="lede">
-              Sajeevan&apos;s degrees, professional membership, short courses and the engineering
-              communities he takes part in.
+              Degrees, professional membership, short courses and engineering community
+              involvement.
             </p>
           </Reveal>
 

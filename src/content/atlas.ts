@@ -5,9 +5,9 @@ import type { EvidenceTier } from './tiers'
  *
  * This is the deepest written content on the site. Originally transcribed
  * from the previous index.html (lines 611 to 897); the prose was rewritten
- * in Phase 0 to first-person active voice, then recast to professional
- * third-person voice on 7 August 2026 per the owner's direction, without
- * changing any claim.
+ * in Phase 0 to first-person active voice, then recast on 7 August 2026 per
+ * the owner's direction to generic, agentless capability statements (no
+ * named or pronoun subject), without changing any claim.
  *
  * evidenceTier is ported from the explicit data-tier attribute Saj set on
  * each entry. `cluster` is the old data-cluster attribute and `contexts` the
@@ -70,7 +70,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'mechatronics-and-systems-engineering',
     name: 'Mechatronics and Systems Engineering',
     summary:
-      'Mechatronics is Sajeevan\'s home discipline: he integrates mechanical, electrical, embedded, control and software layers into one working system, then proves it with structured test and documentation.',
+      'Mechatronics is the home discipline: integrating mechanical, electrical, embedded, control and software layers into one working system, then proving it with structured test and documentation.',
     cluster: 'systems',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'delivered',
@@ -91,9 +91,9 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ROS 2 rover and clinical capstone both required whole-stack integration from sensing to validated behaviour.',
     experienceProof:
-      'Sajeevan graduated with a Bachelor of Mechatronics Engineering (Honours, Distinction) from Deakin University, and he delivered integrated systems at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
+      'Graduated with a Bachelor of Mechatronics Engineering (Honours, Distinction) from Deakin University, and delivered integrated systems at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
     transferableLogic:
-      'Sajeevan uses system decomposition to locate faults and requirements at the correct engineering layer before choosing a solution.',
+      'Uses system decomposition to locate faults and requirements at the correct engineering layer before choosing a solution.',
     growthTargets: ['Model-based systems engineering (SysML)'],
     relatedProjects: ['autonomous-navigation-rover', 'ataxia-assessment-device'],
   },
@@ -101,7 +101,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'mechanical-design-materials-and-thermofluids',
     name: 'Mechanical Design, Materials and Thermofluids',
     summary:
-      'Sajeevan designs parts, mechanisms and assemblies for mechatronic systems hands-on in CAD, backed by degree-level materials, thermodynamics and fluid mechanics coursework.',
+      'Designs parts, mechanisms and assemblies for mechatronic systems hands-on in CAD, backed by degree-level materials, thermodynamics and fluid mechanics coursework.',
     cluster: 'physical',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'hands-on',
@@ -122,9 +122,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Pneumatics and hydraulics basics',
     ],
     projectProof:
-      'Sajeevan carried mechanical design and CAD across university projects, the Deakin Mars Rover Team and the ESP32 capstone hardware.',
+      'Carried mechanical design and CAD across university projects, the Deakin Mars Rover Team and the ESP32 capstone hardware.',
     experienceProof:
-      'Sajeevan performed drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles, including pressure-vessel CAD designs at Thornton Engineering that progressed into fabrication.',
+      'Performed drawing review and fabrication QA in structural-steel and carbon-fibre manufacturing roles, including pressure-vessel CAD designs at Thornton Engineering that progressed into fabrication.',
     transferableLogic:
       'Mechanism, tolerance and load thinking carries into robot hardware, fixtures, panels and production tooling.',
     growthTargets: ['Design for manufacture at production scale', 'Formal FEA validation workflows'],
@@ -134,7 +134,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'electrical-systems-and-power',
     name: 'Electrical Systems and Power',
     summary:
-      'Sajeevan works hands-on with motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.',
+      'Works hands-on with motor control, drives, panel wiring and instrumentation power in industrial settings, with machine and power theory from formal study.',
     cluster: 'physical',
     contexts: ['professional', 'study'],
     evidenceTier: 'hands-on',
@@ -152,9 +152,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Multimeter and loop testing',
       'Instrumentation datasheets',
     ],
-    projectProof: 'Sajeevan integrated motors, drives and actuators in robotics and capstone builds.',
+    projectProof: 'Integrated motors, drives and actuators in robotics and capstone builds.',
     experienceProof:
-      'Sajeevan integrated field devices, sensors and drives with control logic at JAG Process Solutions, building on motor and drive fundamentals from the mechatronics degree and HND.',
+      'Integrated field devices, sensors and drives with control logic at JAG Process Solutions, building on motor and drive fundamentals from the mechatronics degree and HND.',
     transferableLogic:
       'Reading a schematic and tracing a loop is the same discipline whether the cabinet runs a plant, a rig or a robot.',
     growthTargets: ['Switchboard and panel design ownership', 'AS/NZS 3000 wiring rules literacy'],
@@ -164,7 +164,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'electronics-pcb-and-board-bring-up',
     name: 'Electronics, PCB and Board Bring-up',
     summary:
-      'Sajeevan has hands-on capability from schematic capture and PCB layout through board bring-up, debugging and validation.',
+      'Hands-on capability from schematic capture and PCB layout through board bring-up, debugging and validation.',
     cluster: 'embedded',
     contexts: ['project', 'personal'],
     evidenceTier: 'hands-on',
@@ -184,9 +184,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Signal conditioning',
     ],
     projectProof:
-      'Sajeevan designed and brought up sensor hardware for the ESP32 clinical capstone and a custom PCB for an agricultural-equipment telemetry field trial.',
+      'Designed and brought up sensor hardware for the ESP32 clinical capstone and a custom PCB for an agricultural-equipment telemetry field trial.',
     experienceProof:
-      'Sajeevan applied sensor, CAN and equipment interfacing in professional IoT device work.',
+      'Applied sensor, CAN and equipment interfacing in professional IoT device work.',
     transferableLogic:
       'Reliable control, telemetry and ML depend on clean sensing, grounding and signal integrity.',
     growthTargets: ['Multi-layer high-speed layout', 'Formal EMC pre-compliance testing'],
@@ -196,7 +196,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'embedded-systems-and-firmware',
     name: 'Embedded Systems and Firmware',
     summary:
-      'Sajeevan builds embedded firmware and device integrations in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning, CAN-connected equipment interfaces and field deployment.',
+      'Builds embedded firmware and device integrations in C and C++ on ESP32 and STM32, from register-level peripherals and RTOS tasks to provisioning, CAN-connected equipment interfaces and field deployment.',
     cluster: 'embedded',
     contexts: ['professional', 'project', 'personal'],
     evidenceTier: 'delivered',
@@ -217,9 +217,9 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     protocols: ['UART', 'I2C', 'SPI', 'CAN', 'ADC', 'PWM'],
     projectProof:
-      'Sajeevan built the capstone clinical sensing device and IoT platform firmware end to end.',
+      'Built the capstone clinical sensing device and IoT platform firmware end to end.',
     experienceProof:
-      'Sajeevan delivered agricultural-equipment telemetry work spanning custom PCB design, CAN trace capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
+      'Delivered agricultural-equipment telemetry work spanning custom PCB design, CAN trace capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
     transferableLogic:
       'Real-time constraints, interrupt discipline and driver structure transfer directly into robotics, automotive and instrumentation work.',
     growthTargets: ['Functional-safety-rated firmware practices', 'Rust for embedded'],
@@ -229,7 +229,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'control-systems',
     name: 'Control Systems',
     summary:
-      'Sajeevan has applied feedback control through PID and PLC logic, then extended it through state estimation and model-based design in degree and project work.',
+      'Applied feedback control through PID and PLC logic, then extended it through state estimation and model-based design in degree and project work.',
     cluster: 'controls',
     contexts: ['professional', 'project', 'study'],
     evidenceTier: 'delivered',
@@ -248,9 +248,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Simulation-first validation',
     ],
     projectProof:
-      'Sajeevan built Kalman and EKF estimation and PID motion control into the ROS 2 rover project.',
+      'Built Kalman and EKF estimation and PID motion control into the ROS 2 rover project.',
     experienceProof:
-      'Sajeevan delivered control logic for pharmaceutical, biotechnology and food-manufacturing systems.',
+      'Delivered control logic for pharmaceutical, biotechnology and food-manufacturing systems.',
     transferableLogic:
       'A control loop is a control loop: the same stability and disturbance thinking applies to a dosing skid, a wheel motor or a thermal chamber.',
     growthTargets: [
@@ -263,7 +263,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'industrial-automation-plc-and-scada',
     name: 'Industrial Automation, PLC and SCADA',
     summary:
-      'Sajeevan delivered PLC, HMI, SCADA, MES and batch-system work for regulated plants, including a SCADA migration verified against the existing validated system.',
+      'Delivered PLC, HMI, SCADA, MES and batch-system work for regulated plants, including a SCADA migration verified against the existing validated system.',
     cluster: 'controls',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -286,11 +286,11 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     protocols: ['Modbus TCP/RTU', 'Profinet'],
     projectProof:
-      'Sajeevan\'s smart-factory case study details the SCADA migration and process-visualisation work he delivered.',
+      'The smart-factory case study details the SCADA migration and process-visualisation work delivered.',
     experienceProof:
-      'Sajeevan executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
+      'Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
     transferableLogic:
-      'Sajeevan carries alarm design, operator usability and data-integrity discipline into supervisory and telemetry systems.',
+      'Carries alarm design, operator usability and data-integrity discipline into supervisory and telemetry systems.',
     growthTargets: ['Allen-Bradley and Rockwell platforms', 'Ignition SCADA'],
     relatedProjects: ['jag-smart-factory'],
   },
@@ -298,7 +298,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'robotics-and-autonomy',
     name: 'Robotics and Autonomy',
     summary:
-      'Sajeevan built and validated a ROS 2 autonomy stack covering perception, SLAM, state estimation, planning, control and simulation.',
+      'Built and validated a ROS 2 autonomy stack covering perception, SLAM, state estimation, planning, control and simulation.',
     cluster: 'controls',
     contexts: ['professional', 'project', 'personal'],
     evidenceTier: 'delivered',
@@ -323,11 +323,11 @@ export const atlas: readonly AtlasDomain[] = [
       'EKF localisation',
     ],
     projectProof:
-      'Sajeevan built an end-to-end ROS 2 autonomous rover with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion.',
+      'Built an end-to-end ROS 2 autonomous rover with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion.',
     experienceProof:
-      'Sajeevan contributed to the Deakin Mars Rover Team, and he gained hands-on industrial robotics exposure at Carbon Revolution, working through the automation programme that replaced a legacy rim layup machine with KUKA-based robotic layup and demoulding cells.',
+      'Contributed to the Deakin Mars Rover Team, and gained hands-on industrial robotics exposure at Carbon Revolution, working through the automation programme that replaced a legacy rim layup machine with KUKA-based robotic layup and demoulding cells.',
     transferableLogic:
-      'Robotics strengthened Sajeevan\'s discipline around timing, transforms, interfaces and failure handling across integrated systems.',
+      'Robotics strengthened the discipline around timing, transforms, interfaces and failure handling across integrated systems.',
     growthTargets: [
       'Commercial robot deployment and fleet operations',
       'Learning-based perception in production',
@@ -343,7 +343,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'ai-ml-and-data-science',
     name: 'AI, ML and Data Science',
     summary:
-      'Sajeevan applies machine learning to engineering signals through anomaly detection, predictive-maintenance logic, computer vision and time-series analytics.',
+      'Applies machine learning to engineering signals through anomaly detection, predictive-maintenance logic, computer vision and time-series analytics.',
     cluster: 'software',
     contexts: ['personal', 'project', 'study'],
     evidenceTier: 'hands-on',
@@ -363,11 +363,11 @@ export const atlas: readonly AtlasDomain[] = [
       'Grafana',
     ],
     projectProof:
-      'Sajeevan built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept, and vision and estimation work into the ROS 2 rover.',
+      'Built anomaly detection, predictive-maintenance logic and OEE analytics into the digital-twin concept, and vision and estimation work into the ROS 2 rover.',
     experienceProof:
-      'Sajeevan applied monitoring concepts to professional IoT telemetry pipelines, and he keeps the boundary exact: the agricultural field trial evidences telemetry engineering, while his ML evidence sits in the personal builds.',
+      'Applied monitoring concepts to professional IoT telemetry pipelines, with the boundary kept exact: the agricultural field trial evidences telemetry engineering, while the ML evidence sits in the personal builds.',
     transferableLogic:
-      'Sajeevan uses the physics and measurement context behind a signal to guide feature design, model choice and validation.',
+      'Uses the physics and measurement context behind a signal to guide feature design, model choice and validation.',
     growthTargets: ['Production MLOps', 'Edge inference on embedded targets'],
     relatedProjects: ['digital-twin-industrial-ai', 'autonomous-navigation-rover'],
   },
@@ -375,7 +375,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'software-engineering-and-devops',
     name: 'Software Engineering and DevOps',
     summary:
-      'Sajeevan writes practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.',
+      'Writes practical software across Python, C, C++, JavaScript and TypeScript with Linux, Git, REST APIs, databases and test automation, including a deployed club website.',
     cluster: 'software',
     contexts: ['professional', 'personal'],
     evidenceTier: 'hands-on',
@@ -399,10 +399,10 @@ export const atlas: readonly AtlasDomain[] = [
       'InfluxDB',
     ],
     projectProof:
-      'Sajeevan built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, alongside this portfolio and the Engineering Mastery Lab.',
-    experienceProof: 'Sajeevan used test automation and CI workflows in professional validation work.',
+      'Built and runs the Newcomb and District Cricket Club website on Next.js and Supabase, alongside this portfolio and the Engineering Mastery Lab.',
+    experienceProof: 'Used test automation and CI workflows in professional validation work.',
     transferableLogic:
-      'Sajeevan uses clean interfaces, version discipline and automated checks to connect work across engineering domains.',
+      'Uses clean interfaces, version discipline and automated checks to connect work across engineering domains.',
     growthTargets: ['Cloud architecture certification', 'Containerised deployment at scale'],
     relatedProjects: [
       'engineering-mastery-lab',
@@ -415,7 +415,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'iot-and-edge-to-cloud-telemetry',
     name: 'IoT and Edge-to-Cloud Telemetry',
     summary:
-      'Sajeevan delivered an end-to-end IoT field-trial system spanning custom electronics, CAN capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
+      'Delivered an end-to-end IoT field-trial system spanning custom electronics, CAN capture, GPS or GNSS location, condition sensing, MikroTik connectivity and Linux server integration.',
     cluster: 'software',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -439,7 +439,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The DuxTel agricultural equipment telemetry case study covers the deployed active field-trial system end to end.',
     experienceProof:
-      'Sajeevan designed and deployed DuxTel field telemetry systems from custom PCB and equipment interfaces through MikroTik connectivity, Linux server integration and trial deployment.',
+      'Designed and deployed DuxTel field telemetry systems from custom PCB and equipment interfaces through MikroTik connectivity, Linux server integration and trial deployment.',
     transferableLogic:
       'Edge-to-cloud thinking scales from a paddock sensor to a plant historian: the same ingestion, buffering and visualisation logic applies.',
     growthTargets: ['Industrial IoT at plant scale (OPC UA)', 'Cellular and satellite backhaul systems'],
@@ -449,7 +449,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'automotive-systems-and-validation',
     name: 'Automotive Systems and Validation',
     summary:
-      'Sajeevan carried out vehicle-software and ADAS validation on OEM programmes, plus regulated emissions and compliance testing grounded in CAN-level evidence.',
+      'Carried out vehicle-software and ADAS validation on OEM programmes, plus regulated emissions and compliance testing grounded in CAN-level evidence.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -473,9 +473,9 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ADAS validation and emissions testing case studies break the work down.',
     experienceProof:
-      'Sajeevan validated vehicle software and ADAS features across the T6 Ranger and Everest programmes, and he conducted emissions and compliance testing against ADR and EURO standards at ABMARC.',
+      'Validated vehicle software and ADAS features across the T6 Ranger and Everest programmes, and conducted emissions and compliance testing against ADR and EURO standards at ABMARC.',
     transferableLogic:
-      'Sajeevan uses traceable evidence, from CAN traces to certification reports, to support validation decisions in regulated work.',
+      'Uses traceable evidence, from CAN traces to certification reports, to support validation decisions in regulated work.',
     growthTargets: ['AUTOSAR literacy', 'ISO 26262 functional safety'],
     relatedProjects: ['adas-can-validation', 'emissions-compliance-testing'],
   },
@@ -483,7 +483,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'biomedical-and-clinical-devices',
     name: 'Biomedical and Clinical Devices',
     summary:
-      'Sajeevan built and validated embedded clinical sensing against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.',
+      'Built and validated embedded clinical sensing against clinical references in an Honours capstone, with working knowledge of human-factors and device-validation concepts.',
     cluster: 'sectors',
     contexts: ['project', 'study'],
     evidenceTier: 'hands-on',
@@ -501,9 +501,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Signal processing',
     ],
     projectProof:
-      'Sajeevan built the ESP32 clinical ataxia assessment capstone, with real-time acquisition and measurement validation against clinical references.',
+      'Built the ESP32 clinical ataxia assessment capstone, with real-time acquisition and measurement validation against clinical references.',
     experienceProof:
-      'Sajeevan completed the assessed Honours capstone at Deakin University and graduated with Distinction.',
+      'Completed the assessed Honours capstone at Deakin University and graduated with Distinction.',
     transferableLogic:
       'Clinical work forces measurement rigour, repeatability and documentation discipline that generalises to any safety-relevant sensing.',
     growthTargets: ['IEC 62304 software lifecycle', 'Clinical trial support engineering'],
@@ -513,7 +513,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'manufacturing-production-and-quality',
     name: 'Manufacturing, Production and Quality',
     summary:
-      'Sajeevan built production, QA, traceability and documentation experience across food and beverage, carbon-fibre and structural-steel manufacturing.',
+      'Built production, QA, traceability and documentation experience across food and beverage, carbon-fibre and structural-steel manufacturing.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -535,7 +535,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The manufacturing and QA foundation record and the compliance testing case study show the same QA discipline applied end to end.',
     experienceProof:
-      'Sajeevan held manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.',
+      'Held manufacturing, QA and documentation roles at IDL, Carbon Revolution and Thornton Engineering from 2018 to 2024, spanning food and beverage, carbon-fibre and structural-steel production.',
     transferableLogic:
       'Floor-level empathy for operators and inspectors makes automation, HMI and MES design markedly better.',
     growthTargets: ['Six Sigma Green Belt', 'Production line ownership'],
@@ -550,7 +550,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'process-pharma-and-regulated-manufacturing',
     name: 'Process, Pharma and Regulated Manufacturing',
     summary:
-      'Sajeevan delivered smart-factory and control engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP, through qualification and handover.',
+      'Delivered smart-factory and control engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP, through qualification and handover.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -570,9 +570,9 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     projectProof: 'The JAG smart factory case study details the regulated delivery context.',
     experienceProof:
-      'Sajeevan delivered control, integration and smart-factory engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP across plants, skids and packaged units.',
+      'Delivered control, integration and smart-factory engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP across plants, skids and packaged units.',
     transferableLogic:
-      'Sajeevan applies regulated-industry traceability and documentation discipline to engineering work in other sectors.',
+      'Applies regulated-industry traceability and documentation discipline to engineering work in other sectors.',
     growthTargets: ['CQV engineering roles', 'Process engineering depth in pharma'],
     relatedProjects: ['jag-smart-factory'],
   },
@@ -580,7 +580,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'civil-structural-and-infrastructure-awareness',
     name: 'Civil, Structural and Infrastructure Awareness',
     summary:
-      'Sajeevan carries transferable exposure from structural-steel fabrication QA: he reads structural drawings and weld and inspection documentation, and he worked inside standards-driven fabrication workflows.',
+      'Carries transferable exposure from structural-steel fabrication QA: reading structural drawings and weld and inspection documentation, with experience working inside standards-driven fabrication workflows.',
     cluster: 'sectors',
     contexts: ['professional'],
     evidenceTier: 'adjacent',
@@ -591,9 +591,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Standards-driven documentation',
     ],
     platforms: ['Engineering drawings', 'ITPs and MDRs', 'Material traceability records'],
-    projectProof: 'Sajeevan produced pressure-vessel CAD designs that progressed into fabrication.',
+    projectProof: 'Produced pressure-vessel CAD designs that progressed into fabrication.',
     experienceProof:
-      'Sajeevan carried out QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.',
+      'Carried out QA, drawing review and documentation work at Thornton Engineering across structural-steel fabrication projects.',
     transferableLogic:
       'Standards-driven fabrication QA is a direct bridge into infrastructure, rail and energy project work.',
     growthTargets: ['Infrastructure automation and monitoring systems'],
@@ -603,7 +603,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'aerospace-space-marine-rail-defence-mining-agriculture-and-energy',
     name: 'Aerospace, Space, Marine, Rail, Defence, Mining, Agriculture and Energy',
     summary:
-      'Sajeevan reached these sectors through rover robotics, field IoT and hands-on farm work, and he holds them honestly as adjacent exposure and strategic growth targets rather than delivery claims.',
+      'Sectors reached through rover robotics, field IoT and hands-on farm work, held honestly as adjacent exposure and strategic growth targets rather than delivery claims.',
     cluster: 'sectors',
     contexts: ['project', 'personal'],
     evidenceTier: 'adjacent',
@@ -622,9 +622,9 @@ export const atlas: readonly AtlasDomain[] = [
       'Remote asset monitoring patterns',
     ],
     projectProof:
-      'Sajeevan contributed to the Deakin Mars Rover Team and deployed the agricultural equipment health and location telemetry platform.',
+      'Contributed to the Deakin Mars Rover Team and deployed the agricultural equipment health and location telemetry platform.',
     experienceProof:
-      'Sajeevan gained practical agricultural experience as a farmhand alongside field IoT trial deployment work.',
+      'Gained practical agricultural experience as a farmhand alongside field IoT trial deployment work.',
     transferableLogic:
       'Autonomy, telemetry, harsh-environment sensing and regulated validation transfer directly into these sectors.',
     growthTargets: [
@@ -638,7 +638,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'safety-reliability-standards-and-cyber-physical-security',
     name: 'Safety, Reliability, Standards and Cyber-physical Security',
     summary:
-      'Sajeevan has working knowledge of machinery safety, industrial cybersecurity and quality standards, applied through documentation and test practice.',
+      'Working knowledge of machinery safety, industrial cybersecurity and quality standards, applied through documentation and test practice.',
     cluster: 'assurance',
     contexts: ['professional', 'study'],
     evidenceTier: 'working-knowledge',
@@ -659,9 +659,9 @@ export const atlas: readonly AtlasDomain[] = [
       'FMEA',
     ],
     projectProof:
-      'Sajeevan uses a consistent, standards-aware structure for validation methods and evidence.',
+      'Uses a consistent, standards-aware structure for validation methods and evidence.',
     experienceProof:
-      'Sajeevan applied these standards through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
+      'Applied these standards through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
     transferableLogic:
       'Standards literacy converts good engineering into defensible engineering: it is the language auditors and safety leads trust.',
     growthTargets: ['Functional safety certification (TUV style)', 'IEC 62443 practitioner depth'],
@@ -671,7 +671,7 @@ export const atlas: readonly AtlasDomain[] = [
     slug: 'project-delivery-commissioning-and-handover',
     name: 'Project Delivery, Commissioning and Handover',
     summary:
-      'Sajeevan takes systems through FAT and SAT, site commissioning, fault resolution, stakeholder communication, qualification and handover.',
+      'Takes systems through FAT and SAT, site commissioning, fault resolution, stakeholder communication, qualification and handover.',
     cluster: 'assurance',
     contexts: ['professional'],
     evidenceTier: 'delivered',
@@ -685,11 +685,11 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     platforms: ['FAT and SAT protocols', 'Commissioning plans', 'JIRA and Agile', 'Structured reporting'],
     projectProof:
-      'Sajeevan\'s professional case studies include documented validation and handover, not only functional implementation.',
+      'The professional case studies include documented validation and handover, not only functional implementation.',
     experienceProof:
-      'Sajeevan produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions, resolved faults raised during testing and site support, and produced readiness-milestone and sign-off evidence in vehicle validation programmes.',
+      'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions, resolved faults raised during testing and site support, and produced readiness-milestone and sign-off evidence in vehicle validation programmes.',
     transferableLogic:
-      'Sajeevan uses commissioning to test interfaces, expose faults and verify how the complete system behaves in practice.',
+      'Uses commissioning to test interfaces, expose faults and verify how the complete system behaves in practice.',
     growthTargets: ['Lead commissioning roles', 'Multi-discipline project engineering'],
     relatedProjects: ['jag-smart-factory', 'adas-can-validation'],
   },

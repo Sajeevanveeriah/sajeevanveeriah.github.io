@@ -103,7 +103,7 @@ export default function EcosystemPage() {
                 <p className={e.noticeBody}>
                   A reference catalogue of the field, kept separate from{' '}
                   <Link href="/skills/" className={s.link}>
-                    Sajeevan&apos;s documented experience
+                    documented experience
                   </Link>
                   .
                 </p>
@@ -114,8 +114,8 @@ export default function EcosystemPage() {
           <Reveal className={e.notice} as="div">
             <p className={e.noticeTitle}>How to read this catalogue.</p>
             <p className={e.noticeBody}>
-              Entries describe technologies and methods in the wider engineering field. Sajeevan&apos;s
-              own applied experience is documented separately in{' '}
+              Entries describe technologies and methods in the wider engineering field. Applied
+              experience is documented separately in{' '}
               <Link href="/skills/" className={s.link}>
                 Expertise
               </Link>

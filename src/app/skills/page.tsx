@@ -11,8 +11,9 @@ import k from './skills.module.css'
 
 export const metadata: Metadata = {
   title: 'Expertise',
+  // Recast agentless per the owner's 7 August 2026 direction.
   description:
-    "Sajeevan's engineering toolchain across six territories and the ten-layer systems stack connecting physical systems, embedded intelligence, autonomy, software and validation.",
+    'An engineering toolchain across six territories and the ten-layer systems stack connecting physical systems, embedded intelligence, autonomy, software and validation.',
   alternates: { canonical: '/skills/' },
   openGraph: { title: 'Expertise', url: '/skills/' },
 }
@@ -25,8 +26,8 @@ export default function SkillsPage() {
           <PageHeader
           signature="strata"
             kicker="Expertise"
-            title="Sajeevan's toolchain, connected to the work behind it."
-            lede="Six engineering territories, each linked to the platforms, supporting tools and evidence behind his experience."
+            title="The toolchain, connected to the work behind it."
+            lede="Six engineering territories, each linked to the platforms, supporting tools and evidence behind the experience."
             aside={
               <div className={s.railBlock}>
                 <p className="label">Evidence tiers</p>
@@ -81,7 +82,7 @@ export default function SkillsPage() {
               </h2>
             </div>
             <p className="lede">
-              Sajeevan has applied these ten layers across professional, university and personal
+              These ten layers have been applied across professional, university and personal
               engineering work. They are shown as one connected stack because system behaviour
               depends on the interfaces between them.
             </p>

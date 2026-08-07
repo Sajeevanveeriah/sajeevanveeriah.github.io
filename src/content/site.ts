@@ -2,8 +2,10 @@
  * Site-level facts and SEO defaults.
  *
  * Every value here was transcribed from the previous index.html; the
- * tagline and description voice was recast to third person on the owner's
- * 7 August 2026 direction, facts unchanged. Nothing is inferred.
+ * tagline and description voice was recast to agentless capability voice
+ * (no name, no pronouns in prose) on the owner's 7 August 2026 direction
+ * after the named third-person cut was rejected, facts unchanged. Nothing
+ * is inferred.
  * The contact model is binding and closed: exactly
  * three personal channels plus the resume, and no telephone, address,
  * location, visa, work-rights or availability statement may ever be added.
@@ -53,16 +55,17 @@ export const site: SiteConfig = {
   shortName: 'Saj',
   initials: 'SV',
   jobTitle: JOB_TITLE,
-  // From index.html:1523; voice recast to third person on the owner's
-  // 7 August 2026 direction.
+  // From index.html:1523; voice recast to agentless capability voice on the
+  // owner's 7 August 2026 direction.
   tagline:
-    'Sajeevan works across robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
+    'Work spans robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
   // The role label is composed from `JOB_TITLE` so the meta description, the
   // Open Graph card and the Twitter card can never drift from the page title.
   // The capability clause after it is the original wording from index.html:9;
-  // the framing was recast to third person on the owner's 7 August 2026
-  // direction.
-  description: `Sajeevan Veeriah is a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
+  // the framing was recast on the owner's 7 August 2026 direction. The name
+  // appears exactly once here as identity (rule: SEO identity, not prose);
+  // the rest of the sentence is agentless.
+  description: `Portfolio and engineering practice of Sajeevan Veeriah, a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
   url: 'https://sajeevanveeriah.github.io',
   locale: 'en_AU',
   lang: 'en-AU',
@@ -138,8 +141,9 @@ export const navPanels: readonly NavPanelCopy[] = [
   {
     href: '/work/',
     eyebrow: 'Work',
+    // Panel intros recast agentless on the owner's 7 August 2026 direction.
     intro:
-      'Case studies showing the problem, the work Sajeevan owned, the decisions he made and the result he verified.',
+      'Case studies showing the problem, the work owned, the decisions made and the verified result.',
     listTitle: 'Records',
     indexLabel: 'Every record, including the archive',
   },
@@ -147,7 +151,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/skills/',
     eyebrow: 'Expertise',
     intro:
-      'Sajeevan\'s capability atlas, with each domain linked to the evidence he can show.',
+      'The capability atlas, with each domain linked to the evidence behind it.',
     listTitle: 'Atlas domains',
     indexLabel: 'Browse the full atlas',
   },
@@ -155,7 +159,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/employers/',
     eyebrow: 'Employers',
     intro:
-      'Sajeevan\'s employment record, separating company background from the work he personally completed.',
+      'The employment record, separating company background from the work completed in each role.',
     listTitle: 'Employers',
     indexLabel: 'Every employer, and the through-line',
   },

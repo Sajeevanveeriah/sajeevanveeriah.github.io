@@ -19,7 +19,9 @@ import type { EvidenceTier } from './tiers'
  *     explicit `source`. Nothing is paraphrased into a stronger statement
  *     and no claim about Saj's work is inferred from anywhere else. Per the
  *     owner's direction of 7 August 2026, first-person prose was recast into
- *     third-person or indicative voice; the recast changed voice and grammar
+ *     third-person or indicative voice; later that day the owner rejected
+ *     named third person, so all prose was recast again into generic,
+ *     agentless indicative voice. Each recast changed voice and grammar
  *     only, and no claim was added, strengthened, weakened or dropped.
  *   - `companyFacts` are verified facts about the employer, not about Saj.
  *     Each carries the primary source domain it was verified against.
@@ -164,7 +166,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan designs, builds and deploys independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
+      'Designs, builds and deploys independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
     domains: ['Robotics and autonomy', 'Product R&D', 'Engineering software', 'Inventory systems'],
     toolsLabel: 'Representative tools from completed and deployed work',
     tools: ['React', 'TypeScript', 'Vite', 'Tauri 2', 'Node.js', 'Vitest', 'Playwright'],
@@ -286,7 +288,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.',
+      'Delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.',
     domains: [
       'Automation and SCADA',
       'Controls',
@@ -298,11 +300,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Industrial automation, process control, HMI and SCADA, MES, batch systems, GMP, GAMP 5, commissioning, validation, field-device integration, production data and regulated documentation.',
     transferable:
-      'In this role, Sajeevan connected controls, software, process systems, operator workflows and compliance. He worked across both the machine layer and the validation layer, building capability relevant to automation, robotics, smart factory, digital twin and regulated engineering environments.',
+      'Connected controls, software, process systems, operator workflows and compliance, working across both the machine layer and the validation layer and building capability relevant to automation, robotics, smart factory, digital twin and regulated engineering environments.',
     group: 'recent',
     relatedProjects: ['jag-smart-factory'],
     closing:
-      'Sajeevan learned to treat a regulated plant as one connected system: recipes and supervisory software, field devices, material movement, and the qualification evidence that proves the system behaves as intended.',
+      'The lasting lesson was to treat a regulated plant as one connected system: recipes and supervisory software, field devices, material movement, and the qualification evidence that proves the system behaves as intended.',
     todoConfirm: [
       'PVI+ migration scope, a screen or object count.',
       'Did Saj personally do loop checking or point-to-point testing.',
@@ -365,14 +367,14 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes, using CAN-level evidence for readiness milestones and OTA sign-off.',
+      'Validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes, using CAN-level evidence for readiness milestones and OTA sign-off.',
     domains: ['Automotive and validation', 'Embedded networks', 'Test engineering'],
     toolsLabel: 'Representative tools',
     tools: ['Vector CANoe', 'CANalyzer', 'CAN and CAN FD', 'vehicle instrumentation'],
     relevance:
       'Automotive validation, ADAS, vehicle networks, CAN, CAN FD, test procedures, regression testing, OTA validation, instrumentation, diagnostics and evidence-based engineering.',
     transferable:
-      'In this role, Sajeevan connected embedded systems, vehicle behaviour, test engineering and fault evidence. He strengthened his ability to validate cyber-physical systems where software, sensors, networks, control logic and real-world operation interact. He applies the same closed-loop discipline to robotics and automation: sense, estimate, control, actuate and verify against real behaviour.',
+      'Connected embedded systems, vehicle behaviour, test engineering and fault evidence, strengthening the ability to validate cyber-physical systems where software, sensors, networks, control logic and real-world operation interact. The same closed-loop discipline carries into robotics and automation: sense, estimate, control, actuate and verify against real behaviour.',
     group: 'recent',
     relatedProjects: ['adas-can-validation'],
     closing: null,
@@ -477,18 +479,18 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.',
+      'Conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.',
     domains: ['Automotive and compliance', 'Instrumentation and DAQ', 'Quality and reporting'],
     toolsLabel: 'Representative tools',
     tools: ['Emissions instrumentation', 'data-acquisition systems', 'QA records'],
     relevance:
       'Emissions testing, vehicle compliance, instrumentation, data acquisition, test repeatability, QA records, regulatory documentation, standards exposure and technical reporting.',
     transferable:
-      'In this role, Sajeevan strengthened his test discipline, evidence handling and systems-level thinking. He applies those habits wherever measurement quality, repeatability, documentation and fault interpretation matter, including robotics and automation commissioning.',
+      'Strengthened test discipline, evidence handling and systems-level thinking. Those habits carry into any setting where measurement quality, repeatability, documentation and fault interpretation matter, including robotics and automation commissioning.',
     group: 'recent',
     relatedProjects: ['emissions-compliance-testing'],
     closing:
-      'Sajeevan learned to question every measurement: calibration state, procedure, repeatability and the difference between instrument behaviour and the system under test.',
+      'The lasting lesson was to question every measurement: calibration state, procedure, repeatability and the difference between instrument behaviour and the system under test.',
     todoConfirm: [
       'Did Saj work on the AVL PEMS specifically.',
       'Did Saj work on the AAA Real-World Testing Program.',
@@ -574,7 +576,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan designed and deployed field telemetry systems linking custom electronics, CAN capture, location, condition sensing, MikroTik edge equipment and Linux server integration.',
+      'Designed and deployed field telemetry systems linking custom electronics, CAN capture, location, condition sensing, MikroTik edge equipment and Linux server integration.',
     domains: ['IoT and telemetry', 'Embedded and vehicle interfaces', 'Linux integration'],
     toolsLabel: 'Representative tools',
     tools: [
@@ -588,11 +590,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Embedded systems, IoT telemetry, custom PCB design, CAN trace capture, GPS or GNSS location, sensor interfacing, MikroTik connectivity, Linux servers, deployment and field validation.',
     transferable:
-      'In this role, Sajeevan bridged embedded devices, communications, cloud data and operational visibility. He worked from sensor-level hardware through network configuration to data pipelines and user-facing dashboards, using the same sensor-to-cloud backbone that robotics and automation rely on for monitoring, diagnostics and control.',
+      'Bridged embedded devices, communications, cloud data and operational visibility, working from sensor-level hardware through network configuration to data pipelines and user-facing dashboards, using the same sensor-to-cloud backbone that robotics and automation rely on for monitoring, diagnostics and control.',
     group: 'recent',
     relatedProjects: ['iot-monitoring-platform'],
     closing:
-      'Sajeevan worked across the telemetry path from custom electronics and firmware to networking, Linux services, stored data and the dashboard used in the field.',
+      'The work spanned the telemetry path from custom electronics and firmware to networking, Linux services, stored data and the dashboard used in the field.',
     todoConfirm: [
       'Device count provisioned, and physical area or link range.',
       'EDA tool for the agricultural PCB, KiCad or Altium, and revision count.',
@@ -692,18 +694,18 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan worked across quality assurance, engineering support, pressure-vessel CAD, drawing review, traceability and fabrication documentation in a standards-driven structural-steel and pressure-vessel environment, operating as second to the QA manager.',
+      'Worked across quality assurance, engineering support, pressure-vessel CAD, drawing review, traceability and fabrication documentation in a standards-driven structural-steel and pressure-vessel environment, operating as second to the QA manager.',
     domains: ['Quality and documentation', 'Mechanical and CAD', 'Standards-driven delivery'],
     toolsLabel: 'Representative context',
     tools: ['ITPs', 'MDRs', 'drawing review', 'pressure-vessel CAD', 'traceability'],
     relevance:
       'Structural steel fabrication, pressure-vessel QA, CAD, drawing review, ITPs, MDRs, material traceability, welding and fabrication documentation, NDE, mechanical testing, inspection planning, QA sign-off and standards-driven delivery.',
     transferable:
-      'In this role, Sajeevan built the documentation and quality discipline behind engineering delivery. He carried clear requirements, inspection evidence, traceability, sign-offs and defensible handover documentation into later regulated automation and commissioning work, alongside the mechanical, CAD and quality rigour needed for robot hardware, fixtures, machine frames and automation structures.',
+      'Built the documentation and quality discipline behind engineering delivery, carrying clear requirements, inspection evidence, traceability, sign-offs and defensible handover documentation into later regulated automation and commissioning work, alongside the mechanical, CAD and quality rigour needed for robot hardware, fixtures, machine frames and automation structures.',
     group: 'foundation',
     relatedProjects: ['manufacturing-qa-foundation'],
     closing:
-      'Sajeevan learned that traceability is part of the delivered product: fabrication evidence must show what was built, from which material and against which requirements.',
+      'The lasting lesson was that traceability is part of the delivered product: fabrication evidence must show what was built, from which material and against which requirements.',
     todoConfirm: [
       'Exact dates and exact job title.',
       'Any named project, such as a bridge or station package.',
@@ -810,7 +812,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing, and he was hands-on through the programme that replaced the legacy rim layup machine with new KUKA-based robotic cells.',
+      'Worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing, and was hands-on through the programme that replaced the legacy rim layup machine with new KUKA-based robotic cells.',
     domains: [
       'Advanced manufacturing',
       'Robotics and automation',
@@ -827,11 +829,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Advanced manufacturing, carbon-fibre composites, industrial robotics, KUKA-based robotic cells, automated layup and robotic demoulding, cell commissioning support, quality assurance, NDE, mechanical testing, defect detection, production repeatability, process development and manufacturing scale-up.',
     transferable:
-      'In this role, Sajeevan strengthened his understanding of the links between industrial robotics, automation, materials, machine behaviour and product quality. Working hands-on as KUKA-based robotic cells replaced a legacy line showed him how process variation, fibre placement, inspection, testing and operator feedback influence high-performance manufacturing.',
+      'Strengthened understanding of the links between industrial robotics, automation, materials, machine behaviour and product quality. Working hands-on as KUKA-based robotic cells replaced a legacy line showed how process variation, fibre placement, inspection, testing and operator feedback influence high-performance manufacturing.',
     group: 'foundation',
     relatedProjects: ['carbon-revolution-rim-layup', 'manufacturing-qa-foundation'],
     closing:
-      'Sajeevan saw how robotics, process control, inspection and digital traceability work together when an advanced manufacturing line changes at production scale.',
+      'The role showed how robotics, process control, inspection and digital traceability work together when an advanced manufacturing line changes at production scale.',
     todoConfirm: [
       'Exact dates and exact title. Public records list Production Line Operator.',
       'Which process stage. Moulding, demoulding, machining, finishing or inspection.',
@@ -878,7 +880,7 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'Sajeevan operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
+      'Operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
     domains: ['Manufacturing and quality', 'Machine operations', 'Installation and commissioning'],
     toolsLabel: 'Representative context',
     tools: [
@@ -891,7 +893,7 @@ export const employers: readonly Employer[] = [
     relevance:
       'High-throughput production systems, machine reliability, changeover logic, operator-centred workflows, packaging automation, equipment installation and commissioning, quality assurance and traceability.',
     transferable:
-      'This experience taught Sajeevan how operators interact with machines, how small mechanical or control issues affect throughput, and why usability, changeover design, line recovery and traceable QA matter in production systems.',
+      'The experience showed how operators interact with machines, how small mechanical or control issues affect throughput, and why usability, changeover design, line recovery and traceable QA matter in production systems.',
     group: 'foundation',
     relatedProjects: ['idl-canning-line', 'manufacturing-qa-foundation'],
     closing: null,
@@ -938,13 +940,14 @@ export function getEmployerRecord(slug: string): Employer | undefined {
 
 /**
  * Section 6's argument, stated once. Transcribed from the brief, with its
- * first-person prose recast into third person per the owner's 7 August 2026
- * direction, keeping the ordering, which runs oldest to most recent so the
- * pattern accumulates.
+ * first-person prose recast per the owner's 7 August 2026 direction, now in
+ * generic agentless indicative voice after the owner rejected named third
+ * person the same day, keeping the ordering, which runs oldest to most
+ * recent so the pattern accumulates.
  */
 export const versatility = {
   heading: 'Different roles, one engineering method.',
-  body: "Sajeevan's roles varied, but the work repeatedly crossed mechanical, electrical, software, data, quality and delivery boundaries.",
+  body: 'The roles varied, but the work repeatedly crossed mechanical, electrical, software, data, quality and delivery boundaries.',
   columns: ['Employer', 'Title implied', 'Work actually crossed'] as const,
   rows: [
     [
@@ -975,5 +978,5 @@ export const versatility = {
     ],
   ] as const,
   closing:
-    "Sajeevan's consistent method is to instrument the system, establish trustworthy evidence, isolate interface failures and document the result so another engineer can verify it. He applies that method across manufacturing, instrumentation, regulated automation, embedded systems and robotics.",
+    'The consistent method across roles is to instrument the system, establish trustworthy evidence, isolate interface failures and document the result so another engineer can verify it. That method applies across manufacturing, instrumentation, regulated automation, embedded systems and robotics.',
 } as const

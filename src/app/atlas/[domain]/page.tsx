@@ -112,9 +112,8 @@ export default async function DomainPage({ params }: { params: Promise<{ domain:
                 <h2 className={s.chapterTitle}>Technique deep dives</h2>
                 <div className={s.chapterBody}>
                   <p>
-                    Sajeevan wrote these treatments to make the techniques this domain names
-                    legible in full: the mechanism, the choice, the tuning and the proof. Each one
-                    opens in place.
+                    These treatments make the techniques this domain names legible in full: the
+                    mechanism, the choice, the tuning and the proof. Each one opens in place.
                   </p>
                   <div>
                     {depth.map((t) => (

@@ -32,10 +32,10 @@ export interface SignalMapCopy {
 export const signalMap: SignalMapCopy = {
   eyebrow: 'Signal map',
   title: 'The whole site, one view.',
-  lede: 'Sajeevan attaches every claim on this site to its evidence. This map counts what is here, and every line in it is a path to that evidence.',
+  lede: 'Every claim on this site is attached to its evidence. This map counts what is here, and every line in it is a path to that evidence.',
   summaryHeading: 'Site summary',
   recordsHeading: 'Work records',
-  recordsNote: 'Case studies stating what Sajeevan owned, how he checked it and what he delivered.',
+  recordsNote: 'Case studies stating what was owned, how it was checked and what was delivered.',
   recordsLink: 'Open every record',
   clustersHeading: 'Atlas domains',
   tiersHeading: 'Evidence tiers',
@@ -43,7 +43,7 @@ export const signalMap: SignalMapCopy = {
   routes: [
     {
       label: 'See something working',
-      description: 'Interactive demonstrations Sajeevan wrote to make his core techniques legible.',
+      description: 'Interactive demonstrations written to make the core techniques legible.',
       href: '/lab/',
     },
     {
@@ -53,7 +53,7 @@ export const signalMap: SignalMapCopy = {
     },
     {
       label: 'Inspect all evidence',
-      description: 'Every domain Sajeevan claims, held at the tier its evidence supports.',
+      description: 'Every claimed domain, held at the tier its evidence supports.',
       href: '/atlas/',
     },
   ],

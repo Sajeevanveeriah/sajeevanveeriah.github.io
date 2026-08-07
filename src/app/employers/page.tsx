@@ -8,8 +8,9 @@ import s from '@/components/ui/shared.module.css'
 
 export const metadata: Metadata = {
   title: 'Employers',
+  // Recast agentless per the owner's 7 August 2026 direction.
   description:
-    "Sajeevan's employment record, with company context, the work he completed and the capability he carried forward.",
+    'An employment record with company context, the work completed and the capability carried forward.',
   alternates: { canonical: '/employers/' },
   openGraph: { title: 'Employers', url: '/employers/' },
 }
@@ -20,8 +21,8 @@ export default function EmployersPage() {
       <div className="wrap-wide">
         <PageHeader
           kicker="Employers"
-          title="Where Sajeevan worked and what he delivered."
-          lede="Each page separates company background from his responsibilities, results and transferable engineering capability."
+          title="Where the work was done and what was delivered."
+          lede="Each page separates company background from the responsibilities, results and transferable engineering capability."
           aside={
             <div className={s.railBlock}>
               <p className="label">Evidence tiers</p>

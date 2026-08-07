@@ -41,8 +41,8 @@ export default function WorkPage() {
         <PageHeader
           signature="route"
           kicker="Work"
-          title="Systems Sajeevan built, integrated and validated."
-          lede="Four records lead into the full archive. Each entry states what he owned, how he checked it and what he delivered."
+          title="Systems built, integrated and validated."
+          lede="Four records lead into the full archive. Each entry states what was owned, how it was checked and what was delivered."
           aside={
             <div className={s.railBlock}>
               <p className="label">Evidence tiers</p>

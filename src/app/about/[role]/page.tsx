@@ -80,7 +80,7 @@ export default async function RolePage({ params }: { params: Promise<{ role: str
           <PageHeader
             kicker="This page moved"
             title={r.company}
-            lede={`The record for this role now lives on the employer page, where the work is graded by evidence tier and the verified facts about the employer are kept separate from Sajeevan's own claims.`}
+            lede={`The record for this role now lives on the employer page, where the work is graded by evidence tier and the verified facts about the employer are kept separate from the claimed contributions.`}
           >
             <p className={s.rowSummary}>
               <Link href={`/employers/${role}/`} className={s.link}>
@@ -100,7 +100,8 @@ export default async function RolePage({ params }: { params: Promise<{ role: str
     .filter((p) => !p.suppressed)
 
   const chapters = [
-    { title: 'What Sajeevan did', bullets: r.achievements },
+    // Recast agentless per the owner's 7 August 2026 direction.
+    { title: 'What was done', bullets: r.achievements },
     { title: 'Engineering relevance', body: r.relevance },
     { title: 'Transferable capability', body: r.transferable },
   ]

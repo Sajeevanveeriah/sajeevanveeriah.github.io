@@ -2,9 +2,9 @@
  * The five-tier evidence model.
  *
  * Binding truthful-representation control, carried over from AGENTS.md.
- * Definitions are written in professional third person about Saj (voice
- * recast on the owner's 7 August 2026 direction, meaning unchanged) and
- * render wherever the legend or an indicator explains a tier.
+ * Definitions are written in agentless capability voice (recast per the
+ * owner's 7 August 2026 direction, meaning unchanged) and render wherever
+ * the legend or an indicator explains a tier.
  *
  * Saj assigns every tier. No tier is ever inferred from a description, a
  * platform list, resume text or any other content. An entry with no
@@ -37,35 +37,35 @@ export const TIERS: Record<EvidenceTier, TierMeta> = {
   delivered: {
     id: 'delivered',
     label: 'Delivered',
-    definition: 'Sajeevan delivered this in professional or assessed project work, and evidence of that delivery exists.',
+    definition: 'Delivered in professional or assessed project work, and evidence of that delivery exists.',
     dot: 'solid',
     strength: 5,
   },
   'hands-on': {
     id: 'hands-on',
     label: 'Hands-on',
-    definition: 'Sajeevan built, tested, configured, analysed or used this directly himself.',
+    definition: 'Built, tested, configured, analysed or used directly, first hand.',
     dot: 'half',
     strength: 4,
   },
   'working-knowledge': {
     id: 'working-knowledge',
     label: 'Working knowledge',
-    definition: 'Sajeevan knows this through credible study, coursework or self-directed learning.',
+    definition: 'Known through credible study, coursework or self-directed learning.',
     dot: 'ringed',
     strength: 3,
   },
   adjacent: {
     id: 'adjacent',
     label: 'Adjacent',
-    definition: 'Sajeevan brings transferable exposure to this from nearby systems he worked on.',
+    definition: 'Transferable exposure carried over from work on nearby systems.',
     dot: 'hollow',
     strength: 2,
   },
   target: {
     id: 'target',
     label: 'Target',
-    definition: 'Sajeevan is deliberately building toward this as a growth domain.',
+    definition: 'A growth domain being deliberately built toward.',
     dot: 'dashed',
     strength: 1,
   },

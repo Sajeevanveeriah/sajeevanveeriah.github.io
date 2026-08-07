@@ -612,7 +612,7 @@ export const projectEngineering: Readonly<Record<string, ProjectEngineeringProfi
         d('Production traceability records', 'Link material and process to test evidence.')),
       'software-control': section('The record covers operation and support, not programme authorship.',
         d('KUKA cell operation and line recovery', 'Support ramp-up, quality and throughput.'),
-        i('PLC sequence and robot programme coordination', 'Synchronises tooling and motion.', 'This describes architecture, not Saj-authored code.')),
+        i('PLC sequence and robot programme coordination', 'Synchronises tooling and motion.', 'This describes architecture, not personally authored code.')),
       'safety-standards': section('Cell-level references do not imply personal conformity ownership.',
         r('ISO 10218-1 and -2', 'Industrial robot and application safety references.'),
         r('ISO 12100 and ISO 13849', 'Risk and safety-control references.'),
