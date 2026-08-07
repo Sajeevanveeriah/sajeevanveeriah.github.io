@@ -1,23 +1,25 @@
 /**
  * Narrative, credentials, community and Beyond Engineering.
- * All copy transcribed verbatim from index.html lines 158 to 229 (hero
+ * Copy originally transcribed from index.html lines 158 to 229 (hero
  * narrative and closed-loop panel), 1403 to 1435 (credentials) and 1437 to
- * 1482 (Beyond Engineering).
+ * 1482 (Beyond Engineering); voice recast to agentless capability voice
+ * (no name, no pronouns in prose) on the owner's 7 August 2026 direction
+ * after the named third-person cut was rejected, facts unchanged.
  */
 
 import { JOB_TITLE } from './site'
 
 /** Hero lede, index.html:165. */
 export const narrative =
-  'I build across the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. I identify which engineering layer a problem lives in, then work across the disciplines required to resolve it.'
+  'Work spans the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. Each problem is placed in the engineering layer it lives in, then resolved across the disciplines it requires.'
 
 export const homeStory = {
   kicker: JOB_TITLE,
-  headline: 'I build intelligent systems that move, sense and decide.',
+  headline: 'Intelligent systems that move, sense and decide.',
   proofTitle: 'Engineering from first principles to a tested system.',
   proofKicker: '01 / Complete-package engineering',
   proofSummary:
-    'My work joins mechanics, electronics, embedded software, autonomy, controls and validation. Each featured record shows the engineering need, the decisions I owned and the evidence behind the result.',
+    'The work joins mechanics, electronics, embedded software, autonomy, controls and validation. Each featured record shows the engineering need, the decisions owned and the evidence behind the result.',
   featuredKicker: 'Selected engineering stories',
   featuredTitle: 'Built across disciplines and tested as a system.',
   responseLabel: 'Response',
@@ -30,23 +32,23 @@ export const homeStory = {
 
 /**
  * Closed-loop signal panel. The collapsed stage row keeps its original
- * shape; each stage now expands into a first-person account of the
- * techniques I used at that stage, the systems I used them in, and the
- * records that evidence it.
+ * shape; each stage expands into an agentless account of the techniques
+ * used at that stage, the systems they were used in, and the records that
+ * evidence it.
  */
 export const closedLoop = {
   title: 'Closed-loop engineering',
   summary:
-    'My engineering workflow closes the loop: I sense the system, estimate its state, control it, act on it and verify the result.',
-  expandLabel: 'How I close this stage',
+    'The engineering workflow closes the loop: sense the system, estimate its state, control it, act on it and verify the result.',
+  expandLabel: 'How this stage is closed',
   nodes: [
     {
       index: '01',
       name: 'Sense',
       detail: 'LiDAR, IMU, instrumentation, field devices',
       depth: [
-        'Sensing is where every loop I build starts, and I treat it as an engineering layer rather than as given data. On my rover, LiDAR scans and IMU rates enter a ROS 2 graph with explicit timing and transforms. On my Honours capstone I chose IMU, time-of-flight, Hall-effect and magnetometer channels deliberately, so movement features arrive redundantly through modalities with different noise behaviour.',
-        'Professionally, I integrated field devices and instrumentation with control logic in regulated plants, and I captured CAN and sensor data on agricultural equipment through a custom board I designed. The shared discipline is signal integrity: conditioning, grounding and calibration decide whether everything downstream is estimation or guesswork.',
+        'Sensing is where every loop starts, and it is treated as an engineering layer rather than as given data. On the rover, LiDAR scans and IMU rates enter a ROS 2 graph with explicit timing and transforms. On the Honours capstone, IMU, time-of-flight, Hall-effect and magnetometer channels were chosen deliberately, so movement features arrive redundantly through modalities with different noise behaviour.',
+        'Professional work integrated field devices and instrumentation with control logic in regulated plants, and captured CAN and sensor data on agricultural equipment through a custom-designed board. The shared discipline is signal integrity: conditioning, grounding and calibration decide whether everything downstream is estimation or guesswork.',
       ],
       records: [
         { label: 'ROS 2 rover', href: '/work/autonomous-navigation-rover/' },
@@ -59,8 +61,8 @@ export const closedLoop = {
       name: 'Estimate',
       detail: 'Kalman and EKF, sensor fusion, signal conditioning',
       depth: [
-        'Raw signals disagree with each other, so estimation is where I turn them into one defensible state. In the rover I fused wheel odometry and IMU data through Kalman and extended Kalman filters, with LiDAR SLAM supplying the map-referenced correction that stops dead reckoning wandering.',
-        'The engineering lives in the noise models and the residuals: I tuned process and measurement trust by watching estimate stability across repeated simulation runs, and on the capstone I conditioned each sensor channel so the offline clinical comparison stayed auditable.',
+        'Raw signals disagree with each other, so estimation is where they become one defensible state. In the rover, wheel odometry and IMU data were fused through Kalman and extended Kalman filters, with LiDAR SLAM supplying the map-referenced correction that stops dead reckoning wandering.',
+        'The engineering lives in the noise models and the residuals: process and measurement trust were tuned by watching estimate stability across repeated simulation runs, and on the capstone each sensor channel was conditioned so the offline clinical comparison stayed auditable.',
       ],
       records: [
         { label: 'ROS 2 rover', href: '/work/autonomous-navigation-rover/' },
@@ -72,7 +74,7 @@ export const closedLoop = {
       name: 'Control',
       detail: 'PID, PLC logic, motion and process control',
       depth: [
-        'With a trustworthy state I close the loop. I tuned PID motion control in the rover against simulated behaviour, watching overshoot, rise and settling on each change, and I delivered PLC control logic for pharmaceutical, biotechnology and food-manufacturing systems under GMP.',
+        'With a trustworthy state the loop is closed. PID motion control in the rover was tuned against simulated behaviour, watching overshoot, rise and settling on each change, and PLC control logic was delivered for pharmaceutical, biotechnology and food-manufacturing systems under GMP.',
         'The same stability and disturbance thinking applies at both scales: a wheel motor and a dosing skid are both plants with dynamics, limits and consequences for getting the loop wrong.',
       ],
       records: [
@@ -85,8 +87,8 @@ export const closedLoop = {
       name: 'Actuate',
       detail: 'Drives, actuators, robots, production equipment',
       depth: [
-        'Control earns its keep at the actuator. I integrated drives, motors and actuators with control logic in plant automation, and I worked hands-on through the programme that moved carbon-fibre rim layup and demoulding onto KUKA robotic cells.',
-        'Production actuation carries obligations simulation never imposes: safety, changeover, recovery and rate. Six years on manufacturing floors taught me what a line needs from its equipment before I specified any.',
+        'Control earns its keep at the actuator. Drives, motors and actuators were integrated with control logic in plant automation, including hands-on work through the programme that moved carbon-fibre rim layup and demoulding onto KUKA robotic cells.',
+        'Production actuation carries obligations simulation never imposes: safety, changeover, recovery and rate. Six years on manufacturing floors taught what a line needs from its equipment before any equipment was specified.',
       ],
       records: [
         { label: 'JAG smart factory', href: '/work/jag-smart-factory/' },
@@ -98,7 +100,7 @@ export const closedLoop = {
       name: 'Verify',
       detail: 'FAT and SAT, CAN evidence, ITPs, qualification',
       depth: [
-        'I close every loop with evidence someone else can audit. I executed FAT and SAT and produced qualification and handover documentation for regulated plants, verified a migrated SCADA system against the validated original, and backed every automotive defect report I raised with CAN traces.',
+        'Every loop closes with evidence someone else can audit. FAT and SAT were executed and qualification and handover documentation produced for regulated plants, a migrated SCADA system was verified against the validated original, and every automotive defect report raised was backed with CAN traces.',
         'In manufacturing that discipline ran through ITPs, MDRs and traceability records. Verification is designed before it is executed: acceptance criteria first, evidence at the moment of test, a record for every fault.',
       ],
       records: [
@@ -121,11 +123,11 @@ export const credentials: readonly CredentialGroup[] = [
       {
         title: 'Bachelor of Mechatronics Engineering (Honours)',
         detail:
-          'I graduated from Deakin University with Distinction in 2025. My Honours capstone was an ESP32 clinical ataxia assessment device.',
+          'Completed at Deakin University with Distinction in 2025. The Honours capstone was an ESP32 clinical ataxia assessment device.',
       },
       {
         title: 'Higher National Diploma, Mechatronics, Robotics and Automation Engineering',
-        detail: 'I completed this qualification at Cardiff Metropolitan University with Distinction in 2016.',
+        detail: 'Completed at Cardiff Metropolitan University with Distinction in 2016.',
       },
     ],
   },
@@ -144,20 +146,20 @@ export const credentials: readonly CredentialGroup[] = [
     items: [
       {
         title: 'Secretary, Newcomb and District Cricket Club.',
-        detail: 'I also built and run the club website on Next.js and Supabase.',
+        detail: 'This role also covers building and running the club website on Next.js and Supabase.',
       },
       {
         title: 'Deakin Mars Rover Team.',
         detail:
-          'I contributed to multidisciplinary student rover engineering across mechanical, electronics, control and software work.',
+          'Contributed to multidisciplinary student rover engineering across mechanical, electronics, control and software work.',
       },
       {
         title: 'Math Mentors.',
-        detail: 'I supported peers with mathematics, problem solving, study skills and exam preparation.',
+        detail: 'Supported peers with mathematics, problem solving, study skills and exam preparation.',
       },
       {
         title: 'Peer Support.',
-        detail: 'I helped fellow students settle in, stay connected and find the right support.',
+        detail: 'Helped fellow students settle in, stay connected and find the right support.',
       },
     ],
   },
@@ -165,32 +167,32 @@ export const credentials: readonly CredentialGroup[] = [
 
 export const beyondHeading = {
   title: 'Away from the stack.',
-  summary: 'My week does not end at the workbench. These are five things that keep me balanced.',
+  summary: 'The week does not end at the workbench. These are five things that keep it balanced.',
 } as const
 
 export const beyond: readonly { readonly title: string; readonly body: string }[] = [
   {
     title: 'Club cricket',
-    body: 'I spend most weekends in season at Newcomb and District Cricket Club, both on and off the field. I play for the club and help keep it running as secretary.',
+    body: 'Most weekends in season are spent at Newcomb and District Cricket Club, both on and off the field: playing for the club and helping keep it running as secretary.',
   },
   {
     title: 'Hockey',
-    body: "Hockey is my cricket off-season counterpart: a different field, a faster ball and the same appetite for team sport.",
+    body: 'Hockey is the cricket off-season counterpart: a different field, a faster ball and the same appetite for team sport.',
   },
   {
     title: 'Long drives',
-    body: 'Long drives are my reset button: an open road, no particular hurry and somewhere new at the end of it.',
+    body: 'Long drives are the reset button: an open road, no particular hurry and somewhere new at the end of it.',
   },
   {
     title: 'Music',
-    body: 'Music is the soundtrack to my drives and most evenings. Good music is non-negotiable for me.',
+    body: 'Music is the soundtrack to those drives and to most evenings. Good music is non-negotiable.',
   },
   {
     title: 'Robots in the garage',
-    body: 'I nearly always have a personal robotics or hardware build half-finished on the bench. Some of them make it into this portfolio.',
+    body: 'There is nearly always a personal robotics or hardware build half-finished on the bench. Some of them make it into this portfolio.',
   },
 ] as const
 
 /** Contact section copy, index.html:1489. */
 export const contactIntro =
-  'I work across robotics, mechatronics, AI/ML, autonomous systems, embedded intelligence and end-to-end automation engineering.'
+  'Work spans robotics, mechatronics, AI/ML, autonomous systems, embedded intelligence and end-to-end automation engineering. Get in touch by email, LinkedIn or GitHub.'

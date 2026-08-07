@@ -14,7 +14,8 @@ import type { EvidenceTier } from '../tiers'
  *
  *   - `coverageKind: 'ecosystem-reference'` is a neutral catalogue entry. It
  *     is a fact about the field, not a claim about Saj. It carries no
- *     evidence tier and can never render as "I use" or "my expertise".
+ *     evidence tier and can never render as a personal usage or expertise
+ *     claim (e.g. "Sajeevan uses" or "his expertise").
  *   - `coverageKind: 'profile'` additionally carries a `profile` block, and
  *     that block is the only place an evidence tier may appear.
  *
@@ -203,7 +204,7 @@ export interface EntityProfile {
   readonly evidenceTier: EvidenceTier
   /** Routes or records that carry the evidence. Never empty. */
   readonly evidenceRefs: readonly string[]
-  /** The honest limit of the claim, in Saj's words. */
+  /** The honest limit of the claim, as stated by Saj. */
   readonly scopeNote: string
   readonly assignedBySaj: true
 }

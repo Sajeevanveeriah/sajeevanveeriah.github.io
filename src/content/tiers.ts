@@ -1,9 +1,10 @@
 /**
  * The five-tier evidence model.
  *
- * Binding truthful-representation control, carried over from AGENTS.md
- * without alteration. Definitions are written in Saj's first person and
- * render wherever the legend or an indicator explains a tier.
+ * Binding truthful-representation control, carried over from AGENTS.md.
+ * Definitions are written in agentless capability voice (recast per the
+ * owner's 7 August 2026 direction, meaning unchanged) and render wherever
+ * the legend or an indicator explains a tier.
  *
  * Saj assigns every tier. No tier is ever inferred from a description, a
  * platform list, resume text or any other content. An entry with no
@@ -20,7 +21,7 @@ export type EvidenceTier =
 export interface TierMeta {
   readonly id: EvidenceTier
   readonly label: string
-  /** What the tier means, in Saj's own words. */
+  /** What the tier means, as defined by Saj. */
   readonly definition: string
   /**
    * Dot treatment. Never the sole signal: every indicator also renders its
@@ -36,35 +37,35 @@ export const TIERS: Record<EvidenceTier, TierMeta> = {
   delivered: {
     id: 'delivered',
     label: 'Delivered',
-    definition: 'I delivered this in professional or assessed project work, and evidence of that delivery exists.',
+    definition: 'Delivered in professional or assessed project work, and evidence of that delivery exists.',
     dot: 'solid',
     strength: 5,
   },
   'hands-on': {
     id: 'hands-on',
     label: 'Hands-on',
-    definition: 'I built, tested, configured, analysed or used this directly myself.',
+    definition: 'Built, tested, configured, analysed or used directly, first hand.',
     dot: 'half',
     strength: 4,
   },
   'working-knowledge': {
     id: 'working-knowledge',
     label: 'Working knowledge',
-    definition: 'I know this through credible study, coursework or self-directed learning.',
+    definition: 'Known through credible study, coursework or self-directed learning.',
     dot: 'ringed',
     strength: 3,
   },
   adjacent: {
     id: 'adjacent',
     label: 'Adjacent',
-    definition: 'I bring transferable exposure to this from nearby systems I worked on.',
+    definition: 'Transferable exposure carried over from work on nearby systems.',
     dot: 'hollow',
     strength: 2,
   },
   target: {
     id: 'target',
     label: 'Target',
-    definition: 'I am deliberately building toward this as a growth domain.',
+    definition: 'A growth domain being deliberately built toward.',
     dot: 'dashed',
     strength: 1,
   },

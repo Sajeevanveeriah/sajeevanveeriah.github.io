@@ -21,8 +21,10 @@ export const metadata: Metadata = {
   // canonical identity string reaches the tab, the search result and both
   // social cards from a single place.
   title: `${site.name} | ${site.jobTitle}`,
+  // The one metadata description that keeps the name: it is the site's search
+  // snippet, so the name appears once as identity, not as narration.
   description:
-    'I build robotics, mechatronics, AI/ML and automation systems across mechanics, electronics, embedded software, autonomy, controls and validation.',
+    'Sajeevan Veeriah: robotics, mechatronics, AI/ML and automation engineering across mechanics, electronics, embedded software, autonomy, controls and validation.',
   alternates: { canonical: '/' },
 }
 
@@ -126,7 +128,7 @@ export default function HomePage() {
           <div className={home.heroIntro}>
             <p className={home.heroName}>{site.name}</p>
             <h1 id="hero-title" className={home.heroTitle}>
-              I build intelligent systems that move, sense and decide.
+              Intelligent systems that move, sense and decide.
             </h1>
             <p className={home.heroRole}>{site.jobTitle}</p>
           </div>
@@ -164,18 +166,18 @@ export default function HomePage() {
         </Stagger>
       </section>
 
-      {/* ---------- Problems I solve ---------- */}
+      {/* ---------- Problem space (recast agentless per owner's 7 August 2026 direction) ---------- */}
       <section className="section" aria-labelledby="problems-title">
         <div className="wrap-wide">
           <Reveal className={home.stageHeadSplit}>
             <div>
-              <p className="label label-accent">Problems I solve</p>
+              <p className="label label-accent">Problems solved</p>
               <h2 id="problems-title">Across boundaries, not inside silos.</h2>
             </div>
             <p className="lede">
-              Most of the hard problems I am given sit between disciplines. I identify which
-              engineering layer the problem actually lives in, then work across the layers required
-              to resolve it.
+              Most of the hard problems presented sit between disciplines. The approach identifies
+              which engineering layer the problem actually lives in, then works across the layers
+              required to resolve it.
             </p>
           </Reveal>
 
@@ -196,7 +198,7 @@ export default function HomePage() {
         <div className="wrap-wide">
           <Reveal className={home.stageHeadSplit}>
             <div>
-              <p className="label label-accent">How I work</p>
+              <p className="label label-accent">How the work is done</p>
               <h2 id="loop-title">{closedLoop.title}</h2>
             </div>
             <p className="lede">{closedLoop.summary}</p>
@@ -217,11 +219,11 @@ export default function HomePage() {
           <div className={home.workStage}>
             <Reveal className={`sticky-rail ${home.workRail}`}>
               <p className="label label-accent">Selected work</p>
-              <h2 id="work-title">Systems I built, integrated and validated.</h2>
+              <h2 id="work-title">Systems built, integrated and validated.</h2>
               <p className="lede">
                 Four records that span deployed mobile robotics, client inventory and pricing
                 software, deployed supervised product engineering and applied AI/ML. Each one states the problem,
-                what I personally owned and what the evidence supports.
+                what was personally owned and what the evidence supports.
               </p>
             </Reveal>
 
@@ -306,7 +308,7 @@ export default function HomePage() {
                           <p className={home.factBody}>{p.problem}</p>
                         </div>
                         <div className={home.fact}>
-                          <span className={home.factLabel}>What I owned</span>
+                          <span className={home.factLabel}>What was owned</span>
                           <p className={home.factBody}>
                             {p.homeExcerpt?.ownership ?? p.demonstrates}
                           </p>
@@ -351,7 +353,7 @@ export default function HomePage() {
               <h2 id="stack-title">From physical architecture to verified behaviour.</h2>
             </div>
             <p className="lede">
-              Ten layers I have exercised through real work. Explore the evidence behind each one
+              Ten layers exercised through real work. Explore the evidence behind each one
               rather than a proficiency score.
             </p>
           </Reveal>
@@ -397,7 +399,7 @@ export default function HomePage() {
             Have an engineering problem that crosses disciplines?
           </h2>
           <p className="lede">
-            Review the work, inspect the evidence behind it, or write to me directly.
+            Review the work, inspect the evidence behind it, or make direct contact.
           </p>
           <div className={home.ctaActions}>
             <a href={`mailto:${site.email}`} className="btn btn-primary">
@@ -426,7 +428,7 @@ function diagramCaption(slug: string): string | undefined {
     case 'veerai-slm':
       return 'The governed local pipeline: approved knowledge ingested and retrieved, inference run locally, and evaluation feeding back into the system.'
     case 'iot-monitoring-platform':
-      return 'The transport chain I built: equipment CAN and condition sensing, through a custom board and MikroTik edge connectivity, to a Linux server.'
+      return 'The transport chain as built: equipment CAN and condition sensing, through a custom board and MikroTik edge connectivity, to a Linux server.'
     case 'jag-smart-factory':
       return 'The migration discipline: application content converted item by item, then verified against the existing validated system.'
     case 'inventory-scanning-mobile-robot':

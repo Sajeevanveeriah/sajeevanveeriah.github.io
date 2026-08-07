@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
   /**
    * The case study reads as one continuous argument: the problem, the system
-   * that answers it, the part of that system I personally owned, the
+   * that answers it, the part of that system that was personally owned, the
    * decisions behind it, how it was checked and what the evidence actually
    * supports. Empty fields drop out rather than rendering a blank chapter.
    */
@@ -115,12 +115,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       body: [engineering.basis],
       engineering: true,
     },
-    { title: 'What I owned', body: [p.demonstrates] },
-    { title: 'Why I built it this way', body: [p.approach[1] ?? ''] },
+    // Chapter titles recast agentless per the owner's 7 August 2026 direction.
+    { title: 'What was owned', body: [p.demonstrates] },
+    { title: 'Why it was built this way', body: [p.approach[1] ?? ''] },
     {
       title: 'Technique deep dives',
       body: depth.length
-        ? ['I wrote these treatments to make the techniques this record names legible in full: the mechanism, the choice, the tuning and the proof. Each one opens in place.']
+        ? ['These treatments make the techniques this record names legible in full: the mechanism, the choice, the tuning and the proof. Each one opens in place.']
         : [],
       depth: true,
     },
@@ -130,8 +131,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       labs: true,
     },
     { title: 'Tools and disciplines', body: [p.toolsNote] },
-    { title: 'How I checked the work', body: [p.validation] },
-    { title: 'What I delivered', body: [p.outcome] },
+    { title: 'How the work was verified', body: [p.validation] },
+    { title: 'What was delivered', body: [p.outcome] },
     { title: 'What this record proves', body: [p.proves] },
     { title: 'What it does not claim', body: [p.doesNotClaim] },
   ]
