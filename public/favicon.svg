@@ -1,10 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SV monogram">
-  <style>
-    .fav-bg { fill: #0B0D12; }
-    .fav-ink { fill: #ECE9E1; }
-    .fav-accent { fill: #D0B274; }
-  </style>
-  <rect class="fav-bg" width="64" height="64" rx="4"></rect>
-  <text x="32" y="34" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="700" letter-spacing="-1" text-anchor="middle" dominant-baseline="central" class="fav-ink">SV</text>
-  <rect class="fav-accent" x="16" y="47" width="32" height="3"></rect>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Monogram mark">
+  <defs>
+    <!-- the numeral, reused for drawing and for cutting clean gaps in the ring -->
+    <g id="one">
+      <rect x="300" y="290" width="84" height="530"/>
+      <!-- top serif slanting down to the left -->
+      <polygon points="384,290 384,360 236,404 236,352"/>
+      <!-- bottom foot, slanted -->
+      <polygon points="240,820 430,820 404,878 214,878"/>
+    </g>
+    <mask id="ringmask">
+      <rect width="1000" height="1000" fill="#fff"/>
+      <use href="#one" fill="#000" stroke="#000" stroke-width="56"/>
+    </mask>
+  </defs>
+
+  <!-- outer ring, broken where the numeral crosses it -->
+  <circle cx="520" cy="500" r="315" fill="none" stroke="#1A5DC8" stroke-width="40" mask="url(#ringmask)"/>
+
+  <!-- numeral 1, blue -->
+  <use href="#one" fill="#1A5DC8"/>
+
+  <!-- F bars -->
+  <rect x="404" y="322" width="360" height="66" fill="#1D2733"/>
+  <rect x="404" y="458" width="224" height="66" fill="#1A5DC8"/>
+  <rect x="404" y="594" width="150" height="66" fill="#1D2733"/>
+
+  <!-- P: bowl continuing from the middle bar, stem descending -->
+  <path d="M628 458 h74 a146 146 0 0 1 0 292 h-26 v-66 h26 a80 80 0 0 0 0 -160 h-74 z" fill="#1D2733"/>
+  <rect x="614" y="458" width="66" height="420" fill="#1D2733"/>
 </svg>
