@@ -88,6 +88,9 @@ export interface NavItem {
 
 export const navigation: readonly NavItem[] = [
   { label: 'Work', href: '/work/' },
+  // The business profile. Saj asked on 7 August 2026 for the practice to be
+  // reachable as its own section, built for project lead generation.
+  { label: 'Practice', href: '/practice/' },
   { label: 'Expertise', href: '/skills/' },
   // The employer record was reachable from nothing until this entry existed:
   // it had a route, a sitemap line and six detail pages, and no page on the

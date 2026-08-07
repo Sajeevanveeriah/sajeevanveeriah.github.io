@@ -488,3 +488,12 @@
     grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   }
 }
+
+/* Practice band: the business profile teaser above the closing CTA. The
+   wordmark is a wide lockup, so it is capped rather than filling the wrap. */
+.practiceLogo {
+  width: min(100%, 26rem);
+  height: auto;
+  display: block;
+  margin-block-end: var(--space-3);
+}
