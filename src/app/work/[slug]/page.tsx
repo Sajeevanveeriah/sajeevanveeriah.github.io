@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { ProjectImage } from '@/components/ui/ProjectImage'
-import { ProjectVideo } from '@/components/ui/ProjectVideo'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
@@ -82,7 +81,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   // A suppressed role is never advertised, including from a record it worked on.
   const roles = discoverableExperience.filter((r) => r.relatedProjects.includes(p.slug))
   const image = p.images?.[0]
-  const video = p.videos?.[0]
   const variant = diagramFor(p.slug)
 
   // Pagination walks the discoverable set, so it can neither land on nor
@@ -207,14 +205,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           }
         />
 
-        {/* A record with a demonstration clip leads with it; the record's
-            static image stays its poster and failure fallback, and every
-            discovery surface keeps the image untouched. */}
-        {video ? (
-          <Reveal className={`media-frame ${s.mediaHero}`}>
-            <ProjectVideo video={video} fallback={image} />
-          </Reveal>
-        ) : image ? (
+        {image ? (
           <Reveal className={`media-frame ${s.mediaHero}`}>
             <ProjectImage image={image} priority />
           </Reveal>
