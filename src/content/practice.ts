@@ -30,9 +30,11 @@ export const practice = {
   since: 'Operating since June 2026',
   tagline:
     'Engineering delivery for problems that cross disciplines: robotics, mechatronics, AI/ML, software and end-to-end automation.',
-  // Reused verbatim from the employer record summary in employers.ts.
+  // Same facts as the employer record summary in employers.ts, recast in the
+  // indicative business voice Saj asked for on 7 August 2026: the company
+  // profile speaks as the practice, never as "I".
   summary:
-    'I design, build and deploy independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
+    'The practice designs, builds and deploys independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
   services: [
     {
       title: 'Robotics and autonomy',
@@ -73,7 +75,7 @@ export const practice = {
   engage: {
     kicker: 'Work with the practice',
     title: 'Bring a project.',
-    body: 'Describe the operating problem, the constraints and the outcome you need. I reply with how I would approach it, what I would validate and what delivery would look like.',
+    body: 'Describe the operating problem, the constraints and the outcome you need. The practice responds with a proposed approach, the validation plan and what delivery would look like.',
   },
   support: {
     kicker: 'Support the practice',
