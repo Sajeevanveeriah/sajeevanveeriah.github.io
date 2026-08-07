@@ -1,6 +1,6 @@
 import type { EcosystemEntity, EcosystemPillar, EcosystemDomain, Lifecycle, EntityKind, CoverageKind } from './types'
 import { allPillars, pillars, domains, categories, BASELINE_PILLAR_ID } from './taxonomy'
-import { sources, CATALOGUE_UPDATED_AT } from './sources'
+import { sources, REVIEWED_AT } from './sources'
 import { computeBoardEntities } from './entities/compute-boards'
 import { siliconEntities } from './entities/silicon'
 import { hardwareComponentEntities } from './entities/hardware-components'
@@ -19,7 +19,7 @@ import { matchesQuery } from './validate'
 
 export * from './types'
 export { allPillars, pillars, baselinePillar, domains, categories, BASELINE_PILLAR_ID } from './taxonomy'
-export { sources, REVIEWED_AT, CATALOGUE_UPDATED_AT } from './sources'
+export { sources, REVIEWED_AT } from './sources'
 export { scopeMappings, suppliedTerms } from './scope'
 export { matchesQuery, validateEcosystem } from './validate'
 export type { EcosystemData, Problem } from './validate'
@@ -59,13 +59,6 @@ export const REQUIRED_SEARCH_TERMS: readonly string[] = [
   'Arduino',
   'Particle',
   'NVIDIA Jetson',
-  'Orange Pi',
-  'ODROID',
-  'ASUS Tinker Board',
-  'Banana Pi',
-  'Libre Computer Le Potato',
-  'BBC micro:bit',
-  'Adafruit Feather',
   'MATLAB',
   'Simulink',
   'ROS 2',
@@ -175,4 +168,4 @@ export function searchEntities(query: string, pool: readonly EcosystemEntity[] =
   return pool.filter((e) => matchesQuery(e, query))
 }
 
-export { CATALOGUE_UPDATED_AT as ecosystemUpdatedAt }
+export { REVIEWED_AT as ecosystemReviewedAt }
