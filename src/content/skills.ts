@@ -1,8 +1,9 @@
 import type { EvidenceTier } from './tiers'
 
 /**
- * Skill Library: six tool territories, transcribed verbatim from
- * index.html lines 1030 to 1085. evidenceTier is ported from the tier chip
+ * Skill Library: six tool territories, transcribed from index.html lines
+ * 1030 to 1085; voice recast to third person on the owner's 7 August 2026
+ * direction, facts unchanged. evidenceTier is ported from the tier chip
  * Saj set on each group; tierNote preserves the chip's qualifier text.
  */
 
@@ -24,7 +25,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'robotics-and-autonomy',
     name: 'Robotics and autonomy',
     summary:
-      'I built and validated an autonomous ROS 2 rover stack end to end, and gained hands-on exposure to KUKA industrial robot cells in manufacturing.',
+      'Sajeevan built and validated an autonomous ROS 2 rover stack end to end, and gained hands-on exposure to KUKA industrial robot cells in manufacturing.',
     platforms: ['ROS 2 Humble', 'Nav2', 'MoveIt 2', 'Gazebo'],
     protocols: [
       'RViz',
@@ -45,7 +46,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'controls-automation-and-scada',
     name: 'Controls, automation and SCADA',
     summary:
-      'I delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration.',
+      'Sajeevan delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration.',
     platforms: ['Siemens TIA Portal', 'WinCC', 'PCS 7', 'iFIX', 'PVI+'],
     protocols: [
       'PLC programming (IEC 61131-3)',
@@ -65,7 +66,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'embedded-and-electronics',
     name: 'Embedded and electronics',
     summary:
-      'I designed custom PCBs, integrated CAN-connected equipment and telemetry, and developed firmware across professional, capstone and personal builds.',
+      'Sajeevan designed custom PCBs, integrated CAN-connected equipment and telemetry, and developed firmware across professional, capstone and personal builds.',
     platforms: ['ESP32 and ESP32-S3', 'STM32', 'FreeRTOS', 'Custom PCB design', 'CAN capture'],
     protocols: [
       'Embedded C and C++',
@@ -85,7 +86,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'software-data-and-ai-ml',
     name: 'Software, data and AI/ML',
     summary:
-      'I built telemetry capture, transport and Linux server paths, and applied ML in digital-twin and robotics projects.',
+      'Sajeevan built telemetry capture, transport and Linux server paths, and applied ML in digital-twin and robotics projects.',
     platforms: ['Python', 'C and C++', 'MATLAB and Simulink', 'Linux', 'MikroTik'],
     protocols: [
       'JavaScript',
@@ -105,7 +106,7 @@ export const disciplines: readonly Discipline[] = [
   {
     slug: 'automotive-and-validation',
     name: 'Automotive and validation',
-    summary: 'I carried out ADAS and vehicle-software validation, plus emissions and compliance testing.',
+    summary: 'Sajeevan carried out ADAS and vehicle-software validation, plus emissions and compliance testing.',
     platforms: ['Vector CANoe', 'Vector CANalyzer'],
     protocols: [
       'CAN and CAN FD',
@@ -123,7 +124,7 @@ export const disciplines: readonly Discipline[] = [
     slug: 'mechanical-hardware-and-delivery',
     name: 'Mechanical, hardware and delivery',
     summary:
-      'I applied CAD across capstone, rover and pressure-vessel work, and produced delivery documentation in regulated environments.',
+      'Sajeevan applied CAD across capstone, rover and pressure-vessel work, and produced delivery documentation in regulated environments.',
     platforms: ['SolidWorks', 'Fusion 360'],
     protocols: [
       'Motors, drives and actuators',

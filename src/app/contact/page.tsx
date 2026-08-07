@@ -8,7 +8,7 @@ import c from './contact.module.css'
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Contact me by email, LinkedIn or GitHub, and download my resume for my full professional record.',
+    "Contact Sajeevan by email, LinkedIn or GitHub, and download his resume for his full professional record.",
   alternates: { canonical: '/contact/' },
   openGraph: { title: 'Contact', url: '/contact/' },
 }

@@ -125,7 +125,7 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
             <Reveal as="section" className={s.chapter} aria-labelledby="the-work">
               <span className={s.chapterIndex}>{nextIndex()}</span>
               <h2 id="the-work" className={s.chapterTitle}>
-                What I did
+                What Sajeevan did
               </h2>
               <div className={s.chapterBody}>
                 {groups.map((g) => (
@@ -157,7 +157,7 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
             <Reveal as="section" className={s.chapter} aria-labelledby="the-transfer">
               <span className={s.chapterIndex}>{nextIndex()}</span>
               <h2 id="the-transfer" className={s.chapterTitle}>
-                What I carried forward
+                What he carried forward
               </h2>
               <div className={s.chapterBody}>
                 <p>{x.transferable}</p>
@@ -168,7 +168,7 @@ export default async function EmployerPage({ params }: { params: Promise<{ slug:
               <Reveal as="section" className={s.chapter} aria-labelledby="the-argument">
                 <span className={s.chapterIndex}>{nextIndex()}</span>
                 <h2 id="the-argument" className={s.chapterTitle}>
-                  What I learned
+                  What he learned
                 </h2>
                 <p className={e.closing}>{x.closing}</p>
               </Reveal>

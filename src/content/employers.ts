@@ -17,7 +17,10 @@ import type { EvidenceTier } from './tiers'
  *     authoritative content brief of 30 July 2026, or the migrated text of
  *     the former `experience.ts`. Claims added from the resume carry an
  *     explicit `source`. Nothing is paraphrased into a stronger statement
- *     and no claim about Saj's work is inferred from anywhere else.
+ *     and no claim about Saj's work is inferred from anywhere else. Per the
+ *     owner's direction of 7 August 2026, first-person prose was recast into
+ *     third-person or indicative voice; the recast changed voice and grammar
+ *     only, and no claim was added, strengthened, weakened or dropped.
  *   - `companyFacts` are verified facts about the employer, not about Saj.
  *     Each carries the primary source domain it was verified against.
  *     "Company fact" is deliberately not an evidence tier: the five-tier
@@ -142,26 +145,26 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Robotics and autonomy',
         tier: 'delivered',
-        body: 'I completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot now used by end-users, with a supporting browser application for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+        body: 'Completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot now used by end-users, with a supporting browser application for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
       },
       {
         discipline: 'Networks and data',
         tier: 'delivered',
-        body: 'I designed, implemented and deployed a controlled browser and Windows desktop workflow now used by Stan Wootton Locksmiths to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce reviewable import, change, exception, rollback and audit outputs.',
+        body: 'Designed, implemented and deployed a controlled browser and Windows desktop workflow now used by Stan Wootton Locksmiths to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce reviewable import, change, exception, rollback and audit outputs.',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'delivered',
-        body: 'I designed, built and deployed an operator-support mobile robot now used by end-users to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
+        body: 'Designed, built and deployed an operator-support mobile robot now used by end-users to assist physical inventory scanning and connect captured stock observations to a controlled review workflow.',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'delivered',
-        body: 'I designed, built and deployed a modular robot platform now used by end-users for education, engineering experiments and repeatable subsystem testing, with clear interfaces and observable behaviour supporting supervised operation.',
+        body: 'Designed, built and deployed a modular robot platform now used by end-users for education, engineering experiments and repeatable subsystem testing, with clear interfaces and observable behaviour supporting supervised operation.',
       },
     ],
     summary:
-      'I design, build and deploy independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
+      'Sajeevan designs, builds and deploys independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
     domains: ['Robotics and autonomy', 'Product R&D', 'Engineering software', 'Inventory systems'],
     toolsLabel: 'Representative tools from completed and deployed work',
     tools: ['React', 'TypeScript', 'Vite', 'Tauri 2', 'Node.js', 'Vitest', 'Playwright'],
@@ -200,90 +203,90 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Control and automation',
         tier: 'delivered',
-        body: 'I executed an iFIX to PVI+ migration on a validated system, verifying functional behaviour against the pre-existing qualified baseline rather than against a specification alone.',
+        body: 'Executed an iFIX to PVI+ migration on a validated system, verifying functional behaviour against the pre-existing qualified baseline rather than against a specification alone.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
-        body: 'I produced FAT, SAT, commissioning, qualification and handover documentation packages.',
+        body: 'Produced FAT, SAT, commissioning, qualification and handover documentation packages.',
       },
       {
         discipline: 'Control and automation',
         tier: 'hands-on',
-        body: 'I built and modified control logic and process visualisation for pharmaceutical, biotech and food manufacturing lines operating under GMP.',
+        body: 'Built and modified control logic and process visualisation for pharmaceutical, biotech and food manufacturing lines operating under GMP.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I worked across field devices, instruments and drives, including the wiring and signal path between an instrument and the controller, not only the tag in software.',
+        body: 'Worked across field devices, instruments and drives, including the wiring and signal path between an instrument and the controller, not only the tag in software.',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'hands-on',
-        body: 'I supported MiR autonomous mobile robot operations and material-flow workflows in a smart-factory environment, diagnosing faults across the robot, the control system, the network and the production interface.',
+        body: 'Supported MiR autonomous mobile robot operations and material-flow workflows in a smart-factory environment, diagnosing faults across the robot, the control system, the network and the production interface.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I ran verification against a validated system under GMP change control, where the burden is proving that behaviour did not change, a harder test than proving a new feature works.',
+        body: 'Ran verification against a validated system under GMP change control, where the burden is proving that behaviour did not change, a harder test than proving a new feature works.',
       },
       {
         discipline: 'Control and automation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of batch control and recipe-driven production, including how a batch layer sits above equipment modules.',
+        body: 'Developed working knowledge of batch control and recipe-driven production, including how a batch layer sits above equipment modules.',
       },
       {
         discipline: 'Embedded and electronics',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of control-panel construction and industrial field-wiring practice.',
+        body: 'Developed working knowledge of control-panel construction and industrial field-wiring practice.',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of fleet-level traffic management and AMR mission dispatch against production demand.',
+        body: 'Developed working knowledge of fleet-level traffic management and AMR mission dispatch against production demand.',
       },
       {
         discipline: 'Networks and data',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of industrial networking between control, robot and production layers, including interface failure modes.',
+        body: 'Developed working knowledge of industrial networking between control, robot and production layers, including interface failure modes.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of the GMP computerised-system validation lifecycle and requirement-to-test traceability.',
+        body: 'Developed working knowledge of the GMP computerised-system validation lifecycle and requirement-to-test traceability.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'adjacent',
-        body: "I worked on systems for JAG's pharmaceutical, biotechnology and food-manufacturing clients.",
+        body: "Worked on systems for JAG's pharmaceutical, biotechnology and food-manufacturing clients.",
       },
       {
         discipline: 'Control and automation',
         tier: 'delivered',
-        body: 'I delivered end-to-end automation and systems integration for pharmaceutical, biotech and food manufacturing under GMP.',
+        body: 'Delivered end-to-end automation and systems integration for pharmaceutical, biotech and food manufacturing under GMP.',
         source: 'resume Rev09',
       },
       {
         discipline: 'Control and automation',
         tier: 'hands-on',
-        body: 'I worked across control logic, HMI, SCADA, MES and batch execution.',
+        body: 'Worked across control logic, HMI, SCADA, MES and batch execution.',
         source: 'experience.ts',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I integrated field devices, sensors, drives and process equipment with control logic and production data flows.',
+        body: 'Integrated field devices, sensors, drives and process equipment with control logic and production data flows.',
         source: 'experience.ts',
       },
       {
         discipline: 'Project and delivery',
         tier: 'hands-on',
-        body: 'I resolved faults raised during testing and site support with attention to diagnostics, safety, usability and data integrity.',
+        body: 'Resolved faults raised during testing and site support with attention to diagnostics, safety, usability and data integrity.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.',
+      'Sajeevan delivered control, integration and smart-factory engineering for pharmaceutical, biotech and food clients under GMP, including a full SCADA platform migration.',
     domains: [
       'Automation and SCADA',
       'Controls',
@@ -295,11 +298,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Industrial automation, process control, HMI and SCADA, MES, batch systems, GMP, GAMP 5, commissioning, validation, field-device integration, production data and regulated documentation.',
     transferable:
-      'In this role, I connected controls, software, process systems, operator workflows and compliance. I worked across both the machine layer and the validation layer, building capability relevant to automation, robotics, smart factory, digital twin and regulated engineering environments.',
+      'In this role, Sajeevan connected controls, software, process systems, operator workflows and compliance. He worked across both the machine layer and the validation layer, building capability relevant to automation, robotics, smart factory, digital twin and regulated engineering environments.',
     group: 'recent',
     relatedProjects: ['jag-smart-factory'],
     closing:
-      'I learned to treat a regulated plant as one connected system: recipes and supervisory software, field devices, material movement, and the qualification evidence that proves the system behaves as intended.',
+      'Sajeevan learned to treat a regulated plant as one connected system: recipes and supervisory software, field devices, material movement, and the qualification evidence that proves the system behaves as intended.',
     todoConfirm: [
       'PVI+ migration scope, a screen or object count.',
       'Did Saj personally do loop checking or point-to-point testing.',
@@ -362,14 +365,14 @@ export const employers: readonly Employer[] = [
       },
     ],
     summary:
-      'I validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes, using CAN-level evidence for readiness milestones and OTA sign-off.',
+      'Sajeevan validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes, using CAN-level evidence for readiness milestones and OTA sign-off.',
     domains: ['Automotive and validation', 'Embedded networks', 'Test engineering'],
     toolsLabel: 'Representative tools',
     tools: ['Vector CANoe', 'CANalyzer', 'CAN and CAN FD', 'vehicle instrumentation'],
     relevance:
       'Automotive validation, ADAS, vehicle networks, CAN, CAN FD, test procedures, regression testing, OTA validation, instrumentation, diagnostics and evidence-based engineering.',
     transferable:
-      'In this role, I connected embedded systems, vehicle behaviour, test engineering and fault evidence. I strengthened my ability to validate cyber-physical systems where software, sensors, networks, control logic and real-world operation interact. I apply the same closed-loop discipline to robotics and automation: sense, estimate, control, actuate and verify against real behaviour.',
+      'In this role, Sajeevan connected embedded systems, vehicle behaviour, test engineering and fault evidence. He strengthened his ability to validate cyber-physical systems where software, sensors, networks, control logic and real-world operation interact. He applies the same closed-loop discipline to robotics and automation: sense, estimate, control, actuate and verify against real behaviour.',
     group: 'recent',
     relatedProjects: ['adas-can-validation'],
     closing: null,
@@ -403,89 +406,89 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
-        body: 'I prepared QA, regulatory and test documentation for certification and audit, holding traceable configurations, results and findings.',
+        body: 'Prepared QA, regulatory and test documentation for certification and audit, holding traceable configurations, results and findings.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I prepared and instrumented vehicles for emissions and range testing, including fitting measurement equipment, verifying calibration state and setting up the test environment before a run.',
+        body: 'Prepared and instrumented vehicles for emissions and range testing, including fitting measurement equipment, verifying calibration state and setting up the test environment before a run.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I conducted real-time data acquisition during test runs and analysed results against ADR and EURO requirements.',
+        body: 'Conducted real-time data acquisition during test runs and analysed results against ADR and EURO requirements.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I performed maintenance and fault finding on emissions test equipment to hold accuracy and reliability between programs.',
+        body: 'Performed maintenance and fault finding on emissions test equipment to hold accuracy and reliability between programs.',
       },
       {
         discipline: 'Networks and data',
         tier: 'hands-on',
-        body: 'I used CAN tools to capture and interpret vehicle bus data during testing, correlating bus signals against measured emissions and energy consumption.',
+        body: 'Used CAN tools to capture and interpret vehicle bus data during testing, correlating bus signals against measured emissions and energy consumption.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'hands-on',
-        body: 'I tested EV and PHEV range and vehicle systems, a different measurement problem from tailpipe emissions requiring energy accounting rather than gas analysis.',
+        body: 'Tested EV and PHEV range and vehicle systems, a different measurement problem from tailpipe emissions requiring energy accounting rather than gas analysis.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I analysed deviations and supported evidence-based fault isolation, separating instrument fault from vehicle behaviour from test procedure error.',
+        body: 'Analysed deviations and supported evidence-based fault isolation, separating instrument fault from vehicle behaviour from test procedure error.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of portable emissions measurement and the controls needed to preserve laboratory-grade discipline in field testing.',
+        body: 'Developed working knowledge of portable emissions measurement and the controls needed to preserve laboratory-grade discipline in field testing.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of internal-combustion, hybrid and battery-electric powertrain behaviour as it appears in test data.',
+        body: 'Developed working knowledge of internal-combustion, hybrid and battery-electric powertrain behaviour as it appears in test data.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I applied repeatability criteria when deciding whether inconsistent results required another test run.',
+        body: 'Applied repeatability criteria when deciding whether inconsistent results required another test run.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of the Australian Design Rules and Road Vehicle Certification System as the framework for test evidence.',
+        body: 'Developed working knowledge of the Australian Design Rules and Road Vehicle Certification System as the framework for test evidence.',
       },
       {
         discipline: 'Instrumentation and measurement',
         tier: 'adjacent',
-        body: 'I worked adjacent to ABMARC service lines covering ADAS, driver-assist, noise and VASS engineering.',
+        body: 'Worked adjacent to ABMARC service lines covering ADAS, driver-assist, noise and VASS engineering.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I followed repeatable procedures for auditable and technically defensible test results.',
+        body: 'Followed repeatable procedures for auditable and technically defensible test results.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I reviewed test data to identify deviations, trends and evidence gaps.',
+        body: 'Reviewed test data to identify deviations, trends and evidence gaps.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.',
+      'Sajeevan conducted vehicle emissions and compliance testing against ADR and EURO standards, producing repeatable, auditable and technically defensible results.',
     domains: ['Automotive and compliance', 'Instrumentation and DAQ', 'Quality and reporting'],
     toolsLabel: 'Representative tools',
     tools: ['Emissions instrumentation', 'data-acquisition systems', 'QA records'],
     relevance:
       'Emissions testing, vehicle compliance, instrumentation, data acquisition, test repeatability, QA records, regulatory documentation, standards exposure and technical reporting.',
     transferable:
-      'In this role, I strengthened my test discipline, evidence handling and systems-level thinking. I apply those habits wherever measurement quality, repeatability, documentation and fault interpretation matter, including robotics and automation commissioning.',
+      'In this role, Sajeevan strengthened his test discipline, evidence handling and systems-level thinking. He applies those habits wherever measurement quality, repeatability, documentation and fault interpretation matter, including robotics and automation commissioning.',
     group: 'recent',
     relatedProjects: ['emissions-compliance-testing'],
     closing:
-      'I learned to question every measurement: calibration state, procedure, repeatability and the difference between instrument behaviour and the system under test.',
+      'Sajeevan learned to question every measurement: calibration state, procedure, repeatability and the difference between instrument behaviour and the system under test.',
     todoConfirm: [
       'Did Saj work on the AVL PEMS specifically.',
       'Did Saj work on the AAA Real-World Testing Program.',
@@ -512,66 +515,66 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Embedded and electronics',
         tier: 'delivered',
-        body: 'I designed and deployed end-to-end IoT systems linking sensors, embedded devices, gateways, Linux services, data pipelines and dashboards. End to end means the literal chain: a sensor reading, an ESP32 firmware loop, a LoRaWAN uplink on AU915, a ChirpStack network server, an MQTT broker, a Linux service, an InfluxDB time series and a Grafana panel. Seven layers, one engineer.',
+        body: 'Designed and deployed end-to-end IoT systems linking sensors, embedded devices, gateways, Linux services, data pipelines and dashboards. End to end means the literal chain: a sensor reading, an ESP32 firmware loop, a LoRaWAN uplink on AU915, a ChirpStack network server, an MQTT broker, a Linux service, an InfluxDB time series and a Grafana panel. Seven layers, one engineer.',
       },
       {
         discipline: 'Project and delivery',
         tier: 'delivered',
-        body: 'I ran field trials on agricultural equipment and supported provisioning, fault finding and handover to the operator.',
+        body: 'Ran field trials on agricultural equipment and supported provisioning, fault finding and handover to the operator.',
       },
-      { discipline: 'Embedded and electronics', tier: 'hands-on', body: 'I developed ESP32 firmware for sensing and telemetry.' },
-      { discipline: 'Networks and data', tier: 'hands-on', body: 'I planned LoRaWAN AU915 radio links and provisioned devices.' },
-      { discipline: 'Networks and data', tier: 'hands-on', body: 'I configured ChirpStack and designed MQTT topic structures.' },
+      { discipline: 'Embedded and electronics', tier: 'hands-on', body: 'Developed ESP32 firmware for sensing and telemetry.' },
+      { discipline: 'Networks and data', tier: 'hands-on', body: 'Planned LoRaWAN AU915 radio links and provisioned devices.' },
+      { discipline: 'Networks and data', tier: 'hands-on', body: 'Configured ChirpStack and designed MQTT topic structures.' },
       {
         discipline: 'Networks and data',
         tier: 'hands-on',
-        body: 'I deployed Linux services, designed InfluxDB schemas and retention, and built Grafana dashboards.',
+        body: 'Deployed Linux services, designed InfluxDB schemas and retention, and built Grafana dashboards.',
       },
       {
         discipline: 'Embedded and electronics',
         tier: 'hands-on',
-        body: 'I designed a custom PCB for the agricultural monitoring application, integrating CAN trace capture, GPS and environmental sensing on one board.',
+        body: 'Designed a custom PCB for the agricultural monitoring application, integrating CAN trace capture, GPS and environmental sensing on one board.',
       },
       {
         discipline: 'Embedded and electronics',
         tier: 'hands-on',
-        body: 'I made enclosure, mounting and field-hardening decisions for equipment operating outdoors on moving machinery.',
+        body: 'Made enclosure, mounting and field-hardening decisions for equipment operating outdoors on moving machinery.',
       },
       {
         discipline: 'Networks and data',
         tier: 'hands-on',
-        body: 'I configured MikroTik networking for the field deployment.',
+        body: 'Configured MikroTik networking for the field deployment.',
       },
       {
         discipline: 'Networks and data',
         tier: 'hands-on',
-        body: 'I diagnosed failures in a deployed system where the fault could be firmware, radio, network server, broker, database or dashboard, with no way to know in advance which.',
+        body: 'Diagnosed failures in a deployed system where the fault could be firmware, radio, network server, broker, database or dashboard, with no way to know in advance which.',
       },
       {
         discipline: 'Project and delivery',
         tier: 'hands-on',
-        body: 'I administered the project alongside the engineering: scope, supplier coordination, documentation and delivery tracking.',
+        body: 'Administered the project alongside the engineering: scope, supplier coordination, documentation and delivery tracking.',
       },
       {
         discipline: 'Networks and data',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of point-to-point and point-to-multipoint wireless design, including RF trade-offs between LoRaWAN, Wi-Fi and cellular links.',
+        body: 'Developed working knowledge of point-to-point and point-to-multipoint wireless design, including RF trade-offs between LoRaWAN, Wi-Fi and cellular links.',
       },
       {
         discipline: 'Networks and data',
         tier: 'hands-on',
-        body: 'I integrated multiple data capture and transfer paths into a Linux-based server for remote status collection.',
+        body: 'Integrated multiple data capture and transfer paths into a Linux-based server for remote status collection.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I supported documentation and post-deployment handover.',
+        body: 'Supported documentation and post-deployment handover.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I designed and deployed field telemetry systems linking custom electronics, CAN capture, location, condition sensing, MikroTik edge equipment and Linux server integration.',
+      'Sajeevan designed and deployed field telemetry systems linking custom electronics, CAN capture, location, condition sensing, MikroTik edge equipment and Linux server integration.',
     domains: ['IoT and telemetry', 'Embedded and vehicle interfaces', 'Linux integration'],
     toolsLabel: 'Representative tools',
     tools: [
@@ -585,11 +588,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Embedded systems, IoT telemetry, custom PCB design, CAN trace capture, GPS or GNSS location, sensor interfacing, MikroTik connectivity, Linux servers, deployment and field validation.',
     transferable:
-      'In this role, I bridged embedded devices, communications, cloud data and operational visibility. I worked from sensor-level hardware through network configuration to data pipelines and user-facing dashboards, using the same sensor-to-cloud backbone that robotics and automation rely on for monitoring, diagnostics and control.',
+      'In this role, Sajeevan bridged embedded devices, communications, cloud data and operational visibility. He worked from sensor-level hardware through network configuration to data pipelines and user-facing dashboards, using the same sensor-to-cloud backbone that robotics and automation rely on for monitoring, diagnostics and control.',
     group: 'recent',
     relatedProjects: ['iot-monitoring-platform'],
     closing:
-      'I worked across the telemetry path from custom electronics and firmware to networking, Linux services, stored data and the dashboard used in the field.',
+      'Sajeevan worked across the telemetry path from custom electronics and firmware to networking, Linux services, stored data and the dashboard used in the field.',
     todoConfirm: [
       'Device count provisioned, and physical area or link range.',
       'EDA tool for the agricultural PCB, KiCad or Altium, and revision count.',
@@ -619,88 +622,88 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
-        body: 'I prepared and worked from Inspection and Test Plans.',
+        body: 'Prepared and worked from Inspection and Test Plans.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
-        body: 'I assembled Manufacturing Data Reports and traceable evidence packages for fabricated items.',
+        body: 'Assembled Manufacturing Data Reports and traceable evidence packages for fabricated items.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I reviewed structural-steel detail drawings against fabrication requirements and shop capability.',
+        body: 'Reviewed structural-steel detail drawings against fabrication requirements and shop capability.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I maintained material traceability by linking heat numbers and material certificates to finished members.',
+        body: 'Maintained material traceability by linking heat numbers and material certificates to finished members.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of AS/NZS structural-steel compliance records and audit expectations.',
+        body: 'Developed working knowledge of AS/NZS structural-steel compliance records and audit expectations.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of welding as a controlled process, including procedure and welder qualification. I did not perform welding-engineering work.',
+        body: 'Developed working knowledge of welding as a controlled process, including procedure and welder qualification. Did not perform welding-engineering work.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'adjacent',
-        body: 'I worked adjacent to pressure-vessel and heat-exchanger fabrication, stress relieving and heat treatment.',
+        body: 'Worked adjacent to pressure-vessel and heat-exchanger fabrication, stress relieving and heat treatment.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'delivered',
-        body: 'I signed off QA documentation within the scope given.',
+        body: 'Signed off QA documentation within the scope given.',
         source: 'experience.ts',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'delivered',
-        body: 'I developed CAD designs for pressure vessels that progressed into fabrication.',
+        body: 'Developed CAD designs for pressure vessels that progressed into fabrication.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I worked within the quality assurance team and operated as second to the QA manager across fabrication quality workflows.',
+        body: 'Worked within the quality assurance team and operated as second to the QA manager across fabrication quality workflows.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I supported quality areas for structural-steel and pressure-vessel work.',
+        body: 'Supported quality areas for structural-steel and pressure-vessel work.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I helped coordinate inspection evidence, non-conformance follow-up and fabrication documentation.',
+        body: 'Helped coordinate inspection evidence, non-conformance follow-up and fabrication documentation.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I supported NDE and mechanical testing evidence workflows as part of fabrication QA and inspection support.',
+        body: 'Supported NDE and mechanical testing evidence workflows as part of fabrication QA and inspection support.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I worked across quality assurance, engineering support, pressure-vessel CAD, drawing review, traceability and fabrication documentation in a standards-driven structural-steel and pressure-vessel environment, operating as second to the QA manager.',
+      'Sajeevan worked across quality assurance, engineering support, pressure-vessel CAD, drawing review, traceability and fabrication documentation in a standards-driven structural-steel and pressure-vessel environment, operating as second to the QA manager.',
     domains: ['Quality and documentation', 'Mechanical and CAD', 'Standards-driven delivery'],
     toolsLabel: 'Representative context',
     tools: ['ITPs', 'MDRs', 'drawing review', 'pressure-vessel CAD', 'traceability'],
     relevance:
       'Structural steel fabrication, pressure-vessel QA, CAD, drawing review, ITPs, MDRs, material traceability, welding and fabrication documentation, NDE, mechanical testing, inspection planning, QA sign-off and standards-driven delivery.',
     transferable:
-      'In this role, I built the documentation and quality discipline behind engineering delivery. I carried clear requirements, inspection evidence, traceability, sign-offs and defensible handover documentation into later regulated automation and commissioning work, alongside the mechanical, CAD and quality rigour needed for robot hardware, fixtures, machine frames and automation structures.',
+      'In this role, Sajeevan built the documentation and quality discipline behind engineering delivery. He carried clear requirements, inspection evidence, traceability, sign-offs and defensible handover documentation into later regulated automation and commissioning work, alongside the mechanical, CAD and quality rigour needed for robot hardware, fixtures, machine frames and automation structures.',
     group: 'foundation',
     relatedProjects: ['manufacturing-qa-foundation'],
     closing:
-      'I learned that traceability is part of the delivered product: fabrication evidence must show what was built, from which material and against which requirements.',
+      'Sajeevan learned that traceability is part of the delivered product: fabrication evidence must show what was built, from which material and against which requirements.',
     todoConfirm: [
       'Exact dates and exact job title.',
       'Any named project, such as a bridge or station package.',
@@ -734,37 +737,37 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I operated and monitored carbon fibre production equipment through the process steps, working to the tolerances a Tier 1 automotive part demands.',
+        body: 'Operated and monitored carbon fibre production equipment through the process steps, working to the tolerances a Tier 1 automotive part demands.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I performed quality-control checks within the in-process measurement regime.',
+        body: 'Performed quality-control checks within the in-process measurement regime.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I performed first-level troubleshooting when equipment or process behaviour drifted, including stopping the process when required.',
+        body: 'Performed first-level troubleshooting when equipment or process behaviour drifted, including stopping the process when required.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of composite manufacturing as a controlled process, including cure, pressure and layup discipline.',
+        body: 'Developed working knowledge of composite manufacturing as a controlled process, including cure, pressure and layup discipline.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of Industry 4.0 traceability by working within a system that recorded data for each unit and process stage.',
+        body: 'Developed working knowledge of Industry 4.0 traceability by working within a system that recorded data for each unit and process stage.',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'adjacent',
-        body: 'I worked adjacent to automation, robotics and AI-assisted inspection within the plant.',
+        body: 'Worked adjacent to automation, robotics and AI-assisted inspection within the plant.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I operated the legacy automated rim layup machine on the carbon-fibre wheel line.',
+        body: 'Operated the legacy automated rim layup machine on the carbon-fibre wheel line.',
         source: 'experience.ts',
       },
       {
@@ -776,19 +779,19 @@ export const employers: readonly Employer[] = [
         // not that he owned the cell build.
         discipline: 'Robotics and autonomy',
         tier: 'hands-on',
-        body: 'I was hands-on through the automation programme that replaced the legacy rim layup machine with new KUKA-based robotic cells for automated layup and robotic demoulding of the hot, heavy wheel tooling.',
+        body: 'Was hands-on through the automation programme that replaced the legacy rim layup machine with new KUKA-based robotic cells for automated layup and robotic demoulding of the hot, heavy wheel tooling.',
         source: 'experience.ts',
       },
       {
         discipline: 'Robotics and autonomy',
         tier: 'hands-on',
-        body: 'I supported trials, changeovers, quality checks and line recovery as the new KUKA robotic manufacturing line was commissioned and brought into production.',
+        body: 'Supported trials, changeovers, quality checks and line recovery as the new KUKA robotic manufacturing line was commissioned and brought into production.',
         source: 'experience.ts',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I supported wider production areas including NDE and mechanical testing.',
+        body: 'Supported wider production areas including NDE and mechanical testing.',
         source: 'experience.ts',
       },
       {
@@ -796,18 +799,18 @@ export const employers: readonly Employer[] = [
         // tier below the supporting claims above it rather than beside them.
         discipline: 'Quality, compliance and documentation',
         tier: 'hands-on',
-        body: 'I supported quality assurance and development work around automated rim layup, including first-off checks, in-process inspection, defect review, traceability and production trials.',
+        body: 'Supported quality assurance and development work around automated rim layup, including first-off checks, in-process inspection, defect review, traceability and production trials.',
         source: 'experience.ts',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'working-knowledge',
-        body: 'I gained hands-on exposure to carbon-fibre manufacturing, industrial robotics, automated layup, production quality, defect awareness and the practical realities of scaling advanced composite manufacturing.',
+        body: 'Gained hands-on exposure to carbon-fibre manufacturing, industrial robotics, automated layup, production quality, defect awareness and the practical realities of scaling advanced composite manufacturing.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing, and I was hands-on through the programme that replaced the legacy rim layup machine with new KUKA-based robotic cells.',
+      'Sajeevan worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing, and he was hands-on through the programme that replaced the legacy rim layup machine with new KUKA-based robotic cells.',
     domains: [
       'Advanced manufacturing',
       'Robotics and automation',
@@ -824,11 +827,11 @@ export const employers: readonly Employer[] = [
     relevance:
       'Advanced manufacturing, carbon-fibre composites, industrial robotics, KUKA-based robotic cells, automated layup and robotic demoulding, cell commissioning support, quality assurance, NDE, mechanical testing, defect detection, production repeatability, process development and manufacturing scale-up.',
     transferable:
-      'In this role, I strengthened my understanding of the links between industrial robotics, automation, materials, machine behaviour and product quality. Working hands-on as KUKA-based robotic cells replaced a legacy line showed me how process variation, fibre placement, inspection, testing and operator feedback influence high-performance manufacturing.',
+      'In this role, Sajeevan strengthened his understanding of the links between industrial robotics, automation, materials, machine behaviour and product quality. Working hands-on as KUKA-based robotic cells replaced a legacy line showed him how process variation, fibre placement, inspection, testing and operator feedback influence high-performance manufacturing.',
     group: 'foundation',
     relatedProjects: ['carbon-revolution-rim-layup', 'manufacturing-qa-foundation'],
     closing:
-      'I saw how robotics, process control, inspection and digital traceability work together when an advanced manufacturing line changes at production scale.',
+      'Sajeevan saw how robotics, process control, inspection and digital traceability work together when an advanced manufacturing line changes at production scale.',
     todoConfirm: [
       'Exact dates and exact title. Public records list Production Line Operator.',
       'Which process stage. Moulding, demoulding, machining, finishing or inspection.',
@@ -848,34 +851,34 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
+        body: 'Operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
       },
       {
         discipline: 'Quality, compliance and documentation',
         tier: 'working-knowledge',
-        body: 'I developed working knowledge of production hygiene, batch traceability and quality controls for food and beverage manufacturing.',
+        body: 'Developed working knowledge of production hygiene, batch traceability and quality controls for food and beverage manufacturing.',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I supported five production lines: two canning lines, two bottling lines and one kegging line.',
+        body: 'Supported five production lines: two canning lines, two bottling lines and one kegging line.',
         source: 'experience.ts',
       },
       {
         discipline: 'Manufacturing and process',
         tier: 'hands-on',
-        body: 'I supported daily production execution, changeovers, run completion, KPI tracking, quality checks and first-response machine fixes.',
+        body: 'Supported daily production execution, changeovers, run completion, KPI tracking, quality checks and first-response machine fixes.',
         source: 'experience.ts',
       },
       {
         discipline: 'Project and delivery',
         tier: 'hands-on',
-        body: 'I took part in the installation and commissioning of WestRock and Fibre King packaging equipment during the canning line upgrade.',
+        body: 'Took part in the installation and commissioning of WestRock and Fibre King packaging equipment during the canning line upgrade.',
         source: 'experience.ts',
       },
     ],
     summary:
-      'I operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
+      'Sajeevan operated and monitored beverage production equipment while maintaining safety, quality, traceability and first-level troubleshooting discipline.',
     domains: ['Manufacturing and quality', 'Machine operations', 'Installation and commissioning'],
     toolsLabel: 'Representative context',
     tools: [
@@ -888,7 +891,7 @@ export const employers: readonly Employer[] = [
     relevance:
       'High-throughput production systems, machine reliability, changeover logic, operator-centred workflows, packaging automation, equipment installation and commissioning, quality assurance and traceability.',
     transferable:
-      'This experience taught me how operators interact with machines, how small mechanical or control issues affect throughput, and why usability, changeover design, line recovery and traceable QA matter in production systems.',
+      'This experience taught Sajeevan how operators interact with machines, how small mechanical or control issues affect throughput, and why usability, changeover design, line recovery and traceable QA matter in production systems.',
     group: 'foundation',
     relatedProjects: ['idl-canning-line', 'manufacturing-qa-foundation'],
     closing: null,
@@ -934,12 +937,14 @@ export function getEmployerRecord(slug: string): Employer | undefined {
 }
 
 /**
- * Section 6's argument, stated once. Transcribed verbatim, including the
- * ordering, which runs oldest to most recent so the pattern accumulates.
+ * Section 6's argument, stated once. Transcribed from the brief, with its
+ * first-person prose recast into third person per the owner's 7 August 2026
+ * direction, keeping the ordering, which runs oldest to most recent so the
+ * pattern accumulates.
  */
 export const versatility = {
   heading: 'Different roles, one engineering method.',
-  body: 'My roles varied, but the work repeatedly crossed mechanical, electrical, software, data, quality and delivery boundaries.',
+  body: "Sajeevan's roles varied, but the work repeatedly crossed mechanical, electrical, software, data, quality and delivery boundaries.",
   columns: ['Employer', 'Title implied', 'Work actually crossed'] as const,
   rows: [
     [
@@ -970,5 +975,5 @@ export const versatility = {
     ],
   ] as const,
   closing:
-    'My consistent method is to instrument the system, establish trustworthy evidence, isolate interface failures and document the result so another engineer can verify it. I apply that method across manufacturing, instrumentation, regulated automation, embedded systems and robotics.',
+    "Sajeevan's consistent method is to instrument the system, establish trustworthy evidence, isolate interface failures and document the result so another engineer can verify it. He applies that method across manufacturing, instrumentation, regulated automation, embedded systems and robotics.",
 } as const

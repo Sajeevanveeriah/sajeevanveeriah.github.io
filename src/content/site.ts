@@ -1,8 +1,10 @@
 /**
  * Site-level facts and SEO defaults.
  *
- * Every value here is transcribed verbatim from the previous index.html.
- * Nothing is inferred. The contact model is binding and closed: exactly
+ * Every value here was transcribed from the previous index.html; the
+ * tagline and description voice was recast to third person on the owner's
+ * 7 August 2026 direction, facts unchanged. Nothing is inferred.
+ * The contact model is binding and closed: exactly
  * three personal channels plus the resume, and no telephone, address,
  * location, visa, work-rights or availability statement may ever be added.
  */
@@ -51,14 +53,16 @@ export const site: SiteConfig = {
   shortName: 'Saj',
   initials: 'SV',
   jobTitle: JOB_TITLE,
-  // Verbatim from index.html:1523
+  // From index.html:1523; voice recast to third person on the owner's
+  // 7 August 2026 direction.
   tagline:
-    'I work across robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
+    'Sajeevan works across robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
   // The role label is composed from `JOB_TITLE` so the meta description, the
   // Open Graph card and the Twitter card can never drift from the page title.
-  // The capability clause after it is the original wording from index.html:9,
-  // unchanged.
-  description: `I am a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
+  // The capability clause after it is the original wording from index.html:9;
+  // the framing was recast to third person on the owner's 7 August 2026
+  // direction.
+  description: `Sajeevan Veeriah is a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
   url: 'https://sajeevanveeriah.github.io',
   locale: 'en_AU',
   lang: 'en-AU',
@@ -135,7 +139,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/work/',
     eyebrow: 'Work',
     intro:
-      'Case studies showing the problem, the work I owned, the decisions I made and the result I verified.',
+      'Case studies showing the problem, the work Sajeevan owned, the decisions he made and the result he verified.',
     listTitle: 'Records',
     indexLabel: 'Every record, including the archive',
   },
@@ -143,7 +147,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/skills/',
     eyebrow: 'Expertise',
     intro:
-      'My capability atlas, with each domain linked to the evidence I can show.',
+      'Sajeevan\'s capability atlas, with each domain linked to the evidence he can show.',
     listTitle: 'Atlas domains',
     indexLabel: 'Browse the full atlas',
   },
@@ -151,7 +155,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/employers/',
     eyebrow: 'Employers',
     intro:
-      'My employment record, separating company background from the work I personally completed.',
+      'Sajeevan\'s employment record, separating company background from the work he personally completed.',
     listTitle: 'Employers',
     indexLabel: 'Every employer, and the through-line',
   },

@@ -3,8 +3,10 @@ import type { EvidenceTier } from './tiers'
 /**
  * Work records.
  *
- * Every string below is transcribed verbatim from the previous index.html.
- * Nothing is paraphrased, summarised or invented. Where the old site had no
+ * Every string below was transcribed verbatim from the previous index.html,
+ * then recast from first person into third-person or indicative voice on
+ * 7 August 2026 at the owner's direction. Voice and grammar only: no claim
+ * was added, strengthened, weakened or dropped. Where the old site had no
  * copy for a field, the field carries a TODO marker and renders nothing.
  *
  * Source-field mapping from the old nine-field case studies:
@@ -66,7 +68,7 @@ export interface Project {
   readonly toolsNote: string
   readonly validation: string
   readonly outcome: string
-  /** What this record proves, stated plainly in Saj's first person. */
+  /** What this record proves, stated plainly in third person (recast from first person on 7 August 2026 at the owner's direction). */
   readonly proves: string
   /**
    * What the record does not claim. Boundaries are stated as facts about
@@ -108,7 +110,7 @@ export const projects: readonly Project[] = [
     slug: 'upzy-supervised-routine-companion',
     title: 'Upzy: Supervised Educational Routine Companion Robot',
     summary:
-      'I completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot for young children, with a supporting browser application used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
+      'Sajeevan completed and deployed Upzy, a supervised, privacy-conscious physical educational routine companion robot for young children, with a supporting browser application used by end-users for adult-defined routines, simple child-facing prompts and adult review while keeping button interactions separate from proof that an activity occurred.',
     role: 'Robotics, mechatronics and application developer',
     period: 'Jun 2026 onward',
     domain: 'Human-centred robotics and product development',
@@ -117,23 +119,23 @@ export const projects: readonly Project[] = [
     problem:
       'Young children can benefit from clear, repeatable routine prompts, but a support concept must avoid surveillance, false completion claims and unnecessary data collection.',
     context:
-      'I completed Upzy as an independent robotics and product engineering project and deployed the physical robot with its supporting browser application. It is now used by end-users within the supervised routine workflow. The public record does not claim measured educational outcomes or disclose implementation details beyond the supporting application.',
+      'Sajeevan completed Upzy as an independent robotics and product engineering project and deployed the physical robot with its supporting browser application. It is now used by end-users within the supervised routine workflow. The public record does not claim measured educational outcomes or disclose implementation details beyond the supporting application.',
     approach: [
-      'I designed and built the physical routine-companion robot and its supporting React and TypeScript single-page application, with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
-      'I designed the boundaries deliberately: supervised use, no cameras or microphones, no accounts, no analytics, no cloud database, versioned local storage, and explicit wording that Done records an acknowledgement rather than real-world completion.',
+      'Designed and built the physical routine-companion robot and its supporting React and TypeScript single-page application, with a guided routine flow, routine creation and editing, an interaction dashboard and deterministic browser-local state.',
+      'Designed the boundaries deliberately: supervised use, no cameras or microphones, no accounts, no analytics, no cloud database, versioned local storage, and explicit wording that Done records an acknowledgement rather than real-world completion.',
     ],
     toolsNote:
       'Physical robot and mechatronic integration, with public software details covering React 19, TypeScript 5.9, Vite 7, Vitest, Testing Library, browser-local versioned storage and static GitHub Pages routing. Detailed hardware and embedded implementation remain unpublished.',
     validation:
-      'I validated the supporting application with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state, and I verified that the deployed GitHub Pages endpoint responds successfully. Deployment and active end-user use provide operational evidence for the physical robot and integrated workflow, while detailed hardware test evidence remains unpublished.',
+      'Sajeevan validated the supporting application with linting, TypeScript checks, Vitest, production builds and tests for missing, malformed, partial, outdated and deeply invalid stored data. The application restores deterministic sample data instead of trusting invalid state, and he verified that the deployed GitHub Pages endpoint responds successfully. Deployment and active end-user use provide operational evidence for the physical robot and integrated workflow, while detailed hardware test evidence remains unpublished.',
     outcome:
-      'I delivered and deployed a working physical routine-companion robot with a supporting browser application, now used by end-users for supervised routine prompts, adult routine configuration and transparent interaction review.',
+      'Sajeevan delivered and deployed a working physical routine-companion robot with a supporting browser application, now used by end-users for supervised routine prompts, adult routine configuration and transparent interaction review.',
     proves:
-      'I translated a human-centred robotics concept into a completed, deployed and actively used physical robot and supporting interface while preserving clear privacy, supervision and evidence boundaries.',
+      'Sajeevan translated a human-centred robotics concept into a completed, deployed and actively used physical robot and supporting interface while preserving clear privacy, supervision and evidence boundaries.',
     doesNotClaim:
       'The public record does not disclose detailed hardware, electronics, embedded software or connectivity architecture. It does not claim independently verified task completion, child monitoring, measured educational or clinical outcomes, commercial product certification or child-safety certification.',
     demonstrates:
-      'I combined physical robotics, mechatronics, product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a completed routine-companion system.',
+      'Sajeevan combined physical robotics, mechatronics, product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a completed routine-companion system.',
     evidenceTier: 'delivered',
     category: 'Deployed independent robotics and product engineering',
     links: [
@@ -154,7 +156,7 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the physical robot and product framing, mechatronic system, interaction model, privacy boundaries, supporting application, deployment and validation.',
+        'Owned the physical robot and product framing, mechatronic system, interaction model, privacy boundaries, supporting application, deployment and validation.',
       outcome:
         'A completed physical robot and supporting application in active end-user use that keep interaction records separate from claims about real-world completion.',
     },
@@ -170,7 +172,7 @@ export const projects: readonly Project[] = [
     slug: 'swl-pricing-inventory-control',
     title: 'SWL Pricing and Inventory Control',
     summary:
-      'I designed, implemented and deployed a controlled browser and Windows desktop workflow now used by Stan Wootton Locksmiths to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce reviewable import, change, exception, rollback and audit outputs.',
+      'Sajeevan designed, implemented and deployed a controlled browser and Windows desktop workflow now used by Stan Wootton Locksmiths to compare supplier and ServiceM8 exports, apply a confirmed 30% markup on cost, route exceptions and proposals through operator review, and produce reviewable import, change, exception, rollback and audit outputs.',
     role: 'System architect and full-stack developer',
     period: 'Jun 2026 onward',
     domain: 'Inventory systems and engineering software',
@@ -179,23 +181,23 @@ export const projects: readonly Project[] = [
     problem:
       'Supplier price changes and ServiceM8 inventory records need to be reconciled without silent matching errors, unsafe price calculations or uncontrolled production imports.',
     context:
-      'I delivered and deployed this system for Stan Wootton Locksmiths around supplier and ServiceM8 file handoffs. Its operators now use the workflow while every proposed change remains reviewable and reversible and real business data stays protected.',
+      'Sajeevan delivered and deployed this system for Stan Wootton Locksmiths around supplier and ServiceM8 file handoffs. Its operators now use the workflow while every proposed change remains reviewable and reversible and real business data stays protected.',
     approach: [
-      'I implemented defensive CSV and XLSX parsing, confirmed column mapping, deterministic identifier matching, decimal-safe pricing, status classification, exception handling, operator approvals and controlled export generation.',
-      'I added formula-injection protection, duplicate and ambiguity blocks, rollback and audit outputs, local configuration boundaries, a Windows Tauri shell, and an own-origin Node service for controlled competitor-price searches without transmitting imported business rows.',
+      'Implemented defensive CSV and XLSX parsing, confirmed column mapping, deterministic identifier matching, decimal-safe pricing, status classification, exception handling, operator approvals and controlled export generation.',
+      'Added formula-injection protection, duplicate and ambiguity blocks, rollback and audit outputs, local configuration boundaries, a Windows Tauri shell, and an own-origin Node service for controlled competitor-price searches without transmitting imported business rows.',
     ],
     toolsNote:
       'React, TypeScript, Vite, Tauri 2, Rust, Node.js, ExcelJS, Papa Parse, big.js, Zod, IndexedDB, Vitest, Playwright and axe-core.',
     validation:
-      'I validated the system with strict TypeScript checks, linting, unit and integration tests, property-based tests, production builds, Playwright end-to-end and accessibility tests, formula-injection tests and a repository data-safety detector. Deployment and active operator use provide operational evidence of the complete workflow.',
+      'Sajeevan validated the system with strict TypeScript checks, linting, unit and integration tests, property-based tests, production builds, Playwright end-to-end and accessibility tests, formula-injection tests and a repository data-safety detector. Deployment and active operator use provide operational evidence of the complete workflow.',
     outcome:
-      'I delivered and deployed a working controlled workflow now used for pricing review and inventory preparation, with explicit exceptions, approvals, rollback evidence and operator-reviewed ServiceM8 output.',
+      'Sajeevan delivered and deployed a working controlled workflow now used for pricing review and inventory preparation, with explicit exceptions, approvals, rollback evidence and operator-reviewed ServiceM8 output.',
     proves:
-      'I delivered a real operational pricing and inventory system spanning data ingestion, deterministic business rules, operator review, desktop packaging, deployment and validation.',
+      'Sajeevan delivered a real operational pricing and inventory system spanning data ingestion, deterministic business rules, operator review, desktop packaging, deployment and validation.',
     doesNotClaim:
       'The deployed workflow deliberately keeps ServiceM8 updates as operator-reviewed file handoffs and does not make direct writes to ServiceM8 or Xero. No real business exports, generated operational outputs or credentials are published.',
     demonstrates:
-      'I integrated operational requirements, data safety, deterministic pricing, exception workflows, product UX, desktop delivery, deployment and automated validation into one controlled system.',
+      'Sajeevan integrated operational requirements, data safety, deterministic pricing, exception workflows, product UX, desktop delivery, deployment and automated validation into one controlled system.',
     evidenceTier: 'delivered',
     category: 'Deployed client engineering software',
     images: [
@@ -212,7 +214,7 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the system architecture, data contracts, deterministic business rules, review workflow, desktop boundary and validation strategy.',
+        'Owned the system architecture, data contracts, deterministic business rules, review workflow, desktop boundary and validation strategy.',
       outcome:
         'A deployed application in active operator use that prepares reviewable pricing and inventory outputs without direct external-system writes.',
     },
@@ -227,7 +229,7 @@ export const projects: readonly Project[] = [
     slug: 'inventory-scanning-mobile-robot',
     title: 'Inventory Scanning Mobile Robot',
     summary:
-      'I designed, built and deployed an operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow. It is in active use by its end-users.',
+      'Sajeevan designed, built and deployed an operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow. It is in active use by its end-users.',
     role: 'Robotics system designer and developer',
     period: 'Jun 2026 onward',
     domain: 'Mobile robotics and inventory automation',
@@ -241,23 +243,23 @@ export const projects: readonly Project[] = [
     problem:
       'Physical stock capture is repetitive and error-prone when observations, item identity, location and inventory records are disconnected.',
     context:
-      'I delivered this system as client-facing robotics work alongside the SWL inventory workflow. It is deployed and actively used, while detailed hardware, identification and autonomy implementation choices remain unpublished.',
+      'Sajeevan delivered this system as client-facing robotics work alongside the SWL inventory workflow. It is deployed and actively used, while detailed hardware, identification and autonomy implementation choices remain unpublished.',
     approach: [
-      'I defined and implemented the system boundary across mobility, item identification, location association, inventory data handoff and operator confirmation.',
-      'I treated navigation, identification and data integrity as separate verification problems so uncertain observations stop for review instead of silently changing inventory records.',
+      'Defined and implemented the system boundary across mobility, item identification, location association, inventory data handoff and operator confirmation.',
+      'Treated navigation, identification and data integrity as separate verification problems so uncertain observations stop for review instead of silently changing inventory records.',
     ],
     toolsNote:
       'The delivered scope spans requirements, system architecture, mobility, item identification, location association, workflow integration, operator review, deployment and handover. Detailed hardware and software selections remain unpublished.',
     validation:
       'Deployment and active end-user use provide operational evidence that the integrated robot and review workflow are working. Detailed client-site evidence, component choices and quantitative scan, navigation and safety results remain unpublished.',
     outcome:
-      'I delivered a completed mobile robot deployed for active end-user use, linking physical stock capture to controlled inventory review while retaining operator authority.',
+      'Sajeevan delivered a completed mobile robot deployed for active end-user use, linking physical stock capture to controlled inventory review while retaining operator authority.',
     proves:
-      'I applied mobile robotics and systems-engineering discipline to deliver a working inventory system while preserving operator authority and data-integrity boundaries.',
+      'Sajeevan applied mobile robotics and systems-engineering discipline to deliver a working inventory system while preserving operator authority and data-integrity boundaries.',
     doesNotClaim:
       'This record does not claim lights-out warehouse autonomy, replacement of operator review, a publicly disclosed scanner or sensor suite, certified safety or unpublished performance figures.',
     demonstrates:
-      'I delivered a cross-domain cyber-physical system across mobility, sensing, data association, workflow integration and verification.',
+      'Sajeevan delivered a cross-domain cyber-physical system across mobility, sensing, data association, workflow integration and verification.',
     evidenceTier: 'delivered',
     category: 'Deployed client robotics',
     images: [
@@ -274,7 +276,7 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the delivered system boundary across mobility, item identification, location association, inventory data handoff, operator confirmation and deployment.',
+        'Owned the delivered system boundary across mobility, item identification, location association, inventory data handoff, operator confirmation and deployment.',
       outcome:
         'A completed mobile robot in active end-user use, linking physical stock capture to controlled inventory review.',
     },
@@ -290,7 +292,7 @@ export const projects: readonly Project[] = [
     slug: 'modular-education-testing-robot',
     title: 'Modular Education and Testing Robot',
     summary:
-      'I designed, built and deployed a modular robot platform for education, engineering experiments and repeatable subsystem testing. It is in active use by end-users, with clear interfaces and observable behaviour supporting supervised operation.',
+      'Sajeevan designed, built and deployed a modular robot platform for education, engineering experiments and repeatable subsystem testing. It is in active use by end-users, with clear interfaces and observable behaviour supporting supervised operation.',
     role: 'Robotics and mechatronics system designer and developer',
     period: 'Jun 2026 onward',
     domain: 'Educational robotics and engineering test systems',
@@ -304,23 +306,23 @@ export const projects: readonly Project[] = [
     problem:
       'Education and early robotics experiments need a platform that exposes how sensing, control and actuation interact without locking every lesson or test into one fixed configuration.',
     context:
-      'I delivered this as a reusable robotics platform for supervised learning and engineering experiments. It is deployed and actively used by end-users, while the detailed hardware and software configuration remains unpublished.',
+      'Sajeevan delivered this as a reusable robotics platform for supervised learning and engineering experiments. It is deployed and actively used by end-users, while the detailed hardware and software configuration remains unpublished.',
     approach: [
-      'I structured and built the platform around replaceable sensing, control and actuation modules with defined interfaces and a stable test boundary.',
-      'I prioritised supervised operation, visible system state, repeatable test cases and modular replacement so learning and engineering iteration can use the same platform without hiding failure modes.',
+      'Structured and built the platform around replaceable sensing, control and actuation modules with defined interfaces and a stable test boundary.',
+      'Prioritised supervised operation, visible system state, repeatable test cases and modular replacement so learning and engineering iteration can use the same platform without hiding failure modes.',
     ],
     toolsNote:
       'The delivered scope covers modular system architecture, interface definition, system integration, supervised-use boundaries, repeatable test workflows, deployment and handover. Component and software-stack details remain unpublished.',
     validation:
       'Deployment and active end-user use provide operational evidence that the integrated platform supports supervised education and repeatable engineering experiments. Component evidence, quantitative performance measurements and learning-outcome data remain unpublished.',
     outcome:
-      'I delivered a completed modular robot platform now deployed and used by end-users for education, engineering experiments and repeatable subsystem testing.',
+      'Sajeevan delivered a completed modular robot platform now deployed and used by end-users for education, engineering experiments and repeatable subsystem testing.',
     proves:
-      'I applied mechatronic architecture and validation thinking to deliver a reusable robotics learning and test platform.',
+      'Sajeevan applied mechatronic architecture and validation thinking to deliver a reusable robotics learning and test platform.',
     doesNotClaim:
       'This record does not claim certified safety, production-scale manufacturing readiness, measured learning outcomes, a publicly disclosed component set or unpublished performance figures.',
     demonstrates:
-      'I delivered a robotics platform designed around modularity, observable behaviour, supervised use and repeatable engineering tests.',
+      'Sajeevan delivered a robotics platform designed around modularity, observable behaviour, supervised use and repeatable engineering tests.',
     evidenceTier: 'delivered',
     category: 'Deployed client robotics',
     images: [
@@ -341,7 +343,7 @@ export const projects: readonly Project[] = [
     slug: 'engineering-mastery-lab',
     title: 'Engineering Mastery Lab',
     summary:
-      'I built a browser-first engineering workbench that combines input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.',
+      'Sajeevan built a browser-first engineering workbench that combines input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows across web and desktop modes.',
     role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Software and engineering tools',
@@ -350,23 +352,23 @@ export const projects: readonly Project[] = [
     problem:
       'Engineering learning, calculation, CAD, simulation, skills tracking and evidence workflows are often fragmented across disconnected tools and notes.',
     context:
-      'I developed this personal open-source engineering application and deployed it through GitHub Pages. A shared React and TypeScript interface supports the browser application and an optional Tauri 2 desktop shell.',
+      'Sajeevan developed this personal open-source engineering application and deployed it through GitHub Pages. A shared React and TypeScript interface supports the browser application and an optional Tauri 2 desktop shell.',
     approach: [
-      'I built a React and TypeScript frontend with Vite and HashRouter for GitHub Pages, TypeScript calculation and simulation engines, a bounded Three.js parametric CAD layer, browser-local storage, and a controlled Tauri and Rust boundary for authorised local workspaces, external tools and evidence capture.',
-      'I kept the browser experience local-first with no required account, backend or telemetry. Exposed governing assumptions and validation warnings instead of hiding engineering limits. Implemented bounded parametric templates rather than presenting a simplified modeller as general CAD. Kept desktop filesystem and process authority behind an allow-listed Rust boundary with workspace containment and deterministic evidence handling.',
+      'Built a React and TypeScript frontend with Vite and HashRouter for GitHub Pages, TypeScript calculation and simulation engines, a bounded Three.js parametric CAD layer, browser-local storage, and a controlled Tauri and Rust boundary for authorised local workspaces, external tools and evidence capture.',
+      'Kept the browser experience local-first with no required account, backend or telemetry. Exposed governing assumptions and validation warnings instead of hiding engineering limits. Implemented bounded parametric templates rather than presenting a simplified modeller as general CAD. Kept desktop filesystem and process authority behind an allow-listed Rust boundary with workspace containment and deterministic evidence handling.',
     ],
     toolsNote:
       'React 18, TypeScript, Vite 8, React Router 6, Three.js, Vitest, Tauri 2, Rust, GitHub Actions, optional ngspice and KiCad CLI integration.',
     validation:
-      'I validated it with automated Vitest suites, TypeScript checks, production builds, GitHub Actions gates and rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. I do not claim engineering-standards certification.',
+      'Sajeevan validated it with automated Vitest suites, TypeScript checks, production builds, GitHub Actions gates and rendered inspection of the deployed dashboard, toolbox, CAD and workbench routes. He does not claim engineering-standards certification.',
     outcome:
-      'I delivered a working public web application with a browser-first engineering toolbox, bounded parametric CAD, a guided learning system, an evidence-focused project workflow and a desktop-capable source architecture.',
+      'Sajeevan delivered a working public web application with a browser-first engineering toolbox, bounded parametric CAD, a guided learning system, an evidence-focused project workflow and a desktop-capable source architecture.',
     proves:
-      'I built and tested version 0.2.0 as a functional completion candidate, and both the working application and the source repository are public for inspection.',
+      'Sajeevan built and tested version 0.2.0 as a functional completion candidate, and both the working application and the source repository are public for inspection.',
     doesNotClaim:
       'This is a personal open-source build, so the record presents a working, tested engineering workbench rather than certified engineering software, and the app itself surfaces its governing assumptions and validation warnings.',
     demonstrates:
-      'I integrated engineering logic, simulation, CAD geometry, software architecture, security boundaries, validation and accessible product design into one coherent system.',
+      'Sajeevan integrated engineering logic, simulation, CAD geometry, software architecture, security boundaries, validation and accessible product design into one coherent system.',
     evidenceTier: 'delivered',
     category: 'Personal open-source build',
     links: [
@@ -386,7 +388,7 @@ export const projects: readonly Project[] = [
       },
     ],
     homeExcerpt: {
-      ownership: 'I owned the product architecture across engineering logic, CAD geometry, software, desktop security boundaries and validation.',
+      ownership: 'Owned the product architecture across engineering logic, CAD geometry, software, desktop security boundaries and validation.',
       outcome: 'A working public application spanning calculation, bounded parametric CAD, guided learning and evidence workflows.',
     },
     featured: true,
@@ -401,7 +403,7 @@ export const projects: readonly Project[] = [
     slug: 'veerai-slm',
     title: 'VeerAI: Local SLM System',
     summary:
-      'I designed and built VeerAI as a complete local AI system: an open-weight small language model running entirely on my own hardware, wrapped in a governed knowledge pipeline I architected end to end, spanning ingestion, retrieval-augmented generation, controlled memory, tools and evaluation.',
+      'Sajeevan designed and built VeerAI as a complete local AI system: an open-weight small language model running entirely on his own hardware, wrapped in a governed knowledge pipeline he architected end to end, spanning ingestion, retrieval-augmented generation, controlled memory, tools and evaluation.',
     role: 'System architect and sole implementer',
     period: null, // TODO: Saj to supply.
     domain: 'AI/ML and local inference',
@@ -417,23 +419,23 @@ export const projects: readonly Project[] = [
     problem:
       'General-purpose language models do not automatically understand personal and engineering context, preserve source grounding or operate within controlled local data boundaries. VeerAI addresses this through local inference and an explicitly governed knowledge architecture.',
     context:
-      'I built VeerAI as a local AI system that runs on my own hardware and works with approved personal and engineering knowledge. I focused the project on system integration: combining local open-weight inference, governed ingestion, retrieval, memory, tools and evaluation into an architecture I control end to end.',
+      'Sajeevan built VeerAI as a local AI system that runs on his own hardware and works with approved personal and engineering knowledge. He focused the project on system integration: combining local open-weight inference, governed ingestion, retrieval, memory, tools and evaluation into an architecture he controls end to end.',
     approach: [
-      'I built the ingestion layer that normalises and approves source documents, the chunking and embedding stage that makes them retrievable, the retrieval-augmented generation loop that grounds every response in cited approved sources, a controlled memory layer with explicit read and write boundaries, a tool execution interface, and an evaluation harness that scores retrieval relevance and answer faithfulness against a held-out set.',
-      'I made deliberate architectural decisions at each layer: local inference to keep the data boundary absolute, modular separation so any component can be replaced without touching the others, and evaluation as a first-class subsystem rather than a final step.',
+      'Built the ingestion layer that normalises and approves source documents, the chunking and embedding stage that makes them retrievable, the retrieval-augmented generation loop that grounds every response in cited approved sources, a controlled memory layer with explicit read and write boundaries, a tool execution interface, and an evaluation harness that scores retrieval relevance and answer faithfulness against a held-out set.',
+      'Made deliberate architectural decisions at each layer: local inference to keep the data boundary absolute, modular separation so any component can be replaced without touching the others, and evaluation as a first-class subsystem rather than a final step.',
     ],
     toolsNote:
       'Local open-weight inference, retrieval-augmented generation, governed knowledge ingestion, controlled memory, tool interfaces and evaluation workflows, integrated as independently maintainable parts of one local system.',
     validation:
-      'I used the evaluation harness to assess retrieval quality, response grounding, memory and tool boundaries, edge-case handling and runtime resilience across the end-to-end workflow.',
+      'Sajeevan used the evaluation harness to assess retrieval quality, response grounding, memory and tool boundaries, edge-case handling and runtime resilience across the end-to-end workflow.',
     outcome:
-      'I delivered a modular local AI system that grounds responses in approved personal and engineering knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
+      'Sajeevan delivered a modular local AI system that grounds responses in approved personal and engineering knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
     proves:
-      'I architected and implemented a complete compound AI system end to end on my own hardware: inference, governed ingestion, retrieval, memory, tools and evaluation, exercised through an evaluation harness I built for it.',
+      'Sajeevan architected and implemented a complete compound AI system end to end on his own hardware: inference, governed ingestion, retrieval, memory, tools and evaluation, exercised through an evaluation harness he built for it.',
     doesNotClaim:
-      'The system runs privately on my own machine, so this record documents the architecture rather than hosting a public endpoint. VeerAI runs an open-weight model locally; the engineering I claim is the governed system I designed and built around it.',
+      'The system runs privately on Sajeevan\'s own machine, so this record documents the architecture rather than hosting a public endpoint. VeerAI runs an open-weight model locally; the engineering he claims is the governed system he designed and built around it.',
     demonstrates:
-      'I engineered the system across local open-weight inference, retrieval-augmented generation, governed ingestion, modular orchestration, controlled memory, tool integration and evaluation.',
+      'Sajeevan engineered the system across local open-weight inference, retrieval-augmented generation, governed ingestion, modular orchestration, controlled memory, tool integration and evaluation.',
     evidenceTier: 'delivered',
     category: 'Personal AI/ML build',
     images: [
@@ -450,7 +452,7 @@ export const projects: readonly Project[] = [
     ],
     homeExcerpt: {
       ownership:
-        'I owned the system architecture, governed knowledge pipeline, retrieval workflow, orchestration layer and validation structure.',
+        'Owned the system architecture, governed knowledge pipeline, retrieval workflow, orchestration layer and validation structure.',
       outcome:
         'A modular local AI foundation that grounds responses in approved knowledge while keeping inference, retrieval, memory, tools and evaluation independently maintainable.',
     },
@@ -460,7 +462,7 @@ export const projects: readonly Project[] = [
     slug: 'autonomous-navigation-rover',
     title: 'Autonomous Navigation Rover on ROS 2',
     summary:
-      'I built a complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, then validated it in simulation for repeatable obstacle-aware navigation.',
+      'Sajeevan built a complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, then validated it in simulation for repeatable obstacle-aware navigation.',
     role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Robotics and autonomy',
@@ -469,23 +471,23 @@ export const projects: readonly Project[] = [
     problem:
       'Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before any of the higher-level behaviour matters.',
     context:
-      'I developed this personal robotics system end to end, using simulation to test decisions before physical implementation.',
+      'Sajeevan developed this personal robotics system end to end, using simulation to test decisions before physical implementation.',
     approach: [
-      'I structured sensing, LiDAR SLAM, Kalman and EKF state estimation, odometry and IMU fusion, A* and Nav2 planning, motion control, simulation and visualisation as modular ROS 2 nodes.',
-      'I built on ROS 2 Humble for a maintained long-term base; kept perception, estimation, planning and control as separate nodes so each layer could be tuned and validated independently; used simulation-first validation before physical trials.',
+      'Structured sensing, LiDAR SLAM, Kalman and EKF state estimation, odometry and IMU fusion, A* and Nav2 planning, motion control, simulation and visualisation as modular ROS 2 nodes.',
+      'Built on ROS 2 Humble for a maintained long-term base; kept perception, estimation, planning and control as separate nodes so each layer could be tuned and validated independently; used simulation-first validation before physical trials.',
     ],
     toolsNote:
       'ROS 2 Humble, Nav2, Gazebo, RViz, SLAM toolboxes, A* path planning, Kalman and EKF filters, LiDAR, IMU and odometry fusion, PID tuning.',
     validation:
-      'I ran repeated Gazebo simulations and used RViz to inspect maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
+      'Sajeevan ran repeated Gazebo simulations and used RViz to inspect maps, transforms and planned paths, checking localisation stability and obstacle avoidance across reruns.',
     outcome:
-      'I delivered a working end-to-end autonomy stack with repeatable localisation and obstacle-aware navigation behaviour.',
+      'Sajeevan delivered a working end-to-end autonomy stack with repeatable localisation and obstacle-aware navigation behaviour.',
     proves:
-      'I designed, integrated and validated a complete autonomy stack myself: perception, SLAM, state estimation, planning and control running as one ROS 2 system with repeatable behaviour across simulation reruns.',
+      'Sajeevan designed, integrated and validated a complete autonomy stack himself: perception, SLAM, state estimation, planning and control running as one ROS 2 system with repeatable behaviour across simulation reruns.',
     doesNotClaim:
-      'I validated the stack in Gazebo simulation, where every layer could be exercised and re-run deterministically, so the evidence is repeatable simulated behaviour. The record documents a personal build proven in simulation rather than a fleet deployed in the field.',
+      'Sajeevan validated the stack in Gazebo simulation, where every layer could be exercised and re-run deterministically, so the evidence is repeatable simulated behaviour. The record documents a personal build proven in simulation rather than a fleet deployed in the field.',
     demonstrates:
-      'I integrated and validated perception, state estimation, planning and control as one autonomy stack.',
+      'Sajeevan integrated and validated perception, state estimation, planning and control as one autonomy stack.',
     evidenceTier: 'delivered',
     category: 'Featured, Personal build',
     images: [
@@ -500,7 +502,7 @@ export const projects: readonly Project[] = [
       },
     ],
     homeExcerpt: {
-      ownership: 'I integrated perception, state estimation, planning and control as independently testable ROS 2 nodes.',
+      ownership: 'Integrated perception, state estimation, planning and control as independently testable ROS 2 nodes.',
       outcome: 'A repeatable simulation-validated autonomy stack with stable localisation and obstacle-aware navigation.',
     },
     featured: true,
@@ -509,7 +511,7 @@ export const projects: readonly Project[] = [
     slug: 'jag-smart-factory',
     title: 'JAG Smart Factory and iFIX to PVI+ Migration',
     summary:
-      'I delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration that I verified against the validated system.',
+      'Sajeevan delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration that he verified against the validated system.',
     role: 'Automation & Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
     domain: 'Automation and SCADA',
@@ -518,23 +520,23 @@ export const projects: readonly Project[] = [
     problem:
       'Regulated production needs traceability, diagnostics and process visibility without disturbing validated behaviour.',
     context:
-      'I delivered this work at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.',
+      'Sajeevan delivered this work at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.',
     approach: [
-      'I integrated field devices and instrumentation with control logic, HMI and SCADA, MES and batch execution, and production data flows, including an iFIX to PVI+ migration.',
-      'I converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.',
+      'Integrated field devices and instrumentation with control logic, HMI and SCADA, MES and batch execution, and production data flows, including an iFIX to PVI+ migration.',
+      'Converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.',
     ],
     toolsNote:
       'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC logic (IEC 61131-3), MES and batch systems, Modbus and Profinet, GMP and GAMP 5 practice.',
     validation:
-      'I executed FAT and SAT activities and produced commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.',
+      'Sajeevan executed FAT and SAT activities and produced commissioning, qualification and handover documentation, verifying migrated behaviour against the validated system.',
     outcome:
-      'I delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.',
+      'Sajeevan delivered control, integration and smart-factory engineering with clearer process visibility, trends, alarms and defensible documentation.',
     proves:
-      'I delivered regulated automation engineering through to qualification: control integration, an iFIX to PVI+ SCADA migration verified against the validated system, and FAT, SAT and handover documentation the client relies on.',
+      'Sajeevan delivered regulated automation engineering through to qualification: control integration, an iFIX to PVI+ SCADA migration verified against the validated system, and FAT, SAT and handover documentation the client relies on.',
     doesNotClaim:
       'The work was delivered inside clients\' regulated GMP environments, so this record describes the engineering and the evidence produced rather than naming plants, products or proprietary configurations.',
     demonstrates:
-      'I migrated and integrated supervisory systems where validation evidence mattered as much as functional behaviour.',
+      'Sajeevan migrated and integrated supervisory systems where validation evidence mattered as much as functional behaviour.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -551,7 +553,7 @@ export const projects: readonly Project[] = [
     slug: 'adas-can-validation',
     title: 'ADAS and CAN Validation',
     summary:
-      'I conducted feature, breadboard and OTA regression testing across the T6 Ranger and Everest programmes, supported by CAN-level fault evidence.',
+      'Sajeevan conducted feature, breadboard and OTA regression testing across the T6 Ranger and Everest programmes, supported by CAN-level fault evidence.',
     role: 'Product Development Test Engineer (Contract)',
     period: 'Oct 2025 to Jan 2026',
     domain: 'Automotive and validation',
@@ -560,23 +562,23 @@ export const projects: readonly Project[] = [
     problem:
       'Vehicle features must remain stable across variants, running changes and over-the-air software updates, with evidence to prove it.',
     context:
-      'I validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
+      'Sajeevan validated vehicle software integration and ADAS features across the T6 Ranger and Everest programmes.',
     approach: [
-      'I worked across instrumented test vehicles, CAN and CAN FD networks and the feature software under test, structuring feature-vehicle, breadboard and regression test workflows that fed readiness milestones and sign-off evidence.',
-      'I captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
+      'Worked across instrumented test vehicles, CAN and CAN FD networks and the feature software under test, structuring feature-vehicle, breadboard and regression test workflows that fed readiness milestones and sign-off evidence.',
+      'Captured bus-level evidence for every observation so defect reports stood on data rather than impressions; used structured drives to make failures reproducible before reporting them.',
     ],
     toolsNote:
       'Vector CANoe and CANalyzer, CAN and CAN FD, vehicle instrumentation, OTA regression testing, structured test procedures.',
     validation:
-      'I ran feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, capturing and analysing CAN traces for fault isolation.',
+      'Sajeevan ran feature-vehicle, breadboard and regression testing for readiness milestones and OTA updates, capturing and analysing CAN traces for fault isolation.',
     outcome:
-      'I delivered evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
+      'Sajeevan delivered evidence-based defect reports and sign-off evidence supporting programme readiness decisions.',
     proves:
-      'I produced vehicle-level validation evidence that stood on data: reproducible failures, CAN traces backing every defect report, and sign-off evidence feeding programme readiness milestones.',
+      'Sajeevan produced vehicle-level validation evidence that stood on data: reproducible failures, CAN traces backing every defect report, and sign-off evidence feeding programme readiness milestones.',
     doesNotClaim:
-      'The programmes and their test data belong to the vehicle manufacturer, so this record describes my test method and evidence discipline rather than publishing programme results.',
+      'The programmes and their test data belong to the vehicle manufacturer, so this record describes Sajeevan\'s test method and evidence discipline rather than publishing programme results.',
     demonstrates:
-      'This demonstrates my cyber-physical validation skill: I read what a vehicle network is actually doing and turn it into defensible engineering evidence.',
+      'This demonstrates Sajeevan\'s cyber-physical validation skill: he reads what a vehicle network is actually doing and turns it into defensible engineering evidence.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -593,7 +595,7 @@ export const projects: readonly Project[] = [
     slug: 'emissions-compliance-testing',
     title: 'ABMARC Emissions and Compliance Testing',
     summary:
-      'I conducted repeatable, auditable emissions testing against ADR and EURO standards, supported by instrumentation and QA records.',
+      'Sajeevan conducted repeatable, auditable emissions testing against ADR and EURO standards, supported by instrumentation and QA records.',
     role: 'Technical Assistant',
     period: 'Jul 2024 to Aug 2025',
     domain: 'Automotive and compliance',
@@ -602,23 +604,23 @@ export const projects: readonly Project[] = [
     problem:
       'Compliance testing requires accurate, repeatable and auditable measurements that survive regulatory scrutiny.',
     context:
-      'I completed this professional work at ABMARC, conducting vehicle emissions and compliance testing against ADR and EURO standards.',
+      'Sajeevan completed this professional work at ABMARC, conducting vehicle emissions and compliance testing against ADR and EURO standards.',
     approach: [
-      'I used test instrumentation and data-acquisition systems, followed controlled procedures, and maintained QA and regulatory documentation for certification and audit work.',
-      'I treated calibration discipline and procedure fidelity as first-class engineering tasks, because the defensibility of the final report depends on them; analysed data for deviations and trends before results left the building.',
+      'Used test instrumentation and data-acquisition systems, followed controlled procedures, and maintained QA and regulatory documentation for certification and audit work.',
+      'Treated calibration discipline and procedure fidelity as first-class engineering tasks, because the defensibility of the final report depends on them; analysed data for deviations and trends before results left the building.',
     ],
     toolsNote:
       'Emissions test equipment, instrumentation, data-acquisition systems, ADR and EURO test procedures, QA records.',
     validation:
-      'I followed repeatable standard procedures, calibrated and cross-checked instrumentation, and produced auditable and technically defensible results.',
+      'Sajeevan followed repeatable standard procedures, calibrated and cross-checked instrumentation, and produced auditable and technically defensible results.',
     outcome:
-      'I delivered defensible compliance results and structured reporting supporting certification and audit outcomes.',
+      'Sajeevan delivered defensible compliance results and structured reporting supporting certification and audit outcomes.',
     proves:
-      'I ran regulated test procedures to the standard the results had to survive: calibrated instrumentation, repeatable execution and auditable QA records against ADR and EURO requirements.',
+      'Sajeevan ran regulated test procedures to the standard the results had to survive: calibrated instrumentation, repeatable execution and auditable QA records against ADR and EURO requirements.',
     doesNotClaim:
-      'Client vehicles and certification results are the client\'s to publish, so this record covers my measurement discipline and documentation practice rather than specific test outcomes.',
+      'Client vehicles and certification results are the client\'s to publish, so this record covers Sajeevan\'s measurement discipline and documentation practice rather than specific test outcomes.',
     demonstrates:
-      'I applied measurement discipline, traceable documentation and evidence-based fault interpretation in a regulated testing environment.',
+      'Sajeevan applied measurement discipline, traceable documentation and evidence-based fault interpretation in a regulated testing environment.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -635,7 +637,7 @@ export const projects: readonly Project[] = [
     slug: 'iot-monitoring-platform',
     title: 'DuxTel Agricultural Equipment Health and Location Platform',
     summary:
-      'I designed and deployed a custom PCB-based field telemetry system combining CAN capture, GPS and equipment condition sensing with MikroTik connectivity and a Linux server, giving operators remote status and maintenance visibility for machinery left across large agricultural sites.',
+      'Sajeevan designed and deployed a custom PCB-based field telemetry system combining CAN capture, GPS and equipment condition sensing with MikroTik connectivity and a Linux server, giving operators remote status and maintenance visibility for machinery left across large agricultural sites.',
     role: 'Consultant Engineer, IoT and Projects Administrator',
     period: 'Feb 2024 to Aug 2024',
     domain: 'IoT and telemetry',
@@ -651,23 +653,23 @@ export const projects: readonly Project[] = [
     problem:
       'Agricultural machinery may be left across large fields, making its location and current condition difficult to confirm before the next visit.',
     context:
-      'I designed and deployed this professional DuxTel Pty Ltd project, which is currently in an active field trial.',
+      'Sajeevan designed and deployed this professional DuxTel Pty Ltd project, which is currently in an active field trial.',
     approach: [
-      'I integrated agricultural-equipment CAN capture, a custom PCB, GPS or GNSS positioning, condition sensing, MikroTik edge connectivity and a Linux server for remote status collection.',
-      'I consolidated field interfaces on a purpose-built board, preserved traceable CAN and sensor data, used rugged edge connectivity and separated acquisition, transport and server responsibilities.',
+      'Integrated agricultural-equipment CAN capture, a custom PCB, GPS or GNSS positioning, condition sensing, MikroTik edge connectivity and a Linux server for remote status collection.',
+      'Consolidated field interfaces on a purpose-built board, preserved traceable CAN and sensor data, used rugged edge connectivity and separated acquisition, transport and server responsibilities.',
     ],
     toolsNote:
       'Custom PCB design, CAN capture and trace, GPS or GNSS, sensor interfacing, MikroTik networking and Linux server integration.',
     validation:
-      'I validated the device, CAN, location, sensor, connectivity and server paths end to end during deployment and the ongoing field trial.',
+      'Sajeevan validated the device, CAN, location, sensor, connectivity and server paths end to end during deployment and the ongoing field trial.',
     outcome:
-      'I delivered a working trial system that provides available location and condition information to support maintenance preparation before a return to the asset.',
+      'Sajeevan delivered a working trial system that provides available location and condition information to support maintenance preparation before a return to the asset.',
     proves:
-      'I owned the full engineering path myself: custom PCB, equipment interfaces, positioning and condition sensing, MikroTik connectivity and Linux server integration, deployed into an active professional field trial.',
+      'Sajeevan owned the full engineering path himself: custom PCB, equipment interfaces, positioning and condition sensing, MikroTik connectivity and Linux server integration, deployed into an active professional field trial.',
     doesNotClaim:
       'The system is a commercial field trial running on a client\'s equipment, so this record describes the architecture and deployment rather than trial data or client specifics.',
     demonstrates:
-      'I owned the engineering path from electronics and PCB design through equipment interfaces, communications, Linux integration, deployment and field validation.',
+      'Sajeevan owned the engineering path from electronics and PCB design through equipment interfaces, communications, Linux integration, deployment and field validation.',
     evidenceTier: 'delivered',
     category: 'Professional delivery',
     images: [
@@ -684,7 +686,7 @@ export const projects: readonly Project[] = [
     slug: 'ataxia-assessment-device',
     title: 'ESP32 Clinical Ataxia Assessment Device',
     summary:
-      'I developed embedded hardware and firmware for movement assessment support and validated it against clinical references.',
+      'Sajeevan developed embedded hardware and firmware for movement assessment support and validated it against clinical references.',
     role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'Embedded and sensing',
@@ -693,23 +695,23 @@ export const projects: readonly Project[] = [
     problem:
       'Movement and coordination assessment benefits from repeatable, sensor-based measurement rather than observation alone.',
     context:
-      'I completed this as my final-year Honours capstone for the Bachelor of Mechatronics Engineering at Deakin University, graduating with Distinction.',
+      'Sajeevan completed this as his final-year Honours capstone for the Bachelor of Mechatronics Engineering at Deakin University, graduating with Distinction.',
     approach: [
-      'I built ESP32 sensing hardware around IMU, time-of-flight, Hall-effect and magnetometer inputs, with real-time firmware and MATLAB data logging and analysis.',
-      'I chose complementary sensor modalities so movement features are captured redundantly; designed the firmware around deterministic real-time acquisition; kept analysis offline in MATLAB where clinical comparison is easier to audit.',
+      'Built ESP32 sensing hardware around IMU, time-of-flight, Hall-effect and magnetometer inputs, with real-time firmware and MATLAB data logging and analysis.',
+      'Chose complementary sensor modalities so movement features are captured redundantly; designed the firmware around deterministic real-time acquisition; kept analysis offline in MATLAB where clinical comparison is easier to audit.',
     ],
     toolsNote:
       'ESP32, IMU, ToF, Hall-effect and magnetometer sensing, embedded C and C++, real-time signal acquisition, MATLAB data logging and signal processing.',
     validation:
-      'I validated measurements against clinical references, checking that captured motion signals were repeatable and comparable.',
+      'Sajeevan validated measurements against clinical references, checking that captured motion signals were repeatable and comparable.',
     outcome:
-      'I delivered a proof-of-concept measurement platform supporting repeatable motion and coordination assessment.',
+      'Sajeevan delivered a proof-of-concept measurement platform supporting repeatable motion and coordination assessment.',
     proves:
-      'I built embedded sensing hardware and real-time firmware to a clinical validation standard: measurements captured deterministically and checked against clinical references for repeatability and comparability.',
+      'Sajeevan built embedded sensing hardware and real-time firmware to a clinical validation standard: measurements captured deterministically and checked against clinical references for repeatability and comparability.',
     doesNotClaim:
-      'I completed and submitted this as an assessed Honours capstone and research-support concept, and the record presents it as exactly that: a validated proof-of-concept measurement platform rather than a certified medical device.',
+      'Sajeevan completed and submitted this as an assessed Honours capstone and research-support concept, and the record presents it as exactly that: a validated proof-of-concept measurement platform rather than a certified medical device.',
     demonstrates:
-      'I applied embedded hardware, real-time firmware and measurement discipline to a safety-relevant sensing problem, using clinical references as the validation basis.',
+      'Sajeevan applied embedded hardware, real-time firmware and measurement discipline to a safety-relevant sensing problem, using clinical references as the validation basis.',
     evidenceTier: 'delivered',
     category: 'University capstone',
     images: [
@@ -726,7 +728,7 @@ export const projects: readonly Project[] = [
     slug: 'digital-twin-industrial-ai',
     title: 'Digital Twin and Industrial AI',
     summary:
-      'I built a real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
+      'Sajeevan built a real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
     role: null, // TODO: Saj to supply.
     period: null, // TODO: Saj to supply.
     domain: 'AI/ML and automation',
@@ -735,23 +737,23 @@ export const projects: readonly Project[] = [
     problem:
       'Factories benefit from a live, model-based view of equipment so faults are caught early and throughput and quality stay stable.',
     context:
-      'I developed this personal engineering concept to model a production line in software, drawing on my smart-factory delivery experience.',
+      'Sajeevan developed this personal engineering concept to model a production line in software, drawing on his smart-factory delivery experience.',
     approach: [
-      'I modelled process and equipment states, generated simulated telemetry, added analytics and ML for anomaly detection and predictive maintenance, and visualised OEE in a dashboard.',
-      'I modelled equipment states explicitly rather than learning them blind, so anomalies map to physical causes; kept the analytics layer separate from the twin so detection logic can be swapped; reported OEE the way production teams actually read it.',
+      'Modelled process and equipment states, generated simulated telemetry, added analytics and ML for anomaly detection and predictive maintenance, and visualised OEE in a dashboard.',
+      'Modelled equipment states explicitly rather than learning them blind, so anomalies map to physical causes; kept the analytics layer separate from the twin so detection logic can be swapped; reported OEE the way production teams actually read it.',
     ],
     toolsNote:
       'Python, anomaly detection and predictive-maintenance logic, AI agents, OEE analytics, dashboard visualisation.',
     validation:
-      'I exercised the concept against simulated fault and drift scenarios, checking anomaly detection, maintenance flags and OEE calculations.',
+      'Sajeevan exercised the concept against simulated fault and drift scenarios, checking anomaly detection, maintenance flags and OEE calculations.',
     outcome:
-      'I delivered a working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.',
+      'Sajeevan delivered a working demonstration that surfaces anomalies, flags maintenance needs and reports OEE in real time.',
     proves:
-      'I built a working digital-twin demonstration end to end: explicit equipment-state models, simulated telemetry, anomaly detection, maintenance flags and OEE reported the way production teams read it.',
+      'Sajeevan built a working digital-twin demonstration end to end: explicit equipment-state models, simulated telemetry, anomaly detection, maintenance flags and OEE reported the way production teams read it.',
     doesNotClaim:
-      'The twin runs on simulated telemetry I generated, so the record documents a hands-on personal concept at exactly that stage; connecting it to a live plant is a deployment step, and the evidence tier reflects that.',
+      'The twin runs on simulated telemetry Sajeevan generated, so the record documents a hands-on personal concept at exactly that stage; connecting it to a live plant is a deployment step, and the evidence tier reflects that.',
     demonstrates:
-      'I connected plant-floor automation needs with applied AI/ML by defining the physical process and operational signals before modelling them.',
+      'Sajeevan connected plant-floor automation needs with applied AI/ML by defining the physical process and operational signals before modelling them.',
     evidenceTier: 'hands-on',
     category: 'Personal concept',
     images: [
@@ -768,7 +770,7 @@ export const projects: readonly Project[] = [
     slug: 'manufacturing-qa-foundation',
     title: 'Manufacturing and QA Foundation',
     summary:
-      'I built six years of experience across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.',
+      'Sajeevan built six years of experience across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.',
     role: null, // TODO: Saj to supply.
     period: '2018 to 2024',
     domain: 'Manufacturing and quality',
@@ -777,26 +779,26 @@ export const projects: readonly Project[] = [
     problem:
       'Effective automation, validation and commissioning depend on understanding how production floors, operators and quality systems behave in practice.',
     context:
-      'I completed six years of production and quality work from 2018 to 2024 at IDL, Carbon Revolution and Thornton Engineering Australia Pty Ltd while undertaking formal engineering study.',
+      'Sajeevan completed six years of production and quality work from 2018 to 2024 at IDL, Carbon Revolution and Thornton Engineering Australia Pty Ltd while undertaking formal engineering study.',
     approach: [
-      'I worked across high-throughput beverage lines, carbon-fibre rim layup moving onto KUKA robotic cells, and standards-driven structural-steel and pressure-vessel fabrication.',
+      'Worked across high-throughput beverage lines, carbon-fibre rim layup moving onto KUKA robotic cells, and standards-driven structural-steel and pressure-vessel fabrication.',
       /* "leading lines" removed: it restated the unverified line-lead
          progression that Rev01 and Rev02 both required to stay unpublished.
          Owning quality workflows is Thornton evidence and stays. */
-      'I progressed deliberately from operating machines to owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
+      'Progressed deliberately from operating machines to owning quality workflows; treated changeovers, first-response fixes and inspection evidence as engineering problems, not chores; learned the paperwork that makes production defensible: ITPs, MDRs, traceability records and QA sign-off.',
     ],
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, KUKA-based automated rim layup, NDE and mechanical testing exposure, ITP and MDR documentation, drawing review, KPI tracking, Lean practice.',
     validation:
-      'I validated my work through daily production KPIs, QA checks, inspection evidence and documented sign-off. This included installation and commissioning support for WestRock and Fibre King equipment during a canning line upgrade, plus hands-on involvement as KUKA-based robotic cells replaced a legacy rim layup machine.',
+      'Sajeevan validated his work through daily production KPIs, QA checks, inspection evidence and documented sign-off. This included installation and commissioning support for WestRock and Fibre King equipment during a canning line upgrade, plus hands-on involvement as KUKA-based robotic cells replaced a legacy rim layup machine.',
     outcome:
-      'I developed a working production and quality instinct across line recovery, changeover logic, operator empathy and audit-ready documentation.',
+      'Sajeevan developed a working production and quality instinct across line recovery, changeover logic, operator empathy and audit-ready documentation.',
     proves:
-      'I built six years of floor-level production and quality judgement across three manufacturers, evidenced through daily KPIs, QA checks, inspection records and hands-on commissioning support.',
+      'Sajeevan built six years of floor-level production and quality judgement across three manufacturers, evidenced through daily KPIs, QA checks, inspection records and hands-on commissioning support.',
     doesNotClaim:
-      'This record covers production, quality and commissioning-support roles; the design of the lines and robot cells belonged to their vendors, and my claim is the operational and quality capability I built working with them.',
+      'This record covers production, quality and commissioning-support roles; the design of the lines and robot cells belonged to their vendors, and Sajeevan\'s claim is the operational and quality capability he built working with them.',
     demonstrates:
-      'This experience gave me the operator, troubleshooting and quality perspective that now informs my engineering decisions.',
+      'This experience gave Sajeevan the operator, troubleshooting and quality perspective that now informs his engineering decisions.',
     evidenceTier: 'delivered',
     category: 'Professional foundation',
     deepDives: [
@@ -812,7 +814,7 @@ export const projects: readonly Project[] = [
     slug: 'carbon-revolution-rim-layup',
     title: 'Carbon Revolution: Robotic Rim Layup Automation',
     summary:
-      'I worked hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
+      'Sajeevan worked hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
     role: 'Production and quality role',
     period: null, // TODO: Saj to supply.
     domain: 'Advanced manufacturing and robotics',
@@ -826,23 +828,23 @@ export const projects: readonly Project[] = [
     problem:
       'Scaling carbon-fibre wheel production means taking repeatable fibre layup, and the handling of hot, heavy, safety-critical tooling, off manual work and onto robots, without losing the quality a structural wheel depends on.',
     context:
-      'I worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution. I was hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
+      'Sajeevan worked across production, quality assurance and development support in advanced carbon-fibre automotive wheel manufacturing at Carbon Revolution. He was hands-on through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
     approach: [
-      'I worked with KUKA robotic cells used for automated rim layup and demoulding, alongside downstream cure, machining, NDE, mechanical testing and traceability processes.',
-      'I treated the change as a systems problem, not a machine swap: moving hot, heavy tooling handling onto robots to take it off operators, and leaning on trials, first-off checks and defect inspection to prove the robotic cell held layup repeatability before the line was allowed to ramp.',
+      'Worked with KUKA robotic cells used for automated rim layup and demoulding, alongside downstream cure, machining, NDE, mechanical testing and traceability processes.',
+      'Treated the change as a systems problem, not a machine swap: moving hot, heavy tooling handling onto robots to take it off operators, and leaning on trials, first-off checks and defect inspection to prove the robotic cell held layup repeatability before the line was allowed to ramp.',
     ],
     toolsNote:
       'KUKA robotic cells, automated rim layup, robotic demoulding, carbon-fibre composite production, NDE and mechanical testing, production quality and defect-inspection systems.',
     validation:
-      'I supported trials, first-off and in-process quality checks, defect inspection, changeover and line recovery as the KUKA line was commissioned and ramped into production. My contribution was hands-on involvement and support, not ownership of the robot-cell design or programming.',
+      'Sajeevan supported trials, first-off and in-process quality checks, defect inspection, changeover and line recovery as the KUKA line was commissioned and ramped into production. His contribution was hands-on involvement and support, not ownership of the robot-cell design or programming.',
     outcome:
-      'I developed a hands-on, floor-level understanding of moving a production line onto industrial robotics, including what changes for operators, quality and throughput when robots take over layup and demoulding.',
+      'Sajeevan developed a hands-on, floor-level understanding of moving a production line onto industrial robotics, including what changes for operators, quality and throughput when robots take over layup and demoulding.',
     proves:
-      'I worked hands-on through a live industrial automation transition, supporting trials, first-off checks, defect inspection, changeovers and line recovery as KUKA robotic cells took over layup and demoulding.',
+      'Sajeevan worked hands-on through a live industrial automation transition, supporting trials, first-off checks, defect inspection, changeovers and line recovery as KUKA robotic cells took over layup and demoulding.',
     doesNotClaim:
-      'The robot cells were designed and programmed by the automation programme\'s engineers; my claim is the hands-on production and quality work that proved the cells could hold rate and quality through ramp-up.',
+      'The robot cells were designed and programmed by the automation programme\'s engineers; Sajeevan\'s claim is the hands-on production and quality work that proved the cells could hold rate and quality through ramp-up.',
     demonstrates:
-      'I gained hands-on industrial robotics experience in a production environment where safety, repeatability, quality and ramp-up mattered as much as robot motion.',
+      'Sajeevan gained hands-on industrial robotics experience in a production environment where safety, repeatability, quality and ramp-up mattered as much as robot motion.',
     evidenceTier: 'hands-on',
     category: 'Professional foundation',
     featured: false,
@@ -851,7 +853,7 @@ export const projects: readonly Project[] = [
     slug: 'idl-canning-line',
     title: 'IDL: Canning Line Upgrade and Commissioning',
     summary:
-      'I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
+      'Sajeevan supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
     /* The role line carried an unverified progression title, and the context
        and approach below carried the trade descriptor that goes with it.
        Both trace to third-party aggregator records rather than to anything
@@ -871,23 +873,23 @@ export const projects: readonly Project[] = [
     problem:
       'A high-throughput beverage plant has to lift capacity and reliability across canning, bottling and kegging without long downtime, which means installing and commissioning new packaging automation on a live production site.',
     context:
-      'I worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. I supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade.',
+      'Sajeevan worked across five food and beverage manufacturing lines at IDL: two canning, two bottling and one kegging. He supported hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade.',
     approach: [
-      'I worked across high-throughput fillers, seamers and conveyors, and supported the WestRock and Fibre King equipment added during the canning-line upgrade.',
-      "I treated changeovers, first-response fixes and run recovery as engineering problems rather than chores, supported install and commissioning so the new equipment held rate and quality, and learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
+      'Worked across high-throughput fillers, seamers and conveyors, and supported the WestRock and Fibre King equipment added during the canning-line upgrade.',
+      "Treated changeovers, first-response fixes and run recovery as engineering problems rather than chores, supported install and commissioning so the new equipment held rate and quality, and learned the line from the operator's side to see how a small mechanical or control fault costs throughput.",
     ],
     toolsNote:
       'Canning, bottling and kegging lines, WestRock and Fibre King packaging equipment, changeover and KPI tracking, quality checks and first-response machine fixes.',
     validation:
-      'I used daily production KPIs, quality checks, first-response fixes and installation and commissioning checks as new equipment was brought up to rate on the canning line.',
+      'Sajeevan used daily production KPIs, quality checks, first-response fixes and installation and commissioning checks as new equipment was brought up to rate on the canning line.',
     outcome:
-      'I developed a packaging-automation and commissioning instinct: install it, prove it, recover it and hold rate on a live, high-throughput line.',
+      'Sajeevan developed a packaging-automation and commissioning instinct: install it, prove it, recover it and hold rate on a live, high-throughput line.',
     proves:
-      'I supported hands-on installation and commissioning of new packaging equipment on a live, high-throughput site while carrying production and quality responsibilities across five lines.',
+      'Sajeevan supported hands-on installation and commissioning of new packaging equipment on a live, high-throughput site while carrying production and quality responsibilities across five lines.',
     doesNotClaim:
-      'The upgrade was an equipment vendor and site project; my claim is the hands-on installation support, commissioning checks and operational recovery work I personally did within it.',
+      'The upgrade was an equipment vendor and site project; Sajeevan\'s claim is the hands-on installation support, commissioning checks and operational recovery work he personally did within it.',
     demonstrates:
-      'I learned how usability, changeover design, line recovery and traceable QA affect automation and commissioning from an operator perspective.',
+      'Sajeevan learned how usability, changeover design, line recovery and traceable QA affect automation and commissioning from an operator perspective.',
     evidenceTier: 'delivered',
     category: 'Professional foundation',
     featured: false,
@@ -896,7 +898,7 @@ export const projects: readonly Project[] = [
     slug: 'ndcc-website',
     title: 'Newcomb and District Cricket Club Digital Platform',
     summary:
-      'I designed, built and run the official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
+      'Sajeevan designed, built and runs the official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
     role: 'Full-stack developer and platform administrator',
     period: '2026',
     domain: 'Full-stack software and community operations',
@@ -914,23 +916,23 @@ export const projects: readonly Project[] = [
     problem:
       'The club needed one reliable digital platform for current public information and committee workflows, without forcing volunteers to maintain the same content across disconnected pages, files and services.',
     context:
-      'I built and operate this production community platform for Newcomb and District Cricket Club. It is live at ndcc.com.au and supports public club information, fixtures, teams, news, events, facilities, membership, merchandise, sponsors, gallery, fantasy cricket and committee administration.',
+      'Sajeevan built and operates this production community platform for Newcomb and District Cricket Club. It is live at ndcc.com.au and supports public club information, fixtures, teams, news, events, facilities, membership, merchandise, sponsors, gallery, fantasy cricket and committee administration.',
     approach: [
-      'I structured the system as a Next.js App Router application with accessible public routes, protected committee administration and Supabase Postgres as the governed source for mutable club content.',
-      'I integrated PlayHQ as the fixture source, Resend-ready transactional email, manual order and payment reconciliation, GitHub-backed single-image publishing, Supabase Storage for bulk gallery media and Vercel deployment. Server-only credentials remain outside the browser, and live CMS reads use dynamic no-store delivery so successful empty results are never replaced with stale seed content.',
+      'Structured the system as a Next.js App Router application with accessible public routes, protected committee administration and Supabase Postgres as the governed source for mutable club content.',
+      'Integrated PlayHQ as the fixture source, Resend-ready transactional email, manual order and payment reconciliation, GitHub-backed single-image publishing, Supabase Storage for bulk gallery media and Vercel deployment. Server-only credentials remain outside the browser, and live CMS reads use dynamic no-store delivery so successful empty results are never replaced with stale seed content.',
     ],
     toolsNote:
       'Next.js 14, TypeScript, React, Tailwind CSS, Supabase Postgres and Storage, custom committee authentication, PlayHQ Public API, Resend, Vercel, GitHub media publishing, route and content smoke tests.',
     validation:
-      'I validate the codebase with lint and production builds, route and content smoke tests, public-site audits, asset checks, migration and schema tests, and live inspection. Credential-dependent email, authentication and external-service checks remain separate so an untested integration is never presented as passing.',
+      'Sajeevan validates the codebase with lint and production builds, route and content smoke tests, public-site audits, asset checks, migration and schema tests, and live inspection. Credential-dependent email, authentication and external-service checks remain separate so an untested integration is never presented as passing.',
     outcome:
-      'I delivered and continue to operate a live club platform spanning public information, fixtures, events, news, teams, facilities, membership, merchandise, sponsors, gallery, volunteering, contact, fantasy cricket and committee administration.',
+      'Sajeevan delivered and continues to operate a live club platform spanning public information, fixtures, events, news, teams, facilities, membership, merchandise, sponsors, gallery, volunteering, contact, fantasy cricket and committee administration.',
     proves:
-      'I deliver and operate a production platform: the site is live at ndcc.com.au, the source repository is public, and the club runs its public information and committee workflows on it.',
+      'Sajeevan delivers and operates a production platform: the site is live at ndcc.com.au, the source repository is public, and the club runs its public information and committee workflows on it.',
     doesNotClaim:
       'Payment and email paths are described at their verified implementation state, and an integration is only claimed as live once it has been tested in the target environment.',
     demonstrates:
-      'I translated community operations into a maintained full-stack product covering information architecture, data modelling, authentication, integrations, media, administration, deployment and validation.',
+      'Sajeevan translated community operations into a maintained full-stack product covering information architecture, data modelling, authentication, integrations, media, administration, deployment and validation.',
     evidenceTier: 'delivered',
     category: 'Community digital platform',
     links: [

@@ -12,7 +12,7 @@ import k from './skills.module.css'
 export const metadata: Metadata = {
   title: 'Expertise',
   description:
-    'My engineering toolchain across six territories and the ten-layer systems stack connecting physical systems, embedded intelligence, autonomy, software and validation.',
+    "Sajeevan's engineering toolchain across six territories and the ten-layer systems stack connecting physical systems, embedded intelligence, autonomy, software and validation.",
   alternates: { canonical: '/skills/' },
   openGraph: { title: 'Expertise', url: '/skills/' },
 }
@@ -25,8 +25,8 @@ export default function SkillsPage() {
           <PageHeader
           signature="strata"
             kicker="Expertise"
-            title="My toolchain, connected to the work behind it."
-            lede="Six engineering territories, each linked to the platforms, supporting tools and evidence behind my experience."
+            title="Sajeevan's toolchain, connected to the work behind it."
+            lede="Six engineering territories, each linked to the platforms, supporting tools and evidence behind his experience."
             aside={
               <div className={s.railBlock}>
                 <p className="label">Evidence tiers</p>
@@ -81,9 +81,9 @@ export default function SkillsPage() {
               </h2>
             </div>
             <p className="lede">
-              I have applied these ten layers across professional, university and personal engineering
-              work. I show them as one connected stack because system behaviour depends on the
-              interfaces between them.
+              Sajeevan has applied these ten layers across professional, university and personal
+              engineering work. They are shown as one connected stack because system behaviour
+              depends on the interfaces between them.
             </p>
           </Reveal>
           <StackSpine layers={systemsStack} />

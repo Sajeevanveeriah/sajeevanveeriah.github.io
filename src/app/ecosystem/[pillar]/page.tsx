@@ -82,8 +82,8 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
         <aside className={e.notice}>
           <p className={e.noticeTitle}>About this reference</p>
           <p className={e.noticeBody}>
-            These entries describe the wider engineering field. My applied experience is documented
-            separately in <Link href="/skills/" className={s.link}>Expertise</Link> and{' '}
+            These entries describe the wider engineering field. Sajeevan&apos;s applied experience is
+            documented separately in <Link href="/skills/" className={s.link}>Expertise</Link> and{' '}
             <Link href="/work/" className={s.link}>Work</Link>.
           </p>
         </aside>

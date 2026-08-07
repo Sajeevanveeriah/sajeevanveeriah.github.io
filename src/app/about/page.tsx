@@ -10,7 +10,7 @@ import a from './about.module.css'
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'My engineering record, qualifications, professional membership, community work and interests beyond engineering.',
+    "Sajeevan's engineering record, qualifications, professional membership, community work and interests beyond engineering.",
   alternates: { canonical: '/about/' },
   openGraph: { title: 'About', url: '/about/' },
 }
@@ -25,7 +25,7 @@ export default function AboutPage() {
           <PageHeader
           signature="spine"
             kicker="About"
-            title="I built my engineering practice on six years of production, quality and manufacturing experience."
+            title="Sajeevan built his engineering practice on six years of production, quality and manufacturing experience."
             lede={narrative}
           />
 
@@ -50,8 +50,8 @@ export default function AboutPage() {
               <h2 id="creds-title">Where the formal record sits.</h2>
             </div>
             <p className="lede">
-              My degrees, professional membership, short courses and the engineering communities I
-              take part in.
+              Sajeevan&apos;s degrees, professional membership, short courses and the engineering
+              communities he takes part in.
             </p>
           </Reveal>
 

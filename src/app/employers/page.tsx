@@ -9,7 +9,7 @@ import s from '@/components/ui/shared.module.css'
 export const metadata: Metadata = {
   title: 'Employers',
   description:
-    'My employment record, with company context, the work I completed and the capability I carried forward.',
+    "Sajeevan's employment record, with company context, the work he completed and the capability he carried forward.",
   alternates: { canonical: '/employers/' },
   openGraph: { title: 'Employers', url: '/employers/' },
 }
@@ -20,8 +20,8 @@ export default function EmployersPage() {
       <div className="wrap-wide">
         <PageHeader
           kicker="Employers"
-          title="Where I worked and what I delivered."
-          lede="Each page separates company background from my responsibilities, results and transferable engineering capability."
+          title="Where Sajeevan worked and what he delivered."
+          lede="Each page separates company background from his responsibilities, results and transferable engineering capability."
           aside={
             <div className={s.railBlock}>
               <p className="label">Evidence tiers</p>
