@@ -4,14 +4,15 @@ import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { ProjectImage } from '@/components/ui/ProjectImage'
-import { ProjectVideo } from '@/components/ui/ProjectVideo'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { TechnicalDepth } from '@/components/ui/TechnicalDepth'
+import { ProjectEngineering } from '@/components/ui/ProjectEngineering'
 import { Reveal } from '@/components/motion/Reveal'
 import { LabMount } from '@/components/lab/LabMount'
 import { StaticLab } from '@/components/lab/StaticLab'
 import { publishedProjects, discoverableProjects, getProject } from '@/content/projects'
+import { getProjectEngineering } from '@/content/projectEngineering'
 import { projectTechniques, techniquesFor } from '@/content/techniques'
 import { getLab, projectLabs, embedCopy } from '@/content/labs'
 import labCss from '@/components/lab/lab.module.css'
@@ -80,7 +81,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   // A suppressed role is never advertised, including from a record it worked on.
   const roles = discoverableExperience.filter((r) => r.relatedProjects.includes(p.slug))
   const image = p.images?.[0]
-  const video = p.videos?.[0]
   const variant = diagramFor(p.slug)
 
   // Pagination walks the discoverable set, so it can neither land on nor
@@ -96,13 +96,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
    * supports. Empty fields drop out rather than rendering a blank chapter.
    */
   const depth = techniquesFor(projectTechniques, p.slug)
+  const engineering = getProjectEngineering(p.slug)
   const embeds = (projectLabs[p.slug] ?? [])
     .map(getLab)
     .filter((l): l is NonNullable<typeof l> => l !== undefined)
 
-  const chapters: { title: string; body: string[]; depth?: boolean; labs?: boolean }[] = [
+  const chapters: {
+    title: string
+    body: string[]
+    depth?: boolean
+    labs?: boolean
+    engineering?: boolean
+  }[] = [
     { title: 'The engineering problem', body: [p.problem, p.context] },
     { title: 'How the system works', body: [p.approach[0] ?? ''] },
+    {
+      title: 'Engineering implementation',
+      body: [engineering.basis],
+      engineering: true,
+    },
     { title: 'What I owned', body: [p.demonstrates] },
     { title: 'Why I built it this way', body: [p.approach[1] ?? ''] },
     {
@@ -193,14 +205,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           }
         />
 
-        {/* A record with a demonstration clip leads with it; the record's
-            static image stays its poster and failure fallback, and every
-            discovery surface keeps the image untouched. */}
-        {video ? (
-          <Reveal className={`media-frame ${s.mediaHero}`}>
-            <ProjectVideo video={video} fallback={image} />
-          </Reveal>
-        ) : image ? (
+        {image ? (
           <Reveal className={`media-frame ${s.mediaHero}`}>
             <ProjectImage image={image} priority />
           </Reveal>
@@ -222,6 +227,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   {c.title === 'How the system works' && variant ? (
                     <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
                   ) : null}
+                  {c.engineering ? <ProjectEngineering profile={engineering} /> : null}
                   {c.depth ? (
                     <div>
                       {depth.map((t) => (
