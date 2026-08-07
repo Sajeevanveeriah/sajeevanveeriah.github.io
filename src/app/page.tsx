@@ -10,6 +10,7 @@ import { Reveal, Stagger } from '@/components/motion/Reveal'
 import { ParallaxStage, ParallaxLayer } from '@/components/motion/ParallaxStage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { site } from '@/content/site'
+import { practice } from '@/content/practice'
 import { narrative, closedLoop } from '@/content/about'
 import { discoverableProjects } from '@/content/projects'
 import { systemsStack } from '@/content/systemsStack'
@@ -355,6 +356,36 @@ export default function HomePage() {
             </p>
           </Reveal>
           <StackSpine layers={systemsStack} />
+        </div>
+      </section>
+
+      {/* ---------- Practice ---------- */}
+      <section className="section" aria-labelledby="practice-title">
+        <div className={`wrap-wide ${home.cta}`}>
+          <p className="label label-accent">The practice</p>
+          {/* eslint-disable-next-line @next/next/no-img-element -- static
+              export; next/image is a pass-through here (see ProjectImage). */}
+          <img
+            className={home.practiceLogo}
+            src={practice.logo.src}
+            alt={practice.logo.alt}
+            width={practice.logo.width}
+            height={practice.logo.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <h2 id="practice-title" className={home.ctaTitle}>
+            Engineering delivery through {practice.name}.
+          </h2>
+          <p className="lede">{practice.tagline}</p>
+          <div className={home.ctaActions}>
+            <Link href={practice.path} className="btn btn-primary">
+              View the company profile
+            </Link>
+            <a href={practice.linkedin.href} className="btn btn-secondary" rel="me noopener">
+              Follow on LinkedIn
+            </a>
+          </div>
         </div>
       </section>
 
