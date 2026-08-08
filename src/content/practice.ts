@@ -21,36 +21,72 @@ export const practice = {
   name: 'Independent Engineering Practice',
   /** Route of the profile page, used by nav, sitemap and internal links. */
   path: '/practice/',
+  /**
+   * The two lockups, and the crop each one needs.
+   *
+   * Saj supplied a light lockup on transparency and a dark lockup baked onto
+   * its own deep-navy card. They are different sizes AND different framings:
+   * the light artwork's mark ends at x=1070 of 1600 and the dark artwork's
+   * mark sits inside 1733x908 with a wide empty band beneath it. Rendered
+   * whole, the two would sit at visibly different optical sizes on the same
+   * page.
+   *
+   * Every number below was measured from the actual pixels with sharp, not
+   * estimated: `content` is the bounding box of the drawn mark, and `crop` is
+   * that box plus proportional padding, expressed as the background-size and
+   * background-position percentages that show exactly that region. Both crops
+   * resolve to the same 1070/354 aspect ratio, which is what makes the two
+   * variants interchangeable inside one fixed-height plate with no layout
+   * shift when the theme changes.
+   */
   logo: {
     src: '/assets/image/20260806-Independent-Engineering-Practice-Logo-Primary-Rev00.png',
     width: 1600,
     height: 420,
     alt: 'Independent Engineering Practice logo',
   },
+  logoDark: {
+    src: '/assets/image/20260806-IEP-Logo-Primary-Dark-Rev00.png',
+    width: 1733,
+    height: 908,
+  },
   since: 'Operating since June 2026',
   tagline:
-    'Engineering delivery for problems that cross disciplines: robotics, mechatronics, AI/ML, software and end-to-end automation.',
+    'Robotic and embedded product development, from system architecture through physical integration, validation and deployment.',
+  secondary:
+    'Selective engineering software and workflow automation, where it directly supports physical operations.',
   // Same facts as the employer record summary in employers.ts, recast in the
   // indicative business voice Saj asked for on 7 August 2026: the company
   // profile speaks as the practice, never as "I".
   summary:
-    'The practice designs, builds and deploys independent and client-facing engineering systems across robotics, mechatronics, AI/ML, software and end-to-end automation, taking work from problem definition and architecture through implementation, validation, deployment and practical handover.',
+    'The practice designs, builds and deploys robotic and embedded systems for clients and for its own product work, taking a machine from problem definition and system architecture through mechanism, electronics, firmware, autonomy and software to validation, deployment and practical handover. Engineering software and automation are delivered where they support the physical operation.',
+  /**
+   * Ordered, not equal. The first three are what the practice is for; the
+   * last two are what it does around them. Ten services at equal prominence
+   * is what made the practice read as a general contractor rather than as a
+   * robotics practice, so the order here is load-bearing and the page renders
+   * it as a ranked list rather than as a grid of identical cards.
+   */
   services: [
     {
-      title: 'Robotics and autonomy',
-      body: 'Supervised robots, mobile platforms and autonomy stacks, designed, built, validated and handed over for real end-users.',
+      title: 'Robotic and embedded product development',
+      body: 'A machine taken from operating problem and system architecture through mechanism, electronics, firmware, autonomy and handover.',
     },
     {
-      title: 'Product research and development',
-      body: 'Physical products from concept and architecture through electronics, firmware, software and field validation.',
+      title: 'Prototype integration',
+      body: 'Existing subsystems made to behave as one machine, with the interfaces and failure modes written down rather than discovered on site.',
     },
     {
-      title: 'Engineering software',
-      body: 'Controlled browser and desktop workflows with reviewable outputs: imports, changes, exceptions, rollback and audit.',
+      title: 'Robotics and edge-intelligence architecture',
+      body: 'Compute, sensing and autonomy chosen against timing, I/O, power, thermals, environment, serviceability and supply, before anything is committed.',
     },
     {
-      title: 'End-to-end automation',
-      body: 'Automation that connects physical systems, data and operator review, with observable behaviour and verified results.',
+      title: 'Deployment and diagnostics readiness',
+      body: 'What an operator needs on the day: observable state, recovery behaviour, service access and evidence that the system does what it claims.',
+    },
+    {
+      title: 'Operational workflow automation',
+      body: 'Controlled software with reviewable outputs, where it directly supports the physical operation rather than replacing it.',
     },
   ],
   /** Slugs of delivered practice projects, matching `projects.ts`. */

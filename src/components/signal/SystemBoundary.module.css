@@ -1,0 +1,354 @@
+/* ============================================================
+   System boundary
+   Five layer cards, a shared integration bus and one outcome node.
+   Connectors are CSS rules on the same grid the cards sit in, so they
+   cannot drift out of register with a label at any viewport.
+   ============================================================ */
+
+.root {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.kicker {
+  margin: 0;
+}
+
+.title {
+  max-width: 16ch;
+  margin-block: 0.15rem 0.35rem;
+}
+
+.lede {
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.map {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+}
+
+/* ---- Layers ---- */
+
+.layers {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+  min-width: 0;
+}
+
+/* Each card carries its layer hue three ways: the rule down its leading
+   edge, the index and the wash behind the index. The written name carries
+   the same information, so nothing here is signalled by colour alone. */
+/* Flex column rather than grid: the cards stretch to the tallest in the row,
+   and the evidence control has to sit on the bottom edge of every card or
+   the five disclosures land at five different heights and the row stops
+   reading as one instrument. `margin-top: auto` on `.disclosure` needs a
+   flex container to push against; in a grid with `align-content: start` it
+   does nothing, which is exactly what it was doing. */
+.layer {
+  --layer: var(--accent);
+  --layer-wash: var(--accent-wash);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: var(--space-3) var(--space-3) var(--space-3) calc(var(--space-3) + 4px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    border-color var(--dur-interaction) var(--ease-servo),
+    transform var(--dur-interaction) var(--ease-servo);
+}
+
+.layer::before {
+  content: '';
+  position: absolute;
+  inset-block: -1px;
+  inset-inline-start: -1px;
+  width: 4px;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--layer);
+}
+
+.layer:hover,
+.layer:focus-within {
+  border-color: var(--border-strong);
+  transform: translateY(var(--lift));
+}
+
+.layer[data-layer='mech'] {
+  --layer: var(--sys-mech);
+  --layer-wash: var(--sys-mech-wash);
+}
+
+.layer[data-layer='sense'] {
+  --layer: var(--sys-sense);
+  --layer-wash: var(--sys-sense-wash);
+}
+
+.layer[data-layer='control'] {
+  --layer: var(--sys-control);
+  --layer-wash: var(--sys-control-wash);
+}
+
+.layer[data-layer='autonomy'] {
+  --layer: var(--sys-autonomy);
+  --layer-wash: var(--sys-autonomy-wash);
+}
+
+.layer[data-layer='verify'] {
+  --layer: var(--sys-verify);
+  --layer-wash: var(--sys-verify-wash);
+}
+
+.index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  background: var(--layer-wash);
+  color: var(--layer);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+
+.name {
+  font-size: var(--text-lg);
+  letter-spacing: var(--tracking-snug);
+  max-width: 18ch;
+}
+
+.detail {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: none;
+}
+
+/* ---- Evidence disclosure ---- */
+
+.disclosure {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+/* 44px tall on every pointer, not the 24px the text alone would give. */
+.summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  color: var(--accent-text);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A drawn chevron rather than the platform marker, so the control looks the
+   same in every browser and rotates to carry open state as shape rather than
+   as colour. The written label never changes, so the state is also available
+   through `aria-expanded` on the summary element itself. */
+.chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.disclosure[open] .chevron {
+  transform: rotate(-135deg) translate(-1px, -1px);
+}
+
+.disclosureBody {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+  padding-top: 0.35rem;
+}
+
+.evidence {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: none;
+}
+
+/* ---- Integration bus ---- */
+
+/* The bus is a spacer row on small viewports: a single vertical rule from
+   the last card to the outcome. It becomes the horizontal collector at the
+   two-column breakpoint below. */
+.bus {
+  position: relative;
+  height: var(--space-5);
+  display: grid;
+  place-items: center;
+}
+
+.busLine {
+  display: block;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--sys-autonomy),
+    var(--sys-verify)
+  );
+  transform-origin: top;
+}
+
+/* Motion: the connector draws once, then stops. The RESTING state above is
+   the drawn state, so a reader with JavaScript off gets the finished visual.
+   The undrawn state exists only under `html[data-js]`, exactly as the reveal
+   treatment does, and the reduced-motion guard in globals.css collapses the
+   transition to 0.01ms so it lands complete rather than animating. */
+html[data-js] .busLine {
+  transform: scaleY(0);
+}
+
+html[data-js] :global(.reveal[data-shown]) .busLine {
+  transform: scaleY(1);
+  transition: transform var(--dur-slow) var(--ease-out) 160ms;
+}
+
+/* ---- Outcome ---- */
+
+.outcome {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+  text-align: center;
+  padding: var(--space-4) var(--space-3);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 140% at 50% 0%, var(--accent-wash), transparent 70%),
+    var(--surface);
+}
+
+.outcomeLabel {
+  color: var(--accent-text);
+}
+
+.outcomeTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-snug);
+  color: var(--text);
+  max-width: 20ch;
+}
+
+/* ============================================================
+   Two-column and wide compositions
+   ============================================================ */
+
+@media (min-width: 680px) {
+  .layers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* The fifth card is the integration layer and is the one the outcome
+     hangs off, so it spans rather than sitting in a half-empty row. */
+  .layer:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1040px) {
+  .layers {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .layer:last-child {
+    grid-column: auto;
+  }
+
+  .layer {
+    padding-inline: var(--space-3);
+  }
+
+  .name {
+    max-width: none;
+  }
+
+  /* The horizontal collector. A hairline across the full measure with a
+     stub dropping from each column into it, then one stub continuing down
+     into the outcome node. Drawn with `repeating-linear-gradient` on a grid
+     of the same five columns, so the stubs land under the cards at every
+     width without a single hard-coded offset. */
+  .bus {
+    height: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-2);
+    place-items: stretch;
+    align-content: stretch;
+  }
+
+  .bus::before {
+    content: '';
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: center;
+    height: 1px;
+    background: var(--border-strong);
+  }
+
+  /* One stub per card, drawn from the card's own centre down to the
+     collector. Positioned against the card, so it tracks the column at every
+     width and carries that layer's hue into the join. */
+  .layer::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 1px;
+    height: calc(var(--space-6) / 2);
+    background: var(--layer);
+    opacity: 0.6;
+  }
+
+  /* The drop from the collector into the outcome node, under the middle
+     column. This is the one connector that animates. */
+  .busLine {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
+    align-self: end;
+    width: 2px;
+    height: 50%;
+  }
+}
+
+/* Reduced motion: the connector is never left part-drawn. The guard in
+   globals.css already collapses the transition, and this states the resting
+   value at matching specificity so a partially applied transform cannot
+   survive. */
+@media (prefers-reduced-motion: reduce) {
+  html[data-js] .busLine,
+  html[data-js] :global(.reveal[data-shown]) .busLine {
+    transform: none;
+  }
+}

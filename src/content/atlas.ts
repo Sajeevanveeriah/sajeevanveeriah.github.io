@@ -91,7 +91,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The ROS 2 rover and clinical capstone both required whole-stack integration from sensing to validated behaviour.',
     experienceProof:
-      'Graduated with a Bachelor of Mechatronics Engineering (Honours, Distinction) from Deakin University, and delivered integrated systems at JAG Process Solutions and DuxTel spanning field devices, control logic, data flows and handover.',
+      'Graduated with a Bachelor of Mechatronics Engineering (Honours, Distinction) from Deakin University, and delivered integrated systems in regulated process automation and at DuxTel spanning field devices, control logic, data flows and handover.',
     transferableLogic:
       'Uses system decomposition to locate faults and requirements at the correct engineering layer before choosing a solution.',
     growthTargets: ['Model-based systems engineering (SysML)'],
@@ -154,7 +154,7 @@ export const atlas: readonly AtlasDomain[] = [
     ],
     projectProof: 'Integrated motors, drives and actuators in robotics and capstone builds.',
     experienceProof:
-      'Integrated field devices, sensors and drives with control logic at JAG Process Solutions, building on motor and drive fundamentals from the mechatronics degree and HND.',
+      'Integrated field devices, sensors and drives with control logic on a regulated smart-factory delivery, building on motor and drive fundamentals from the mechatronics degree and HND.',
     transferableLogic:
       'Reading a schematic and tracing a loop is the same discipline whether the cabinet runs a plant, a rig or a robot.',
     growthTargets: ['Switchboard and panel design ownership', 'AS/NZS 3000 wiring rules literacy'],
@@ -288,7 +288,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The smart-factory case study details the SCADA migration and process-visualisation work delivered.',
     experienceProof:
-      'Executed an iFIX to PVI+ SCADA migration at JAG Process Solutions, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
+      'Executed an iFIX to PVI+ SCADA migration on a regulated smart-factory delivery, converting application content and verifying functional behaviour against the validated system, with FAT, SAT, commissioning and qualification documentation.',
     transferableLogic:
       'Carries alarm design, operator usability and data-integrity discipline into supervisory and telemetry systems.',
     growthTargets: ['Allen-Bradley and Rockwell platforms', 'Ignition SCADA'],
@@ -568,7 +568,7 @@ export const atlas: readonly AtlasDomain[] = [
       'Batch execution systems',
       'FAT, SAT, IQ/OQ-style documentation',
     ],
-    projectProof: 'The JAG smart factory case study details the regulated delivery context.',
+    projectProof: 'The regulated smart factory case study details the delivery context.',
     experienceProof:
       'Delivered control, integration and smart-factory engineering for pharmaceutical, biotechnology and food-manufacturing clients under GMP across plants, skids and packaged units.',
     transferableLogic:
@@ -661,7 +661,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'Uses a consistent, standards-aware structure for validation methods and evidence.',
     experienceProof:
-      'Applied these standards through GMP automation delivery, FMEA and QA documentation across JAG, ABMARC and manufacturing roles.',
+      'Applied these standards through GMP automation delivery, FMEA and QA documentation across regulated automation, ABMARC and manufacturing roles.',
     transferableLogic:
       'Standards literacy converts good engineering into defensible engineering: it is the language auditors and safety leads trust.',
     growthTargets: ['Functional safety certification (TUV style)', 'IEC 62443 practitioner depth'],
@@ -687,7 +687,7 @@ export const atlas: readonly AtlasDomain[] = [
     projectProof:
       'The professional case studies include documented validation and handover, not only functional implementation.',
     experienceProof:
-      'Produced FAT, SAT, commissioning, qualification and handover documentation at JAG Process Solutions, resolved faults raised during testing and site support, and produced readiness-milestone and sign-off evidence in vehicle validation programmes.',
+      'Produced FAT, SAT, commissioning, qualification and handover documentation on a regulated smart-factory delivery, resolved faults raised during testing and site support, and produced readiness-milestone and sign-off evidence in vehicle validation programmes.',
     transferableLogic:
       'Uses commissioning to test interfaces, expose faults and verify how the complete system behaves in practice.',
     growthTargets: ['Lead commissioning roles', 'Multi-discipline project engineering'],

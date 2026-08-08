@@ -22,17 +22,25 @@ import {
   type EntityKind,
   type Lifecycle,
 } from '@/content/ecosystem'
+import { ecosystemLibrary } from '@/content/library'
 import s from '@/components/ui/shared.module.css'
 import e from '@/components/ecosystem/ecosystem.module.css'
 
-const DESCRIPTION =
-  'A reference catalogue covering eight engineering pillars, 31 domains, and the hardware, software, protocols, standards and methods within them.'
+/**
+ * Renamed, not rebuilt. The catalogue, the route, the search and every
+ * pillar page are unchanged; what changed on the 6 August 2026
+ * repositioning is that it is now presented as a reference library about the
+ * field rather than as a section of the portfolio, and its disclaimer is
+ * rendered where a reader meets it rather than only where a reader hunts
+ * for it.
+ */
+const DESCRIPTION = `${ecosystemLibrary.disclaimer} It covers eight engineering pillars and 31 domains across hardware, software, protocols, standards and methods.`
 
 export const metadata: Metadata = {
-  title: 'Ecosystem',
+  title: ecosystemLibrary.name,
   description: DESCRIPTION,
   alternates: { canonical: '/ecosystem/' },
-  openGraph: { title: 'Ecosystem', description: DESCRIPTION, url: '/ecosystem/' },
+  openGraph: { title: ecosystemLibrary.name, description: DESCRIPTION, url: '/ecosystem/' },
 }
 
 /** Only what search needs travels to the client; detail stays on pillar pages. */
@@ -94,16 +102,16 @@ export default function EcosystemPage() {
       <section className="section">
         <div className="wrap-wide">
           <PageHeader
-            kicker="Ecosystem"
-            title="The field, mapped."
-            lede="Explore eight engineering pillars and 31 domains spanning mechatronics, robotics, controls, embedded systems, AI and industrial automation."
+            kicker={ecosystemLibrary.kicker}
+            title={ecosystemLibrary.title}
+            lede={ecosystemLibrary.lede}
             aside={
               <div className={s.railBlock}>
-                <p className="label">What this is</p>
+                <p className="label">What this is not</p>
                 <p className={e.noticeBody}>
-                  A reference catalogue of the field, kept separate from{' '}
-                  <Link href="/skills/" className={s.link}>
-                    documented experience
+                  Not an experience claim.{' '}
+                  <Link href={ecosystemLibrary.provenLink.href} className={s.link}>
+                    {ecosystemLibrary.provenLink.label}
                   </Link>
                   .
                 </p>
@@ -112,10 +120,11 @@ export default function EcosystemPage() {
           />
 
           <Reveal className={e.notice} as="div">
-            <p className={e.noticeTitle}>How to read this catalogue.</p>
+            <p className={e.noticeTitle}>How to read this library.</p>
+            <p className={e.noticeBody}>{ecosystemLibrary.disclaimer}</p>
+            <p className={e.noticeBody}>{ecosystemLibrary.selectionNote}</p>
             <p className={e.noticeBody}>
-              Entries describe technologies and methods in the wider engineering field. Applied
-              experience is documented separately in{' '}
+              Applied experience is documented separately in{' '}
               <Link href="/skills/" className={s.link}>
                 Expertise
               </Link>

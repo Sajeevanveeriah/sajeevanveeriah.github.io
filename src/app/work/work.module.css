@@ -1,0 +1,173 @@
+/* ============================================================
+   Work index: three groups, deliberately unequal
+   ============================================================ */
+
+.groups {
+  display: grid;
+  gap: clamp(3.5rem, 7vw, 6rem);
+}
+
+.group {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.groupHead {
+  display: grid;
+  gap: 0.5rem;
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--layer, var(--accent-line));
+}
+
+.group[data-group='robotic-systems'] {
+  --layer: var(--sys-autonomy);
+}
+
+.group[data-group='embedded-intelligence'] {
+  --layer: var(--sys-control);
+}
+
+.group[data-group='supporting-systems'] {
+  --layer: var(--sys-verify);
+}
+
+.groupIndex {
+  color: var(--layer);
+}
+
+.groupTitle {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+}
+
+.groupNote {
+  color: var(--text-muted);
+  max-width: 58ch;
+}
+
+/* ---- Records ---- */
+
+.records {
+  display: grid;
+  gap: var(--space-4);
+  list-style: none;
+  min-width: 0;
+}
+
+.record {
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color var(--dur-interaction) var(--ease-servo),
+    transform var(--dur-interaction) var(--ease-servo);
+}
+
+.record:hover,
+.record:focus-within {
+  border-color: var(--border-strong);
+  transform: translateY(var(--lift));
+}
+
+.recordMedia {
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-faint);
+  background: var(--tint);
+}
+
+.recordCopy {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.recordTitle {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-snug);
+  max-width: 24ch;
+}
+
+.recordTitle a {
+  transition: color var(--dur-interaction) var(--ease-servo);
+}
+
+.recordTitle a:hover {
+  color: var(--accent-text);
+}
+
+/* The whole card is the target. That is also what takes the hit area past
+   44px on a coarse pointer without moving any type. */
+.recordTitle a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.recordSummary {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: none;
+}
+
+.recordMeta {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  max-width: none;
+}
+
+/* The lead record in the robotics group is given the wide composition, so
+   the first thing on the page is one system rather than a row of equals. */
+.recordLead .recordTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.archiveNote {
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin-top: var(--space-2);
+}
+
+@media (min-width: 760px) {
+  .records {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .record {
+    grid-template-rows: auto 1fr;
+  }
+
+  .recordLead {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: auto;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+  }
+}
+
+@media (min-width: 1100px) {
+  .records {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .recordLead {
+    grid-column: 1 / -1;
+  }
+}

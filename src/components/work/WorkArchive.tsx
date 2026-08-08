@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { TierIndicator } from '@/components/ui/TierIndicator'
+import { EvidenceStateChip } from '@/components/ui/EvidenceState'
 import { TIER_ORDER, TIERS, byTierStrength, type EvidenceTier } from '@/content/tiers'
 import type { Project } from '@/content/projects'
 import s from '@/components/ui/shared.module.css'
@@ -106,7 +107,7 @@ export function WorkArchive({
                 <Link href={`/work/${p.slug}/`}>{p.title}</Link>
               </h3>
               <div className={s.rowMeta}>
-                <span className={s.cat}>{p.category}</span>
+                <EvidenceStateChip state={p.evidenceState} />
                 <TierIndicator tier={p.evidenceTier} />
                 {p.period ? <span className={s.cat}>{p.period}</span> : null}
               </div>

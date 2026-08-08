@@ -1,0 +1,72 @@
+/* ============================================================
+   Independent Engineering Practice mark, theme aware
+   See PracticeMark.tsx for why this is a background rather than an <img>.
+
+   Every percentage below is derived from pixels measured with sharp, and
+   the derivation is written out so it can be rechecked rather than trusted:
+
+   LIGHT  20260806-Independent-Engineering-Practice-Logo-Primary-Rev00.png
+          1600x420, transparent ground.
+          Drawn mark: x 80..1070, y 77..351.
+          Crop with padding: x0 40, w 1070, y0 37, h 354.
+          background-size   = 1600 / 1070 = 149.53%
+          background-pos-x  = 40 / (1600 - 1070) = 7.55%
+          background-pos-y  = 37 / (420 - 354) = 56.06%
+
+   DARK   20260806-IEP-Logo-Primary-Dark-Rev00.png
+          1733x908, opaque ground sampled at rgb(4 12 29) on all four corners.
+          Drawn mark: x 154..1618, y 226..630.
+          Crop with proportional padding: x0 95, w 1582, y0 166, h 523.
+          background-size   = 1733 / 1582 = 109.55%
+          background-pos-x  = 95 / (1733 - 1582) = 62.91%
+          background-pos-y  = 166 / (908 - 523) = 43.12%
+
+   Both crops resolve to 1070/354, so one aspect ratio serves both and the
+   plate cannot change height when the theme changes. The dark plate colour
+   is the artwork's own sampled ground, so the crop meets the plate with no
+   seam.
+   ============================================================ */
+
+.mark {
+  display: block;
+  width: min(100%, 26rem);
+  aspect-ratio: 1070 / 354;
+  border: 1px solid var(--practice-plate-border);
+  border-radius: var(--radius);
+  background-color: var(--practice-plate);
+  background-repeat: no-repeat;
+  background-image: url('/assets/image/20260806-Independent-Engineering-Practice-Logo-Primary-Rev00.png');
+  background-size: 149.53% auto;
+  background-position: 7.55% 56.06%;
+  /* The plate changes ground with the rest of the page rather than snapping.
+     Neutralised globally under prefers-reduced-motion in globals.css. */
+  transition:
+    background-color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo);
+}
+
+/* ---- Dark, explicit choice. Mirrors the attribute block in tokens.css. ---- */
+html[data-theme='dark'] .mark {
+  background-image: url('/assets/image/20260806-IEP-Logo-Primary-Dark-Rev00.png');
+  background-size: 109.55% auto;
+  background-position: 62.91% 43.12%;
+}
+
+/* ---- Dark, no explicit choice. Mirrors the media block in tokens.css, and
+   is the state a reader with JavaScript disabled lands in. ---- */
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) .mark {
+    background-image: url('/assets/image/20260806-IEP-Logo-Primary-Dark-Rev00.png');
+    background-size: 109.55% auto;
+    background-position: 62.91% 43.12%;
+  }
+}
+
+/* Print drops background images by default, which would leave an empty
+   ruled box where the lockup was. An empty plate says nothing, so the box
+   is removed rather than printed hollow. */
+@media print {
+  .mark {
+    display: none;
+  }
+}

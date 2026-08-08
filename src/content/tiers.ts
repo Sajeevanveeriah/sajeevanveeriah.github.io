@@ -79,6 +79,52 @@ export const TIER_ORDER: readonly EvidenceTier[] = [
   'target',
 ] as const
 
+/* ============================================================
+   Evidence states
+   ============================================================ */
+
+/**
+ * What a record's evidence actually is, stated per record.
+ *
+ * The five tiers above answer "how strong is this claim". They are kept,
+ * because the atlas and the archive filter are built on them. This second
+ * vocabulary answers a different and more useful question for a reader
+ * looking at one project: what kind of thing exists, and where can it be
+ * seen. "Delivered" was the same word on a client robot in daily use, a
+ * simulation-validated stack and an assessed university prototype, and that
+ * flattening is what this replaces.
+ *
+ * Assigned record by record from the evidence already published in
+ * `projects.ts`. No state is inferred from a category, a tier or a title,
+ * and no record shares a state simply because it shares a client.
+ */
+export type EvidenceState =
+  | 'Active client deployment'
+  | 'Deployed physical system'
+  | 'Deployed software system'
+  | 'Simulation-validated autonomy stack'
+  | 'Assessed embedded prototype'
+  | 'Hands-on professional integration'
+  | 'Locally deployed private system'
+  | 'Concept development'
+
+export const EVIDENCE_STATE_DEFINITION: Record<EvidenceState, string> = {
+  'Active client deployment':
+    'Delivered to a client, deployed, and in active use by its end-users.',
+  'Deployed physical system': 'A physical system built, deployed and in use.',
+  'Deployed software system': 'Software built, released and reachable at a public address.',
+  'Simulation-validated autonomy stack':
+    'A complete autonomy stack exercised and re-run deterministically in simulation. Field deployment is not claimed.',
+  'Assessed embedded prototype':
+    'Embedded hardware and firmware built and assessed, with measurements checked against references. Certification is not claimed.',
+  'Hands-on professional integration':
+    'Delivered inside a professional engineering environment, with the client evidence retained by the client.',
+  'Locally deployed private system':
+    'Built and running on personally owned hardware. There is no public endpoint to inspect.',
+  'Concept development':
+    'Developed and exercised against simulated inputs. Connection to live equipment is a later step.',
+} as const
+
 /** Sort strongest evidence first. */
 export function byTierStrength(
   a: { evidenceTier: EvidenceTier | null },

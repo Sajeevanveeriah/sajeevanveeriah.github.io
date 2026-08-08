@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Reveal, Stagger } from '@/components/motion/Reveal'
+import { PracticeMark } from '@/components/ui/PracticeMark'
+import { EvidenceStateChip } from '@/components/ui/EvidenceState'
 import { site } from '@/content/site'
 import { practice } from '@/content/practice'
 import { getProject } from '@/content/projects'
@@ -54,22 +56,13 @@ export default function PracticePage() {
 
           <Reveal>
             <div className={p.logoBand}>
-              {/* eslint-disable-next-line @next/next/no-img-element -- static
-                  export; next/image is a pass-through here (see ProjectImage). */}
-              <img
-                className={p.logo}
-                src={practice.logo.src}
-                alt={practice.logo.alt}
-                width={practice.logo.width}
-                height={practice.logo.height}
-                loading="eager"
-                decoding="async"
-              />
+              <PracticeMark className={p.logo} />
             </div>
           </Reveal>
 
           <Reveal>
             <p className="lede">{practice.summary}</p>
+            <p className={p.secondary}>{practice.secondary}</p>
             <div className={p.meta}>
               <p className="label">{practice.since}</p>
               {site.credentials.map((c) => (
@@ -85,16 +78,20 @@ export default function PracticePage() {
       <section className="section stage-tint" aria-labelledby="services-title">
         <div className="wrap-wide">
           <p className="label label-accent">What the practice delivers</p>
-          <h2 id="services-title">Services</h2>
-          <Stagger>
-            <div className={p.grid}>
-              {practice.services.map((sv) => (
-                <div key={sv.title} className={p.cell}>
-                  <h3>{sv.title}</h3>
-                  <p>{sv.body}</p>
-                </div>
-              ))}
-            </div>
+          <h2 id="services-title">Services, in order.</h2>
+          {/* Ranked rather than gridded. Five equal cards said the practice
+              does five unrelated things; a numbered list says the first is
+              what it is for and the last is what it does around it. */}
+          <Stagger as="ol" className={p.services}>
+            {practice.services.map((sv, i) => (
+              <li key={sv.title} className={p.service}>
+                <span className={p.serviceIndex} aria-hidden="true">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 className={p.serviceTitle}>{sv.title}</h3>
+                <p className={p.serviceBody}>{sv.body}</p>
+              </li>
+            ))}
           </Stagger>
         </div>
       </section>
@@ -105,10 +102,11 @@ export default function PracticePage() {
           <h2 id="delivered-title">Completed and deployed practice work</h2>
           <ul className={p.records}>
             {delivered.map((pr) => (
-              <li key={pr.slug}>
+              <li key={pr.slug} className={p.record}>
                 <Link className="textlink" href={`/work/${pr.slug}/`}>
                   {pr.title}
                 </Link>
+                <EvidenceStateChip state={pr.evidenceState} />
               </li>
             ))}
           </ul>

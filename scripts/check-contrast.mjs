@@ -171,6 +171,23 @@ const GATED = [
   ['focus-ring', 'tint', 3],
   ['accent-fill', 'bg', 3],
   ['accent-fill', 'surface', 3],
+
+  /* The five system-layer hues. Each is used as a label colour as well as a
+     stroke, so each is gated at the text threshold rather than the 3:1
+     non-text one, on both grounds it is ever drawn on: the page canvas and
+     the tinted stage. Added with the specialist redesign; without these rows
+     a new hue could ship legible in light and unreadable in dark, which is
+     precisely the failure the dark-theme rows above exist to catch. */
+  ['sys-mech', 'bg', 4.5],
+  ['sys-mech', 'tint', 4.5],
+  ['sys-sense', 'bg', 4.5],
+  ['sys-sense', 'tint', 4.5],
+  ['sys-control', 'bg', 4.5],
+  ['sys-control', 'tint', 4.5],
+  ['sys-autonomy', 'bg', 4.5],
+  ['sys-autonomy', 'tint', 4.5],
+  ['sys-verify', 'bg', 4.5],
+  ['sys-verify', 'tint', 4.5],
 ]
 
 /* ADVISORY, ungated. Reported for visibility, and deliberately do not fail

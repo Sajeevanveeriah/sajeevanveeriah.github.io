@@ -3,42 +3,95 @@
 .logoBand {
   display: flex;
   justify-content: flex-start;
-  margin-block: var(--space-5, 2rem) var(--space-6, 3rem);
+  margin-block: var(--space-5) var(--space-6);
 }
 
+/* Width only. The height comes from the mark's own aspect ratio, which both
+   theme variants share, so switching theme cannot move anything below it. */
 .logo {
   width: min(100%, 34rem);
-  height: auto;
-  display: block;
 }
 
-.grid {
+.secondary {
+  margin-block-start: var(--space-3);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--sys-verify);
+  color: var(--text-muted);
+  max-width: 56ch;
+}
+
+/* ---- Services, ranked ---- */
+
+.services {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.5rem;
-  margin-block-start: 2rem;
+  gap: 0;
+  list-style: none;
+  margin-block-start: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
-.cell {
-  border-block-start: 1px solid var(--line, currentColor);
-  padding-block-start: 1rem;
+.service {
+  display: grid;
+  gap: 0.4rem;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
 }
 
-.cell h3 {
-  margin-block-end: 0.5rem;
+.serviceIndex {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-text);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
 }
+
+.serviceTitle {
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-snug);
+  max-width: 26ch;
+}
+
+.serviceBody {
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* The first service is what the practice is for, so it is set larger. The
+   ordinal is already in the markup, so the size is reinforcement rather than
+   the only signal. */
+.service:first-child .serviceTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+@media (min-width: 860px) {
+  .service {
+    grid-template-columns: 4rem minmax(0, 1.1fr) minmax(0, 1.4fr);
+    align-items: baseline;
+    column-gap: var(--space-3);
+    padding-block: var(--space-4);
+  }
+}
+
+/* ---- Evidence ---- */
 
 .records {
   list-style: none;
   padding: 0;
-  margin: 2rem 0 0;
+  margin: var(--space-4) 0 0;
   display: grid;
-  gap: 0.75rem;
+  gap: var(--space-2);
 }
 
-.records li {
-  border-block-start: 1px solid var(--line, currentColor);
-  padding-block-start: 0.75rem;
+.record {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem var(--space-2);
+  border-block-start: 1px solid var(--border);
+  padding-block-start: var(--space-2);
 }
 
 .channels {
@@ -49,10 +102,13 @@
   margin-block-start: 1.5rem;
 }
 
+/* Was `opacity: 0.75` on body text, which drops the handle below 4.5:1 in
+   both themes. The ink ramp already has a step for de-emphasised text that
+   passes, so it is used instead of dimming. */
 .handle {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.85rem;
-  opacity: 0.75;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
   overflow-wrap: anywhere;
 }
 

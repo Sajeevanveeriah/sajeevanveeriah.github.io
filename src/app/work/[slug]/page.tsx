@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
+import { EvidenceStateChip, EvidenceNote } from '@/components/ui/EvidenceState'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
@@ -101,6 +102,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     .map(getLab)
     .filter((l): l is NonNullable<typeof l> => l !== undefined)
 
+  /**
+   * Chapter order, reset on the 6 August 2026 repositioning to the sequence
+   * a technical reader assesses a machine in: the environment, then the
+   * architecture, then the boundary that was personally owned, then the
+   * physical and software layers, the decisions, the verification and
+   * finally the result with its limits.
+   *
+   * Every chapter is fed by a field that already exists on the record. No
+   * chapter was added that would have needed a controller, a mechanism, a
+   * standard or a measurement to be invented to fill it: the layer chapter
+   * renders `ProjectEngineering`, which states its own evidence status per
+   * item, including "not applicable" and "recommended check, not claimed as
+   * performed". An empty field still drops its chapter rather than rendering
+   * a blank one.
+   */
   const chapters: {
     title: string
     body: string[]
@@ -108,16 +124,15 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     labs?: boolean
     engineering?: boolean
   }[] = [
-    { title: 'The engineering problem', body: [p.problem, p.context] },
-    { title: 'How the system works', body: [p.approach[0] ?? ''] },
+    { title: 'Problem and operating environment', body: [p.problem, p.context] },
+    { title: 'System architecture', body: [p.approach[0] ?? ''] },
+    { title: 'Interfaces owned', body: [p.demonstrates] },
     {
-      title: 'Engineering implementation',
+      title: 'Mechanical, electrical, electronic and software layers',
       body: [engineering.basis],
       engineering: true,
     },
-    // Chapter titles recast agentless per the owner's 7 August 2026 direction.
-    { title: 'What was owned', body: [p.demonstrates] },
-    { title: 'Why it was built this way', body: [p.approach[1] ?? ''] },
+    { title: 'Engineering decisions and trade-offs', body: [p.approach[1] ?? ''] },
     {
       title: 'Technique deep dives',
       body: depth.length
@@ -131,10 +146,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       labs: true,
     },
     { title: 'Tools and disciplines', body: [p.toolsNote] },
-    { title: 'How the work was verified', body: [p.validation] },
-    { title: 'What was delivered', body: [p.outcome] },
-    { title: 'What this record proves', body: [p.proves] },
-    { title: 'What it does not claim', body: [p.doesNotClaim] },
+    { title: 'Verification method and observed evidence', body: [p.validation] },
+    { title: 'Result', body: [p.outcome, p.proves] },
+    { title: 'Limitations and evidence boundary', body: [p.doesNotClaim] },
   ]
     .map((c) => ({ ...c, body: c.body.filter(Boolean) }))
     .filter((c) => c.body.length > 0)
@@ -184,7 +198,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           aside={
             <>
               <div className={s.railBlock}>
-                <p className="label">Evidence</p>
+                <p className="label">Evidence state</p>
+                <EvidenceStateChip state={p.evidenceState} />
+                <EvidenceNote note={p.evidenceNote} />
+              </div>
+              <div className={s.railBlock}>
+                <p className="label">Evidence tier</p>
                 <TierIndicator tier={p.evidenceTier} />
                 {p.evidenceTier ? (
                   <p className={s.rowSummary}>{TIERS[p.evidenceTier].definition}</p>
@@ -225,7 +244,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   {/* The signature diagram sits directly under the
                       architecture chapter, where it shows what the prose
                       has just described. */}
-                  {c.title === 'How the system works' && variant ? (
+                  {c.title === 'System architecture' && variant ? (
                     <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
                   ) : null}
                   {c.engineering ? <ProjectEngineering profile={engineering} /> : null}

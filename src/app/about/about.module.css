@@ -164,3 +164,61 @@
     gap: clamp(2rem, 5vw, 5rem);
   }
 }
+
+/* ============================================================
+   Specialist identity rail and production foundation
+   Added with the 6 August 2026 repositioning.
+   ============================================================ */
+
+.identityRail {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  padding-top: var(--space-2);
+  border-top: 2px solid var(--accent-line);
+}
+
+.identityTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+  color: var(--text);
+  max-width: 26ch;
+}
+
+.identitySpecialism {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  max-width: 30ch;
+}
+
+.identitySpecialism::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.32em;
+  bottom: 0.32em;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, var(--sys-autonomy), var(--sys-control), var(--sys-sense));
+}
+
+/* The production and quality history reads as a foundation under the
+   specialism, not as a second identity beside it. It sits above the career
+   record it explains, at body weight rather than at heading weight. */
+.foundation {
+  margin-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 5vw, 4rem);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--sys-verify);
+}
+
+.foundationBody {
+  color: var(--text-muted);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  max-width: 62ch;
+}

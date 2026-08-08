@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { navigation, site } from '@/content/site'
+import { navigation, secondaryNavigation, site } from '@/content/site'
 import styles from './SiteFooter.module.css'
 
 export function SiteFooter() {
@@ -13,16 +13,27 @@ export function SiteFooter() {
           <p className={styles.tagline}>{site.tagline}</p>
         </div>
 
-        <nav className={styles.col} aria-label="Footer">
+        <nav className={styles.col} aria-label="Footer sections">
           <p className="label">Sections</p>
           {navigation.map((item) => (
             <Link key={item.href} href={item.href} className={styles.link}>
               {item.label}
             </Link>
           ))}
-          <Link href="/atlas/" className={styles.link}>
-            Engineering Atlas
-          </Link>
+        </nav>
+
+        {/* The routes demoted out of the header on the 6 August 2026
+            repositioning land here, in full. Nothing that was reachable
+            before became unreachable: the reference library, the capability
+            atlas, the employment record and the interactive lab all keep
+            their routes and are one click from every page. */}
+        <nav className={styles.col} aria-label="Footer reference">
+          <p className="label">Reference</p>
+          {secondaryNavigation.map((item) => (
+            <Link key={item.href} href={item.href} className={styles.link}>
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <div className={styles.col}>

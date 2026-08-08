@@ -40,6 +40,55 @@
   --on-accent: #ffffff;
   --focus-ring: #0b5cd5;
 
+  /* ---- System layer palette ----
+     Five hues, one per layer of the system-boundary model, used by
+     `SystemBoundary`, the three expertise pillars and the work groups.
+
+     This is a deliberate departure from the earlier white-first rule that
+     allowed no second hue and no category colour. It is authorised by the
+     6 August 2026 specialist-repositioning brief, which asks for controlled
+     cobalt, cyan, violet, coral and amber accents. The restraint is kept in
+     three ways rather than by refusing colour outright:
+
+       - `--accent` remains the ONLY interactive colour. Links, buttons and
+         focus rings never take a layer hue, so "blue means you can click it"
+         still holds.
+       - Every layer hue is also carried by a written label and a distinct
+         index, so nothing is signalled by colour alone (WCAG 1.4.1).
+       - Each hue is gated at 4.5:1 on --bg and --tint in BOTH themes by
+         scripts/check-contrast.mjs, so a layer label is legible wherever it
+         is used, not only where it was first drawn.
+
+     Control is the cobalt accent itself rather than a sixth hue: embedded
+     control is the centre of the specialist story, so it carries the site's
+     primary colour instead of competing with it. */
+  --sys-mech: #8a5200;
+  --sys-sense: #00697c;
+  --sys-control: #0b5cd5;
+  --sys-autonomy: #6b34c9;
+  --sys-verify: #0a6b45;
+
+  --sys-mech-wash: rgb(138 82 0 / 0.09);
+  --sys-sense-wash: rgb(0 105 124 / 0.09);
+  --sys-control-wash: rgb(11 92 213 / 0.09);
+  --sys-autonomy-wash: rgb(107 52 201 / 0.09);
+  --sys-verify-wash: rgb(10 107 69 / 0.09);
+
+  /* Ambient hero field. Two very low-alpha stops over the page ground, so
+     the gradient reads as light rather than as a coloured slab. */
+  --field-a: rgb(11 92 213 / 0.10);
+  --field-b: rgb(0 105 124 / 0.07);
+  --field-c: rgb(107 52 201 / 0.07);
+
+  /* The plate the Independent Engineering Practice mark sits on. In light
+     it is the page surface, because the light lockup ships on transparency.
+     In dark it is the exact background baked into the dark lockup PNG
+     (sampled at rgb(4 12 29) from all four corners of
+     20260806-IEP-Logo-Primary-Dark-Rev00.png), so the cropped mark meets its
+     plate with no visible seam. Measured, not guessed. */
+  --practice-plate: #ffffff;
+  --practice-plate-border: rgb(13 13 15 / 0.11);
+
   /* Retained aliases so existing modules keep resolving. */
   --status: #0b5cd5;
   --status-hover: #0846a8;
@@ -242,6 +291,29 @@
   --dark-status-text: #4d90f0;
   --dark-status-muted: rgb(77 144 240 / 0.12);
   --dark-header-bg: rgb(13 13 15 / 0.82);
+
+  /* Dark layer palette. Same five hues, lifted in lightness and held at the
+     same hue angles, exactly as the accent is. Each is gated at 4.5:1 on
+     --dark-bg and --dark-tint by scripts/check-contrast.mjs. */
+  --dark-sys-mech: #e0a44a;
+  --dark-sys-sense: #3ec4d8;
+  --dark-sys-control: #4d90f0;
+  --dark-sys-autonomy: #b294ff;
+  --dark-sys-verify: #45c98e;
+
+  --dark-sys-mech-wash: rgb(224 164 74 / 0.13);
+  --dark-sys-sense-wash: rgb(62 196 216 / 0.13);
+  --dark-sys-control-wash: rgb(77 144 240 / 0.13);
+  --dark-sys-autonomy-wash: rgb(178 148 255 / 0.13);
+  --dark-sys-verify-wash: rgb(69 201 142 / 0.13);
+
+  --dark-field-a: rgb(77 144 240 / 0.16);
+  --dark-field-b: rgb(62 196 216 / 0.10);
+  --dark-field-c: rgb(178 148 255 / 0.11);
+
+  /* Sampled from the dark lockup PNG itself, so the crop is seamless. */
+  --dark-practice-plate: #040c1d;
+  --dark-practice-plate-border: rgb(230 230 234 / 0.14);
 }
 
 /* ---- Dark activation, explicit choice ----
@@ -284,6 +356,25 @@ html[data-theme='dark'] {
   --status-text: var(--dark-status-text);
   --status-muted: var(--dark-status-muted);
   --header-bg: var(--dark-header-bg);
+
+  --sys-mech: var(--dark-sys-mech);
+  --sys-sense: var(--dark-sys-sense);
+  --sys-control: var(--dark-sys-control);
+  --sys-autonomy: var(--dark-sys-autonomy);
+  --sys-verify: var(--dark-sys-verify);
+
+  --sys-mech-wash: var(--dark-sys-mech-wash);
+  --sys-sense-wash: var(--dark-sys-sense-wash);
+  --sys-control-wash: var(--dark-sys-control-wash);
+  --sys-autonomy-wash: var(--dark-sys-autonomy-wash);
+  --sys-verify-wash: var(--dark-sys-verify-wash);
+
+  --field-a: var(--dark-field-a);
+  --field-b: var(--dark-field-b);
+  --field-c: var(--dark-field-c);
+
+  --practice-plate: var(--dark-practice-plate);
+  --practice-plate-border: var(--dark-practice-plate-border);
 }
 
 /* ---- Dark activation, no explicit choice ----
@@ -330,5 +421,24 @@ html[data-theme='dark'] {
     --status-text: var(--dark-status-text);
     --status-muted: var(--dark-status-muted);
     --header-bg: var(--dark-header-bg);
+
+    --sys-mech: var(--dark-sys-mech);
+    --sys-sense: var(--dark-sys-sense);
+    --sys-control: var(--dark-sys-control);
+    --sys-autonomy: var(--dark-sys-autonomy);
+    --sys-verify: var(--dark-sys-verify);
+
+    --sys-mech-wash: var(--dark-sys-mech-wash);
+    --sys-sense-wash: var(--dark-sys-sense-wash);
+    --sys-control-wash: var(--dark-sys-control-wash);
+    --sys-autonomy-wash: var(--dark-sys-autonomy-wash);
+    --sys-verify-wash: var(--dark-sys-verify-wash);
+
+    --field-a: var(--dark-field-a);
+    --field-b: var(--dark-field-b);
+    --field-c: var(--dark-field-c);
+
+    --practice-plate: var(--dark-practice-plate);
+    --practice-plate-border: var(--dark-practice-plate-border);
   }
 }

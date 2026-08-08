@@ -1,4 +1,4 @@
-import type { EvidenceTier } from './tiers'
+import type { EvidenceState, EvidenceTier } from './tiers'
 
 /**
  * Work records.
@@ -78,6 +78,14 @@ export interface Project {
   readonly doesNotClaim: string
   readonly demonstrates: string
   readonly evidenceTier: EvidenceTier | null
+  /**
+   * The precise evidence state for this record, assigned individually.
+   * Null only where no state has been assigned; the UI then renders nothing
+   * rather than guessing one.
+   */
+  readonly evidenceState: EvidenceState | null
+  /** One sentence naming a disclosure boundary, where one applies. */
+  readonly evidenceNote?: string
   readonly category: string
   readonly links?: readonly ProjectLink[]
   readonly images?: readonly ProjectImage[]
@@ -138,6 +146,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Combined physical robotics, mechatronics, product definition, accessible interface design, local data handling, privacy boundaries, deployment and validation into a completed routine-companion system.',
     evidenceTier: 'delivered',
+    evidenceState: 'Deployed physical system',
+    evidenceNote:
+      'Detailed hardware, electronics and embedded implementation remain unpublished.',
     category: 'Deployed independent robotics and product engineering',
     links: [
       { label: 'Open deployed app', url: 'https://sajeevanveeriah.github.io/Upzy-Project/' },
@@ -200,6 +211,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Integrated operational requirements, data safety, deterministic pricing, exception workflows, product UX, desktop delivery, deployment and automated validation into one controlled system.',
     evidenceTier: 'delivered',
+    evidenceState: 'Active client deployment',
     category: 'Deployed client engineering software',
     images: [
       {
@@ -262,6 +274,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Delivered a cross-domain cyber-physical system across mobility, sensing, data association, workflow integration and verification.',
     evidenceTier: 'delivered',
+    evidenceState: 'Active client deployment',
+    evidenceNote:
+      'Technical implementation remains confidential. The public record describes the workflow and outcome without exposing client architecture.',
     category: 'Deployed client robotics',
     images: [
       {
@@ -325,6 +340,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Delivered a robotics platform designed around modularity, observable behaviour, supervised use and repeatable engineering tests.',
     evidenceTier: 'delivered',
+    evidenceState: 'Deployed physical system',
+    evidenceNote:
+      'Component and software-stack details remain unpublished.',
     category: 'Deployed client robotics',
     images: [
       {
@@ -371,6 +389,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Integrated engineering logic, simulation, CAD geometry, software architecture, security boundaries, validation and accessible product design into one coherent system.',
     evidenceTier: 'delivered',
+    evidenceState: 'Deployed software system',
     category: 'Personal open-source build',
     links: [
       { label: 'Open live app', url: 'https://sajeevanveeriah.github.io/Engineering-Mastery-Lab/' },
@@ -438,6 +457,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Engineered the system across local open-weight inference, retrieval-augmented generation, governed ingestion, modular orchestration, controlled memory, tool integration and evaluation.',
     evidenceTier: 'delivered',
+    evidenceState: 'Locally deployed private system',
     category: 'Personal AI/ML build',
     images: [
       {
@@ -490,6 +510,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Integrated and validated perception, state estimation, planning and control as one autonomy stack.',
     evidenceTier: 'delivered',
+    evidenceState: 'Simulation-validated autonomy stack',
     category: 'Featured, Personal build',
     images: [
       {
@@ -510,7 +531,7 @@ export const projects: readonly Project[] = [
   },
   {
     slug: 'jag-smart-factory',
-    title: 'JAG Smart Factory and iFIX to PVI+ Migration',
+    title: 'Regulated Smart Factory and iFIX to PVI+ Migration',
     summary:
       'Delivered GMP smart-factory automation, including an iFIX to PVI+ SCADA migration verified against the validated system.',
     role: 'Automation & Controls Engineer',
@@ -521,7 +542,7 @@ export const projects: readonly Project[] = [
     problem:
       'Regulated production needs traceability, diagnostics and process visibility without disturbing validated behaviour.',
     context:
-      'Delivered at JAG Process Solutions Pty Ltd for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units.',
+      'Delivered as an automation and controls engineer for pharmaceutical, biotech and food clients under GMP, across plants, skids and packaged units. The engineering employer is not named in this public record.',
     approach: [
       'Integrated field devices and instrumentation with control logic, HMI and SCADA, MES and batch execution, and production data flows, including an iFIX to PVI+ migration.',
       'Converted SCADA application content methodically and verified functional behaviour against the existing validated system rather than trusting the conversion; prioritised diagnostics, operator usability and data integrity in every interface decision.',
@@ -539,6 +560,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Migrated and integrated supervisory systems where validation evidence mattered as much as functional behaviour.',
     evidenceTier: 'delivered',
+    evidenceState: 'Hands-on professional integration',
+    evidenceNote:
+      'Delivered inside a regulated client environment; plants, products and configurations are not named.',
     category: 'Professional delivery',
     images: [
       {
@@ -581,6 +605,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'This demonstrates cyber-physical validation skill: reading what a vehicle network is actually doing and turning it into defensible engineering evidence.',
     evidenceTier: 'delivered',
+    evidenceState: 'Hands-on professional integration',
+    evidenceNote:
+      'Programme test data belongs to the vehicle manufacturer and is not published.',
     category: 'Professional delivery',
     images: [
       {
@@ -623,6 +650,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Applied measurement discipline, traceable documentation and evidence-based fault interpretation in a regulated testing environment.',
     evidenceTier: 'delivered',
+    evidenceState: 'Hands-on professional integration',
     category: 'Professional delivery',
     images: [
       {
@@ -672,6 +700,9 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Owned the engineering path from electronics and PCB design through equipment interfaces, communications, Linux integration, deployment and field validation.',
     evidenceTier: 'delivered',
+    evidenceState: 'Deployed physical system',
+    evidenceNote:
+      'Deployed into an active client field trial; trial data and client specifics are not published.',
     category: 'Professional delivery',
     images: [
       {
@@ -714,6 +745,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Applied embedded hardware, real-time firmware and measurement discipline to a safety-relevant sensing problem, using clinical references as the validation basis.',
     evidenceTier: 'delivered',
+    evidenceState: 'Assessed embedded prototype',
     category: 'University capstone',
     images: [
       {
@@ -756,6 +788,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Connected plant-floor automation needs with applied AI/ML by defining the physical process and operational signals before modelling them.',
     evidenceTier: 'hands-on',
+    evidenceState: 'Concept development',
     category: 'Personal concept',
     images: [
       {
@@ -801,6 +834,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'This experience built the operator, troubleshooting and quality perspective that now informs engineering decisions.',
     evidenceTier: 'delivered',
+    evidenceState: 'Hands-on professional integration',
     category: 'Professional foundation',
     deepDives: [
       {
@@ -847,6 +881,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Gained hands-on industrial robotics experience in a production environment where safety, repeatability, quality and ramp-up mattered as much as robot motion.',
     evidenceTier: 'hands-on',
+    evidenceState: 'Hands-on professional integration',
     category: 'Professional foundation',
     featured: false,
   },
@@ -892,6 +927,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Learned how usability, changeover design, line recovery and traceable QA affect automation and commissioning from an operator perspective.',
     evidenceTier: 'delivered',
+    evidenceState: 'Hands-on professional integration',
     category: 'Professional foundation',
     featured: false,
   },
@@ -935,6 +971,7 @@ export const projects: readonly Project[] = [
     demonstrates:
       'Translated community operations into a maintained full-stack product covering information architecture, data modelling, authentication, integrations, media, administration, deployment and validation.',
     evidenceTier: 'delivered',
+    evidenceState: 'Deployed software system',
     category: 'Community digital platform',
     links: [
       { label: 'Open live website', url: 'https://www.ndcc.com.au/' },

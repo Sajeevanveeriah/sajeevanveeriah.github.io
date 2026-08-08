@@ -1,0 +1,70 @@
+/* ============================================================
+   Evidence state
+   The precise, per-record answer to "what exists and where can it be seen".
+   ============================================================ */
+
+/* `inline-flex` is not enough: as a grid or flex item the chip stretches to
+   the track, and a pill that runs the full width of a card reads as a banner
+   rather than as a label. `width: fit-content` plus the self alignments hold
+   it to its text in every container it is dropped into. */
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  justify-self: start;
+  align-self: start;
+  max-width: 100%;
+  padding: 0.3rem 0.7rem 0.3rem 0.55rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* The mark is a second, non-colour channel for the same distinction the
+   words already make, so a reader in greyscale loses nothing: a filled disc
+   for something running in the world, a ring for something exercised in a
+   controlled setting. The written state is always present, so this is
+   reinforcement rather than the signal (WCAG 1.4.1). */
+.mark {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  flex: none;
+  border: 1.5px solid var(--state-colour, var(--accent));
+  background: var(--state-colour, var(--accent));
+}
+
+.state[data-live='false'] .mark {
+  background: transparent;
+}
+
+.state[data-kind='deployed'] {
+  --state-colour: var(--sys-verify);
+}
+
+.state[data-kind='validated'] {
+  --state-colour: var(--sys-autonomy);
+}
+
+.state[data-kind='professional'] {
+  --state-colour: var(--sys-sense);
+}
+
+.state[data-kind='development'] {
+  --state-colour: var(--sys-mech);
+}
+
+.note {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  max-width: 52ch;
+}
