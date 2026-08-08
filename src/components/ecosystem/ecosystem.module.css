@@ -23,6 +23,14 @@
   line-height: 1.6;
 }
 
+/* The notice carries three paragraphs since the library disclaimer and the
+   selection note joined it, and with `margin: 0` on every one they ran
+   together as a single block of text. Only the gap between siblings is set,
+   so the first paragraph still sits tight under its heading. */
+.noticeBody + .noticeBody {
+  margin-top: var(--space-2);
+}
+
 .reviewed {
   margin: var(--space-4) 0 0;
   color: var(--text-faint);

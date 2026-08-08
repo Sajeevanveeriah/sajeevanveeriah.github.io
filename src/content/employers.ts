@@ -186,21 +186,27 @@ export const employers: readonly Employer[] = [
     todoConfirm: [],
   },
   {
+    /*
+     * Suppressed and name-redacted on the 6 August 2026 specialist
+     * repositioning, which forbids this employer from appearing in public
+     * career or profile content. The mechanism is the one the Ford record
+     * already uses: the role leaves the career spine, the employers index,
+     * the nav panel and the sitemap, while `/about/jag-process-solutions/`
+     * still resolves at its original URL and still carries `noindex`.
+     * Suppression is not deletion and no claim was dropped.
+     *
+     * The two verified `companyFacts` were about the employer rather than
+     * about Saj, and could not be carried without publishing the name, so
+     * they are withheld rather than paraphrased into something unsourced.
+     * The engineering claims below never named the employer and are intact.
+     */
     slug: 'jag-process-solutions',
-    company: 'JAG Process Solutions Pty Ltd',
+    company: 'Process automation systems integrator',
     title: 'Automation & Controls Engineer',
     period: 'Jan 2026 to Jun 2026',
     location: 'Victoria, Australia',
-    companyFacts: [
-      {
-        source: 'jag-ps.com.au/en-au/company',
-        body: 'JAG Process Solutions is the Australian arm of the JAG Group, a Swiss process technology house founded in Biel that grew from an electrical installation firm into a systems integrator covering basic and detail engineering, plant construction, control panel manufacture, industrial field wiring, process control systems and MES, building turnkey plants for the pharmaceutical, biotech and food industries.',
-      },
-      {
-        source: 'jag-ps.com.au/en-au/automation',
-        body: "JAG's automation scope runs from the ERP interface to field level and is positioned as smart-factory compatible.",
-      },
-    ],
+    suppressed: true,
+    companyFacts: [],
     claims: [
       {
         discipline: 'Control and automation',
@@ -260,7 +266,7 @@ export const employers: readonly Employer[] = [
       {
         discipline: 'Manufacturing and process',
         tier: 'adjacent',
-        body: "Worked on systems for JAG's pharmaceutical, biotechnology and food-manufacturing clients.",
+        body: 'Worked on systems for pharmaceutical, biotechnology and food-manufacturing clients.',
       },
       {
         discipline: 'Control and automation',
@@ -314,7 +320,7 @@ export const employers: readonly Employer[] = [
       // `todoConfirm` ships into the built HTML as a source comment, so
       // carrying the name would publish exactly what this item forbids.
       // The instruction is preserved; only the name is withheld.
-      'Whether any client may be named publicly. Default is to name none. The one client named in the source brief must not be named: it was a JAG client, never an employer.',
+      'Whether any client may be named publicly. Default is to name none. The one client named in the source brief must not be named: it was the integrator\'s client, never an employer.',
     ],
   },
   {
@@ -329,10 +335,26 @@ export const employers: readonly Employer[] = [
      * no history is rewritten.
      */
     slug: 'ford-via-invenio',
-    company: 'Ford Motor Company via Invenio contract placement',
+    /*
+     * Name redacted on the 6 August 2026 specialist repositioning. The record
+     * was already suppressed, but `/about/ford-via-invenio/` still resolves
+     * and would still have rendered the name in its own HTML. The descriptor
+     * below is what the placement was, stated without naming either party;
+     * no claim on this record depends on the name and none was changed.
+     */
+    company: 'Automotive product development, contract placement',
     title: 'Product Development Test Engineer (Contract)',
     period: 'Oct 2025 to Jan 2026',
     location: 'Victoria, Australia',
+    /*
+     * The comment above this record has described it as suppressed since
+     * Rev01, but the flag was never actually set, so the record was listed on
+     * `/employers/`, linked from the nav panel and carried in the sitemap the
+     * whole time. Setting it is the fix; the route is unaffected, because
+     * `/employers/[slug]` now emits every authored slug and marks a
+     * suppressed one `noindex`.
+     */
+    suppressed: true,
     companyFacts: [],
     claims: [
       {
@@ -728,7 +750,7 @@ export const employers: readonly Employer[] = [
       },
       {
         source: 'carbonrev.com/faqs and /company',
-        body: 'The wheels are manufactured as one continuous carbon fibre structure, face, spokes and barrel, not bonded, glued or bolted, using proprietary process IP in an ISO quality certified facility that has also achieved Ford Q1 supplier certification. Resin is injected at approximately 50 times atmospheric pressure, and the company performs over 160 in-process measurements and inspections.',
+        body: 'The wheels are manufactured as one continuous carbon fibre structure, face, spokes and barrel, not bonded, glued or bolted, using proprietary process IP in an ISO quality certified facility. Resin is injected at approximately 50 times atmospheric pressure, and the company performs over 160 in-process measurements and inspections.',
       },
       {
         source: 'carbonrev.com/technology/manufacturing',
@@ -972,7 +994,7 @@ export const versatility = {
       'Instrumentation, calibration, CAN, data acquisition, deviation analysis, certification evidence',
     ],
     [
-      'JAG Process Solutions',
+      'Process automation systems integrator',
       'Automation & Controls Engineer',
       'Control logic, HMI, field devices, drives, AMR fleet operations, industrial networking, GMP qualification',
     ],

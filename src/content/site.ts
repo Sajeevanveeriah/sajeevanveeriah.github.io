@@ -50,22 +50,39 @@ export interface SiteConfig {
  */
 export const JOB_TITLE = 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' as const
 
+/**
+ * The specialism, stated under the job title wherever the identity appears.
+ *
+ * `JOB_TITLE` says what the discipline is; this says what the specialism
+ * inside it is, which is the thing a reader has to get in the first screen.
+ * The two are deliberately separate constants: the title is the formal
+ * professional identity and is not to be replaced by a coined label, and the
+ * descriptor is the positioning that sits beneath it.
+ */
+export const SPECIALIST_DESCRIPTOR =
+  'Autonomous Mobile Robotics | Embedded Intelligence | Sensor Fusion and Control' as const
+
+/** The resume adds ROS 2 to the descriptor, because a resume is scanned for it. */
+export const RESUME_DESCRIPTOR =
+  'Autonomous Mobile Robotics | ROS 2 | Embedded Intelligence | Sensor Fusion and Control' as const
+
 export const site: SiteConfig = {
   name: 'Sajeevan Veeriah',
   shortName: 'Saj',
   initials: 'SV',
   jobTitle: JOB_TITLE,
-  // From index.html:1523; voice recast to agentless capability voice on the
-  // owner's 7 August 2026 direction.
+  // Recast on the 6 August 2026 specialist repositioning: the tagline used to
+  // list the disciplines side by side, which read as breadth. It now names
+  // the specialism and treats the breadth as what supports it.
   tagline:
-    'Work spans robotics, mechatronics, AI/ML and end-to-end automation, connecting physical systems, electronics, embedded intelligence, software, controls and validation.',
+    'Autonomous mobile robotics and embedded intelligent systems, engineered across mechanics, sensing, embedded control, autonomy, AI/ML and deployment.',
   // The role label is composed from `JOB_TITLE` so the meta description, the
   // Open Graph card and the Twitter card can never drift from the page title.
   // The capability clause after it is the original wording from index.html:9;
   // the framing was recast on the owner's 7 August 2026 direction. The name
   // appears exactly once here as identity (rule: SEO identity, not prose);
   // the rest of the sentence is agentless.
-  description: `Portfolio and engineering practice of Sajeevan Veeriah, a ${JOB_TITLE} working across physical systems, embedded electronics, controls, CAN telemetry, Linux integration and field validation.`,
+  description: `Portfolio and engineering practice of Sajeevan Veeriah, a ${JOB_TITLE} specialising in autonomous mobile robotics and embedded intelligent systems, from mechanism and sensing through embedded control, autonomy and deployment.`,
   url: 'https://sajeevanveeriah.github.io',
   locale: 'en_AU',
   lang: 'en-AU',
@@ -93,25 +110,42 @@ export interface NavItem {
   readonly href: string
 }
 
+/**
+ * Five primary destinations, in the order a reader needs them.
+ *
+ * Two entries were demoted on the 6 August 2026 specialist repositioning,
+ * and neither was removed:
+ *
+ *   - `/ecosystem/` is a reference library about the field rather than about
+ *     Saj. A header entry beside the evidence routes gave a catalogue of 240
+ *     entities the same weight as the work, which is exactly what made the
+ *     site read as "knows of everything" rather than "specialises in this".
+ *     It keeps its route and is linked from the footer and from Expertise.
+ *   - `/employers/` keeps its route, its detail pages and its footer link.
+ *     It is a career appendix, not a primary destination.
+ *
+ * Demotion is not deletion. Both indexes remain reachable, indexed and in
+ * the sitemap; they simply stop competing for the header.
+ */
 export const navigation: readonly NavItem[] = [
   { label: 'Work', href: '/work/' },
+  { label: 'Expertise', href: '/skills/' },
+  { label: 'About', href: '/about/' },
   // The business profile. Saj asked on 7 August 2026 for the practice to be
   // reachable as its own section, built for project lead generation.
   { label: 'Practice', href: '/practice/' },
-  { label: 'Expertise', href: '/skills/' },
-  // The employer record was reachable from nothing until this entry existed:
-  // it had a route, a sitemap line and six detail pages, and no page on the
-  // site linked to any of them. Everything a visitor could click led to the
-  // thinner career copy instead, which is why the role pages read as empty.
-  { label: 'Employers', href: '/employers/' },
-  // The ecosystem catalogue is a reference layer about the field rather than
-  // about Saj, so it sits after the evidence routes. It gets a plain nav
-  // entry and no mega-menu panel on purpose: eight pillars belong on the
-  // page, not in a dropdown, and dumping 31 domains into the header would
-  // make navigation worse rather than better.
-  { label: 'Ecosystem', href: '/ecosystem/' },
-  { label: 'About', href: '/about/' },
   { label: 'Contact', href: '/contact/' },
+] as const
+
+/**
+ * Secondary destinations. Reachable from the footer rather than the header,
+ * so nothing that exists today becomes unreachable.
+ */
+export const secondaryNavigation: readonly NavItem[] = [
+  { label: 'Engineering Reference Library', href: '/ecosystem/' },
+  { label: 'Capability atlas', href: '/atlas/' },
+  { label: 'Employment record', href: '/employers/' },
+  { label: 'Interactive lab', href: '/lab/' },
 ] as const
 
 /**
@@ -143,7 +177,7 @@ export const navPanels: readonly NavPanelCopy[] = [
     eyebrow: 'Work',
     // Panel intros recast agentless on the owner's 7 August 2026 direction.
     intro:
-      'Case studies showing the problem, the work owned, the decisions made and the verified result.',
+      'Robotics first, then embedded intelligence, then the supporting software. Each record states the problem, the interfaces owned and the evidence.',
     listTitle: 'Records',
     indexLabel: 'Every record, including the archive',
   },
@@ -151,16 +185,8 @@ export const navPanels: readonly NavPanelCopy[] = [
     href: '/skills/',
     eyebrow: 'Expertise',
     intro:
-      'The capability atlas, with each domain linked to the evidence behind it.',
+      'Three specialist pillars, each linked to the evidence behind it, over a detailed capability atlas.',
     listTitle: 'Atlas domains',
     indexLabel: 'Browse the full atlas',
-  },
-  {
-    href: '/employers/',
-    eyebrow: 'Employers',
-    intro:
-      'The employment record, separating company background from the work completed in each role.',
-    listTitle: 'Employers',
-    indexLabel: 'Every employer, and the through-line',
   },
 ] as const

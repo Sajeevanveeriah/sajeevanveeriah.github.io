@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ProjectImage } from '@/components/ui/ProjectImage'
 import { SignalHero } from '@/components/signal/SignalHero'
-import { SignalMap } from '@/components/signal/SignalMap'
-import { ClosedLoop } from '@/components/signal/ClosedLoop'
-import { StackSpine } from '@/components/signal/StackSpine'
+import { SystemBoundary } from '@/components/signal/SystemBoundary'
 import { SystemDiagram, diagramFor } from '@/components/signal/SystemDiagram'
 import { Reveal, Stagger } from '@/components/motion/Reveal'
 import { ParallaxStage, ParallaxLayer } from '@/components/motion/ParallaxStage'
 import { ArrowLink } from '@/components/ui/ArrowLink'
-import { site } from '@/content/site'
+import { EvidenceStateChip } from '@/components/ui/EvidenceState'
+import { PracticeMark } from '@/components/ui/PracticeMark'
+import { site, SPECIALIST_DESCRIPTOR } from '@/content/site'
 import { practice } from '@/content/practice'
-import { narrative, closedLoop } from '@/content/about'
+import { heroCopy } from '@/content/about'
 import { discoverableProjects } from '@/content/projects'
-import { systemsStack } from '@/content/systemsStack'
+import { pillars, supportingFoundation } from '@/content/specialism'
 import home from './home.module.css'
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   // The one metadata description that keeps the name: it is the site's search
   // snippet, so the name appears once as identity, not as narration.
   description:
-    'Sajeevan Veeriah: robotics, mechatronics, AI/ML and automation engineering across mechanics, electronics, embedded software, autonomy, controls and validation.',
+    'Sajeevan Veeriah designs, integrates and validates autonomous mobile robots and embedded intelligent systems across mechanics, sensing, embedded control, autonomy, AI/ML and deployment.',
   alternates: { canonical: '/' },
 }
 
@@ -55,6 +55,18 @@ function PersonSchema() {
         url: `${site.url}/`,
         email: `mailto:${site.email}`,
         jobTitle: site.jobTitle,
+        description: site.description,
+        // The specialism, in the field search engines read as "what is this
+        // person known for". Held to the four terms the site actually
+        // evidences rather than to every technology on the reference shelf.
+        knowsAbout: [
+          'Autonomous mobile robotics',
+          'ROS 2',
+          'Embedded intelligent systems',
+          'Sensor fusion and control',
+          'Mechatronic system integration',
+          'Edge AI/ML',
+        ],
         sameAs: site.socials.map((x) => x.href),
         alumniOf: { '@type': 'EducationalOrganization', name: 'Deakin University' },
         memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
@@ -67,46 +79,35 @@ function PersonSchema() {
 }
 
 /**
- * Four selected records, chosen to span the disciplines rather than to
- * repeat one: deployed mobile robotics, deployed client engineering
- * software, deployed supervised product engineering and applied AI/ML.
+ * Four records, and the point of the sequence is repetition rather than
+ * range: a deployed client robot, a full autonomy stack, a deployed modular
+ * platform and an assessed embedded device. A reader who scans only the
+ * titles should conclude "robotics, repeatedly" rather than "many things,
+ * once each".
  *
- * The three current independent records took the slots the rover, the
- * telemetry platform and the smart-factory record held. All three previous
- * records remain published, and the rover now sits in the four that lead
- * `/work/`, so nothing is demoted out of view.
+ * The software and automation records are not demoted out of view. They lead
+ * the "Supporting systems and software" group on /work/, which is where a
+ * reader who wants breadth is sent.
  */
 const SELECTED = [
   'inventory-scanning-mobile-robot',
-  'swl-pricing-inventory-control',
-  'upzy-supervised-routine-companion',
-  'veerai-slm',
+  'autonomous-navigation-rover',
+  'modular-education-testing-robot',
+  'ataxia-assessment-device',
 ] as const
 
+/**
+ * Credibility, held to what is verifiable. Catalogue totals were removed:
+ * "eight pillars, 31 domains" is a claim about the size of a reference
+ * shelf, and on a conversion page it reads as breadth rather than as depth.
+ */
 const PROOF = [
-  { value: 'Engineers Australia', note: 'Professional membership' },
-  { value: 'Honours, Distinction', note: 'Bachelor of Mechatronics Engineering, Deakin, 2025' },
-  { value: 'Architecture to validation', note: 'Integrated systems across engineering disciplines' },
-  { value: 'Four evidence sources', note: 'Professional, contract, university and open source' },
-] as const
-
-const PROBLEMS = [
-  [
-    'Autonomous systems',
-    'Sensing, localisation, planning and control integrated as one testable system.',
-  ],
-  [
-    'Cyber-physical products',
-    'Mechanics, electronics, firmware and interfaces developed around the real operating problem.',
-  ],
-  [
-    'Intelligent automation',
-    'Controls, data and AI/ML joined without losing engineering traceability.',
-  ],
-  [
-    'Verification',
-    'Simulation, testing, field evidence and defensible documentation used to close the loop.',
-  ],
+  { value: 'Member, Engineers Australia', note: 'Professional membership' },
+  {
+    value: 'Mechatronics Engineering Honours',
+    note: 'Deakin University, awarded with Distinction, 2025',
+  },
+  { value: 'Architecture to deployed system', note: 'Owned across every layer of the machine' },
 ] as const
 
 export default function HomePage() {
@@ -120,6 +121,11 @@ export default function HomePage() {
 
       {/* ---------- Hero ---------- */}
       <section className={home.hero} aria-labelledby="hero-title">
+        {/* The ambient field. Two very slow radial washes over the page
+            ground, so the opening reads as lit rather than as a coloured
+            slab. Decorative and aria-hidden; nothing is stated by it. */}
+        <div className={home.heroField} aria-hidden="true" />
+
         {/* Three blocks rather than two, so on a phone the animation lands
             between the headline and the supporting copy instead of a full
             screen below it. On desktop the grid areas put it back in the
@@ -128,9 +134,10 @@ export default function HomePage() {
           <div className={home.heroIntro}>
             <p className={home.heroName}>{site.name}</p>
             <h1 id="hero-title" className={home.heroTitle}>
-              Intelligent systems that move, sense and decide.
+              {heroCopy.headline}
             </h1>
             <p className={home.heroRole}>{site.jobTitle}</p>
+            <p className={home.heroSpecialism}>{SPECIALIST_DESCRIPTOR}</p>
           </div>
 
           <div className={home.heroFigure}>
@@ -138,92 +145,48 @@ export default function HomePage() {
           </div>
 
           <div className={home.heroOutro}>
-            <p className={home.heroLede}>{narrative}</p>
+            <p className={home.heroLede}>{heroCopy.lede}</p>
             <div className={home.heroActions}>
               <Link href="/work/" className="btn btn-primary">
-                View selected work
+                Explore selected work
               </Link>
               <a href={site.resumePath} download className="btn btn-secondary">
-                Download resume
+                View resume
               </a>
+              <Link href="/contact/" className="btn btn-secondary">
+                Discuss a system
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ---------- Signal map ---------- */}
-      <SignalMap />
-
-      {/* ---------- Credibility ---------- */}
-      <section className={home.proof} aria-label="Credentials and evidence">
-        <Stagger className={`wrap-wide ${home.proofGrid}`}>
-          {PROOF.map((item) => (
-            <div key={item.value} className={home.proofItem}>
-              <span className={home.proofValue}>{item.value}</span>
-              <span className={home.proofNote}>{item.note}</span>
-            </div>
-          ))}
-        </Stagger>
-      </section>
-
-      {/* ---------- Problem space (recast agentless per owner's 7 August 2026 direction) ---------- */}
-      <section className="section" aria-labelledby="problems-title">
+      {/* ---------- System boundary ----------
+          The one meaningful visual on the page. It is a layered system
+          model, not a schematic, and its content is real markup rather than
+          SVG labels, so it stays legible from 390px to 1440px without a
+          second composition. */}
+      <section className="section stage-tint" aria-labelledby="boundary-title">
         <div className="wrap-wide">
-          <Reveal className={home.stageHeadSplit}>
-            <div>
-              <p className="label label-accent">Problems solved</p>
-              <h2 id="problems-title">Across boundaries, not inside silos.</h2>
-            </div>
-            <p className="lede">
-              Most of the hard problems presented sit between disciplines. The approach identifies
-              which engineering layer the problem actually lives in, then works across the layers
-              required to resolve it.
-            </p>
+          <Reveal>
+            <SystemBoundary headingId="boundary-title" />
           </Reveal>
-
-          <Stagger as="ul" className={home.problemList}>
-            {PROBLEMS.map(([title, body], i) => (
-              <li key={title} className={home.problem}>
-                <span className={home.problemIndex}>{String(i + 1).padStart(2, '0')}</span>
-                <h3 className={home.problemTitle}>{title}</h3>
-                <p className={home.problemBody}>{body}</p>
-              </li>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* ---------- Closed loop ---------- */}
-      <section className="section stage-tint" aria-labelledby="loop-title">
-        <div className="wrap-wide">
-          <Reveal className={home.stageHeadSplit}>
-            <div>
-              <p className="label label-accent">How the work is done</p>
-              <h2 id="loop-title">{closedLoop.title}</h2>
-            </div>
-            <p className="lede">{closedLoop.summary}</p>
-          </Reveal>
-          <ClosedLoop />
         </div>
       </section>
 
       {/* ---------- Selected work ----------
           The one sticky scroll stage on the site. The heading holds in the
           left column while the four records pass it, so the reader always
-          knows which stage they are inside. It is a rail rather than a
-          pinned full-height graphic on purpose: a sticky column beside a
-          scrolling column always has readable content on screen, where a
-          pinned diagram can strand a viewport containing nothing else. */}
+          knows which stage they are inside. */}
       <section className="section section-lg" aria-labelledby="work-title">
         <div className="wrap-wide">
           <div className={home.workStage}>
             <Reveal className={`sticky-rail ${home.workRail}`}>
               <p className="label label-accent">Selected work</p>
-              <h2 id="work-title">Systems built, integrated and validated.</h2>
+              <h2 id="work-title">Robots that were built, deployed and checked.</h2>
               <p className="lede">
-                Four records that span deployed mobile robotics, client inventory and pricing
-                software, deployed supervised product engineering and applied AI/ML. Each one states the problem,
-                what was personally owned and what the evidence supports.
+                Four records in one specialism rather than four disciplines. Each states the
+                operating problem, the interfaces owned and exactly what the evidence supports.
               </p>
             </Reveal>
 
@@ -254,14 +217,11 @@ export default function HomePage() {
                           /
                         </span>
                         <span>{p.domain}</span>
-                        <span className={home.entryDivider} aria-hidden="true">
-                          /
-                        </span>
-                        <span>{p.category}</span>
                       </p>
                       <h3 className={`${home.entryTitle} ${lead ? home.entryTitleLead : ''}`}>
                         <Link href={`/work/${p.slug}/`}>{p.title}</Link>
                       </h3>
+                      <EvidenceStateChip state={p.evidenceState} />
                       <p className={home.entrySummary}>{p.summary}</p>
                     </div>
 
@@ -308,7 +268,7 @@ export default function HomePage() {
                           <p className={home.factBody}>{p.problem}</p>
                         </div>
                         <div className={home.fact}>
-                          <span className={home.factLabel}>What was owned</span>
+                          <span className={home.factLabel}>Interfaces owned</span>
                           <p className={home.factBody}>
                             {p.homeExcerpt?.ownership ?? p.demonstrates}
                           </p>
@@ -327,10 +287,7 @@ export default function HomePage() {
                     </div>
 
                     {!showcase && image && variant ? (
-                      <SystemDiagram
-                        variant={variant}
-                        caption={diagramCaption(p.slug)}
-                      />
+                      <SystemDiagram variant={variant} caption={diagramCaption(p.slug)} />
                     ) : null}
                   </Reveal>
                 )
@@ -339,25 +296,44 @@ export default function HomePage() {
           </div>
 
           <div className={home.entryFoot}>
-            <ArrowLink href="/work/">See every record, including the archive</ArrowLink>
+            <ArrowLink href="/work/">
+              Every record, grouped by what it is
+            </ArrowLink>
           </div>
         </div>
       </section>
 
-      {/* ---------- Systems stack ---------- */}
-      <section className="section stage-tint" aria-labelledby="stack-title">
+      {/* ---------- Three specialist pillars ---------- */}
+      <section className="section stage-tint" aria-labelledby="pillars-title">
         <div className="wrap-wide">
           <Reveal className={home.stageHeadSplit}>
             <div>
-              <p className="label label-accent">End-to-end capability</p>
-              <h2 id="stack-title">From physical architecture to verified behaviour.</h2>
+              <p className="label label-accent">Specialist capability</p>
+              <h2 id="pillars-title">Three pillars, not a list of technologies.</h2>
             </div>
             <p className="lede">
-              Ten layers exercised through real work. Explore the evidence behind each one
-              rather than a proficiency score.
+              The breadth is real, and it exists to serve one spine. These are the three groups
+              the work is actually organised around.
             </p>
           </Reveal>
-          <StackSpine layers={systemsStack} />
+
+          <Stagger as="ul" className={home.pillarList}>
+            {pillars.map((pillar) => (
+              <li key={pillar.id} className={home.pillar} data-layer={pillar.id}>
+                <span className={home.pillarIndex} aria-hidden="true">
+                  {pillar.index}
+                </span>
+                <h3 className={home.pillarTitle}>
+                  <Link href={`/skills/#${pillar.id}`}>{pillar.name}</Link>
+                </h3>
+                <p className={home.pillarBody}>{pillar.summary}</p>
+              </li>
+            ))}
+          </Stagger>
+
+          <Reveal className={home.pillarFoot}>
+            <ArrowLink href="/skills/">See the evidence behind each pillar</ArrowLink>
+          </Reveal>
         </div>
       </section>
 
@@ -365,17 +341,7 @@ export default function HomePage() {
       <section className="section" aria-labelledby="practice-title">
         <div className={`wrap-wide ${home.cta}`}>
           <p className="label label-accent">The practice</p>
-          {/* eslint-disable-next-line @next/next/no-img-element -- static
-              export; next/image is a pass-through here (see ProjectImage). */}
-          <img
-            className={home.practiceLogo}
-            src={practice.logo.src}
-            alt={practice.logo.alt}
-            width={practice.logo.width}
-            height={practice.logo.height}
-            loading="lazy"
-            decoding="async"
-          />
+          <PracticeMark className={home.practiceLogo} />
           <h2 id="practice-title" className={home.ctaTitle}>
             Engineering delivery through {practice.name}.
           </h2>
@@ -391,27 +357,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ---------- Close ---------- */}
-      <section className="section section-lg" aria-labelledby="cta-title">
-        <div className={`wrap-wide ${home.cta}`}>
-          <p className="label label-accent">Start a conversation</p>
-          <h2 id="cta-title" className={home.ctaTitle}>
-            Have an engineering problem that crosses disciplines?
-          </h2>
-          <p className="lede">
-            Review the work, inspect the evidence behind it, or make direct contact.
-          </p>
-          <div className={home.ctaActions}>
-            <a href={`mailto:${site.email}`} className="btn btn-primary">
-              Send an email
-            </a>
-            <Link href="/work/" className="btn btn-secondary">
-              Review selected work
-            </Link>
-            <Link href="/contact/" className="textlink">
-              All contact channels
-            </Link>
-          </div>
+      {/* ---------- Credibility and close ---------- */}
+      <section className="section section-lg stage-tint" aria-labelledby="cta-title">
+        <div className="wrap-wide">
+          <Stagger className={home.proofGrid}>
+            {PROOF.map((item) => (
+              <div key={item.value} className={home.proofItem}>
+                <span className={home.proofValue}>{item.value}</span>
+                <span className={home.proofNote}>{item.note}</span>
+              </div>
+            ))}
+          </Stagger>
+
+          <Reveal className={home.foundation}>
+            <p className="label label-accent">{supportingFoundation.kicker}</p>
+            <p className={home.foundationBody}>{supportingFoundation.body}</p>
+          </Reveal>
+
+          <Reveal className={home.cta}>
+            <h2 id="cta-title" className={home.ctaTitle}>
+              Have a machine that has to move, sense and decide?
+            </h2>
+            <div className={home.ctaActions}>
+              <a href={`mailto:${site.email}`} className="btn btn-primary">
+                Discuss a system
+              </a>
+              <Link href="/contact/" className="textlink">
+                All contact channels
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>
@@ -437,6 +412,10 @@ function diagramCaption(slug: string): string | undefined {
       return 'The controlled workflow: supplier and ServiceM8 files mapped, compared deterministically, held at the operator approval gate, then written as candidate outputs.'
     case 'upzy-supervised-routine-companion':
       return 'The supervised loop: an adult-defined routine prompts the child, a button press is recorded, and the adult reviews it, with the acknowledgement kept apart from any completion claim.'
+    case 'modular-education-testing-robot':
+      return 'The bench loop: a sensing, control and actuation module set exercised through a repeatable test, with each module replaceable behind a fixed interface.'
+    case 'ataxia-assessment-device':
+      return 'Three sensor channels acquiring in parallel while a sample cursor advances through the record.'
     default:
       return undefined
   }

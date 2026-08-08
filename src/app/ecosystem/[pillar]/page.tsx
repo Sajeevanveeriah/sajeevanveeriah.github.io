@@ -15,6 +15,7 @@ import {
   LIFECYCLE_LABEL,
   type EcosystemEntity,
 } from '@/content/ecosystem'
+import { ecosystemLibrary } from '@/content/library'
 import s from '@/components/ui/shared.module.css'
 import e from '@/components/ecosystem/ecosystem.module.css'
 
@@ -30,7 +31,7 @@ export async function generateMetadata({
   const { pillar } = await params
   const p = getPillar(pillar)
   if (!p) return {}
-  const description = `${p.summary} Part of the engineering ecosystem reference catalogue.`
+  const description = `${p.summary} Part of the ${ecosystemLibrary.name}, which maps the field rather than claiming hands-on use.`
   return {
     title: p.name,
     description,
@@ -79,11 +80,15 @@ export default async function PillarPage({ params }: { params: Promise<{ pillar:
           }
         />
 
+        {/* The disclaimer travels with the content, not only with the index:
+            a pillar page is where a reader actually meets a platform name,
+            and it is the page a search result lands on. */}
         <aside className={e.notice}>
           <p className={e.noticeTitle}>About this reference</p>
+          <p className={e.noticeBody}>{ecosystemLibrary.disclaimer}</p>
           <p className={e.noticeBody}>
-            These entries describe the wider engineering field. Applied experience is
-            documented separately in <Link href="/skills/" className={s.link}>Expertise</Link> and{' '}
+            Applied experience is documented separately in{' '}
+            <Link href="/skills/" className={s.link}>Expertise</Link> and{' '}
             <Link href="/work/" className={s.link}>Work</Link>.
           </p>
         </aside>

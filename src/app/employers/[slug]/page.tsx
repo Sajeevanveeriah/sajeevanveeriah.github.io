@@ -4,16 +4,25 @@ import { notFound } from 'next/navigation'
 import { PageHeader, BackLink } from '@/components/ui/PageHeader'
 import { TierIndicator } from '@/components/ui/TierIndicator'
 import { Reveal } from '@/components/motion/Reveal'
-import { publishedEmployers, getEmployer, DISCIPLINES } from '@/content/employers'
+import { employers, getEmployerRecord, DISCIPLINES } from '@/content/employers'
 import { getProject } from '@/content/projects'
 import { TIERS } from '@/content/tiers'
 import s from '@/components/ui/shared.module.css'
 import e from './employer.module.css'
 
+/**
+ * Every authored slug is emitted, suppressed records included.
+ *
+ * This used to read `publishedEmployers`, which meant flagging a record as
+ * suppressed silently deleted its URL from the export. That is deletion
+ * wearing suppression's name, and it is exactly what the work records do not
+ * do: `/work/[slug]` emits `publishedProjects` and lets the page carry
+ * `noindex` instead. Employers now behave the same way, so a suppressed
+ * employer keeps its route, keeps resolving for anyone holding the link, and
+ * is simply never listed, linked, indexed or put in the sitemap.
+ */
 export function generateStaticParams() {
-  // Suppressed employers are absent from `publishedEmployers`, so no route is
-  // emitted for them here at all. Their `/about/[slug]/` URL still resolves.
-  return publishedEmployers.map((x) => ({ slug: x.slug }))
+  return employers.map((x) => ({ slug: x.slug }))
 }
 
 export async function generateMetadata({
@@ -22,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const x = getEmployer(slug)
+  const x = getEmployerRecord(slug)
   if (!x) return {}
   // The summary is the page's own lede, so it is the honest description.
   // `closing` is the argument the page ends on, not a description of it.
@@ -31,6 +40,10 @@ export async function generateMetadata({
     title: x.title ? `${x.title}, ${x.company}` : x.company,
     description,
     alternates: { canonical: `/employers/${x.slug}/` },
+    // A suppressed record stays reachable by direct URL but is not indexed.
+    // `follow: true` so its outbound links still carry, matching the work
+    // records and not-found.tsx.
+    ...(x.suppressed ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: x.title ? `${x.title}, ${x.company}` : x.company,
       description,
@@ -41,7 +54,7 @@ export async function generateMetadata({
 
 export default async function EmployerPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const x = getEmployer(slug)
+  const x = getEmployerRecord(slug)
   if (!x) notFound()
 
   // Suppressed records are never advertised from a related-work module.

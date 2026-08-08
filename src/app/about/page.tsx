@@ -3,15 +3,15 @@ import Link from 'next/link'
 import { PageHeader } from '@/components/ui/PageHeader'
 import { Reveal } from '@/components/motion/Reveal'
 import { CareerSpine } from '@/components/about/CareerSpine'
-import { narrative, credentials, beyond, beyondHeading } from '@/content/about'
+import { aboutOpening, credentials, beyond, beyondHeading } from '@/content/about'
+import { site, SPECIALIST_DESCRIPTOR } from '@/content/site'
 import { discoverableExperience, experienceGroups } from '@/content/experience'
 import a from './about.module.css'
 
 export const metadata: Metadata = {
   title: 'About',
-  // Recast agentless per the owner's 7 August 2026 direction.
   description:
-    'An engineering record, qualifications, professional membership, community work and interests beyond engineering.',
+    'Sajeevan Veeriah: an engineer specialising in intelligent robotic systems built from the physical layer up, with a production, quality and manufacturing foundation behind the engineering.',
   alternates: { canonical: '/about/' },
   openGraph: { title: 'About', url: '/about/' },
 }
@@ -24,11 +24,25 @@ export default function AboutPage() {
       <section className="section">
         <div className="wrap-wide">
           <PageHeader
-          signature="spine"
+            signature="spine"
             kicker="About"
-            title="An engineering practice built on six years of production, quality and manufacturing experience."
-            lede={narrative}
+            title={aboutOpening.title}
+            lede={aboutOpening.lede}
+            aside={
+              <div className={a.identityRail}>
+                <p className="label">Professional identity</p>
+                <p className={a.identityTitle}>{site.jobTitle}</p>
+                <p className={a.identitySpecialism}>{SPECIALIST_DESCRIPTOR}</p>
+              </div>
+            }
           />
+
+          {/* The foundation, framed as a foundation. It is why the robotics
+              above is engineered the way it is, and it is deliberately not
+              presented as the current specialism. */}
+          <Reveal className={a.foundation}>
+            <p className={a.foundationBody}>{aboutOpening.foundation}</p>
+          </Reveal>
 
           {groups.map((g) => (
             <div key={g} className={a.group}>

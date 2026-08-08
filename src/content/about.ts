@@ -9,9 +9,35 @@
 
 import { JOB_TITLE } from './site'
 
-/** Hero lede, index.html:165. */
+/**
+ * The homepage opening, in the specialist voice.
+ *
+ * Recast on the 6 August 2026 repositioning. The previous lede listed the
+ * stack from end to end, which is true and which read as breadth. This one
+ * leads with the specialism and treats the same breadth as what makes the
+ * specialism deliverable.
+ */
+export const heroCopy = {
+  headline: 'Intelligent systems that move, sense and decide.',
+  lede: 'I design, integrate and validate intelligent robotic and mechatronic systems from mechanisms, sensing and embedded control through autonomy, AI/ML, software and deployment.',
+} as const
+
+/** Hero lede, index.html:165. Retained for the About page opening rail. */
 export const narrative =
   'Work spans the robotics and mechatronics stack: physical systems, electronics, embedded firmware, controls, autonomy, software, data and validation. Each problem is placed in the engineering layer it lives in, then resolved across the disciplines it requires.'
+
+/**
+ * The About page opening, supplied verbatim in the 6 August 2026 brief.
+ * The production and quality history is framed as a foundation that shapes
+ * how the robotics is engineered, never as the current specialism.
+ */
+export const aboutOpening = {
+  title:
+    'An engineer specialising in intelligent robotic systems built from the physical layer up.',
+  lede: 'I work where mechanics, electronics, embedded control, autonomy, AI/ML and software meet. My role is to make those boundaries work as one system, then validate the result against real operating constraints.',
+  foundation:
+    'My production, quality and manufacturing foundation shapes how I engineer for reliability, traceability, recovery, serviceability and the realities beyond a laboratory.',
+} as const
 
 export const homeStory = {
   kicker: JOB_TITLE,
@@ -79,7 +105,7 @@ export const closedLoop = {
       ],
       records: [
         { label: 'ROS 2 rover', href: '/work/autonomous-navigation-rover/' },
-        { label: 'JAG smart factory', href: '/work/jag-smart-factory/' },
+        { label: 'Regulated smart factory', href: '/work/jag-smart-factory/' },
       ],
     },
     {
@@ -91,7 +117,7 @@ export const closedLoop = {
         'Production actuation carries obligations simulation never imposes: safety, changeover, recovery and rate. Six years on manufacturing floors taught what a line needs from its equipment before any equipment was specified.',
       ],
       records: [
-        { label: 'JAG smart factory', href: '/work/jag-smart-factory/' },
+        { label: 'Regulated smart factory', href: '/work/jag-smart-factory/' },
         { label: 'Robotic rim layup', href: '/work/carbon-revolution-rim-layup/' },
       ],
     },
@@ -104,7 +130,7 @@ export const closedLoop = {
         'In manufacturing that discipline ran through ITPs, MDRs and traceability records. Verification is designed before it is executed: acceptance criteria first, evidence at the moment of test, a record for every fault.',
       ],
       records: [
-        { label: 'JAG smart factory', href: '/work/jag-smart-factory/' },
+        { label: 'Regulated smart factory', href: '/work/jag-smart-factory/' },
         { label: 'ADAS and CAN validation', href: '/work/adas-can-validation/' },
       ],
     },
@@ -195,4 +221,4 @@ export const beyond: readonly { readonly title: string; readonly body: string }[
 
 /** Contact section copy, index.html:1489. */
 export const contactIntro =
-  'Work spans robotics, mechatronics, AI/ML, autonomous systems, embedded intelligence and end-to-end automation engineering. Get in touch by email, LinkedIn or GitHub.'
+  'Autonomous mobile robotics, embedded intelligent systems, sensor fusion and control, and the integration and verification that make them deployable. Get in touch by email, LinkedIn or GitHub.'

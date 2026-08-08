@@ -3,7 +3,64 @@
    ============================================================ */
 
 .hero {
+  position: relative;
+  isolation: isolate;
+  /* The field below bleeds past the stage on both sides so its radial stops
+     are not cut off at the gutter. Measured before this line: the stage
+     carried 38px of document overflow at 375px and 192px at 1920px, absorbed
+     invisibly by `body { overflow-x: hidden }` and reported as five failures
+     by scripts/audit.mjs. `clip` rather than `hidden` on purpose: `hidden`
+     would make this a scroll container and break `position: sticky` for
+     anything inside it, and clipping one axis leaves the block axis alone. */
+  overflow-x: clip;
   padding-block: clamp(3rem, 6vw, 5.5rem) clamp(3.5rem, 7vw, 7rem);
+}
+
+/* ---- Ambient field ----
+   Three very low-alpha radial washes over the page ground. It is light, not
+   a slab: at these alphas the canvas still reads as the site's own ground
+   and every contrast pair measured against --bg still holds, because none of
+   these sit under body copy.
+
+   The drift is one full turn of the site's ambient clock at four times its
+   period, which is slow enough that it is felt rather than watched. The 0%
+   and 100% keyframes are identical, so under prefers-reduced-motion, where
+   the global guard collapses the duration to 0.01ms, the field lands on
+   exactly the composition it was authored at rather than on an arbitrary
+   frame. */
+.heroField {
+  position: absolute;
+  inset: -20% -10% 0;
+  z-index: -1;
+  background:
+    radial-gradient(42% 52% at 18% 26%, var(--field-a), transparent 68%),
+    radial-gradient(38% 46% at 82% 18%, var(--field-b), transparent 70%),
+    radial-gradient(46% 40% at 62% 78%, var(--field-c), transparent 72%);
+  animation: hero-field calc(var(--cycle) * 4) var(--ease-inout) infinite;
+  will-change: transform;
+}
+
+@keyframes hero-field {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-1.6%, 1.2%, 0) scale(1.045);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* A continuous loop is exactly what a reader asking for reduced motion is
+   asking not to have, so it is removed rather than slowed. The static
+   composition is the authored one. */
+@media (prefers-reduced-motion: reduce) {
+  .heroField {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
 }
 
 .heroGrid {
@@ -61,6 +118,36 @@
      attribution runs nearly the width of the headline above it and starts
      competing with it, which is the fault this max-width exists to prevent. */
   max-width: 42ch;
+}
+
+/* The specialism, under the formal title. Set in the body face at label
+   weight so it reads as a qualification of the line above rather than as a
+   third headline, and given the accent rule so the eye finds it inside the
+   first screen. */
+.heroSpecialism {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  max-width: 46ch;
+}
+
+.heroSpecialism::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.32em;
+  bottom: 0.32em;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--sys-autonomy),
+    var(--sys-control),
+    var(--sys-sense)
+  );
 }
 
 .heroLede {
@@ -367,6 +454,123 @@
 }
 
 /* ============================================================
+   Specialist pillars
+   ============================================================ */
+
+.pillarList {
+  display: grid;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.pillar {
+  --layer: var(--accent);
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  min-width: 0;
+  padding: var(--space-4) var(--space-3) var(--space-4) calc(var(--space-3) + 4px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition:
+    border-color var(--dur-interaction) var(--ease-servo),
+    transform var(--dur-interaction) var(--ease-servo);
+}
+
+.pillar::before {
+  content: '';
+  position: absolute;
+  inset-block: -1px;
+  inset-inline-start: -1px;
+  width: 4px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  background: var(--layer);
+}
+
+/* Hover and keyboard focus get the same response, so the affordance is not
+   pointer-only. */
+.pillar:hover,
+.pillar:focus-within {
+  border-color: var(--border-strong);
+  transform: translateY(var(--lift));
+}
+
+.pillar[data-layer='autonomy'] {
+  --layer: var(--sys-autonomy);
+}
+
+.pillar[data-layer='control'] {
+  --layer: var(--sys-control);
+}
+
+.pillar[data-layer='verify'] {
+  --layer: var(--sys-verify);
+}
+
+.pillarIndex {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--layer);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+
+.pillarTitle {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 16ch;
+}
+
+.pillarTitle a {
+  transition: color var(--dur-interaction) var(--ease-servo);
+}
+
+.pillarTitle a:hover {
+  color: var(--accent-text);
+}
+
+/* The card is large, but the anchor inside it is one line of type. The
+   overlay makes the whole card the target on every pointer, which is also
+   what makes the 44px floor unnecessary on the anchor itself. */
+.pillarTitle a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.pillarBody {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: 42ch;
+}
+
+.pillarFoot {
+  margin-top: var(--space-4);
+}
+
+/* ============================================================
+   Supporting foundation and closing call
+   ============================================================ */
+
+.foundation {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.foundationBody {
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* ============================================================
    Capability handoff and closing call
    ============================================================ */
 
@@ -407,13 +611,17 @@
 
 @media (min-width: 700px) {
   .proofGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-4);
   }
 
   .problemList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  .pillarList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -452,10 +660,6 @@
     align-self: start;
   }
 
-  .proofGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
   .stageHeadSplit {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: clamp(2rem, 5vw, 5rem);
@@ -490,10 +694,16 @@
 }
 
 /* Practice band: the business profile teaser above the closing CTA. The
-   wordmark is a wide lockup, so it is capped rather than filling the wrap. */
+   wordmark is a wide lockup, so it is capped rather than filling the wrap.
+   Height is held by the mark's own aspect ratio, so swapping the light and
+   dark artwork moves nothing on the page. */
 .practiceLogo {
-  width: min(100%, 26rem);
-  height: auto;
-  display: block;
   margin-block-end: var(--space-3);
+}
+
+/* The credibility strip sits on the tinted closing stage, so it carries a
+   rule rather than a plate. */
+.proofItem {
+  padding-top: var(--space-2);
+  border-top: 2px solid var(--accent-line);
 }

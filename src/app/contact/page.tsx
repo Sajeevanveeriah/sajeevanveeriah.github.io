@@ -7,9 +7,8 @@ import c from './contact.module.css'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  // Recast agentless per the owner's 7 August 2026 direction.
   description:
-    'Get in touch by email, LinkedIn or GitHub, and download the resume for the full professional record.',
+    'Discuss an autonomous mobile robotics or embedded intelligent systems project by email, LinkedIn or GitHub, and download the resume for the full professional record.',
   alternates: { canonical: '/contact/' },
   openGraph: { title: 'Contact', url: '/contact/' },
 }

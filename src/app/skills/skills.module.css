@@ -1,3 +1,163 @@
+/* ============================================================
+   Three specialist pillars
+   ============================================================ */
+
+.pillars {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.pillar {
+  --layer: var(--accent);
+  position: relative;
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4) var(--space-4) var(--space-4) calc(var(--space-4) + 4px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.pillar::before {
+  content: '';
+  position: absolute;
+  inset-block: -1px;
+  inset-inline-start: -1px;
+  width: 4px;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  background: var(--layer);
+}
+
+/* The hue is carried by a class rather than a `data-layer` attribute here,
+   because these cards are rendered through `Reveal`, which forwards only
+   `className`, `style` and its own reveal attributes. An attribute set on a
+   `Reveal` is silently dropped, which is exactly what happened: all three
+   pillars rendered in the default accent. */
+.layerAutonomy {
+  --layer: var(--sys-autonomy);
+}
+
+.layerControl {
+  --layer: var(--sys-control);
+}
+
+.layerVerify {
+  --layer: var(--sys-verify);
+}
+
+.pillarHead {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.pillarIndex {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--layer);
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+
+.pillarName {
+  font-size: var(--text-3xl);
+  letter-spacing: var(--tracking-tight);
+  max-width: 18ch;
+}
+
+.pillarSummary {
+  color: var(--text-muted);
+  font-size: var(--text-lede);
+  line-height: 1.5;
+  max-width: 56ch;
+}
+
+.pillarBody {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.pillarBlock {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  min-width: 0;
+}
+
+.capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.capability {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+}
+
+.boundary {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  max-width: 46ch;
+}
+
+.records {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+/* ============================================================
+   Detailed matrix, behind progressive disclosure
+   ============================================================ */
+
+.matrixTitle {
+  max-width: 20ch;
+  margin-block: 0.3rem var(--space-3);
+}
+
+.matrix {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.matrixSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 56px;
+  color: var(--accent-text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.matrixSummary::-webkit-details-marker {
+  display: none;
+}
+
+.matrixChevron {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.matrix[open] .matrixChevron {
+  transform: rotate(-135deg) translate(-1px, -1px);
+}
+
 .territories {
   display: grid;
   border-top: 1px solid var(--border);
@@ -103,19 +263,23 @@
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: clamp(2rem, 5vw, 5rem);
   }
+
+  /* Capability, boundary and records share a row: the boundary has to sit
+     beside the capability list rather than under it, because a reader who
+     scans only the chips is exactly the reader who needs to see the limit. */
+  .pillarBody {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
 }
 
 /* Contextual pointer to the ecosystem catalogue. Restrained on purpose: it
    is a reference layer about the field, not more evidence about Saj. */
 .ecosystemLink {
-  margin-top: var(--space-10);
-  padding-top: var(--space-5);
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  max-width: 64ch;
-}
-
-.ecosystemLink p {
-  margin: 0;
+  max-width: 68ch;
   color: var(--text-muted);
   line-height: 1.65;
 }

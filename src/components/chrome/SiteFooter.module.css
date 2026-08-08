@@ -111,7 +111,24 @@
 
 @media (min-width: 760px) {
   .grid {
-    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-8);
+  }
+
+  /* The brand column spans, so the three link columns below it get equal
+     tracks rather than the brand squeezing them. */
+  .brandCol {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid {
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
     gap: var(--space-8);
+  }
+
+  .brandCol {
+    grid-column: auto;
   }
 }
