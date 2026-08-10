@@ -8,7 +8,6 @@ export const site = {
   email: 'sajeevanveeriah@gmail.com',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   github: 'https://github.com/Sajeevanveeriah',
-  linkedin: 'https://www.linkedin.com/in/sajeevan-veeriah/',
   iepLinkedin: 'https://www.linkedin.com/company/independent-engineering-practise/',
   credentials: ['Member, Engineers Australia', 'Deakin Mechatronics Engineering Honours, Distinction, 2025'],
 } as const

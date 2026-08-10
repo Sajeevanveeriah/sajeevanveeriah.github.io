@@ -18,7 +18,6 @@ export default function HomePage() {
           <div className="actions" aria-label="Primary professional links">
             <a className="button button-primary" href={site.resume}>Resume <Arrow /></a>
             <a className="button" href={site.github}>GitHub <Arrow /></a>
-            <a className="button" href={site.linkedin}>LinkedIn <Arrow /></a>
           </div>
         </div>
         <div className="hero-proof" aria-label="Professional foundation">
@@ -134,7 +133,6 @@ export default function HomePage() {
         <h2 id="contact-title">Have a system that has to move, sense or decide?</h2>
         <div className="contact-row">
           <a className="button button-primary" href={`mailto:${site.email}`}>Email Sajeevan <Arrow /></a>
-          <a className="text-link" href={site.linkedin}>Connect on LinkedIn <Arrow /></a>
         </div>
       </section>
     </>
