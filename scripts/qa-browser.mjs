@@ -60,11 +60,20 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     theme: document.documentElement.dataset.theme,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && image.alt),
+    iepVisible: [...document.querySelectorAll('.iep-section h2, .iep-section p, .iep-section a')].every((element) => {
+      const rect = element.getBoundingClientRect()
+      const style = getComputedStyle(element)
+      return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none' && style.opacity !== '0'
+    }),
+    personalLinkedInCount: document.querySelectorAll('a[href*="linkedin.com/in/"]').length,
     animations: document.getAnimations().length,
-    violations: (await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => item.id),
+    violations: (await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({
+      id: item.id,
+      nodes: item.nodes.map((node) => ({ target: node.target, summary: node.failureSummary })),
+    })),
   }))
   await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.violations.length || consoleErrors.length || requestFailures.length) {
+  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || !result.iepVisible || result.personalLinkedInCount !== 0 || result.violations.length || consoleErrors.length || requestFailures.length) {
     failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   }
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
@@ -76,7 +85,8 @@ await context.addInitScript(() => localStorage.setItem('sv-theme', 'light'))
 const page = await context.newPage()
 await page.goto(baseURL, { waitUntil: 'networkidle' })
 const focusResults = []
-for (let index = 0; index < 22; index += 1) {
+const focusableCount = await page.locator('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])').count()
+for (let index = 0; index < focusableCount; index += 1) {
   await page.keyboard.press('Tab')
   focusResults.push(await page.evaluate(() => {
     const element = document.activeElement

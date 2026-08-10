@@ -36,8 +36,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f8f5' },
-    { media: '(prefers-color-scheme: dark)', color: '#07130f' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
 }
 
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: site.name,
     url: site.url,
     jobTitle: site.jobTitle,
-    sameAs: [site.github, site.linkedin],
+    sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
   }
@@ -89,7 +89,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </div>
             <div className="footer-links" aria-label="Professional links">
               <a href={site.github}>GitHub</a>
-              <a href={site.linkedin}>LinkedIn</a>
               <a href={site.resume}>Resume</a>
             </div>
             <p className="copyright">© 2026 Sajeevan Veeriah</p>
