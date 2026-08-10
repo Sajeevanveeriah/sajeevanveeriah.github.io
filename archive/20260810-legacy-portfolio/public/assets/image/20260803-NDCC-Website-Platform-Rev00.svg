@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1435" height="660" viewBox="0 0 1435 660" role="img" aria-labelledby="title description">
+  <title id="title">NDCC digital platform architecture</title>
+  <desc id="description">A system diagram showing the public club website and committee administration connected through a Next.js application to Supabase data and operational integrations.</desc>
+  <rect width="1435" height="660" fill="#FFFFFF"/>
+  <rect x="52" y="48" width="1331" height="564" rx="28" fill="#F6F6F8" stroke="#D9D9E0" stroke-width="2"/>
+  <text x="96" y="112" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="34" font-weight="700">NDCC DIGITAL PLATFORM</text>
+  <text x="96" y="148" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Public club experience, committee operations and governed data in one maintained system.</text>
+
+  <rect x="96" y="204" width="340" height="230" rx="20" fill="#FFFFFF" stroke="#0B5CD5" stroke-width="3"/>
+  <text x="128" y="252" fill="#0B5CD5" font-family="Arial, sans-serif" font-size="16" font-weight="700">PUBLIC EXPERIENCE</text>
+  <text x="128" y="302" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="25" font-weight="700">Club website</text>
+  <text x="128" y="342" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Fixtures and teams</text>
+  <text x="128" y="376" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">News, events and gallery</text>
+  <text x="128" y="410" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Membership and merchandise</text>
+
+  <path d="M436 319 H526" fill="none" stroke="#0B5CD5" stroke-width="4"/>
+  <path d="M514 307 L528 319 L514 331" fill="none" stroke="#0B5CD5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="526" y="204" width="383" height="230" rx="20" fill="#0D0D0F"/>
+  <text x="562" y="252" fill="#8DB9F5" font-family="Arial, sans-serif" font-size="16" font-weight="700">APPLICATION CORE</text>
+  <text x="562" y="302" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="25" font-weight="700">Next.js 14 App Router</text>
+  <text x="562" y="342" fill="#D9D9E0" font-family="Arial, sans-serif" font-size="18">TypeScript and React</text>
+  <text x="562" y="376" fill="#D9D9E0" font-family="Arial, sans-serif" font-size="18">Server routes and protected admin</text>
+  <text x="562" y="410" fill="#D9D9E0" font-family="Arial, sans-serif" font-size="18">Dynamic, no-store CMS delivery</text>
+
+  <path d="M909 319 H999" fill="none" stroke="#0B5CD5" stroke-width="4"/>
+  <path d="M987 307 L1001 319 L987 331" fill="none" stroke="#0B5CD5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="999" y="204" width="340" height="230" rx="20" fill="#FFFFFF" stroke="#0B5CD5" stroke-width="3"/>
+  <text x="1031" y="252" fill="#0B5CD5" font-family="Arial, sans-serif" font-size="16" font-weight="700">CLUB OPERATIONS</text>
+  <text x="1031" y="302" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="25" font-weight="700">Committee CMS</text>
+  <text x="1031" y="342" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Supabase Postgres</text>
+  <text x="1031" y="376" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Role-based administration</text>
+  <text x="1031" y="410" fill="#4E4E57" font-family="Arial, sans-serif" font-size="18">Content, media and orders</text>
+
+  <line x1="96" y1="488" x2="1339" y2="488" stroke="#D9D9E0" stroke-width="2"/>
+  <text x="96" y="533" fill="#5F5F68" font-family="Arial, sans-serif" font-size="15" font-weight="700">INTEGRATIONS AND DELIVERY</text>
+  <g fill="#0D0D0F" font-family="Arial, sans-serif" font-size="17" font-weight="700">
+    <text x="96" y="574">PlayHQ fixtures</text>
+    <text x="356" y="574">Resend email</text>
+    <text x="596" y="574">GitHub media</text>
+    <text x="842" y="574">Supabase Storage</text>
+    <text x="1132" y="574">Vercel</text>
+  </g>
+  <g fill="#0B5CD5">
+    <circle cx="77" cy="568" r="6"/>
+    <circle cx="337" cy="568" r="6"/>
+    <circle cx="577" cy="568" r="6"/>
+    <circle cx="823" cy="568" r="6"/>
+    <circle cx="1113" cy="568" r="6"/>
+  </g>
+</svg>
