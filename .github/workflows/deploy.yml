@@ -42,11 +42,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # Fails the build if any colour pair drops below its WCAG 2.2 AA
-      # threshold in either theme.
-      - name: Contrast gate
-        run: npm run contrast
-
       - name: Build static export
         run: npm run build
 

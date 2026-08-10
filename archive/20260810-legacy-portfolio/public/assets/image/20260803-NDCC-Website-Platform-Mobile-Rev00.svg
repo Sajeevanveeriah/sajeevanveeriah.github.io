@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="960" viewBox="0 0 660 960" role="img" aria-labelledby="title description">
+  <title id="title">NDCC digital platform architecture for small screens</title>
+  <desc id="description">A vertical system diagram showing the public club website, the Next.js application core, committee administration, Supabase data and operational integrations.</desc>
+  <rect width="660" height="960" fill="#FFFFFF"/>
+  <rect x="28" y="28" width="604" height="904" rx="28" fill="#F6F6F8" stroke="#D9D9E0" stroke-width="2"/>
+  <text x="60" y="82" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="28" font-weight="700">NDCC DIGITAL PLATFORM</text>
+  <text x="60" y="116" fill="#4E4E57" font-family="Arial, sans-serif" font-size="17">One maintained system for the public site and club operations.</text>
+
+  <rect x="60" y="158" width="540" height="170" rx="18" fill="#FFFFFF" stroke="#0B5CD5" stroke-width="3"/>
+  <text x="88" y="198" fill="#0B5CD5" font-family="Arial, sans-serif" font-size="15" font-weight="700">PUBLIC EXPERIENCE</text>
+  <text x="88" y="240" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="23" font-weight="700">Club website</text>
+  <text x="88" y="276" fill="#4E4E57" font-family="Arial, sans-serif" font-size="17">Fixtures, teams, news, events and gallery</text>
+  <text x="88" y="306" fill="#4E4E57" font-family="Arial, sans-serif" font-size="17">Membership and merchandise</text>
+
+  <path d="M330 328 V370" fill="none" stroke="#0B5CD5" stroke-width="4"/>
+  <path d="M318 358 L330 372 L342 358" fill="none" stroke="#0B5CD5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="60" y="370" width="540" height="190" rx="18" fill="#0D0D0F"/>
+  <text x="88" y="414" fill="#8DB9F5" font-family="Arial, sans-serif" font-size="15" font-weight="700">APPLICATION CORE</text>
+  <text x="88" y="456" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="23" font-weight="700">Next.js 14 App Router</text>
+  <text x="88" y="494" fill="#D9D9E0" font-family="Arial, sans-serif" font-size="17">TypeScript, React and server routes</text>
+  <text x="88" y="528" fill="#D9D9E0" font-family="Arial, sans-serif" font-size="17">Protected admin and dynamic CMS delivery</text>
+
+  <path d="M330 560 V602" fill="none" stroke="#0B5CD5" stroke-width="4"/>
+  <path d="M318 590 L330 604 L342 590" fill="none" stroke="#0B5CD5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="60" y="602" width="540" height="170" rx="18" fill="#FFFFFF" stroke="#0B5CD5" stroke-width="3"/>
+  <text x="88" y="642" fill="#0B5CD5" font-family="Arial, sans-serif" font-size="15" font-weight="700">CLUB OPERATIONS</text>
+  <text x="88" y="684" fill="#0D0D0F" font-family="Arial, sans-serif" font-size="23" font-weight="700">Committee CMS</text>
+  <text x="88" y="720" fill="#4E4E57" font-family="Arial, sans-serif" font-size="17">Supabase Postgres and role-based administration</text>
+  <text x="88" y="750" fill="#4E4E57" font-family="Arial, sans-serif" font-size="17">Content, media, membership and orders</text>
+
+  <line x1="60" y1="814" x2="600" y2="814" stroke="#D9D9E0" stroke-width="2"/>
+  <text x="60" y="852" fill="#5F5F68" font-family="Arial, sans-serif" font-size="14" font-weight="700">INTEGRATIONS AND DELIVERY</text>
+  <g fill="#0D0D0F" font-family="Arial, sans-serif" font-size="16" font-weight="700">
+    <text x="82" y="890">PlayHQ</text>
+    <text x="190" y="890">Resend</text>
+    <text x="302" y="890">GitHub media</text>
+    <text x="453" y="890">Vercel</text>
+  </g>
+  <g fill="#0B5CD5">
+    <circle cx="66" cy="884" r="5"/>
+    <circle cx="174" cy="884" r="5"/>
+    <circle cx="286" cy="884" r="5"/>
+    <circle cx="437" cy="884" r="5"/>
+  </g>
+</svg>

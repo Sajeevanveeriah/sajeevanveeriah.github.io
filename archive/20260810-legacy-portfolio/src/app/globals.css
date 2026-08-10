@@ -1,0 +1,897 @@
+@import 'tailwindcss';
+@import '../styles/tokens.css';
+/* Last, so its @media print reset wins on source order against the theme
+   rules in tokens.css it has to override. */
+@import './print.css';
+
+/* Bind the role tokens into Tailwind v4's theme so utilities such as
+   bg-surface and text-muted resolve automatically. Components use these
+   utilities or the role tokens directly; a literal colour outside
+   tokens.css is a defect. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-tint: var(--tint);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-muted: var(--accent-muted);
+  --color-on-accent: var(--on-accent);
+  --color-status: var(--status);
+  --color-status-hover: var(--status-hover);
+  --color-status-text: var(--status-text);
+  --color-status-muted: var(--status-muted);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --ease-servo: var(--ease-servo);
+  --ease-settle: var(--ease-settle);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + var(--space-3));
+}
+
+/* Smooth scrolling is granted rather than granted-then-revoked. It used to be
+   declared unconditionally and switched back to `auto` in the reduced-motion
+   block at the foot of this file, which reaches the same end state but leaves
+   the property on for the moment between the two rules and states the opt-out
+   backwards. Asking for it only where motion is welcome is the honest form,
+   and it means a reader who wants less motion never has the behaviour applied
+   to them at all. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Anything a link can target clears the sticky header on its own account.
+   `scroll-padding-top` on the scroll container covers same-page anchors, but
+   it does not survive a cross-page landing on a fragment or a programmatic
+   `scrollIntoView`, and in both of those the heading arrived underneath the
+   header. `scroll-margin-top` belongs to the target itself, so it holds
+   however the target is reached. */
+:where(h1, h2, h3, h4, h5, h6, section, article, [id]):target,
+:where(h1, h2, h3, h4, h5, h6)[id],
+:where(section, article)[id] {
+  scroll-margin-top: calc(var(--header-h) + var(--space-3));
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  /* Softens the theme switch so the page changes ground rather than
+     snapping. Nothing else repaints the body canvas, so this transition
+     only ever runs on a theme change.
+
+     Under prefers-reduced-motion: reduce this is already neutralised by the
+     global guard at the end of this file, which forces transition-duration
+     to 0.01ms on every element with !important. Stated here so the next
+     reader does not add a second, weaker reset for it. */
+  transition:
+    background-color var(--dur-interaction) var(--ease-servo),
+    color var(--dur-interaction) var(--ease-servo);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-5xl);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+}
+
+h4 {
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-snug);
+}
+
+p {
+  margin: 0;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+/* A string with no break opportunity in it cannot be wrapped by the normal
+   algorithm, so it runs straight out of its box: a long URL, a package or
+   module name, a dotted technology string, a slug in a meta rail. `break-word`
+   only takes effect when a word genuinely does not fit its line, so it changes
+   nothing about how ordinary copy rags and leaves the authored headline breaks
+   exactly where they were written. Several modules already set
+   `overflow-wrap: anywhere` on the specific fields known to carry these; this
+   is the floor under everything that was never identified individually. */
+body,
+p,
+li,
+dd,
+dt,
+figcaption,
+blockquote,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--accent-wash);
+  color: var(--text);
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--wrap) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap-wide {
+  width: 100%;
+  max-width: calc(var(--wrap-wide) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+/* A stage that carries real weight earns more air before and after it, so
+   arriving at it reads as an event rather than as the next item in a list. */
+.section-lg {
+  padding-block: var(--section-y-lg);
+}
+
+/* A connective strip closes up against what it supports. */
+.section-sm {
+  padding-block: var(--section-y-sm);
+}
+
+/* A tinted stage already announces itself by changing ground, so it does not
+   also need the full white-to-white interval to separate it. */
+.stage-tint.section {
+  padding-block: calc(var(--section-y) * 0.88);
+}
+
+/* A quiet tinted stage. Full-bleed, so it reads as a change of ground rather
+   than a floating slab inside white space. */
+.stage-tint {
+  background: var(--tint);
+}
+
+.rule-top {
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Shared type utilities
+   ============================================================ */
+
+.label,
+.mono-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.label-accent {
+  color: var(--accent-text);
+}
+
+.lede {
+  font-size: var(--text-lede);
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  color: var(--text-muted);
+  max-width: 54ch;
+}
+
+.prose {
+  color: var(--text-muted);
+}
+
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Underlined text link that draws on hover instead of sitting permanently
+   underlined. */
+.textlink {
+  position: relative;
+  display: inline-block;
+  color: var(--accent-text);
+  font-weight: 500;
+  padding-bottom: 2px;
+}
+
+.textlink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.textlink:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* Same technique as the footer links: a pseudo-element takes the hit area to
+   44px on a touch pointer while the drawn underline stays exactly where it
+   was. Changing the box itself would have moved the underline, which is
+   positioned against the link's own bottom edge. */
+@media (pointer: coarse) {
+  .textlink::before {
+    content: '';
+    position: absolute;
+    inset: -11px -4px;
+  }
+}
+
+/* Arrow link used for "read the case study" style affordances. */
+/* The hit area is 44px tall while the mark stays its drawn size. Measured on
+   a phone the bare link was 24px, which clears the WCAG 2.5.8 minimum but is
+   well under what a thumb actually wants, and this is the primary way into
+   every case study. The negative margin keeps the added padding from
+   changing any layout it sits in. */
+.arrowlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  color: var(--accent-text);
+  font-weight: 500;
+  font-size: var(--text-sm);
+  min-height: 44px;
+  padding-block: 0.625rem;
+  margin-block: -0.625rem;
+}
+
+.arrowlink svg {
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.arrowlink:hover svg {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 50px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-interaction) var(--ease-servo),
+    border-color var(--dur-interaction) var(--ease-servo),
+    color var(--dur-interaction) var(--ease-servo),
+    transform var(--dur-interaction) var(--ease-servo);
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--surface);
+}
+
+.btn-primary:hover {
+  background: var(--accent-fill);
+  transform: translateY(var(--lift));
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text);
+  transform: translateY(var(--lift));
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: var(--space-2);
+  z-index: 100;
+  transform: translateY(-250%);
+  padding: 0.6rem 1rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--accent-fill);
+  border-radius: var(--radius);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: transform var(--dur-interaction) var(--ease-servo);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: var(--radius-sm);
+}
+
+[aria-hidden='true'] {
+  pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   Project media
+   ============================================================ */
+
+.project-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--media-ratio);
+  overflow: hidden;
+  background: var(--tint);
+}
+
+@media (max-width: 767px) {
+  .project-media {
+    aspect-ratio: var(--media-ratio-mobile, var(--media-ratio));
+  }
+}
+
+.project-media picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-position: var(--media-position);
+  transition: transform 900ms var(--ease-settle);
+}
+
+.project-media[data-mode='contain'] img {
+  object-fit: contain;
+}
+
+.project-media[data-mode='cover'] img,
+.project-media[data-mode='full-bleed'] img {
+  object-fit: cover;
+}
+
+/* Media frame shared by home, work and case-study routes. Rounded, ruled and
+   large: project imagery is never reduced to a thumbnail. */
+.media-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--tint);
+}
+
+.media-frame:hover .project-media img {
+  transform: scale(1.02);
+}
+
+/* ============================================================
+   Shared diagram styling
+   ============================================================ */
+
+.diagram {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.diagram text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--text-faint);
+  text-transform: uppercase;
+}
+
+.diagram .d-ink {
+  stroke: var(--border-strong);
+}
+
+.diagram .d-rule {
+  stroke: var(--border);
+}
+
+.diagram .d-accent {
+  stroke: var(--accent);
+}
+
+.diagram .d-fill-tint {
+  fill: var(--tint);
+}
+
+/* ============================================================
+   Scroll reveal
+   The hidden state exists only when JavaScript is running, so the
+   server-rendered page is complete and readable on its own. See
+   components/motion/Reveal.tsx.
+   ============================================================ */
+
+html[data-js] .reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Both channels run on `--dur-base`. They used to run on two durations, the
+   longer of which was 720ms, so the movement outlasted the fade by nearly
+   200ms and the whole arrival sat well past the 600ms this system allows
+   itself. One duration, one curve: the block fades and settles as a single
+   event. Only opacity and transform are animated, so nothing here can
+   trigger layout or paint on the main thread. */
+html[data-js] .reveal[data-shown] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
+    transform var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
+}
+
+/* ---- Reveal vocabulary ----
+   One fade-up applied to every section reads as a template. These are the
+   four movements the site actually needs, chosen per stage so a heading, a
+   list, a wide plate and a full-bleed image do not all arrive the same way.
+   Each is a variation on the same settle easing, so they still feel related. */
+
+/* `lift`: a shorter, quieter arrival for secondary blocks that should not
+   compete with the stage heading above them. */
+html[data-js] .reveal[data-reveal='lift'] {
+  transform: translateY(8px);
+}
+
+/* `edge`: enters from the leading edge instead of from below. Used where a
+   block sits beside another rather than under it, so the two do not both
+   rise in parallel. */
+html[data-js] .reveal[data-reveal='edge'] {
+  transform: translateX(-18px);
+}
+
+/* `wipe`: the plate is uncovered rather than moved, which suits a diagram or
+   an image whose framing should stay put while its content is disclosed. */
+html[data-js] .reveal[data-reveal='wipe'] {
+  transform: none;
+  clip-path: inset(0 0 38% 0);
+}
+
+html[data-js] .reveal[data-reveal='wipe'][data-shown] {
+  clip-path: inset(0 0 0 0);
+  transition:
+    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
+    clip-path var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
+}
+
+/* Every variant resolves to the same finished state, and this reset has to
+   carry the extra attribute to get there.
+
+   `html[data-js] .reveal[data-shown]` and `html[data-js]
+   .reveal[data-reveal='lift']` are the same specificity, so source order
+   decides, and the variants are declared second. The offset therefore won and
+   never resolved: measured on /versatility/ at 1440x900, the closing stage
+   reached `data-shown` and `opacity: 1` but held `translateY(8px)`
+   permanently, sitting 8px below where the same block sits with JavaScript
+   off. `edge` had the same fault at 18px on the horizontal.
+
+   AGENTS.md already records this trap for the reduced-motion reset, which
+   carries `[data-reveal]` for exactly this reason. The resolved state needs
+   it too. */
+html[data-js] .reveal[data-reveal][data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Cascading groups ----
+   Children of a stagger group inherit the group's reveal and offset
+   themselves by index, so a list resolves in reading order rather than
+   snapping in as one slab. The index is set inline by the Stagger component
+   because CSS cannot count siblings into a delay. */
+html[data-js] .stagger > * {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* The delay is capped rather than linear in the index. A discipline group can
+   carry a dozen claims and the archive is longer still; uncapped, the last
+   item in a long list waits on every predecessor and the reader is left
+   watching an empty column for the better part of a second. `min()` holds the
+   cascade to `--stagger-steps` gaps, after which every remaining child
+   arrives together. */
+html[data-js] .stagger[data-shown] > * {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-base) var(--ease-out)
+      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger)),
+    transform var(--dur-base) var(--ease-out)
+      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger));
+}
+
+/* ============================================================
+   Layered parallax stage
+   See components/motion/ParallaxStage.tsx and motion/parallax.ts.
+
+   `--p` is the only value JavaScript writes. The composition below is what
+   turns it into movement, which is why the reduced-motion reset at the end
+   of this file can cancel the whole effect without the script knowing.
+   ============================================================ */
+
+.stage {
+  /* The server-rendered resting value. A stage that never registers, either
+     because JavaScript is off or because the visitor asked for reduced
+     motion, holds this and every layer sits at its authored position. */
+  --p: 0;
+  position: relative;
+}
+
+html[data-js] .stage__layer {
+  transform: translate3d(0, calc(-1 * var(--depth, 0) * var(--parallax-travel) * var(--p)), 0)
+    rotate(calc(var(--depth, 0) * 1.5deg * (var(--p) - 0.5)));
+}
+
+/* Promoted only while the stage is actually being ticked. Left on
+   permanently this gives every layer on the page its own compositor tile
+   for the whole session. */
+html[data-js] .stage[data-active] .stage__layer {
+  will-change: transform;
+}
+
+/* ---- Stacked composition ----
+   Every layer occupies the same grid cell, so the plate is sized by the
+   tallest layer and no layer is positioned absolutely. Absolute layers would
+   take themselves out of flow and collapse the plate to zero height before
+   the first paint, which is a guaranteed CLS event. */
+.stage-stacked {
+  display: grid;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.stage-stacked > .stage__layer {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+/* Depths on a clipping plate are held low on purpose. Travel is always
+   upward, so nothing drawn is ever cut off at the top; what a deep layer
+   would cost is a strip of bare plate revealed at the bottom edge. At the
+   hero's deepest 0.30 that strip is 44px on a 600 unit drawing whose lowest
+   mark sits at 529, so the exposed band is empty in every layer. Raising a
+   depth here means re-checking that. */
+
+/* ---- Sequenced composition ----
+   Layers stay in normal flow and simply travel at different rates. Used
+   where each layer carries its own readable content and overlapping them
+   would make both illegible. The padding absorbs the travel so a rising
+   layer never reaches the stage above it. */
+.stage-flow {
+  display: grid;
+  gap: var(--space-4);
+  padding-block: clamp(1.5rem, 3vw, 2.75rem);
+  /* Layers are rotated as well as translated, and a rotation widens an
+     element's bounding box slightly even when the rotation is a degree and a
+     half. Measured on the homepage showcase at 1280 the layer box ran from
+     -2px to 821px inside an 819px stage, so the stage carried 2px of
+     horizontal overflow that only `body { overflow-x: hidden }` was
+     absorbing. `clip` rather than `hidden`: `hidden` would make this a scroll
+     container and break `position: sticky` for anything inside it, while
+     `clip` on one axis leaves the block axis visible and creates no scroll
+     port. Travel is vertical, so nothing drawn is lost. */
+  overflow-x: clip;
+}
+
+/* Grid and flex children default to `min-width: auto`, which refuses to shrink
+   below the intrinsic width of their content and pushes the track wider than
+   its share instead. The individual columns that were found doing this each
+   carry their own `min-width: 0`; these two primitives are where a new child
+   lands before anyone has looked at it. */
+.stage-flow > *,
+.stage-stacked > * {
+  min-width: 0;
+}
+
+/* ============================================================
+   Sticky scroll stage
+   A tall outer section with a sticky inner wrapper. Used once, on the
+   selected-work stage, where the heading holds while the records pass it.
+
+   It is deliberately not applied to ClosedLoop, StackSpine or CareerSpine:
+   those are full-height graphics, and making them sticky would strand a
+   viewport containing nothing but a diagram. A sticky column beside a
+   scrolling column always has readable content on screen.
+   ============================================================ */
+
+.sticky-rail {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-4));
+  align-self: start;
+  /* No height ceiling. A `max-height` here plus `overflow: visible` clamped
+     the box while the copy carried on rendering past it: measured at
+     1024x600 the rail box was held to 486px while its content ran to 578px,
+     so 92px of live text sat outside the element's own box and over
+     whatever followed. A sticky element taller than its viewport still
+     sticks, it simply cannot show all of itself at once, which is the
+     correct trade. `min-height` is the only height any pinned stage takes. */
+  min-height: 0;
+  overflow: visible;
+}
+
+/* Below the two-column breakpoint there is no second column to scroll past,
+   so pinning the heading would just cover the records with it. 999px, not
+   899px: the selected-work stage does not split into two columns until
+   1000px, and un-pinning at the header's breakpoint instead would leave a
+   100px band where a full-width heading tracked the viewport. */
+@media (max-width: 999px) {
+  .sticky-rail {
+    position: static;
+  }
+}
+
+/* ============================================================
+   Motion keyframes shared across diagrams
+   ============================================================ */
+
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sig-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  55%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes sig-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+
+@keyframes sig-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sig-ping {
+  0% {
+    r: 6;
+    opacity: 0.55;
+  }
+  100% {
+    r: 62;
+    opacity: 0;
+  }
+}
+
+@keyframes sig-blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes sig-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Reduced motion
+   Ambient loops are removed entirely; content reveals collapse to an
+   instant state change. Enforced globally so no component can opt out.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Content is never gated on a reveal that will not run. The variant
+     selectors carry an extra attribute, so the reset has to match their
+     specificity or the wipe would stay clipped at its start state and
+     permanently crop the block. */
+  html[data-js] .reveal,
+  html[data-js] .reveal[data-reveal],
+  html[data-js] .reveal[data-reveal][data-shown],
+  html[data-js] .stagger > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  /* Parallax is cancelled outright rather than slowed. The stage never
+     registers under reduced motion either, so this is the belt to that
+     braces: a layer rendered before the media query was consulted still
+     resolves to its authored position. */
+  html[data-js] .stage__layer {
+    transform: none;
+  }
+
+  html[data-js] .stage[data-active] .stage__layer {
+    will-change: auto;
+  }
+
+  /* A pinned rail is motion too: the heading tracking the viewport while
+     the records move past it is exactly the effect being opted out of. */
+  .sticky-rail {
+    position: static;
+  }
+
+  /* Diagrams settle on their finished state rather than their first frame. */
+  [data-draw] {
+    stroke-dashoffset: 0 !important;
+  }
+
+  [data-travel] {
+    offset-distance: 100% !important;
+    opacity: 1 !important;
+  }
+}

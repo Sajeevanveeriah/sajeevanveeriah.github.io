@@ -1,45 +1,58 @@
-@import 'tailwindcss';
-@import '../styles/tokens.css';
-/* Last, so its @media print reset wins on source order against the theme
-   rules in tokens.css it has to override. */
-@import './print.css';
-
-/* Bind the role tokens into Tailwind v4's theme so utilities such as
-   bg-surface and text-muted resolve automatically. Components use these
-   utilities or the role tokens directly; a literal colour outside
-   tokens.css is a defect. */
-@theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
-  --color-tint: var(--tint);
-  --color-text: var(--text);
-  --color-text-muted: var(--text-muted);
-  --color-text-faint: var(--text-faint);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-text: var(--accent-text);
-  --color-accent-fill: var(--accent-fill);
-  --color-accent-muted: var(--accent-muted);
-  --color-on-accent: var(--on-accent);
-  --color-status: var(--status);
-  --color-status-hover: var(--status-hover);
-  --color-status-text: var(--status-text);
-  --color-status-muted: var(--status-muted);
-
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  --font-mono: var(--font-mono);
-
-  --ease-servo: var(--ease-servo);
-  --ease-settle: var(--ease-settle);
+:root {
+  --bg: #f7f8f5;
+  --surface: #ffffff;
+  --surface-soft: #edf2ed;
+  --ink: #0b2c23;
+  --text: #263c34;
+  --muted: #586c64;
+  --line: #cbd6d0;
+  --line-strong: #8ea39a;
+  --accent: #b84408;
+  --accent-hover: #913706;
+  --accent-soft: #f8e8df;
+  --on-accent: #ffffff;
+  --header: rgb(247 248 245 / 0.9);
+  --shadow: 0 22px 60px rgb(11 44 35 / 0.09);
+  --shell: min(1280px, calc(100% - 48px));
+  --section: clamp(5.5rem, 9vw, 9rem);
+  --radius: 3px;
 }
 
-/* ============================================================
-   Base
-   ============================================================ */
+html[data-theme='dark'] {
+  --bg: #07130f;
+  --surface: #0d1e18;
+  --surface-soft: #122820;
+  --ink: #eff7f2;
+  --text: #d1ded7;
+  --muted: #a3b6ac;
+  --line: #29443a;
+  --line-strong: #547064;
+  --accent: #ff8b4b;
+  --accent-hover: #ffad7c;
+  --accent-soft: #3a1f12;
+  --on-accent: #1b0b03;
+  --header: rgb(7 19 15 / 0.9);
+  --shadow: 0 22px 60px rgb(0 0 0 / 0.28);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --bg: #07130f;
+    --surface: #0d1e18;
+    --surface-soft: #122820;
+    --ink: #eff7f2;
+    --text: #d1ded7;
+    --muted: #a3b6ac;
+    --line: #29443a;
+    --line-strong: #547064;
+    --accent: #ff8b4b;
+    --accent-hover: #ffad7c;
+    --accent-soft: #3a1f12;
+    --on-accent: #1b0b03;
+    --header: rgb(7 19 15 / 0.9);
+    --shadow: 0 22px 60px rgb(0 0 0 / 0.28);
+  }
+}
 
 *,
 *::before,
@@ -48,850 +61,934 @@
 }
 
 html {
-  -webkit-text-size-adjust: 100%;
-  scroll-padding-top: calc(var(--header-h) + var(--space-3));
-}
-
-/* Smooth scrolling is granted rather than granted-then-revoked. It used to be
-   declared unconditionally and switched back to `auto` in the reduced-motion
-   block at the foot of this file, which reaches the same end state but leaves
-   the property on for the moment between the two rules and states the opt-out
-   backwards. Asking for it only where motion is welcome is the honest form,
-   and it means a reader who wants less motion never has the behaviour applied
-   to them at all. */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-/* Anything a link can target clears the sticky header on its own account.
-   `scroll-padding-top` on the scroll container covers same-page anchors, but
-   it does not survive a cross-page landing on a fragment or a programmatic
-   `scrollIntoView`, and in both of those the heading arrived underneath the
-   header. `scroll-margin-top` belongs to the target itself, so it holds
-   however the target is reached. */
-:where(h1, h2, h3, h4, h5, h6, section, article, [id]):target,
-:where(h1, h2, h3, h4, h5, h6)[id],
-:where(section, article)[id] {
-  scroll-margin-top: calc(var(--header-h) + var(--space-3));
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
   margin: 0;
-  background-color: var(--bg);
   color: var(--text);
-  /* Softens the theme switch so the page changes ground rather than
-     snapping. Nothing else repaints the body canvas, so this transition
-     only ever runs on a theme change.
-
-     Under prefers-reduced-motion: reduce this is already neutralised by the
-     global guard at the end of this file, which forces transition-duration
-     to 0.01ms on every element with !important. Stated here so the next
-     reader does not add a second, weaker reset for it. */
-  transition:
-    background-color var(--dur-interaction) var(--ease-servo),
-    color var(--dur-interaction) var(--ease-servo);
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-body);
-  font-synthesis-weight: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  line-height: 1.62;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  margin: 0;
-  color: var(--text);
-  text-wrap: balance;
-}
-
-h1 {
-  font-size: var(--text-5xl);
-  line-height: var(--leading-display);
-  letter-spacing: var(--tracking-display);
-}
-
-h2 {
-  font-size: var(--text-3xl);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-}
-
-h3 {
-  font-size: var(--text-xl);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-snug);
-}
-
-h4 {
-  font-size: var(--text-lg);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-snug);
-}
-
-p {
-  margin: 0;
-  max-width: var(--measure);
-  text-wrap: pretty;
-}
-
-/* A string with no break opportunity in it cannot be wrapped by the normal
-   algorithm, so it runs straight out of its box: a long URL, a package or
-   module name, a dotted technology string, a slug in a meta rail. `break-word`
-   only takes effect when a word genuinely does not fit its line, so it changes
-   nothing about how ordinary copy rags and leaves the authored headline breaks
-   exactly where they were written. Several modules already set
-   `overflow-wrap: anywhere` on the specific fields known to carry these; this
-   is the floor under everything that was never identified individually. */
-body,
-p,
-li,
-dd,
-dt,
-figcaption,
-blockquote,
-a,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  background-image:
+    linear-gradient(to right, transparent calc(100% - 1px), color-mix(in srgb, var(--line) 26%, transparent) 1px),
+    linear-gradient(to bottom, transparent calc(100% - 1px), color-mix(in srgb, var(--line) 18%, transparent) 1px);
+  background-size: 80px 80px;
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 0.42), transparent 44rem);
 }
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
 }
 
-ul,
-ol {
-  margin: 0;
-  padding: 0;
+a:hover {
+  color: var(--accent);
 }
 
-img,
-svg,
-picture {
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+img {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-button {
-  font: inherit;
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
 }
 
-::selection {
-  background: var(--accent-wash);
-  color: var(--text);
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  font-family: var(--font-display), system-ui, sans-serif;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
-/* ============================================================
-   Layout primitives
-   ============================================================ */
+h1 {
+  font-size: clamp(3.4rem, 8.3vw, 8.8rem);
+  letter-spacing: -0.065em;
+}
 
-.wrap {
-  width: 100%;
-  max-width: calc(var(--wrap) + var(--gutter) * 2);
+h2 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2.35rem, 5vw, 5.4rem);
+  letter-spacing: -0.052em;
+}
+
+h3 {
+  font-size: clamp(1.45rem, 2.4vw, 2.5rem);
+  letter-spacing: -0.035em;
+}
+
+.shell {
+  width: var(--shell);
   margin-inline: auto;
-  padding-inline: var(--gutter);
 }
 
-.wrap-wide {
-  width: 100%;
-  max-width: calc(var(--wrap-wide) + var(--gutter) * 2);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
-.section {
-  padding-block: var(--section-y);
-  position: relative;
-}
-
-/* A stage that carries real weight earns more air before and after it, so
-   arriving at it reads as an event rather than as the next item in a list. */
-.section-lg {
-  padding-block: var(--section-y-lg);
-}
-
-/* A connective strip closes up against what it supports. */
-.section-sm {
-  padding-block: var(--section-y-sm);
-}
-
-/* A tinted stage already announces itself by changing ground, so it does not
-   also need the full white-to-white interval to separate it. */
-.stage-tint.section {
-  padding-block: calc(var(--section-y) * 0.88);
-}
-
-/* A quiet tinted stage. Full-bleed, so it reads as a change of ground rather
-   than a floating slab inside white space. */
-.stage-tint {
-  background: var(--tint);
-}
-
-.rule-top {
-  border-top: 1px solid var(--border);
-}
-
-/* ============================================================
-   Shared type utilities
-   ============================================================ */
-
-.label,
-.mono-label {
-  display: block;
-  font-family: var(--font-body);
-  font-size: var(--text-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin: 0;
-}
-
-.label-accent {
-  color: var(--accent-text);
-}
-
-.lede {
-  font-size: var(--text-lede);
-  line-height: 1.5;
-  letter-spacing: -0.011em;
-  color: var(--text-muted);
-  max-width: 54ch;
-}
-
-.prose {
-  color: var(--text-muted);
-}
-
-.prose strong {
-  color: var(--text);
-  font-weight: 600;
-}
-
-/* Underlined text link that draws on hover instead of sitting permanently
-   underlined. */
-.textlink {
-  position: relative;
-  display: inline-block;
-  color: var(--accent-text);
-  font-weight: 500;
-  padding-bottom: 2px;
-}
-
-.textlink::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(1);
-  transform-origin: left;
-  transition: transform var(--dur-interaction) var(--ease-servo);
-}
-
-.textlink:hover::after {
-  transform: scaleX(0);
-  transform-origin: right;
-}
-
-/* Same technique as the footer links: a pseudo-element takes the hit area to
-   44px on a touch pointer while the drawn underline stays exactly where it
-   was. Changing the box itself would have moved the underline, which is
-   positioned against the link's own bottom edge. */
-@media (pointer: coarse) {
-  .textlink::before {
-    content: '';
-    position: absolute;
-    inset: -11px -4px;
-  }
-}
-
-/* Arrow link used for "read the case study" style affordances. */
-/* The hit area is 44px tall while the mark stays its drawn size. Measured on
-   a phone the bare link was 24px, which clears the WCAG 2.5.8 minimum but is
-   well under what a thumb actually wants, and this is the primary way into
-   every case study. The negative margin keeps the added padding from
-   changing any layout it sits in. */
-.arrowlink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55em;
-  color: var(--accent-text);
-  font-weight: 500;
-  font-size: var(--text-sm);
-  min-height: 44px;
-  padding-block: 0.625rem;
-  margin-block: -0.625rem;
-}
-
-.arrowlink svg {
-  transition: transform var(--dur-interaction) var(--ease-servo);
-}
-
-.arrowlink:hover svg {
-  transform: translateX(4px);
-}
-
-/* ============================================================
-   Buttons
-   ============================================================ */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5em;
-  min-height: 50px;
-  padding: 0.75rem 1.5rem;
-  border-radius: 999px;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition:
-    background-color var(--dur-interaction) var(--ease-servo),
-    border-color var(--dur-interaction) var(--ease-servo),
-    color var(--dur-interaction) var(--ease-servo),
-    transform var(--dur-interaction) var(--ease-servo);
-}
-
-.btn-primary {
-  background: var(--text);
-  color: var(--surface);
-}
-
-.btn-primary:hover {
-  background: var(--accent-fill);
-  transform: translateY(var(--lift));
-}
-
-.btn-secondary {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--border-strong);
-}
-
-.btn-secondary:hover {
-  border-color: var(--text);
-  transform: translateY(var(--lift));
-}
-
-/* ============================================================
-   Accessibility
-   ============================================================ */
-
-.skip-link {
-  position: absolute;
-  left: var(--space-2);
-  top: var(--space-2);
-  z-index: 100;
-  transform: translateY(-250%);
-  padding: 0.6rem 1rem;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--accent-fill);
-  border-radius: var(--radius);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  transition: transform var(--dur-interaction) var(--ease-servo);
-}
-
-.skip-link:focus-visible {
-  transform: translateY(0);
-}
-
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring);
-  outline-offset: var(--focus-ring-offset);
-  border-radius: var(--radius-sm);
-}
-
-[aria-hidden='true'] {
-  pointer-events: none;
-}
-
-.visually-hidden {
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip-path: inset(50%);
+  clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
 
-/* ============================================================
-   Project media
-   ============================================================ */
-
-.project-media {
-  display: block;
-  width: 100%;
-  aspect-ratio: var(--media-ratio);
-  overflow: hidden;
-  background: var(--tint);
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  color: var(--on-accent);
+  background: var(--accent);
+  transform: translateY(-160%);
 }
 
-@media (max-width: 767px) {
-  .project-media {
-    aspect-ratio: var(--media-ratio-mobile, var(--media-ratio));
-  }
+.skip-link:focus {
+  transform: translateY(0);
 }
 
-.project-media picture {
-  display: block;
-  width: 100%;
-  height: 100%;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: var(--header);
+  backdrop-filter: blur(16px);
 }
 
-.project-media img {
-  width: 100%;
-  height: 100%;
-  object-position: var(--media-position);
-  transition: transform 900ms var(--ease-settle);
+.header-inner {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  min-height: 72px;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
 }
 
-.project-media[data-mode='contain'] img {
-  object-fit: contain;
+.brand {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--ink);
+  text-decoration: none;
 }
 
-.project-media[data-mode='cover'] img,
-.project-media[data-mode='full-bleed'] img {
-  object-fit: cover;
-}
-
-/* Media frame shared by home, work and case-study routes. Rounded, ruled and
-   large: project imagery is never reduced to a thumbnail. */
-.media-frame {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: var(--tint);
-}
-
-.media-frame:hover .project-media img {
-  transform: scale(1.02);
-}
-
-/* ============================================================
-   Shared diagram styling
-   ============================================================ */
-
-.diagram {
-  width: 100%;
-  height: auto;
-  display: block;
-  overflow: visible;
-}
-
-.diagram text {
-  font-family: var(--font-body);
-  font-size: 12px;
+.brand-mark {
+  padding-right: 0.8rem;
+  border-right: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.65rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  fill: var(--text-faint);
+  letter-spacing: -0.06em;
+}
+
+.brand-name {
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2.2rem);
+}
+
+nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.theme-switch {
+  display: inline-flex;
+  min-width: 92px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 0.82rem;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.theme-switch:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.theme-symbol {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: end;
+  padding-block: clamp(5rem, 10vw, 10rem) clamp(4rem, 8vw, 8rem);
+}
+
+.hero h1 {
+  max-width: 9ch;
+  margin-bottom: 1.35rem;
+}
+
+.identity {
+  max-width: 55ch;
+  margin-bottom: 1.6rem;
+  color: var(--accent);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.25rem, 2.4vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.proposition {
+  max-width: 57ch;
+  margin-bottom: 2.25rem;
+  font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+  line-height: 1.45;
+}
+
+.actions,
+.contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1.15rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: transparent;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  border-color: var(--accent);
+  color: var(--on-accent);
+  background: var(--accent);
+}
+
+.button-primary:hover {
+  border-color: var(--accent-hover);
+  color: var(--on-accent);
+  background: var(--accent-hover);
+}
+
+.hero-proof {
+  position: relative;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+}
+
+.hero-proof::before,
+.hero-proof::after {
+  position: absolute;
+  left: -10px;
+  width: 20px;
+  height: 1px;
+  content: '';
+  background: var(--accent);
+}
+
+.hero-proof::before { top: -2px; }
+.hero-proof::after { bottom: -1px; }
+
+.proof-label,
+.section-index,
+.layer-index,
+.project-image span,
+.record-header > p,
+.record-index li span {
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 
-.diagram .d-ink {
-  stroke: var(--border-strong);
+.proof-statement {
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.55rem, 2.8vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.1;
 }
 
-.diagram .d-rule {
-  stroke: var(--border);
+.hero-proof ul {
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
 }
 
-.diagram .d-accent {
-  stroke: var(--accent);
+.hero-proof li {
+  padding-block: 0.65rem;
+  border-bottom: 1px solid var(--line);
 }
 
-.diagram .d-fill-tint {
-  fill: var(--tint);
+.credential-rail {
+  display: grid;
+  gap: 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
-/* ============================================================
-   Scroll reveal
-   The hidden state exists only when JavaScript is running, so the
-   server-rendered page is complete and readable on its own. See
-   components/motion/Reveal.tsx.
-   ============================================================ */
-
-html[data-js] .reveal {
-  opacity: 0;
-  transform: translateY(12px);
+.systems-section,
+.practice-section {
+  padding-block: var(--section);
+  background: var(--surface-soft);
 }
 
-/* Both channels run on `--dur-base`. They used to run on two durations, the
-   longer of which was 720ms, so the movement outlasted the fade by nearly
-   200ms and the whole arrival sat well past the 600ms this system allows
-   itself. One duration, one curve: the block fades and settles as a single
-   event. Only opacity and transform are animated, so nothing here can
-   trigger layout or paint on the main thread. */
-html[data-js] .reveal[data-shown] {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
-    transform var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(80px, 0.25fr) minmax(0, 1fr);
+  gap: clamp(1rem, 4vw, 5rem);
+  align-items: start;
+  margin-bottom: clamp(3rem, 7vw, 6rem);
 }
 
-/* ---- Reveal vocabulary ----
-   One fade-up applied to every section reads as a template. These are the
-   four movements the site actually needs, chosen per stage so a heading, a
-   list, a wide plate and a full-bleed image do not all arrive the same way.
-   Each is a variation on the same settle easing, so they still feel related. */
-
-/* `lift`: a shorter, quieter arrival for secondary blocks that should not
-   compete with the stage heading above them. */
-html[data-js] .reveal[data-reveal='lift'] {
-  transform: translateY(8px);
+.section-heading h2 {
+  max-width: 13ch;
 }
 
-/* `edge`: enters from the leading edge instead of from below. Used where a
-   block sits beside another rather than under it, so the two do not both
-   rise in parallel. */
-html[data-js] .reveal[data-reveal='edge'] {
-  transform: translateX(-18px);
+.section-heading > div > p {
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: 1.15rem;
 }
 
-/* `wipe`: the plate is uncovered rather than moved, which suits a diagram or
-   an image whose framing should stay put while its content is disclosed. */
-html[data-js] .reveal[data-reveal='wipe'] {
-  transform: none;
-  clip-path: inset(0 0 38% 0);
+.systems-map {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-html[data-js] .reveal[data-reveal='wipe'][data-shown] {
-  clip-path: inset(0 0 0 0);
-  transition:
-    opacity var(--dur-base) var(--ease-out) var(--reveal-delay, 0s),
-    clip-path var(--dur-base) var(--ease-out) var(--reveal-delay, 0s);
+.systems-map li {
+  position: relative;
+  min-width: 0;
+  padding: 2.4rem 1.2rem 1.2rem 0;
+  border-top: 2px solid var(--line-strong);
 }
 
-/* Every variant resolves to the same finished state, and this reset has to
-   carry the extra attribute to get there.
-
-   `html[data-js] .reveal[data-shown]` and `html[data-js]
-   .reveal[data-reveal='lift']` are the same specificity, so source order
-   decides, and the variants are declared second. The offset therefore won and
-   never resolved: measured on /versatility/ at 1440x900, the closing stage
-   reached `data-shown` and `opacity: 1` but held `translateY(8px)`
-   permanently, sitting 8px below where the same block sits with JavaScript
-   off. `edge` had the same fault at 18px on the horizontal.
-
-   AGENTS.md already records this trap for the reduced-motion reset, which
-   carries `[data-reveal]` for exactly this reason. The resolved state needs
-   it too. */
-html[data-js] .reveal[data-reveal][data-shown] {
-  opacity: 1;
-  transform: none;
+.systems-map li::before {
+  position: absolute;
+  top: -7px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 3px solid var(--surface-soft);
+  border-radius: 50%;
+  content: '';
+  background: var(--accent);
 }
 
-/* ---- Cascading groups ----
-   Children of a stagger group inherit the group's reveal and offset
-   themselves by index, so a list resolves in reading order rather than
-   snapping in as one slab. The index is set inline by the Stagger component
-   because CSS cannot count siblings into a delay. */
-html[data-js] .stagger > * {
-  opacity: 0;
-  transform: translateY(12px);
+.systems-map li::after {
+  position: absolute;
+  top: -4px;
+  right: 1.1rem;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid var(--line-strong);
+  border-right: 1px solid var(--line-strong);
+  content: '';
+  transform: rotate(45deg);
 }
 
-/* The delay is capped rather than linear in the index. A discipline group can
-   carry a dozen claims and the archive is longer still; uncapped, the last
-   item in a long list waits on every predecessor and the reader is left
-   watching an empty column for the better part of a second. `min()` holds the
-   cascade to `--stagger-steps` gaps, after which every remaining child
-   arrives together. */
-html[data-js] .stagger[data-shown] > * {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity var(--dur-base) var(--ease-out)
-      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger)),
-    transform var(--dur-base) var(--ease-out)
-      calc(min(var(--i, 0), var(--stagger-steps)) * var(--stagger));
+.systems-map li:last-child::after {
+  display: none;
 }
 
-/* ============================================================
-   Layered parallax stage
-   See components/motion/ParallaxStage.tsx and motion/parallax.ts.
+.systems-map h3 {
+  min-height: 3.2em;
+  margin: 0.7rem 0;
+  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
 
-   `--p` is the only value JavaScript writes. The composition below is what
-   turns it into movement, which is why the reduced-motion reset at the end
-   of this file can cancel the whole effect without the script knowing.
-   ============================================================ */
+.systems-map p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
 
-.stage {
-  /* The server-rendered resting value. A stage that never registers, either
-     because JavaScript is off or because the visitor asked for reduced
-     motion, holds this and every layer sits at its authored position. */
-  --p: 0;
+.work-section {
+  padding-block: var(--section);
+}
+
+.project-list {
+  display: grid;
+  gap: clamp(5rem, 10vw, 10rem);
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: center;
+}
+
+.project-row:nth-child(even) .project-image {
+  order: 2;
+}
+
+.project-image {
   position: relative;
 }
 
-html[data-js] .stage__layer {
-  transform: translate3d(0, calc(-1 * var(--depth, 0) * var(--parallax-travel) * var(--p)), 0)
-    rotate(calc(var(--depth, 0) * 1.5deg * (var(--p) - 0.5)));
-}
-
-/* Promoted only while the stage is actually being ticked. Left on
-   permanently this gives every layer on the page its own compositor tile
-   for the whole session. */
-html[data-js] .stage[data-active] .stage__layer {
-  will-change: transform;
-}
-
-/* ---- Stacked composition ----
-   Every layer occupies the same grid cell, so the plate is sized by the
-   tallest layer and no layer is positioned absolutely. Absolute layers would
-   take themselves out of flow and collapse the plate to zero height before
-   the first paint, which is a guaranteed CLS event. */
-.stage-stacked {
-  display: grid;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
+.project-image img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   background: var(--surface);
+  box-shadow: var(--shadow);
+  object-fit: cover;
 }
 
-.stage-stacked > .stage__layer {
-  grid-area: 1 / 1;
-  min-width: 0;
+.project-image span {
+  display: block;
+  margin-top: 0.9rem;
 }
 
-/* Depths on a clipping plate are held low on purpose. Travel is always
-   upward, so nothing drawn is ever cut off at the top; what a deep layer
-   would cost is a strip of bare plate revealed at the bottom edge. At the
-   hero's deepest 0.30 that strip is 44px on a 600 unit drawing whose lowest
-   mark sits at 529, so the exposed band is empty in every layer. Raising a
-   depth here means re-checking that. */
+.project-copy h3 {
+  margin-bottom: 2rem;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+}
 
-/* ---- Sequenced composition ----
-   Layers stay in normal flow and simply travel at different rates. Used
-   where each layer carries its own readable content and overlapping them
-   would make both illegible. The padding absorbs the travel so a rising
-   layer never reaches the stage above it. */
-.stage-flow {
+.project-copy h3 a {
+  text-decoration: none;
+}
+
+.project-copy dl {
+  margin: 0 0 2rem;
+}
+
+.project-copy dl > div {
   display: grid;
-  gap: var(--space-4);
-  padding-block: clamp(1.5rem, 3vw, 2.75rem);
-  /* Layers are rotated as well as translated, and a rotation widens an
-     element's bounding box slightly even when the rotation is a degree and a
-     half. Measured on the homepage showcase at 1280 the layer box ran from
-     -2px to 821px inside an 819px stage, so the stage carried 2px of
-     horizontal overflow that only `body { overflow-x: hidden }` was
-     absorbing. `clip` rather than `hidden`: `hidden` would make this a scroll
-     container and break `position: sticky` for anything inside it, while
-     `clip` on one axis leaves the block axis visible and creates no scroll
-     port. Travel is vertical, so nothing drawn is lost. */
-  overflow-x: clip;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 1rem;
+  border-top: 1px solid var(--line);
 }
 
-/* Grid and flex children default to `min-width: auto`, which refuses to shrink
-   below the intrinsic width of their content and pushes the track wider than
-   its share instead. The individual columns that were found doing this each
-   carry their own `min-width: 0`; these two primitives are where a new child
-   lands before anyone has looked at it. */
-.stage-flow > *,
-.stage-stacked > * {
-  min-width: 0;
+.project-copy dt {
+  color: var(--ink);
+  font-weight: 600;
 }
 
-/* ============================================================
-   Sticky scroll stage
-   A tall outer section with a sticky inner wrapper. Used once, on the
-   selected-work stage, where the heading holds while the records pass it.
+.project-copy dd {
+  margin: 0;
+  color: var(--muted);
+}
 
-   It is deliberately not applied to ClosedLoop, StackSpine or CareerSpine:
-   those are full-height graphics, and making them sticky would strand a
-   viewport containing nothing but a diagram. A sticky column beside a
-   scrolling column always has readable content on screen.
-   ============================================================ */
+.text-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
 
-.sticky-rail {
-  position: sticky;
-  top: calc(var(--header-h) + var(--space-4));
+.text-link:hover {
+  color: var(--accent-hover);
+}
+
+.domain-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.domain-list li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.domain-list li:nth-child(even) {
+  border-right: 0;
+}
+
+.domain-list > li > span {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.domain-list h3 {
+  margin-bottom: 0.6rem;
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+}
+
+.domain-list p {
+  max-width: 48ch;
+  margin: 0;
+  color: var(--muted);
+}
+
+.iep-section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  color: #dce9e2;
+  background: #0b3025;
+}
+
+.iep-section h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: #ffffff;
+}
+
+.iep-section .section-index {
+  color: #ff9c66;
+}
+
+.iep-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 0.6fr);
+  gap: clamp(2rem, 8vw, 8rem);
+  align-items: end;
+}
+
+.iep-grid > div:last-child > p {
+  max-width: 42ch;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+}
+
+.button-inverse {
+  border-color: #ff9c66;
+  color: #1b0b03;
+  background: #ff9c66;
+}
+
+.button-inverse:hover {
+  border-color: #ffffff;
+  color: #0b3025;
+  background: #ffffff;
+}
+
+.contact-section {
+  padding-block: var(--section);
+}
+
+.contact-section h2 {
+  max-width: 12ch;
+  margin-block: 1rem 2.5rem;
+}
+
+.site-footer {
+  padding-block: 3.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr auto;
+  gap: 2rem;
+  align-items: end;
+}
+
+.footer-name {
+  color: var(--ink);
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-grid p {
+  max-width: 52ch;
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.copyright {
+  white-space: nowrap;
+}
+
+.record-index,
+.record,
+.not-found {
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+
+.record-index h1,
+.not-found h1,
+.record-header h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 7rem);
+}
+
+.record-index ul {
+  margin: 4rem 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+  list-style: none;
+}
+
+.record-index li {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.record-index li a {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.back-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-bottom: 4rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.record-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.45fr);
+  gap: 2rem 5rem;
+  align-items: end;
+  margin-bottom: 4rem;
+}
+
+.record-header > p:first-child {
+  grid-column: 1 / -1;
+}
+
+.record-header h1 {
+  margin: 0;
+}
+
+.record-header > p:last-child {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.record-image img {
+  width: 100%;
+  max-height: 720px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  object-fit: contain;
+}
+
+.record-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.32fr) minmax(0, 0.68fr);
+  gap: clamp(3rem, 9vw, 9rem);
+  padding-block: clamp(4rem, 8vw, 8rem);
+}
+
+.record-grid aside {
   align-self: start;
-  /* No height ceiling. A `max-height` here plus `overflow: visible` clamped
-     the box while the copy carried on rendering past it: measured at
-     1024x600 the rail box was held to 486px while its content ran to 578px,
-     so 92px of live text sat outside the element's own box and over
-     whatever followed. A sticky element taller than its viewport still
-     sticks, it simply cannot show all of itself at once, which is the
-     correct trade. `min-height` is the only height any pinned stage takes. */
-  min-height: 0;
-  overflow: visible;
+  padding-top: 1.5rem;
+  border-top: 3px solid var(--accent);
 }
 
-/* Below the two-column breakpoint there is no second column to scroll past,
-   so pinning the heading would just cover the records with it. 999px, not
-   899px: the selected-work stage does not split into two columns until
-   1000px, and un-pinning at the header's breakpoint instead would leave a
-   100px band where a full-width heading tracked the viewport. */
-@media (max-width: 999px) {
-  .sticky-rail {
-    position: static;
-  }
+.record-grid aside ul {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* ============================================================
-   Motion keyframes shared across diagrams
-   ============================================================ */
-
-@keyframes route-draw {
-  from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+.record-grid aside li {
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
 }
 
-@keyframes sig-draw {
-  0% {
-    stroke-dashoffset: 1;
-  }
-  55%,
-  100% {
-    stroke-dashoffset: 0;
-  }
+.record-body section {
+  max-width: 70ch;
+  padding-block: 0 3.5rem;
 }
 
-@keyframes sig-travel {
-  0% {
-    offset-distance: 0%;
-    opacity: 0;
-  }
-  6% {
-    opacity: 1;
-  }
-  92% {
-    opacity: 1;
-  }
-  100% {
-    offset-distance: 100%;
-    opacity: 0;
-  }
+.record-body h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
 }
 
-@keyframes sig-sweep {
-  to {
-    transform: rotate(360deg);
-  }
+.record-body li + li {
+  margin-top: 0.75rem;
 }
 
-@keyframes sig-ping {
-  0% {
-    r: 6;
-    opacity: 0.55;
+.record-body .boundary {
+  padding: 2rem;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+}
+
+.not-found p:not(.section-index) {
+  max-width: 60ch;
+  margin-bottom: 2rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-copy {
+    animation: arrive 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  100% {
-    r: 62;
-    opacity: 0;
+
+  .hero-proof {
+    animation: arrive 720ms 90ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .systems-map li::before {
+    animation: signal 5s ease-in-out infinite;
+  }
+
+  .systems-map li:nth-child(2)::before { animation-delay: 0.35s; }
+  .systems-map li:nth-child(3)::before { animation-delay: 0.7s; }
+  .systems-map li:nth-child(4)::before { animation-delay: 1.05s; }
+  .systems-map li:nth-child(5)::before { animation-delay: 1.4s; }
+  .systems-map li:nth-child(6)::before { animation-delay: 1.75s; }
+
+  @keyframes arrive {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @keyframes signal {
+    0%, 65%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 0%, transparent); }
+    12% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 20%, transparent); }
   }
 }
 
-@keyframes sig-blink {
-  0%,
-  100% {
-    opacity: 0.25;
+@media (max-width: 980px) {
+  :root { --shell: min(100% - 36px, 860px); }
+  .hero { grid-template-columns: 1fr; }
+  .hero-proof { max-width: 720px; }
+  .systems-map { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 3rem; }
+  .project-row { grid-template-columns: 1fr; }
+  .project-row:nth-child(even) .project-image { order: 0; }
+  .iep-grid,
+  .record-header { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .copyright { grid-column: 1 / -1; }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --shell: min(100% - 28px, 620px);
+    --section: 5.25rem;
   }
-  50% {
-    opacity: 1;
+
+  html { scroll-padding-top: 68px; }
+  body { font-size: 1rem; }
+  body::before { background-size: 48px 48px; }
+
+  .header-inner {
+    grid-template-columns: 1fr auto;
+    min-height: 64px;
+    gap: 0.75rem;
+  }
+
+  .brand-name { display: none; }
+  nav { display: none; }
+  .theme-switch { min-width: 88px; }
+
+  .hero {
+    gap: 3.5rem;
+    padding-block: 4.3rem 5.5rem;
+  }
+
+  .hero h1 { font-size: clamp(3.5rem, 17vw, 5.5rem); }
+  .identity { font-size: 1.35rem; }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .actions .button { width: 100%; }
+
+  .section-heading {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-heading h2 { max-width: 14ch; }
+
+  .systems-map {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+    padding-left: 1.8rem;
+  }
+
+  .systems-map li {
+    min-height: 118px;
+    padding: 0 0 2rem 2rem;
+    border-top: 0;
+    border-left: 2px solid var(--line-strong);
+  }
+
+  .systems-map li:last-child { min-height: auto; }
+
+  .systems-map li::before {
+    top: 0.3rem;
+    left: -7px;
+  }
+
+  .systems-map li::after {
+    top: auto;
+    right: auto;
+    bottom: 1.2rem;
+    left: -4px;
+    transform: rotate(135deg);
+  }
+
+  .systems-map h3 {
+    min-height: 0;
+    margin: 0.25rem 0;
+  }
+
+  .project-list { gap: 5.5rem; }
+
+  .project-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-copy dl > div {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .domain-list { grid-template-columns: 1fr; }
+  .domain-list li,
+  .domain-list li:nth-child(even) { border-right: 0; }
+  .domain-list li { padding-inline: 0; }
+
+  .iep-grid { grid-template-columns: 1fr; }
+  .iep-grid .button { width: 100%; }
+
+  .contact-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .footer-grid { grid-template-columns: 1fr; }
+  .copyright { grid-column: auto; }
+
+  .record-grid { grid-template-columns: 1fr; }
+  .record-header { grid-template-columns: 1fr; }
+  .record-header > p:first-child { grid-column: auto; }
+
+  .record-index li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-block: 1.25rem;
   }
 }
 
-@keyframes sig-rise {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@media (max-width: 360px) {
+  :root { --shell: calc(100% - 22px); }
+  .hero h1 { font-size: 3.3rem; }
+  .domain-list li { grid-template-columns: 2.4rem minmax(0, 1fr); }
 }
 
-/* ============================================================
-   Reduced motion
-   Ambient loops are removed entirely; content reveals collapse to an
-   instant state change. Enforced globally so no component can opt out.
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+@media (min-width: 1700px) {
+  :root { --shell: min(1460px, calc(100% - 96px)); }
+  .hero { padding-block-start: 11rem; }
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  /* Content is never gated on a reveal that will not run. The variant
-     selectors carry an extra attribute, so the reset has to match their
-     specificity or the wipe would stay clipped at its start state and
-     permanently crop the block. */
-  html[data-js] .reveal,
-  html[data-js] .reveal[data-reveal],
-  html[data-js] .reveal[data-reveal][data-shown],
-  html[data-js] .stagger > * {
-    opacity: 1;
-    transform: none;
-    clip-path: none;
-  }
-
-  /* Parallax is cancelled outright rather than slowed. The stage never
-     registers under reduced motion either, so this is the belt to that
-     braces: a layer rendered before the media query was consulted still
-     resolves to its authored position. */
-  html[data-js] .stage__layer {
-    transform: none;
-  }
-
-  html[data-js] .stage[data-active] .stage__layer {
-    will-change: auto;
-  }
-
-  /* A pinned rail is motion too: the heading tracking the viewport while
-     the records move past it is exactly the effect being opted out of. */
-  .sticky-rail {
-    position: static;
-  }
-
-  /* Diagrams settle on their finished state rather than their first frame. */
-  [data-draw] {
-    stroke-dashoffset: 0 !important;
-  }
-
-  [data-travel] {
-    offset-distance: 100% !important;
-    opacity: 1 !important;
-  }
+@media print {
+  .site-header,
+  .theme-switch,
+  .actions,
+  .site-footer { display: none; }
+  body { color: #111; background: #fff; }
 }

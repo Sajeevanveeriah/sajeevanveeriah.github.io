@@ -5,35 +5,26 @@
   "description": "My engineering portfolio, exported as a static Next.js site for GitHub Pages.",
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/check-contrast.mjs && node scripts/check-ecosystem.mjs && next build",
-    "start": "next start",
+    "build": "next build",
+    "postbuild": "node scripts/generate-redirects.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "contrast": "node scripts/check-contrast.mjs",
-    "ecosystem": "node scripts/check-ecosystem.mjs",
-    "visual": "node scripts/make-veerai-visual.mjs",
-    "visual:check": "node scripts/make-veerai-visual.mjs --check"
+    "qa:browser": "node scripts/qa-browser.mjs"
   },
   "dependencies": {
-    "framer-motion": "^12.23.12",
-    "lucide-react": "^0.544.0",
-    "next": "^15.5.4",
+    "next": "15.5.23",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.6",
-    "@tailwindcss/postcss": "^4.1.13",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "axe-core": "^4.12.1",
     "eslint": "^9.36.0",
-    "eslint-config-next": "^15.5.4",
-    "lighthouse": "^13.4.1",
+    "eslint-config-next": "15.5.23",
     "playwright": "^1.62.0",
-    "sharp": "^0.35.3",
-    "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"
   }
 }
