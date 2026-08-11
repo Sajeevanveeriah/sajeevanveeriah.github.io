@@ -640,49 +640,6 @@ nav a {
   color: var(--muted);
 }
 
-.iep-section {
-  padding-block: clamp(4rem, 8vw, 7rem);
-  border-top: 4px solid transparent;
-  border-image: var(--spectrum) 1;
-  color: #e8e8ed;
-  background: linear-gradient(135deg, #1d1d1f 0%, #1d1d1f 58%, #14213d 100%);
-}
-
-.iep-section h2 {
-  max-width: 12ch;
-  margin: 0;
-  color: #ffffff;
-}
-
-.iep-section .section-index {
-  color: #64d2ff;
-}
-
-.iep-grid {
-  display: grid;
-  grid-template-columns: 1fr minmax(280px, 0.6fr);
-  gap: clamp(2rem, 8vw, 8rem);
-  align-items: end;
-}
-
-.iep-grid > div:last-child > p {
-  max-width: 42ch;
-  margin-bottom: 2rem;
-  font-size: 1.25rem;
-}
-
-.button-inverse {
-  border-color: #2997ff;
-  color: #ffffff;
-  background: #0071e3;
-}
-
-.button-inverse:hover {
-  border-color: #ffffff;
-  color: #1d1d1f;
-  background: #ffffff;
-}
-
 .contact-section {
   padding-block: var(--section);
 }
