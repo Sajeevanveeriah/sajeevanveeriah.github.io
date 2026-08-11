@@ -60,12 +60,9 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     theme: document.documentElement.dataset.theme,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && image.alt),
-    iepVisible: [...document.querySelectorAll('.iep-section h2, .iep-section p, .iep-section a')].every((element) => {
-      const rect = element.getBoundingClientRect()
-      const style = getComputedStyle(element)
-      return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none' && style.opacity !== '0'
-    }),
-    personalLinkedInCount: document.querySelectorAll('a[href*="linkedin.com/in/"]').length,
+    iepCount: document.querySelectorAll('.iep-section, #iep-title').length,
+    linkedInCount: document.querySelectorAll('a[href*="linkedin.com"]').length,
+    practiceTarget: document.querySelector('#practice')?.classList.contains('practice-section') ?? false,
     animations: document.getAnimations().length,
     violations: (await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({
       id: item.id,
@@ -73,7 +70,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     })),
   }))
   await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || !result.iepVisible || result.personalLinkedInCount !== 0 || result.violations.length || consoleErrors.length || requestFailures.length) {
+  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
     failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   }
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
