@@ -95,7 +95,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="practice-section" aria-labelledby="practice-title">
+      <section className="practice-section" id="practice" aria-labelledby="practice-title">
         <div className="shell">
           <div className="section-heading">
             <p className="section-index">03</p>
@@ -115,21 +115,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="iep-section" id="practice" aria-labelledby="iep-title">
-        <div className="shell iep-grid">
-          <div>
-            <p className="section-index">04</p>
-            <h2 id="iep-title">Independent Engineering Practice</h2>
-          </div>
-          <div>
-            <p>Commercial engineering delivery, kept distinct from the personal professional record.</p>
-            <a className="button button-inverse" href={site.iepLinkedin}>Visit the company page <Arrow /></a>
-          </div>
-        </div>
-      </section>
-
       <section className="contact-section shell" id="contact" aria-labelledby="contact-title">
-        <p className="section-index">05</p>
+        <p className="section-index">04</p>
         <h2 id="contact-title">Have a system that has to move, sense or decide?</h2>
         <div className="contact-row">
           <a className="button button-primary" href={`mailto:${site.email}`}>Email Sajeevan <Arrow /></a>
