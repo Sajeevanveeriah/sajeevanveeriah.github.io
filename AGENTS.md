@@ -15,7 +15,7 @@ Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer
 The information path is:
 
 identity -> engineering proposition -> systems map -> three flagship records
--> engineering practice -> Independent Engineering Practice -> contact.
+-> engineering practice -> contact.
 
 Do not recreate the archived catalogue, skills directory, career timeline,
 large route tree or legacy visual system in the active product. The complete
