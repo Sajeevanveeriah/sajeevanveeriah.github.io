@@ -64,7 +64,10 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     linkedInCount: document.querySelectorAll('a[href*="linkedin.com"]').length,
     practiceTarget: document.querySelector('#practice')?.classList.contains('practice-section') ?? false,
     animations: document.getAnimations().length,
-    violations: (await window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({
+    // .brand-mark is the SV logotype: WCAG 1.4.3 exempts logotypes, and it is
+    // aria-hidden with the full name as real text beside it. axe cannot know
+    // that, so the node is excluded rather than the rule disabled.
+    violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({
       id: item.id,
       nodes: item.nodes.map((node) => ({ target: node.target, summary: node.failureSummary })),
     })),
@@ -83,10 +86,17 @@ const page = await context.newPage()
 await page.goto(baseURL, { waitUntil: 'networkidle' })
 const focusResults = []
 const focusableCount = await page.locator('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])').count()
+// A radio group is one tab stop, not one per input, so stop as soon as focus
+// wraps back out of the document instead of pressing Tab once per element.
 for (let index = 0; index < focusableCount; index += 1) {
   await page.keyboard.press('Tab')
+  if (await page.evaluate(() => document.activeElement === document.body || document.activeElement === document.documentElement)) break
   focusResults.push(await page.evaluate(() => {
-    const element = document.activeElement
+    const active = document.activeElement
+    if (!(active instanceof HTMLElement)) return false
+    // A visually hidden radio inside the theme control draws its focus ring on
+    // the wrapping label, so measure that instead.
+    const element = active instanceof HTMLInputElement && active.closest('label') ? active.closest('label') : active
     if (!(element instanceof HTMLElement)) return false
     const rect = element.getBoundingClientRect()
     const style = getComputedStyle(element)
@@ -95,8 +105,7 @@ for (let index = 0; index < focusableCount; index += 1) {
 }
 if (focusResults.some((result) => !result)) failures.push({ name: 'keyboard-focus', focusResults })
 
-const themeButton = page.getByRole('button', { name: /Theme:/ })
-await themeButton.click()
+await page.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
 if (await page.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-switch' })
 for (const route of ['/work/inventory-scanning-mobile-robot/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/']) {
   const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
@@ -107,6 +116,17 @@ if (missing?.status() !== 404 || !(await page.locator('h1').textContent())?.incl
 await page.goto(`${baseURL}/about/`, { waitUntil: 'networkidle' })
 if (page.url() !== `${baseURL}/`) failures.push({ name: 'legacy-redirect', url: page.url() })
 await context.close()
+
+// Theme persistence needs a context with no seeded sv-theme value, because the
+// init script above rewrites the key on every navigation.
+const themeContext = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'light' })
+const themePage = await themeContext.newPage()
+await themePage.goto(baseURL, { waitUntil: 'networkidle' })
+await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
+await themePage.reload({ waitUntil: 'networkidle' })
+if (await themePage.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-persistence' })
+if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== 'dark') failures.push({ name: 'theme-storage' })
+await themeContext.close()
 
 const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })
 const noJsPage = await noJs.newPage()

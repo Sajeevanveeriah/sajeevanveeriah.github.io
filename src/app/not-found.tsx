@@ -1,12 +1,21 @@
 import Link from 'next/link'
+import { ArrowUpRight } from '@/components/icons'
+import { Masthead } from '@/components/Masthead'
+import { SiteFooter } from '@/components/SiteFooter'
 
 export default function NotFound() {
   return (
-    <section className="not-found shell">
-      <p className="section-index">404</p>
-      <h1>This route is no longer part of the concise portfolio.</h1>
-      <p>The current site keeps the professional identity, systems map and three flagship engineering records in one clear path.</p>
-      <Link className="button button-primary" href="/">Open the portfolio ↗</Link>
-    </section>
+    <>
+      <Masthead reduced />
+      <main id="main">
+        <section className="not-found shell" aria-labelledby="not-found-title">
+          <span className="not-found-number" aria-hidden="true">404</span>
+          <h1 id="not-found-title">This route is no longer part of the portfolio.</h1>
+          <p>The current site keeps the professional identity, systems map and three flagship engineering records in one clear path.</p>
+          <Link className="button button-primary" href="/">Open the portfolio<ArrowUpRight /></Link>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   )
 }

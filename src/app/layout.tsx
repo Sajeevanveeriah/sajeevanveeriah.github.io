@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import Link from 'next/link'
-import { bodyFont, displayFont } from './fonts'
-import { ThemeSwitch } from '@/components/ThemeSwitch'
+import { archivoFont } from './fonts'
 import { site } from '@/content/site'
 import './globals.css'
 
@@ -36,8 +34,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#f3f2f2' },
+    { media: '(prefers-color-scheme: dark)', color: '#2d2b2b' },
   ],
 }
 
@@ -54,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   }
 
   return (
-    <html lang="en-AU" className={`${displayFont.variable} ${bodyFont.variable}`} suppressHydrationWarning>
+    <html lang="en-AU" className={archivoFont.variable} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -66,34 +64,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
-        <header className="site-header">
-          <div className="shell header-inner">
-            <Link className="brand" href="/" aria-label="Sajeevan Veeriah, home">
-              <span className="brand-mark" aria-hidden="true">{site.initials}</span>
-              <span className="brand-name">{site.name}</span>
-            </Link>
-            <nav aria-label="Primary navigation">
-              <Link href="/#work">Work</Link>
-              <Link href="/#practice">Practice</Link>
-              <Link href="/#contact">Contact</Link>
-            </nav>
-            <ThemeSwitch />
-          </div>
-        </header>
-        <main id="main">{children}</main>
-        <footer className="site-footer">
-          <div className="shell footer-grid">
-            <div>
-              <Link className="footer-name" href="/">{site.name}</Link>
-              <p>{site.jobTitle}</p>
-            </div>
-            <div className="footer-links" aria-label="Professional links">
-              <a href={site.github}>GitHub</a>
-              <a href={site.resume}>Resume</a>
-            </div>
-            <p className="copyright">© 2026 Sajeevan Veeriah</p>
-          </div>
-        </footer>
+        {children}
       </body>
     </html>
   )
