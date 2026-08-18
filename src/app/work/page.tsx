@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ArrowLeft } from '@/components/icons'
+import { Masthead } from '@/components/Masthead'
+import { SiteFooter } from '@/components/SiteFooter'
 import { projects } from '@/content/projects'
 
 export const metadata: Metadata = {
@@ -10,18 +13,25 @@ export const metadata: Metadata = {
 
 export default function WorkPage() {
   return (
-    <section className="record-index shell">
-      <p className="section-index">Selected work</p>
-      <h1>Three systems. Three kinds of proof.</h1>
-      <ul>
-        {projects.map((project) => (
-          <li key={project.slug}>
-            <Link href={`/work/${project.slug}/`}>{project.title}</Link>
-            <span>{project.evidence}</span>
-          </li>
-        ))}
-      </ul>
-      <Link className="text-link" href="/#work">Return to the complete portfolio ↗</Link>
-    </section>
+    <>
+      <Masthead current="work" />
+      <main id="main">
+        <section className="record-index shell" aria-labelledby="index-title">
+          <p className="kicker">Selected work</p>
+          <h1 id="index-title">Three systems. Three kinds of proof.</h1>
+          <ul className="index-list">
+            {projects.map((project, index) => (
+              <li key={project.slug}>
+                <span className="index-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <Link href={`/work/${project.slug}/`}>{project.title}</Link>
+                <span className="index-evidence">{project.evidence}</span>
+              </li>
+            ))}
+          </ul>
+          <Link className="text-link" href="/#work"><ArrowLeft />Return to the portfolio</Link>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   )
 }
