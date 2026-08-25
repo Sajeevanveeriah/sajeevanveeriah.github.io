@@ -62,6 +62,9 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && image.alt),
     iepCount: document.querySelectorAll('.iep-section, #iep-title').length,
     linkedInCount: document.querySelectorAll('a[href*="linkedin.com"]').length,
+    supportCount: document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]').length,
+    supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')]
+      .every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
     practiceTarget: document.querySelector('#practice')?.classList.contains('practice-section') ?? false,
     animations: document.getAnimations().length,
     // .brand-mark is the SV logotype: WCAG 1.4.3 exempts logotypes, and it is
@@ -73,7 +76,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     })),
   }))
   await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
+  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
     failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   }
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
