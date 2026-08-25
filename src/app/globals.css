@@ -191,9 +191,9 @@ a:hover { color: var(--accent-text-hover); }
 .button-poster:hover { background: var(--color-accent-200); }
 .button-poster:active { background: var(--color-accent-300); }
 .button-poster-secondary, .button-poster-secondary:hover { color: var(--color-neutral-100); }
-.button-poster-secondary { border: 2px solid color-mix(in srgb, var(--color-neutral-100) 76%, transparent); }
-.button-poster-secondary:hover { background: color-mix(in srgb, var(--color-neutral-100) 14%, transparent); }
-.button-poster-secondary:active { background: color-mix(in srgb, var(--color-neutral-100) 24%, transparent); }
+.button-poster-secondary { border: 2px solid var(--color-neutral-100); background: var(--color-accent-900); }
+.button-poster-secondary:hover { background: var(--color-accent-800); }
+.button-poster-secondary:active { background: var(--color-accent-700); }
 
 /* masthead */
 
@@ -342,7 +342,7 @@ a:hover { color: var(--accent-text-hover); }
 
 .contact-section h2 { font-size: 60px; max-width: 22ch; margin-bottom: 36px; color: var(--color-neutral-100); }
 .contact-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.support-note { margin-top: 14px; max-width: 48ch; font-size: 13px; color: var(--color-neutral-100); opacity: 0.82; }
+.support-note { margin-top: 14px; max-width: 48ch; font-size: 13px; color: #160604; }
 
 /* footer */
 
