@@ -45,6 +45,12 @@ jobs:
       - name: Build static export
         run: npm run build
 
+      - name: Install browser for rendered QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Run rendered browser QA
+        run: npm run qa:browser
+
       # Guards the GitHub Pages constraints: without .nojekyll, Jekyll strips
       # the _next directory and the whole site 404s.
       - name: Verify export

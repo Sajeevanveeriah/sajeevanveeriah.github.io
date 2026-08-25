@@ -7,8 +7,8 @@ export function PracticeGrid() {
         <div className="section-heading">
           <p className="section-index">03</p>
           <div>
-            <h2 id="practice-title">A coherent engineering practice.</h2>
-            <p>Technologies support these system capabilities. They do not define the identity.</p>
+            <h2 id="practice-title">Engineering capability, grounded in delivery.</h2>
+            <p>The tools from my resume, organised around the system responsibilities they support.</p>
           </div>
         </div>
         <ul className="domain-list">

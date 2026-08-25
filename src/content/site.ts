@@ -8,6 +8,11 @@ export const site = {
   email: 'sajeevanveeriah@gmail.com',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   github: 'https://github.com/Sajeevanveeriah',
+  support: {
+    label: 'Buy me a coffee',
+    description: 'Optional support for my open engineering work.',
+    url: 'https://paypal.me/SajeevanVeeriah95',
+  },
   credentials: ['Member, Engineers Australia', 'Deakin Mechatronics Engineering Honours, Distinction, 2025'],
 } as const
 
@@ -21,10 +26,28 @@ export const systemLayers = [
 ] as const
 
 export const practiceDomains = [
-  { title: 'Robotics & Autonomous Systems', detail: 'Perception, localisation, estimation, planning and motion control.' },
-  { title: 'Mechatronic System Engineering', detail: 'Mechanisms, actuation, sensing, packaging and interfaces designed together.' },
-  { title: 'AI/ML & Embedded Intelligence', detail: 'Models and decision logic built around real signals and operating constraints.' },
-  { title: 'Embedded Electronics & Sensing', detail: 'Electronics, firmware, acquisition and communication for physical systems.' },
-  { title: 'Software & Engineering Data', detail: 'Typed software, diagnostics, telemetry and controlled engineering workflows.' },
-  { title: 'End-To-End Integration & Automation', detail: 'Subsystem integration, verification, deployment and practical handover.' },
+  {
+    title: 'Robotics & Autonomy',
+    detail: 'ROS 2 Humble, Nav2, MoveIt 2, Gazebo Fortress, SLAM, EKF sensor fusion, localisation, planning and PID control.',
+  },
+  {
+    title: 'Embedded & Electronics',
+    detail: 'ESP32, STM32, FreeRTOS, C/C++, PCB bring-up, CAN, UART, I2C, SPI, BLE, sensing, motors and drives.',
+  },
+  {
+    title: 'Automation & Controls',
+    detail: 'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC and HMI/SCADA integration, FAT, SAT and commissioning.',
+  },
+  {
+    title: 'AI/ML & Engineering Data',
+    detail: 'Python, scikit-learn, OpenCV, YOLO, time-series analysis, MATLAB, Simulink, InfluxDB and Grafana.',
+  },
+  {
+    title: 'Mechanical & Validation',
+    detail: 'SolidWorks, Fusion 360, GD&T, prototyping, instrumentation, calibrated testing, fault isolation and DFM.',
+  },
+  {
+    title: 'Software & Delivery',
+    detail: 'Python, C/C++, TypeScript, Linux, Git, Docker, CI/CD, REST APIs, PostgreSQL, traceability and handover.',
+  },
 ] as const
