@@ -20,7 +20,7 @@ export default function HomePage() {
             <p className="hero-summary">{site.proposition}</p>
             <p className="hero-profile">{site.profile}</p>
             <ul className="hero-meta" aria-label="Professional foundation"><li>{site.location}</li><li>Member, Engineers Australia</li></ul>
-            <div className="hero-actions"><a className="button button-primary" href={`mailto:${site.email}`}>Email Sajeevan</a><a className="button button-secondary" href={site.github}>GitHub</a><a className="text-action" href={site.linkedin}>LinkedIn</a></div>
+            <div className="hero-actions"><a className="button button-primary" href={`mailto:${site.email}`}>Email Sajeevan</a><a className="button button-secondary" href={site.github}>GitHub</a></div>
           </div>
           <div className="hero-mosaic" aria-label="Screenshots rendered from the three flagship project builds">
             <figure className="mosaic-main"><Image src={panelogramProject.image.src} alt={panelogramProject.image.alt} width={panelogramProject.image.width} height={panelogramProject.image.height} priority sizes="(max-width: 900px) 100vw, 44vw" /><figcaption>01 / Panelogram, rendered build</figcaption></figure>
@@ -60,7 +60,7 @@ export default function HomePage() {
 
         <section className="contact-strip" id="contact" aria-labelledby="contact-title"><div className="shell contact-grid">
           <div><p className="eyebrow">Let&apos;s build intelligent systems</p><h2 id="contact-title">Available for engineering conversations in Geelong and beyond.</h2></div>
-          <address className="contact-links"><a href={`mailto:${site.email}`}><span>Email</span>{site.email}</a><a href={`tel:${site.phone.replace(/\s/g, '')}`}><span>Phone</span>{site.phone}</a><a href={site.github}><span>GitHub</span>Sajeevanveeriah</a><a href={site.resume}><span>Resume</span>Download PDF</a><a className="support-link" href={site.support.url} target="_blank" rel="noopener noreferrer"><span>Optional support</span>Buy me a coffee with PayPal<span className="sr-only">(opens in a new tab)</span></a></address>
+          <address className="contact-links"><a href={`mailto:${site.email}`}><span>Email</span>{site.email}</a><a href={`tel:${site.phone.replace(/\s/g, '')}`}><span>Phone</span>{site.phone}</a><a href={site.github}><span>GitHub</span>Sajeevanveeriah</a><a href={site.resume}><span>Resume</span>Download PDF</a><a className="support-link" href={site.support.url} target="_blank" rel="noopener noreferrer"><span>Optional support</span>Support my work with PayPal<span className="sr-only">(opens in a new tab)</span></a></address>
         </div></section>
       </main>
       <SiteFooter />

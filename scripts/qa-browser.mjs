@@ -86,7 +86,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     })),
   }))
   await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 2 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
+  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
     failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   }
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
