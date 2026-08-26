@@ -2,12 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { Masthead } from '@/components/Masthead'
+import { ProjectIndex } from '@/components/ProjectIndex'
 import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/content/projects'
 
 export const metadata: Metadata = {
   title: 'Selected engineering work',
-  description: 'Three engineering records covering a client pricing and inventory system, a local-first retail space planner and a live fundraising event platform.',
+  description: 'Three flagship engineering records plus the complete index of sixteen further projects across robotics, software platforms and industrial delivery.',
   alternates: { canonical: '/#work' },
 }
 
@@ -28,6 +29,7 @@ export default function WorkPage() {
               </li>
             ))}
           </ul>
+          <ProjectIndex headingId="further-title-index" />
           <Link className="text-link" href="/#work"><ArrowLeft />Return to the portfolio</Link>
         </section>
       </main>
