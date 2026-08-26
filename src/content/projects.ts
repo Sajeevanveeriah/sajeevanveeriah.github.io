@@ -125,6 +125,19 @@ export interface IndexedProject {
   readonly summary: string
   readonly evidence: string
   readonly link?: string
+  /**
+   * Each indexed project carries its committed portfolio visual where one
+   * exists. `kind` states plainly what the image is - an illustrative
+   * project visual, an interface visual or a system diagram - so no image
+   * is presented as capture evidence it is not.
+   */
+  readonly image?: {
+    readonly src: string
+    readonly alt: string
+    readonly width: number
+    readonly height: number
+    readonly kind: 'Project visual' | 'Interface visual' | 'System diagram'
+  }
 }
 
 export interface ProjectGroup {
@@ -148,32 +161,74 @@ export const projectIndex: readonly ProjectGroup[] = [
         summary: 'A completed, privacy-conscious educational routine companion robot for young children, with a supporting browser application for adult-defined routines and review.',
         evidence: 'Deployed physical system',
         link: 'https://github.com/Sajeevanveeriah/Upzy-Project',
+        image: {
+          src: '/assets/image/20260806-Upzy-Supervised-Routine-Companion-Rev00.avif',
+          alt: 'Illustrative visual of the Upzy routine companion: a small rounded tabletop robot with a dark display face showing simple shapes, a fabric speaker grille and side buttons.',
+          width: 1672,
+          height: 941,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'Inventory Scanning Mobile Robot',
         summary: 'An operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow.',
         evidence: 'Active client deployment',
+        image: {
+          src: '/assets/image/20260806-Inventory-Scanning-Mobile-Robot-Rev00.avif',
+          alt: 'Illustrative visual of the inventory scanning mobile robot: a compact wheeled robot with a sensor mast beside stocked parts shelving, with a review workstation behind it.',
+          width: 1672,
+          height: 941,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'Modular Education and Testing Robot',
         summary: 'A modular robot platform for education, engineering experiments and repeatable subsystem testing, in active supervised use.',
         evidence: 'Deployed physical system',
+        image: {
+          src: '/assets/image/20260806-Education-Testing-Robot-Rev00.avif',
+          alt: 'Illustrative visual of the modular education and testing robot platform on a workbench.',
+          width: 1672,
+          height: 941,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'Autonomous Navigation Rover on ROS 2',
         summary: 'A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation.',
         evidence: 'Simulation-validated autonomy stack',
+        image: {
+          src: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.avif',
+          alt: 'Illustrative visual of the autonomous navigation rover: a LiDAR-equipped wheeled rover on a lab bench beside a laptop showing an occupancy-grid map with a planned path.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'ESP32 Clinical Ataxia Assessment Device',
         summary: 'Embedded hardware and firmware for movement assessment support, validated against clinical reference instruments.',
         evidence: 'Assessed embedded prototype',
         link: 'https://github.com/Sajeevanveeriah/Ataxia-Monitor',
+        image: {
+          src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.avif',
+          alt: 'Illustrative visual of the ESP32 clinical ataxia assessment device with movement-sensing hardware.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'DuxTel Agricultural Equipment Telemetry',
         summary: 'A custom PCB-based field telemetry system combining CAN capture, GPS and condition sensing with MikroTik connectivity and a Linux server for remote machinery visibility.',
         evidence: 'Deployed physical system',
+        image: {
+          src: '/assets/image/20260724-DuxTel-Agricultural-Equipment-Telemetry-Rev00.jpg',
+          alt: 'Illustrative visual of the agricultural equipment telemetry system: field machinery with an installed telemetry enclosure and antenna, feeding a remote monitoring dashboard.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
     ],
   },
@@ -185,22 +240,50 @@ export const projectIndex: readonly ProjectGroup[] = [
         summary: 'A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows.',
         evidence: 'Deployed software system',
         link: 'https://github.com/Sajeevanveeriah/Engineering-Mastery-Lab',
+        image: {
+          src: '/assets/image/Engineering_Mastery_Lab_Command_Centre_Rev00.svg',
+          alt: 'Interface visual of the Engineering Mastery Lab dashboard showing the Parametric CAD Studio, Engineering Toolbox, Project Workbench and PID Control Lab.',
+          width: 1435,
+          height: 660,
+          kind: 'Interface visual',
+        },
       },
       {
         title: 'VeerAI: Local SLM System',
         summary: 'A complete local AI system: an open-weight small language model on personally owned hardware inside a governed pipeline spanning ingestion, retrieval, memory, tools and evaluation.',
         evidence: 'Locally deployed private system',
+        image: {
+          src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.avif',
+          alt: 'System diagram of the VeerAI local SLM system: data flowing into a layered local model stack and out to generated documents.',
+          width: 1672,
+          height: 941,
+          kind: 'System diagram',
+        },
       },
       {
         title: 'Newcomb and District Cricket Club Platform',
         summary: 'The official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
         evidence: 'Deployed software system',
         link: 'https://github.com/Sajeevanveeriah/ndcc-website',
+        image: {
+          src: '/assets/image/20260803-NDCC-Website-Platform-Rev00.svg',
+          alt: 'System diagram of the NDCC digital platform architecture spanning the public website, committee content, membership, merchandise and administration workflows.',
+          width: 1435,
+          height: 660,
+          kind: 'System diagram',
+        },
       },
       {
         title: 'Digital Twin and Industrial AI',
         summary: 'A real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
         evidence: 'Concept development',
+        image: {
+          src: '/assets/image/Digital_Twin_Industrial_AI_Rev00.avif',
+          alt: 'Illustrative visual of the factory digital twin concept: a live plant floor mirrored by a virtual model with analytics overlays.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
     ],
   },
@@ -211,16 +294,37 @@ export const projectIndex: readonly ProjectGroup[] = [
         title: 'Regulated Smart Factory and SCADA Migration',
         summary: 'GMP smart-factory automation delivery, including an iFIX to PVI+ SCADA migration verified against the validated system.',
         evidence: 'Hands-on professional integration',
+        image: {
+          src: '/assets/image/Smart_Factory_Process_Visualisation_Rev00.avif',
+          alt: 'Illustrative visual of smart-factory process visualisation: SCADA process screens above an automated production line.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'ADAS and CAN Validation',
         summary: 'Feature, breadboard and OTA regression testing across vehicle development programmes for a global automotive OEM, supported by CAN-level fault evidence.',
         evidence: 'Hands-on professional integration',
+        image: {
+          src: '/assets/image/Vehicle_ADAS_CAN_Validation_Rev00.avif',
+          alt: 'Illustrative visual of ADAS and CAN validation: an instrumented test vehicle with CAN analysis traces on engineering workstations.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'ABMARC Emissions and Compliance Testing',
         summary: 'Repeatable, auditable emissions testing against ADR and EURO standards, supported by calibrated instrumentation and QA records.',
         evidence: 'Hands-on professional integration',
+        image: {
+          src: '/assets/image/Vehicle_Emissions_Compliance_Testing_Rev00.avif',
+          alt: 'Illustrative visual of vehicle emissions and compliance testing: a vehicle on a dynamometer with emissions instrumentation and analysis screens.',
+          width: 1448,
+          height: 1086,
+          kind: 'Project visual',
+        },
       },
       {
         title: 'Carbon Revolution: Robotic Rim Layup Automation',

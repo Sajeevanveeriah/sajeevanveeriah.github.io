@@ -190,6 +190,9 @@ a { color: inherit; text-underline-offset: 4px; }
 .index-groups ul { margin-top: 8px; }
 .index-groups li { padding: 16px 0; border-bottom: 1px solid var(--line); }
 .index-groups li:last-child { border-bottom: 0; padding-bottom: 0; }
+.further-figure { position: relative; margin-bottom: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--tag); }
+.further-figure img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center top; }
+.further-figure figcaption { position: absolute; left: 0; bottom: 0; padding: 5px 9px; background: rgba(13,16,34,.92); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 .further-title { font-size: 17px; font-weight: 800; letter-spacing: -.01em; line-height: 1.3; }
 .further-title a { display: inline-flex; align-items: baseline; gap: 5px; min-height: 0; text-decoration-thickness: 1px; }
 .further-title a:hover { color: var(--accent); }
