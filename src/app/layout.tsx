@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     description: site.proposition,
     url: site.url,
     images: [{
-      url: '/assets/image/20260806-Inventory-Scanning-Mobile-Robot-Rev00.avif',
+      url: '/assets/image/20260826-Panelogram-Bay-Layout-Rev00.png',
       width: 1672,
       height: 941,
-      alt: 'Concept visual of an operator-support inventory scanning mobile robot.',
+      alt: 'Screenshot of Panelogram rendering a retail shelving bay to scale with millimetre rulers and per-shelf capacity figures.',
     }],
   },
   twitter: { card: 'summary_large_image' },
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f6f2' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1018' },
+    { media: '(prefers-color-scheme: light)', color: '#f4f7fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1117' },
   ],
 }
 

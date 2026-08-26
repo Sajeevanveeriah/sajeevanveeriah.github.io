@@ -2,45 +2,53 @@
 
 import { useEffect, useState } from 'react'
 
-type Mode = 'light' | 'dark'
+type Choice = 'light' | 'auto' | 'dark'
+type Resolved = 'light' | 'dark'
 
-const options: readonly { readonly value: Mode; readonly label: string }[] = [
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
+const options: readonly { readonly value: Choice; readonly label: string; readonly hint: string }[] = [
+  { value: 'light', label: 'Light', hint: 'Light theme' },
+  { value: 'auto', label: 'Auto', hint: 'Follow the system theme' },
+  { value: 'dark', label: 'Dark', hint: 'Dark theme' },
 ]
 
-function stored(): Mode | null {
+function stored(): Resolved | null {
   const value = window.localStorage.getItem('sv-theme')
   return value === 'light' || value === 'dark' ? value : null
 }
 
 /**
- * Two labelled options plus the system preference as the default when nothing
- * is stored. The inline head script in layout.tsx applies the stored theme
- * before first paint, so this component only has to stay in step with it.
+ * Three labelled options. Light and Dark are explicit choices that persist in
+ * localStorage; Auto is the default and the reset, clears the stored choice
+ * and follows the operating system preference live. The inline head script in
+ * layout.tsx applies the resolved theme before first paint, so this component
+ * only has to stay in step with it after hydration.
  */
 export function ThemeSegment() {
-  const [mode, setMode] = useState<Mode>('light')
+  const [choice, setChoice] = useState<Choice>('auto')
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const resolve = (): Mode => stored() ?? (media.matches ? 'dark' : 'light')
-    const initial = resolve()
-    setMode(initial)
-    document.documentElement.dataset.theme = initial
+    const systemTheme = (): Resolved => (media.matches ? 'dark' : 'light')
+    const explicit = stored()
+    setChoice(explicit ?? 'auto')
+    document.documentElement.dataset.theme = explicit ?? systemTheme()
 
-    const sync = () => {
+    const followSystem = () => {
       if (stored()) return
-      const next = resolve()
-      setMode(next)
-      document.documentElement.dataset.theme = next
+      document.documentElement.dataset.theme = systemTheme()
     }
-    media.addEventListener('change', sync)
-    return () => media.removeEventListener('change', sync)
+    media.addEventListener('change', followSystem)
+    return () => media.removeEventListener('change', followSystem)
   }, [])
 
-  function pick(next: Mode) {
-    setMode(next)
+  function pick(next: Choice) {
+    setChoice(next)
+    if (next === 'auto') {
+      window.localStorage.removeItem('sv-theme')
+      const dark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      return
+    }
     window.localStorage.setItem('sv-theme', next)
     document.documentElement.dataset.theme = next
   }
@@ -48,12 +56,12 @@ export function ThemeSegment() {
   return (
     <div className="seg" role="group" aria-label="Colour theme">
       {options.map((option) => (
-        <label className="seg-opt" key={option.value}>
+        <label className="seg-opt" key={option.value} title={option.hint}>
           <input
             type="radio"
             name="theme"
             value={option.value}
-            checked={mode === option.value}
+            checked={choice === option.value}
             onChange={() => pick(option.value)}
           />
           {option.label}

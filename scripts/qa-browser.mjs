@@ -120,7 +120,7 @@ if (focusResults.some((result) => !result)) failures.push({ name: 'keyboard-focu
 
 await page.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
 if (await page.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-switch' })
-for (const route of ['/work/inventory-scanning-mobile-robot/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/']) {
+for (const route of ['/work/panelogram/', '/work/swl-pricing-inventory-control/', '/work/snail-race/', '/work/']) {
   const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
   if (response?.status() !== 200 || await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)) failures.push({ name: 'route', route, status: response?.status() })
 }
@@ -135,10 +135,28 @@ await context.close()
 const themeContext = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'light' })
 const themePage = await themeContext.newPage()
 await themePage.goto(baseURL, { waitUntil: 'networkidle' })
+// System preference applies before any explicit choice: light OS, no storage.
+if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-system-default' })
+if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== null) failures.push({ name: 'theme-no-eager-storage' })
 await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
 await themePage.reload({ waitUntil: 'networkidle' })
 if (await themePage.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-persistence' })
 if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== 'dark') failures.push({ name: 'theme-storage' })
+// Auto resets the explicit choice and returns to the system preference.
+await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Auto', { exact: true }).click()
+if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== null) failures.push({ name: 'theme-reset-storage' })
+if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-reset-resolve' })
+// A live change of the system preference is followed while in Auto. The
+// matchMedia change event is delivered asynchronously, so poll briefly
+// rather than asserting on the very next tick.
+await themePage.emulateMedia({ colorScheme: 'dark' })
+await themePage.waitForFunction(() => document.documentElement.dataset.theme === 'dark', undefined, { timeout: 3000 })
+  .catch(() => failures.push({ name: 'theme-system-follow' }))
+// An explicit choice is not overridden by later system changes.
+await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Light', { exact: true }).click()
+await themePage.emulateMedia({ colorScheme: 'light' })
+await themePage.emulateMedia({ colorScheme: 'dark' })
+if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-explicit-wins' })
 await themeContext.close()
 
 const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })

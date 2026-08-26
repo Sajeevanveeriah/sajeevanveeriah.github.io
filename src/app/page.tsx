@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { experience, foundation, practiceDomains, site, systemLayers } from '@/content/site'
 import { featuredProjects } from '@/content/projects'
 
-const [navigationProject, ataxiaProject, inventoryProject] = featuredProjects
+const [panelogramProject, swlProject, snailRaceProject] = featuredProjects
 
 export default function HomePage() {
   return (
@@ -22,10 +22,10 @@ export default function HomePage() {
             <ul className="hero-meta" aria-label="Professional foundation"><li>{site.location}</li><li>Member, Engineers Australia</li></ul>
             <div className="hero-actions"><a className="button button-primary" href={`mailto:${site.email}`}>Email Sajeevan</a><a className="button button-secondary" href={site.github}>GitHub</a><a className="text-action" href={site.linkedin}>LinkedIn</a></div>
           </div>
-          <div className="hero-mosaic" aria-label="Selected engineering project imagery">
-            <figure className="mosaic-main"><Image src={navigationProject.image.src} alt={navigationProject.image.alt} width={navigationProject.image.width} height={navigationProject.image.height} priority sizes="(max-width: 900px) 100vw, 36vw" /><figcaption>01 / Autonomous systems</figcaption></figure>
-            <figure><Image src={ataxiaProject.image.src} alt={ataxiaProject.image.alt} width={ataxiaProject.image.width} height={ataxiaProject.image.height} priority sizes="(max-width: 900px) 50vw, 18vw" /><figcaption>02 / Embedded sensing</figcaption></figure>
-            <figure><Image src={inventoryProject.image.src} alt={inventoryProject.image.alt} width={inventoryProject.image.width} height={inventoryProject.image.height} priority sizes="(max-width: 900px) 50vw, 18vw" /><figcaption>03 / Deployed robotics</figcaption></figure>
+          <div className="hero-mosaic" aria-label="Screenshots rendered from the three flagship project builds">
+            <figure className="mosaic-main"><Image src={panelogramProject.image.src} alt={panelogramProject.image.alt} width={panelogramProject.image.width} height={panelogramProject.image.height} priority sizes="(max-width: 900px) 100vw, 44vw" /><figcaption>01 / Panelogram, rendered build</figcaption></figure>
+            <figure><Image src={swlProject.image.src} alt={swlProject.image.alt} width={swlProject.image.width} height={swlProject.image.height} priority sizes="(max-width: 900px) 50vw, 22vw" /><figcaption>02 / SWL pricing, rendered build</figcaption></figure>
+            <figure><Image src={snailRaceProject.image.src} alt={snailRaceProject.image.alt} width={snailRaceProject.image.width} height={snailRaceProject.image.height} priority sizes="(max-width: 900px) 50vw, 22vw" /><figcaption>03 / Snail Race, rendered build</figcaption></figure>
           </div>
         </section>
 
@@ -44,7 +44,7 @@ export default function HomePage() {
           <div className="section-heading atlas-heading"><div><p className="eyebrow">Project atlas</p><h2 id="work-title">Systems built, tested and deployed.</h2></div><Link className="text-action" href="/work/">View all engineering records</Link></div>
           <div className="atlas-records">{featuredProjects.map((project, index) => <article className="atlas-record" key={project.slug}>
             <figure><Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 800px) 100vw, 34vw" /><figcaption>{String(index + 1).padStart(2, '0')} / {project.evidence}</figcaption></figure>
-            <div className="atlas-record-copy"><div className="record-title-row"><p className="record-index">{String(index + 1).padStart(2, '0')}</p><h3>{project.title}</h3></div><dl className="record-facts"><div><dt>Problem</dt><dd>{project.problem}</dd></div><div><dt>System</dt><dd>{project.system}</dd></div><div><dt>Ownership</dt><dd>{project.ownership}</dd></div><div><dt>Verification</dt><dd>{project.verification}</dd></div><div><dt>Outcome</dt><dd>{project.outcome}</dd></div></dl><ul className="stack-row" aria-label={`${project.title} technology stack`}>{project.stack.map((item) => <li key={item}>{item}</li>)}</ul><Link className="button button-secondary" href={`/work/${project.slug}/`}>Open engineering record</Link></div>
+            <div className="atlas-record-copy"><div className="record-title-row"><p className="record-index">{String(index + 1).padStart(2, '0')}</p><h3>{project.title}</h3></div><dl className="record-facts"><div><dt>Problem</dt><dd>{project.problem}</dd></div><div><dt>System boundary</dt><dd>{project.system}</dd></div><div><dt>Verification</dt><dd>{project.verification}</dd></div><div><dt>Current readiness</dt><dd>{project.readiness}</dd></div></dl><ul className="stack-row" aria-label={`${project.title} technology stack`}>{project.stack.map((item) => <li key={item}>{item}</li>)}</ul><div className="record-actions"><Link className="button button-secondary" href={`/work/${project.slug}/`}>Open engineering record</Link><a className="text-action" href={project.repo}>Repository on GitHub</a></div></div>
           </article>)}</div>
         </div></section>
 
@@ -60,7 +60,7 @@ export default function HomePage() {
 
         <section className="contact-strip" id="contact" aria-labelledby="contact-title"><div className="shell contact-grid">
           <div><p className="eyebrow">Let&apos;s build intelligent systems</p><h2 id="contact-title">Available for engineering conversations in Geelong and beyond.</h2></div>
-          <address className="contact-links"><a href={`mailto:${site.email}`}><span>Email</span>{site.email}</a><a href={`tel:${site.phone.replace(/\s/g, '')}`}><span>Phone</span>{site.phone}</a><a href={site.github}><span>GitHub</span>Sajeevanveeriah</a><a href={site.resume}><span>Resume</span>Download PDF</a><a className="support-cta" href={site.support.url} target="_blank" rel="noopener noreferrer"><span>Support</span>Buy me a coffee with PayPal</a></address>
+          <address className="contact-links"><a href={`mailto:${site.email}`}><span>Email</span>{site.email}</a><a href={`tel:${site.phone.replace(/\s/g, '')}`}><span>Phone</span>{site.phone}</a><a href={site.github}><span>GitHub</span>Sajeevanveeriah</a><a href={site.resume}><span>Resume</span>Download PDF</a><a className="support-link" href={site.support.url} target="_blank" rel="noopener noreferrer"><span>Optional support</span>Buy me a coffee with PayPal<span className="sr-only">(opens in a new tab)</span></a></address>
         </div></section>
       </main>
       <SiteFooter />
