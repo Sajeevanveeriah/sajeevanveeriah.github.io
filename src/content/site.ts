@@ -12,9 +12,8 @@ export const site = {
   location: 'Geelong, VIC, Australia',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   github: 'https://github.com/Sajeevanveeriah',
-  linkedin: 'https://www.linkedin.com/in/sajeevan-veeriah',
   support: {
-    label: 'Buy me a coffee',
+    label: 'Support my work',
     description: 'Optional support for my open engineering work.',
     url: 'https://paypal.me/SajeevanVeeriah95',
   },

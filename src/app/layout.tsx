@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f4f7fa' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1117' },
+    { media: '(prefers-color-scheme: light)', color: '#f3f4fb' },
+    { media: '(prefers-color-scheme: dark)', color: '#0d1022' },
   ],
 }
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: site.name,
     url: site.url,
     jobTitle: site.jobTitle,
-    sameAs: [site.github, site.linkedin],
+    sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
   }
