@@ -55,6 +55,16 @@ for (const [name, width, height, theme, reducedMotion] of states) {
   page.on('console', (message) => message.type() === 'error' && consoleErrors.push(message.text()))
   page.on('requestfailed', (request) => requestFailures.push(request.url()))
   const response = await page.goto(baseURL, { waitUntil: 'networkidle' })
+  await page.evaluate(async () => {
+    const images = [...document.images]
+    for (const image of images) {
+      image.loading = 'eager'
+      image.scrollIntoView({ block: 'center' })
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, 50))
+    }
+    await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
+    window.scrollTo(0, 0)
+  })
   await page.addScriptTag({ path: axePath })
   const result = await page.evaluate(async () => ({
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -65,7 +75,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     supportCount: document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]').length,
     supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')]
       .every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
-    practiceTarget: document.querySelector('#practice')?.classList.contains('practice-section') ?? false,
+    practiceTarget: document.querySelector('#practice')?.classList.contains('capability-section') ?? false,
     animations: document.getAnimations().length,
     // .brand-mark is the SV logotype: WCAG 1.4.3 exempts logotypes, and it is
     // aria-hidden with the full name as real text beside it. axe cannot know
@@ -76,7 +86,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     })),
   }))
   await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
+  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 2 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
     failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   }
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
@@ -134,7 +144,7 @@ await themeContext.close()
 const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })
 const noJsPage = await noJs.newPage()
 const noJsResponse = await noJsPage.goto(baseURL)
-if (noJsResponse?.status() !== 200 || await noJsPage.locator('.project-copy h3 a').count() !== 3) failures.push({ name: 'no-js' })
+if (noJsResponse?.status() !== 200 || await noJsPage.locator('.atlas-record h3').count() !== 3) failures.push({ name: 'no-js' })
 await noJs.close()
 
 await browser.close()
