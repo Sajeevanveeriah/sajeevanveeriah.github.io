@@ -119,6 +119,128 @@ export const projects: readonly [Project, Project, Project] = [
 
 export const featuredProjects = projects
 
+
+export interface IndexedProject {
+  readonly title: string
+  readonly summary: string
+  readonly evidence: string
+  readonly link?: string
+}
+
+export interface ProjectGroup {
+  readonly group: string
+  readonly items: readonly IndexedProject[]
+}
+
+/**
+ * The complete project index beyond the three flagship records. Every entry
+ * is carried over from the previously published portfolio records preserved
+ * under archive/20260810-legacy-portfolio/, with client-programme names kept
+ * inside the boundaries AGENTS.md sets. Entries link out only where a public
+ * repository exists.
+ */
+export const projectIndex: readonly ProjectGroup[] = [
+  {
+    group: 'Robotics and physical systems',
+    items: [
+      {
+        title: 'Upzy: Supervised Routine Companion Robot',
+        summary: 'A completed, privacy-conscious educational routine companion robot for young children, with a supporting browser application for adult-defined routines and review.',
+        evidence: 'Deployed physical system',
+        link: 'https://github.com/Sajeevanveeriah/Upzy-Project',
+      },
+      {
+        title: 'Inventory Scanning Mobile Robot',
+        summary: 'An operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow.',
+        evidence: 'Active client deployment',
+      },
+      {
+        title: 'Modular Education and Testing Robot',
+        summary: 'A modular robot platform for education, engineering experiments and repeatable subsystem testing, in active supervised use.',
+        evidence: 'Deployed physical system',
+      },
+      {
+        title: 'Autonomous Navigation Rover on ROS 2',
+        summary: 'A complete ROS 2 Humble autonomy stack with LiDAR SLAM, A* planning, Kalman and EKF estimation and IMU-odometry fusion, validated in simulation.',
+        evidence: 'Simulation-validated autonomy stack',
+      },
+      {
+        title: 'ESP32 Clinical Ataxia Assessment Device',
+        summary: 'Embedded hardware and firmware for movement assessment support, validated against clinical reference instruments.',
+        evidence: 'Assessed embedded prototype',
+        link: 'https://github.com/Sajeevanveeriah/Ataxia-Monitor',
+      },
+      {
+        title: 'DuxTel Agricultural Equipment Telemetry',
+        summary: 'A custom PCB-based field telemetry system combining CAN capture, GPS and condition sensing with MikroTik connectivity and a Linux server for remote machinery visibility.',
+        evidence: 'Deployed physical system',
+      },
+    ],
+  },
+  {
+    group: 'Software and AI platforms',
+    items: [
+      {
+        title: 'Engineering Mastery Lab',
+        summary: 'A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows.',
+        evidence: 'Deployed software system',
+        link: 'https://github.com/Sajeevanveeriah/Engineering-Mastery-Lab',
+      },
+      {
+        title: 'VeerAI: Local SLM System',
+        summary: 'A complete local AI system: an open-weight small language model on personally owned hardware inside a governed pipeline spanning ingestion, retrieval, memory, tools and evaluation.',
+        evidence: 'Locally deployed private system',
+      },
+      {
+        title: 'Newcomb and District Cricket Club Platform',
+        summary: 'The official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
+        evidence: 'Deployed software system',
+        link: 'https://github.com/Sajeevanveeriah/ndcc-website',
+      },
+      {
+        title: 'Digital Twin and Industrial AI',
+        summary: 'A real-time factory digital twin concept integrating AI agents, anomaly detection, predictive maintenance and OEE analytics.',
+        evidence: 'Concept development',
+      },
+    ],
+  },
+  {
+    group: 'Industrial and automotive delivery',
+    items: [
+      {
+        title: 'Regulated Smart Factory and SCADA Migration',
+        summary: 'GMP smart-factory automation delivery, including an iFIX to PVI+ SCADA migration verified against the validated system.',
+        evidence: 'Hands-on professional integration',
+      },
+      {
+        title: 'ADAS and CAN Validation',
+        summary: 'Feature, breadboard and OTA regression testing across vehicle development programmes for a global automotive OEM, supported by CAN-level fault evidence.',
+        evidence: 'Hands-on professional integration',
+      },
+      {
+        title: 'ABMARC Emissions and Compliance Testing',
+        summary: 'Repeatable, auditable emissions testing against ADR and EURO standards, supported by calibrated instrumentation and QA records.',
+        evidence: 'Hands-on professional integration',
+      },
+      {
+        title: 'Carbon Revolution: Robotic Rim Layup Automation',
+        summary: 'Hands-on work through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.',
+        evidence: 'Hands-on professional integration',
+      },
+      {
+        title: 'IDL: Canning Line Upgrade and Commissioning',
+        summary: 'Hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.',
+        evidence: 'Hands-on professional integration',
+      },
+      {
+        title: 'Manufacturing and QA Foundation',
+        summary: 'Six years across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.',
+        evidence: 'Hands-on professional integration',
+      },
+    ],
+  },
+] as const
+
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)
 }
