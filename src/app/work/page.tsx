@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { Masthead } from '@/components/Masthead'
 import { SiteFooter } from '@/components/SiteFooter'
-import { projects } from '@/content/projects'
+import { featuredProjects } from '@/content/projects'
 
 export const metadata: Metadata = {
   title: 'Selected engineering work',
@@ -20,7 +20,7 @@ export default function WorkPage() {
           <p className="kicker">Selected work</p>
           <h1 id="index-title">Three systems. Three kinds of proof.</h1>
           <ul className="index-list">
-            {projects.map((project, index) => (
+            {featuredProjects.map((project, index) => (
               <li key={project.slug}>
                 <span className="index-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 <Link href={`/work/${project.slug}/`}>{project.title}</Link>

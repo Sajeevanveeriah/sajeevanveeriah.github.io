@@ -82,6 +82,12 @@ export const projects: readonly Project[] = [
   },
 ] as const
 
+export const featuredProjects = [
+  projects.find((project) => project.slug === 'autonomous-navigation-rover')!,
+  projects.find((project) => project.slug === 'ataxia-assessment-device')!,
+  projects.find((project) => project.slug === 'inventory-scanning-mobile-robot')!,
+] as const
+
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)
 }

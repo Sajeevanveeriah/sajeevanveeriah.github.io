@@ -4,7 +4,7 @@
   "private": true,
   "description": "My engineering portfolio, exported as a static Next.js site for GitHub Pages.",
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/dev-server.mjs",
     "build": "next build",
     "postbuild": "node scripts/generate-redirects.mjs",
     "lint": "eslint",

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { Masthead } from '@/components/Masthead'
 import { RecordArticle } from '@/components/RecordArticle'
 import { SiteFooter } from '@/components/SiteFooter'
-import { getProject, projects } from '@/content/projects'
+import { featuredProjects, getProject, projects } from '@/content/projects'
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
@@ -28,13 +28,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params
   const project = getProject(slug)
   if (!project) notFound()
-  const position = projects.findIndex((entry) => entry.slug === slug) + 1
+  const position = featuredProjects.findIndex((entry) => entry.slug === slug) + 1
 
   return (
     <>
       <Masthead current="work" />
       <main id="main">
-        <RecordArticle project={project} position={position} total={projects.length} />
+        <RecordArticle project={project} position={position} total={featuredProjects.length} />
       </main>
       <SiteFooter />
     </>
