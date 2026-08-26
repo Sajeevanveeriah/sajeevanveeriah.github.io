@@ -7,7 +7,7 @@ import { featuredProjects } from '@/content/projects'
 
 export const metadata: Metadata = {
   title: 'Selected engineering work',
-  description: 'Three engineering records covering deployed mobile robotics, simulation-validated autonomy and embedded sensing.',
+  description: 'Three engineering records covering a client pricing and inventory system, a local-first retail space planner and a live fundraising event platform.',
   alternates: { canonical: '/#work' },
 }
 

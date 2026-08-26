@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft } from '@/components/icons'
+import { ArrowLeft, ArrowUpRight } from '@/components/icons'
 import type { Project } from '@/content/projects'
 
 function MetaStrip({ items }: { readonly items: readonly { readonly label: string; readonly value: string; readonly accent?: boolean; readonly route?: boolean }[] }) {
@@ -57,7 +57,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
             priority
             sizes="100vw"
           />
-          <figcaption>{project.image.alt}</figcaption>
+          <figcaption>Real screenshot / rendered from the repository build</figcaption>
         </figure>
       </article>
       <div className="record-grid shell">
@@ -65,6 +65,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
           <hr className="rule-accent" />
           <p className="kicker">Engineering boundary</p>
           <p>{project.ownership}</p>
+          <a className="text-link" href={project.repo}>Repository on GitHub<ArrowUpRight /></a>
           <p className="rail-label">Contribution</p>
           <ul className="tag-list">
             {project.stack.map((item) => <Tag key={item}>{item}</Tag>)}
@@ -72,9 +73,10 @@ export function RecordArticle({ project, position, total }: { readonly project: 
         </aside>
         <div className="record-body">
           <section aria-labelledby="problem-heading"><h2 id="problem-heading">Problem</h2><p>{project.problem}</p></section>
-          <section aria-labelledby="system-heading"><h2 id="system-heading">Engineered system</h2><p>{project.system}</p></section>
+          <section aria-labelledby="system-heading"><h2 id="system-heading">System boundary</h2><p>{project.system}</p></section>
+          <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">Architecture</h2><p>{project.architecture}</p></section>
           <section aria-labelledby="decisions-heading">
-            <h2 id="decisions-heading">Decisions</h2>
+            <h2 id="decisions-heading">Constraints and decisions</h2>
             <ol className="decisions">
               {project.decisions.map((decision, index) => (
                 <li key={decision}>
@@ -85,7 +87,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
             </ol>
           </section>
           <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
-          <section aria-labelledby="outcome-heading"><h2 id="outcome-heading">Outcome</h2><p>{project.outcome}</p></section>
+          <section aria-labelledby="readiness-heading"><h2 id="readiness-heading">Current readiness</h2><p>{project.readiness}</p></section>
           <EvidenceBoundary text={project.boundary} />
         </div>
       </div>
