@@ -6,8 +6,8 @@
   --muted: #596170;
   --line: #d8d3c7;
   --line-strong: #858477;
-  --accent: #2768ff;
-  --accent-strong: #174fd2;
+  --accent: #174fc8;
+  --accent-strong: #0e3b9a;
   --accent-contrast: #ffffff;
   --accent-soft: #e9efff;
   --signal: #bf351d;
@@ -422,7 +422,7 @@ a { color: inherit; text-underline-offset: 4px; }
   .hero-proof { grid-template-columns: 1fr 1fr; }
   .hero-proof div { grid-template-columns: 1fr; gap: 0; }
   .practice-visual { border-radius: 18px; }
-  .practice-visual figcaption { position: static; border-radius: 0; background: var(--ink); }
+  .practice-visual figcaption { position: static; border-radius: 0; background: #10131a; }
   .section-intro.compact { grid-template-columns: 1fr; gap: 10px; }
   .section-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
   .section-heading > p { text-align: left; }
