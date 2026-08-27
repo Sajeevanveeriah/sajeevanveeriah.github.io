@@ -102,7 +102,8 @@ for (const [name, width, height, theme, reducedMotion] of states) {
         const copyBox = copy.getBoundingClientRect()
         const figureBox = figure.getBoundingClientRect()
         const desktop = innerWidth > 760
-        const sideBySide = figureBox.left >= copyBox.right - 1 && Math.abs(figureBox.top - copyBox.top) < 2
+        const verticalOverlap = Math.min(figureBox.bottom, copyBox.bottom) - Math.max(figureBox.top, copyBox.top)
+        const sideBySide = figureBox.left >= copyBox.right - 1 && verticalOverlap > 0
         const stacked = figureBox.top >= copyBox.bottom - 1 && Math.abs(figureBox.left - copyBox.left) < 2
         const contained = copyBox.left >= cardBox.left - 1 && copyBox.right <= cardBox.right + 1 && figureBox.left >= cardBox.left - 1 && figureBox.right <= cardBox.right + 1
         return { index, valid: contained && (desktop ? sideBySide : stacked), desktop, sideBySide, stacked, contained }
