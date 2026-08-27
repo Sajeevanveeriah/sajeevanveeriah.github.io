@@ -99,6 +99,9 @@ for (let index = 0; index < 24; index += 1) {
   const result = await page.evaluate(() => {
     const active = document.activeElement
     if (!(active instanceof HTMLElement)) return null
+    // Browsers move focus back to the document after the final tabbable
+    // control. The body is the cycle boundary, not an interactive target.
+    if (active === document.body || active === document.documentElement) return null
     const element = active instanceof HTMLInputElement && active.closest('label') ? active.closest('label') : active
     if (!(element instanceof HTMLElement)) return null
     const rect = element.getBoundingClientRect()
