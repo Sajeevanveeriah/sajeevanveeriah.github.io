@@ -167,7 +167,7 @@ a { color: inherit; text-underline-offset: 4px; }
 .hero-proof dd { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
 .practice-visual { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; margin-bottom: clamp(70px, 8vw, 118px); overflow: hidden; border: 1px solid var(--line-strong); border-radius: 28px; background: #f7f2e5; }
-.practice-visual img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.practice-visual img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .practice-visual figcaption { position: absolute; left: 18px; bottom: 16px; padding: 7px 10px; border-radius: 999px; background: rgba(16, 19, 26, .9); color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
 .system-rail li { position: relative; overflow: hidden; }
@@ -295,7 +295,7 @@ a { color: inherit; text-underline-offset: 4px; }
 .selected-proof li, .tag { padding: 5px 8px; background: var(--tag); color: var(--muted); font-size: 11px; font-weight: 800; }
 .selected-proof .button { margin-top: 22px; }
 .selected-visual { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
-.selected-visual img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.selected-visual img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .selected-visual figcaption, .record-plate figcaption, .further-figure figcaption { position: absolute; left: 0; bottom: 0; padding: 6px 9px; background: rgba(8, 15, 34, .93); color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 
 .capability-section { padding-block: var(--section); border-top: 1px solid var(--line); }
@@ -348,7 +348,7 @@ a { color: inherit; text-underline-offset: 4px; }
 .record-header p { max-width: 74ch; margin-top: 20px; color: var(--muted); font-size: clamp(18px, 2vw, 23px); }
 .record > .system-evidence { max-width: 960px; }
 .record-plate { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
-.record-plate img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.record-plate img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .record-grid { display: grid; grid-template-columns: minmax(240px, .42fr) minmax(0, 1fr); gap: clamp(48px, 7vw, 100px); padding-block: 64px 108px; }
 .record-rail { position: sticky; top: 110px; align-self: start; }
 .rule-accent { height: 2px; margin: 0 0 18px; border: 0; background: var(--signal); }
@@ -377,7 +377,7 @@ a { color: inherit; text-underline-offset: 4px; }
 .index-project-visual .further-figure { grid-column: 2; grid-row: 1; }
 .further-number { display: block; margin-bottom: 28px; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 .further-figure { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; margin: 0; overflow: hidden; border: 1px solid var(--line); background: var(--tag); }
-.further-figure img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.further-figure img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .further-title { font-size: clamp(18px, 2vw, 27px); font-weight: 800; line-height: 1.15; }
 .further-evidence { margin-top: 4px; color: var(--signal); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .further-summary { max-width: 64ch; margin-top: 12px; color: var(--muted); font-size: 14px; line-height: 1.55; }
