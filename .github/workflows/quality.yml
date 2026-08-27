@@ -1,29 +1,15 @@
-# Builds the static export and publishes it to GitHub Pages.
-#
-# Pages must be set to "Deploy from a GitHub Actions workflow" in repository
-# settings before the first run; see README.md. There is no gh-pages branch:
-# the artifact is uploaded and deployed directly.
-name: Deploy to GitHub Pages
+name: Portfolio quality
 
 on:
-  push:
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
-# GITHUB_TOKEN needs pages:write and id-token:write for deploy-pages.
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-# Never run two deployments at once, but let a queued run finish rather than
-# cancelling it mid-publish.
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
-  build:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,7 +31,7 @@ jobs:
       - name: Build static export
         run: npm run build
 
-      - name: Install browser for rendered QA
+      - name: Install browser
         run: npx playwright install --with-deps chromium
 
       - name: Run rendered browser QA
@@ -62,8 +48,6 @@ jobs:
       - name: Run Lighthouse quality gate
         run: npm run qa:lighthouse
 
-      # Guards the GitHub Pages constraints: without .nojekyll, Jekyll strips
-      # the _next directory and the whole site 404s.
       - name: Verify export
         run: |
           set -e
@@ -73,19 +57,3 @@ jobs:
           done
           test -e out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
           echo "export verified"
-
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4

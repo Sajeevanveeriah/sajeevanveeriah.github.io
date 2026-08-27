@@ -9,7 +9,7 @@ import { featuredProjects } from '@/content/projects'
 export const metadata: Metadata = {
   title: 'Selected engineering work',
   description: 'Three flagship engineering records plus the complete index of sixteen further projects across robotics, software platforms and industrial delivery.',
-  alternates: { canonical: '/#work' },
+  alternates: { canonical: '/work/' },
 }
 
 export default function WorkPage() {
@@ -30,7 +30,7 @@ export default function WorkPage() {
             ))}
           </ul>
           <ProjectIndex headingId="further-title-index" />
-          <Link className="text-link" href="/#work"><ArrowLeft />Return to the portfolio</Link>
+          <Link className="text-link" href="/#work"><ArrowLeft />Return to selected work</Link>
         </section>
       </main>
       <SiteFooter />

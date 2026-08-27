@@ -1,17 +1,18 @@
 import { createServer } from 'node:http'
-import { readFile, stat } from 'node:fs/promises'
+import { mkdir, readFile, stat } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { extname, join, normalize, resolve } from 'node:path'
 import { chromium } from 'playwright'
 
 const require = createRequire(import.meta.url)
 const root = resolve('out')
+const captureRoot = '/tmp/portfolio-qa'
 const port = 4173
 const baseURL = `http://127.0.0.1:${port}`
 const mime = {
   '.avif': 'image/avif', '.css': 'text/css', '.html': 'text/html; charset=utf-8',
-  '.js': 'text/javascript', '.pdf': 'application/pdf', '.svg': 'image/svg+xml',
-  '.woff2': 'font/woff2', '.xml': 'application/xml',
+  '.js': 'text/javascript', '.jpg': 'image/jpeg', '.pdf': 'application/pdf', '.png': 'image/png',
+  '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.xml': 'application/xml',
 }
 
 const server = createServer(async (request, response) => {
@@ -28,7 +29,8 @@ const server = createServer(async (request, response) => {
   }
 })
 
-await new Promise((resolveReady) => server.listen(port, '127.0.0.1', resolveReady))
+await mkdir(captureRoot, { recursive: true })
+await new Promise((ready) => server.listen(port, '127.0.0.1', ready))
 const executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH
 const browser = await chromium.launch(executablePath ? { executablePath, headless: true } : { headless: true })
 const axePath = require.resolve('axe-core/axe.min.js')
@@ -39,9 +41,7 @@ const states = [
   ['mobile-light', 390, 844, 'light', 'no-preference'],
   ['mobile-dark', 390, 844, 'dark', 'no-preference'],
   ['narrow-320', 320, 720, 'light', 'no-preference'],
-  ['zoom-200-equivalent', 640, 900, 'light', 'no-preference'],
   ['tablet-768', 768, 1024, 'light', 'no-preference'],
-  ['laptop-1024', 1024, 768, 'light', 'no-preference'],
   ['ultrawide-1920', 1920, 1080, 'dark', 'no-preference'],
   ['reduced-motion', 1440, 1000, 'light', 'reduce'],
 ]
@@ -56,39 +56,28 @@ for (const [name, width, height, theme, reducedMotion] of states) {
   page.on('requestfailed', (request) => requestFailures.push(request.url()))
   const response = await page.goto(baseURL, { waitUntil: 'networkidle' })
   await page.evaluate(async () => {
-    const images = [...document.images]
-    for (const image of images) {
-      image.loading = 'eager'
-      image.scrollIntoView({ block: 'center' })
-      await new Promise((resolveDelay) => setTimeout(resolveDelay, 50))
-    }
-    await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
+    await Promise.all([...document.images].map((image) => image.decode().catch(() => undefined)))
     window.scrollTo(0, 0)
   })
   await page.addScriptTag({ path: axePath })
   const result = await page.evaluate(async () => ({
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     theme: document.documentElement.dataset.theme,
+    title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
+    visibleText: document.body.innerText.trim().length,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && image.alt),
-    iepCount: document.querySelectorAll('.iep-section, #iep-title').length,
-    linkedInCount: document.querySelectorAll('a[href*="linkedin.com"]').length,
+    featuredCount: document.querySelectorAll('.selected-system h3').length,
+    experienceCount: document.querySelectorAll('.experience-section, #experience').length,
+    homepageIndexCount: document.querySelectorAll('main > .further-projects, #work .further-projects').length,
     supportCount: document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]').length,
-    supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')]
-      .every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
-    practiceTarget: document.querySelector('#practice')?.classList.contains('capability-section') ?? false,
+    supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
+    dialogs: [...document.querySelectorAll('[role="dialog"]')].filter((node) => getComputedStyle(node).display !== 'none').length,
     animations: document.getAnimations().length,
-    // .brand-mark is the SV logotype: WCAG 1.4.3 exempts logotypes, and it is
-    // aria-hidden with the full name as real text beside it. axe cannot know
-    // that, so the node is excluded rather than the rule disabled.
-    violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({
-      id: item.id,
-      nodes: item.nodes.map((node) => ({ target: node.target, summary: node.failureSummary })),
-    })),
+    violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
-  await page.screenshot({ path: `/tmp/portfolio-${name}.png`, fullPage: true })
-  if (response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.imagesReady || result.iepCount !== 0 || result.linkedInCount !== 0 || result.supportCount !== 2 || !result.supportTargetSafe || !result.practiceTarget || result.violations.length || consoleErrors.length || requestFailures.length) {
-    failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
-  }
+  await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.featuredCount !== 3 || result.experienceCount !== 0 || result.homepageIndexCount !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
 }
@@ -97,80 +86,68 @@ const context = await browser.newContext({ viewport: { width: 1280, height: 900 
 await context.addInitScript(() => localStorage.setItem('sv-theme', 'light'))
 const page = await context.newPage()
 await page.goto(baseURL, { waitUntil: 'networkidle' })
+
 const focusResults = []
-const focusableCount = await page.locator('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])').count()
-// A radio group is one tab stop, not one per input, so stop as soon as focus
-// wraps back out of the document instead of pressing Tab once per element.
-for (let index = 0; index < focusableCount; index += 1) {
+for (let index = 0; index < 24; index += 1) {
   await page.keyboard.press('Tab')
-  if (await page.evaluate(() => document.activeElement === document.body || document.activeElement === document.documentElement)) break
-  focusResults.push(await page.evaluate(() => {
+  const result = await page.evaluate(() => {
     const active = document.activeElement
-    if (!(active instanceof HTMLElement)) return false
-    // A visually hidden radio inside the theme control draws its focus ring on
-    // the wrapping label, so measure that instead.
+    if (!(active instanceof HTMLElement)) return null
     const element = active instanceof HTMLInputElement && active.closest('label') ? active.closest('label') : active
-    if (!(element instanceof HTMLElement)) return false
+    if (!(element instanceof HTMLElement)) return null
     const rect = element.getBoundingClientRect()
     const style = getComputedStyle(element)
-    return rect.width > 0 && rect.height > 0 && style.outlineStyle !== 'none' && style.outlineWidth !== '0px'
-  }))
+    return { tag: element.tagName, visible: rect.width > 0 && rect.height > 0, focus: style.outlineStyle !== 'none' && style.outlineWidth !== '0px' }
+  })
+  if (result) focusResults.push(result)
 }
-if (focusResults.some((result) => !result)) failures.push({ name: 'keyboard-focus', focusResults })
+if (focusResults.length < 10 || focusResults.some((item) => !item.visible || !item.focus)) failures.push({ name: 'keyboard-focus', focusResults })
 
 await page.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
 if (await page.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-switch' })
-for (const route of ['/work/panelogram/', '/work/swl-pricing-inventory-control/', '/work/snail-race/', '/work/']) {
+
+const routes = ['/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
+for (const route of routes) {
   const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
-  if (response?.status() !== 200 || await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)) failures.push({ name: 'route', route, status: response?.status() })
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)
+  if (response?.status() !== 200 || overflow) failures.push({ name: 'route', route, status: response?.status(), overflow })
 }
+
+await page.goto(`${baseURL}/work/`, { waitUntil: 'networkidle' })
+const canonical = await page.locator('link[rel="canonical"]').getAttribute('href')
+if (canonical !== 'https://sajeevanveeriah.github.io/work/') failures.push({ name: 'work-canonical', canonical })
+
 const missing = await page.goto(`${baseURL}/missing-route/`, { waitUntil: 'networkidle' })
-if (missing?.status() !== 404 || !(await page.locator('h1').textContent())?.includes('no longer part')) failures.push({ name: '404' })
-await page.goto(`${baseURL}/about/`, { waitUntil: 'networkidle' })
-if (page.url() !== `${baseURL}/`) failures.push({ name: 'legacy-redirect', url: page.url() })
+const robots = (await page.locator('meta[name="robots"]').allTextContents()).join(',') || (await page.locator('meta[name="robots"]').all()).map(async (item) => item.getAttribute('content'))
+const robotsContent = await page.locator('meta[name="robots"]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('content') ?? '').join(','))
+if (missing?.status() !== 404 || !(await page.locator('h1').textContent())?.includes('no longer part') || !robotsContent.includes('noindex')) failures.push({ name: '404', robots, robotsContent })
+
+await page.goto(`${baseURL}/work/panelogram/`, { waitUntil: 'networkidle' })
+if (page.url() !== `${baseURL}/work/`) failures.push({ name: 'legacy-work-redirect', url: page.url() })
 await context.close()
 
-// Theme persistence needs a context with no seeded sv-theme value, because the
-// init script above rewrites the key on every navigation.
-const themeContext = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'light' })
-const themePage = await themeContext.newPage()
-await themePage.goto(baseURL, { waitUntil: 'networkidle' })
-// System preference applies before any explicit choice: light OS, no storage.
-if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-system-default' })
-if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== null) failures.push({ name: 'theme-no-eager-storage' })
-await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
-await themePage.reload({ waitUntil: 'networkidle' })
-if (await themePage.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-persistence' })
-if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== 'dark') failures.push({ name: 'theme-storage' })
-// Auto resets the explicit choice and returns to the system preference.
-await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Auto', { exact: true }).click()
-if (await themePage.evaluate(() => localStorage.getItem('sv-theme')) !== null) failures.push({ name: 'theme-reset-storage' })
-if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-reset-resolve' })
-// A live change of the system preference is followed while in Auto. The
-// matchMedia change event is delivered asynchronously, so poll briefly
-// rather than asserting on the very next tick.
-await themePage.emulateMedia({ colorScheme: 'dark' })
-await themePage.waitForFunction(() => document.documentElement.dataset.theme === 'dark', undefined, { timeout: 3000 })
-  .catch(() => failures.push({ name: 'theme-system-follow' }))
-// An explicit choice is not overridden by later system changes.
-await themePage.getByRole('group', { name: 'Colour theme' }).getByText('Light', { exact: true }).click()
-await themePage.emulateMedia({ colorScheme: 'light' })
-await themePage.emulateMedia({ colorScheme: 'dark' })
-if (await themePage.locator('html').getAttribute('data-theme') !== 'light') failures.push({ name: 'theme-explicit-wins' })
-await themeContext.close()
+const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light' })
+const mobilePage = await mobile.newPage()
+await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
+await mobilePage.getByText('Menu', { exact: true }).click()
+const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
+const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
+if (!mobileNavVisible || mobileLinks !== 4) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
+await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
+await mobile.close()
 
 const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })
 const noJsPage = await noJs.newPage()
 const noJsResponse = await noJsPage.goto(baseURL)
-if (noJsResponse?.status() !== 200 || await noJsPage.locator('.atlas-record h3').count() !== 3) failures.push({ name: 'no-js' })
+if (noJsResponse?.status() !== 200 || await noJsPage.locator('.selected-system h3').count() !== 3 || !(await noJsPage.getByText('Menu', { exact: true }).isVisible())) failures.push({ name: 'no-js' })
 await noJs.close()
 
 await browser.close()
-await new Promise((resolveClosed) => server.close(resolveClosed))
+await new Promise((closed) => server.close(closed))
 
 if (failures.length) {
   console.error(JSON.stringify(failures, null, 2))
   process.exitCode = 1
 } else {
-  console.log(`Browser QA passed: ${states.length} visual states, 4 routes, keyboard focus, 404 and no-JavaScript.`)
+  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
 }

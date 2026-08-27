@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
+import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
 
 function MetaStrip({ items }: { readonly items: readonly { readonly label: string; readonly value: string; readonly accent?: boolean; readonly route?: boolean }[] }) {
@@ -48,17 +49,12 @@ export function RecordArticle({ project, position, total }: { readonly project: 
           <h1>{project.title}</h1>
           <p>{project.system}</p>
         </header>
-        <figure className="record-plate">
-          <Image
-            src={project.image.src}
-            alt={project.image.alt}
-            width={project.image.width}
-            height={project.image.height}
-            priority
-            sizes="100vw"
-          />
-          <figcaption>Real screenshot / rendered from the project build</figcaption>
-        </figure>
+        {project.image ? (
+          <figure className="record-plate">
+            <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} priority sizes="100vw" />
+            <figcaption>Real screenshot / rendered from the project build</figcaption>
+          </figure>
+        ) : <SystemEvidence eyebrow="Verified system path" title={project.title} steps={project.systemPath} />}
       </article>
       <div className="record-grid shell">
         <aside className="record-rail">
