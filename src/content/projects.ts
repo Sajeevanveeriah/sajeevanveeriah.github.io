@@ -12,7 +12,13 @@ export interface Project {
   readonly boundary: string
   readonly stack: readonly string[]
   readonly systemPath: readonly { readonly label: string; readonly detail: string }[]
-  readonly image?: { readonly src: string; readonly alt: string; readonly width: number; readonly height: number }
+  readonly image?: {
+    readonly src: string
+    readonly alt: string
+    readonly width: number
+    readonly height: number
+    readonly kind: 'Real interface screenshot' | 'Illustrative system visual'
+  }
 }
 
 export const projects: readonly [Project, Project, Project] = [
@@ -38,6 +44,13 @@ export const projects: readonly [Project, Project, Project] = [
       { label: 'Plan', detail: 'Nav2 and costmaps' },
       { label: 'Act', detail: 'Motion control and recovery' },
     ],
+    image: {
+      src: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.webp',
+      alt: 'Illustrative system visual showing an autonomous rover moving through a mapped environment with navigation and sensing layers.',
+      width: 1448,
+      height: 1086,
+      kind: 'Illustrative system visual',
+    },
   },
   {
     slug: 'ataxia-assessment-device',
@@ -61,6 +74,13 @@ export const projects: readonly [Project, Project, Project] = [
       { label: 'Transmit', detail: 'BLE live display and CSV' },
       { label: 'Validate', detail: 'MATLAB comparison and reporting' },
     ],
+    image: {
+      src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.webp',
+      alt: 'Illustrative system visual of an embedded movement-assessment prototype and its sensing and analysis path.',
+      width: 1448,
+      height: 1086,
+      kind: 'Illustrative system visual',
+    },
   },
   {
     slug: 'swl-pricing-inventory-control',
@@ -89,6 +109,7 @@ export const projects: readonly [Project, Project, Project] = [
       alt: 'Screenshot of the SWL Pricing and Inventory Control new-run screen showing the seven-stage workflow from adding files to a reviewed export, with the current business rules panel.',
       width: 1672,
       height: 941,
+      kind: 'Real interface screenshot',
     },
   },
 ] as const
@@ -117,9 +138,9 @@ export const projectIndex: readonly ProjectGroup[] = [
   {
     group: 'Robotics and physical systems',
     items: [
-      { title: 'Upzy: Supervised Routine Companion Robot', summary: 'A completed, privacy-conscious educational routine companion robot for young children, with a supporting browser application for adult-defined routines and review.', evidence: 'Deployed physical system' },
-      { title: 'Inventory Scanning Mobile Robot', summary: 'An operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow.', evidence: 'Active client deployment' },
-      { title: 'Modular Education and Testing Robot', summary: 'A modular robot platform for education, engineering experiments and repeatable subsystem testing, in active supervised use.', evidence: 'Deployed physical system' },
+      { title: 'Upzy: Supervised Routine Companion Robot', summary: 'A privacy-conscious educational routine companion robot for young children, paired with a browser application for adult-defined routines, supervised use and review.', evidence: 'Owner-attested completed build' },
+      { title: 'Inventory Scanning Mobile Robot', summary: 'An operator-support mobile robot that assists physical inventory scanning and connects captured stock observations to a controlled review workflow.', evidence: 'Owner-attested client deployment' },
+      { title: 'Modular Education and Testing Robot', summary: 'A modular robot platform for education, engineering experiments and repeatable subsystem testing in supervised use.', evidence: 'Owner-attested physical build' },
       { title: 'DuxTel Agricultural Equipment Telemetry', summary: 'A custom PCB-based field telemetry system combining CAN capture, GPS and condition sensing with MikroTik connectivity and a Linux server for remote machinery visibility.', evidence: 'Deployed physical system' },
     ],
   },
@@ -155,9 +176,9 @@ export const projectIndex: readonly ProjectGroup[] = [
       { title: 'Regulated Smart Factory and SCADA Migration', summary: 'GMP smart-factory automation delivery, including an iFIX to PVI+ SCADA migration verified against the validated system.', evidence: 'Hands-on professional integration' },
       { title: 'ADAS and CAN Validation', summary: 'Feature, breadboard and OTA regression testing across vehicle development programmes, supported by CAN-level fault evidence.', evidence: 'Hands-on professional integration' },
       { title: 'ABMARC Emissions and Compliance Testing', summary: 'Repeatable, auditable emissions testing against ADR and EURO standards, supported by calibrated instrumentation and QA records.', evidence: 'Hands-on professional integration' },
-      { title: 'Carbon Revolution: Robotic Rim Layup Automation', summary: 'Hands-on work through the automation programme that replaced the legacy automated rim layup machine with new KUKA-based robotic cells.', evidence: 'Hands-on professional integration' },
-      { title: 'IDL: Canning Line Upgrade and Commissioning', summary: 'Hands-on installation and commissioning of WestRock and Fibre King packaging equipment during a canning line upgrade on a live production site.', evidence: 'Hands-on professional integration' },
-      { title: 'Manufacturing and QA Foundation', summary: 'Six years across food and beverage, carbon-fibre and structural-steel production, spanning operations, QA, traceability, robotic automation and commissioning.', evidence: 'Hands-on professional integration' },
+      { title: 'Carbon Revolution: Carbon-Fibre Wheel Manufacturing', summary: 'Operated production equipment, recorded quality and traceability evidence, and supported equipment trials, setup and first-level recovery during manufacturing changes.', evidence: 'Hands-on professional delivery' },
+      { title: 'IDL: Canning Line Upgrade and Commissioning', summary: 'Supported live production, changeovers, fault recovery and commissioning checks around WestRock and Fibre-King packaging upgrades.', evidence: 'Hands-on professional delivery' },
+      { title: 'Manufacturing and Quality Foundation', summary: 'Experience spanning 2018 to 2024 across beverage, carbon-fibre and structural-steel production, connecting operations, quality, traceability and commissioning support.', evidence: 'Hands-on professional delivery' },
     ],
   },
 ] as const

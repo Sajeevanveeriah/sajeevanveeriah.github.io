@@ -57,7 +57,7 @@ jobs:
         run: |
           set -e
           for f in index.html 404.html .nojekyll BingSiteAuth.xml \
-                   googlebcce96f6b520ab1f.html robots.txt sitemap.xml favicon.svg; do
+                   googlebcce96f6b520ab1f.html robots.txt sitemap.xml favicon.png; do
             test -e "out/$f" || { echo "missing out/$f"; exit 1; }
           done
           test -e out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }

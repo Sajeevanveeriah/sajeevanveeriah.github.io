@@ -24,18 +24,18 @@ export const metadata: Metadata = {
       url: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
       width: 1200,
       height: 630,
-      alt: 'Sajeevan Veeriah systems engineering portfolio, spanning physical systems, embedded engineering, autonomy and delivery.',
+      alt: 'Sajeevan Veeriah Living Systems Atlas, spanning robotics, embedded engineering, automation, software and validation.',
     }],
   },
   twitter: { card: 'summary_large_image' },
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.png', apple: '/favicon.png' },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8f9fc' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b1020' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f4ec' },
+    { media: '(prefers-color-scheme: dark)', color: '#0c0f16' },
   ],
 }
 
@@ -49,6 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
+    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Embedded systems', 'Automotive validation', 'IoT', 'AI and machine learning'],
   }
 
   return (

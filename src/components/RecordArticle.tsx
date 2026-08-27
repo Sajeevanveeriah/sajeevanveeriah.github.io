@@ -52,7 +52,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
         {project.image ? (
           <figure className="record-plate">
             <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} priority sizes="100vw" />
-            <figcaption>Real screenshot / rendered from the project build</figcaption>
+            <figcaption>{project.image.kind}</figcaption>
           </figure>
         ) : <SystemEvidence eyebrow="Verified system path" title={project.title} steps={project.systemPath} />}
       </article>
