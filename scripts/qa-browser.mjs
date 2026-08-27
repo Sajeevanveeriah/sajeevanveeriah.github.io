@@ -56,7 +56,13 @@ for (const [name, width, height, theme, reducedMotion] of states) {
   page.on('requestfailed', (request) => requestFailures.push(request.url()))
   const response = await page.goto(baseURL, { waitUntil: 'networkidle' })
   await page.evaluate(async () => {
-    await Promise.all([...document.images].map((image) => image.decode().catch(() => undefined)))
+    const images = [...document.images]
+    for (const image of images) {
+      image.loading = 'eager'
+      image.scrollIntoView({ block: 'center' })
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, 50))
+    }
+    await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
     window.scrollTo(0, 0)
   })
   await page.addScriptTag({ path: axePath })
@@ -93,6 +99,9 @@ for (let index = 0; index < 24; index += 1) {
   const result = await page.evaluate(() => {
     const active = document.activeElement
     if (!(active instanceof HTMLElement)) return null
+    // Browsers move focus back to the document after the final tabbable
+    // control. The body is the cycle boundary, not an interactive target.
+    if (active === document.body || active === document.documentElement) return null
     const element = active instanceof HTMLInputElement && active.closest('label') ? active.closest('label') : active
     if (!(element instanceof HTMLElement)) return null
     const rect = element.getBoundingClientRect()
