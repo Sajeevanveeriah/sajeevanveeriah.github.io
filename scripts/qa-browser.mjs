@@ -56,7 +56,13 @@ for (const [name, width, height, theme, reducedMotion] of states) {
   page.on('requestfailed', (request) => requestFailures.push(request.url()))
   const response = await page.goto(baseURL, { waitUntil: 'networkidle' })
   await page.evaluate(async () => {
-    await Promise.all([...document.images].map((image) => image.decode().catch(() => undefined)))
+    const images = [...document.images]
+    for (const image of images) {
+      image.loading = 'eager'
+      image.scrollIntoView({ block: 'center' })
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, 50))
+    }
+    await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
     window.scrollTo(0, 0)
   })
   await page.addScriptTag({ path: axePath })
