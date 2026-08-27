@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ArrowUpRight } from '@/components/icons'
+import { ArrowLeft } from '@/components/icons'
 import type { Project } from '@/content/projects'
 
 function MetaStrip({ items }: { readonly items: readonly { readonly label: string; readonly value: string; readonly accent?: boolean; readonly route?: boolean }[] }) {
@@ -57,7 +57,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
             priority
             sizes="100vw"
           />
-          <figcaption>Real screenshot / rendered from the repository build</figcaption>
+          <figcaption>Real screenshot / rendered from the project build</figcaption>
         </figure>
       </article>
       <div className="record-grid shell">
@@ -65,7 +65,6 @@ export function RecordArticle({ project, position, total }: { readonly project: 
           <hr className="rule-accent" />
           <p className="kicker">Engineering boundary</p>
           <p>{project.ownership}</p>
-          <a className="text-link" href={project.repo}>Repository on GitHub<ArrowUpRight /></a>
           <p className="rail-label">Contribution</p>
           <ul className="tag-list">
             {project.stack.map((item) => <Tag key={item}>{item}</Tag>)}
