@@ -72,6 +72,43 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
     visibleText: document.body.innerText.trim().length,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && (image.alt || image.closest('.brand-mark, .field-core'))),
+    imageFraming: [...document.querySelectorAll('.practice-visual, .selected-visual, .record-plate, .further-figure')].map((figure, index) => {
+      const image = figure.querySelector('img')
+      if (!(image instanceof HTMLImageElement)) return { index, valid: false, reason: 'missing-image' }
+      const frame = figure.getBoundingClientRect()
+      const rendered = image.getBoundingClientRect()
+      const style = getComputedStyle(image)
+      const frameRatio = frame.width / frame.height
+      const withinFrame = rendered.left >= frame.left - 1 && rendered.top >= frame.top - 1 && rendered.right <= frame.right + 1 && rendered.bottom <= frame.bottom + 1
+      return {
+        index,
+        valid: image.complete && image.naturalWidth > 0 && style.objectFit === 'contain' && Math.abs(frameRatio - (16 / 9)) < 0.03 && withinFrame,
+        natural: [image.naturalWidth, image.naturalHeight],
+        frame: [Math.round(frame.width), Math.round(frame.height)],
+        rendered: [Math.round(rendered.width), Math.round(rendered.height)],
+        objectFit: style.objectFit,
+        objectPosition: style.objectPosition,
+        withinFrame,
+      }
+    }),
+    indexLayout: {
+      groups: document.querySelectorAll('.index-group').length,
+      projects: document.querySelectorAll('.index-project').length,
+      visualProjects: [...document.querySelectorAll('.index-project-visual')].map((card, index) => {
+        const copy = card.querySelector('.further-copy')
+        const figure = card.querySelector('.further-figure')
+        if (!(copy instanceof HTMLElement) || !(figure instanceof HTMLElement)) return { index, valid: false, reason: 'missing-region' }
+        const cardBox = card.getBoundingClientRect()
+        const copyBox = copy.getBoundingClientRect()
+        const figureBox = figure.getBoundingClientRect()
+        const desktop = innerWidth > 760
+        const verticalOverlap = Math.min(figureBox.bottom, copyBox.bottom) - Math.max(figureBox.top, copyBox.top)
+        const sideBySide = figureBox.left >= copyBox.right - 1 && verticalOverlap > 0
+        const stacked = copyBox.top >= figureBox.bottom - 1 && Math.abs(figureBox.left - copyBox.left) < 2
+        const contained = copyBox.left >= cardBox.left - 1 && copyBox.right <= cardBox.right + 1 && figureBox.left >= cardBox.left - 1 && figureBox.right <= cardBox.right + 1
+        return { index, valid: contained && (desktop ? sideBySide : stacked), desktop, sideBySide, stacked, contained }
+      }),
+    },
     featuredCount: document.querySelectorAll('.selected-system h3').length,
     experienceCount: document.querySelectorAll('.experience-section, #experience').length,
     homepageIndexCount: document.querySelectorAll('main > .further-projects, #work .further-projects').length,
@@ -82,7 +119,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.featuredCount !== 3 || result.experienceCount !== 1 || result.homepageIndexCount !== 1 || result.supportCount !== 3 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.imageFraming.some((item) => !item.valid) || result.indexLayout.groups !== 3 || result.indexLayout.projects !== 16 || result.indexLayout.visualProjects.length !== 5 || result.indexLayout.visualProjects.some((item) => !item.valid) || result.featuredCount !== 3 || result.experienceCount !== 1 || result.homepageIndexCount !== 1 || result.supportCount !== 3 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -118,8 +155,29 @@ if (await page.locator('html').getAttribute('data-theme') !== 'dark') failures.p
 const routes = ['/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
 for (const route of routes) {
   const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)
-  if (response?.status() !== 200 || overflow) failures.push({ name: 'route', route, status: response?.status(), overflow })
+  await page.evaluate(async () => {
+    for (const image of [...document.images]) {
+      image.loading = 'eager'
+      image.scrollIntoView({ block: 'center' })
+    }
+    await Promise.all([...document.images].map((image) => image.decode().catch(() => undefined)))
+    window.scrollTo(0, 0)
+  })
+  const routeResult = await page.evaluate(() => ({
+    overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
+    visualOverflow: [...document.querySelectorAll('.practice-visual, .record-plate, .selected-visual, .further-figure')].flatMap((figure, index) => {
+      const image = figure.querySelector('img')
+      if (!(image instanceof HTMLImageElement)) return [{ index, reason: 'missing-image' }]
+      const frame = figure.getBoundingClientRect()
+      const rendered = image.getBoundingClientRect()
+      const style = getComputedStyle(image)
+      const withinFrame = rendered.left >= frame.left - 1 && rendered.top >= frame.top - 1 && rendered.right <= frame.right + 1 && rendered.bottom <= frame.bottom + 1
+      const landscape = Math.abs((frame.width / frame.height) - (16 / 9)) < 0.03
+      return withinFrame && landscape && style.objectFit === 'contain' ? [] : [{ index, frame: [frame.width, frame.height], rendered: [rendered.width, rendered.height], objectFit: style.objectFit, withinFrame, landscape }]
+    }),
+  }))
+  if (response?.status() !== 200 || routeResult.overflow || !routeResult.imagesReady || routeResult.visualOverflow.length) failures.push({ name: 'route', route, status: response?.status(), ...routeResult })
 }
 
 await page.goto(`${baseURL}/work/`, { waitUntil: 'networkidle' })
@@ -158,5 +216,5 @@ if (failures.length) {
   console.error(JSON.stringify(failures, null, 2))
   process.exitCode = 1
 } else {
-  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
+  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, uncropped image framing, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
 }

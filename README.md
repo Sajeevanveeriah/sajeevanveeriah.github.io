@@ -29,14 +29,15 @@ The export is written to `out/`. Browser QA serves that export locally and
 requires Playwright Chromium. A managed runner can set
 `PLAYWRIGHT_EXECUTABLE_PATH` to an existing Chromium-compatible binary.
 
-## Free hosting
+## Production hosting
 
 The same static `out/` directory is compatible with both GitHub Pages and
-Cloudflare Pages.
+Cloudflare Workers Static Assets.
 
 - Build command: `npm run build`
 - Output directory: `out`
-- Cloudflare configuration: `wrangler.toml`
+- Cloudflare Worker configuration: `wrangler.jsonc`
+- Cloudflare deployment: `wrangler deploy --config wrangler.jsonc`
 
 ## Archive
 

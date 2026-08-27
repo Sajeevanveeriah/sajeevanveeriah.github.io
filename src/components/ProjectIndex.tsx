@@ -2,8 +2,8 @@ import Image from 'next/image'
 import { projectIndex } from '@/content/projects'
 
 /**
- * The complete project index beyond the three flagship records: one grouped
- * column per discipline. Authentic interface captures and system diagrams
+ * The complete project index beyond the three flagship records: one stacked
+ * band per discipline. Authentic interface captures and system diagrams
  * appear where the source record supports them. Text-only entries avoid
  * implying evidence that the portfolio does not hold.
  */
@@ -18,21 +18,28 @@ export function ProjectIndex({ headingId }: { readonly headingId: string }) {
         <p>A broader record of robotics, software, industrial and automotive delivery. Visuals appear only where an authentic interface capture or system diagram is available.</p>
       </div>
       <div className="index-groups">
-        {projectIndex.map((group) => (
-          <section key={group.group} aria-label={group.group}>
-            <h4>{group.group}</h4>
-            <ul>
-              {group.items.map((item) => (
-                <li key={item.title}>
+        {projectIndex.map((group, groupIndex) => (
+          <section className="index-group" key={group.group} aria-labelledby={`${headingId}-group-${groupIndex + 1}`}>
+            <div className="index-group-heading">
+              <p aria-hidden="true">{String(groupIndex + 1).padStart(2, '0')}</p>
+              <h4 id={`${headingId}-group-${groupIndex + 1}`}>{group.group}</h4>
+              <span>{group.items.length} records</span>
+            </div>
+            <ul className="index-group-list">
+              {group.items.map((item, itemIndex) => (
+                <li className={item.image ? 'index-project index-project-visual' : 'index-project'} key={item.title}>
+                  <div className="further-copy">
+                    <span className="further-number" aria-hidden="true">{String(itemIndex + 1).padStart(2, '0')}</span>
+                    <p className="further-title">{item.title}</p>
+                    <p className="further-evidence">{item.evidence}</p>
+                    <p className="further-summary">{item.summary}</p>
+                  </div>
                   {item.image ? (
                     <figure className="further-figure">
-                      <Image src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} sizes="(max-width: 780px) 100vw, (max-width: 1120px) 50vw, 30vw" />
+                      <Image src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} sizes="(max-width: 760px) 100vw, (max-width: 1160px) 56vw, 48vw" loading="eager" />
                       <figcaption>{item.image.kind}</figcaption>
                     </figure>
                   ) : null}
-                  <p className="further-title">{item.title}</p>
-                  <p className="further-evidence">{item.evidence}</p>
-                  <p className="further-summary">{item.summary}</p>
                 </li>
               ))}
             </ul>
