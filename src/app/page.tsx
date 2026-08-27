@@ -20,7 +20,7 @@ export default function HomePage() {
         <section className="atlas-hero shell" id="overview" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">Geelong, Australia / Engineer across the complete system</p>
-            <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
+            <h1 id="hero-title"><span>Sajeevan</span>{' '}<span>Veeriah</span></h1>
             <p className="hero-role">{site.jobTitle}</p>
             <p className="hero-summary">{site.proposition}</p>
             <p className="hero-profile">{site.profile}</p>
