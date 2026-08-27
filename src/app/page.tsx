@@ -110,7 +110,7 @@ export default function HomePage() {
                   </div>
                   {project.image ? (
                     <figure className="selected-visual">
-                      <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 900px) 100vw, 29vw" />
+                      <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 900px) 100vw, 29vw" loading="eager" />
                       <figcaption>{project.image.kind}</figcaption>
                     </figure>
                   ) : null}
