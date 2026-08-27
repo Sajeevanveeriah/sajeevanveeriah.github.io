@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { ArrowUpRight } from '@/components/icons'
 import { projectIndex } from '@/content/projects'
 
 /**
@@ -7,7 +6,8 @@ import { projectIndex } from '@/content/projects'
  * column per discipline. Each entry carries its committed portfolio visual
  * where one exists, captioned with what the image is - a project visual, an
  * interface visual or a system diagram - never presented as capture
- * evidence. Only projects with a public repository link out.
+ * evidence. No entry links to source: the repositories are private client
+ * work.
  */
 export function ProjectIndex({ headingId }: { readonly headingId: string }) {
   const total = projectIndex.reduce((count, group) => count + group.items.length, 0)
@@ -32,9 +32,7 @@ export function ProjectIndex({ headingId }: { readonly headingId: string }) {
                       <figcaption>{item.image.kind}</figcaption>
                     </figure>
                   ) : null}
-                  <p className="further-title">
-                    {item.link ? <a href={item.link}>{item.title}<ArrowUpRight size={13} /></a> : item.title}
-                  </p>
+                  <p className="further-title">{item.title}</p>
                   <p className="further-evidence">{item.evidence}</p>
                   <p className="further-summary">{item.summary}</p>
                 </li>

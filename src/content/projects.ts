@@ -11,15 +11,15 @@ export interface Project {
   readonly readiness: string
   readonly boundary: string
   readonly stack: readonly string[]
-  readonly repo: string
   readonly image: { readonly src: string; readonly alt: string; readonly width: number; readonly height: number }
 }
 
 /**
- * Every claim below is limited to what the named public repository contains.
- * The images are real screenshots rendered from each repository's own build,
+ * Every claim below is limited to what the project's codebase contains. The
+ * repositories are private client work, so no record links out to source.
+ * The images are real screenshots rendered from each project's own build,
  * captured at 1672x941; they are not mockups and not concept art. Regenerate
- * by building the repository and photographing the served page.
+ * by building the project and photographing the served page.
  */
 export const projects: readonly [Project, Project, Project] = [
   {
@@ -43,9 +43,8 @@ export const projects: readonly [Project, Project, Project] = [
     readiness:
       'A usable alpha, deliberately scoped to one bay in a single browser session, with a committed production bundle and a documented GitHub Pages publishing path. No accounts, sync or collaboration by design.',
     boundary:
-      'This record does not claim retail deployment, multi-bay planning, other fixture types or any usage figures. The repository is public but not open-source licensed.',
+      'This record does not claim retail deployment, multi-bay planning, other fixture types or any usage figures. The codebase is private and not open-source licensed.',
     stack: ['TypeScript', 'React', 'Vite', 'SVG', 'Vitest', 'GitHub Pages'],
-    repo: 'https://github.com/Sajeevanveeriah/Planogram',
     image: {
       src: '/assets/image/20260826-Panelogram-Bay-Layout-Rev00.png',
       alt: 'Screenshot of Panelogram rendering a six-shelf bay to scale with millimetre rulers, per-shelf capacity figures and one shelf flagged as over capacity.',
@@ -74,9 +73,8 @@ export const projects: readonly [Project, Project, Project] = [
     readiness:
       'Release 1.2.0 builds an unsigned Windows installer and a browser demonstration through CI. Production installation, code signing and automatic updates sit outside the current release boundary and are tracked in the repository\'s gap register.',
     boundary:
-      'This record does not claim a completed production rollout, live supplier or accounting integrations in use, or outcomes beyond what the public repository shows. The software is proprietary to the client.',
+      'This record does not claim a completed production rollout, live supplier or accounting integrations in use, or outcomes beyond the release evidence described here. The software is proprietary to the client and its codebase is private.',
     stack: ['TypeScript', 'React', 'Tauri 2', 'Rust', 'SQLite', 'Node.js', 'Vitest', 'Playwright', 'GitHub Actions'],
-    repo: 'https://github.com/Sajeevanveeriah/Inventory-Management-SWL',
     image: {
       src: '/assets/image/20260826-SWL-Pricing-Run-Rev00.png',
       alt: 'Screenshot of the SWL Pricing and Inventory Control new-run screen showing the seven-stage workflow from adding files to a reviewed export, with the current business rules panel.',
@@ -107,7 +105,6 @@ export const projects: readonly [Project, Project, Project] = [
     boundary:
       'This record does not claim real-money betting, wagering or gambling capability: backing a snail is a donation with no return and play chips have no cash value. No live event, attendance or takings figures are claimed.',
     stack: ['Next.js', 'React', 'TypeScript', 'Stripe Checkout', 'Tailwind CSS', 'Web Audio', 'GitHub Actions'],
-    repo: 'https://github.com/Sajeevanveeriah/SnailRace',
     image: {
       src: '/assets/image/20260826-Snail-Race-Stage-Rev00.png',
       alt: 'Screenshot of the Snail Race projector stage before race one, showing the animated track, the race one tote board with equal one-in-six chances and the play-chip fun bets panel.',
@@ -124,7 +121,6 @@ export interface IndexedProject {
   readonly title: string
   readonly summary: string
   readonly evidence: string
-  readonly link?: string
   /**
    * Each indexed project carries its committed portfolio visual where one
    * exists. `kind` states plainly what the image is - an illustrative
@@ -149,8 +145,8 @@ export interface ProjectGroup {
  * The complete project index beyond the three flagship records. Every entry
  * is carried over from the previously published portfolio records preserved
  * under archive/20260810-legacy-portfolio/, with client-programme names kept
- * inside the boundaries AGENTS.md sets. Entries link out only where a public
- * repository exists.
+ * inside the boundaries AGENTS.md sets. No entry links to source: the
+ * repositories are private client work.
  */
 export const projectIndex: readonly ProjectGroup[] = [
   {
@@ -160,7 +156,6 @@ export const projectIndex: readonly ProjectGroup[] = [
         title: 'Upzy: Supervised Routine Companion Robot',
         summary: 'A completed, privacy-conscious educational routine companion robot for young children, with a supporting browser application for adult-defined routines and review.',
         evidence: 'Deployed physical system',
-        link: 'https://github.com/Sajeevanveeriah/Upzy-Project',
         image: {
           src: '/assets/image/20260806-Upzy-Supervised-Routine-Companion-Rev00.avif',
           alt: 'Illustrative visual of the Upzy routine companion: a small rounded tabletop robot with a dark display face showing simple shapes, a fabric speaker grille and side buttons.',
@@ -209,7 +204,6 @@ export const projectIndex: readonly ProjectGroup[] = [
         title: 'ESP32 Clinical Ataxia Assessment Device',
         summary: 'Embedded hardware and firmware for movement assessment support, validated against clinical reference instruments.',
         evidence: 'Assessed embedded prototype',
-        link: 'https://github.com/Sajeevanveeriah/Ataxia-Monitor',
         image: {
           src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.avif',
           alt: 'Illustrative visual of the ESP32 clinical ataxia assessment device with movement-sensing hardware.',
@@ -239,7 +233,6 @@ export const projectIndex: readonly ProjectGroup[] = [
         title: 'Engineering Mastery Lab',
         summary: 'A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, eight guided learning labs and evidence-focused project workflows.',
         evidence: 'Deployed software system',
-        link: 'https://github.com/Sajeevanveeriah/Engineering-Mastery-Lab',
         image: {
           src: '/assets/image/Engineering_Mastery_Lab_Command_Centre_Rev00.svg',
           alt: 'Interface visual of the Engineering Mastery Lab dashboard showing the Parametric CAD Studio, Engineering Toolbox, Project Workbench and PID Control Lab.',
@@ -264,7 +257,6 @@ export const projectIndex: readonly ProjectGroup[] = [
         title: 'Newcomb and District Cricket Club Platform',
         summary: 'The official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
         evidence: 'Deployed software system',
-        link: 'https://github.com/Sajeevanveeriah/ndcc-website',
         image: {
           src: '/assets/image/20260803-NDCC-Website-Platform-Rev00.svg',
           alt: 'System diagram of the NDCC digital platform architecture spanning the public website, committee content, membership, merchandise and administration workflows.',
