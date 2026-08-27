@@ -1,69 +1,113 @@
 export const site = {
   name: 'Sajeevan Veeriah',
+  shortName: 'Saj',
   initials: 'SV',
-  jobTitle: 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
+  jobTitle: 'Robotics, Mechatronics and Automation Engineer',
   proposition:
-    'I engineer complete intelligent systems from physical behaviour and sensing through embedded control, autonomy, software, verification and deployed operation.',
+    'I build intelligent systems that move, sense and decide - from mechanisms and electronics through embedded control, autonomy, software and verified operation.',
   profile:
-    'My work connects mechanics, electronics, firmware, controls, robotics, AI/ML and engineering data into systems that can be tested, commissioned and handed over.',
+    'My practice connects robotics, industrial automation, automotive validation, IoT, AI/ML and engineering software. I am at my best at the interfaces: turning a physical need into a system that can be built, tested, fault-found and handed over.',
   url: 'https://sajeevanveeriah.github.io',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
-  location: 'Geelong, VIC, Australia',
+  location: 'Geelong, Victoria, Australia',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   github: 'https://github.com/Sajeevanveeriah',
+  logo: '/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
   support: {
-    label: 'Support open engineering work',
-    description: 'Optional support for my open engineering work.',
+    label: 'Buy me a coffee',
+    description: 'Optional support for the open engineering work and learning resources I publish.',
     url: 'https://paypal.me/SajeevanVeeriah95',
   },
-  credentials: ['Member, Engineers Australia', 'Deakin Mechatronics Engineering Honours, Distinction, 2025'],
+  credentials: ['Member, Engineers Australia', 'Mechatronics Engineering Honours, Distinction, 2025'],
 } as const
 
-export const experience = [
+export interface ExperienceRecord {
+  readonly period: string
+  readonly role: string
+  readonly organisation: string
+  readonly employerUrl?: string
+  readonly context: string
+  readonly detail: string
+  readonly tags: readonly string[]
+}
+
+/**
+ * Public-facing functional titles are deliberately concise. The first two
+ * organisations remain anonymised to respect programme confidentiality and
+ * contract boundaries. Employer links establish company context only; every
+ * personal contribution below is grounded in the resume and portfolio record.
+ */
+export const experience: readonly ExperienceRecord[] = [
   {
-    period: 'Jan 2026 - Jun 2026', role: 'Automation and Controls Engineer', organisation: 'Process automation systems integrator',
-    context: 'GMP automation for pharmaceutical, biotechnology and food production',
-    detail: 'Integrated PLC logic, HMI/SCADA, field devices, drives and production data through testing, commissioning and handover. Migrated validated application content from iFIX to PVI+, completed functional checks and supported MiR mobile-robot operations and fault tracing.',
-    tags: ['PLC/HMI/SCADA', 'GMP', 'FAT/SAT', 'AMR support'],
+    period: 'Jan 2026 - Jun 2026',
+    role: 'Automation Engineer',
+    organisation: 'Process automation systems integrator',
+    context: 'Regulated pharmaceutical, biotechnology and food production',
+    detail:
+      'Delivered controls and integration work across PLC logic, HMI/SCADA, field devices, drives, MES and production data. Migrated validated application content from iFIX to PVI+, completed functional checks, and supported FAT, SAT, commissioning, handover and MiR mobile-robot fault tracing under GMP controls.',
+    tags: ['PLC', 'HMI/SCADA', 'Siemens', 'GMP', 'FAT/SAT', 'AMR support'],
   },
   {
-    period: 'Oct 2025 - Jan 2026', role: 'Product Development Test Engineer (Contract)', organisation: 'Global automotive OEM via engineering consultancy',
-    context: 'Vehicle product development and validation',
-    detail: 'Validated vehicle software integration and ADAS features using feature-vehicle, breadboard and regression testing. Instrumented test vehicles, ran structured drives and used Vector CANoe and CANalyzer for CAN-data fault isolation and defect evidence.',
-    tags: ['ADAS', 'CAN', 'Regression test', 'Vehicle software'],
+    period: 'Oct 2025 - Jan 2026',
+    role: 'Vehicle Validation Engineer',
+    organisation: 'Global automotive OEM via engineering consultancy',
+    context: 'Vehicle software integration and ADAS product development',
+    detail:
+      'Validated vehicle-software integration and ADAS behaviour through feature-vehicle, breadboard and regression testing. Instrumented test vehicles, conducted structured drives, and used Vector CANoe and CANalyzer to capture CAN and CAN FD data for fault isolation, defect evidence and software-readiness verification.',
+    tags: ['ADAS', 'CAN/CAN FD', 'CANoe', 'CANalyzer', 'Regression test', 'Fault evidence'],
   },
   {
-    period: 'Jul 2024 - Aug 2025', role: 'Technical Officer, Quality Assurance and OH&S', organisation: 'ABMARC',
-    context: 'Automotive emissions, energy, compliance and future mobility',
-    detail: 'Delivered ADR/EURO emissions, EV/PHEV range and vehicle-systems testing using calibrated instrumentation, data acquisition and CAN tools. Maintained QA, regulatory, safety and test evidence for certification and audit.',
-    tags: ['Vehicle test', 'DAQ', 'Compliance', 'Quality'],
+    period: 'Jul 2024 - Aug 2025',
+    role: 'Automotive Test and Quality Engineer',
+    organisation: 'ABMARC',
+    employerUrl: 'https://abmarc.com.au/about/',
+    context: 'Automotive testing, energy, emissions and compliance engineering',
+    detail:
+      'Delivered ADR and EURO emissions work, EV/PHEV range testing and vehicle-systems evaluation using calibrated instrumentation, data acquisition and CAN tools. Maintained traceable QA, safety, regulatory and test records so results could stand up to certification review and audit.',
+    tags: ['Vehicle test', 'DAQ', 'CAN', 'ADR/EURO', 'QA', 'OH&S'],
   },
   {
-    period: 'Feb 2024 - Aug 2024', role: 'Consultant Engineer, IoT and Projects Administrator', organisation: 'DuxTel',
-    context: 'Networking and low-power IoT telemetry',
-    detail: 'Built ESP32, sensor, gateway and Linux dashboard solutions using LoRaWAN AU915, MQTT, ChirpStack, InfluxDB and Grafana. Supported CAN, GPS, custom PCB, MikroTik and agricultural monitoring work from field trial to handover.',
-    tags: ['IoT', 'LoRaWAN', 'ESP32', 'Grafana'],
+    period: 'Feb 2024 - Aug 2024',
+    role: 'IoT Systems Engineer',
+    organisation: 'DuxTel',
+    employerUrl: 'https://www.duxtel.com.au/duxSmart',
+    context: 'Networking, low-power telemetry and remote asset visibility',
+    detail:
+      'Built field-to-dashboard solutions using ESP32 devices, sensors, LoRaWAN AU915, MQTT, ChirpStack, InfluxDB and Grafana. Supported CAN and GPS capture, custom PCB work, MikroTik connectivity and Linux services for agricultural-equipment telemetry from field trial through handover.',
+    tags: ['ESP32', 'LoRaWAN', 'MQTT', 'Grafana', 'MikroTik', 'Linux'],
   },
   {
-    period: 'Aug 2022 - Feb 2024', role: 'Production Line Team Lead and Cellar Hand', organisation: 'IDL Australia',
-    context: 'Beverage development, manufacturing and packaging',
-    detail: 'Led shift output, changeovers and handover while maintaining batch quality and traceability. Performed first-level fault finding across production equipment and process interruptions.',
-    tags: ['Team lead', 'Production', 'Traceability', 'Fault finding'],
+    period: 'Aug 2022 - Feb 2024',
+    role: 'Production Team Lead',
+    organisation: 'IDL Australia',
+    employerUrl: 'https://www.idl.au/idl-story',
+    context: 'Beverage manufacturing, packaging and traceable production',
+    detail:
+      'Led day-to-day output, changeovers and shift handovers while maintaining batch quality, traceability and safe operation. Performed first-response fault recovery and supported installation and commissioning checks during WestRock and Fibre-King canning-line upgrades.',
+    tags: ['Team leadership', 'Production', 'Changeover', 'Traceability', 'Fault recovery', 'Commissioning support'],
   },
   {
-    period: 'Sep 2021 - Dec 2021', role: 'Production Line Operator and Commissioning Support', organisation: 'Carbon Revolution',
-    context: 'Industry 4.0 carbon-fibre wheel manufacturing',
-    detail: 'Operated production equipment, recorded quality and traceability data, and supported equipment trials, setup and verification during commissioning activity.',
-    tags: ['Manufacturing', 'Commissioning', 'Quality', 'Traceability'],
+    period: 'Sep 2021 - Dec 2021',
+    role: 'Advanced Manufacturing Technician',
+    organisation: 'Carbon Revolution',
+    employerUrl: 'https://www.carbonrev.com/technology/manufacturing/',
+    context: 'Carbon-fibre wheel production and Industry 4.0 quality control',
+    detail:
+      'Operated carbon-fibre wheel production equipment, recorded in-process quality and traceability evidence, and supported equipment trials, setup and first-level recovery during manufacturing changes. The role built practical discipline around controlled processes, repeatability and production handover.',
+    tags: ['Carbon fibre', 'Manufacturing', 'Traceability', 'Quality', 'Equipment trials', 'First-level recovery'],
   },
   {
-    period: 'Mar 2018 - Mar 2020', role: 'Undergraduate Quality Engineer', organisation: 'Thornton Engineering Australia',
-    context: 'Structural steel and heavy fabrication',
-    detail: 'Supported drawing review, inspection and test plans, manufacturing data records, material traceability and AS/NZS compliance across design, workshop and inspection boundaries.',
-    tags: ['QA', 'ITP/MDR', 'Drawings', 'AS/NZS'],
+    period: 'Mar 2018 - Mar 2020',
+    role: 'Quality Engineer',
+    organisation: 'Thornton Engineering Australia',
+    employerUrl: 'https://www.thorntoneng.com.au/capabilities/',
+    context: 'Structural steel and heavy fabrication for major projects',
+    detail:
+      'Supported drawing review, inspection and test plans, manufacturing data records, material traceability and AS/NZS compliance across design, workshop and inspection boundaries. Learned how design intent becomes auditable fabrication evidence on real production floors.',
+    tags: ['QA', 'ITP/MDR', 'Drawings', 'Materials', 'Traceability', 'AS/NZS'],
   },
-] as const
+]
 
 export const foundation = {
   education: [
@@ -76,37 +120,60 @@ export const foundation = {
 } as const
 
 export const systemLayers = [
-  { index: '01', title: 'Physical system', detail: 'Mechanisms, structures, actuation and the environment.' },
-  { index: '02', title: 'Sensing and electronics', detail: 'Sensors, signal paths, power and embedded hardware.' },
-  { index: '03', title: 'Embedded intelligence', detail: 'Firmware, real-time control, drivers and middleware.' },
-  { index: '04', title: 'Robotics and autonomy', detail: 'Perception, estimation, planning and motion control.' },
-  { index: '05', title: 'AI/ML and data', detail: 'Models, telemetry, engineering data and diagnostics.' },
-  { index: '06', title: 'Validation and deployment', detail: 'Simulation, integration, field checks and handover.' },
+  { index: '01', title: 'Physical system', detail: 'Mechanisms, structures, actuation and the operating environment.', colour: 'orange' },
+  { index: '02', title: 'Sensing and electronics', detail: 'Sensors, signal paths, power and embedded hardware.', colour: 'yellow' },
+  { index: '03', title: 'Embedded intelligence', detail: 'Firmware, real-time control, drivers and middleware.', colour: 'teal' },
+  { index: '04', title: 'Robotics and autonomy', detail: 'Perception, estimation, planning and motion control.', colour: 'blue' },
+  { index: '05', title: 'AI/ML and data', detail: 'Models, telemetry, engineering data and diagnostics.', colour: 'violet' },
+  { index: '06', title: 'Validation and deployment', detail: 'Simulation, integration, field checks and handover.', colour: 'rose' },
 ] as const
 
 export const practiceDomains = [
   {
-    title: 'Robotics & Autonomy',
+    title: 'Robotics and Autonomy',
     detail: 'ROS 2 Humble, Nav2, MoveIt 2, Gazebo Fortress, SLAM, EKF sensor fusion, localisation, planning and PID control.',
   },
   {
-    title: 'Embedded & Electronics',
+    title: 'Embedded and Electronics',
     detail: 'ESP32, STM32, FreeRTOS, C/C++, PCB bring-up, CAN, UART, I2C, SPI, BLE, sensing, motors and drives.',
   },
   {
-    title: 'Automation & Controls',
+    title: 'Automation and Controls',
     detail: 'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC and HMI/SCADA integration, FAT, SAT and commissioning.',
   },
   {
-    title: 'AI/ML & Engineering Data',
+    title: 'AI/ML and Engineering Data',
     detail: 'Python, scikit-learn, OpenCV, YOLO, time-series analysis, MATLAB, Simulink, InfluxDB and Grafana.',
   },
   {
-    title: 'Mechanical & Validation',
+    title: 'Mechanical and Validation',
     detail: 'SolidWorks, Fusion 360, GD&T, prototyping, instrumentation, calibrated testing, fault isolation and DFM.',
   },
   {
-    title: 'Software & Delivery',
+    title: 'Software and Delivery',
     detail: 'Python, C/C++, TypeScript, Linux, Git, Docker, CI/CD, REST APIs, PostgreSQL, traceability and handover.',
   },
+] as const
+
+export const community = [
+  {
+    title: 'Newcomb and District Cricket Club',
+    detail: 'Playing club cricket, helping the club run and building its digital platform for members, committees, sponsors and supporters.',
+  },
+  {
+    title: 'Deakin Mars Rover Team',
+    detail: 'Multidisciplinary student rover work across mechanical, electronics, control and software interfaces.',
+  },
+  {
+    title: 'Math Mentors and Peer Support',
+    detail: 'Helping fellow students with problem solving, study skills, exam preparation and finding the right support.',
+  },
+] as const
+
+export const beyond = [
+  { title: 'Club cricket', detail: 'Most in-season weekends belong to Newcomb and District Cricket Club, on the field and behind the scenes.' },
+  { title: 'Hockey', detail: 'A faster off-season field game, and another reason to enjoy team sport.' },
+  { title: 'Long drives', detail: 'An open road, good music and somewhere new at the end is the best reset.' },
+  { title: 'Music', detail: 'The soundtrack to those drives, late builds and most evenings.' },
+  { title: 'Robots in the garage', detail: 'There is usually a personal robotics or hardware build half-finished on the bench.' },
 ] as const

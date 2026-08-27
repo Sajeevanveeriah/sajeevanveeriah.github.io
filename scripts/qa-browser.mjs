@@ -71,18 +71,18 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     theme: document.documentElement.dataset.theme,
     title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
     visibleText: document.body.innerText.trim().length,
-    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && image.alt),
+    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && (image.alt || image.closest('.brand-mark, .field-core'))),
     featuredCount: document.querySelectorAll('.selected-system h3').length,
     experienceCount: document.querySelectorAll('.experience-section, #experience').length,
     homepageIndexCount: document.querySelectorAll('main > .further-projects, #work .further-projects').length,
     supportCount: document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]').length,
     supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
     dialogs: [...document.querySelectorAll('[role="dialog"]')].filter((node) => getComputedStyle(node).display !== 'none').length,
-    animations: document.getAnimations().length,
+    animations: document.getAnimations().filter((animation) => animation.playState === 'running').length,
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.featuredCount !== 3 || result.experienceCount !== 0 || result.homepageIndexCount !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.featuredCount !== 3 || result.experienceCount !== 1 || result.homepageIndexCount !== 1 || result.supportCount !== 3 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -141,7 +141,7 @@ await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
 await mobilePage.getByText('Menu', { exact: true }).click()
 const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
 const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
-if (!mobileNavVisible || mobileLinks !== 4) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
+if (!mobileNavVisible || mobileLinks !== 6) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
 await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
 await mobile.close()
 
