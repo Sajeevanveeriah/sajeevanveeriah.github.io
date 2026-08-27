@@ -1,71 +1,58 @@
 #!/usr/bin/env node
-/** Lighthouse over the exported site, served locally. */
 import lighthouse from 'lighthouse'
 import { launch } from 'chrome-launcher'
+import { chromium } from 'playwright'
 import { createServer } from 'node:http'
 import { readFile, stat } from 'node:fs/promises'
-import { join, extname } from 'node:path'
+import { extname, join } from 'node:path'
 
-const ROOT = new URL('../out/', import.meta.url).pathname
-const T = { '.html':'text/html','.js':'text/javascript','.css':'text/css','.woff2':'font/woff2',
-  '.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.avif':'image/avif',
-  '.webp':'image/webp','.txt':'text/plain','.xml':'application/xml','.pdf':'application/pdf' }
-const server = createServer(async (req, res) => {
+const root = new URL('../out/', import.meta.url).pathname
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.avif': 'image/avif', '.txt': 'text/plain', '.xml': 'application/xml', '.pdf': 'application/pdf' }
+const server = createServer(async (request, response) => {
   try {
-    let f = join(ROOT, decodeURIComponent((req.url ?? '/').split('?')[0]))
-    try { if ((await stat(f)).isDirectory()) f = join(f, 'index.html') } catch { f = join(ROOT, '404.html') }
-    const b = await readFile(f)
-    res.writeHead(200, { 'content-type': T[extname(f)] ?? 'application/octet-stream' }); res.end(b)
-  } catch { res.writeHead(404).end('nf') }
+    let file = join(root, decodeURIComponent((request.url ?? '/').split('?')[0]))
+    try { if ((await stat(file)).isDirectory()) file = join(file, 'index.html') } catch { file = join(root, '404.html') }
+    response.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream' })
+    response.end(await readFile(file))
+  } catch { response.writeHead(404).end('not found') }
 })
-await new Promise((r) => server.listen(0, r))
-const base = `http://127.0.0.1:${server.address().port}`
+await new Promise((ready) => server.listen(0, ready))
+const address = server.address()
+if (!address || typeof address === 'string') throw new Error('Lighthouse server did not start')
+const base = `http://127.0.0.1:${address.port}`
 
 const chrome = await launch({
-  chromePath: process.env.BROWSER_EXECUTABLE_PATH,
+  chromePath: process.env.BROWSER_EXECUTABLE_PATH || chromium.executablePath(),
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })
+const routes = ['/', '/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
+const minimum = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 }
+const scores = []
 
-/* One representative route per family rather than all 63, because a full
-   Lighthouse pass costs roughly ten seconds a route. Each index is included
-   plus the heaviest detail page under it, so a regression in a shared
-   component still surfaces. `/ecosystem/` carries the largest server-rendered
-   list on the site and the pillar page carries the most records, so both are
-   here: leaving the new routes out would have made this gate quieter as the
-   site grew, which is the failure mode the audit script already had. */
-const ROUTES = ['/', '/work/', '/atlas/', '/about/', '/skills/', '/contact/', '/employers/',
-  '/ecosystem/', '/ecosystem/compute-embedded-and-low-level-software/',
-  '/work/autonomous-navigation-rover/', '/atlas/robotics-and-autonomy/']
-
-console.log('Route'.padEnd(40) + 'Perf  A11y  BestP   SEO   FCP      LCP      CLS   TBT')
-const totals = { performance: [], accessibility: [], 'best-practices': [], seo: [] }
-
-for (const route of ROUTES) {
-  const r = await lighthouse(base + route, {
-    port: chrome.port, output: 'json', logLevel: 'error',
-    onlyCategories: ['performance', 'accessibility', 'best-practices', 'seo'],
+console.log('Route'.padEnd(46) + 'Perf  A11y  Best  SEO')
+for (const route of routes) {
+  const result = await lighthouse(base + route, {
+    port: chrome.port,
+    output: 'json',
+    logLevel: 'error',
+    onlyCategories: Object.keys(minimum),
     formFactor: 'desktop',
     screenEmulation: { mobile: false, width: 1440, height: 900, deviceScaleFactor: 1, disabled: false },
     throttling: { rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1 },
   })
-  const c = r.lhr.categories
-  const a = r.lhr.audits
-  for (const k of Object.keys(totals)) totals[k].push(Math.round(c[k].score * 100))
-  console.log(
-    route.padEnd(40) +
-    String(Math.round(c.performance.score*100)).padStart(4) +
-    String(Math.round(c.accessibility.score*100)).padStart(6) +
-    String(Math.round(c['best-practices'].score*100)).padStart(6) +
-    String(Math.round(c.seo.score*100)).padStart(6) +
-    ('  ' + a['first-contentful-paint'].displayValue).padEnd(11) +
-    (a['largest-contentful-paint'].displayValue).padEnd(9) +
-    (a['cumulative-layout-shift'].displayValue).padEnd(6) +
-    a['total-blocking-time'].displayValue,
-  )
+  if (!result) throw new Error(`Lighthouse did not return a result for ${route}`)
+  const row = Object.fromEntries(Object.keys(minimum).map((key) => [key, Math.round((result.lhr.categories[key].score ?? 0) * 100)]))
+  scores.push({ route, ...row })
+  console.log(route.padEnd(46) + String(row.performance).padStart(4) + String(row.accessibility).padStart(6) + String(row['best-practices']).padStart(6) + String(row.seo).padStart(5))
 }
 
-console.log('\nMinimums across all routes:')
-for (const [k, v] of Object.entries(totals)) console.log(`  ${k.padEnd(16)} ${Math.min(...v)}`)
-
 await chrome.kill()
-server.close()
+await new Promise((closed) => server.close(closed))
+
+const failures = scores.flatMap((row) => Object.entries(minimum).filter(([key, threshold]) => row[key] < threshold).map(([key, threshold]) => ({ route: row.route, category: key, score: row[key], threshold })))
+if (failures.length) {
+  console.error(JSON.stringify(failures, null, 2))
+  process.exitCode = 1
+} else {
+  console.log(`Lighthouse passed ${routes.length} routes at or above ${JSON.stringify(minimum)}.`)
+}

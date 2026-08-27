@@ -21,10 +21,10 @@ export const metadata: Metadata = {
     description: site.proposition,
     url: site.url,
     images: [{
-      url: '/assets/image/20260826-Panelogram-Bay-Layout-Rev00.png',
-      width: 1672,
-      height: 941,
-      alt: 'Screenshot of Panelogram rendering a retail shelving bay to scale with millimetre rulers and per-shelf capacity figures.',
+      url: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
+      width: 1200,
+      height: 630,
+      alt: 'Sajeevan Veeriah systems engineering portfolio, spanning physical systems, embedded engineering, autonomy and delivery.',
     }],
   },
   twitter: { card: 'summary_large_image' },
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f3f4fb' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d1022' },
+    { media: '(prefers-color-scheme: light)', color: '#f8f9fc' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1020' },
   ],
 }
 

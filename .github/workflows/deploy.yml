@@ -8,6 +8,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 # GITHUB_TOKEN needs pages:write and id-token:write for deploy-pages.
@@ -51,6 +53,17 @@ jobs:
       - name: Run rendered browser QA
         run: npm run qa:browser
 
+      - name: Upload rendered QA evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-rendered-qa
+          path: /tmp/portfolio-qa
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Run Lighthouse quality gate
+        run: npm run qa:lighthouse
+
       # Guards the GitHub Pages constraints: without .nojekyll, Jekyll strips
       # the _next directory and the whole site 404s.
       - name: Verify export
@@ -64,12 +77,15 @@ jobs:
           echo "export verified"
 
       - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
 
       - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
           path: ./out
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:

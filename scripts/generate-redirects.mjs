@@ -3,15 +3,13 @@ import { join, resolve } from 'node:path'
 
 const root = resolve('out')
 const hubs = ['about', 'atlas', 'contact', 'ecosystem', 'employers', 'lab', 'practice', 'skills', 'versatility']
-// swl-pricing-inventory-control left this list on 20260826: it is a live
-// engineering record again, so writing a redirect for it would overwrite the
-// exported page. The three 20260826-retired record slugs joined instead.
+// Live engineering records are excluded so redirects never overwrite pages.
 const formerWork = [
   'upzy-supervised-routine-companion', 'modular-education-testing-robot',
   'engineering-mastery-lab', 'veerai-slm', 'adas-can-validation', 'emissions-compliance-testing',
   'iot-monitoring-platform', 'digital-twin-industrial-ai', 'manufacturing-qa-foundation',
   'carbon-revolution-rim-layup', 'idl-canning-line', 'ndcc-website',
-  'inventory-scanning-mobile-robot', 'autonomous-navigation-rover', 'ataxia-assessment-device',
+  'inventory-scanning-mobile-robot', 'panelogram', 'snail-race',
 ]
 const formerAtlas = [
   'mechatronics-and-systems-engineering', 'mechanical-design-materials-and-thermofluids',
@@ -35,7 +33,7 @@ const routes = [
 
 function destination(segments) {
   if (segments[0] === 'contact') return '/#contact'
-  if (segments[0] === 'work') return '/#work'
+  if (segments[0] === 'work') return '/work/'
   if (['atlas', 'ecosystem', 'lab', 'practice', 'skills', 'versatility'].includes(segments[0])) return '/#practice'
   return '/'
 }

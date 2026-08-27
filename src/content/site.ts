@@ -3,9 +3,9 @@ export const site = {
   initials: 'SV',
   jobTitle: 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
   proposition:
-    'I work across the full stack of a machine: mechanical design, electronics, embedded firmware, controls, autonomy, software and engineering data.',
+    'I engineer complete intelligent systems from physical behaviour and sensing through embedded control, autonomy, software, verification and deployed operation.',
   profile:
-    'My experience spans vehicle software and ADAS validation, GMP process automation, mobile-robot support, automotive emissions and EV testing, IoT field deployment and manufacturing quality. I take systems from requirements and prototyping through integration, test, commissioning and handover.',
+    'My work connects mechanics, electronics, firmware, controls, robotics, AI/ML and engineering data into systems that can be tested, commissioned and handed over.',
   url: 'https://sajeevanveeriah.github.io',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
@@ -13,7 +13,7 @@ export const site = {
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   github: 'https://github.com/Sajeevanveeriah',
   support: {
-    label: 'Support my work',
+    label: 'Support open engineering work',
     description: 'Optional support for my open engineering work.',
     url: 'https://paypal.me/SajeevanVeeriah95',
   },

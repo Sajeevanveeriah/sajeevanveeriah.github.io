@@ -9,7 +9,8 @@
     "postbuild": "node scripts/generate-redirects.mjs",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "qa:browser": "node scripts/qa-browser.mjs"
+    "qa:browser": "node scripts/qa-browser.mjs",
+    "qa:lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "next": "15.5.23",
@@ -22,8 +23,10 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "axe-core": "^4.12.1",
+    "chrome-launcher": "^1.2.1",
     "eslint": "^9.36.0",
     "eslint-config-next": "15.5.23",
+    "lighthouse": "^13.4.1",
     "playwright": "^1.62.0",
     "typescript": "^5.9.2"
   }

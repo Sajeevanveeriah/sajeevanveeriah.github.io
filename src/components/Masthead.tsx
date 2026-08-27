@@ -5,38 +5,22 @@ import { site } from '@/content/site'
 type Section = 'work' | 'practice' | 'contact'
 
 const destinations = [
-  { id: 'experience', label: 'Experience' },
-  { id: 'systems', label: 'Systems' },
-  { id: 'work', label: 'Projects' },
-  { id: 'practice', label: 'Capability' },
-  { id: 'credentials', label: 'Credentials' },
+  { id: 'work', label: 'Selected work' },
+  { id: 'practice', label: 'Engineering practice' },
   { id: 'contact', label: 'Contact' },
 ] as const
 
+function DestinationLinks({ current }: { readonly current?: Section }) {
+  return <>{destinations.map((destination) => <Link key={destination.id} href={`/#${destination.id}`} aria-current={current === destination.id ? 'page' : undefined}>{destination.label}</Link>)}</>
+}
+
 export function Masthead({ current, reduced = false }: { readonly current?: Section; readonly reduced?: boolean }) {
   return (
-    <header className="site-header">
-      <div className="shell header-inner">
-        <Link className="brand" href="/" aria-label={`${site.name}, home`}>
-          <span className="brand-mark" aria-hidden="true">{site.initials}</span>
-          <span className="brand-copy"><span className="brand-name">Systems Atlas</span><span>Engineering portfolio</span></span>
-        </Link>
-        {reduced ? null : (
-          <nav className="site-nav" aria-label="Primary">
-            {destinations.map((destination) => (
-              <Link
-                key={destination.id}
-                href={`/#${destination.id}`}
-                aria-current={current === destination.id ? 'page' : undefined}
-              >
-                {destination.label}
-              </Link>
-            ))}
-          </nav>
-        )}
-        <a className="header-resume" href={site.resume}>Resume</a>
-        <ThemeSegment />
-      </div>
-    </header>
+    <header className="site-header"><div className="shell header-inner">
+      <Link className="brand" href="/" aria-label={`${site.name}, home`}><span className="brand-mark" aria-hidden="true">{site.initials}</span><span className="brand-copy"><span className="brand-name">{site.name}</span><span>Systems Atlas</span></span></Link>
+      {reduced ? null : <nav className="site-nav" aria-label="Primary"><DestinationLinks current={current} /></nav>}
+      <div className="header-actions"><a className="header-resume" href={site.resume}>Resume</a><ThemeSegment /></div>
+      {reduced ? null : <details className="nav-disclosure"><summary>Menu</summary><nav aria-label="Mobile primary"><DestinationLinks current={current} /><a href={site.resume}>Resume</a></nav></details>}
+    </div></header>
   )
 }
