@@ -23,6 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: project.system,
     alternates: { canonical: `/work/${project.slug}/` },
     openGraph: {
+      type: 'article',
+      url: `/work/${project.slug}/`,
       title: project.title,
       description: project.system,
       images: [{ url: image.src, width: image.width, height: image.height, alt: image.alt }],
@@ -35,12 +37,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const project = getProject(slug)
   if (!project) notFound()
   const position = featuredProjects.findIndex((entry) => entry.slug === slug) + 1
+  const nextProject = featuredProjects[position % featuredProjects.length] ?? featuredProjects[0]
 
   return (
     <>
       <Masthead current="work" />
       <main id="main">
-        <RecordArticle project={project} position={position} total={featuredProjects.length} />
+        <RecordArticle project={project} nextProject={nextProject} position={position} total={featuredProjects.length} />
       </main>
       <SiteFooter />
     </>

@@ -1,19 +1,30 @@
-# Sajeevan Veeriah - Living Systems Atlas
+# Sajeevan Veeriah - Engineering Portfolio
 
-A static, evidence-led engineering portfolio for Sajeevan Veeriah, a robotics,
-mechatronics and automation engineer in Geelong, Australia.
+A concise, evidence-led portfolio for Sajeevan Veeriah:
 
-The site combines:
+`Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer`
 
-- a 19-domain personal Engineering Atlas with explicit evidence levels;
-- three detailed engineering records and 16 further project records;
-- seven career chapters across manufacturing, IoT, automotive and automation;
-- qualifications, community involvement, languages and interests;
-- light and dark themes, responsive motion and reduced-motion support;
-- a direct PayPal.me support link, with no payment data handled by the site.
+The recruiter-first path is deliberately short:
 
-The implementation is a Next.js 15 App Router static export. It has no backend,
-analytics, trackers or runtime dependency on a paid service.
+1. Exact identity and engineering proposition.
+2. Immediate proof from three flagship records.
+3. Optional role lenses for robotics, automation and engineering software.
+4. A six-layer complete-systems method.
+5. Three evidence-bounded case studies.
+6. Selected professional practice, working style and contact.
+
+The three public engineering records cover ROS 2 autonomous navigation, an
+ESP32 movement-assessment prototype, and a client-commissioned pricing and
+inventory-control application. Each record separates contribution,
+verification, current readiness and evidence boundaries.
+
+The visual system uses oversized editorial typography, a restrained
+near-monochrome palette, one clay accent, hard-edged evidence panels and
+alternating light and dark bands. It retains the site's engineering-field
+motif, light/dark theme control, responsive reflow and reduced-motion support.
+
+The implementation is a Next.js 15 App Router static export for GitHub Pages.
+It has no backend, analytics, trackers or runtime third-party requests.
 
 ## Local commands
 
@@ -31,7 +42,7 @@ requires Playwright Chromium. A managed runner can set
 
 ## Production hosting
 
-The same static `out/` directory is compatible with both GitHub Pages and
+The same static `out/` directory is compatible with GitHub Pages and
 Cloudflare Workers Static Assets.
 
 - Build command: `npm run build`
@@ -42,5 +53,5 @@ Cloudflare Workers Static Assets.
 ## Archive
 
 The pre-rebuild implementation remains under
-`archive/20260810-legacy-portfolio/` for reference. It is not part of the active
-website routes or navigation.
+`archive/20260810-legacy-portfolio/` for reference. It is not part of the
+active website routes or navigation.

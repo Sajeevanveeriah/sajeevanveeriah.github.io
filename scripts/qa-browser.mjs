@@ -91,35 +91,33 @@ for (const [name, width, height, theme, reducedMotion] of states) {
         withinFrame,
       }
     }),
-    indexLayout: {
-      groups: document.querySelectorAll('.index-group').length,
-      projects: document.querySelectorAll('.index-project').length,
-      visualProjects: [...document.querySelectorAll('.index-project-visual')].map((card, index) => {
-        const copy = card.querySelector('.further-copy')
-        const figure = card.querySelector('.further-figure')
-        if (!(copy instanceof HTMLElement) || !(figure instanceof HTMLElement)) return { index, valid: false, reason: 'missing-region' }
-        const cardBox = card.getBoundingClientRect()
-        const copyBox = copy.getBoundingClientRect()
-        const figureBox = figure.getBoundingClientRect()
-        const desktop = innerWidth > 760
-        const verticalOverlap = Math.min(figureBox.bottom, copyBox.bottom) - Math.max(figureBox.top, copyBox.top)
-        const sideBySide = figureBox.left >= copyBox.right - 1 && verticalOverlap > 0
-        const stacked = copyBox.top >= figureBox.bottom - 1 && Math.abs(figureBox.left - copyBox.left) < 2
-        const contained = copyBox.left >= cardBox.left - 1 && copyBox.right <= cardBox.right + 1 && figureBox.left >= cardBox.left - 1 && figureBox.right <= cardBox.right + 1
-        return { index, valid: contained && (desktop ? sideBySide : stacked), desktop, sideBySide, stacked, contained }
-      }),
-    },
-    featuredCount: document.querySelectorAll('.selected-system h3').length,
-    experienceCount: document.querySelectorAll('.experience-section, #experience').length,
-    homepageIndexCount: document.querySelectorAll('main > .further-projects, #work .further-projects').length,
-    supportCount: document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]').length,
-    supportTargetSafe: [...document.querySelectorAll('a[href="https://paypal.me/SajeevanVeeriah95"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
+    identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+    proofCount: document.querySelectorAll('#proof .proof-rail-item').length,
+    roleLensCount: document.querySelectorAll('#role-lenses .role-lens').length,
+    systemsCount: document.querySelectorAll('#systems').length,
+    selectedSystemCount: document.querySelectorAll('#work .selected-system').length,
+    practiceCount: document.querySelectorAll('#practice').length,
+    contactCount: document.querySelectorAll('#contact').length,
+    sectionOrder: ['overview', 'proof', 'role-lenses', 'systems', 'work', 'practice', 'contact'].every((id, index, ids) => {
+      const node = document.getElementById(id)
+      const previous = index === 0 ? null : document.getElementById(ids[index - 1])
+      return Boolean(node && (!previous || (previous.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING)))
+    }),
+    obsoletePhrases: [
+      'Living Systems Atlas',
+      'Nineteen connected capability domains.',
+      'Complete project index',
+      '16 further engineering projects.',
+      'Complete work history',
+    ].filter((phrase) => document.body.innerText.includes(phrase)),
+    supportCount: document.querySelectorAll('a[href*="paypal.me"]').length,
+    supportTargetSafe: [...document.querySelectorAll('a[href*="paypal.me"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
     dialogs: [...document.querySelectorAll('[role="dialog"]')].filter((node) => getComputedStyle(node).display !== 'none').length,
     animations: document.getAnimations().filter((animation) => animation.playState === 'running').length,
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.imageFraming.some((item) => !item.valid) || result.indexLayout.groups !== 3 || result.indexLayout.projects !== 16 || result.indexLayout.visualProjects.length !== 5 || result.indexLayout.visualProjects.some((item) => !item.valid) || result.featuredCount !== 3 || result.experienceCount !== 1 || result.homepageIndexCount !== 1 || result.supportCount !== 3 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.proofCount !== 3 || result.roleLensCount !== 3 || result.systemsCount !== 1 || result.selectedSystemCount !== 3 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -166,6 +164,13 @@ for (const route of routes) {
   const routeResult = await page.evaluate(() => ({
     overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
+    workIndexCount: document.querySelectorAll('.record-index .index-list > li').length,
+    publicCatalogueCount: document.querySelectorAll('.further-projects, .index-group, .index-project').length,
+    recordPage: Boolean(document.querySelector('.record')),
+    evidenceBoundaryCount: document.querySelectorAll('.record .boundary').length,
+    emailActionCount: document.querySelectorAll('.record-actions a[href^="mailto:"]').length,
+    resumeActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.pdf"]').length,
+    nextProjectCount: document.querySelectorAll('.record-actions a[data-next-project]').length,
     visualOverflow: [...document.querySelectorAll('.practice-visual, .record-plate, .selected-visual, .further-figure')].flatMap((figure, index) => {
       const image = figure.querySelector('img')
       if (!(image instanceof HTMLImageElement)) return [{ index, reason: 'missing-image' }]
@@ -177,7 +182,10 @@ for (const route of routes) {
       return withinFrame && landscape && style.objectFit === 'contain' ? [] : [{ index, frame: [frame.width, frame.height], rendered: [rendered.width, rendered.height], objectFit: style.objectFit, withinFrame, landscape }]
     }),
   }))
-  if (response?.status() !== 200 || routeResult.overflow || !routeResult.imagesReady || routeResult.visualOverflow.length) failures.push({ name: 'route', route, status: response?.status(), ...routeResult })
+  const isWorkIndex = route === '/work/'
+  const recordContractInvalid = routeResult.recordPage && (routeResult.evidenceBoundaryCount !== 1 || routeResult.emailActionCount !== 1 || routeResult.resumeActionCount !== 1 || routeResult.nextProjectCount !== 1)
+  const indexContractInvalid = isWorkIndex && (routeResult.workIndexCount !== 3 || routeResult.publicCatalogueCount !== 0)
+  if (response?.status() !== 200 || routeResult.overflow || !routeResult.imagesReady || routeResult.visualOverflow.length || recordContractInvalid || indexContractInvalid) failures.push({ name: 'route', route, status: response?.status(), ...routeResult })
 }
 
 await page.goto(`${baseURL}/work/`, { waitUntil: 'networkidle' })
@@ -199,14 +207,37 @@ await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
 await mobilePage.getByText('Menu', { exact: true }).click()
 const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
 const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
-if (!mobileNavVisible || mobileLinks !== 6) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
+if (!mobileNavVisible || mobileLinks !== 5) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
 await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
+await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Systems' }).click()
+await mobilePage.waitForTimeout(50)
+const mobileMenuOpenAfterSelection = await mobilePage.locator('details.nav-disclosure').evaluate((element) => element.open)
+if (mobileMenuOpenAfterSelection) failures.push({ name: 'mobile-navigation-close', mobileMenuOpenAfterSelection })
 await mobile.close()
 
 const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })
 const noJsPage = await noJs.newPage()
 const noJsResponse = await noJsPage.goto(baseURL)
-if (noJsResponse?.status() !== 200 || await noJsPage.locator('.selected-system h3').count() !== 3 || !(await noJsPage.getByText('Menu', { exact: true }).isVisible())) failures.push({ name: 'no-js' })
+const noJsResult = await noJsPage.evaluate(() => ({
+  identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+  proofCount: document.querySelectorAll('#proof .proof-rail-item').length,
+  roleLensCount: document.querySelectorAll('#role-lenses .role-lens').length,
+  systemsCount: document.querySelectorAll('#systems').length,
+  selectedSystemCount: document.querySelectorAll('#work .selected-system').length,
+  practiceCount: document.querySelectorAll('#practice').length,
+  contactCount: document.querySelectorAll('#contact').length,
+}))
+if (
+  noJsResponse?.status() !== 200
+  || noJsResult.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer'
+  || noJsResult.proofCount !== 3
+  || noJsResult.roleLensCount !== 3
+  || noJsResult.systemsCount !== 1
+  || noJsResult.selectedSystemCount !== 3
+  || noJsResult.practiceCount !== 1
+  || noJsResult.contactCount !== 1
+  || !(await noJsPage.getByText('Menu', { exact: true }).isVisible())
+) failures.push({ name: 'no-js', ...noJsResult })
 await noJs.close()
 
 await browser.close()

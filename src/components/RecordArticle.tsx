@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
+import { site } from '@/content/site'
 
 function MetaStrip({ items }: { readonly items: readonly { readonly label: string; readonly value: string; readonly accent?: boolean; readonly route?: boolean }[] }) {
   return (
@@ -30,8 +31,7 @@ function EvidenceBoundary({ text }: { readonly text: string }) {
   )
 }
 
-export function RecordArticle({ project, position, total }: { readonly project: Project; readonly position: number; readonly total: number }) {
-  const route = `/work/${project.slug}/`
+export function RecordArticle({ project, nextProject, position, total }: { readonly project: Project; readonly nextProject: Project; readonly position: number; readonly total: number }) {
   const pad = (value: number) => String(value).padStart(2, '0')
 
   return (
@@ -42,7 +42,7 @@ export function RecordArticle({ project, position, total }: { readonly project: 
           items={[
             { label: 'Record', value: `${pad(position)} of ${pad(total)}` },
             { label: 'Evidence class', value: project.evidence, accent: true },
-            { label: 'Route', value: route, route: true },
+            { label: 'Status', value: 'Public evidence-bounded record' },
           ]}
         />
         <header className="record-header">
@@ -59,9 +59,9 @@ export function RecordArticle({ project, position, total }: { readonly project: 
       <div className="record-grid shell">
         <aside className="record-rail">
           <hr className="rule-accent" />
-          <p className="kicker">Engineering boundary</p>
+          <p className="kicker">My contribution</p>
           <p>{project.ownership}</p>
-          <p className="rail-label">Contribution</p>
+          <p className="rail-label">Technology</p>
           <ul className="tag-list">
             {project.stack.map((item) => <Tag key={item}>{item}</Tag>)}
           </ul>
@@ -86,6 +86,17 @@ export function RecordArticle({ project, position, total }: { readonly project: 
           <EvidenceBoundary text={project.boundary} />
         </div>
       </div>
+      <section className="record-actions" aria-labelledby="record-actions-title">
+        <div className="shell">
+          <h2 id="record-actions-title">Continue the conversation.</h2>
+          <p>Discuss this work, compare it with your engineering brief, or continue to the next evidence record.</p>
+          <div>
+            <a href={`mailto:${site.email}`}>Email Saj <span aria-hidden="true">→</span></a>
+            <a href={site.resume}>Download resume <span aria-hidden="true">→</span></a>
+            <Link href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
