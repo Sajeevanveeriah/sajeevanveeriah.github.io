@@ -9,11 +9,11 @@ export function SiteFooter() {
           <Link className="footer-name" href="/">{site.name}</Link>
           <p>{site.jobTitle}</p>
         </div>
-        <div className="footer-links" aria-label="Professional links">
+        <nav className="footer-links" aria-label="Professional links">
           <a href={site.github}>GitHub</a>
           <a href={site.resume}>Resume</a>
           <a href={site.support.url} target="_blank" rel="noopener noreferrer">{site.support.label}</a>
-        </div>
+        </nav>
         <p className="copyright">© 2026 {site.name}</p>
       </div>
     </footer>

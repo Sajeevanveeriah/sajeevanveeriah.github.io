@@ -2,11 +2,11 @@ export const site = {
   name: 'Sajeevan Veeriah',
   shortName: 'Saj',
   initials: 'SV',
-  jobTitle: 'Robotics, Mechatronics and Automation Engineer',
+  jobTitle: 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
   proposition:
-    'I build intelligent systems that move, sense and decide - from mechanisms and electronics through embedded control, autonomy, software and verified operation.',
+    'I engineer complete systems from physical requirements to verified operation - connecting mechanisms, electronics, embedded control, autonomy, data and software.',
   profile:
-    'My practice connects robotics, industrial automation, automotive validation, IoT, AI/ML and engineering software. I am at my best at the interfaces: turning a physical need into a system that can be built, tested, fault-found and handed over.',
+    'I work where disciplines meet: turning a physical need into a system that can be built, integrated, tested, fault-found and handed over.',
   url: 'https://sajeevanveeriah.github.io',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
@@ -15,7 +15,7 @@ export const site = {
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
   support: {
-    label: 'Buy me a coffee',
+    label: 'Optional project support',
     description: 'Optional support for the open engineering work and learning resources I publish.',
     url: 'https://paypal.me/SajeevanVeeriah95',
   },
@@ -33,15 +33,15 @@ export interface ExperienceRecord {
 }
 
 /**
- * Public-facing functional titles are deliberately concise. The first two
- * organisations remain anonymised to respect programme confidentiality and
- * contract boundaries. Employer links establish company context only; every
- * personal contribution below is grounded in the resume and portfolio record.
+ * Role titles follow the verified public resume. The first two organisations
+ * remain anonymised to respect programme confidentiality and contract
+ * boundaries. Employer links establish company context only; every personal
+ * contribution below is grounded in the resume and portfolio record.
  */
 export const experience: readonly ExperienceRecord[] = [
   {
     period: 'Jan 2026 - Jun 2026',
-    role: 'Automation Engineer',
+    role: 'Automation and Controls Engineer',
     organisation: 'Process automation systems integrator',
     context: 'Regulated pharmaceutical, biotechnology and food production',
     detail:
@@ -50,7 +50,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Oct 2025 - Jan 2026',
-    role: 'Vehicle Validation Engineer',
+    role: 'Product Development Test Engineer (Contract)',
     organisation: 'Global automotive OEM via engineering consultancy',
     context: 'Vehicle software integration and ADAS product development',
     detail:
@@ -59,7 +59,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Jul 2024 - Aug 2025',
-    role: 'Automotive Test and Quality Engineer',
+    role: 'Technical Officer & Quality Assurance',
     organisation: 'ABMARC',
     employerUrl: 'https://abmarc.com.au/about/',
     context: 'Automotive testing, energy, emissions and compliance engineering',
@@ -69,7 +69,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Feb 2024 - Aug 2024',
-    role: 'IoT Systems Engineer',
+    role: 'Consultant Engineer, IoT and Projects Administrator',
     organisation: 'DuxTel',
     employerUrl: 'https://www.duxtel.com.au/duxSmart',
     context: 'Networking, low-power telemetry and remote asset visibility',
@@ -79,7 +79,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Aug 2022 - Feb 2024',
-    role: 'Production Team Lead',
+    role: 'Production Line Team Lead & Cellar Hand',
     organisation: 'IDL Australia',
     employerUrl: 'https://www.idl.au/idl-story',
     context: 'Beverage manufacturing, packaging and traceable production',
@@ -89,7 +89,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Sep 2021 - Dec 2021',
-    role: 'Advanced Manufacturing Technician',
+    role: 'Production Line Operator and Commissioning Support',
     organisation: 'Carbon Revolution',
     employerUrl: 'https://www.carbonrev.com/technology/manufacturing/',
     context: 'Carbon-fibre wheel production and Industry 4.0 quality control',
@@ -99,7 +99,7 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Mar 2018 - Mar 2020',
-    role: 'Quality Engineer',
+    role: 'Undergraduate Quality Engineer',
     organisation: 'Thornton Engineering Australia',
     employerUrl: 'https://www.thorntoneng.com.au/capabilities/',
     context: 'Structural steel and heavy fabrication for major projects',
@@ -127,6 +127,48 @@ export const systemLayers = [
   { index: '05', title: 'AI/ML and data', detail: 'Models, telemetry, engineering data and diagnostics.', colour: 'violet' },
   { index: '06', title: 'Validation and deployment', detail: 'Simulation, integration, field checks and handover.', colour: 'rose' },
 ] as const
+
+export const roleLenses = [
+  {
+    title: 'Robotics and Mechatronics',
+    detail: 'I connect mechanisms, sensing, embedded control and autonomy so physical systems can move from build to verified behaviour.',
+    href: '/work/autonomous-navigation-rover/',
+    action: 'See robotics evidence',
+  },
+  {
+    title: 'Automation and Controls',
+    detail: 'I integrate PLC, HMI/SCADA, field devices, drives and production data, carrying work through FAT, SAT, commissioning and handover.',
+    href: '#practice',
+    action: 'See automation evidence',
+  },
+  {
+    title: 'AI/ML and Engineering Software',
+    detail: 'My AI/ML evidence includes VeerAI, a locally deployed private small-language-model system with governed ingestion, retrieval, memory, tools and evaluation. The linked record shows adjacent engineering-software delivery.',
+    href: '/work/swl-pricing-inventory-control/',
+    action: 'See software evidence',
+  },
+] as const
+
+export const professionalProof = [
+  {
+    title: 'Regulated automation and commissioning',
+    detail: 'Controls and integration across PLC logic, HMI/SCADA, field devices, drives and production data, including validated migration, FAT, SAT, commissioning, handover and mobile-robot fault tracing under GMP controls.',
+  },
+  {
+    title: 'Field IoT and telemetry',
+    detail: 'Field-to-dashboard telemetry with ESP32, LoRaWAN, MQTT, ChirpStack, InfluxDB and Grafana, plus CAN, GPS, custom PCB, connectivity and Linux support from field trial through handover.',
+  },
+  {
+    title: 'Automotive validation and test evidence',
+    detail: 'Vehicle-software and ADAS validation through feature-vehicle, breadboard and regression testing, with CAN and CAN FD captures used for fault isolation, defect evidence and software-readiness verification.',
+  },
+] as const
+
+export const workingStyle =
+  'My working pattern is consistent: understand the whole system, isolate faults and leave clear evidence for verification, commissioning and handover.'
+
+export const humanNote =
+  'Beyond project delivery, I play and help run my cricket club, mentor fellow students, and usually have a personal robotics or hardware build on the bench.'
 
 export const practiceDomains = [
   {

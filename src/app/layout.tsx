@@ -24,7 +24,7 @@ export const metadata: Metadata = {
       url: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
       width: 1200,
       height: 630,
-      alt: 'Sajeevan Veeriah Living Systems Atlas, spanning robotics, embedded engineering, automation, software and validation.',
+      alt: `${site.name}, ${site.jobTitle}`,
     }],
   },
   twitter: { card: 'summary_large_image' },
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f7f4ec' },
-    { media: '(prefers-color-scheme: dark)', color: '#0c0f16' },
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f0f1c' },
   ],
 }
 
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
-    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Embedded systems', 'Automotive validation', 'IoT', 'AI and machine learning'],
+    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Embedded systems', 'Controls', 'Automotive validation', 'IoT', 'AI and machine learning', 'Engineering software'],
   }
 
   return (

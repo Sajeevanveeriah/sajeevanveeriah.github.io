@@ -2,6 +2,7 @@ export interface Project {
   readonly slug: string
   readonly title: string
   readonly evidence: string
+  readonly proof: string
   readonly problem: string
   readonly system: string
   readonly architecture: string
@@ -17,7 +18,7 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Real interface screenshot' | 'Illustrative system visual'
+    readonly kind: 'Real interface screenshot' | 'Illustrative concept image - not build photography'
   }
 }
 
@@ -26,6 +27,7 @@ export const projects: readonly [Project, Project, Project] = [
     slug: 'autonomous-navigation-rover',
     title: 'Autonomous Navigation Rover on ROS 2',
     evidence: 'Hardware build with simulation-validated autonomy',
+    proof: 'Repeatable localisation, planning and obstacle-aware navigation behaviour.',
     problem: 'Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before higher-level behaviour matters.',
     system: 'A differential-drive platform with LiDAR and IMU sensing, running ROS 2 Humble, Nav2, SLAM, EKF state estimation and motion control.',
     architecture: 'LiDAR and IMU inputs feed modular ROS 2 nodes for mapping and EKF state estimation. Nav2 consumes the resulting map and fused pose for costmaps, planning, control and recovery behaviour, with Gazebo Fortress and RViz providing repeatable inspection.',
@@ -49,13 +51,14 @@ export const projects: readonly [Project, Project, Project] = [
       alt: 'Illustrative system visual showing an autonomous rover moving through a mapped environment with navigation and sensing layers.',
       width: 1448,
       height: 1086,
-      kind: 'Illustrative system visual',
+      kind: 'Illustrative concept image - not build photography',
     },
   },
   {
     slug: 'ataxia-assessment-device',
     title: 'ESP32 Clinical Ataxia Assessment Device',
     evidence: 'Assessed embedded prototype',
+    proof: 'Real-time recording, Bluetooth display and CSV/PDF reporting.',
     problem: 'Movement and coordination assessment benefits from repeatable sensor-based measurement rather than observation alone.',
     system: 'An ESP32 device with a custom PCB, enclosure, four Hall-effect sensors, 100 Hz acquisition, Bluetooth connectivity and MATLAB validation.',
     architecture: 'Four Hall-effect sensing channels feed deterministic 100 Hz acquisition on the ESP32. The embedded path supports recording and Bluetooth live display, while MATLAB provides the auditable reference-instrument comparison and reporting workflow.',
@@ -79,13 +82,14 @@ export const projects: readonly [Project, Project, Project] = [
       alt: 'Illustrative system visual of an embedded movement-assessment prototype and its sensing and analysis path.',
       width: 1448,
       height: 1086,
-      kind: 'Illustrative system visual',
+      kind: 'Illustrative concept image - not build photography',
     },
   },
   {
     slug: 'swl-pricing-inventory-control',
     title: 'SWL Pricing and Inventory Control',
     evidence: 'Client-commissioned system, release 1.2.0',
+    proof: 'Operator-reviewed imports with change, exception, rollback and audit reports.',
     problem: 'Stan Wootton Locksmiths reprices its ServiceM8 materials catalogue from supplier price exports. Doing that by spreadsheet risks damaged item numbers and barcodes, an inconsistent markup and unreviewed price changes reaching the job system.',
     system: 'A local-first pricing and inventory control application with a Windows desktop surface and a browser surface. It compares an untouched supplier export against the current ServiceM8 materials list, applies the confirmed 30 percent markup on GST-exclusive cost, and produces an operator-reviewed import CSV in ServiceM8\'s exact format, with change, exception, rollback and audit reports.',
     architecture: 'A shared React and TypeScript interface over pure domain modules for money, pricing, comparison, mapping and output. A typed platform adapter selects the backend: scoped Tauri commands with bundled SQLite on the Rust desktop build, a loopback Node server for local web use, and a session-only store for the static demonstration.',

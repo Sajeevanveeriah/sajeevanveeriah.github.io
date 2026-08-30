@@ -1,68 +1,88 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { AtlasExplorer } from '@/components/AtlasExplorer'
 import { EngineeringField } from '@/components/EngineeringField'
-import { ExperienceTimeline } from '@/components/ExperienceTimeline'
 import { Masthead } from '@/components/Masthead'
-import { ProjectIndex } from '@/components/ProjectIndex'
 import { SiteFooter } from '@/components/SiteFooter'
-import { featuredProjects, projectIndex } from '@/content/projects'
-import { beyond, community, experience, foundation, site, systemLayers } from '@/content/site'
+import { featuredProjects } from '@/content/projects'
+import { humanNote, professionalProof, roleLenses, site, systemLayers, workingStyle } from '@/content/site'
 
-const projectTotal = featuredProjects.length + projectIndex.reduce((count, group) => count + group.items.length, 0)
-const beyondColours = ['orange', 'yellow', 'teal', 'blue', 'violet'] as const
+const proofItems = [
+  'Member, Engineers Australia',
+  'Mechatronics Engineering (Honours), Distinction, 2025',
+  'Lab / Field / Vehicle / Production',
+] as const
 
 export default function HomePage() {
   return (
     <>
       <Masthead />
       <main id="main">
-        <section className="atlas-hero shell" id="overview" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <p className="eyebrow">Geelong, Australia / Engineer across the complete system</p>
-            <h1 id="hero-title"><span>Sajeevan</span>{' '}<span>Veeriah</span></h1>
-            <p className="hero-role">{site.jobTitle}</p>
-            <p className="hero-summary">{site.proposition}</p>
-            <p className="hero-profile">{site.profile}</p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#work">Explore my work</a>
-              <a className="button button-secondary" href={site.resume}>Download resume</a>
-              <a className="button button-coffee" href={site.support.url} target="_blank" rel="noopener noreferrer">Buy me a coffee</a>
+        <section className="portfolio-hero" id="overview" aria-labelledby="hero-title">
+          <div className="shell hero-layout">
+            <div className="hero-copy">
+              <p className="hero-location">Geelong, Victoria, Australia</p>
+              <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
+              <p className="hero-role">{site.jobTitle}</p>
+              <h2 className="hero-statement">Complete systems.<br />Verified operation.</h2>
+              <p className="hero-summary">{site.proposition}</p>
+              <p className="hero-profile">{site.profile}</p>
+              <div className="hero-actions">
+                <a className="button button-primary" href="#proof">View selected work</a>
+                <a className="button button-secondary" href={site.resume}>Download resume</a>
+                <a className="button button-secondary" href={`mailto:${site.email}`}>Email me</a>
+              </div>
             </div>
+            <EngineeringField />
+            <ul className="trust-proof" aria-label="Professional proof">
+              {proofItems.map((item) => (
+                <li key={item}><span aria-hidden="true" />{item}</li>
+              ))}
+            </ul>
           </div>
-          <EngineeringField />
-
-          <dl className="hero-proof" aria-label="Portfolio scope">
-            <div><dt>{projectTotal}</dt><dd>project records</dd></div>
-            <div><dt>19</dt><dd>atlas domains</dd></div>
-            <div><dt>{experience.length}</dt><dd>career chapters</dd></div>
-            <div><dt>{systemLayers.length}</dt><dd>connected layers</dd></div>
-          </dl>
         </section>
 
-        <figure className="practice-visual shell">
-          <Image
-            src="/assets/image/20260827-Living-Systems-Atlas-Illustration-Rev00.webp"
-            alt="Illustrative engineering atlas connecting a rover, sensing, embedded electronics, automation hardware and verification software through one signal path."
-            width={1919}
-            height={1200}
-            priority
-            sizes="(max-width: 1440px) 100vw, 1380px"
-          />
-          <figcaption>Illustrative practice map / brand artwork, not project evidence</figcaption>
-        </figure>
+        <section className="proof-rail" id="proof" aria-labelledby="proof-title">
+          <h2 className="sr-only" id="proof-title">Immediate project proof</h2>
+          <div className="shell proof-rail-grid">
+            {featuredProjects.map((project, index) => (
+              <article className="proof-rail-item" key={project.slug}>
+                <p className="proof-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
+                <h3>{project.title}</h3>
+                <p className="proof-evidence">{project.evidence}</p>
+                <p>{project.proof}</p>
+                <Link href={`/work/${project.slug}/`}>Open record <span aria-hidden="true">→</span></Link>
+              </article>
+            ))}
+          </div>
+        </section>
 
-        <section className="system-band" id="systems" aria-labelledby="systems-title">
-          <div className="shell">
-            <div className="section-intro compact">
-              <p className="eyebrow">How I engineer</p>
+        <section className="role-lenses-section shell" id="role-lenses" aria-labelledby="role-lenses-title">
+          <div className="role-lenses-intro">
+            <h2 id="role-lenses-title">Start with the role you are hiring for.</h2>
+            <p>The same projects show different strengths. Choose the lens closest to your brief, or keep scrolling for the complete system.</p>
+          </div>
+          <div className="role-lenses">
+            {roleLenses.map((lens, index) => (
+              <article className="role-lens" data-featured={index === 0 ? 'true' : undefined} key={lens.title}>
+                <p className="role-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
+                <h3>{lens.title}</h3>
+                <p>{lens.detail}</p>
+                <Link href={lens.href}>{lens.action} <span aria-hidden="true">→</span></Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="systems-band" id="systems" aria-labelledby="systems-title">
+          <div className="shell systems-layout">
+            <div className="systems-intro">
               <h2 id="systems-title">From physical behaviour to dependable operation.</h2>
-              <p>Each layer has clear interfaces, testable assumptions and evidence at the boundary.</p>
+              <p>I connect each interface, test the assumptions and leave evidence at the boundary.</p>
             </div>
-            <ol className="system-rail">
+            <ol className="systems-path">
               {systemLayers.map((layer) => (
-                <li data-colour={layer.colour} key={layer.index}>
-                  <span className="rail-node" aria-hidden="true">{layer.index}</span>
+                <li key={layer.index}>
+                  <span aria-hidden="true">{layer.index}</span>
                   <h3>{layer.title}</h3>
                   <p>{layer.detail}</p>
                 </li>
@@ -71,124 +91,75 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="atlas-section shell" id="atlas" aria-labelledby="atlas-title">
-          <div className="section-heading">
+        <section className="work-section" id="work" aria-labelledby="work-title">
+          <div className="shell section-heading editorial-heading">
             <div>
-              <p className="eyebrow">My Engineering Atlas</p>
-              <h2 id="atlas-title">Nineteen connected capability domains.</h2>
+              <p className="kicker">Selected work</p>
+              <h2 id="work-title">Evidence across complete systems.</h2>
             </div>
-            <p>Evidence levels separate delivered work, hands-on practice, working knowledge and adjacent fields. The map shows what I can defend, not a catalogue of everything in engineering.</p>
+            <p>Three records. Each one shows the system, my contribution, how it was checked and where the claim stops.</p>
           </div>
-          <AtlasExplorer />
-        </section>
-
-        <section className="project-section" id="work" aria-labelledby="work-title">
-          <div className="shell">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">Selected engineering records</p>
-                <h2 id="work-title">Systems with evidence and boundaries.</h2>
-              </div>
-              <Link className="text-action" href="/work/">Open the dedicated work index</Link>
-            </div>
-
-            <div className="selected-systems">
-              {featuredProjects.map((project, index) => (
-                <article className="selected-system" key={project.slug}>
-                  <div className="selected-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</div>
-                  <div className="selected-heading">
-                    <p>{project.evidence}</p>
+          <div className="selected-systems">
+            {featuredProjects.map((project, index) => (
+              <article className="selected-system" data-tone={index === 1 ? 'dark' : 'light'} key={project.slug}>
+                <div className="shell selected-system-grid">
+                  <div className="selected-copy">
+                    <p className="selected-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
                     <h3>{project.title}</h3>
-                  </div>
-                  <div className="selected-proof">
-                    <p><strong>System</strong>{project.system}</p>
-                    <p><strong>Verification</strong>{project.verification}</p>
-                    <ul aria-label={`${project.title} technology stack`}>
-                      {project.stack.slice(0, 7).map((item) => <li key={item}>{item}</li>)}
-                    </ul>
-                    <Link className="button button-secondary" href={`/work/${project.slug}/`}>Open engineering record</Link>
+                    <p className="selected-evidence">{project.evidence}</p>
+                    <dl className="selected-details">
+                      <div><dt>Contribution</dt><dd>{project.ownership}</dd></div>
+                      <div><dt>Verification</dt><dd>{project.verification}</dd></div>
+                      <div><dt>Boundary</dt><dd>{project.boundary}</dd></div>
+                    </dl>
+                    <Link className="button button-record" href={`/work/${project.slug}/`}>Open engineering record <span aria-hidden="true">→</span></Link>
                   </div>
                   {project.image ? (
                     <figure className="selected-visual">
-                      <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 900px) 100vw, 29vw" loading="eager" />
+                      <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 900px) 100vw, 56vw" />
                       <figcaption>{project.image.kind}</figcaption>
                     </figure>
                   ) : null}
-                </article>
-              ))}
-            </div>
-
-            <ProjectIndex headingId="complete-project-index" />
-          </div>
-        </section>
-
-        <section className="experience-section" id="experience" aria-labelledby="experience-title">
-          <div className="shell experience-layout">
-            <div className="experience-intro">
-              <p className="eyebrow">Complete work history</p>
-              <h2 id="experience-title">Built on real production floors.</h2>
-              <p>My career moves across structural steel, advanced composites, beverage production, IoT, automotive testing and regulated automation. The thread is the same: understand the system, find the fault and leave auditable evidence.</p>
-              <p className="source-note">Organisation links describe employer context. Personal duties and tools remain bounded by my resume and project records.</p>
-            </div>
-            <ExperienceTimeline />
-          </div>
-        </section>
-
-        <section className="foundation-section" id="credentials" aria-labelledby="credentials-title">
-          <div className="shell">
-            <div className="proof-strip">
-              <p><span>Base</span>{site.location}</p>
-              {site.credentials.map((credential) => <p key={credential}><span>Credential</span>{credential}</p>)}
-            </div>
-            <div className="section-intro compact">
-              <p className="eyebrow">Foundation</p>
-              <h2 id="credentials-title">Engineering depth with a practical bias.</h2>
-              <p>Formal study, professional membership, short courses and multilingual communication support the delivery record.</p>
-            </div>
-            <div className="foundation-grid">
-              <section><p className="foundation-number">01</p><h3>Education</h3><ul>{foundation.education.map((item) => <li key={item}>{item}</li>)}</ul></section>
-              <section><p className="foundation-number">02</p><h3>Professional</h3><ul>{foundation.professional.map((item) => <li key={item}>{item}</li>)}</ul></section>
-              <section><p className="foundation-number">03</p><h3>Training</h3><ul>{foundation.training.map((item) => <li key={item}>{item}</li>)}</ul></section>
-              <section><p className="foundation-number">04</p><h3>Languages</h3><ul>{foundation.languages.map((item) => <li key={item}>{item}</li>)}</ul></section>
-            </div>
-          </div>
-        </section>
-
-        <section className="beyond-section shell" id="about" aria-labelledby="about-title">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">Beyond engineering</p>
-              <h2 id="about-title">A life with teams, roads, music and unfinished robots.</h2>
-            </div>
-            <p>The portfolio is technical. The person behind it is powered by community sport, mentoring, good music and curiosity that follows me home.</p>
-          </div>
-          <div className="beyond-grid">
-            {beyond.map((item, index) => (
-              <article data-colour={beyondColours[index] ?? 'blue'} key={item.title}>
-                <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                <h3>{item.title}</h3>
-                <p>{item.detail}</p>
+                </div>
               </article>
             ))}
           </div>
-          <div className="community-grid">
-            <div><p className="eyebrow">Community and university</p><h3>Engineering is a team sport too.</h3></div>
-            <ul>{community.map((item) => <li key={item.title}><strong>{item.title}</strong><span>{item.detail}</span></li>)}</ul>
+          <div className="shell work-index-action"><Link className="text-action" href="/work/">View the three-record work index <span aria-hidden="true">→</span></Link></div>
+        </section>
+
+        <section className="practice-section" id="practice" aria-labelledby="practice-title">
+          <div className="shell practice-layout">
+            <div className="practice-intro">
+              <p className="kicker">Practice</p>
+              <h2 id="practice-title">I work where systems meet reality.</h2>
+              <p>{workingStyle}</p>
+            </div>
+            <ol className="practice-list">
+              {professionalProof.map((item, index) => (
+                <li key={item.title}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <div><h3>{item.title}</h3><p>{item.detail}</p></div>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div className="human-note">
+            <div className="shell human-note-grid">
+              <div><p className="kicker">Human note</p><h2>The engineer behind the evidence.</h2></div>
+              <p>{humanNote}</p>
+              <div className="human-linework" aria-hidden="true" />
+            </div>
           </div>
         </section>
 
-        <section className="contact-strip" id="contact" aria-labelledby="contact-title">
-          <div className="shell contact-grid">
-            <div>
-              <p className="eyebrow">Build the next dependable system</p>
-              <h2 id="contact-title">Open to engineering conversations in Geelong and beyond.</h2>
-              <p>If my work helps you, the optional PayPal button supports more open engineering projects and learning resources.</p>
-              <a className="button button-coffee" href={site.support.url} target="_blank" rel="noopener noreferrer">Buy me a coffee with PayPal</a>
-            </div>
-            <address className="contact-links">
-              <a href={`mailto:${site.email}`}><span>Email</span>{site.email}</a>
-              <a href={site.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span>Sajeevanveeriah</a>
-              <a href={site.resume}><span>Resume</span>Download PDF</a>
+        <section className="contact-terminal" id="contact" aria-labelledby="contact-title">
+          <div className="shell contact-layout">
+            <h2 id="contact-title">Need an engineer who can connect the whole system?</h2>
+            <p>I am based in Geelong and open to conversations about robotics, mechatronics, automation, controls, AI/ML and engineering software roles.</p>
+            <address className="contact-actions">
+              <a href={`mailto:${site.email}`}>Email me <span aria-hidden="true">→</span></a>
+              <a href={site.github}>View GitHub <span aria-hidden="true">→</span></a>
+              <a href={site.resume}>Download resume <span aria-hidden="true">→</span></a>
             </address>
           </div>
         </section>
