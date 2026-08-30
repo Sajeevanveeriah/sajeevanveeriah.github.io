@@ -167,7 +167,7 @@ for (const route of routes) {
     workIndexCount: document.querySelectorAll('.record-index .index-list > li').length,
     publicCatalogueCount: document.querySelectorAll('.further-projects, .index-group, .index-project').length,
     recordPage: Boolean(document.querySelector('.record')),
-    evidenceBoundaryCount: document.querySelectorAll('.record .boundary').length,
+    evidenceBoundaryCount: document.querySelectorAll('.record-grid .boundary').length,
     emailActionCount: document.querySelectorAll('.record-actions a[href^="mailto:"]').length,
     resumeActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.pdf"]').length,
     nextProjectCount: document.querySelectorAll('.record-actions a[data-next-project]').length,
