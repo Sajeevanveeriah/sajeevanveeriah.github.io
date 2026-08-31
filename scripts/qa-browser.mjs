@@ -38,10 +38,12 @@ const failures = []
 const states = [
   ['desktop-light', 1440, 1000, 'light', 'no-preference'],
   ['desktop-dark', 1440, 1000, 'dark', 'no-preference'],
+  ['desktop-tight-1180', 1180, 900, 'light', 'no-preference'],
   ['mobile-light', 390, 844, 'light', 'no-preference'],
   ['mobile-dark', 390, 844, 'dark', 'no-preference'],
   ['narrow-320', 320, 720, 'light', 'no-preference'],
   ['tablet-768', 768, 1024, 'light', 'no-preference'],
+  ['zoom-200-equivalent', 720, 900, 'light', 'no-preference'],
   ['ultrawide-1920', 1920, 1080, 'dark', 'no-preference'],
   ['reduced-motion', 1440, 1000, 'light', 'reduce'],
 ]
@@ -72,6 +74,48 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
     visibleText: document.body.innerText.trim().length,
     imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && (image.alt || image.closest('.brand-mark, .field-core'))),
+    layoutIntegrity: (() => {
+      const collisions = []
+      const groups = [
+        ['hero', '.hero-layout', ':scope > *'],
+        ['field-nodes', '.field-nodes', ':scope > .field-node'],
+        ['proof', '.proof-rail-grid', ':scope > .proof-rail-item'],
+        ['role-lenses', '.role-lenses', ':scope > .role-lens'],
+        ['systems-path', '.systems-path', ':scope > li'],
+        ['practice', '.practice-layout', ':scope > *'],
+        ['contact', '.contact-layout', ':scope > h2, :scope > p'],
+      ]
+
+      for (const [name, containerSelector, itemSelector] of groups) {
+        for (const container of document.querySelectorAll(containerSelector)) {
+          const items = [...container.querySelectorAll(itemSelector)]
+            .map((item, index) => ({ index, rect: item.getBoundingClientRect(), display: getComputedStyle(item).display }))
+            .filter((item) => item.display !== 'none' && item.rect.width > 0 && item.rect.height > 0)
+          for (let left = 0; left < items.length; left += 1) {
+            for (let right = left + 1; right < items.length; right += 1) {
+              const a = items[left].rect
+              const b = items[right].rect
+              if (a.right > b.left + 1 && b.right > a.left + 1 && a.bottom > b.top + 1 && b.bottom > a.top + 1) {
+                collisions.push({ name, pair: [items[left].index, items[right].index] })
+              }
+            }
+          }
+        }
+      }
+
+      const field = document.querySelector('.field-nodes')
+      const fieldRect = field?.getBoundingClientRect()
+      const fieldOutOfBounds = field && fieldRect && getComputedStyle(field).display !== 'none'
+        ? [...field.querySelectorAll('.field-node')].flatMap((node, index) => {
+            const rect = node.getBoundingClientRect()
+            return rect.left < fieldRect.left - 1 || rect.top < fieldRect.top - 1 || rect.right > fieldRect.right + 1 || rect.bottom > fieldRect.bottom + 1
+              ? [{ index, node: [rect.left, rect.top, rect.right, rect.bottom], field: [fieldRect.left, fieldRect.top, fieldRect.right, fieldRect.bottom] }]
+              : []
+          })
+        : []
+
+      return { collisions, fieldOutOfBounds }
+    })(),
     imageFraming: [...document.querySelectorAll('.practice-visual, .selected-visual, .record-plate, .further-figure')].map((figure, index) => {
       const image = figure.querySelector('img')
       if (!(image instanceof HTMLImageElement)) return { index, valid: false, reason: 'missing-image' }
@@ -117,7 +161,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.proofCount !== 3 || result.roleLensCount !== 3 || result.systemsCount !== 1 || result.selectedSystemCount !== 3 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.proofCount !== 3 || result.roleLensCount !== 3 || result.systemsCount !== 1 || result.selectedSystemCount !== 3 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -247,5 +291,5 @@ if (failures.length) {
   console.error(JSON.stringify(failures, null, 2))
   process.exitCode = 1
 } else {
-  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, uncropped image framing, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
+  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, collision-free layout, 200% zoom-equivalent reflow, uncropped image framing, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
 }
