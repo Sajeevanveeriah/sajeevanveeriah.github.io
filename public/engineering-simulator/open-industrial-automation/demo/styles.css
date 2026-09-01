@@ -3,3 +3,36 @@
   text-transform: none;
   letter-spacing: normal;
 }
+/* OIA grid-track containment repair */
+.workspace {
+  grid-template-columns: minmax(0, 2fr) minmax(0, .7fr);
+}
+.process-panel,
+.command-panel,
+.sequence-panel,
+.trend-panel,
+.alarm-panel,
+.mimic {
+  width: 100%;
+}
+@media (max-width: 980px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .process-panel {
+    grid-row: auto;
+  }
+  .sequence-panel {
+    grid-column: auto;
+  }
+}
+@media (max-width: 760px) {
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mimic svg {
+    width: 660px;
+    min-width: 660px;
+    max-width: none;
+  }
+}
