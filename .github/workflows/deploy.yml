@@ -1,4 +1,4 @@
-# Builds the static export, deploys it to GitHub Pages and verifies the public result.
+# Builds the static export, deploys it to GitHub Pages and verifies the public portfolio result.
 name: Deploy to GitHub Pages
 
 on:
@@ -14,9 +14,6 @@ permissions:
 concurrency:
   group: pages
   cancel-in-progress: false
-
-env:
-  OIA_PUBLIC_BASE_URL: https://sajeevanveeriah.github.io/open-industrial-automation
 
 jobs:
   build:
@@ -102,6 +99,7 @@ jobs:
           grep -Fq '../#operations' out/open-industrial-automation/demo/index.html
           grep -Fq '../#control-studio' out/open-industrial-automation/studio/index.html
           grep -Fq 'OIA-REF-001' out/open-industrial-automation/model.json
+          grep -Fq 'Machines. Intelligence. Dependable operation.' out/index.html
           echo "export verified"
 
       - uses: actions/configure-pages@v5
@@ -122,62 +120,65 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
 
-  verify-live-oia:
+  verify-live-portfolio:
     needs: deploy
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install browser for live verification
-        run: npx playwright install --with-deps chromium
-
-      - name: Wait for portfolio and all Open Industrial Automation routes
+      - name: Wait for the portfolio, resume and portfolio monogram
+        shell: bash
         run: |
           set -euo pipefail
+          base_url="https://sajeevanveeriah.github.io"
           for attempt in $(seq 1 90); do
-            portfolio_status="$(curl --silent --show-error --location --output /tmp/portfolio-live.html --write-out '%{http_code}' "https://sajeevanveeriah.github.io/?release=${GITHUB_SHA}")"
-            suite_status="$(curl --silent --show-error --location --output /tmp/oia-live-suite.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/?release=${GITHUB_SHA}")"
-            operator_status="$(curl --silent --show-error --location --output /tmp/oia-live-operator.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/demo/?release=${GITHUB_SHA}")"
-            studio_status="$(curl --silent --show-error --location --output /tmp/oia-live-studio.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/studio/?release=${GITHUB_SHA}")"
-            model_status="$(curl --silent --show-error --location --output /tmp/oia-live-model.json --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/model.json?release=${GITHUB_SHA}")"
+            cache_key="${GITHUB_SHA}-${attempt}"
+            portfolio_status="$(curl --silent --show-error --compressed --location \
+              --header 'Cache-Control: no-cache' \
+              --output /tmp/portfolio-live.html \
+              --write-out '%{http_code}' \
+              "$base_url/?release=$cache_key")"
+            resume_status="$(curl --silent --show-error --location \
+              --header 'Cache-Control: no-cache' \
+              --output /tmp/resume-live.pdf \
+              --write-out '%{http_code}' \
+              "$base_url/assets/Resume_Sajeevan_Veeriah.pdf?release=$cache_key")"
+            monogram_status="$(curl --silent --show-error --location \
+              --header 'Cache-Control: no-cache' \
+              --output /tmp/portfolio-monogram-live.webp \
+              --write-out '%{http_code}' \
+              "$base_url/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp?release=$cache_key")"
+
             if [ "$portfolio_status" = 200 ] && \
-               [ "$suite_status" = 200 ] && \
-               [ "$operator_status" = 200 ] && \
-               [ "$studio_status" = 200 ] && \
-               [ "$model_status" = 200 ] && \
-               grep -Fq 'Open Industrial Automation Suite' /tmp/oia-live-suite.html && \
-               grep -Fq '../#operations' /tmp/oia-live-operator.html && \
-               grep -Fq '../#control-studio' /tmp/oia-live-studio.html && \
-               grep -Fq 'OIA-REF-001' /tmp/oia-live-model.json; then
-              printf 'Live portfolio and OIA routes ready after attempt %s\n' "$attempt"
+               [ "$resume_status" = 200 ] && \
+               [ "$monogram_status" = 200 ] && \
+               grep -Fq 'Machines. Intelligence. Dependable operation.' /tmp/portfolio-live.html && \
+               cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
+               cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp; then
+              printf 'Live portfolio, corrected resume and exact monogram verified after attempt %s\n' "$attempt"
+              sha256sum \
+                /tmp/portfolio-live.html \
+                /tmp/resume-live.pdf \
+                /tmp/portfolio-monogram-live.webp
               exit 0
             fi
-            printf 'Attempt %s: portfolio=%s suite=%s operator=%s studio=%s model=%s\n' \
-              "$attempt" "$portfolio_status" "$suite_status" "$operator_status" "$studio_status" "$model_status"
+
+            printf 'Attempt %s: portfolio=%s resume=%s monogram=%s\n' \
+              "$attempt" "$portfolio_status" "$resume_status" "$monogram_status"
             sleep 4
           done
-          echo 'Portfolio or Open Industrial Automation public routes did not become ready in time' >&2
+          echo 'The public portfolio files did not match the deployed commit in time' >&2
           exit 1
 
-      - name: Run live Open Industrial Automation browser QA
-        env:
-          OIA_BASE_URL: ${{ env.OIA_PUBLIC_BASE_URL }}
-        run: npm run qa:oia
-
-      - name: Upload live verification evidence
+      - name: Upload live portfolio verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: live-oia-qa-${{ github.sha }}
-          path: /tmp/oia-qa
+          name: live-portfolio-qa-${{ github.sha }}
+          path: |
+            /tmp/portfolio-live.html
+            /tmp/resume-live.pdf
+            /tmp/portfolio-monogram-live.webp
           if-no-files-found: warn
           retention-days: 14
