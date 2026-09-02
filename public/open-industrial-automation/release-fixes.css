@@ -202,9 +202,31 @@ html[data-theme="dark"] #workspace b {
   font-weight: 700;
 }
 
+@media (max-width: 820px) {
+  .module-rail {
+    display: block;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .module-list {
+    overflow: visible;
+  }
+}
+
 @media (max-width: 720px) {
   .no-js-fallback {
     margin: 24px;
     padding: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
