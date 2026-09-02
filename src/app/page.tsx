@@ -134,7 +134,7 @@ export default function HomePage() {
           <div className="shell work-index-action"><Link className="text-action" href="/work/">View the three-record work index <span aria-hidden="true">→</span></Link></div>
         </section>
 
-        <section className="project-index-section" aria-labelledby="complete-projects-title">
+        <section className="project-index-section" id="projects" aria-labelledby="complete-projects-title">
           <div className="shell">
             <ProjectIndex headingId="complete-projects-title" />
           </div>
