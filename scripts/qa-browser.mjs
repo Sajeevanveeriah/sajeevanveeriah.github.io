@@ -253,7 +253,7 @@ const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobil
 const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
 if (!mobileNavVisible || mobileLinks !== 5) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
 await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
-await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Systems' }).click()
+await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Work' }).click()
 await mobilePage.waitForTimeout(50)
 const mobileMenuOpenAfterSelection = await mobilePage.locator('details.nav-disclosure').evaluate((element) => element.open)
 if (mobileMenuOpenAfterSelection) failures.push({ name: 'mobile-navigation-close', mobileMenuOpenAfterSelection })
