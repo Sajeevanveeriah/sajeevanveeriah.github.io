@@ -26,12 +26,25 @@ jobs:
   validate:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    outputs:
+      products: ${{ steps.scope.outputs.products }}
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+
+      - id: scope
+        name: Select products for this release gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo 'products=["suite"]' >> "$GITHUB_OUTPUT"
+          else
+            echo 'products=["suite","operations","control","hmi","alarms","historian","performance","integration","mes","materials","assets","quality","security","identity","deployment","migration"]' >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Verify suite source and desktop contracts
         run: node desktop/verify.cjs
@@ -59,26 +72,9 @@ jobs:
           - id: mac
             runner: macos-15-intel
             arch: universal
-        product:
-          - suite
-          - operations
-          - control
-          - hmi
-          - alarms
-          - historian
-          - performance
-          - integration
-          - mes
-          - materials
-          - assets
-          - quality
-          - security
-          - identity
-          - deployment
-          - migration
+        product: ${{ fromJSON(needs.validate.outputs.products) }}
     runs-on: ${{ matrix.platform.runner }}
     timeout-minutes: 55
-    if: github.event_name != 'pull_request' || matrix.product == 'suite'
     env:
       OIA_PRODUCT: ${{ matrix.product }}
       OIA_PLATFORM: ${{ matrix.platform.id }}
