@@ -1,3 +1,4 @@
+# Retry after restoring the exact package chunk.
 name: OIA suite materialise
 
 on:
@@ -31,11 +32,13 @@ jobs:
         run: |
           set -euo pipefail
           cat .github/oia-bootstrap-xz/part-* > /tmp/oia-suite.tar.xz.b64
+          echo "Encoded package bytes: $(stat -c %s /tmp/oia-suite.tar.xz.b64)"
           test "$(stat -c %s /tmp/oia-suite.tar.xz.b64)" = "104880"
           printf '%s  %s\n' \
             '886f3b15c47113c5ac87bbba0804e767f934f91d4a0228d2c41044af1dbb13c4' \
             '/tmp/oia-suite.tar.xz.b64' | sha256sum -c -
           base64 --decode /tmp/oia-suite.tar.xz.b64 > /tmp/oia-suite.tar.xz
+          echo "Decoded package bytes: $(stat -c %s /tmp/oia-suite.tar.xz)"
           test "$(stat -c %s /tmp/oia-suite.tar.xz)" = "78660"
           printf '%s  %s\n' \
             'b9f40e2bce85ac47c88f0d64673a9760f997335725f6ab9bddc56fc7a2982123' \
