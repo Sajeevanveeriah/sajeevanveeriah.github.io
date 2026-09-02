@@ -3,6 +3,7 @@ import { archivoFont } from './fonts'
 import { site } from '@/content/site'
 import './globals.css'
 import './premium.css'
+import './premium-quality.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
