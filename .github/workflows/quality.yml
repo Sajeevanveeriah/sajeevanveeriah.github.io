@@ -15,7 +15,7 @@ concurrency:
 jobs:
   quality:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -39,26 +39,51 @@ jobs:
       - name: Install browser
         run: npx playwright install --with-deps chromium
 
-      - name: Run rendered browser QA
+      - name: Run portfolio rendered browser QA
         run: npm run qa:browser
 
+      - name: Run Open Industrial Automation browser QA
+        run: npm run qa:oia
+
       - name: Upload rendered QA evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: portfolio-rendered-qa
-          path: /tmp/portfolio-qa
-          if-no-files-found: error
-          retention-days: 7
+          name: portfolio-and-oia-rendered-qa
+          path: |
+            /tmp/portfolio-qa
+            /tmp/oia-qa
+          if-no-files-found: warn
+          retention-days: 14
 
       - name: Run Lighthouse quality gate
         run: npm run qa:lighthouse
 
       - name: Verify export
         run: |
-          set -e
-          for f in index.html 404.html .nojekyll BingSiteAuth.xml \
-                   googlebcce96f6b520ab1f.html robots.txt sitemap.xml favicon.png; do
-            test -e "out/$f" || { echo "missing out/$f"; exit 1; }
+          set -euo pipefail
+          for file in \
+            index.html \
+            404.html \
+            .nojekyll \
+            BingSiteAuth.xml \
+            googlebcce96f6b520ab1f.html \
+            robots.txt \
+            sitemap.xml \
+            favicon.png \
+            engineering-simulator/open-industrial-automation/index.html \
+            engineering-simulator/open-industrial-automation/styles.css \
+            engineering-simulator/open-industrial-automation/model.json \
+            engineering-simulator/open-industrial-automation/demo/index.html \
+            engineering-simulator/open-industrial-automation/demo/styles.css \
+            engineering-simulator/open-industrial-automation/demo/app.js \
+            engineering-simulator/open-industrial-automation/studio/index.html \
+            engineering-simulator/open-industrial-automation/studio/styles.css \
+            engineering-simulator/open-industrial-automation/studio/app.js; do
+            test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
-          test -e out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
+          test -s out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
+          grep -Fq 'Technical documentation' out/engineering-simulator/open-industrial-automation/index.html
+          grep -Fq 'Mixing, dosing and CIP' out/engineering-simulator/open-industrial-automation/demo/index.html
+          grep -Fq 'Engineering Studio' out/engineering-simulator/open-industrial-automation/studio/index.html
           echo "export verified"
