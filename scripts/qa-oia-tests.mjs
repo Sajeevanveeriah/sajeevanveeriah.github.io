@@ -127,7 +127,7 @@ export async function testSuite(browser, qa) {
 
   await page.getByRole('button', { name: 'Validation and quality', exact: true }).click()
   await page.getByRole('button', { name: 'Execute test TEST-001', exact: true }).click()
-  const testRow = page.locator('tr', { hasText: 'TEST-001' })
+  const testRow = page.locator('tr', { hasText: 'TEST-001' }).filter({ hasText: 'FAT' }).first()
   qa.record('validation-test-execution', (await testRow.innerText()).includes('Passed'))
 
   await page.getByRole('button', { name: 'OT cybersecurity', exact: true }).click()
