@@ -4,9 +4,9 @@ export const site = {
   initials: 'SV',
   jobTitle: 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
   proposition:
-    'I engineer complete systems from physical requirements to verified operation - connecting mechanisms, electronics, embedded control, autonomy, data and software.',
+    'I engineer complete systems across the physical, control, digital and operational boundary - then verify them as one working system.',
   profile:
-    'I work where disciplines meet: turning a physical need into a system that can be built, integrated, tested, fault-found and handed over.',
+    'Robotics, industrial automation, embedded systems, industrial IT/OT, AI/ML and engineering software, integrated from requirements through commissioning and handover.',
   url: 'https://sajeevanveeriah.github.io',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
@@ -122,13 +122,19 @@ export const foundation = {
 export const systemLayers = [
   { index: '01', title: 'Physical system', detail: 'Mechanisms, structures, actuation and the operating environment.', colour: 'orange' },
   { index: '02', title: 'Sensing and electronics', detail: 'Sensors, signal paths, power and embedded hardware.', colour: 'yellow' },
-  { index: '03', title: 'Embedded intelligence', detail: 'Firmware, real-time control, drivers and middleware.', colour: 'teal' },
+  { index: '03', title: 'Control and automation', detail: 'Firmware, PLC control, drives, HMI and process interfaces.', colour: 'teal' },
   { index: '04', title: 'Robotics and autonomy', detail: 'Perception, estimation, planning and motion control.', colour: 'blue' },
-  { index: '05', title: 'AI/ML and data', detail: 'Models, telemetry, engineering data and diagnostics.', colour: 'violet' },
-  { index: '06', title: 'Validation and deployment', detail: 'Simulation, integration, field checks and handover.', colour: 'rose' },
+  { index: '05', title: 'Industrial IT, AI/ML and data', detail: 'MES, operational data, models, telemetry and diagnostics.', colour: 'violet' },
+  { index: '06', title: 'Verification and deployment', detail: 'Simulation, integration, commissioning, field checks and handover.', colour: 'rose' },
 ] as const
 
 export const roleLenses = [
+  {
+    title: 'Industrial IT, OT and Automation',
+    detail: 'I connect PLC and HMI/SCADA systems with production data, MES interfaces, industrial networking, commissioning, traceability and operational handover.',
+    href: '/open-industrial-automation/',
+    action: 'Explore industrial systems work',
+  },
   {
     title: 'Robotics and Mechatronics',
     detail: 'I connect mechanisms, sensing, embedded control and autonomy so physical systems can move from build to verified behaviour.',
@@ -136,14 +142,8 @@ export const roleLenses = [
     action: 'See robotics evidence',
   },
   {
-    title: 'Automation and Controls',
-    detail: 'I integrate PLC, HMI/SCADA, field devices, drives and production data, carrying work through FAT, SAT, commissioning and handover.',
-    href: '#practice',
-    action: 'See automation evidence',
-  },
-  {
     title: 'AI/ML and Engineering Software',
-    detail: 'My AI/ML evidence includes VeerAI, a locally deployed private small-language-model system with governed ingestion, retrieval, memory, tools and evaluation. The linked record shows adjacent engineering-software delivery.',
+    detail: 'My work spans local AI systems, computer vision, engineering data and production-grade software with explicit requirements, tests and release boundaries.',
     href: '/work/swl-pricing-inventory-control/',
     action: 'See software evidence',
   },
@@ -151,16 +151,16 @@ export const roleLenses = [
 
 export const professionalProof = [
   {
-    title: 'Regulated automation and commissioning',
-    detail: 'Controls and integration across PLC logic, HMI/SCADA, field devices, drives and production data, including validated migration, FAT, SAT, commissioning, handover and mobile-robot fault tracing under GMP controls.',
+    title: 'Industrial automation and operational systems',
+    detail: 'Controls and integration across PLC logic, HMI/SCADA, field devices, drives, MES and production data, including validated migration, FAT, SAT, commissioning, handover and mobile-robot fault tracing under GMP controls.',
   },
   {
-    title: 'Field IoT and telemetry',
-    detail: 'Field-to-dashboard telemetry with ESP32, LoRaWAN, MQTT, ChirpStack, InfluxDB and Grafana, plus CAN, GPS, custom PCB, connectivity and Linux support from field trial through handover.',
+    title: 'Field robotics, IoT and telemetry',
+    detail: 'Physical and field-to-dashboard systems using ROS 2, ESP32, LoRaWAN, MQTT, ChirpStack, InfluxDB and Grafana, plus CAN, GPS, custom PCB, connectivity and Linux support.',
   },
   {
-    title: 'Automotive validation and test evidence',
-    detail: 'Vehicle-software and ADAS validation through feature-vehicle, breadboard and regression testing, with CAN and CAN FD captures used for fault isolation, defect evidence and software-readiness verification.',
+    title: 'Verification across regulated and vehicle systems',
+    detail: 'Traceable validation across automation, automotive software and compliance testing, with calibrated instrumentation, CAN and CAN FD captures, regression evidence and auditable quality records.',
   },
 ] as const
 
@@ -180,8 +180,8 @@ export const practiceDomains = [
     detail: 'ESP32, STM32, FreeRTOS, C/C++, PCB bring-up, CAN, UART, I2C, SPI, BLE, sensing, motors and drives.',
   },
   {
-    title: 'Automation and Controls',
-    detail: 'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC and HMI/SCADA integration, FAT, SAT and commissioning.',
+    title: 'Automation, Industrial IT and OT',
+    detail: 'Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC and HMI/SCADA integration, MES and production-data interfaces, FAT, SAT and commissioning.',
   },
   {
     title: 'AI/ML and Engineering Data',

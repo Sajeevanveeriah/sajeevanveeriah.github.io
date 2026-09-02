@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the public, evidence-bounded two-page resume PDF."""
+"""Generate Sajeevan Veeriah's public, evidence-bounded two-page resume PDF."""
 
 from __future__ import annotations
 
@@ -12,35 +12,60 @@ from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
-from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer
+from reportlab.platypus import (
+    KeepTogether,
+    PageBreak,
+    Paragraph,
+    SimpleDocTemplate,
+    Spacer,
+    Table,
+    TableStyle,
+)
 
 
-INK = HexColor('#000d10')
-MUTED = HexColor('#4f555a')
-LINE = HexColor('#d5d3d4')
-CLAY = HexColor('#a8573c')
+INK = HexColor('#111111')
+MUTED = HexColor('#565861')
+LINE = HexColor('#d1d4db')
+PAPER = HexColor('#f8f8f8')
+SAPPHIRE = HexColor('#001391')
+WHITE = HexColor('#ffffff')
 
 
-def register_fonts() -> tuple[str, str]:
-    regular = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-    bold = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf')
-    pdfmetrics.registerFont(TTFont('ResumeSans', regular))
-    pdfmetrics.registerFont(TTFont('ResumeSans-Bold', bold))
-    return 'ResumeSans', 'ResumeSans-Bold'
+def register_fonts() -> None:
+    """Use PDF core fonts for compact, portable output."""
+    return None
 
 
 def draw_page(canvas, document) -> None:
     canvas.saveState()
-    width, _ = A4
+    width, height = A4
+
+    canvas.setFillColor(PAPER)
+    canvas.rect(0, 0, width, height, fill=1, stroke=0)
+
+    if document.page > 1:
+        mark_size = 8 * mm
+        mark_x = width - 15 * mm - mark_size
+        mark_y = height - 5.5 * mm
+        canvas.setFillColor(SAPPHIRE)
+        canvas.roundRect(mark_x, mark_y - mark_size, mark_size, mark_size, 1.8 * mm, fill=1, stroke=0)
+        canvas.setFillColor(WHITE)
+        canvas.setFont('Helvetica-Bold', 7.2)
+        canvas.drawCentredString(mark_x + mark_size / 2, mark_y - mark_size + 2.7 * mm, 'SV')
+        canvas.setFillColor(INK)
+        canvas.setFont('Times-Roman', 8.6)
+        canvas.drawString(15 * mm, height - 9.5 * mm, 'Sajeevan Veeriah')
+        canvas.setStrokeColor(LINE)
+        canvas.setLineWidth(0.5)
+        canvas.line(15 * mm, height - 14.5 * mm, width - 15 * mm, height - 14.5 * mm)
+
     canvas.setStrokeColor(LINE)
     canvas.setLineWidth(0.5)
-    canvas.line(16 * mm, 15 * mm, width - 16 * mm, 15 * mm)
+    canvas.line(15 * mm, 14.5 * mm, width - 15 * mm, 14.5 * mm)
     canvas.setFillColor(MUTED)
-    canvas.setFont('ResumeSans', 7.2)
-    canvas.drawString(16 * mm, 10.2 * mm, 'Sajeevan Veeriah | Public resume')
-    canvas.drawRightString(width - 16 * mm, 10.2 * mm, f'Page {document.page} of 2')
+    canvas.setFont('Courier', 6.7)
+    canvas.drawString(15 * mm, 9.7 * mm, 'SAJEEVAN VEERIAH  |  PUBLIC RESUME')
+    canvas.drawRightString(width - 15 * mm, 9.7 * mm, f'PAGE {document.page} OF 2')
     canvas.restoreState()
 
 
@@ -48,41 +73,45 @@ def make_styles() -> dict[str, ParagraphStyle]:
     base = getSampleStyleSheet()
     return {
         'name': ParagraphStyle(
-            'Name', parent=base['Normal'], fontName='ResumeSans-Bold', fontSize=25,
-            leading=24, textColor=INK, spaceAfter=4, alignment=TA_LEFT,
+            'Name', parent=base['Normal'], fontName='Times-Roman', fontSize=25.5,
+            leading=27, textColor=INK, spaceAfter=3, alignment=TA_LEFT,
         ),
         'identity': ParagraphStyle(
-            'Identity', parent=base['Normal'], fontName='ResumeSans-Bold', fontSize=11.2,
-            leading=14, textColor=INK, spaceAfter=6,
+            'Identity', parent=base['Normal'], fontName='Helvetica-Bold', fontSize=10.2,
+            leading=13, textColor=INK, spaceAfter=5,
         ),
         'contact': ParagraphStyle(
-            'Contact', parent=base['Normal'], fontName='ResumeSans', fontSize=8.3,
-            leading=11, textColor=MUTED, spaceAfter=11,
+            'Contact', parent=base['Normal'], fontName='Helvetica', fontSize=7.75,
+            leading=10.5, textColor=MUTED, spaceAfter=0,
+        ),
+        'monogram': ParagraphStyle(
+            'Monogram', parent=base['Normal'], fontName='Helvetica-Bold', fontSize=17,
+            leading=17, textColor=WHITE, alignment=1,
         ),
         'section': ParagraphStyle(
-            'Section', parent=base['Normal'], fontName='ResumeSans-Bold', fontSize=9.6,
-            leading=11, textColor=CLAY, spaceBefore=9, spaceAfter=5,
-            uppercase=True, borderWidth=0, borderPadding=0,
+            'Section', parent=base['Normal'], fontName='Courier', fontSize=7.4,
+            leading=9, textColor=SAPPHIRE, spaceBefore=7.5, spaceAfter=4.5,
+            uppercase=True, letterSpacing=0.75,
         ),
         'body': ParagraphStyle(
-            'Body', parent=base['Normal'], fontName='ResumeSans', fontSize=8.8,
-            leading=12.1, textColor=INK, spaceAfter=4,
+            'Body', parent=base['Normal'], fontName='Helvetica', fontSize=8.25,
+            leading=11.25, textColor=INK, spaceAfter=3.6,
         ),
         'compact': ParagraphStyle(
-            'Compact', parent=base['Normal'], fontName='ResumeSans', fontSize=8.45,
-            leading=11.5, textColor=INK, spaceAfter=2.8,
+            'Compact', parent=base['Normal'], fontName='Helvetica', fontSize=7.85,
+            leading=10.7, textColor=INK, spaceAfter=2.4,
         ),
         'role': ParagraphStyle(
-            'Role', parent=base['Normal'], fontName='ResumeSans-Bold', fontSize=9.2,
-            leading=11.7, textColor=INK, spaceBefore=5, spaceAfter=1,
+            'Role', parent=base['Normal'], fontName='Times-Roman', fontSize=9.3,
+            leading=11, textColor=INK, spaceBefore=4.3, spaceAfter=1.1,
         ),
         'meta': ParagraphStyle(
-            'Meta', parent=base['Normal'], fontName='ResumeSans', fontSize=7.9,
-            leading=10.4, textColor=MUTED, spaceAfter=3,
+            'Meta', parent=base['Normal'], fontName='Courier', fontSize=6.9,
+            leading=8.9, textColor=MUTED, spaceAfter=2.5,
         ),
         'small': ParagraphStyle(
-            'Small', parent=base['Normal'], fontName='ResumeSans', fontSize=7.9,
-            leading=10.6, textColor=MUTED, spaceAfter=3,
+            'Small', parent=base['Normal'], fontName='Helvetica', fontSize=7.25,
+            leading=9.65, textColor=MUTED, spaceAfter=2.4,
         ),
     }
 
@@ -91,7 +120,52 @@ def section(title: str, styles: dict[str, ParagraphStyle]) -> list:
     return [Paragraph(title.upper(), styles['section'])]
 
 
-def experience_block(role: str, organisation: str, period: str, context: str, bullets: list[str], styles: dict[str, ParagraphStyle]) -> KeepTogether:
+def header_block(styles: dict[str, ParagraphStyle]) -> Table:
+    identity = [
+        Paragraph('Sajeevan Veeriah', styles['name']),
+        Paragraph('Robotics, Mechatronics, AI/ML &amp; End-To-End Automation Engineer', styles['identity']),
+        Paragraph(
+            'Geelong, Victoria, Australia | +61 498 586 654 | '
+            '<link href="mailto:sajeevanveeriah@gmail.com">sajeevanveeriah@gmail.com</link><br/>'
+            '<link href="https://sajeevanveeriah.github.io">sajeevanveeriah.github.io</link> | '
+            '<link href="https://github.com/Sajeevanveeriah">github.com/Sajeevanveeriah</link>',
+            styles['contact'],
+        ),
+    ]
+    mark = Table(
+        [[Paragraph('SV', styles['monogram'])]],
+        colWidths=[18 * mm], rowHeights=[18 * mm],
+        style=TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), SAPPHIRE),
+            ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 0),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+            ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ]),
+    )
+    table = Table(
+        [[identity, mark]],
+        colWidths=[160 * mm, 18 * mm],
+        style=TableStyle([
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('LEFTPADDING', (0, 0), (-1, -1), 0),
+            ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+            ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ]),
+    )
+    return table
+
+
+def experience_block(
+    role: str,
+    organisation: str,
+    period: str,
+    context: str,
+    bullets: list[str],
+    styles: dict[str, ParagraphStyle],
+) -> KeepTogether:
     items = [
         Paragraph(f'{role} | {organisation}', styles['role']),
         Paragraph(f'{period} | {context}', styles['meta']),
@@ -100,7 +174,13 @@ def experience_block(role: str, organisation: str, period: str, context: str, bu
     return KeepTogether(items)
 
 
-def project_block(title: str, evidence: str, detail: str, boundary: str, styles: dict[str, ParagraphStyle]) -> KeepTogether:
+def project_block(
+    title: str,
+    evidence: str,
+    detail: str,
+    boundary: str,
+    styles: dict[str, ParagraphStyle],
+) -> KeepTogether:
     return KeepTogether([
         Paragraph(title, styles['role']),
         Paragraph(evidence, styles['meta']),
@@ -114,38 +194,31 @@ def build_resume(output_path: Path) -> None:
     styles = make_styles()
     document = SimpleDocTemplate(
         str(output_path), pagesize=A4,
-        leftMargin=16 * mm, rightMargin=16 * mm,
-        topMargin=14 * mm, bottomMargin=20 * mm,
+        leftMargin=15 * mm, rightMargin=15 * mm,
+        topMargin=17 * mm, bottomMargin=19 * mm,
         title='Sajeevan Veeriah - Public Resume',
         author='Sajeevan Veeriah',
         subject='Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
     )
 
     story = [
-        Paragraph('Sajeevan Veeriah', styles['name']),
-        Paragraph('Robotics, Mechatronics, AI/ML &amp; End-To-End Automation Engineer', styles['identity']),
-        Paragraph(
-            'Geelong, Victoria, Australia | +61 498 586 654 | '
-            '<link href="mailto:sajeevanveeriah@gmail.com">sajeevanveeriah@gmail.com</link><br/>'
-            '<link href="https://sajeevanveeriah.github.io">sajeevanveeriah.github.io</link> | '
-            '<link href="https://github.com/Sajeevanveeriah">github.com/Sajeevanveeriah</link>',
-            styles['contact'],
-        ),
+        header_block(styles),
+        Spacer(1, 5 * mm),
     ]
 
     story += section('Profile', styles)
     story.append(Paragraph(
-        'I engineer complete systems from physical requirements to verified operation, connecting mechanisms, electronics, embedded control, autonomy, data and software. I work where disciplines meet: turning a physical need into a system that can be built, integrated, tested, fault-found and handed over.',
+        'I engineer complete systems across the physical, control, digital and operational boundary, then verify them as one working system. My practice spans robotics, industrial automation, embedded systems, industrial IT/OT, AI/ML and engineering software from requirements through integration, commissioning and handover.',
         styles['body'],
     ))
 
     story += section('Engineering capability', styles)
     capabilities = [
+        '<b>Industrial IT, OT and automation:</b> PLC and HMI/SCADA integration, MES and production-data interfaces, field devices, drives, industrial networking, FAT, SAT, commissioning and traceable handover.',
         '<b>Robotics and mechatronics:</b> ROS 2 Humble, Nav2, MoveIt 2, Gazebo Fortress, SLAM, EKF sensor fusion, localisation, planning, motion control and physical prototyping.',
-        '<b>Automation and controls:</b> Siemens TIA Portal, WinCC, PCS 7, iFIX, PVI+, PLC and HMI/SCADA integration, field devices, drives, FAT, SAT and commissioning.',
         '<b>Embedded and connectivity:</b> ESP32, STM32, FreeRTOS, C/C++, PCB bring-up, CAN, UART, I2C, SPI, BLE, LoRaWAN, MQTT and Linux services.',
         '<b>AI/ML, data and software:</b> Python, scikit-learn, OpenCV, YOLO, time-series analysis, MATLAB, Simulink, TypeScript, React, Rust, SQL, CI/CD and local-first software.',
-        '<b>Verification and delivery:</b> requirements, instrumentation, calibrated testing, regression, fault isolation, traceable QA, release boundaries and handover evidence.',
+        '<b>Verification and delivery:</b> requirements, instrumentation, calibrated testing, regression, fault isolation, data integrity, traceable QA, release boundaries and technical handover.',
     ]
     story.extend(Paragraph(f'- {item}', styles['compact']) for item in capabilities)
 
@@ -169,9 +242,11 @@ def build_resume(output_path: Path) -> None:
             'Sole engineer across requirements, deterministic pricing and matching rules, React/TypeScript interfaces, Tauri/Rust desktop packaging, SQLite, file contracts, CI and release evidence. More than 500 automated checks cover unit, property, browser, accessibility, desktop and Rust behaviour.',
             'Production installation, signing, automatic updates and rollout remain outside the release boundary.', styles,
         ),
-        Paragraph(
-            '<b>Additional AI/ML evidence - VeerAI:</b> A locally deployed private system around an open-weight small language model, with governed ingestion, retrieval, memory, tools and evaluation. This is private local evidence, not a public production-deployment claim.',
-            styles['compact'],
+        project_block(
+            'Open Industrial Automation',
+            '2026 | Public Phase 1 reference platform',
+            'Built a deterministic industrial reference process with an operator HMI, Engineering Studio, typed project model, traceability and verification gates. The platform makes the control, information, cybersecurity and evidence boundaries explicit.',
+            'A reference and simulation platform, not certified safety control or site-commissioned plant automation.', styles,
         ),
     ])
 
@@ -264,6 +339,16 @@ def build_resume(output_path: Path) -> None:
     if len(reader.pages) != 2:
         raise RuntimeError(f'Expected 2 pages, generated {len(reader.pages)}')
     extracted = '\n'.join(page.extract_text() or '' for page in reader.pages)
+    required = [
+        'Sajeevan Veeriah',
+        'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
+        'Industrial IT, OT and automation',
+        'Open Industrial Automation',
+        'Member, Engineers Australia',
+    ]
+    missing = [item for item in required if item not in extracted]
+    if missing:
+        raise RuntimeError(f'Missing required resume content: {missing}')
     forbidden = ['Ford', 'Ford Motor Company', 'Invenio', 'JAG Process Solutions', '\u2013', '\u2014']
     matches = [item for item in forbidden if item in extracted]
     if matches:
