@@ -1,4 +1,6 @@
 'use strict';
+/* CommonJS is required by the Electron verification entry point. */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -44,14 +46,14 @@ for (const requiredSecuritySetting of [
   'nodeIntegration: false',
   'sandbox: true',
   'webSecurity: true',
-  "setPermissionRequestHandler",
-  "setPermissionCheckHandler",
-  "will-attach-webview",
-  "requestSingleInstanceLock",
+  'setPermissionRequestHandler',
+  'setPermissionCheckHandler',
+  'will-attach-webview',
+  'requestSingleInstanceLock',
 ]) {
   assert.ok(mainSource.includes(requiredSecuritySetting), `Missing desktop security setting: ${requiredSecuritySetting}`);
 }
 
-assert.ok(mainSource.includes("Open-Industrial-Automation"), 'Desktop products must share one user data root');
+assert.ok(mainSource.includes('Open-Industrial-Automation'), 'Desktop products must share one user data root');
 assert.ok(!mainSource.includes('http://'), 'Desktop runtime must not use insecure HTTP');
 console.log(`Desktop catalog verified: ${catalog.products.length} interconnected products, secure shell, shared workspace.`);
