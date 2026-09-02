@@ -1,6 +1,4 @@
 'use strict';
-/* CommonJS is required by Electron preload entry points. */
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 const { contextBridge } = require('electron');
 const catalog = require('./product-catalog.json');
