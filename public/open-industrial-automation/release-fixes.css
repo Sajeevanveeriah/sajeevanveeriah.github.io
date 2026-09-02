@@ -108,15 +108,10 @@ th,
 .studio-title span,
 .hmi-screen-list .studio-title span,
 .hmi-inspector .studio-title span,
-.hmi-stage-header strong,
-.hmi-stage-footer strong,
-.preview-equipment span,
-.tank span,
 .binding-row span,
 .trace-node span,
 .recipe-row small,
 .recipe-row > span,
-.line-numbers,
 .coverage-cell span,
 .queue-item > span:nth-child(2),
 .queue-item > span:nth-child(2) > span {
@@ -127,11 +122,23 @@ th,
   background: var(--surface-2);
 }
 
-.studio-sidebar b,
-.studio-inspector b,
-.hmi-shell b,
-.panel b {
-  color: var(--text-strong);
+html[data-theme="light"] #workspace b {
+  color: #111111 !important;
+}
+
+html[data-theme="dark"] #workspace b {
+  color: #f5f5f5 !important;
+}
+
+.editor-shell .line-numbers {
+  color: #cbd5e1 !important;
+}
+
+.hmi-stage-header > strong,
+.preview-equipment > div > span,
+.tank > div > span,
+.hmi-stage-footer strong {
+  color: #f5f7fa !important;
 }
 
 .product-control label,
@@ -156,6 +163,16 @@ th,
 .split__resize:focus-visible {
   outline: 3px solid var(--warning);
   outline-offset: 3px;
+}
+
+.mission-id {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.035em;
 }
 
 .no-js-fallback {
