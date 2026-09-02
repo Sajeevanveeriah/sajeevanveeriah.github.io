@@ -1,0 +1,149 @@
+name: OIA desktop installers
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'public/open-industrial-automation/**'
+      - 'desktop/**'
+      - '.github/workflows/oia-desktop.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'public/open-industrial-automation/**'
+      - 'desktop/**'
+      - '.github/workflows/oia-desktop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oia-desktop-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      products: ${{ steps.scope.outputs.products }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - id: scope
+        name: Select products for this release gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo 'products=["suite"]' >> "$GITHUB_OUTPUT"
+          else
+            echo 'products=["suite","operations","control","hmi","alarms","historian","performance","integration","mes","materials","assets","quality","security","identity","deployment","migration"]' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify suite source and desktop contracts
+        run: node desktop/verify.cjs
+
+      - name: Install desktop build dependencies
+        working-directory: desktop
+        run: npm install --no-audit --no-fund
+
+      - name: Re-run desktop verification
+        working-directory: desktop
+        run: npm test
+
+  build:
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - id: linux
+            runner: ubuntu-24.04
+            arch: x64
+          - id: windows
+            runner: windows-latest
+            arch: x64
+          - id: mac
+            runner: macos-15-intel
+            arch: universal
+        product: ${{ fromJSON(needs.validate.outputs.products) }}
+    runs-on: ${{ matrix.platform.runner }}
+    timeout-minutes: 55
+    env:
+      OIA_PRODUCT: ${{ matrix.product }}
+      OIA_PLATFORM: ${{ matrix.platform.id }}
+      OIA_ARCH: ${{ matrix.platform.arch }}
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install desktop build dependencies
+        working-directory: desktop
+        run: npm install --no-audit --no-fund
+
+      - name: Build installer
+        working-directory: desktop
+        run: npm run build
+
+      - name: Generate SHA-256 checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          find dist/installers -maxdepth 5 -type f -print0 | sort -z | xargs -0 sha256sum > "dist/OIA-${{ matrix.product }}-${{ matrix.platform.id }}-SHA256SUMS.txt"
+          cat "dist/OIA-${{ matrix.product }}-${{ matrix.platform.id }}-SHA256SUMS.txt"
+
+      - name: Upload installer artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OIA-${{ matrix.product }}-${{ matrix.platform.id }}-${{ matrix.platform.arch }}
+          path: |
+            dist/installers/**
+            dist/OIA-${{ matrix.product }}-${{ matrix.platform.id }}-SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 90
+
+  release:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[oia-release]')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: OIA-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Create immutable installer checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          find release-assets -type f ! -name '*SHA256SUMS.txt' -print0 | sort -z | xargs -0 sha256sum > release-assets/OIA-Desktop-Installers-SHA256SUMS.txt
+
+      - name: Create GitHub prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="oia-desktop-v2.2.0-${GITHUB_SHA::7}"
+          mapfile -d '' files < <(find release-assets -type f -print0 | sort -z)
+          test "${#files[@]}" -gt 0
+          gh release create "$tag" "${files[@]}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Open Industrial Automation Desktop 2.2.0" \
+            --notes "Unsigned community installers for sixteen interconnected OIA products. Windows SmartScreen and macOS Gatekeeper may require explicit confirmation. Production distribution requires organisation-controlled signing and notarisation." \
+            --prerelease \
+            --target "$GITHUB_SHA"

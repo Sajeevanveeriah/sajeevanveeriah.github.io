@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "2.1.0",
+  "site": {
+    "id": "SITE-EXAMPLE",
+    "name": "Example Manufacturing Site",
+    "timezone": "Australia/Melbourne",
+    "unitSystem": "SI"
+  },
+  "areas": [
+    {
+      "id": "AREA-PROCESS",
+      "name": "Process Hall"
+    }
+  ],
+  "productionBoundary": {
+    "liveControlEnabled": false,
+    "safetyIndependent": true,
+    "note": "Define site-specific architecture and acceptance before connecting equipment."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "open-industrial-automation-desktop",
+  "version": "2.2.0",
+  "private": true,
+  "description": "Cross-platform desktop products for the Open Industrial Automation suite.",
+  "author": "Open Industrial Automation contributors",
+  "license": "Apache-2.0",
+  "main": "main.cjs",
+  "oiaProduct": "suite",
+  "scripts": {
+    "test": "node verify.cjs",
+    "build": "node build.cjs"
+  },
+  "devDependencies": {
+    "electron": "44.1.1",
+    "electron-builder": "26.15.7"
+  }
+}

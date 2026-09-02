@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Open Industrial Automation">
+  <rect width="128" height="128" rx="24" fill="#091219"/>
+  <path d="M28 28h72v72H28z" fill="none" stroke="#37d5c5" stroke-width="7"/>
+  <path d="M45 45v38m0-19h16m22-19v38M61 45h22" fill="none" stroke="#f3f8f7" stroke-width="8" stroke-linecap="square"/>
+</svg>
