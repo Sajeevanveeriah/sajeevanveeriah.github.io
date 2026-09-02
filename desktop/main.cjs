@@ -1,6 +1,4 @@
 'use strict';
-/* CommonJS is required by Electron desktop entry points. */
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 const { app, BrowserWindow, Menu, protocol, session, shell } = require('electron');
 const { readFile } = require('node:fs/promises');
