@@ -90,8 +90,13 @@ export function createQA() {
   }
 
   async function axe(page) {
-    const loaded = await page.evaluate(() => Boolean(window.axe))
-    if (!loaded) await page.addScriptTag({ path: axePath })
+    let loaded = await page.evaluate(() => Boolean(window.axe))
+    if (!loaded) {
+      await page.addInitScript({ path: axePath })
+      await page.reload({ waitUntil: 'networkidle' })
+      loaded = await page.evaluate(() => Boolean(window.axe))
+    }
+    if (!loaded) throw new Error('axe-core did not load in the browser context')
     return page.evaluate(async () => {
       const result = await window.axe.run(document, {
         runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] },
@@ -107,6 +112,7 @@ export function createQA() {
 
   async function inspect(page, route, titleExpected, headingExpected) {
     const health = observe(page)
+    await page.addInitScript({ path: axePath })
     const response = await page.goto(url(route), { waitUntil: 'networkidle' })
     const title = await page.title()
     const visibleText = (await page.locator('body').innerText()).trim()
