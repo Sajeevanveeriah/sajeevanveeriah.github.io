@@ -45,16 +45,16 @@ jobs:
           tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz > /tmp/oia-product-suite-files.txt
           test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
 
-      - name: Materialise product suite
+      - name: Materialise product suite without workflow mutations
         shell: bash
         run: |
           set -euo pipefail
           tar -xJf /tmp/oia-product-suite-v2.2.0.tar.xz -C .
+          cp .github/workflows/oia-desktop.yml /tmp/oia-desktop.yml
+          cp .github/workflows/oia-product-quality.yml /tmp/oia-product-quality.yml
+          rm -f .github/workflows/oia-desktop.yml .github/workflows/oia-product-quality.yml
           rm -rf .github/oia-product-payload .github/oia-product-bootstrap
           rm -f \
-            .github/workflows/oia-product-materialise.yml \
-            .github/workflows/oia-source-export.yml \
-            .github/workflows/oia-bootstrap.yml \
             public/open-industrial-automation/demo/app.js \
             public/open-industrial-automation/demo/styles.css \
             public/open-industrial-automation/studio/app.js \
@@ -78,8 +78,8 @@ jobs:
             public/open-industrial-automation/runtime-bootstrap.js \
             public/open-industrial-automation/products/index.html \
             scripts/qa-oia-products.mjs \
-            .github/workflows/oia-product-quality.yml \
-            .github/workflows/oia-desktop.yml; do
+            /tmp/oia-product-quality.yml \
+            /tmp/oia-desktop.yml; do
             test -s "$file" || { echo "missing or empty $file" >&2; exit 1; }
           done
           node --check public/open-industrial-automation/app.js
@@ -108,15 +108,15 @@ jobs:
                   path = Path('public/open-industrial-automation/products') / product['id'] / 'index.html'
               assert path.is_file() and path.stat().st_size > 100, path
           PY
-          if grep -Prn '[–—]' desktop public/open-industrial-automation scripts/qa-oia-products.mjs docs/superpowers/specs/20260902-Open-Industrial-Automation-Product-Suite-Design-Rev01.md docs/superpowers/plans/20260902-Open-Industrial-Automation-Product-Suite-Implementation-Plan-Rev01.md; then
+          if grep -RniE '[–—]' desktop public/open-industrial-automation scripts/qa-oia-products.mjs docs/superpowers/specs/20260902-Open-Industrial-Automation-Product-Suite-Design-Rev01.md docs/superpowers/plans/20260902-Open-Industrial-Automation-Product-Suite-Implementation-Plan-Rev01.md; then
             echo 'Unicode dash found in OIA product release' >&2
             exit 1
           fi
-          if grep -PrinE '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
+          if grep -RniE '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
             echo 'Excluded organisation name found in public OIA product source' >&2
             exit 1
           fi
-          if grep -PrinE '(BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})' desktop public/open-industrial-automation; then
+          if grep -RniE '(BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})' desktop public/open-industrial-automation; then
             echo 'Credential-like content found in OIA product source' >&2
             exit 1
           fi
@@ -127,7 +127,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
+          git add -A -- . ':(exclude).github/workflows/**'
           git diff --cached --check
           git diff --cached --quiet && { echo 'No product-suite changes found' >&2; exit 1; }
           git commit -m 'feat: add premium interconnected OIA product suite 2.2.0 [oia-materialise]'
