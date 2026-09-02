@@ -42,17 +42,33 @@
   }
 
   function repairMissionTraceability(item) {
-    if (!(item instanceof HTMLElement) || item.querySelector('.mission-id')) return;
+    if (!(item instanceof HTMLElement)) return;
     const button = item.querySelector('[aria-label^="Advance mission "]');
     const label = button?.getAttribute('aria-label') || '';
     const id = label.replace(/^Advance mission\s+/, '').trim();
     if (!id) return;
     const details = item.children.item(1);
     if (!(details instanceof HTMLElement)) return;
-    const missionId = document.createElement('span');
-    missionId.className = 'mission-id';
-    missionId.textContent = id;
-    details.prepend(missionId);
+
+    let missionId = details.querySelector('.mission-id');
+    if (!(missionId instanceof HTMLElement)) {
+      missionId = document.createElement('span');
+      missionId.className = 'mission-id';
+      details.prepend(missionId);
+    }
+    if (missionId.textContent !== id) missionId.textContent = id;
+
+    const progressbar = item.querySelector('.progress-track[role="progressbar"]');
+    const progress = progressbar?.getAttribute('aria-valuenow');
+    if (progress === null || progress === undefined) return;
+    let progressText = details.querySelector('.mission-progress');
+    if (!(progressText instanceof HTMLElement)) {
+      progressText = document.createElement('span');
+      progressText.className = 'mission-progress';
+      details.append(progressText);
+    }
+    const nextText = `${progress}% complete`;
+    if (progressText.textContent !== nextText) progressText.textContent = nextText;
   }
 
   function repairOperationsContract() {
