@@ -25,7 +25,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          for file in .github/oia-product-payload/part-*; do
+            printf '%s ' "$file"
+            stat -c '%s bytes' "$file"
+            sha256sum "$file"
+          done
           cat .github/oia-product-payload/part-* > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
+          stat -c 'Concatenated payload: %s bytes' /tmp/oia-product-suite-v2.2.0.tar.xz.b64
+          sha256sum /tmp/oia-product-suite-v2.2.0.tar.xz.b64
           test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz.b64)" = "61272"
           printf '%s  %s\n' \
             'e0b53a1932abc7dbf528fb09752e19186bff744176f7fa1058214284ed2c4d79' \
