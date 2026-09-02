@@ -2,7 +2,7 @@
   'use strict';
 
   const SUITE_TITLE = 'Open Industrial Automation Suite';
-  let scheduled = false;
+  let titleScheduled = false;
 
   function labelledRegion(node, index) {
     if (!(node instanceof HTMLElement)) return;
@@ -41,6 +41,20 @@
     if (!node.hasAttribute('aria-valuenow')) node.setAttribute('aria-valuenow', '50');
   }
 
+  function repairMissionTraceability(item) {
+    if (!(item instanceof HTMLElement) || item.querySelector('.mission-id')) return;
+    const button = item.querySelector('[aria-label^="Advance mission "]');
+    const label = button?.getAttribute('aria-label') || '';
+    const id = label.replace(/^Advance mission\s+/, '').trim();
+    if (!id) return;
+    const details = item.children.item(1);
+    if (!(details instanceof HTMLElement)) return;
+    const missionId = document.createElement('span');
+    missionId.className = 'mission-id';
+    missionId.textContent = id;
+    details.prepend(missionId);
+  }
+
   function repairOperationsContract() {
     const mode = document.querySelector('.plant-status-ribbon > div:nth-child(2) strong');
     if (mode instanceof HTMLElement) mode.setAttribute('data-testid', 'plant-mode');
@@ -55,11 +69,23 @@
     document.title = `${moduleTitle} - ${suffix}`;
   }
 
+  function scheduleTitleRepair() {
+    if (titleScheduled) return;
+    titleScheduled = true;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        titleScheduled = false;
+        repairTitle();
+      });
+    });
+  }
+
   function repair(root) {
     const scope = root instanceof Document || root instanceof Element ? root : document;
     scope.querySelectorAll('.progress-track').forEach(repairProgress);
     scope.querySelectorAll('.hmi-stage-scroll, .table-scroll').forEach(labelledRegion);
     scope.querySelectorAll('.split__resize').forEach(repairResizeHandle);
+    scope.querySelectorAll('.queue-item').forEach(repairMissionTraceability);
 
     const productName = scope.querySelector('#product-name');
     if (productName instanceof HTMLElement) {
@@ -69,27 +95,25 @@
     }
 
     repairOperationsContract();
-    repairTitle();
   }
 
-  function scheduleRepair() {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        scheduled = false;
-        repair(document);
-      });
-    });
-  }
-
-  const observer = new MutationObserver(scheduleRepair);
+  const observer = new MutationObserver(() => {
+    repair(document);
+    scheduleTitleRepair();
+  });
   observer.observe(document.body, { childList: true, subtree: true });
-  window.addEventListener('hashchange', scheduleRepair);
-  window.addEventListener('popstate', scheduleRepair);
-  document.addEventListener('click', scheduleRepair, true);
-  document.addEventListener('change', scheduleRepair, true);
+
+  const repairAfterInteraction = () => {
+    repair(document);
+    scheduleTitleRepair();
+  };
+
+  window.addEventListener('hashchange', repairAfterInteraction);
+  window.addEventListener('popstate', repairAfterInteraction);
+  document.addEventListener('click', repairAfterInteraction, true);
+  document.addEventListener('change', repairAfterInteraction, true);
 
   repair(document);
-  scheduleRepair();
+  repairTitle();
+  scheduleTitleRepair();
 })();
