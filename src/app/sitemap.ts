@@ -9,9 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/',
     '/work/',
     ...projects.map((project) => `/work/${project.slug}/`),
-    '/open-industrial-automation/',
-    '/open-industrial-automation/demo/',
-    '/open-industrial-automation/studio/',
   ]
   return routes.map((path) => ({
     url: `${site.url}${path}`,
