@@ -1,6 +1,4 @@
 'use strict';
-/* CommonJS is required by the Electron verification entry point. */
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
