@@ -1,0 +1,49 @@
+name: Repair OIA record QA locator
+
+on:
+  push:
+    branches:
+      - saj/portfolio-premium-systems-20260902
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oia-record-qa-locator-repair-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Scope REC-BATCH-018 assertion to the record register
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('scripts/qa-oia-tests.mjs')
+          content = path.read_text(encoding='utf-8')
+          old = "  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' })\n"
+          new = "  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' }).filter({ hasText: 'Batch execution' }).first()\n"
+          if old not in content:
+              raise SystemExit('Expected REC-BATCH-018 locator was not found exactly once')
+          if content.count(old) != 1:
+              raise SystemExit('Expected REC-BATCH-018 locator was not unique')
+          path.write_text(content.replace(old, new), encoding='utf-8')
+          PY
+
+      - name: Commit repair and remove this one-time workflow
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/oia-record-qa-locator-repair.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/qa-oia-tests.mjs
+          git commit -m 'Scope OIA record QA to the record register'
+          git push origin HEAD:${GITHUB_REF_NAME}
