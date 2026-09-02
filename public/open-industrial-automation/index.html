@@ -5,15 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="Open-source industrial automation engineering, operations, MES, historian, quality, maintenance, integration and OT security suite.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'">
   <title>Open Industrial Automation Suite</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./dub.css">
+  <link rel="stylesheet" href="./quality.css">
+  <link rel="stylesheet" href="./release-fixes.css">
 </head>
 <body>
   <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <noscript>
+    <main class="no-js-fallback">
+      <h1>Open Industrial Automation Suite</h1>
+      <p>This deterministic engineering workspace requires JavaScript for module navigation, simulation and local state.</p>
+      <p><a href="./products/">View the product catalogue</a></p>
+    </main>
+  </noscript>
   <div class="app-shell" id="appShell">
     <aside class="module-rail" id="moduleNav" data-open="false" aria-label="Suite modules">
       <div class="brand-lockup">
@@ -91,5 +100,6 @@
   <script src="./app.js"></script>
   <script src="./quality.js"></script>
   <script src="./product-shell.js"></script>
+  <script src="./release-fixes.js"></script>
 </body>
 </html>

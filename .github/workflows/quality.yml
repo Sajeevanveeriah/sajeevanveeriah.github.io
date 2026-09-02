@@ -73,17 +73,27 @@ jobs:
             favicon.png \
             open-industrial-automation/index.html \
             open-industrial-automation/styles.css \
+            open-industrial-automation/dub.css \
+            open-industrial-automation/quality.css \
+            open-industrial-automation/release-fixes.css \
+            open-industrial-automation/runtime-bootstrap.js \
+            open-industrial-automation/data.js \
+            open-industrial-automation/app.js \
+            open-industrial-automation/quality.js \
+            open-industrial-automation/product-shell.js \
+            open-industrial-automation/release-fixes.js \
             open-industrial-automation/model.json \
             open-industrial-automation/demo/index.html \
-            open-industrial-automation/demo/styles.css \
-            open-industrial-automation/demo/app.js \
             open-industrial-automation/studio/index.html \
-            open-industrial-automation/studio/styles.css \
-            open-industrial-automation/studio/app.js; do
+            open-industrial-automation/products/index.html; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
+          for product in operations control hmi alarms historian performance integration mes materials assets quality security identity deployment migration; do
+            test -s "out/open-industrial-automation/products/$product/index.html" || { echo "missing product route: $product"; exit 1; }
+          done
           test -s out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
-          grep -Fq 'Technical documentation' out/open-industrial-automation/index.html
-          grep -Fq 'Mixing, dosing and CIP' out/open-industrial-automation/demo/index.html
-          grep -Fq 'Engineering Studio' out/open-industrial-automation/studio/index.html
+          grep -Fq 'Open Industrial Automation Suite' out/open-industrial-automation/index.html
+          grep -Fq '../#operations' out/open-industrial-automation/demo/index.html
+          grep -Fq '../#control-studio' out/open-industrial-automation/studio/index.html
+          grep -Fq 'OIA-REF-001' out/open-industrial-automation/model.json
           echo "export verified"

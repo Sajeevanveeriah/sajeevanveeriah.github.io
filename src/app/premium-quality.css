@@ -1,0 +1,34 @@
+:root {
+  --accent-fill: #001391;
+}
+
+html[data-theme='dark'] {
+  --accent: #91a2ff;
+  --accent-fill: #001391;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --accent: #91a2ff;
+    --accent-fill: #001391;
+  }
+}
+
+.button-primary,
+.button-secondary:hover,
+.header-resume:hover,
+.role-lens[data-featured='true'],
+.contact-actions a:hover,
+.record-actions a:hover,
+.contact-actions a:first-child:hover {
+  border-color: var(--accent-fill);
+  background: var(--accent-fill);
+  color: #f8f8f8;
+}
+
+@media (max-width: 1160px) {
+  .hero-layout,
+  .role-lenses-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

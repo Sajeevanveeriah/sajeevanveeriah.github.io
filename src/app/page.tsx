@@ -9,21 +9,21 @@ import { humanNote, professionalProof, roleLenses, site, systemLayers, workingSt
 const proofItems = [
   'Member, Engineers Australia',
   'Mechatronics Engineering (Honours), Distinction, 2025',
-  'Lab / Field / Vehicle / Production',
+  'Robotics / Industrial Systems / Engineering Software',
 ] as const
 
 export default function HomePage() {
   return (
     <>
       <Masthead />
-      <main id="main">
+      <main className="premium-systems" id="main">
         <section className="portfolio-hero" id="overview" aria-labelledby="hero-title">
           <div className="shell hero-layout">
             <div className="hero-copy">
               <p className="hero-location">Geelong, Victoria, Australia</p>
               <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
               <p className="hero-role">{site.jobTitle}</p>
-              <h2 className="hero-statement">Complete systems.<br />Verified operation.</h2>
+              <h2 className="hero-statement">Machines. Intelligence. Dependable operation.</h2>
               <p className="hero-summary">{site.proposition}</p>
               <p className="hero-profile">{site.profile}</p>
               <div className="hero-actions">
@@ -58,8 +58,8 @@ export default function HomePage() {
 
         <section className="role-lenses-section shell" id="role-lenses" aria-labelledby="role-lenses-title">
           <div className="role-lenses-intro">
-            <h2 id="role-lenses-title">Start with the role you are hiring for.</h2>
-            <p>The same projects show different strengths. Choose the lens closest to your brief, or keep scrolling for the complete system.</p>
+            <h2 id="role-lenses-title">One engineering practice. Three operating domains.</h2>
+            <p>Start with the boundary closest to your brief. The evidence remains connected across the complete system.</p>
           </div>
           <div className="role-lenses">
             {roleLenses.map((lens, index) => (
@@ -76,8 +76,8 @@ export default function HomePage() {
         <section className="systems-band" id="systems" aria-labelledby="systems-title">
           <div className="shell systems-layout">
             <div className="systems-intro">
-              <h2 id="systems-title">From physical behaviour to dependable operation.</h2>
-              <p>I connect each interface, test the assumptions and leave evidence at the boundary.</p>
+              <h2 id="systems-title">A complete system is more than the machine.</h2>
+              <p>I connect physical behaviour, control, industrial information and verification so the whole system can operate as intended.</p>
             </div>
             <ol className="systems-path">
               {systemLayers.map((layer) => (
@@ -95,9 +95,9 @@ export default function HomePage() {
           <div className="shell section-heading editorial-heading">
             <div>
               <p className="kicker">Selected work</p>
-              <h2 id="work-title">Evidence across complete systems.</h2>
+              <h2 id="work-title">Proof, not a catalogue.</h2>
             </div>
-            <p>Three records. Each one shows the system, my contribution, how it was checked and where the claim stops.</p>
+            <p>Three records show the system, my contribution, the verification path and the exact boundary of each claim.</p>
           </div>
           <div className="selected-systems">
             {featuredProjects.map((project, index) => (
@@ -131,7 +131,7 @@ export default function HomePage() {
           <div className="shell practice-layout">
             <div className="practice-intro">
               <p className="kicker">Practice</p>
-              <h2 id="practice-title">I work where systems meet reality.</h2>
+              <h2 id="practice-title">Engineering that survives contact with reality.</h2>
               <p>{workingStyle}</p>
             </div>
             <ol className="practice-list">
@@ -154,8 +154,8 @@ export default function HomePage() {
 
         <section className="contact-terminal" id="contact" aria-labelledby="contact-title">
           <div className="shell contact-layout">
-            <h2 id="contact-title">Need an engineer who can connect the whole system?</h2>
-            <p>I am based in Geelong and open to conversations about robotics, mechatronics, automation, controls, AI/ML and engineering software roles.</p>
+            <h2 id="contact-title">Build the system. Prove the operation.</h2>
+            <p>I work across robotics, industrial automation, industrial IT/OT, embedded systems, AI/ML and engineering software - from requirements through integration, verification and handover.</p>
             <address className="contact-actions">
               <a href={`mailto:${site.email}`}>Email me <span aria-hidden="true">→</span></a>
               <a href={site.github}>View GitHub <span aria-hidden="true">→</span></a>

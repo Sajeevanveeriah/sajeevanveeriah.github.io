@@ -127,7 +127,7 @@ export async function testSuite(browser, qa) {
 
   await page.getByRole('button', { name: 'Validation and quality', exact: true }).click()
   await page.getByRole('button', { name: 'Execute test TEST-001', exact: true }).click()
-  const testRow = page.locator('tr', { hasText: 'TEST-001' })
+  const testRow = page.locator('tr', { hasText: 'TEST-001' }).filter({ hasText: 'FAT' }).first()
   qa.record('validation-test-execution', (await testRow.innerText()).includes('Passed'))
 
   await page.getByRole('button', { name: 'OT cybersecurity', exact: true }).click()
@@ -137,7 +137,7 @@ export async function testSuite(browser, qa) {
 
   await page.getByRole('button', { name: 'Identity and records', exact: true }).click()
   await page.getByRole('button', { name: 'Sign record REC-BATCH-018', exact: true }).click()
-  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' })
+  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' }).filter({ hasText: 'Batch execution' }).first()
   qa.record('electronic-record-review', (await recordRow.innerText()).includes('Reviewed'))
   await clearToasts(page)
   await page.screenshot({ path: `${qa.captureRoot}/${qa.mode}-07-identity-records.png`, fullPage: true })

@@ -79,19 +79,29 @@ jobs:
             favicon.png \
             open-industrial-automation/index.html \
             open-industrial-automation/styles.css \
+            open-industrial-automation/dub.css \
+            open-industrial-automation/quality.css \
+            open-industrial-automation/release-fixes.css \
+            open-industrial-automation/runtime-bootstrap.js \
+            open-industrial-automation/data.js \
+            open-industrial-automation/app.js \
+            open-industrial-automation/quality.js \
+            open-industrial-automation/product-shell.js \
+            open-industrial-automation/release-fixes.js \
             open-industrial-automation/model.json \
             open-industrial-automation/demo/index.html \
-            open-industrial-automation/demo/styles.css \
-            open-industrial-automation/demo/app.js \
             open-industrial-automation/studio/index.html \
-            open-industrial-automation/studio/styles.css \
-            open-industrial-automation/studio/app.js; do
+            open-industrial-automation/products/index.html; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
+          for product in operations control hmi alarms historian performance integration mes materials assets quality security identity deployment migration; do
+            test -s "out/open-industrial-automation/products/$product/index.html" || { echo "missing product route: $product"; exit 1; }
+          done
           test -s out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
-          grep -Fq 'Technical documentation' out/open-industrial-automation/index.html
-          grep -Fq 'Mixing, dosing and CIP' out/open-industrial-automation/demo/index.html
-          grep -Fq 'Engineering Studio' out/open-industrial-automation/studio/index.html
+          grep -Fq 'Open Industrial Automation Suite' out/open-industrial-automation/index.html
+          grep -Fq '../#operations' out/open-industrial-automation/demo/index.html
+          grep -Fq '../#control-studio' out/open-industrial-automation/studio/index.html
+          grep -Fq 'OIA-REF-001' out/open-industrial-automation/model.json
           echo "export verified"
 
       - uses: actions/configure-pages@v5
@@ -135,24 +145,24 @@ jobs:
           set -euo pipefail
           for attempt in $(seq 1 90); do
             portfolio_status="$(curl --silent --show-error --location --output /tmp/portfolio-live.html --write-out '%{http_code}' "https://sajeevanveeriah.github.io/?release=${GITHUB_SHA}")"
-            documentation_status="$(curl --silent --show-error --location --output /tmp/oia-live-documentation.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/?release=${GITHUB_SHA}")"
+            suite_status="$(curl --silent --show-error --location --output /tmp/oia-live-suite.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/?release=${GITHUB_SHA}")"
             operator_status="$(curl --silent --show-error --location --output /tmp/oia-live-operator.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/demo/?release=${GITHUB_SHA}")"
             studio_status="$(curl --silent --show-error --location --output /tmp/oia-live-studio.html --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/studio/?release=${GITHUB_SHA}")"
             model_status="$(curl --silent --show-error --location --output /tmp/oia-live-model.json --write-out '%{http_code}' "$OIA_PUBLIC_BASE_URL/model.json?release=${GITHUB_SHA}")"
             if [ "$portfolio_status" = 200 ] && \
-               [ "$documentation_status" = 200 ] && \
+               [ "$suite_status" = 200 ] && \
                [ "$operator_status" = 200 ] && \
                [ "$studio_status" = 200 ] && \
                [ "$model_status" = 200 ] && \
-               grep -Fq 'Technical documentation' /tmp/oia-live-documentation.html && \
-               grep -Fq 'Mixing, dosing and CIP' /tmp/oia-live-operator.html && \
-               grep -Fq 'Engineering Studio' /tmp/oia-live-studio.html && \
+               grep -Fq 'Open Industrial Automation Suite' /tmp/oia-live-suite.html && \
+               grep -Fq '../#operations' /tmp/oia-live-operator.html && \
+               grep -Fq '../#control-studio' /tmp/oia-live-studio.html && \
                grep -Fq 'OIA-REF-001' /tmp/oia-live-model.json; then
               printf 'Live portfolio and OIA routes ready after attempt %s\n' "$attempt"
               exit 0
             fi
-            printf 'Attempt %s: portfolio=%s documentation=%s operator=%s studio=%s model=%s\n' \
-              "$attempt" "$portfolio_status" "$documentation_status" "$operator_status" "$studio_status" "$model_status"
+            printf 'Attempt %s: portfolio=%s suite=%s operator=%s studio=%s model=%s\n' \
+              "$attempt" "$portfolio_status" "$suite_status" "$operator_status" "$studio_status" "$model_status"
             sleep 4
           done
           echo 'Portfolio or Open Industrial Automation public routes did not become ready in time' >&2

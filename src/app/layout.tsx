@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { archivoFont } from './fonts'
 import { site } from '@/content/site'
 import './globals.css'
+import './premium.css'
+import './premium-quality.css'
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -34,8 +36,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f0f1c' },
+    { media: '(prefers-color-scheme: light)', color: '#f5f5f4' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
 }
 
@@ -49,7 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
-    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Embedded systems', 'Controls', 'Automotive validation', 'IoT', 'AI and machine learning', 'Engineering software'],
+    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Industrial IT', 'Operational technology', 'Embedded systems', 'Controls', 'Automotive validation', 'IoT', 'AI and machine learning', 'Engineering software'],
   }
 
   return (
