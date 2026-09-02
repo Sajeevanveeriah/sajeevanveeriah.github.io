@@ -1,1 +1,95 @@
-<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><title>Technical documentation - OIA</title><link rel="stylesheet" href="./styles.css"></head><body><header><a href="./demo/" class="brand"><span>OI</span><strong>Open Industrial Automation</strong></a><nav><a href="./demo/">Operator HMI</a><a href="./studio/">Engineering Studio</a><a aria-current="page" href="./">Documentation</a></nav></header><main><aside><h1>Technical documentation</h1><nav aria-label="Documentation sections"><a href="#architecture">Architecture</a><a href="#model">Project model</a><a href="#verification">Verification</a><a href="#security">Cybersecurity</a><a href="#safety">Safety boundary</a><a href="#cloud">Cloud delivery</a></nav></aside><article><section class="lead"><h2>Cloud-first engineering with explicit industrial boundaries</h2><p>Phase 1 proves a deterministic reference process, browser operator experience and engineering evidence chain. It is a platform foundation, not a substitute for certified controllers, qualified field hardware or competent commissioning.</p></section><section id="architecture"><h2>Architecture</h2><div class="diagram"><div>Automation Project Model</div><b>-></b><div>Deterministic control core</div><b>-></b><div>HTTP simulation boundary</div><b>-></b><div>HMI and Engineering Studio</div></div><p>The project model carries stable asset, signal, recipe, alarm and requirement identities. Control behaviour is independently testable. The service publishes only a bounded state and role-checked command interface.</p></section><section id="model"><h2>Automation Project Model</h2><table><thead><tr><th>Domain</th><th>Phase 1 content</th></tr></thead><tbody><tr><td>Assets</td><td>Tanks, pumps, agitator and heater</td></tr><tr><td>Signals</td><td>Level, temperature, flow, conductivity and speed</td></tr><tr><td>Recipes</td><td>Production and clean-in-place phase procedures</td></tr><tr><td>Evidence</td><td>Requirements, tests, risks and release records</td></tr></tbody></table></section><section id="verification"><h2>Verification</h2><p>Unit, integration and browser tests are joined by model, traceability, security, container and Bicep gates. Each release produces a machine-readable manifest and SPDX-style software bill of materials.</p></section><section id="security"><h2>Cybersecurity</h2><p>The HTTP service limits command bodies, applies browser security headers and checks roles at the server boundary. No credentials are stored. MQTT and OPC UA ports are not published. Azure templates compile without login or deployment.</p></section><section id="safety" class="warning"><h2>Safety boundary</h2><p><strong>Certified safety remains independent.</strong> Emergency stops, guards, interlocks, pressure protection, hazardous-energy isolation and safe motion require separately engineered hardware and physical validation.</p></section><section id="cloud"><h2>Cloud delivery</h2><p>GitHub is the control plane. Codespaces provides browser development. Actions provides repeatable CI. Container images are GHCR-ready. Azure Container Apps infrastructure is declared but remains undeployed until a separate cost and security approval.</p></section></article></main><footer>Open Industrial Automation - Phase 1 reference documentation</footer></body></html>
+<!doctype html>
+<html lang="en-AU" data-theme="light" data-density="compact" data-product="suite">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Open-source industrial automation engineering, operations, MES, historian, quality, maintenance, integration and OT security suite.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'">
+  <title>Open Industrial Automation Suite</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./dub.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <div class="app-shell" id="appShell">
+    <aside class="module-rail" id="moduleNav" data-open="false" aria-label="Suite modules">
+      <div class="brand-lockup">
+        <a href="./?product=suite#overview" class="brand-mark" aria-label="Open Industrial Automation home">OI</a>
+        <div>
+          <strong>Open Industrial Automation</strong>
+          <span>OIA Suite</span>
+        </div>
+      </div>
+      <nav class="module-list" id="moduleList" aria-label="Primary modules"></nav>
+      <div class="rail-footer">
+        <div class="rail-health"><span class="status-dot is-good"></span><span>Local deterministic runtime</span></div>
+        <p>Interconnected engineering products. Certified safety and field control remain independent.</p>
+      </div>
+    </aside>
+
+    <header class="top-bar">
+      <button class="icon-button mobile-only" id="navToggle" type="button" aria-label="Open navigation" aria-controls="moduleNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="breadcrumb" id="breadcrumb"><span>Reference Plant 01</span><strong>Overview</strong></div>
+      <button class="command-trigger" id="commandTrigger" type="button" aria-label="Open command palette">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+        <span>Search modules, tags and records</span>
+        <kbd>Ctrl K</kbd>
+      </button>
+      <div class="top-actions">
+        <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle colour theme" title="Toggle colour theme">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+        </button>
+        <button class="icon-button" id="notificationButton" type="button" aria-label="Open notifications" title="Notifications">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7M10 19h4"/></svg>
+          <span class="notification-count" id="notificationCount">2</span>
+        </button>
+        <div class="operator-chip" title="Local workspace identity"><span>SV</span><div><strong>System engineer</strong><small>Shared local workspace</small></div></div>
+      </div>
+    </header>
+
+    <main id="workspace" class="workspace" tabindex="-1" aria-live="polite"></main>
+
+    <footer class="status-bar">
+      <span><i class="status-dot is-good"></i> Runtime healthy</span>
+      <span id="statusClock">Australia/Melbourne</span>
+      <span id="saveStatus">Workspace saved locally</span>
+      <span>OIA-REF-001</span>
+    </footer>
+  </div>
+
+  <div class="scrim" id="navScrim" hidden></div>
+  <dialog class="command-dialog" id="commandDialog" aria-labelledby="commandTitle">
+    <div class="command-head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+      <label for="commandInput" class="sr-only" id="commandTitle">Search the suite</label>
+      <input id="commandInput" type="search" autocomplete="off" placeholder="Search modules, tags, alarms, recipes and requirements">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="command-results" id="commandResults"></div>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="confirmDialog" aria-labelledby="confirmTitle">
+    <h2 id="confirmTitle">Reset demonstration workspace?</h2>
+    <p>This restores all seeded data, process state, alarms, work orders and preferences. Export first if you need the current workspace.</p>
+    <div class="dialog-actions">
+      <button type="button" class="button secondary" data-action="cancel-reset">Cancel</button>
+      <button type="button" class="button danger" data-action="confirm-reset">Confirm reset</button>
+    </div>
+  </dialog>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <input type="file" id="workspaceImport" accept="application/json" hidden>
+  <input type="file" id="migrationImport" accept=".csv,text/csv" hidden>
+
+  <script src="./runtime-bootstrap.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+  <script src="./quality.js"></script>
+  <script src="./product-shell.js"></script>
+</body>
+</html>

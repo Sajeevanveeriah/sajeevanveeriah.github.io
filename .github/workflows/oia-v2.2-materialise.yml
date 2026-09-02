@@ -1,0 +1,134 @@
+name: OIA product suite 2.2 materialise
+
+on:
+  push:
+    branches:
+      - feat/oia-suite-v2-20260902
+    paths:
+      - '.github/oia-v2.2-payload/**'
+      - '.github/workflows/oia-v2.2-materialise.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: oia-v2-2-materialise
+  cancel-in-progress: false
+
+jobs:
+  materialise:
+    if: ${{ !contains(github.event.head_commit.message || '', '[oia-v2.2-materialised]') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/oia-suite-v2-20260902
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Reconstruct and verify release payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(find .github/oia-v2.2-payload -maxdepth 1 -type f -name 'part-*' | wc -l)" = 6
+          cat .github/oia-v2.2-payload/part-* > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
+          test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz.b64)" = 61272
+          printf '%s  %s\n' \
+            'e0b53a1932abc7dbf528fb09752e19186bff744176f7fa1058214284ed2c4d79' \
+            '/tmp/oia-product-suite-v2.2.0.tar.xz.b64' | sha256sum -c -
+          base64 --decode /tmp/oia-product-suite-v2.2.0.tar.xz.b64 > /tmp/oia-product-suite-v2.2.0.tar.xz
+          test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz)" = 45952
+          printf '%s  %s\n' \
+            'b242e36f546088485eb06506148c94eed4d43985050b5d6e8d9ba4106b0c0e37' \
+            '/tmp/oia-product-suite-v2.2.0.tar.xz' | sha256sum -c -
+          xz --test /tmp/oia-product-suite-v2.2.0.tar.xz
+          tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz | sort > /tmp/oia-product-suite-files.txt
+          test "$(wc -l < /tmp/oia-product-suite-files.txt)" = 40
+
+      - name: Materialise product suite source
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -xJf /tmp/oia-product-suite-v2.2.0.tar.xz -C .
+          rm -rf .github/oia-v2.2-payload
+          rm -f .github/workflows/oia-bootstrap.yml
+          rm -f .github/workflows/oia-v2.2-materialise.yml
+
+      - name: Verify source contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in \
+            public/open-industrial-automation/index.html \
+            public/open-industrial-automation/dub.css \
+            public/open-industrial-automation/runtime-bootstrap.js \
+            public/open-industrial-automation/product-shell.js \
+            public/open-industrial-automation/products/index.html \
+            public/open-industrial-automation/model.json \
+            desktop/package.json \
+            desktop/product-catalog.json \
+            desktop/main.cjs \
+            desktop/build.cjs \
+            desktop/verify.cjs \
+            desktop/assets/icon.png \
+            scripts/qa-oia-products.mjs \
+            .github/workflows/oia-desktop.yml \
+            .github/workflows/oia-product-quality.yml; do
+            test -s "$file" || { echo "Missing or empty: $file" >&2; exit 1; }
+          done
+          for file in \
+            public/open-industrial-automation/runtime-bootstrap.js \
+            public/open-industrial-automation/product-shell.js \
+            public/open-industrial-automation/sw.js \
+            desktop/main.cjs \
+            desktop/preload.cjs \
+            desktop/build.cjs \
+            desktop/verify.cjs \
+            scripts/qa-oia-products.mjs; do
+            node --check "$file"
+          done
+          node desktop/verify.cjs
+          node <<'NODE'
+          const fs = require('node:fs')
+          const files = [
+            'desktop/package.json',
+            'desktop/product-catalog.json',
+            'public/open-industrial-automation/manifest.webmanifest',
+            'public/open-industrial-automation/model.json',
+          ]
+          for (const file of files) JSON.parse(fs.readFileSync(file, 'utf8'))
+          NODE
+          if grep -Prn '[–—]' desktop public/open-industrial-automation scripts/qa-oia-products.mjs; then
+            echo 'Unicode dash found in OIA source' >&2
+            exit 1
+          fi
+          if grep -PrinE '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
+            echo 'Excluded branding found in public OIA source' >&2
+            exit 1
+          fi
+
+      - name: Commit materialised release candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --check
+          git diff --cached --quiet && { echo 'No materialised changes found' >&2; exit 1; }
+          git commit -m 'feat: add premium interconnected OIA product suite 2.2.0 [oia-v2.2-materialised]'
+          git push origin HEAD:feat/oia-suite-v2-20260902
+
+      - name: Record materialisation evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'source_commit=%s\n' "$(git rev-parse HEAD)"
+          printf 'payload_sha256=%s\n' 'b242e36f546088485eb06506148c94eed4d43985050b5d6e8d9ba4106b0c0e37'
+          printf 'product_count=%s\n' "$(node -p "require('./desktop/product-catalog.json').products.length")"
