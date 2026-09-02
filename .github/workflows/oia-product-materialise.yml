@@ -31,9 +31,6 @@ jobs:
           set -euo pipefail
           files=(.github/oia-product-payload/part-*)
           test "${#files[@]}" = "22"
-          for file in "${files[@]}"; do
-            printf '%s %s bytes\n' "$file" "$(stat -c %s "$file")"
-          done
           cat "${files[@]}" > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
           test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz.b64)" = "61272"
           printf '%s  %s\n' \
@@ -105,7 +102,10 @@ jobs:
           assert len({p['id'] for p in products}) == 16
           assert len({p['appId'] for p in products}) == 16
           for product in products:
-              path = Path('public/open-industrial-automation/products') / product['id'] / 'index.html'
+              if product['id'] == 'suite':
+                  path = Path('public/open-industrial-automation/index.html')
+              else:
+                  path = Path('public/open-industrial-automation/products') / product['id'] / 'index.html'
               assert path.is_file() and path.stat().st_size > 100, path
           PY
           if grep -Prn '[–—]' desktop public/open-industrial-automation scripts/qa-oia-products.mjs docs/superpowers/specs/20260902-Open-Industrial-Automation-Product-Suite-Design-Rev01.md docs/superpowers/plans/20260902-Open-Industrial-Automation-Product-Suite-Implementation-Plan-Rev01.md; then
