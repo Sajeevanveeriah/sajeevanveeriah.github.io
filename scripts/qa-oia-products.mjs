@@ -106,6 +106,41 @@ try {
   )
   await page.screenshot({ path: `${qa.captureRoot}/${qa.mode}-product-mes-shared-state.png`, fullPage: true })
 
+  await page.goto(qa.url('/?product=operations#operations'), { waitUntil: 'networkidle' })
+  const beforeCip = await page.evaluate(() => JSON.parse(localStorage.getItem('oia-suite-workspace-v2')))
+  const initialCipCount = beforeCip.process.cipCount
+  await page.getByRole('button', { name: 'Start CIP', exact: true }).click()
+  qa.record(
+    'simulation-starts-cip-pre-rinse',
+    (await page.locator('[data-testid="plant-state"]').innerText()) === 'CIP PRE RINSE',
+  )
+
+  await page.waitForFunction(
+    () => document.querySelector('[data-testid="plant-state"]')?.textContent?.trim() !== 'CIP PRE RINSE',
+    undefined,
+    { timeout: 15000 },
+  )
+  const progressedCipState = (await page.locator('[data-testid="plant-state"]').innerText()).trim()
+  qa.record(
+    'simulation-progresses-past-cip-pre-rinse',
+    progressedCipState !== 'CIP PRE RINSE' && progressedCipState !== 'IDLE',
+    { progressedCipState },
+  )
+
+  await page.waitForFunction(
+    () => document.querySelector('[data-testid="plant-state"]')?.textContent?.trim() === 'IDLE',
+    undefined,
+    { timeout: 45000 },
+  )
+  const completedCipWorkspace = await page.evaluate(() => JSON.parse(localStorage.getItem('oia-suite-workspace-v2')))
+  qa.record('simulation-completes-cip-cycle', completedCipWorkspace.process.state === 'IDLE')
+  qa.record(
+    'simulation-increments-cip-count',
+    completedCipWorkspace.process.cipCount === initialCipCount + 1,
+    { initialCipCount, completedCipCount: completedCipWorkspace.process.cipCount },
+  )
+  await page.screenshot({ path: `${qa.captureRoot}/${qa.mode}-product-cip-complete.png`, fullPage: true })
+
   const mobile = await browser.newContext({
     viewport: { width: 390, height: 844 },
     reducedMotion: 'reduce',
