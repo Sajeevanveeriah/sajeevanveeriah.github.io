@@ -1,5 +1,4 @@
-# Materialise the recovered source even when rendered QA finds defects, so the branch can be repaired directly.
-name: OIA suite materialise
+name: OIA product suite materialise
 
 on:
   push:
@@ -11,11 +10,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: oia-product-suite-materialise
+  cancel-in-progress: false
+
 jobs:
-  materialise:
-    if: ${{ !contains(github.event.head_commit.message, '[remove-bootstrap]') }}
+  materialise-and-verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,110 +26,130 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
-      - name: Verify and extract source package
+      - name: Reconstruct verified product-suite payload
         shell: bash
         run: |
           set -euo pipefail
-          cat .github/oia-bootstrap-xz/part-* > /tmp/oia-suite.tar.xz.b64
-          echo "Encoded package bytes: $(stat -c %s /tmp/oia-suite.tar.xz.b64)"
-          test "$(stat -c %s /tmp/oia-suite.tar.xz.b64)" = "104880"
+          test "$(find .github/oia-product-bootstrap -maxdepth 1 -type f -name 'part-*' | wc -l)" = "5"
+          cat .github/oia-product-bootstrap/part-* > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
+          test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz.b64)" = "61272"
           printf '%s  %s\n' \
-            '886f3b15c47113c5ac87bbba0804e767f934f91d4a0228d2c41044af1dbb13c4' \
-            '/tmp/oia-suite.tar.xz.b64' | sha256sum -c -
-          base64 --decode /tmp/oia-suite.tar.xz.b64 > /tmp/oia-suite.tar.xz
-          echo "Decoded package bytes: $(stat -c %s /tmp/oia-suite.tar.xz)"
-          test "$(stat -c %s /tmp/oia-suite.tar.xz)" = "78660"
+            'e0b53a1932abc7dbf528fb09752e19186bff744176f7fa1058214284ed2c4d79' \
+            '/tmp/oia-product-suite-v2.2.0.tar.xz.b64' | sha256sum -c -
+          base64 --decode /tmp/oia-product-suite-v2.2.0.tar.xz.b64 > /tmp/oia-product-suite-v2.2.0.tar.xz
+          test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz)" = "45952"
           printf '%s  %s\n' \
-            'b9f40e2bce85ac47c88f0d64673a9760f997335725f6ab9bddc56fc7a2982123' \
-            '/tmp/oia-suite.tar.xz' | sha256sum -c -
-          xz --test /tmp/oia-suite.tar.xz
+            'b242e36f546088485eb06506148c94eed4d43985050b5d6e8d9ba4106b0c0e37' \
+            '/tmp/oia-product-suite-v2.2.0.tar.xz' | sha256sum -c -
+          xz --test /tmp/oia-product-suite-v2.2.0.tar.xz
+          tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz > /tmp/oia-product-suite-files.txt
+          test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
+          tar -xJf /tmp/oia-product-suite-v2.2.0.tar.xz -C .
 
-          cp .github/workflows/deploy.yml /tmp/oia-deploy.yml
-          cp .github/workflows/quality.yml /tmp/oia-quality.yml
-          tar -xJf /tmp/oia-suite.tar.xz -C .
-          cp /tmp/oia-deploy.yml .github/workflows/deploy.yml
-          cp /tmp/oia-quality.yml .github/workflows/quality.yml
+      - name: Remove one-use bootstrap material
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .github/oia-product-bootstrap
+          rm -f .github/workflows/oia-bootstrap.yml
 
-          rm -f \
-            public/open-industrial-automation/demo/app.js \
-            public/open-industrial-automation/demo/styles.css \
-            public/open-industrial-automation/studio/app.js \
-            public/open-industrial-automation/studio/styles.css
-          rm -rf .github/oia-bootstrap .github/oia-bootstrap-xz
-
-      - name: Validate source package
+      - name: Validate source and desktop contracts
         shell: bash
         run: |
           set -euo pipefail
           for file in \
             public/open-industrial-automation/index.html \
             public/open-industrial-automation/styles.css \
+            public/open-industrial-automation/dub.css \
             public/open-industrial-automation/data.js \
             public/open-industrial-automation/app.js \
+            public/open-industrial-automation/runtime-bootstrap.js \
+            public/open-industrial-automation/product-shell.js \
             public/open-industrial-automation/model.json \
-            public/open-industrial-automation/README.md \
-            public/open-industrial-automation/LICENSE \
-            public/open-industrial-automation/docs/Capability-Matrix.md \
-            public/open-industrial-automation/schemas/oia-project.schema.json \
-            scripts/qa-oia-lib.mjs \
-            scripts/qa-oia-tests.mjs \
-            scripts/qa-oia.mjs; do
+            public/open-industrial-automation/products/index.html \
+            desktop/main.cjs \
+            desktop/preload.cjs \
+            desktop/build.cjs \
+            desktop/verify.cjs \
+            desktop/product-catalog.json \
+            scripts/qa-oia-products.mjs \
+            .github/workflows/oia-product-quality.yml \
+            .github/workflows/oia-desktop.yml; do
             test -s "$file" || { echo "missing or empty $file"; exit 1; }
           done
 
-          node --check public/open-industrial-automation/app.js
-          node --check public/open-industrial-automation/data.js
-          node --check public/open-industrial-automation/sw.js
-          node --check scripts/qa-oia-lib.mjs
-          node --check scripts/qa-oia-tests.mjs
-          node --check scripts/qa-oia.mjs
+          node --check public/open-industrial-automation/runtime-bootstrap.js
+          node --check public/open-industrial-automation/product-shell.js
+          node --check desktop/main.cjs
+          node --check desktop/preload.cjs
+          node --check desktop/build.cjs
+          node --check desktop/verify.cjs
+          node --check scripts/qa-oia-products.mjs
+          node desktop/verify.cjs
+
           node <<'NODE'
           const fs = require('node:fs')
-          const paths = [
-            'public/open-industrial-automation/model.json',
+          for (const path of [
+            'desktop/package.json',
+            'desktop/product-catalog.json',
             'public/open-industrial-automation/manifest.webmanifest',
-            'public/open-industrial-automation/schemas/oia-project.schema.json',
-            'public/open-industrial-automation/examples/site-profile.json',
-          ]
-          for (const path of paths) JSON.parse(fs.readFileSync(path, 'utf8'))
+            'public/open-industrial-automation/model.json',
+          ]) JSON.parse(fs.readFileSync(path, 'utf8'))
           NODE
 
-          if grep -Prn '[–—]' public/open-industrial-automation; then
-            echo 'Unicode dash found in public OIA source' >&2
+          if grep -Prn '[–—]' desktop public/open-industrial-automation scripts/qa-oia-products.mjs; then
+            echo 'Unicode dash found in OIA release source' >&2
             exit 1
           fi
-          if grep -Prin '\b(JAG|Ford|Invenio)\b' public/open-industrial-automation; then
-            echo 'Former-employer or proprietary branding found in public OIA source' >&2
+          if grep -PrinE '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
+            echo 'Excluded organisation or proprietary branding found in OIA source' >&2
+            exit 1
+          fi
+          if grep -PrinE '(BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})' desktop public/open-industrial-automation; then
+            echo 'Credential-like content found in OIA source' >&2
             exit 1
           fi
 
-      - id: rendered_qa
-        name: Build and run rendered OIA QA
-        continue-on-error: true
-        shell: bash
+      - name: Install portfolio dependencies
+        run: npm ci
+
+      - name: Type check and lint
         run: |
-          set -euo pipefail
-          npm ci
-          npm run build
-          npx playwright install --with-deps chromium
-          npm run qa:oia
+          npm run typecheck
+          npm run lint
 
-      - name: Commit materialised suite for direct repair
+      - name: Build static export
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run complete suite browser QA
+        run: npm run qa:oia
+
+      - name: Run product and full-sequence browser QA
+        run: node scripts/qa-oia-products.mjs
+
+      - name: Upload materialisation QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: oia-v2-2-materialisation-qa-${{ github.sha }}
+          path: /tmp/oia-qa
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Commit verified product suite
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
+          git diff --cached --check
           git diff --cached --quiet && { echo 'No materialised changes found' >&2; exit 1; }
-          git commit -m 'feat: materialise Open Industrial Automation suite 2.1 [oia-materialise]'
+          git commit -m 'feat: add interconnected OIA product suite and desktop packaging [oia-materialise]'
           git push origin HEAD:feat/oia-suite-v2-20260902
-
-      - name: Preserve QA gate after source materialisation
-        if: ${{ steps.rendered_qa.outcome != 'success' }}
-        run: |
-          echo 'Rendered QA failed. Source was materialised for direct repair.' >&2
-          exit 1
