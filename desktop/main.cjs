@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow, Menu, net, protocol, session, shell } = require('electron');
+const { app, BrowserWindow, Menu, protocol, session, shell } = require('electron');
 const { readFile } = require('node:fs/promises');
 const path = require('node:path');
 const catalog = require('./product-catalog.json');
@@ -55,6 +55,7 @@ function contentType(filePath) {
     '.js': 'text/javascript; charset=utf-8',
     '.json': 'application/json; charset=utf-8',
     '.md': 'text/markdown; charset=utf-8',
+    '.png': 'image/png',
     '.svg': 'image/svg+xml',
     '.txt': 'text/plain; charset=utf-8',
     '.webmanifest': 'application/manifest+json',
