@@ -71,19 +71,19 @@ jobs:
             robots.txt \
             sitemap.xml \
             favicon.png \
-            engineering-simulator/open-industrial-automation/index.html \
-            engineering-simulator/open-industrial-automation/styles.css \
-            engineering-simulator/open-industrial-automation/model.json \
-            engineering-simulator/open-industrial-automation/demo/index.html \
-            engineering-simulator/open-industrial-automation/demo/styles.css \
-            engineering-simulator/open-industrial-automation/demo/app.js \
-            engineering-simulator/open-industrial-automation/studio/index.html \
-            engineering-simulator/open-industrial-automation/studio/styles.css \
-            engineering-simulator/open-industrial-automation/studio/app.js; do
+            open-industrial-automation/index.html \
+            open-industrial-automation/styles.css \
+            open-industrial-automation/model.json \
+            open-industrial-automation/demo/index.html \
+            open-industrial-automation/demo/styles.css \
+            open-industrial-automation/demo/app.js \
+            open-industrial-automation/studio/index.html \
+            open-industrial-automation/studio/styles.css \
+            open-industrial-automation/studio/app.js; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
           test -s out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
-          grep -Fq 'Technical documentation' out/engineering-simulator/open-industrial-automation/index.html
-          grep -Fq 'Mixing, dosing and CIP' out/engineering-simulator/open-industrial-automation/demo/index.html
-          grep -Fq 'Engineering Studio' out/engineering-simulator/open-industrial-automation/studio/index.html
+          grep -Fq 'Technical documentation' out/open-industrial-automation/index.html
+          grep -Fq 'Mixing, dosing and CIP' out/open-industrial-automation/demo/index.html
+          grep -Fq 'Engineering Studio' out/open-industrial-automation/studio/index.html
           echo "export verified"
