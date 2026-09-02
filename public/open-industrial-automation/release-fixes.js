@@ -77,6 +77,13 @@
     if (mode instanceof HTMLElement) mode.setAttribute('data-testid', 'plant-mode');
   }
 
+  function repairCommandLabels(root) {
+    const startCip = root.querySelector('[data-action="start-cip"]');
+    if (startCip instanceof HTMLButtonElement && !startCip.hasAttribute('aria-label')) {
+      startCip.setAttribute('aria-label', 'Start CIP');
+    }
+  }
+
   function dismissCommandPalette(event) {
     if (event.key !== 'Escape') return;
     const dialog = document.querySelector('#commandDialog');
@@ -118,6 +125,7 @@
     }
 
     repairOperationsContract();
+    repairCommandLabels(scope);
   }
 
   const observer = new MutationObserver(() => {
