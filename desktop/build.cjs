@@ -1,4 +1,6 @@
 'use strict';
+/* CommonJS is required by Electron and electron-builder entry points. */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 const { build, Platform, Arch } = require('electron-builder');
 const path = require('node:path');
