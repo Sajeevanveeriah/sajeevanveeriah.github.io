@@ -11,9 +11,18 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./dub.css">
+  <link rel="stylesheet" href="./quality.css">
+  <link rel="stylesheet" href="./release-fixes.css">
 </head>
 <body>
   <a class="skip-link" href="#workspace">Skip to workspace</a>
+  <noscript>
+    <main class="no-js-fallback">
+      <h1>Open Industrial Automation Suite</h1>
+      <p>This deterministic engineering workspace requires JavaScript for module navigation, simulation and local state.</p>
+      <p><a href="./products/">View the product catalogue</a></p>
+    </main>
+  </noscript>
   <div class="app-shell" id="appShell">
     <aside class="module-rail" id="moduleNav" data-open="false" aria-label="Suite modules">
       <div class="brand-lockup">
@@ -91,5 +100,6 @@
   <script src="./app.js"></script>
   <script src="./quality.js"></script>
   <script src="./product-shell.js"></script>
+  <script src="./release-fixes.js"></script>
 </body>
 </html>
