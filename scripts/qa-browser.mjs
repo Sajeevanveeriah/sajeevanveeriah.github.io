@@ -10,7 +10,7 @@ const captureRoot = '/tmp/portfolio-qa'
 const port = 4173
 const baseURL = `http://127.0.0.1:${port}`
 const mime = {
-  '.avif': 'image/avif', '.css': 'text/css', '.html': 'text/html; charset=utf-8',
+  '.avif': 'image/avif', '.css': 'text/css', '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript', '.jpg': 'image/jpeg', '.pdf': 'application/pdf', '.png': 'image/png',
   '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.xml': 'application/xml',
 }
@@ -213,7 +213,8 @@ for (const route of routes) {
     recordPage: Boolean(document.querySelector('.record')),
     evidenceBoundaryCount: document.querySelectorAll('.record-grid .boundary').length,
     emailActionCount: document.querySelectorAll('.record-actions a[href^="mailto:"]').length,
-    resumeActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.pdf"]').length,
+    resumePdfActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.pdf"]').length,
+    resumeDocxActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.docx"]').length,
     nextProjectCount: document.querySelectorAll('.record-actions a[data-next-project]').length,
     visualOverflow: [...document.querySelectorAll('.practice-visual, .record-plate, .selected-visual, .further-figure')].flatMap((figure, index) => {
       const image = figure.querySelector('img')
@@ -227,7 +228,13 @@ for (const route of routes) {
     }),
   }))
   const isWorkIndex = route === '/work/'
-  const recordContractInvalid = routeResult.recordPage && (routeResult.evidenceBoundaryCount !== 1 || routeResult.emailActionCount !== 1 || routeResult.resumeActionCount !== 1 || routeResult.nextProjectCount !== 1)
+  const recordContractInvalid = routeResult.recordPage && (
+    routeResult.evidenceBoundaryCount !== 1
+    || routeResult.emailActionCount !== 1
+    || routeResult.resumePdfActionCount !== 1
+    || routeResult.resumeDocxActionCount !== 1
+    || routeResult.nextProjectCount !== 1
+  )
   const indexContractInvalid = isWorkIndex && (routeResult.workIndexCount !== 3 || routeResult.publicCatalogueCount !== 0)
   if (response?.status() !== 200 || routeResult.overflow || !routeResult.imagesReady || routeResult.visualOverflow.length || recordContractInvalid || indexContractInvalid) failures.push({ name: 'route', route, status: response?.status(), ...routeResult })
 }
@@ -249,9 +256,11 @@ const mobile = await browser.newContext({ viewport: { width: 390, height: 844 },
 const mobilePage = await mobile.newPage()
 await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
 await mobilePage.getByText('Menu', { exact: true }).click()
-const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
-const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
-if (!mobileNavVisible || mobileLinks !== 5) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
+const mobileNav = mobilePage.getByRole('navigation', { name: 'Mobile primary' })
+const mobileNavVisible = await mobileNav.isVisible()
+const mobileLinks = (await mobileNav.getByRole('link').allTextContents()).map((label) => label.trim())
+const expectedMobileLinks = ['Systems', 'Work', 'Practice', 'Contact', 'Resume PDF', 'Resume DOCX']
+if (!mobileNavVisible || JSON.stringify(mobileLinks) !== JSON.stringify(expectedMobileLinks)) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks, expectedMobileLinks })
 await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
 await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Systems' }).click()
 await mobilePage.waitForTimeout(50)
