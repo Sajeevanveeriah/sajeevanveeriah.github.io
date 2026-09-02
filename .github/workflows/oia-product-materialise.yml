@@ -45,18 +45,55 @@ jobs:
           tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz > /tmp/oia-product-suite-files.txt
           test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
 
-          icon_files=(.github/oia-icon-payload/part-*)
-          test "${#icon_files[@]}" = "1"
-          cat "${icon_files[@]}" > /tmp/oia-app-icon.png.b64
-          test "$(stat -c %s /tmp/oia-app-icon.png.b64)" = "2928"
-          printf '%s  %s\n' \
-            '6704346b4304318c1d57016b5379de9b2bb7dd71d44a60493dfdc8f317ee4204' \
-            '/tmp/oia-app-icon.png.b64' | sha256sum -c -
-          base64 --decode /tmp/oia-app-icon.png.b64 > /tmp/oia-app-icon.png
-          test "$(stat -c %s /tmp/oia-app-icon.png)" = "2196"
-          printf '%s  %s\n' \
-            '375af1d0ce97e30fea738632a8a321e8981ad535dc22cbecd4a2250fe63efaa4' \
-            '/tmp/oia-app-icon.png' | sha256sum -c -
+      - name: Generate deterministic desktop icon
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import binascii
+          import hashlib
+          import struct
+          import zlib
+          from pathlib import Path
+
+          width = height = 512
+          blue = (37, 99, 235)
+          white = (255, 255, 255)
+          black = (10, 10, 10)
+
+          def colour(x, y):
+              value = blue
+              outer = ((x - 185) / 120) ** 2 + ((y - 255) / 160) ** 2
+              inner = ((x - 185) / 60) ** 2 + ((y - 255) / 100) ** 2
+              if outer <= 1 and inner >= 1:
+                  value = white
+              if 350 <= x <= 425 and 95 <= y <= 415:
+                  value = white
+              if 130 <= x <= 382 and 445 <= y <= 462:
+                  value = black
+              return value
+
+          raw = bytearray()
+          for y in range(height):
+              raw.append(0)
+              for x in range(width):
+                  raw.extend(colour(x, y))
+
+          def chunk(kind, data):
+              checksum = binascii.crc32(kind + data) & 0xffffffff
+              return struct.pack('>I', len(data)) + kind + data + struct.pack('>I', checksum)
+
+          png = (
+              b'\x89PNG\r\n\x1a\n'
+              + chunk(b'IHDR', struct.pack('>IIBBBBB', width, height, 8, 2, 0, 0, 0))
+              + chunk(b'IDAT', zlib.compress(bytes(raw), 9))
+              + chunk(b'IEND', b'')
+          )
+          path = Path('/tmp/oia-app-icon.png')
+          path.write_bytes(png)
+          assert len(png) == 3616
+          assert hashlib.sha256(png).hexdigest() == '74b2e0deb2555c08062b798d4cdd58ffda3b58bfd9186311c7aa3da787615130'
+          PY
           file /tmp/oia-app-icon.png | grep -Fq 'PNG image data, 512 x 512'
 
       - name: Materialise product suite without workflow mutations
