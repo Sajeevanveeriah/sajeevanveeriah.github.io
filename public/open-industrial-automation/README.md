@@ -1,74 +1,114 @@
 # Open-Industrial-Automation-Suite
 
-Open-Industrial-Automation is a vendor-neutral, Apache-2.0 browser reference suite for industrial automation engineering, operations, manufacturing information, validation and OT governance.
+Open-Industrial-Automation is an Apache-2.0, vendor-neutral product family for industrial automation engineering, operations, HMI and SCADA, manufacturing execution, historian analysis, asset care, validation, integration and OT governance.
 
-The hosted edition runs locally in the browser, stores demonstration state in local storage, works offline after first load, and exports portable JSON and CSV records. It does not connect to live plant equipment and it does not replace a PLC, DCS, safety system, qualified historian, enterprise identity service or validated records platform.
+The public edition is local-first. It runs in the browser, works offline after the first load, exports portable JSON and CSV records, and is packaged as separate Windows, macOS and Linux desktop products. All products use one project-model contract and one shared workspace.
 
-## What is included
+## Product family
+
+| Product | Primary responsibility | Starting workspace |
+|---|---|---|
+| OIA Suite | Complete Open Industrial Automation command centre and lifecycle suite. | Overview |
+| OIA Operations | Operator HMI, process control, alarms, historian and OEE. | Operations |
+| OIA Control | IEC 61131-3-oriented control engineering, tags, I/O and deployment. | Control studio |
+| OIA HMI | HMI and SCADA graphics, bindings, navigation, alarms and trends. | HMI studio |
+| OIA Alarm Management | Alarm rationalisation, lifecycle, acknowledgement, shelving and performance. | Alarm management |
+| OIA Historian | Time-series trends, event chronology, replay, exports and reporting context. | Historian and analytics |
+| OIA OEE | Availability, performance, quality, downtime and production reporting. | OEE and reporting |
+| OIA Integration Hub | Plant, MES, ERP, LIMS, historian, broker and edge contracts. | Integration gateway |
+| OIA MES | Manufacturing orders, recipes, batches, materials, genealogy and OEE. | Batch and MES |
+| OIA Materials | Material lots, warehouse movement, line supply and mobile-equipment tasks. | Materials and movement |
+| OIA Asset Care | Asset criticality, health, maintenance work, calibration and condition context. | Maintenance |
+| OIA Quality | Requirements, testing, traceability, deviations, electronic records and release evidence. | Validation and quality |
+| OIA OT Security | OT zones, conduits, risks, least privilege, recovery and assurance. | OT cybersecurity |
+| OIA Identity and Records | Named roles, access controls, attributable records, signatures and audit trails. | Identity and records |
+| OIA Deployment Centre | Environment comparison, release packaging, configuration drift and rollback lineage. | Deployment centre |
+| OIA Migration Workbench | Legacy screens, tags, scripts, bindings, navigation and controlled migration. | Migration workbench |
+
+Focused products hide unrelated modules while retaining the same local project model and audit history. A change made in one product is visible from the other products.
+
+## Complete module coverage
 
 | Domain | Built-in capability |
 |---|---|
-| Operations | Deterministic mixing, dosing and CIP reference process, operator commands, sequence execution, live values, trends and event context |
-| Control engineering | IEC 61131-3-oriented Structured Text editor, ladder, function-block and sequential-chart views, validation and one-scan simulation |
-| HMI and SCADA | Screen inventory, process graphics, bindings, navigation, idle/running/fault previews and portable HMI metadata export |
-| Tags and I/O | Asset hierarchy, tag database, data types, direction, engineering units, scaling, quality, scan rates, addresses and alarm metadata |
-| Integration gateway | Explicit ERP, MES, LIMS, historian and edge contracts with correlation IDs, queue visibility, endpoint tests and controlled replay |
-| Alarm management | Priority, state, acknowledgement, shelving, clearing, rationalisation, consequences, operator response and chronological events |
-| Historian and analytics | Multi-series deterministic trends, quality summary, event sequence, sample append and CSV export |
-| OEE and reporting | Transparent availability, performance, quality and OEE calculations, downtime classification and report catalogue |
-| Batch and MES | Versioned recipes, production orders, release and completion, batch records, material genealogy and quality-review state |
-| Materials and movement | Material lots, release and quarantine state, warehouse locations, traceable movements and vendor-neutral AMR/AGV missions |
-| Maintenance | Asset criticality and health, work orders, completion workflow and calibration register |
-| Validation and quality | User requirements, functional-design links, executable tests, traceability, deviations, change control and audit records |
-| OT cybersecurity | Zones, conduits, least-privilege controls, OT risk register, posture assessment, backup and recovery evidence |
-| Identity and records | Role matrix, checksummed electronic-record metadata, attributable review signatures and audit package export |
-| Deployment | Environment comparison, configuration drift, release pipeline, manifest generation, package export and rollback lineage |
-| Migration | Legacy screen, button, binding, script and navigation inventory with CSV import/export and controlled progression |
-| Documentation | Architecture, capability classification, public standards targets, deployment path, safety boundary and contribution guidance |
-| Workspace management | Local persistence, schema validation, import, export, dark/light themes, density controls and deterministic reset |
-| Offline application | Installable web manifest and service-worker cache when served over HTTPS |
+| Operations | Deterministic mixing, dosing and CIP reference process, commands, progression, pause, stop, fault and reset |
+| Control engineering | Structured Text editor, ladder, function-block and sequential-chart views, validation and one-scan simulation |
+| HMI and SCADA | Screen inventory, process graphics, bindings, navigation and operating-state previews |
+| Tags and I/O | Asset hierarchy, tag database, scaling, engineering units, quality, scan rates, addresses and alarms |
+| Integration gateway | Versioned ERP, MES, LIMS, historian, broker and edge contracts with correlation, testing and replay |
+| Alarm management | Priority, state, acknowledgement, shelving, clearing, rationalisation, consequences and response |
+| Historian and analytics | Multi-series deterministic trends, quality context, event sequence, replay and CSV export |
+| OEE and reporting | Transparent availability, performance, quality and OEE calculation with downtime classification |
+| Batch and MES | Versioned recipes, production orders, batch records, genealogy and quality-review state |
+| Materials and movement | Material lots, release and quarantine, warehouse movement and AMR or AGV mission state |
+| Maintenance | Criticality, health, work orders, completion workflow and calibration register |
+| Validation and quality | Requirements, functional links, executable tests, traceability, deviations and change control |
+| OT cybersecurity | Zones, conduits, least privilege, control register, risk posture, backup and recovery evidence |
+| Identity and records | Role matrix, attributable audit trail, checksummed records and review signatures |
+| Deployment | Environment comparison, drift, release manifests, package export and rollback lineage |
+| Migration | Legacy screens, buttons, bindings, scripts and navigation inventory with CSV exchange |
+| Documentation | Architecture, capability classification, deployment, safety and contribution guidance |
+| Workspace | Import, export, persistence, reset, light and dark themes and compact density |
+| Offline operation | PWA manifest, product shortcuts and service-worker cache |
 
-## Reference architecture
+## Reference process
+
+The deterministic process automatically advances through:
 
 ```text
-Enterprise and business systems
-        |
-        | versioned information contracts
-        v
-MES, batch, materials, quality, OEE, maintenance and historian
-        |
-        | role-checked supervisory interfaces
-        v
-SCADA, HMI, alarms, trends and operator workflows
-        |
-        | bounded protocol adapters
-        v
-PLC/DCS, remote I/O, drives, instruments and edge runtimes
-        |
-        v
-Physical process and equipment
+Production:
+CHARGE_WATER -> DOSE_CONCENTRATE -> MIX -> HEAT -> HOLD -> TRANSFER -> IDLE
 
-Independent boundary: safety-related controls, emergency stops,
-guards, hazardous-energy isolation and qualified protective systems.
+Clean-in-place:
+CIP_PRE_RINSE -> CIP_CAUSTIC -> CIP_INTERMEDIATE_RINSE -> CIP_FINAL_RINSE -> IDLE
 ```
 
-`model.json` is the portable project-model snapshot. `data.js` is the browser seed that supplies the same model. The complete local workspace export also includes changed runtime state and accumulated audit records.
+The default reference speed is 5x. It can be changed to 1x, 2x, 5x, 10x or 20x. Sequence progress, process values, events, batch count and audit records update through the same shared workspace used by every product.
 
-## Run locally
+## Visual system
 
-Use any static HTTP server. Examples:
+The suite uses the approved Dub-inspired light product system:
 
-```bash
-python -m http.server 8080
-```
+- pure white canvas
+- #f5f5f5 paper surfaces
+- 1 px #e5e5e5 structure
+- #171717 primary text
+- #2563eb active accent
+- #000000 primary actions
+- compact spacing
+- 6 px inputs, 8 px buttons, 12 px cards and pill badges
+- medium-weight editorial headings
+- product-first UI with no stock imagery or heavy decorative effects
+
+## Browser use
 
 Open:
 
 ```text
-http://127.0.0.1:8080/open-industrial-automation/
+https://sajeevanveeriah.github.io/open-industrial-automation/
 ```
 
-For a production build in the containing portfolio repository:
+Focused browser entry points are under:
+
+```text
+/open-industrial-automation/products/
+```
+
+No account or installation is required. Project state stays in the current browser unless exported.
+
+## Desktop installers
+
+The release workflow builds every product for:
+
+- Windows x64: NSIS installer and portable executable
+- macOS universal: DMG and ZIP
+- Linux x64: AppImage and Debian package
+
+All desktop products use a secure `oia://app` protocol, Chromium sandboxing, context isolation, disabled Node.js integration, denied permission requests and one shared OIA user-data directory.
+
+Community builds are unsigned. Production distribution should add organisation-controlled Windows signing and Apple notarisation.
+
+## Repository verification
 
 ```bash
 npm ci
@@ -76,62 +116,31 @@ npm run typecheck
 npm run lint
 npm run build
 npm run qa:oia
+node scripts/qa-oia-products.mjs
+node desktop/verify.cjs
 ```
 
-## Core workflow
+GitHub Actions additionally builds the desktop installers on native hosted runners and generates SHA-256 manifests.
 
-1. Define the site hierarchy, assets, tags, connections, alarms, recipes, requirements and roles.
-2. Engineer control intent, HMI screens, bindings, navigation and interface contracts.
-3. Verify the model, program, process sequences, alarm lifecycle, records and responsive UI.
-4. Operate the deterministic reference plant and inspect events, trends, batches, materials and maintenance work.
-5. Export evidence, compare environments, build a release manifest and preserve an explicit rollback point.
-6. Extend through a separate, reviewed edge runtime for any real industrial connectivity.
+## Production integration boundary
 
-## Production extension boundary
-
-A real deployment requires additional independently engineered services and site acceptance:
+The suite is production-oriented software, but it does not pretend that a browser or desktop shell is a certified controller. A real plant deployment also requires:
 
 - deterministic PLC or DCS runtime and qualified controller hardware
 - independently engineered safety system and physical protective functions
-- protocol adapters with certificate trust, command allow-lists, payload validation and fail-safe behaviour
-- durable historian and manufacturing database with backup, restoration, retention and reconciliation
-- enterprise identity, named accounts, least privilege, session controls and independent audit storage
-- configuration versioning, review, signed release packages and tested rollback
-- site-specific hazard analysis, cybersecurity risk assessment and network segmentation
-- electrical, instrumentation, control-panel, field-device and communications design
+- reviewed protocol adapters with trust, allow-lists, validation and fail-safe behaviour
+- durable historian and manufacturing database with backup and reconciliation
+- enterprise identity, named accounts and independently retained audit data
+- site-specific network segmentation and cybersecurity assessment
+- electrical, instrumentation, panel and field engineering
 - FAT, SAT, commissioning, qualification, operator training and handover
 - validated procedures and records controls where regulated use applies
 
-The hosted reference must not be used to directly control equipment.
-
-## Standards and public architecture targets
-
-The implementation uses public high-level concepts from IEC 61131-3, ISA-88, ISA-95/IEC 62264, alarm-management practice, OPC UA, MQTT Sparkplug, ISA/IEC 62443, NIST SP 800-82 and risk-based validation principles. It does not reproduce restricted standards text, and it makes no certification or compliance claim.
-
-Official public starting points are linked inside the Documentation module.
+The public suite therefore exposes simulation and engineering workflows, not an unauthenticated internet control endpoint.
 
 ## Source integrity
 
-This suite is an independent open implementation. It does not include proprietary vendor code, confidential customer material or copied private documentation. Capability selection is based on public industrial architecture patterns and the project requirements supplied for this build.
-
-## Repository layout
-
-```text
-open-industrial-automation/
-  index.html                 Application shell
-  styles.css                 Design system and responsive layout
-  data.js                    Deterministic seed project
-  app.js                     Application state, workflows and rendering
-  model.json                 Portable project-model snapshot
-  manifest.webmanifest       Installable application metadata
-  sw.js                      Offline cache
-  schemas/                   Portable JSON schema
-  examples/                  Example site and migration inputs
-  docs/                      Architecture, deployment, safety and contribution guides
-  LICENSE                    Apache License 2.0
-  SECURITY.md                Security reporting and production boundary
-  CONTRIBUTING.md            Contribution and verification gate
-```
+This is an independent open implementation. It contains no proprietary vendor code, confidential customer content or copied private documentation. Public industrial architecture concepts are mapped without reproducing restricted standards text or making certification claims.
 
 ## Licence
 

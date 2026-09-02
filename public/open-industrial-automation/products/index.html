@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OIA Products</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../dub.css">
+  <style>
+    body{min-height:100vh;padding:clamp(24px,6vw,72px)}
+    main{max-width:1200px;margin:auto}
+    h1{max-width:760px}
+    .catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:32px}
+    .catalog a{display:block;padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);text-decoration:none}
+    .catalog a:hover{border-color:var(--color-smoke);background:var(--color-paper-mist)}
+    .catalog strong,.catalog span{display:block}.catalog span{margin-top:8px;color:var(--muted)}
+  </style>
+</head>
+<body>
+<main>
+  <a class="button secondary" href="../">Back to suite</a>
+  <h1>Open Industrial Automation products</h1>
+  <p>Each product is a focused application surface and desktop package. Every product shares the same portable project model, audit history and local workspace.</p>
+  <div class="catalog">
+    <a href="../?product=operations#operations"><strong>OIA Operations</strong><span>Operator HMI, process control, alarms, historian and OEE.</span></a>
+    <a href="../?product=control#control-studio"><strong>OIA Control</strong><span>IEC 61131-3-oriented control engineering, tags, I/O and deployment.</span></a>
+    <a href="../?product=hmi#hmi-studio"><strong>OIA HMI</strong><span>HMI and SCADA graphics, bindings, navigation, alarms and trends.</span></a>
+    <a href="../?product=alarms#alarms"><strong>OIA Alarm Management</strong><span>Alarm rationalisation, lifecycle, acknowledgement, shelving and performance.</span></a>
+    <a href="../?product=historian#historian"><strong>OIA Historian</strong><span>Time-series trends, event chronology, replay, exports and reporting context.</span></a>
+    <a href="../?product=performance#performance"><strong>OIA OEE</strong><span>Availability, performance, quality, downtime and production reporting.</span></a>
+    <a href="../?product=integration#integration"><strong>OIA Integration Hub</strong><span>Plant, MES, ERP, LIMS, historian, broker and edge contracts.</span></a>
+    <a href="../?product=mes#batch-mes"><strong>OIA MES</strong><span>Manufacturing orders, recipes, batches, materials, genealogy and OEE.</span></a>
+    <a href="../?product=materials#materials"><strong>OIA Materials</strong><span>Material lots, warehouse movement, line supply and mobile-equipment tasks.</span></a>
+    <a href="../?product=assets#maintenance"><strong>OIA Asset Care</strong><span>Asset criticality, health, maintenance work, calibration and condition context.</span></a>
+    <a href="../?product=quality#validation"><strong>OIA Quality</strong><span>Requirements, testing, traceability, deviations, electronic records and release evidence.</span></a>
+    <a href="../?product=security#cybersecurity"><strong>OIA OT Security</strong><span>OT zones, conduits, risks, least privilege, recovery and assurance.</span></a>
+    <a href="../?product=identity#identity"><strong>OIA Identity and Records</strong><span>Named roles, access controls, attributable records, signatures and audit trails.</span></a>
+    <a href="../?product=deployment#deployment"><strong>OIA Deployment Centre</strong><span>Environment comparison, release packaging, configuration drift and rollback lineage.</span></a>
+    <a href="../?product=migration#migration"><strong>OIA Migration Workbench</strong><span>Legacy screens, tags, scripts, bindings, navigation and controlled migration.</span></a>
+  </div>
+</main>
+</body>
+</html>

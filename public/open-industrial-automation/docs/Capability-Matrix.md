@@ -1,21 +1,36 @@
 # Capability-Matrix
 
-| Capability | Hosted reference maturity | Production dependency |
-|---|---|---|
-| Operator HMI and deterministic process simulation | Executable | Qualified supervisory and controller runtime |
-| IEC 61131-3-oriented engineering views | Executable reference | Vendor toolchain or open controller compiler/runtime |
-| HMI screen and binding engineering | Executable reference | Runtime-specific renderer and deployment target |
-| Tag and I/O model | Executable and exportable | Real device configuration and commissioning |
-| OPC UA, MQTT Sparkplug, Modbus and Profinet contracts | Defined and test-simulated | Separate secure edge adapters |
-| Alarm lifecycle and rationalisation | Executable reference | Durable event storage, site philosophy and acceptance |
-| Historian trends and events | Executable local window | Durable time-series store and redundancy |
-| OEE and reporting | Executable deterministic calculation | Approved source definitions and production data |
-| Batch and MES records | Executable reference | Durable transaction services, identity and integration |
-| Materials and mobile movement | Executable reference | WMS/ERP/device adapters and physical validation |
-| Maintenance and calibration | Executable reference | CMMS integration and controlled records |
-| Validation and quality | Executable reference | Approved procedures and configured-system validation |
-| OT cybersecurity model | Executable readiness model | Site risk assessment and implemented controls |
-| Identity, audit and electronic review | Executable readiness model | Enterprise identity and independent audit storage |
-| Deployment and rollback | Executable package workflow | Signed releases, protected environments and recovery testing |
-| Legacy migration | Executable register and CSV exchange | Source-system inspection and screen-by-screen verification |
-| Safety functions | Documented boundary only | Independent safety engineering and qualified hardware |
+Status meanings:
+
+- **Implemented:** working in the browser and desktop products with automated acceptance coverage
+- **Contract:** portable engineering definition and adapter boundary are implemented; site runtime is supplied separately
+- **Site engineering:** requires physical equipment, infrastructure, qualified personnel and acceptance evidence
+
+| Capability | Community suite | Production adapter or service | Site engineering |
+|---|---|---|---|
+| Project hierarchy and asset model | Implemented | Optional master-data synchronisation | Asset survey and ownership |
+| Tag database and I/O mapping | Implemented | OPC UA, Modbus, Profinet or vendor adapter | Address confirmation and loop checks |
+| Deterministic reference process | Implemented | PLC or DCS runtime contract | Controller implementation and tuning |
+| Production and CIP sequences | Implemented | ISA-88 or controller phase adapter | Process validation |
+| Structured Text workspace | Implemented | PLCopen XML or vendor import/export adapter | Vendor compiler and runtime qualification |
+| Ladder, FBD and SFC views | Implemented | Vendor project transformation | Controller-specific implementation |
+| Operator HMI and process mimic | Implemented | SCADA runtime adapter | Operator review and site acceptance |
+| Alarm lifecycle | Implemented | Durable alarm/event service | Rationalisation and response ownership |
+| Historian trends and export | Implemented | Time-series database adapter | Retention and backup policy |
+| OEE and downtime | Implemented | Production and downtime data adapter | Loss-code governance |
+| Recipes and manufacturing orders | Implemented | MES or ERP adapter | Master-data ownership and release procedure |
+| Batch records and genealogy | Implemented | Durable database and electronic-record service | Validation and reconciliation |
+| Materials and movement | Implemented | WMS and mobile-equipment adapters | Warehouse and traffic risk controls |
+| Work orders and calibration | Implemented | CMMS adapter | Maintenance strategy and calibration execution |
+| Requirements and traceability | Implemented | Document-management integration | Approval and controlled records |
+| Deviations and change control | Implemented | Quality-system adapter | Quality governance |
+| OT zones and conduits | Implemented | Identity, PKI, firewall and monitoring services | Network design and verification |
+| Roles and audit records | Implemented | Enterprise identity and immutable audit service | Account lifecycle and periodic review |
+| Release and rollback | Implemented | Signed artefact registry and deployment service | Site release authorisation |
+| Legacy migration register | Implemented | Import/export transformers | Source-system inventory and acceptance |
+| Offline browser application | Implemented | Managed update channel | Device management |
+| Windows desktop products | Implemented by CI | Code signing service | Endpoint allow-listing |
+| macOS desktop products | Implemented by CI | Signing and notarisation | Endpoint management |
+| Linux desktop products | Implemented by CI | Repository signing | Distribution policy |
+| Functional safety | Explicitly excluded | Certified safety lifecycle and hardware | Hazard analysis, design and validation |
+| Direct internet control | Explicitly excluded | Secure site edge and broker | Cybersecurity acceptance |

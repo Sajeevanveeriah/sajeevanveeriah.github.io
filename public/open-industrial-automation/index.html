@@ -1,30 +1,32 @@
 <!doctype html>
-<html lang="en-AU" data-theme="dark" data-density="comfortable">
+<html lang="en-AU" data-theme="light" data-density="compact" data-product="suite">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#091219">
-  <meta name="description" content="Open-source industrial automation engineering, operations, MES, validation and OT security reference suite.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Open-source industrial automation engineering, operations, MES, historian, quality, maintenance, integration and OT security suite.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'">
   <title>Open Industrial Automation Suite</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./dub.css">
 </head>
 <body>
   <a class="skip-link" href="#workspace">Skip to workspace</a>
   <div class="app-shell" id="appShell">
     <aside class="module-rail" id="moduleNav" data-open="false" aria-label="Suite modules">
       <div class="brand-lockup">
-        <a href="#overview" class="brand-mark" aria-label="Open Industrial Automation home">OI</a>
+        <a href="./?product=suite#overview" class="brand-mark" aria-label="Open Industrial Automation home">OI</a>
         <div>
           <strong>Open Industrial Automation</strong>
-          <span>Reference Suite 2.1</span>
+          <span>OIA Suite</span>
         </div>
       </div>
       <nav class="module-list" id="moduleList" aria-label="Primary modules"></nav>
       <div class="rail-footer">
-        <div class="rail-health"><span class="status-dot is-good"></span><span>Local reference runtime</span></div>
-        <p>Simulation and engineering workspace. Not a certified safety controller.</p>
+        <div class="rail-health"><span class="status-dot is-good"></span><span>Local deterministic runtime</span></div>
+        <p>Interconnected engineering products. Certified safety and field control remain independent.</p>
       </div>
     </aside>
 
@@ -46,7 +48,7 @@
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7M10 19h4"/></svg>
           <span class="notification-count" id="notificationCount">2</span>
         </button>
-        <div class="operator-chip" title="Local demonstration identity"><span>SV</span><div><strong>System engineer</strong><small>Local workspace</small></div></div>
+        <div class="operator-chip" title="Local workspace identity"><span>SV</span><div><strong>System engineer</strong><small>Shared local workspace</small></div></div>
       </div>
     </header>
 
@@ -84,7 +86,10 @@
   <input type="file" id="workspaceImport" accept="application/json" hidden>
   <input type="file" id="migrationImport" accept=".csv,text/csv" hidden>
 
+  <script src="./runtime-bootstrap.js"></script>
   <script src="./data.js"></script>
   <script src="./app.js"></script>
+  <script src="./quality.js"></script>
+  <script src="./product-shell.js"></script>
 </body>
 </html>
