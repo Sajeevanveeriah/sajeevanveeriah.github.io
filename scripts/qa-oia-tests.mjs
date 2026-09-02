@@ -105,20 +105,29 @@ export async function testResponsive(browser, qa, route, heading, name) {
   qa.healthy(`${name}-mobile`, mobileHealth)
   await mobileContext.close()
 
-  const zoomContext = await browser.newContext({ viewport: { width: 720, height: 900 }, reducedMotion: 'reduce' })
+  const zoomFactor = 2
+  const physicalViewport = { width: 720, height: 900 }
+  const zoomEquivalentViewport = {
+    width: Math.floor(physicalViewport.width / zoomFactor),
+    height: Math.floor(physicalViewport.height / zoomFactor),
+  }
+  const zoomContext = await browser.newContext({ viewport: zoomEquivalentViewport, reducedMotion: 'reduce' })
   const zoomPage = await zoomContext.newPage()
   const zoomHealth = qa.observe(zoomPage)
   const zoomResponse = await zoomPage.goto(qa.url(route), { waitUntil: 'networkidle' })
-  await zoomPage.evaluate(() => { document.documentElement.style.zoom = '2' })
-  await zoomPage.waitForTimeout(200)
   const zoom = await qa.containment(zoomPage)
   const controls = await zoomPage.locator('button:visible, a:visible, input:visible, select:visible').count()
   qa.record(`${name}-zoom-http`, zoomResponse?.status() === 200, { status: zoomResponse?.status() })
   qa.record(`${name}-zoom-heading`, await zoomPage.getByRole('heading', { name: heading, exact: true }).isVisible())
-  qa.record(`${name}-zoom-overflow`, zoom.overflow <= 4, zoom)
+  qa.record(`${name}-zoom-overflow`, zoom.overflow <= 4, { ...zoom, zoomFactor, physicalViewport, zoomEquivalentViewport })
   qa.record(`${name}-zoom-controls`, controls > 0, { controls })
   await zoomPage.screenshot({ path: `${qa.captureRoot}/${qa.mode}-zoom-${name}.png`, fullPage: false })
   qa.healthy(`${name}-zoom`, zoomHealth)
   await zoomContext.close()
-  qa.evidence.responsive[name] = { mobile, scroller, zoom, visibleControlsAtZoom: controls }
+  qa.evidence.responsive[name] = {
+    mobile,
+    scroller,
+    zoom: { ...zoom, zoomFactor, physicalViewport, zoomEquivalentViewport },
+    visibleControlsAtZoom: controls,
+  }
 }
