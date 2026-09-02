@@ -1,0 +1,121 @@
+name: OIA suite materialise
+
+on:
+  push:
+    branches:
+      - feat/oia-suite-v2-20260902
+    paths:
+      - .github/workflows/oia-bootstrap.yml
+
+permissions:
+  contents: write
+
+jobs:
+  materialise:
+    if: ${{ !contains(github.event.head_commit.message, '[remove-bootstrap]') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/oia-suite-v2-20260902
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Verify and extract source package
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .github/oia-bootstrap-xz/part-* > /tmp/oia-suite.tar.xz.b64
+          test "$(stat -c %s /tmp/oia-suite.tar.xz.b64)" = "104880"
+          printf '%s  %s\n' \
+            '886f3b15c47113c5ac87bbba0804e767f934f91d4a0228d2c41044af1dbb13c4' \
+            '/tmp/oia-suite.tar.xz.b64' | sha256sum -c -
+          base64 --decode /tmp/oia-suite.tar.xz.b64 > /tmp/oia-suite.tar.xz
+          test "$(stat -c %s /tmp/oia-suite.tar.xz)" = "78660"
+          printf '%s  %s\n' \
+            'b9f40e2bce85ac47c88f0d64673a9760f997335725f6ab9bddc56fc7a2982123' \
+            '/tmp/oia-suite.tar.xz' | sha256sum -c -
+          xz --test /tmp/oia-suite.tar.xz
+
+          cp .github/workflows/deploy.yml /tmp/oia-deploy.yml
+          cp .github/workflows/quality.yml /tmp/oia-quality.yml
+          tar -xJf /tmp/oia-suite.tar.xz -C .
+          cp /tmp/oia-deploy.yml .github/workflows/deploy.yml
+          cp /tmp/oia-quality.yml .github/workflows/quality.yml
+
+          rm -f \
+            public/open-industrial-automation/demo/app.js \
+            public/open-industrial-automation/demo/styles.css \
+            public/open-industrial-automation/studio/app.js \
+            public/open-industrial-automation/studio/styles.css
+          rm -rf .github/oia-bootstrap .github/oia-bootstrap-xz
+
+      - name: Validate source package
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in \
+            public/open-industrial-automation/index.html \
+            public/open-industrial-automation/styles.css \
+            public/open-industrial-automation/data.js \
+            public/open-industrial-automation/app.js \
+            public/open-industrial-automation/model.json \
+            public/open-industrial-automation/README.md \
+            public/open-industrial-automation/LICENSE \
+            public/open-industrial-automation/docs/Capability-Matrix.md \
+            public/open-industrial-automation/schemas/oia-project.schema.json \
+            scripts/qa-oia-lib.mjs \
+            scripts/qa-oia-tests.mjs; do
+            test -s "$file" || { echo "missing or empty $file"; exit 1; }
+          done
+
+          node --check public/open-industrial-automation/app.js
+          node --check public/open-industrial-automation/data.js
+          node --check public/open-industrial-automation/sw.js
+          node --check scripts/qa-oia-lib.mjs
+          node --check scripts/qa-oia-tests.mjs
+          node --check scripts/qa-oia.mjs
+          node <<'NODE'
+          const fs = require('node:fs')
+          const paths = [
+            'public/open-industrial-automation/model.json',
+            'public/open-industrial-automation/manifest.webmanifest',
+            'public/open-industrial-automation/schemas/oia-project.schema.json',
+            'public/open-industrial-automation/examples/site-profile.json',
+          ]
+          for (const path of paths) JSON.parse(fs.readFileSync(path, 'utf8'))
+          NODE
+
+          if grep -Prn '[–—]' public/open-industrial-automation; then
+            echo 'Unicode dash found in public OIA source' >&2
+            exit 1
+          fi
+          if grep -PriEn '\b(JAG|Ford|Invenio)\b' public/open-industrial-automation; then
+            echo 'Former-employer or proprietary branding found in public OIA source' >&2
+            exit 1
+          fi
+
+      - name: Build and run rendered OIA QA
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          npm run build
+          npx playwright install --with-deps chromium
+          npm run qa:oia
+
+      - name: Commit materialised suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --cached --quiet && { echo 'No materialised changes found' >&2; exit 1; }
+          git commit -m 'feat: deliver Open Industrial Automation suite 2.1 [oia-materialise]'
+          git push origin HEAD:feat/oia-suite-v2-20260902
