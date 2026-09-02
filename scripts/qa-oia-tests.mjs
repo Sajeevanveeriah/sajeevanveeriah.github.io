@@ -137,7 +137,7 @@ export async function testSuite(browser, qa) {
 
   await page.getByRole('button', { name: 'Identity and records', exact: true }).click()
   await page.getByRole('button', { name: 'Sign record REC-BATCH-018', exact: true }).click()
-  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' })
+  const recordRow = page.locator('tr', { hasText: 'REC-BATCH-018' }).filter({ hasText: 'Batch execution' }).first()
   qa.record('electronic-record-review', (await recordRow.innerText()).includes('Reviewed'))
   await clearToasts(page)
   await page.screenshot({ path: `${qa.captureRoot}/${qa.mode}-07-identity-records.png`, fullPage: true })
