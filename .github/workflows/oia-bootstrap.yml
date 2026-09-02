@@ -1,4 +1,4 @@
-# Retry after restoring the exact package chunk.
+# Retry after restoring the exact package chunk and suite QA entry point.
 name: OIA suite materialise
 
 on:
@@ -73,7 +73,8 @@ jobs:
             public/open-industrial-automation/docs/Capability-Matrix.md \
             public/open-industrial-automation/schemas/oia-project.schema.json \
             scripts/qa-oia-lib.mjs \
-            scripts/qa-oia-tests.mjs; do
+            scripts/qa-oia-tests.mjs \
+            scripts/qa-oia.mjs; do
             test -s "$file" || { echo "missing or empty $file"; exit 1; }
           done
 
@@ -98,7 +99,7 @@ jobs:
             echo 'Unicode dash found in public OIA source' >&2
             exit 1
           fi
-          if grep -PriEn '\b(JAG|Ford|Invenio)\b' public/open-industrial-automation; then
+          if grep -Prin '\b(JAG|Ford|Invenio)\b' public/open-industrial-automation; then
             echo 'Former-employer or proprietary branding found in public OIA source' >&2
             exit 1
           fi
