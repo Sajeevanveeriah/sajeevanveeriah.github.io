@@ -28,7 +28,6 @@ export function MobileNavigation({ current }: { readonly current?: Section }) {
           return <Link key={destination.id} href={href} aria-current={current === destination.id ? 'location' : undefined} onClick={close}>{destination.label}</Link>
         })}
         <a href={resumeFiles.pdf} download onClick={close}>Resume PDF</a>
-        <a href={resumeFiles.docx} download onClick={close}>Resume DOCX</a>
       </nav>
     </details>
   )
