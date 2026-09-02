@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: oia-product-suite-materialise
+  cancel-in-progress: false
+
 jobs:
   materialise:
     runs-on: ubuntu-24.04
@@ -25,14 +29,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in .github/oia-product-payload/part-*; do
-            printf '%s ' "$file"
-            stat -c '%s bytes' "$file"
-            sha256sum "$file"
+          files=(.github/oia-product-payload/part-*)
+          test "${#files[@]}" = "22"
+          for file in "${files[@]}"; do
+            printf '%s %s bytes\n' "$file" "$(stat -c %s "$file")"
           done
-          cat .github/oia-product-payload/part-* > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
-          stat -c 'Concatenated payload: %s bytes' /tmp/oia-product-suite-v2.2.0.tar.xz.b64
-          sha256sum /tmp/oia-product-suite-v2.2.0.tar.xz.b64
+          cat "${files[@]}" > /tmp/oia-product-suite-v2.2.0.tar.xz.b64
           test "$(stat -c %s /tmp/oia-product-suite-v2.2.0.tar.xz.b64)" = "61272"
           printf '%s  %s\n' \
             'e0b53a1932abc7dbf528fb09752e19186bff744176f7fa1058214284ed2c4d79' \
@@ -44,14 +46,14 @@ jobs:
             '/tmp/oia-product-suite-v2.2.0.tar.xz' | sha256sum -c -
           xz --test /tmp/oia-product-suite-v2.2.0.tar.xz
           tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz > /tmp/oia-product-suite-files.txt
-          test "$(wc -l < /tmp/oia-product-suite-files.txt)" -ge 40
+          test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
 
       - name: Materialise product suite
         shell: bash
         run: |
           set -euo pipefail
           tar -xJf /tmp/oia-product-suite-v2.2.0.tar.xz -C .
-          rm -rf .github/oia-product-payload
+          rm -rf .github/oia-product-payload .github/oia-product-bootstrap
           rm -f \
             .github/workflows/oia-product-materialise.yml \
             .github/workflows/oia-source-export.yml \
@@ -65,6 +67,24 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          for file in \
+            desktop/package.json \
+            desktop/product-catalog.json \
+            desktop/assets/icon.png \
+            desktop/main.cjs \
+            desktop/preload.cjs \
+            desktop/build.cjs \
+            desktop/verify.cjs \
+            public/open-industrial-automation/index.html \
+            public/open-industrial-automation/dub.css \
+            public/open-industrial-automation/product-shell.js \
+            public/open-industrial-automation/runtime-bootstrap.js \
+            public/open-industrial-automation/products/index.html \
+            scripts/qa-oia-products.mjs \
+            .github/workflows/oia-product-quality.yml \
+            .github/workflows/oia-desktop.yml; do
+            test -s "$file" || { echo "missing or empty $file" >&2; exit 1; }
+          done
           node --check public/open-industrial-automation/app.js
           node --check public/open-industrial-automation/data.js
           node --check public/open-industrial-automation/product-shell.js
@@ -79,21 +99,6 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import json
-          required = [
-              'desktop/package.json',
-              'desktop/product-catalog.json',
-              'public/open-industrial-automation/index.html',
-              'public/open-industrial-automation/dub.css',
-              'public/open-industrial-automation/product-shell.js',
-              'public/open-industrial-automation/runtime-bootstrap.js',
-              'public/open-industrial-automation/assets/oia-app-icon.png',
-              'scripts/qa-oia-products.mjs',
-              '.github/workflows/oia-product-quality.yml',
-              '.github/workflows/oia-desktop.yml',
-          ]
-          for item in required:
-              path = Path(item)
-              assert path.is_file() and path.stat().st_size > 0, item
           catalog = json.loads(Path('desktop/product-catalog.json').read_text())
           products = catalog['products']
           assert len(products) == 16
@@ -107,8 +112,12 @@ jobs:
             echo 'Unicode dash found in OIA product release' >&2
             exit 1
           fi
-          if grep -Prin '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
+          if grep -PrinE '\b(JAG|Ford|Invenio)\b' desktop public/open-industrial-automation; then
             echo 'Excluded organisation name found in public OIA product source' >&2
+            exit 1
+          fi
+          if grep -PrinE '(BEGIN (RSA|EC|OPENSSH) PRIVATE KEY|sk-[A-Za-z0-9_-]{20,}|gh[pousr]_[A-Za-z0-9]{20,})' desktop public/open-industrial-automation; then
+            echo 'Credential-like content found in OIA product source' >&2
             exit 1
           fi
 
@@ -119,6 +128,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
+          git diff --cached --check
           git diff --cached --quiet && { echo 'No product-suite changes found' >&2; exit 1; }
-          git commit -m 'feat: add premium interconnected OIA product suite 2.2.0'
+          git commit -m 'feat: add premium interconnected OIA product suite 2.2.0 [oia-materialise]'
           git push origin HEAD:feat/oia-suite-v2-20260902
