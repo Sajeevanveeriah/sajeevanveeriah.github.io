@@ -175,20 +175,7 @@ jobs:
                cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
                cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp && \
                unzip -t /tmp/resume-live.docx >/dev/null; then
-              python - <<'PY'
-              from pathlib import Path
-              from zipfile import ZipFile
-
-              path = Path('/tmp/resume-live.docx')
-              if path.stat().st_size < 30000:
-                  raise SystemExit('Live DOCX resume is unexpectedly small')
-              with ZipFile(path) as archive:
-                  document = archive.read('word/document.xml').decode('utf-8')
-              for phrase in ('Farm Frites Australia', 'CONTRACT PENDING', 'Industrial IT Engineer'):
-                  if phrase not in document:
-                      raise SystemExit(f'Live DOCX missing required phrase: {phrase}')
-              print('Live DOCX package and Farm Frites content verified')
-              PY
+              python -c "from pathlib import Path; from zipfile import ZipFile; path=Path('/tmp/resume-live.docx'); assert path.stat().st_size >= 30000, 'Live DOCX resume is unexpectedly small'; document=ZipFile(path).read('word/document.xml').decode('utf-8'); required=('Farm Frites Australia','CONTRACT PENDING','Industrial IT Engineer'); assert all(phrase in document for phrase in required), 'Live DOCX missing required content'; print('Live DOCX package and Farm Frites content verified')"
               printf 'Live portfolio, PDF resume, DOCX resume and exact monogram verified after attempt %s\n' "$attempt"
               sha256sum \
                 /tmp/portfolio-route-home.html \
