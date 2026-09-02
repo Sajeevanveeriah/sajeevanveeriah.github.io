@@ -165,14 +165,22 @@ html[data-theme="dark"] #workspace b {
   outline-offset: 3px;
 }
 
-.mission-id {
+.mission-id,
+.mission-progress {
   display: block;
-  margin-bottom: 3px;
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.035em;
+}
+
+.mission-id {
+  margin-bottom: 3px;
+}
+
+.mission-progress {
+  margin-top: 5px;
 }
 
 .no-js-fallback {
