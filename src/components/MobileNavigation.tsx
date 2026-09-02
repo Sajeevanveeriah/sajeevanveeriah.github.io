@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useRef } from 'react'
-import { site } from '@/content/site'
+import { resumeFiles } from '@/content/resume'
 
 type Section = 'systems' | 'work' | 'practice' | 'contact'
 
@@ -27,7 +27,8 @@ export function MobileNavigation({ current }: { readonly current?: Section }) {
           const href = current === 'work' && destination.id === 'work' ? '/work/' : `/#${destination.id}`
           return <Link key={destination.id} href={href} aria-current={current === destination.id ? 'location' : undefined} onClick={close}>{destination.label}</Link>
         })}
-        <a href={site.resume} onClick={close}>Resume</a>
+        <a href={resumeFiles.pdf} download onClick={close}>Resume PDF</a>
+        <a href={resumeFiles.docx} download onClick={close}>Resume DOCX</a>
       </nav>
     </details>
   )

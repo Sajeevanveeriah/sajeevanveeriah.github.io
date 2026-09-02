@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { resumeFiles } from '@/content/resume'
 import { site } from '@/content/site'
 
 export function SiteFooter() {
@@ -11,7 +12,8 @@ export function SiteFooter() {
         </div>
         <nav className="footer-links" aria-label="Professional links">
           <a href={site.github}>GitHub</a>
-          <a href={site.resume}>Resume</a>
+          <a href={resumeFiles.pdf} download>Resume PDF</a>
+          <a href={resumeFiles.docx} download>Resume DOCX</a>
           <a href={site.support.url} target="_blank" rel="noopener noreferrer">{site.support.label}</a>
         </nav>
         <p className="copyright">© 2026 {site.name}</p>
