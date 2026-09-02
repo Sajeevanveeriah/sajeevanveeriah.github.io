@@ -77,6 +77,12 @@
     if (mode instanceof HTMLElement) mode.setAttribute('data-testid', 'plant-mode');
   }
 
+  function dismissCommandPalette(event) {
+    if (event.key !== 'Escape') return;
+    const dialog = document.querySelector('#commandDialog');
+    if (dialog instanceof HTMLDialogElement && dialog.open) dialog.close();
+  }
+
   function repairTitle() {
     const moduleTitle = document.querySelector('#breadcrumb strong')?.textContent?.replace(/\s+/g, ' ').trim();
     if (!moduleTitle) return;
@@ -129,6 +135,7 @@
   window.addEventListener('popstate', repairAfterInteraction);
   document.addEventListener('click', repairAfterInteraction, true);
   document.addEventListener('change', repairAfterInteraction, true);
+  document.addEventListener('keydown', dismissCommandPalette, true);
 
   repair(document);
   repairTitle();
