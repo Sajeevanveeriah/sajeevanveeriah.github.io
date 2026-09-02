@@ -10,7 +10,6 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "qa:browser": "node scripts/qa-browser.mjs",
-    "qa:oia": "node scripts/qa-oia.mjs",
     "qa:lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
