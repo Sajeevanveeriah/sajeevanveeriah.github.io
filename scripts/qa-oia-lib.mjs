@@ -14,6 +14,9 @@ const mime = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
+  '.md': 'text/markdown; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.csv': 'text/csv; charset=utf-8',
 }
 
 export function createQA() {
@@ -23,7 +26,7 @@ export function createQA() {
   const mode = remoteBase ? 'live' : 'local'
   const axePath = require.resolve('axe-core/axe.min.js')
   const failures = []
-  const evidence = { mode, siteBase, routes: {}, operator: {}, studio: {}, responsive: {} }
+  const evidence = { mode, siteBase, routes: {}, modules: {}, interactions: {}, assets: {}, responsive: {} }
   let server
 
   function url(route) {
@@ -87,7 +90,8 @@ export function createQA() {
   }
 
   async function axe(page) {
-    await page.addScriptTag({ path: axePath })
+    const loaded = await page.evaluate(() => Boolean(window.axe))
+    if (!loaded) await page.addScriptTag({ path: axePath })
     return page.evaluate(async () => {
       const result = await window.axe.run(document, {
         runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] },
@@ -131,7 +135,7 @@ export function createQA() {
   async function focus(page) {
     await page.evaluate(() => document.activeElement?.blur())
     let result = null
-    for (let index = 0; index < 40; index += 1) {
+    for (let index = 0; index < 60; index += 1) {
       await page.keyboard.press('Tab')
       result = await page.evaluate(() => {
         const active = document.activeElement
@@ -195,6 +199,7 @@ export function createQA() {
   }
 
   return {
+    axe,
     captureRoot,
     containment,
     evidence,
