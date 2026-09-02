@@ -46,28 +46,18 @@ jobs:
           test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
 
           icon_files=(.github/oia-icon-payload/part-*)
-          test "${#icon_files[@]}" = "4"
-          for file in "${icon_files[@]}"; do
-            printf '%s ' "$file"
-            stat -c '%s bytes' "$file"
-            sha256sum "$file"
-          done
+          test "${#icon_files[@]}" = "1"
           cat "${icon_files[@]}" > /tmp/oia-app-icon.png.b64
-          stat -c 'Icon payload: %s bytes' /tmp/oia-app-icon.png.b64
-          sha256sum /tmp/oia-app-icon.png.b64
-          test "$(stat -c %s /tmp/oia-app-icon.png.b64)" = "15120"
+          test "$(stat -c %s /tmp/oia-app-icon.png.b64)" = "2928"
           printf '%s  %s\n' \
-            '8eb0ff28f867f0e195fc0595b34d32291112da95b670ef0bc95532834d36cd47' \
+            '6704346b4304318c1d57016b5379de9b2bb7dd71d44a60493dfdc8f317ee4204' \
             '/tmp/oia-app-icon.png.b64' | sha256sum -c -
           base64 --decode /tmp/oia-app-icon.png.b64 > /tmp/oia-app-icon.png
-          stat -c 'Icon image: %s bytes' /tmp/oia-app-icon.png
-          sha256sum /tmp/oia-app-icon.png
-          test "$(stat -c %s /tmp/oia-app-icon.png)" = "11338"
+          test "$(stat -c %s /tmp/oia-app-icon.png)" = "2196"
           printf '%s  %s\n' \
-            'e6d45b760cc2b07f7168f80a944680caccdf447152e9fc1fc43baca03d0dd298' \
+            '375af1d0ce97e30fea738632a8a321e8981ad535dc22cbecd4a2250fe63efaa4' \
             '/tmp/oia-app-icon.png' | sha256sum -c -
-          file /tmp/oia-app-icon.png | tee /tmp/oia-icon-file.txt
-          grep -Fq 'PNG image data, 1024 x 1024' /tmp/oia-icon-file.txt
+          file /tmp/oia-app-icon.png | grep -Fq 'PNG image data, 512 x 512'
 
       - name: Materialise product suite without workflow mutations
         shell: bash
