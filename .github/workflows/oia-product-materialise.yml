@@ -45,6 +45,20 @@ jobs:
           tar -tJf /tmp/oia-product-suite-v2.2.0.tar.xz > /tmp/oia-product-suite-files.txt
           test "$(wc -l < /tmp/oia-product-suite-files.txt)" = "40"
 
+          icon_files=(.github/oia-icon-payload/part-*)
+          test "${#icon_files[@]}" = "4"
+          cat "${icon_files[@]}" > /tmp/oia-app-icon.png.b64
+          test "$(stat -c %s /tmp/oia-app-icon.png.b64)" = "15120"
+          printf '%s  %s\n' \
+            '8eb0ff28f867f0e195fc0595b34d32291112da95b670ef0bc95532834d36cd47' \
+            '/tmp/oia-app-icon.png.b64' | sha256sum -c -
+          base64 --decode /tmp/oia-app-icon.png.b64 > /tmp/oia-app-icon.png
+          test "$(stat -c %s /tmp/oia-app-icon.png)" = "11338"
+          printf '%s  %s\n' \
+            'e6d45b760cc2b07f7168f80a944680caccdf447152e9fc1fc43baca03d0dd298' \
+            '/tmp/oia-app-icon.png' | sha256sum -c -
+          file /tmp/oia-app-icon.png | grep -Fq 'PNG image data, 1024 x 1024'
+
       - name: Materialise product suite without workflow mutations
         shell: bash
         run: |
@@ -53,7 +67,13 @@ jobs:
           cp .github/workflows/oia-desktop.yml /tmp/oia-desktop.yml
           cp .github/workflows/oia-product-quality.yml /tmp/oia-product-quality.yml
           rm -f .github/workflows/oia-desktop.yml .github/workflows/oia-product-quality.yml
-          rm -rf .github/oia-product-payload .github/oia-product-bootstrap
+          mkdir -p desktop/assets public/open-industrial-automation/assets
+          install -m 0644 /tmp/oia-app-icon.png desktop/assets/icon.png
+          install -m 0644 /tmp/oia-app-icon.png public/open-industrial-automation/assets/oia-app-icon.png
+          rm -rf \
+            .github/oia-product-payload \
+            .github/oia-icon-payload \
+            .github/oia-product-bootstrap
           rm -f \
             public/open-industrial-automation/demo/app.js \
             public/open-industrial-automation/demo/styles.css \
@@ -76,6 +96,7 @@ jobs:
             public/open-industrial-automation/dub.css \
             public/open-industrial-automation/product-shell.js \
             public/open-industrial-automation/runtime-bootstrap.js \
+            public/open-industrial-automation/assets/oia-app-icon.png \
             public/open-industrial-automation/products/index.html \
             scripts/qa-oia-products.mjs \
             /tmp/oia-product-quality.yml \
