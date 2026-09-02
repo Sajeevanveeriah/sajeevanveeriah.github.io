@@ -24,8 +24,18 @@ jobs:
           node-version: 22
           cache: npm
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install dependencies
         run: npm ci
+
+      - name: Generate DOCX resume
+        run: |
+          python -m pip install --disable-pip-version-check --no-cache-dir \
+            python-docx==1.2.0 Pillow==12.3.0
+          python scripts/generate-public-resume-docx.py
 
       - name: Type check
         run: npm run typecheck
@@ -39,14 +49,14 @@ jobs:
       - name: Install browser
         run: npx playwright install --with-deps chromium
 
-      - name: Run portfolio rendered browser QA
+      - name: Run rendered portfolio QA
         run: npm run qa:browser
 
-      - name: Upload rendered QA evidence
+      - name: Upload rendered portfolio evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: portfolio-rendered-qa
+          name: portfolio-rendered-qa-${{ github.sha }}
           path: /tmp/portfolio-qa
           if-no-files-found: warn
           retention-days: 14
@@ -54,7 +64,8 @@ jobs:
       - name: Run Lighthouse quality gate
         run: npm run qa:lighthouse
 
-      - name: Verify export
+      - name: Verify portfolio export and resume formats
+        shell: bash
         run: |
           set -euo pipefail
           for file in \
@@ -65,8 +76,37 @@ jobs:
             googlebcce96f6b520ab1f.html \
             robots.txt \
             sitemap.xml \
-            favicon.png; do
+            favicon.png \
+            work/index.html \
+            work/autonomous-navigation-rover/index.html \
+            work/ataxia-assessment-device/index.html \
+            work/swl-pricing-inventory-control/index.html \
+            assets/Resume_Sajeevan_Veeriah.pdf \
+            assets/Resume_Sajeevan_Veeriah.docx \
+            assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
-          test -s out/assets/Resume_Sajeevan_Veeriah.pdf || { echo "missing resume"; exit 1; }
-          echo "portfolio export verified"
+          unzip -t out/assets/Resume_Sajeevan_Veeriah.docx >/dev/null
+          grep -Fq 'Machines. Intelligence. Dependable operation.' out/index.html
+          grep -Fq 'Resume PDF' out/index.html
+          grep -Fq 'Resume DOCX' out/index.html
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          path = Path('out/assets/Resume_Sajeevan_Veeriah.docx')
+          if path.stat().st_size < 30000:
+              raise SystemExit('DOCX resume is unexpectedly small')
+          with ZipFile(path) as archive:
+              names = set(archive.namelist())
+              required_parts = {'[Content_Types].xml', 'word/document.xml', 'word/media/image1.png'}
+              missing = required_parts - names
+              if missing:
+                  raise SystemExit(f'DOCX missing required parts: {sorted(missing)}')
+              document = archive.read('word/document.xml').decode('utf-8')
+          for phrase in ('Farm Frites Australia', 'CONTRACT PENDING', 'Industrial IT Engineer'):
+              if phrase not in document:
+                  raise SystemExit(f'DOCX missing required phrase: {phrase}')
+          print('DOCX package and Farm Frites content verified')
+          PY
+          echo 'portfolio export verified'

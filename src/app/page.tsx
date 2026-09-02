@@ -4,6 +4,7 @@ import { EngineeringField } from '@/components/EngineeringField'
 import { Masthead } from '@/components/Masthead'
 import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/content/projects'
+import { resumeFiles } from '@/content/resume'
 import { humanNote, professionalProof, roleLenses, site, systemLayers, workingStyle } from '@/content/site'
 
 const proofItems = [
@@ -28,7 +29,8 @@ export default function HomePage() {
               <p className="hero-profile">{site.profile}</p>
               <div className="hero-actions">
                 <a className="button button-primary" href="#proof">View selected work</a>
-                <a className="button button-secondary" href={site.resume}>Download resume</a>
+                <a className="button button-secondary" href={resumeFiles.pdf} download>Resume PDF</a>
+                <a className="button button-secondary" href={resumeFiles.docx} download>Resume DOCX</a>
                 <a className="button button-secondary" href={`mailto:${site.email}`}>Email me</a>
               </div>
             </div>
@@ -67,7 +69,9 @@ export default function HomePage() {
                 <p className="role-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
                 <h3>{lens.title}</h3>
                 <p>{lens.detail}</p>
-                <Link href={lens.href}>{lens.action} <span aria-hidden="true">→</span></Link>
+                <Link href={index === 0 ? '/#practice' : lens.href}>
+                  {index === 0 ? 'Review industrial systems evidence' : lens.action} <span aria-hidden="true">→</span>
+                </Link>
               </article>
             ))}
           </div>
@@ -159,7 +163,8 @@ export default function HomePage() {
             <address className="contact-actions">
               <a href={`mailto:${site.email}`}>Email me <span aria-hidden="true">→</span></a>
               <a href={site.github}>View GitHub <span aria-hidden="true">→</span></a>
-              <a href={site.resume}>Download resume <span aria-hidden="true">→</span></a>
+              <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
+              <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
             </address>
           </div>
         </section>

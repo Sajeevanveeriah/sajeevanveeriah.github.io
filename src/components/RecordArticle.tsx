@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
+import { resumeFiles } from '@/content/resume'
 import { site } from '@/content/site'
 
 function MetaStrip({ items }: { readonly items: readonly { readonly label: string; readonly value: string; readonly accent?: boolean; readonly route?: boolean }[] }) {
@@ -92,7 +93,8 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
           <p>Discuss this work, compare it with your engineering brief, or continue to the next evidence record.</p>
           <div>
             <a href={`mailto:${site.email}`}>Email Saj <span aria-hidden="true">→</span></a>
-            <a href={site.resume}>Download resume <span aria-hidden="true">→</span></a>
+            <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
+            <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
             <Link href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
