@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import { resumeFiles } from '@/content/resume'
 
-type Section = 'systems' | 'work' | 'practice' | 'contact'
+type Section = 'systems' | 'work' | 'experience' | 'learning' | 'practice' | 'contact'
 
 const destinations = [
-  { id: 'systems', label: 'Systems' },
   { id: 'work', label: 'Work' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'learning', label: 'Learning' },
   { id: 'practice', label: 'Practice' },
   { id: 'contact', label: 'Contact' },
 ] as const
