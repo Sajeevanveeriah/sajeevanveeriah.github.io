@@ -25,6 +25,7 @@
     node.setAttribute('aria-valuemin', '0');
     node.setAttribute('aria-valuemax', '100');
     node.setAttribute('aria-valuenow', String(value));
+    node.setAttribute('aria-valuetext', `${value}% complete`);
     if (!node.hasAttribute('aria-label') && !node.hasAttribute('aria-labelledby')) {
       node.setAttribute('aria-label', 'Progress');
     }
