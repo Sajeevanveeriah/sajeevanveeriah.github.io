@@ -1,33 +1,44 @@
-# Design QA
+# Design QA - corrective portfolio rebuild
 
-Date: 2026-09-03
-Reference: approved composite concept combining the dark integrated-systems hero with the light editorial project and career composition.
+## Comparison target
 
-## Visual comparison
+- Source: approved combined editorial/constellation portfolio concept and the selected dark and light concept boards.
+- Implementation: local homepage and `/work/` route at `http://terminal.local:4173/`.
+- Desktop viewport: 1363 x 936 CSS pixels in the cloud browser.
+- Mobile viewport: 390 x 844 CSS pixels through a same-origin responsive frame.
 
-| Area | Result | Evidence |
-| --- | --- | --- |
-| Hero | Passed | Split identity/system composition, oversized serif name, integrated engineering visual and six-node constellation are present. |
-| Selected work | Passed | Asymmetric editorial introduction and featured autonomous-navigation case study match the approved hierarchy. |
-| Project band | Passed | Three compact dark evidence cards preserve the reference rhythm and provide direct case-study access. |
-| Experience and learning | Passed | Career timeline and six-month learning roadmap form the intended balanced two-column editorial section. |
-| Foundation and contact | Passed | Three-part close keeps education, personal positioning and contact information distinct and readable. |
-| Complete archive | Passed | Sixteen additional projects remain discoverable without disrupting the composed landing-page narrative. |
+## Findings and fixes
 
-## Quality gates
+| Severity | Earlier mismatch | Corrective implementation | Post-fix evidence |
+| --- | --- | --- | --- |
+| P0 | The homepage carried the full project archive, creating a very long, database-like page. | The homepage now previews three projects; the complete 16-project archive lives on `/work/`. | `/work/` exposes the full archive and the homepage returns to the compact concept rhythm. |
+| P1 | Experience and learning expanded into tall two-column blocks with large dead zones. | Experience is limited to four concise professional records; the roadmap is a six-column progression. | Desktop capture shows both sections in one deliberate viewport-height composition. |
+| P1 | Hero typography and image composition drifted from the concepts. | Restored the two-line serif name, restrained sans role, labelled engineering system portrait and singular CTA hierarchy. | Light and dark browser captures match the source hierarchy and asymmetrical split. |
+| P1 | PDF output exposed the skip link and produced poor page breaks. | Added print-only header, section and break rules; the skip link and theme controls are excluded from print. | CSS print inspection and production build pass. |
+| P2 | The portfolio identity changed between the homepage and Work page. | Removed the unrelated graphical logo from the global masthead and retained the typographic Sajeevan Veeriah identity. | Homepage and Work route now share the same name-led navigation identity. |
 
-- Responsive states: 1440, 1180, 768, 720, 390 and 320 px, plus 1920 px ultrawide.
-- Theme states: light, dark and system-following control.
-- Accessibility: WCAG 2 A/AA, 2.1 AA and 2.2 AA automated checks; keyboard focus and 200% zoom-equivalent reflow.
-- Resilience: reduced motion, no-JavaScript rendering, missing-route handling and legacy redirects.
-- Asset framing: loaded images, uncropped evidence plates and no horizontal overflow.
+## Required fidelity surfaces
 
-## Resolution record
+- Fonts and typography: passed. Editorial serif hierarchy, compact uppercase labels and restrained sans body copy are consistent with the concept boards.
+- Spacing and layout rhythm: passed. Homepage sections are compact, aligned to one grid and no longer contain archive-driven dead zones.
+- Colours and tokens: passed. The same structure supports the approved light editorial and dark constellation presentations.
+- Image quality and asset fidelity: passed. Authentic portfolio imagery is retained and treated consistently; no placeholders or improvised icon art remain.
+- Copy and content: passed. Sajeevan's robotics, mechatronics, AI/ML, automation, professional experience and learning roadmap remain accurate and visible.
+- Responsiveness: passed. The 390 px responsive hero preserves hierarchy, actions and the system visual without horizontal overflow.
+- Interaction and accessibility: passed. Theme selection, navigation and project links were exercised in the cloud browser; focus treatments and reduced-motion handling remain present.
 
-- Corrected decorative-image readiness detection.
-- Moved mobile constellation labels fully within their visual field.
-- Increased masthead theme-control contrast and interactive target sizing.
-- Isolated parchment-section typography from dark-theme legacy overrides.
-- Updated export and deployment assertions to the approved homepage copy.
+## Remaining P3 polish
 
-Final result: passed.
+- A purpose-made transparent robot-arm line illustration would more exactly match the concept art than the current authentic factory-system image, but it is not required for layout fidelity.
+
+## Implementation checklist
+
+- [x] Compact homepage architecture
+- [x] Complete project archive moved to Work
+- [x] Work-history summary retained
+- [x] Six-month learning roadmap retained
+- [x] Light and dark presentations checked
+- [x] Desktop and mobile layouts checked
+- [x] Typecheck, lint and production build passed
+
+**final result: passed**
