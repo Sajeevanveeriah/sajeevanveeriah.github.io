@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { Masthead } from '@/components/Masthead'
+import { ProjectIndex } from '@/components/ProjectIndex'
 import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/content/projects'
 
@@ -50,6 +51,9 @@ export default function WorkPage() {
               </li>
             ))}
           </ul>
+          <section className="complete-work-index" aria-labelledby="complete-work-title">
+            <ProjectIndex headingId="complete-work-title" />
+          </section>
           <Link className="text-link" href="/#work"><ArrowLeft />Return to homepage work</Link>
         </section>
       </main>

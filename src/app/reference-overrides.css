@@ -1,0 +1,17 @@
+.portfolio-home .hero-copy h1 span:last-child {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.portfolio-home .hero-role {
+  font-family: var(--font-archivo), Arial, sans-serif;
+  text-transform: none;
+}
+
+.portfolio-home .section-intro::before {
+  display: none;
+}
+
+.portfolio-home .section-intro h2 {
+  font-style: normal;
+}
