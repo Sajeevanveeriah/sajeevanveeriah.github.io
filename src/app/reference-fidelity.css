@@ -112,10 +112,10 @@
 .reference-home .experience-item { position: relative; padding: 0 0 26px; }
 .reference-home .experience-item::before { content: ''; position: absolute; width: 11px; height: 11px; left: -30px; top: 3px; border: 1px solid #777; border-radius: 50%; background: var(--ref-paper); }
 .reference-home .experience-item article { display: grid; grid-template-columns: 130px 1fr; gap: 18px; }
-.reference-home .experience-period { color: var(--ref-blue); font-size: 12px; }
+.reference-home .reference-experience-learning .experience-period { color: #2448a8; font-size: 12px; }
 .reference-home .experience-role { margin: 0 0 4px; font-family: var(--font-archivo), Arial, sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0; }
 .reference-home .experience-org, .reference-home .experience-context, .reference-home .experience-tags { display: none; }
-.reference-home .experience-detail { margin: 0; color: var(--ref-muted); font-size: 11px; line-height: 1.45; }
+.reference-home .reference-experience-learning .experience-detail { margin: 0; color: #4d4c48; font-size: 11px; line-height: 1.45; }
 
 .reference-learning-wrap { border-left: 1px dashed var(--ref-line); padding-left: 42px; }
 .reference-home .learning-section { padding: 0; background: transparent; }
@@ -130,7 +130,8 @@
 .reference-home .learning-path > li:nth-child(even) { padding-left: 18px; border-left: 1px dotted var(--ref-line); }
 .reference-home .learning-number { color: var(--ref-blue); font-size: 11px; }
 .reference-home .learning-path h3 { margin: 6px 0; font-family: var(--font-archivo), Arial, sans-serif; font-size: 14px; letter-spacing: 0; }
-.reference-home .learning-path p, .reference-home .learning-path ul { margin: 0; color: var(--ref-muted); font-size: 10px; line-height: 1.45; }
+.reference-home .reference-experience-learning .learning-path p,
+.reference-home .reference-experience-learning .learning-path ul { margin: 0; color: #4d4c48; font-size: 10px; line-height: 1.45; }
 .reference-home .learning-build, .reference-home .learning-path ul { display: none; }
 
 .reference-foundation { padding: 56px 0; border-top: 1px solid var(--ref-line); }
