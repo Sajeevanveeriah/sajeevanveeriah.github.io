@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { EngineeringField } from '@/components/EngineeringField'
 import { ExperienceTimeline } from '@/components/ExperienceTimeline'
 import { LearningRoadmap } from '@/components/LearningRoadmap'
 import { Masthead } from '@/components/Masthead'
@@ -8,198 +7,119 @@ import { ProjectIndex } from '@/components/ProjectIndex'
 import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/content/projects'
 import { resumeFiles } from '@/content/resume'
-import { foundation, humanNote, professionalProof, roleLenses, site, systemLayers, workingStyle } from '@/content/site'
+import { foundation, humanNote, site } from '@/content/site'
+import './reference-fidelity.css'
 
-const proofItems = [
-  'Member, Engineers Australia',
-  'Mechatronics Engineering (Honours), Distinction, 2025',
-  'Robotics / Industrial Systems / Engineering Software',
+const heroNodes = [
+  ['01', 'Physical system', 'Mechanisms & actuation'],
+  ['02', 'Sensing', 'Perception & world model'],
+  ['03', 'Control', 'Real-time & safety'],
+  ['04', 'Autonomy', 'Planning & decisioning'],
+  ['05', 'Industrial IT/AI', 'Data, integration & intelligence'],
+  ['06', 'Verification', 'Validation & reliability'],
+] as const
+
+const projectCards = [
+  { title: 'Autonomous Navigation Rover', tags: ['ROS 2', 'Nav2', 'SLAM'], image: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.webp', href: '/work/autonomous-navigation-rover/' },
+  { title: 'Embedded Ataxia Assessment Device', tags: ['ESP32', 'Sensors', 'MATLAB'], image: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.webp', href: '/work/ataxia-assessment-device/' },
+  { title: 'Pricing and Inventory Control', tags: ['TypeScript', 'Tauri', 'Verification'], image: '/assets/image/20260826-SWL-Pricing-Run-Rev00.png', href: '/work/swl-pricing-inventory-control/' },
 ] as const
 
 export default function HomePage() {
+  const featured = featuredProjects[0]
+
   return (
-    <>
+    <div className="reference-home">
       <Masthead />
-      <main className="premium-systems" id="main">
-        <section className="portfolio-hero" id="overview" aria-labelledby="hero-title">
-          <div className="shell hero-layout">
-            <div className="hero-copy">
-              <p className="hero-location">Geelong, Victoria, Australia</p>
-              <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
-              <p className="hero-role">{site.jobTitle}</p>
-              <h2 className="hero-statement">Build the whole system. Prove it works.</h2>
-              <p className="hero-summary">{site.proposition}</p>
-              <p className="hero-profile">{site.profile}</p>
-              <div className="hero-actions">
-                <a className="button button-primary" href="#work">View selected work</a>
-                <a className="button button-secondary" href={resumeFiles.pdf} download>Resume PDF</a>
-                <a className="button button-secondary" href={resumeFiles.docx} download>Resume DOCX</a>
-                <a className="button button-secondary" href={`mailto:${site.email}`}>Email me</a>
-              </div>
-            </div>
-            <EngineeringField />
-            <ul className="trust-proof" aria-label="Professional proof">
-              {proofItems.map((item) => (
-                <li key={item}><span aria-hidden="true" />{item}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="proof-rail" id="proof" aria-labelledby="proof-title">
-          <h2 className="sr-only" id="proof-title">Immediate project proof</h2>
-          <div className="shell proof-rail-grid">
-            {featuredProjects.map((project, index) => (
-              <article className="proof-rail-item" key={project.slug}>
-                <p className="proof-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
-                <h3>{project.title}</h3>
-                <p className="proof-evidence">{project.evidence}</p>
-                <p>{project.proof}</p>
-                <Link href={`/work/${project.slug}/`}>Open record <span aria-hidden="true">→</span></Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="role-lenses-section shell" id="role-lenses" aria-labelledby="role-lenses-title">
-          <div className="role-lenses-intro">
-            <h2 id="role-lenses-title">One engineering practice. Three operating domains.</h2>
-            <p>Start with the boundary closest to your brief. The evidence remains connected across the complete system.</p>
-          </div>
-          <div className="role-lenses">
-            {roleLenses.map((lens, index) => (
-              <article className="role-lens" data-featured={index === 0 ? 'true' : undefined} key={lens.title}>
-                <p className="role-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
-                <h3>{lens.title}</h3>
-                <p>{lens.detail}</p>
-                <Link href={index === 0 ? '/#practice' : lens.href}>
-                  {index === 0 ? 'Review industrial systems evidence' : lens.action} <span aria-hidden="true">→</span>
-                </Link>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="systems-band" id="systems" aria-labelledby="systems-title">
-          <div className="shell systems-layout">
-            <div className="systems-intro">
-              <h2 id="systems-title">A complete system is more than the machine.</h2>
-              <p>I connect physical behaviour, control, industrial information and verification so the whole system can operate as intended.</p>
-            </div>
-            <ol className="systems-path">
-              {systemLayers.map((layer) => (
-                <li key={layer.index}>
-                  <span aria-hidden="true">{layer.index}</span>
-                  <h3>{layer.title}</h3>
-                  <p>{layer.detail}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className="work-section" id="work" aria-labelledby="work-title">
-          <div className="shell section-heading editorial-heading">
-            <div>
-              <p className="kicker">Selected work</p>
-              <h2 id="work-title">Proof, not a catalogue.</h2>
-            </div>
-            <p>Three records show the system, my contribution, the verification path and the exact boundary of each claim.</p>
-          </div>
-          <div className="selected-systems">
-            {featuredProjects.map((project, index) => (
-              <article className="selected-system" data-tone={index === 1 ? 'dark' : 'light'} key={project.slug}>
-                <div className="shell selected-system-grid">
-                  <div className="selected-copy">
-                    <p className="selected-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
-                    <h3>{project.title}</h3>
-                    <p className="selected-evidence">{project.evidence}</p>
-                    <dl className="selected-details">
-                      <div><dt>Contribution</dt><dd>{project.ownership}</dd></div>
-                      <div><dt>Verification</dt><dd>{project.verification}</dd></div>
-                      <div><dt>Boundary</dt><dd>{project.boundary}</dd></div>
-                    </dl>
-                    <Link className="button button-record" href={`/work/${project.slug}/`}>Open engineering record <span aria-hidden="true">→</span></Link>
-                  </div>
-                  {project.image ? (
-                    <figure className="selected-visual">
-                      <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 900px) 100vw, 56vw" />
-                      <figcaption>{project.image.kind}</figcaption>
-                    </figure>
-                  ) : null}
+      <main id="main">
+        <div className="reference-dark">
+          <section className="reference-hero" id="overview" aria-labelledby="hero-title">
+            <div className="reference-shell reference-hero-grid">
+              <div className="reference-hero-copy">
+                <p className="reference-kicker">Robotics. Intelligence. Automation.</p>
+                <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
+                <p className="reference-role">{site.jobTitle}</p>
+                <p className="reference-summary">{site.proposition}</p>
+                <div className="reference-actions">
+                  <a className="reference-primary" href="#work">View selected work <span aria-hidden="true">→</span></a>
+                  <a className="reference-link" href={resumeFiles.pdf} download>Download resume <span aria-hidden="true">↓</span></a>
                 </div>
-              </article>
-            ))}
-          </div>
-          <div className="shell work-index-action"><Link className="text-action" href="/work/">View the three-record work index <span aria-hidden="true">→</span></Link></div>
-        </section>
+                <p className="reference-member">Member, Engineers Australia</p>
+              </div>
 
-        <section className="project-index-section" id="projects" aria-labelledby="complete-projects-title">
-          <div className="shell">
-            <ProjectIndex headingId="complete-projects-title" />
-          </div>
-        </section>
+              <figure className="reference-system-map" aria-labelledby="reference-map-caption">
+                <div className="reference-orbit" aria-hidden="true" />
+                <Image src="/assets/image/Smart_Factory_Process_Visualisation_Rev00.webp" alt="Illustrative integrated automation system with production equipment, control and operational data layers." width={1448} height={1086} priority sizes="(max-width: 820px) 100vw, 56vw" />
+                <ol>{heroNodes.map(([number, title, detail], index) => <li className={`reference-node reference-node-${index + 1}`} key={number}><span>{number}</span><strong>{title}</strong><small>{detail}</small></li>)}</ol>
+                <figcaption id="reference-map-caption">One connected practice across physical systems, intelligence, automation and verification.</figcaption>
+              </figure>
+            </div>
+          </section>
+        </div>
 
-        <section className="experience-section" id="experience" aria-labelledby="experience-title">
-          <div className="shell experience-layout">
-            <div className="experience-intro">
-              <p className="kicker">Experience</p>
-              <h2 id="experience-title">From production floors to complete engineering systems.</h2>
-              <p>My work history connects manufacturing discipline, quality evidence, field telemetry, automotive validation and automation integration.</p>
+      <section className="reference-feature" id="work" aria-labelledby="work-title">
+        <div className="reference-shell reference-feature-grid">
+          <div className="reference-section-intro">
+            <p className="reference-index">01 <span>Selected work</span></p>
+            <h2 id="work-title">Systems that solve real problems.</h2>
+            <p>From autonomous robots to production automation - engineering that delivers reliability, safety and scale.</p>
+            <Link href="/work/">View all projects <span aria-hidden="true">→</span></Link>
+          </div>
+          <article className="reference-feature-card">
+            <div className="reference-feature-copy">
+              <p className="reference-kicker">Featured project</p>
+              <h3>{featured.title.replace(' on ROS 2', ' - ROS 2')}</h3>
+              <p>{featured.system}</p>
+              <ul>{featured.stack.slice(0, 5).map((tag) => <li key={tag}>{tag}</li>)}</ul>
+              <Link href={`/work/${featured.slug}/`}>View project case study <span aria-hidden="true">→</span></Link>
+            </div>
+            <figure>
+              <Image src={featured.image!.src} alt={featured.image!.alt} width={featured.image!.width} height={featured.image!.height} sizes="(max-width: 820px) 100vw, 42vw" />
+              <figcaption><strong>Engineering evidence</strong>{featured.verification}</figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section className="reference-projects" id="projects" aria-labelledby="projects-title">
+        <div className="reference-shell reference-projects-grid">
+          <div className="reference-section-intro">
+            <p className="reference-index">02 <span>Project index</span></p>
+            <h2 id="projects-title">Complete projects. Deeper by design.</h2>
+            <p>End-to-end case studies with architecture, system diagrams, code insights and results.</p>
+            <a href="#complete-projects">Browse all case studies <span aria-hidden="true">→</span></a>
+          </div>
+          <div className="reference-card-row">
+            {projectCards.map((project) => <article key={project.title}><Image src={project.image} alt="" width={720} height={480} sizes="(max-width: 760px) 100vw, 24vw" /><div><h3>{project.title}</h3><ul>{project.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul><Link href={project.href} aria-label={`Open ${project.title}`}>→</Link></div></article>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="reference-experience-learning" aria-label="Experience and learning">
+        <div className="reference-shell reference-split">
+          <section id="experience" aria-labelledby="experience-title">
+            <div className="reference-section-intro">
+              <p className="reference-index">03 <span>Experience</span></p>
+              <h2 id="experience-title">A timeline of impact.</h2>
+              <p>Engineering roles across manufacturing, quality, automotive validation, field telemetry and automation.</p>
             </div>
             <ExperienceTimeline />
-          </div>
-        </section>
+          </section>
+          <div className="reference-learning-wrap"><LearningRoadmap /></div>
+        </div>
+      </section>
 
-        <LearningRoadmap />
+      <section className="reference-foundation" id="practice" aria-labelledby="foundation-title">
+        <div className="reference-shell reference-foundation-grid">
+          <div><p className="reference-index">05 <span>Foundation</span></p><h2 id="foundation-title">Education and professional foundation.</h2><ul>{foundation.education.map((item) => <li key={item}>{item}</li>)}<li>{foundation.professional[0]}</li></ul></div>
+          <div><p className="reference-index">06 <span>Human note</span></p><h2>Engineer. Problem solver. Systems builder.</h2><p>{humanNote}</p></div>
+          <div id="contact"><p className="reference-index">07 <span>Contact</span></p><h2>Let&apos;s build something reliable together.</h2><ul className="reference-contact-list"><li><a href={`mailto:${site.email}`}>{site.email}</a></li><li><a href={site.github}>github.com/Sajeevanveeriah</a></li><li>{site.location}</li></ul></div>
+        </div>
+      </section>
 
-        <section className="practice-section" id="practice" aria-labelledby="practice-title">
-          <div className="shell practice-layout">
-            <div className="practice-intro">
-              <p className="kicker">Practice</p>
-              <h2 id="practice-title">Engineering that survives contact with reality.</h2>
-              <p>{workingStyle}</p>
-            </div>
-            <ol className="practice-list">
-              {professionalProof.map((item, index) => (
-                <li key={item.title}>
-                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                  <div><h3>{item.title}</h3><p>{item.detail}</p></div>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <div className="foundation-band">
-            <div className="shell foundation-grid">
-              <div><p className="kicker">Foundation</p><h2>Education and professional grounding.</h2></div>
-              <div><h3>Education</h3><ul>{foundation.education.map((item) => <li key={item}>{item}</li>)}</ul></div>
-              <div><h3>Professional</h3><ul>{foundation.professional.map((item) => <li key={item}>{item}</li>)}</ul></div>
-              <div><h3>Continuing development</h3><ul>{foundation.training.map((item) => <li key={item}>{item}</li>)}</ul></div>
-            </div>
-          </div>
-          <div className="human-note">
-            <div className="shell human-note-grid">
-              <div><p className="kicker">Human note</p><h2>The engineer behind the evidence.</h2></div>
-              <p>{humanNote}</p>
-              <div className="human-linework" aria-hidden="true" />
-            </div>
-          </div>
-        </section>
-
-        <section className="contact-terminal" id="contact" aria-labelledby="contact-title">
-          <div className="shell contact-layout">
-            <h2 id="contact-title">Build the system. Prove the operation.</h2>
-            <p>I work across robotics, industrial automation, industrial IT/OT, embedded systems, AI/ML and engineering software - from requirements through integration, verification and handover.</p>
-            <address className="contact-actions">
-              <a href={`mailto:${site.email}`}>Email me <span aria-hidden="true">→</span></a>
-              <a href={site.github}>View GitHub <span aria-hidden="true">→</span></a>
-              <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
-              <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
-            </address>
-          </div>
-        </section>
+      <section className="reference-complete-index" id="complete-projects" aria-labelledby="complete-projects-title"><div className="reference-shell"><ProjectIndex headingId="complete-projects-title" /></div></section>
       </main>
       <SiteFooter />
-    </>
+    </div>
   )
 }

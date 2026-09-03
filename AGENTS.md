@@ -12,14 +12,15 @@ The public identity is exactly:
 
 Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer
 
-The information path is:
+The home-page information path is:
 
-identity -> engineering proposition -> systems map -> three flagship records
--> engineering practice -> contact.
+identity -> integrated systems visual -> featured project -> compact project
+band -> complete career timeline and learning pathway -> professional
+foundation -> contact -> complete project index.
 
-Do not recreate the archived catalogue, skills directory, career timeline,
-large route tree or legacy visual system in the active product. The complete
-previous implementation is preserved under
+Keep the detailed project index and career timeline in the active product.
+Do not recreate the legacy route tree, skills directory or legacy visual
+system. The previous implementation is preserved under
 archive/20260810-legacy-portfolio/.
 
 Do not include Ford, Ford Motor Company, Invenio or JAG Process Solutions in
@@ -40,4 +41,3 @@ dashes. Keep copy factual, concise and in first person where Saj is speaking.
 
 Do not commit, push, merge or deploy without Saj's current target-specific
 approval.
-

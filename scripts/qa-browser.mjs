@@ -73,17 +73,15 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     theme: document.documentElement.dataset.theme,
     title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
     visibleText: document.body.innerText.trim().length,
-    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && (image.alt || image.closest('.brand-mark, .field-core'))),
+    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
     layoutIntegrity: (() => {
       const collisions = []
       const groups = [
-        ['hero', '.hero-layout', ':scope > *'],
-        ['field-nodes', '.field-nodes', ':scope > .field-node'],
-        ['proof', '.proof-rail-grid', ':scope > .proof-rail-item'],
-        ['role-lenses', '.role-lenses', ':scope > .role-lens'],
-        ['systems-path', '.systems-path', ':scope > li'],
-        ['practice', '.practice-layout', ':scope > *'],
-        ['contact', '.contact-layout', ':scope > h2, :scope > p'],
+        ['hero', '.reference-hero-grid', ':scope > *'],
+        ['feature', '.reference-feature-grid', ':scope > *'],
+        ['project-band', '.reference-card-row', ':scope > article'],
+        ['experience-learning', '.reference-split', ':scope > *'],
+        ['foundation', '.reference-foundation-grid', ':scope > *'],
       ]
 
       for (const [name, containerSelector, itemSelector] of groups) {
@@ -103,10 +101,10 @@ for (const [name, width, height, theme, reducedMotion] of states) {
         }
       }
 
-      const field = document.querySelector('.field-nodes')
+      const field = document.querySelector('.reference-system-map')
       const fieldRect = field?.getBoundingClientRect()
       const fieldOutOfBounds = field && fieldRect && getComputedStyle(field).display !== 'none'
-        ? [...field.querySelectorAll('.field-node')].flatMap((node, index) => {
+        ? [...field.querySelectorAll('.reference-node')].flatMap((node, index) => {
             const rect = node.getBoundingClientRect()
             return rect.left < fieldRect.left - 1 || rect.top < fieldRect.top - 1 || rect.right > fieldRect.right + 1 || rect.bottom > fieldRect.bottom + 1
               ? [{ index, node: [rect.left, rect.top, rect.right, rect.bottom], field: [fieldRect.left, fieldRect.top, fieldRect.right, fieldRect.bottom] }]
@@ -116,7 +114,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
 
       return { collisions, fieldOutOfBounds }
     })(),
-    imageFraming: [...document.querySelectorAll('.practice-visual, .selected-visual, .record-plate, .further-figure')].map((figure, index) => {
+    imageFraming: [...document.querySelectorAll('.record-plate, .further-figure')].map((figure, index) => {
       const image = figure.querySelector('img')
       if (!(image instanceof HTMLImageElement)) return { index, valid: false, reason: 'missing-image' }
       const frame = figure.getBoundingClientRect()
@@ -135,14 +133,16 @@ for (const [name, width, height, theme, reducedMotion] of states) {
         withinFrame,
       }
     }),
-    identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
-    proofCount: document.querySelectorAll('#proof .proof-rail-item').length,
-    roleLensCount: document.querySelectorAll('#role-lenses .role-lens').length,
-    systemsCount: document.querySelectorAll('#systems').length,
-    selectedSystemCount: document.querySelectorAll('#work .selected-system').length,
+    identity: document.querySelector('.reference-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+    systemNodeCount: document.querySelectorAll('.reference-system-map .reference-node').length,
+    featuredProjectCount: document.querySelectorAll('#work .reference-feature-card').length,
+    projectBandCount: document.querySelectorAll('#projects .reference-card-row > article').length,
+    experienceCount: document.querySelectorAll('#experience .experience-item').length,
+    learningMonthCount: document.querySelectorAll('#learning .learning-path > li').length,
+    completeProjectCount: document.querySelectorAll('#complete-projects .index-project').length,
     practiceCount: document.querySelectorAll('#practice').length,
     contactCount: document.querySelectorAll('#contact').length,
-    sectionOrder: ['overview', 'proof', 'role-lenses', 'systems', 'work', 'projects', 'experience', 'learning', 'practice', 'contact'].every((id, index, ids) => {
+    sectionOrder: ['overview', 'work', 'projects', 'experience', 'learning', 'practice', 'contact', 'complete-projects'].every((id, index, ids) => {
       const node = document.getElementById(id)
       const previous = index === 0 ? null : document.getElementById(ids[index - 1])
       return Boolean(node && (!previous || (previous.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING)))
@@ -158,7 +158,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.proofCount !== 3 || result.roleLensCount !== 3 || result.systemsCount !== 1 || result.selectedSystemCount !== 3 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.systemNodeCount !== 6 || result.featuredProjectCount !== 1 || result.projectBandCount !== 3 || result.experienceCount < 6 || result.learningMonthCount !== 6 || result.completeProjectCount < 12 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -260,21 +260,25 @@ const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, j
 const noJsPage = await noJs.newPage()
 const noJsResponse = await noJsPage.goto(baseURL)
 const noJsResult = await noJsPage.evaluate(() => ({
-  identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
-  proofCount: document.querySelectorAll('#proof .proof-rail-item').length,
-  roleLensCount: document.querySelectorAll('#role-lenses .role-lens').length,
-  systemsCount: document.querySelectorAll('#systems').length,
-  selectedSystemCount: document.querySelectorAll('#work .selected-system').length,
+  identity: document.querySelector('.reference-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+  systemNodeCount: document.querySelectorAll('.reference-system-map .reference-node').length,
+  featuredProjectCount: document.querySelectorAll('#work .reference-feature-card').length,
+  projectBandCount: document.querySelectorAll('#projects .reference-card-row > article').length,
+  experienceCount: document.querySelectorAll('#experience .experience-item').length,
+  learningMonthCount: document.querySelectorAll('#learning .learning-path > li').length,
+  completeProjectCount: document.querySelectorAll('#complete-projects .index-project').length,
   practiceCount: document.querySelectorAll('#practice').length,
   contactCount: document.querySelectorAll('#contact').length,
 }))
 if (
   noJsResponse?.status() !== 200
   || noJsResult.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer'
-  || noJsResult.proofCount !== 3
-  || noJsResult.roleLensCount !== 3
-  || noJsResult.systemsCount !== 1
-  || noJsResult.selectedSystemCount !== 3
+  || noJsResult.systemNodeCount !== 6
+  || noJsResult.featuredProjectCount !== 1
+  || noJsResult.projectBandCount !== 3
+  || noJsResult.experienceCount < 6
+  || noJsResult.learningMonthCount !== 6
+  || noJsResult.completeProjectCount < 12
   || noJsResult.practiceCount !== 1
   || noJsResult.contactCount !== 1
   || !(await noJsPage.getByText('Menu', { exact: true }).isVisible())
