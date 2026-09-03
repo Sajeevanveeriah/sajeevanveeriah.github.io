@@ -15,3 +15,27 @@
 .portfolio-home .section-intro h2 {
   font-style: normal;
 }
+
+.portfolio-home .project-strip a {
+  display: grid;
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
+}
+
+.portfolio-home .project-strip article > div > p {
+  color: #b8b3aa;
+}
+
+html[data-theme='light'] .portfolio-home .section-number,
+html[data-theme='light'] .portfolio-home .section-intro > a,
+html[data-theme='light'] .portfolio-home .featured-copy a,
+html[data-theme='light'] .portfolio-home .career-line time,
+html[data-theme='light'] .portfolio-home .roadmap-track > a,
+html[data-theme='light'] .portfolio-home .download-action {
+  color: #2147a8;
+}
+
+html[data-theme='light'] .portfolio-home .project-strip article > div > p {
+  color: #625f59;
+}
