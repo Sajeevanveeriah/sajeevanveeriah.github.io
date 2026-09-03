@@ -94,7 +94,7 @@ jobs:
           unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
           grep -Fq 'Systems that solve real problems.' out/index.html
           grep -Fq 'Download resume' out/index.html
-          grep -Fq 'Learn the stack by building through it.' out/index.html
+          grep -Fq 'Build the stack. Prove the skill.' out/index.html
           echo 'portfolio export verified'
 
       - uses: actions/configure-pages@v5
@@ -173,7 +173,7 @@ jobs:
                [ "$monogram_status" = 200 ] && \
                grep -Fq 'Systems that solve real problems.' /tmp/portfolio-route-home.html && \
                grep -Fq 'Download resume' /tmp/portfolio-route-home.html && \
-               grep -Fq 'Learn the stack by building through it.' /tmp/portfolio-route-home.html && \
+               grep -Fq 'Build the stack. Prove the skill.' /tmp/portfolio-route-home.html && \
                cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
                cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp && \
                unzip -t /tmp/resume-live.docx >/dev/null; then
