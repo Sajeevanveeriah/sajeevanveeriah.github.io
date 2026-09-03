@@ -142,7 +142,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     selectedSystemCount: document.querySelectorAll('#work .selected-system').length,
     practiceCount: document.querySelectorAll('#practice').length,
     contactCount: document.querySelectorAll('#contact').length,
-    sectionOrder: ['overview', 'proof', 'role-lenses', 'systems', 'work', 'practice', 'contact'].every((id, index, ids) => {
+    sectionOrder: ['overview', 'proof', 'role-lenses', 'systems', 'work', 'projects', 'experience', 'learning', 'practice', 'contact'].every((id, index, ids) => {
       const node = document.getElementById(id)
       const previous = index === 0 ? null : document.getElementById(ids[index - 1])
       return Boolean(node && (!previous || (previous.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING)))
@@ -150,9 +150,6 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     obsoletePhrases: [
       'Living Systems Atlas',
       'Nineteen connected capability domains.',
-      'Complete project index',
-      '16 further engineering projects.',
-      'Complete work history',
     ].filter((phrase) => document.body.innerText.includes(phrase)),
     supportCount: document.querySelectorAll('a[href*="paypal.me"]').length,
     supportTargetSafe: [...document.querySelectorAll('a[href*="paypal.me"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
@@ -251,9 +248,9 @@ await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
 await mobilePage.getByText('Menu', { exact: true }).click()
 const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
 const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
-if (!mobileNavVisible || mobileLinks !== 5) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
+if (!mobileNavVisible || mobileLinks !== 6) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
 await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
-await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Systems' }).click()
+await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Work' }).click()
 await mobilePage.waitForTimeout(50)
 const mobileMenuOpenAfterSelection = await mobilePage.locator('details.nav-disclosure').evaluate((element) => element.open)
 if (mobileMenuOpenAfterSelection) failures.push({ name: 'mobile-navigation-close', mobileMenuOpenAfterSelection })

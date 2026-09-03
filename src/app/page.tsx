@@ -1,11 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { EngineeringField } from '@/components/EngineeringField'
+import { ExperienceTimeline } from '@/components/ExperienceTimeline'
+import { LearningRoadmap } from '@/components/LearningRoadmap'
 import { Masthead } from '@/components/Masthead'
+import { ProjectIndex } from '@/components/ProjectIndex'
 import { SiteFooter } from '@/components/SiteFooter'
 import { featuredProjects } from '@/content/projects'
 import { resumeFiles } from '@/content/resume'
-import { humanNote, professionalProof, roleLenses, site, systemLayers, workingStyle } from '@/content/site'
+import { foundation, humanNote, professionalProof, roleLenses, site, systemLayers, workingStyle } from '@/content/site'
 
 const proofItems = [
   'Member, Engineers Australia',
@@ -24,11 +27,11 @@ export default function HomePage() {
               <p className="hero-location">Geelong, Victoria, Australia</p>
               <h1 id="hero-title"><span>Sajeevan</span><span>Veeriah</span></h1>
               <p className="hero-role">{site.jobTitle}</p>
-              <h2 className="hero-statement">Machines. Intelligence. Dependable operation.</h2>
+              <h2 className="hero-statement">Build the whole system. Prove it works.</h2>
               <p className="hero-summary">{site.proposition}</p>
               <p className="hero-profile">{site.profile}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href="#proof">View selected work</a>
+                <a className="button button-primary" href="#work">View selected work</a>
                 <a className="button button-secondary" href={resumeFiles.pdf} download>Resume PDF</a>
                 <a className="button button-secondary" href={resumeFiles.docx} download>Resume DOCX</a>
                 <a className="button button-secondary" href={`mailto:${site.email}`}>Email me</a>
@@ -131,6 +134,25 @@ export default function HomePage() {
           <div className="shell work-index-action"><Link className="text-action" href="/work/">View the three-record work index <span aria-hidden="true">→</span></Link></div>
         </section>
 
+        <section className="project-index-section" id="projects" aria-labelledby="complete-projects-title">
+          <div className="shell">
+            <ProjectIndex headingId="complete-projects-title" />
+          </div>
+        </section>
+
+        <section className="experience-section" id="experience" aria-labelledby="experience-title">
+          <div className="shell experience-layout">
+            <div className="experience-intro">
+              <p className="kicker">Experience</p>
+              <h2 id="experience-title">From production floors to complete engineering systems.</h2>
+              <p>My work history connects manufacturing discipline, quality evidence, field telemetry, automotive validation and automation integration.</p>
+            </div>
+            <ExperienceTimeline />
+          </div>
+        </section>
+
+        <LearningRoadmap />
+
         <section className="practice-section" id="practice" aria-labelledby="practice-title">
           <div className="shell practice-layout">
             <div className="practice-intro">
@@ -146,6 +168,14 @@ export default function HomePage() {
                 </li>
               ))}
             </ol>
+          </div>
+          <div className="foundation-band">
+            <div className="shell foundation-grid">
+              <div><p className="kicker">Foundation</p><h2>Education and professional grounding.</h2></div>
+              <div><h3>Education</h3><ul>{foundation.education.map((item) => <li key={item}>{item}</li>)}</ul></div>
+              <div><h3>Professional</h3><ul>{foundation.professional.map((item) => <li key={item}>{item}</li>)}</ul></div>
+              <div><h3>Continuing development</h3><ul>{foundation.training.map((item) => <li key={item}>{item}</li>)}</ul></div>
+            </div>
           </div>
           <div className="human-note">
             <div className="shell human-note-grid">
