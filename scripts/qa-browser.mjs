@@ -133,6 +133,13 @@ for (const [name, width, height, theme, reducedMotion] of states) {
       }
     }),
     identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+    monogramVisible: (() => {
+      const mark = document.querySelector('.brand-mark img')
+      if (!(mark instanceof HTMLImageElement)) return false
+      const rect = mark.getBoundingClientRect()
+      return mark.complete && mark.naturalWidth > 0 && rect.width >= 38 && rect.height >= 38 && getComputedStyle(mark).objectFit === 'contain'
+    })(),
+    projectImagesContained: [...document.querySelectorAll('.featured-project figure img, .project-strip article > img')].every((image) => getComputedStyle(image).objectFit === 'contain'),
     systemNodeCount: document.querySelectorAll('.system-portrait .system-node').length,
     featuredProjectCount: document.querySelectorAll('#work .featured-project').length,
     projectBandCount: document.querySelectorAll('#projects .project-strip > article').length,
@@ -157,7 +164,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
   }))
   await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.systemNodeCount !== 6 || result.featuredProjectCount !== 1 || result.projectBandCount !== 3 || result.experienceCount !== 4 || result.learningMonthCount !== 6 || result.completeProjectCount !== 0 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
+  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || !result.monogramVisible || !result.projectImagesContained || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.systemNodeCount !== 6 || result.featuredProjectCount !== 1 || result.projectBandCount !== 3 || result.experienceCount !== 4 || result.learningMonthCount !== 6 || result.completeProjectCount !== 0 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
   if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
   if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
   await context.close()
@@ -260,6 +267,7 @@ const noJsPage = await noJs.newPage()
 const noJsResponse = await noJsPage.goto(baseURL)
 const noJsResult = await noJsPage.evaluate(() => ({
   identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
+  monogramCount: document.querySelectorAll('.brand-mark img').length,
   systemNodeCount: document.querySelectorAll('.system-portrait .system-node').length,
   featuredProjectCount: document.querySelectorAll('#work .featured-project').length,
   projectBandCount: document.querySelectorAll('#projects .project-strip > article').length,
@@ -272,6 +280,7 @@ const noJsResult = await noJsPage.evaluate(() => ({
 if (
   noJsResponse?.status() !== 200
   || noJsResult.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer'
+  || noJsResult.monogramCount !== 1
   || noJsResult.systemNodeCount !== 6
   || noJsResult.featuredProjectCount !== 1
   || noJsResult.projectBandCount !== 3
