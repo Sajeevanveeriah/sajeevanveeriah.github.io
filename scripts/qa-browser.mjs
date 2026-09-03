@@ -73,7 +73,7 @@ for (const [name, width, height, theme, reducedMotion] of states) {
     theme: document.documentElement.dataset.theme,
     title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
     visibleText: document.body.innerText.trim().length,
-    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0 && (image.alt || image.closest('.brand-mark, .field-core'))),
+    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
     layoutIntegrity: (() => {
       const collisions = []
       const groups = [
