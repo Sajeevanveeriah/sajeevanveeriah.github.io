@@ -89,9 +89,9 @@ jobs:
           done
           unzip -t out/assets/Resume_Sajeevan_Veeriah.docx >/dev/null
           unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
-          grep -Fq 'Build the whole system. Prove it works.' out/index.html
-          grep -Fq 'Resume PDF' out/index.html
-          grep -Fq 'Resume DOCX' out/index.html
+          grep -Fq 'Systems that solve real problems.' out/index.html
+          grep -Fq 'Download resume' out/index.html
+          grep -Fq 'Learn the stack by building through it.' out/index.html
           python - <<'PY'
           from pathlib import Path
           from zipfile import ZipFile
