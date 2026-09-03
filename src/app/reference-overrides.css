@@ -23,6 +23,12 @@
   place-items: center;
 }
 
+.portfolio-home .contact-list a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
 .portfolio-home .project-strip article > div > p {
   color: #b8b3aa;
 }
