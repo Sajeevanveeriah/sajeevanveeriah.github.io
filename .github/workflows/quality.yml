@@ -83,11 +83,13 @@ jobs:
             work/swl-pricing-inventory-control/index.html \
             assets/Resume_Sajeevan_Veeriah.pdf \
             assets/Resume_Sajeevan_Veeriah.docx \
+            assets/20260903-Robotics-Learning-Roadmap-Rev00.docx \
             assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
           unzip -t out/assets/Resume_Sajeevan_Veeriah.docx >/dev/null
-          grep -Fq 'Machines. Intelligence. Dependable operation.' out/index.html
+          unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
+          grep -Fq 'Build the whole system. Prove it works.' out/index.html
           grep -Fq 'Resume PDF' out/index.html
           grep -Fq 'Resume DOCX' out/index.html
           python - <<'PY'
