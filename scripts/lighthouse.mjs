@@ -25,7 +25,7 @@ const chrome = await launch({
   chromePath: process.env.BROWSER_EXECUTABLE_PATH || chromium.executablePath(),
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })
-const routes = ['/', '/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
+const routes = ['/', '/about/', '/notes/', '/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
 const minimum = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 }
 const scores = []
 
@@ -36,8 +36,8 @@ for (const route of routes) {
     output: 'json',
     logLevel: 'error',
     onlyCategories: Object.keys(minimum),
-    formFactor: 'desktop',
-    screenEmulation: { mobile: false, width: 1440, height: 900, deviceScaleFactor: 1, disabled: false },
+    formFactor: 'mobile',
+    screenEmulation: { mobile: true, width: 390, height: 844, deviceScaleFactor: 1, disabled: false },
     throttling: { rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1 },
   })
   if (!result) throw new Error(`Lighthouse did not return a result for ${route}`)

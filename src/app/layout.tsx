@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from 'next'
 import { archivoFont } from './fonts'
 import { site } from '@/content/site'
 import './globals.css'
-import './premium.css'
-import './premium-quality.css'
+
+
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark')m='system';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
+              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='light';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
           }}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />

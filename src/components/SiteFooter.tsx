@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import {ThemeSegment} from './ThemeSegment'
 import { resumeFiles } from '@/content/resume'
 import { site } from '@/content/site'
 
@@ -16,7 +17,7 @@ export function SiteFooter() {
           <a href={resumeFiles.docx} download>Resume DOCX</a>
           <a href={site.support.url} target="_blank" rel="noopener noreferrer">{site.support.label}</a>
         </nav>
-        <p className="copyright">© 2026 {site.name}</p>
+        <ThemeSegment/><p className="copyright">© 2026 {site.name}</p>
       </div>
     </footer>
   )

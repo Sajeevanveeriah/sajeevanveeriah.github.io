@@ -1,57 +1,35 @@
 # Sajeevan Veeriah - Engineering Portfolio
 
-A concise, evidence-led portfolio for Sajeevan Veeriah:
+A static Next.js portfolio presenting robotics, embedded mechatronics, engineering software and professional experience.
 
-`Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer`
+## Experience
 
-The recruiter-first path is deliberately short:
+- Home: introduction, selected projects, engineering approach, experience summary and contact.
+- Work: all 19 records, category filters, search, shareable filter URLs and reset.
+- Case studies: contribution, architecture, decisions, verification and scope.
+- About: the complete seven-entry career timeline and education.
+- Notes: the existing six-month learning roadmap and download.
 
-1. Exact identity and engineering proposition.
-2. Immediate proof from three flagship records.
-3. Optional role lenses for robotics, automation and engineering software.
-4. A six-layer complete-systems method.
-5. Three evidence-bounded case studies.
-6. Selected professional practice, working style and contact.
+The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and download URLs are retained. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
 
-The three public engineering records cover ROS 2 autonomous navigation, an
-ESP32 movement-assessment prototype, and a client-commissioned pricing and
-inventory-control application. Each record separates contribution,
-verification, current readiness and evidence boundaries.
+## Development and verification
 
-The visual system uses oversized editorial typography, a restrained
-near-monochrome palette, one clay accent, hard-edged evidence panels and
-alternating light and dark bands. It retains the site's engineering-field
-motif, light/dark theme control, responsive reflow and reduced-motion support.
+Node.js 22, npm, Python 3.12 for the existing resume generator.
 
-The implementation is a Next.js 15 App Router static export for GitHub Pages.
-It has no backend, analytics, trackers or runtime third-party requests.
+```sh
+npm ci
+npm run typecheck
+npm run lint
+npm run build
+npx playwright install --with-deps chromium
+npm run qa:browser
+npm run qa:lighthouse
+```
 
-## Local commands
+Browser QA checks seven routes at seven widths in both themes, axe accessibility, filters, search recovery, URL persistence, keyboard navigation, mobile menu, downloads/media links, legacy routes and the no-JavaScript catalogue. Lighthouse checks every active content route in mobile emulation. QA screenshots are CI artifacts, not application files.
 
-    npm ci
-    npm run typecheck
-    npm run lint
-    npm run build
-    npm run qa:browser
-    npm run qa:lighthouse
-    npm run dev
+## Deployment
 
-The export is written to `out/`. Browser QA serves that export locally and
-requires Playwright Chromium. A managed runner can set
-`PLAYWRIGHT_EXECUTABLE_PATH` to an existing Chromium-compatible binary.
+The existing GitHub Pages workflow publishes the static `out/` directory after verification. No backend, tracking, database or runtime third-party requests are needed. About is excluded from the legacy redirect generator so the built page cannot be overwritten.
 
-## Production hosting
-
-The same static `out/` directory is compatible with GitHub Pages and
-Cloudflare Workers Static Assets.
-
-- Build command: `npm run build`
-- Output directory: `out`
-- Cloudflare Worker configuration: `wrangler.jsonc`
-- Cloudflare deployment: `wrangler deploy --config wrangler.jsonc`
-
-## Archive
-
-The pre-rebuild implementation remains under
-`archive/20260810-legacy-portfolio/` for reference. It is not part of the
-active website routes or navigation.
+The earlier portfolio remains under `archive/20260810-legacy-portfolio/`. Unused previous style files are retained but are not imported by the active application.

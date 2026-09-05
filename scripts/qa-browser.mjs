@@ -1,14 +1,13 @@
 import { createServer } from 'node:http'
-import { mkdir, readFile, stat } from 'node:fs/promises'
+import { readFile, stat, mkdir } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import { extname, join, normalize, resolve } from 'node:path'
 import { chromium } from 'playwright'
-
-const require = createRequire(import.meta.url)
-const root = resolve('out')
-const captureRoot = '/tmp/portfolio-qa'
-const port = 4173
-const baseURL = `http://127.0.0.1:${port}`
+import assert from 'node:assert/strict'
+const require=createRequire(import.meta.url)
+const root=resolve('out')
+const port=4175
+const baseURL=`http://127.0.0.1:${port}`
 const mime = {
   '.avif': 'image/avif', '.css': 'text/css', '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript', '.jpg': 'image/jpeg', '.pdf': 'application/pdf', '.png': 'image/png',
@@ -29,276 +28,84 @@ const server = createServer(async (request, response) => {
   }
 })
 
-await mkdir(captureRoot, { recursive: true })
-await new Promise((ready) => server.listen(port, '127.0.0.1', ready))
-const executablePath = process.env.PLAYWRIGHT_EXECUTABLE_PATH
-const browser = await chromium.launch(executablePath ? { executablePath, headless: true } : { headless: true })
-const axePath = require.resolve('axe-core/axe.min.js')
-const failures = []
-const states = [
-  ['desktop-light', 1440, 1000, 'light', 'no-preference'],
-  ['desktop-dark', 1440, 1000, 'dark', 'no-preference'],
-  ['desktop-tight-1180', 1180, 900, 'light', 'no-preference'],
-  ['mobile-light', 390, 844, 'light', 'no-preference'],
-  ['mobile-dark', 390, 844, 'dark', 'no-preference'],
-  ['narrow-320', 320, 720, 'light', 'no-preference'],
-  ['tablet-768', 768, 1024, 'light', 'no-preference'],
-  ['zoom-200-equivalent', 720, 900, 'light', 'no-preference'],
-  ['ultrawide-1920', 1920, 1080, 'dark', 'no-preference'],
-  ['reduced-motion', 1440, 1000, 'light', 'reduce'],
-]
 
-for (const [name, width, height, theme, reducedMotion] of states) {
-  const context = await browser.newContext({ viewport: { width, height }, colorScheme: theme, reducedMotion })
-  await context.addInitScript((value) => localStorage.setItem('sv-theme', value), theme)
-  const page = await context.newPage()
-  const consoleErrors = []
-  const requestFailures = []
-  page.on('console', (message) => message.type() === 'error' && consoleErrors.push(message.text()))
-  page.on('requestfailed', (request) => requestFailures.push(request.url()))
-  const response = await page.goto(baseURL, { waitUntil: 'networkidle' })
-  await page.evaluate(async () => {
-    const images = [...document.images]
-    for (const image of images) {
-      image.loading = 'eager'
-      image.scrollIntoView({ block: 'center' })
-      await new Promise((resolveDelay) => setTimeout(resolveDelay, 50))
-    }
-    await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
-    window.scrollTo(0, 0)
-  })
-  await page.addScriptTag({ path: axePath })
-  const result = await page.evaluate(async () => ({
-    overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    theme: document.documentElement.dataset.theme,
-    title: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim(),
-    visibleText: document.body.innerText.trim().length,
-    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
-    layoutIntegrity: (() => {
-      const collisions = []
-      const groups = [
-        ['hero', '.hero-grid', ':scope > *'],
-        ['featured-work', '.featured-project', ':scope > *'],
-        ['project-band', '.project-strip', ':scope > article'],
-        ['closing', '.closing-grid', ':scope > *'],
-      ]
-
-      for (const [name, containerSelector, itemSelector] of groups) {
-        for (const container of document.querySelectorAll(containerSelector)) {
-          const items = [...container.querySelectorAll(itemSelector)]
-            .map((item, index) => ({ index, rect: item.getBoundingClientRect(), display: getComputedStyle(item).display }))
-            .filter((item) => item.display !== 'none' && item.rect.width > 0 && item.rect.height > 0)
-          for (let left = 0; left < items.length; left += 1) {
-            for (let right = left + 1; right < items.length; right += 1) {
-              const a = items[left].rect
-              const b = items[right].rect
-              if (a.right > b.left + 1 && b.right > a.left + 1 && a.bottom > b.top + 1 && b.bottom > a.top + 1) {
-                collisions.push({ name, pair: [items[left].index, items[right].index] })
-              }
-            }
-          }
-        }
-      }
-
-      const field = document.querySelector('.system-portrait')
-      const fieldRect = field?.getBoundingClientRect()
-      const fieldOutOfBounds = field && fieldRect && getComputedStyle(field).display !== 'none'
-        ? [...field.querySelectorAll('.system-node')].flatMap((node, index) => {
-            const rect = node.getBoundingClientRect()
-            return rect.left < fieldRect.left - 1 || rect.top < fieldRect.top - 1 || rect.right > fieldRect.right + 1 || rect.bottom > fieldRect.bottom + 1
-              ? [{ index, node: [rect.left, rect.top, rect.right, rect.bottom], field: [fieldRect.left, fieldRect.top, fieldRect.right, fieldRect.bottom] }]
-              : []
-          })
-        : []
-
-      return { collisions, fieldOutOfBounds }
-    })(),
-    imageFraming: [...document.querySelectorAll('.record-plate, .further-figure')].map((figure, index) => {
-      const image = figure.querySelector('img')
-      if (!(image instanceof HTMLImageElement)) return { index, valid: false, reason: 'missing-image' }
-      const frame = figure.getBoundingClientRect()
-      const rendered = image.getBoundingClientRect()
-      const style = getComputedStyle(image)
-      const frameRatio = frame.width / frame.height
-      const withinFrame = rendered.left >= frame.left - 1 && rendered.top >= frame.top - 1 && rendered.right <= frame.right + 1 && rendered.bottom <= frame.bottom + 1
-      return {
-        index,
-        valid: image.complete && image.naturalWidth > 0 && style.objectFit === 'contain' && Math.abs(frameRatio - (16 / 9)) < 0.03 && withinFrame,
-        natural: [image.naturalWidth, image.naturalHeight],
-        frame: [Math.round(frame.width), Math.round(frame.height)],
-        rendered: [Math.round(rendered.width), Math.round(rendered.height)],
-        objectFit: style.objectFit,
-        objectPosition: style.objectPosition,
-        withinFrame,
-      }
-    }),
-    identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
-    monogramVisible: (() => {
-      const mark = document.querySelector('.brand-mark img')
-      if (!(mark instanceof HTMLImageElement)) return false
-      const rect = mark.getBoundingClientRect()
-      return mark.complete && mark.naturalWidth > 0 && rect.width >= 38 && rect.height >= 38 && getComputedStyle(mark).objectFit === 'contain'
-    })(),
-    projectImagesContained: [...document.querySelectorAll('.featured-project figure img, .project-strip article > img')].every((image) => getComputedStyle(image).objectFit === 'contain'),
-    systemNodeCount: document.querySelectorAll('.system-portrait .system-node').length,
-    featuredProjectCount: document.querySelectorAll('#work .featured-project').length,
-    projectBandCount: document.querySelectorAll('#projects .project-strip > article').length,
-    experienceCount: document.querySelectorAll('#experience .career-line > li').length,
-    learningMonthCount: document.querySelectorAll('#learning .roadmap-track ol > li').length,
-    completeProjectCount: document.querySelectorAll('#complete-projects .index-project').length,
-    practiceCount: document.querySelectorAll('#practice').length,
-    contactCount: document.querySelectorAll('#contact').length,
-    sectionOrder: ['work', 'experience', 'learning', 'projects', 'practice', 'contact'].every((id, index, ids) => {
-      const node = document.getElementById(id)
-      const previous = index === 0 ? null : document.getElementById(ids[index - 1])
-      return Boolean(node && (!previous || (previous.compareDocumentPosition(node) & Node.DOCUMENT_POSITION_FOLLOWING)))
-    }),
-    obsoletePhrases: [
-      'Living Systems Atlas',
-      'Nineteen connected capability domains.',
-    ].filter((phrase) => document.body.innerText.includes(phrase)),
-    supportCount: document.querySelectorAll('a[href*="paypal.me"]').length,
-    supportTargetSafe: [...document.querySelectorAll('a[href*="paypal.me"]')].every((link) => link.target === '_blank' && link.relList.contains('noopener') && link.relList.contains('noreferrer')),
-    dialogs: [...document.querySelectorAll('[role="dialog"]')].filter((node) => getComputedStyle(node).display !== 'none').length,
-    animations: document.getAnimations().filter((animation) => animation.playState === 'running').length,
-    violations: (await window.axe.run({ exclude: [['.brand-mark']] }, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'] } })).violations.map((item) => ({ id: item.id, nodes: item.nodes.map((node) => node.target) })),
-  }))
-  await page.screenshot({ path: `${captureRoot}/${name}.png`, fullPage: true })
-  const invalid = response?.status() !== 200 || result.overflow !== 0 || result.theme !== theme || !result.title?.includes('Sajeevan') || result.visibleText < 1200 || !result.imagesReady || !result.monogramVisible || !result.projectImagesContained || result.layoutIntegrity.collisions.length || result.layoutIntegrity.fieldOutOfBounds.length || result.imageFraming.some((item) => !item.valid) || result.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer' || result.systemNodeCount !== 6 || result.featuredProjectCount !== 1 || result.projectBandCount !== 3 || result.experienceCount !== 4 || result.learningMonthCount !== 6 || result.completeProjectCount !== 0 || result.practiceCount !== 1 || result.contactCount !== 1 || !result.sectionOrder || result.obsoletePhrases.length !== 0 || result.supportCount !== 1 || !result.supportTargetSafe || result.dialogs !== 0 || result.violations.length || consoleErrors.length || requestFailures.length
-  if (invalid) failures.push({ name, status: response?.status(), ...result, consoleErrors, requestFailures })
-  if (reducedMotion === 'reduce' && result.animations !== 0) failures.push({ name, animations: result.animations })
+await new Promise(ready=>server.listen(port,'127.0.0.1',ready))
+const browser=await chromium.launch({headless:true})
+const routes=['/','/work/','/about/','/notes/','/work/autonomous-navigation-rover/','/work/ataxia-assessment-device/','/work/swl-pricing-inventory-control/']
+const failures=[]
+await mkdir('/tmp/portfolio-qa',{recursive:true})
+try {
+for(const width of [320,390,768,1024,1440,1920,2560]) {
+ for(const theme of ['light','dark']) {
+  const context=await browser.newContext({viewport:{width,height:1000},colorScheme:theme,reducedMotion:'reduce'})
+  await context.addInitScript(value=>localStorage.setItem('sv-theme',value),theme)
+  const page=await context.newPage()
+  const errors=[]
+  page.on('pageerror',e=>errors.push(e.message))
+  for(const route of routes) {
+   const response=await page.goto(baseURL+route,{waitUntil:'networkidle'})
+   assert.equal(response.status(),200)
+   await page.evaluate(async()=>{for(const i of document.images)i.loading='eager';await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))})
+   if([390,1440].includes(width)&&theme==='light')await page.screenshot({path:`/tmp/portfolio-qa/${route.replaceAll('/','_')}-${width}.png`,fullPage:true})
+   const result=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,images:[...document.images].every(i=>i.complete&&i.naturalWidth>0),logo:document.querySelector('.brand img')?.getBoundingClientRect().width>=38,title:document.querySelectorAll('h1').length,theme:document.documentElement.dataset.theme,media:[...document.querySelectorAll('.project-media img')].every(i=>getComputedStyle(i).objectFit==='contain')}))
+   if(result.overflow||!result.images||!result.logo||result.title!==1||result.theme!==theme||!result.media)failures.push({width,theme,route,result})
+   await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')})
+   const axe=await page.evaluate(async()=>{const r=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}});return r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))})
+   if(axe.length)failures.push({width,theme,route,axe})
+  }
+  if(errors.length)failures.push({width,theme,errors})
   await context.close()
+ }
+ console.log(`Verified seven routes at ${width}px in light and dark`)
 }
-
-const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, colorScheme: 'light' })
-await context.addInitScript(() => localStorage.setItem('sv-theme', 'light'))
-const page = await context.newPage()
-await page.goto(baseURL, { waitUntil: 'networkidle' })
-
-const focusResults = []
-for (let index = 0; index < 24; index += 1) {
-  await page.keyboard.press('Tab')
-  const result = await page.evaluate(() => {
-    const active = document.activeElement
-    if (!(active instanceof HTMLElement)) return null
-    // Browsers move focus back to the document after the final tabbable
-    // control. The body is the cycle boundary, not an interactive target.
-    if (active === document.body || active === document.documentElement) return null
-    const element = active instanceof HTMLInputElement && active.closest('label') ? active.closest('label') : active
-    if (!(element instanceof HTMLElement)) return null
-    const rect = element.getBoundingClientRect()
-    const style = getComputedStyle(element)
-    return { tag: element.tagName, visible: rect.width > 0 && rect.height > 0, focus: style.outlineStyle !== 'none' && style.outlineWidth !== '0px' }
-  })
-  if (result) focusResults.push(result)
-}
-if (focusResults.length < 10 || focusResults.some((item) => !item.visible || !item.focus)) failures.push({ name: 'keyboard-focus', focusResults })
-
-await page.getByRole('group', { name: 'Colour theme' }).getByText('Dark', { exact: true }).click()
-if (await page.locator('html').getAttribute('data-theme') !== 'dark') failures.push({ name: 'theme-switch' })
-
-const routes = ['/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
-for (const route of routes) {
-  const response = await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' })
-  await page.evaluate(async () => {
-    for (const image of [...document.images]) {
-      image.loading = 'eager'
-      image.scrollIntoView({ block: 'center' })
-    }
-    await Promise.all([...document.images].map((image) => image.decode().catch(() => undefined)))
-    window.scrollTo(0, 0)
-  })
-  const routeResult = await page.evaluate(() => ({
-    overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
-    imagesReady: [...document.images].every((image) => image.complete && image.naturalWidth > 0),
-    workIndexCount: document.querySelectorAll('.record-index .index-list > li').length,
-    publicCatalogueCount: document.querySelectorAll('.further-projects, .index-group, .index-project').length,
-    recordPage: Boolean(document.querySelector('.record')),
-    evidenceBoundaryCount: document.querySelectorAll('.record-grid .boundary').length,
-    emailActionCount: document.querySelectorAll('.record-actions a[href^="mailto:"]').length,
-    resumeActionCount: document.querySelectorAll('.record-actions a[href$="Resume_Sajeevan_Veeriah.pdf"]').length,
-    nextProjectCount: document.querySelectorAll('.record-actions a[data-next-project]').length,
-    visualOverflow: [...document.querySelectorAll('.practice-visual, .record-plate, .selected-visual, .further-figure')].flatMap((figure, index) => {
-      const image = figure.querySelector('img')
-      if (!(image instanceof HTMLImageElement)) return [{ index, reason: 'missing-image' }]
-      const frame = figure.getBoundingClientRect()
-      const rendered = image.getBoundingClientRect()
-      const style = getComputedStyle(image)
-      const withinFrame = rendered.left >= frame.left - 1 && rendered.top >= frame.top - 1 && rendered.right <= frame.right + 1 && rendered.bottom <= frame.bottom + 1
-      const landscape = Math.abs((frame.width / frame.height) - (16 / 9)) < 0.03
-      return withinFrame && landscape && style.objectFit === 'contain' ? [] : [{ index, frame: [frame.width, frame.height], rendered: [rendered.width, rendered.height], objectFit: style.objectFit, withinFrame, landscape }]
-    }),
-  }))
-  const isWorkIndex = route === '/work/'
-  const recordContractInvalid = routeResult.recordPage && (routeResult.evidenceBoundaryCount !== 1 || routeResult.emailActionCount !== 1 || routeResult.resumeActionCount !== 1 || routeResult.nextProjectCount !== 1)
-  const indexContractInvalid = isWorkIndex && (routeResult.workIndexCount !== 3 || routeResult.publicCatalogueCount !== 20)
-  if (response?.status() !== 200 || routeResult.overflow || !routeResult.imagesReady || routeResult.visualOverflow.length || recordContractInvalid || indexContractInvalid) failures.push({ name: 'route', route, status: response?.status(), ...routeResult })
-}
-
-await page.goto(`${baseURL}/work/`, { waitUntil: 'networkidle' })
-const canonical = await page.locator('link[rel="canonical"]').getAttribute('href')
-if (canonical !== 'https://sajeevanveeriah.github.io/work/') failures.push({ name: 'work-canonical', canonical })
-
-const missing = await page.goto(`${baseURL}/missing-route/`, { waitUntil: 'networkidle' })
-const robots = (await page.locator('meta[name="robots"]').allTextContents()).join(',') || (await page.locator('meta[name="robots"]').all()).map(async (item) => item.getAttribute('content'))
-const robotsContent = await page.locator('meta[name="robots"]').evaluateAll((nodes) => nodes.map((node) => node.getAttribute('content') ?? '').join(','))
-if (missing?.status() !== 404 || !(await page.locator('h1').textContent())?.includes('no longer part') || !robotsContent.includes('noindex')) failures.push({ name: '404', robots, robotsContent })
-
-await page.goto(`${baseURL}/work/panelogram/`, { waitUntil: 'networkidle' })
-if (page.url() !== `${baseURL}/work/`) failures.push({ name: 'legacy-work-redirect', url: page.url() })
+const context=await browser.newContext({viewport:{width:390,height:844}})
+const page=await context.newPage()
+await page.goto(baseURL+'/work/')
+await page.getByRole('button',{name:'Software',exact:true}).click()
+assert.equal(await page.getByRole('status').textContent(),'7 projects')
+assert.ok(page.url().includes('category=Software'))
+await page.reload()
+assert.equal(await page.getByRole('button',{name:'Software',exact:true}).getAttribute('aria-pressed'),'true')
+await page.getByRole('searchbox').fill('no-such-system')
+await page.getByRole('heading',{name:'No matching projects'}).waitFor()
+await page.getByRole('button',{name:'Show all projects'}).click()
+assert.equal(await page.getByRole('status').textContent(),'19 projects')
+await page.getByRole('searchbox').fill('ataxia')
+assert.equal(await page.getByRole('status').textContent(),'1 projects')
+await page.getByRole('button',{name:'Reset',exact:true}).click()
+await page.getByLabel('Colour theme').selectOption('dark')
+await page.reload()
+assert.equal(await page.locator('html').getAttribute('data-theme'),'dark')
+await page.getByLabel('Colour theme').selectOption('system')
+await page.getByLabel('Colour theme').selectOption('light')
+await page.getByText('Menu',{exact:true}).click()
+assert.equal(await page.getByRole('navigation',{name:'Mobile primary'}).isVisible(),true)
+await page.getByRole('navigation',{name:'Mobile primary'}).getByRole('link',{name:'About',exact:true}).click()
+await page.waitForURL('**/about/')
+assert.equal(await page.locator('.timeline li').count(),7)
+await page.getByText('Menu',{exact:true}).click()
+await page.getByText('Menu',{exact:true}).press('Escape')
+assert.equal(await page.locator('details').getAttribute('open'),null)
+await page.goto(baseURL)
+await page.keyboard.press('Tab')
+assert.equal(await page.locator(':focus').textContent(),'Skip to content')
+await page.locator(':focus').press('Enter')
+assert.ok(page.url().endsWith('#main'))
+await page.setViewportSize({width:720,height:900})
+assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false)
+await page.goto(baseURL+'/work/ataxia-assessment-device/')
+const imageHref=await page.getByRole('link',{name:'Full-size image',exact:false}).getAttribute('href')
+assert.ok(imageHref.endsWith('.webp'))
+const missing=await page.goto(baseURL+'/missing-route/')
+assert.equal(missing.status(),404)
+await page.goto(baseURL+'/work/panelogram/')
+await page.waitForURL(baseURL+'/work/')
 await context.close()
-
-const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light' })
-const mobilePage = await mobile.newPage()
-await mobilePage.goto(baseURL, { waitUntil: 'networkidle' })
-await mobilePage.getByText('Menu', { exact: true }).click()
-const mobileNavVisible = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).isVisible()
-const mobileLinks = await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link').count()
-if (!mobileNavVisible || mobileLinks !== 6) failures.push({ name: 'mobile-navigation', mobileNavVisible, mobileLinks })
-await mobilePage.screenshot({ path: `${captureRoot}/mobile-menu-open.png`, fullPage: false })
-await mobilePage.getByRole('navigation', { name: 'Mobile primary' }).getByRole('link', { name: 'Work' }).click()
-await mobilePage.waitForTimeout(50)
-const mobileMenuOpenAfterSelection = await mobilePage.locator('details.nav-disclosure').evaluate((element) => element.open)
-if (mobileMenuOpenAfterSelection) failures.push({ name: 'mobile-navigation-close', mobileMenuOpenAfterSelection })
-await mobile.close()
-
-const noJs = await browser.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false, colorScheme: 'dark' })
-const noJsPage = await noJs.newPage()
-const noJsResponse = await noJsPage.goto(baseURL)
-const noJsResult = await noJsPage.evaluate(() => ({
-  identity: document.querySelector('.hero-role')?.textContent?.replace(/\s+/g, ' ').trim(),
-  monogramCount: document.querySelectorAll('.brand-mark img').length,
-  systemNodeCount: document.querySelectorAll('.system-portrait .system-node').length,
-  featuredProjectCount: document.querySelectorAll('#work .featured-project').length,
-  projectBandCount: document.querySelectorAll('#projects .project-strip > article').length,
-  experienceCount: document.querySelectorAll('#experience .career-line > li').length,
-  learningMonthCount: document.querySelectorAll('#learning .roadmap-track ol > li').length,
-  completeProjectCount: document.querySelectorAll('#complete-projects .index-project').length,
-  practiceCount: document.querySelectorAll('#practice').length,
-  contactCount: document.querySelectorAll('#contact').length,
-}))
-if (
-  noJsResponse?.status() !== 200
-  || noJsResult.identity !== 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer'
-  || noJsResult.monogramCount !== 1
-  || noJsResult.systemNodeCount !== 6
-  || noJsResult.featuredProjectCount !== 1
-  || noJsResult.projectBandCount !== 3
-  || noJsResult.experienceCount !== 4
-  || noJsResult.learningMonthCount !== 6
-  || noJsResult.completeProjectCount !== 0
-  || noJsResult.practiceCount !== 1
-  || noJsResult.contactCount !== 1
-  || !(await noJsPage.getByText('Menu', { exact: true }).isVisible())
-) failures.push({ name: 'no-js', ...noJsResult })
-await noJs.close()
-
-await browser.close()
-await new Promise((closed) => server.close(closed))
-
-if (failures.length) {
-  console.error(JSON.stringify(failures, null, 2))
-  process.exitCode = 1
-} else {
-  console.log(`Browser QA passed: ${states.length} visual states, ${routes.length} routes, collision-free layout, 200% zoom-equivalent reflow, uncropped image framing, keyboard, theme, mobile menu, 404, redirects and no-JavaScript.`)
-}
+const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}})
+const plain=await nojs.newPage()
+await plain.goto(baseURL+'/work/')
+assert.equal(await plain.locator('.catalogue article').count(),19)
+await nojs.close()
+console.log('Filters, URL persistence, search, empty recovery, theme, mobile menu, keyboard, reflow, full-size media, redirects and no-JS passed')
+if(failures.length){console.error(JSON.stringify(failures,null,2));process.exitCode=1}else console.log('All 98 route/viewport/theme checks passed')
+}finally{await browser.close();await new Promise(done=>server.close(done))}

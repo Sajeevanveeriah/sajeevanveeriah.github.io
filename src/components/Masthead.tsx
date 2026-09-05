@@ -1,33 +1,9 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { MobileNavigation } from '@/components/MobileNavigation'
-import { ThemeSegment } from '@/components/ThemeSegment'
-import { site } from '@/content/site'
-
-type Section = 'systems' | 'work' | 'experience' | 'learning' | 'practice' | 'contact'
-
-const destinations = [
-  { id: 'work', label: 'Work' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'learning', label: 'Learning' },
-  { id: 'practice', label: 'Practice' },
-  { id: 'contact', label: 'Contact' },
-] as const
-
-function DestinationLinks({ current }: { readonly current?: Section }) {
-  return <>{destinations.map((destination) => {
-    const href = current === 'work' && destination.id === 'work' ? '/work/' : `/#${destination.id}`
-    return <Link key={destination.id} href={href} aria-current={current === destination.id ? 'location' : undefined}>{destination.label}</Link>
-  })}</>
-}
-
-export function Masthead({ current, reduced = false }: { readonly current?: Section; readonly reduced?: boolean }) {
-  return (
-    <header className="site-header"><div className="shell header-inner">
-      <Link className="brand" href="/" aria-label={`${site.name}, home`}><span className="brand-mark" aria-hidden="true"><Image src={site.logo} alt="" width={512} height={512} priority /></span><span className="brand-copy"><span className="brand-name">{site.name}</span><span>Complete systems engineering</span></span></Link>
-      {reduced ? null : <nav className="site-nav" aria-label="Primary"><DestinationLinks current={current} /></nav>}
-      <div className="header-actions"><a className="header-resume" href={site.resume}>Resume</a><ThemeSegment /></div>
-      {reduced ? null : <MobileNavigation current={current} />}
-    </div></header>
-  )
-}
+import Image from 'next/image';
+import Link from 'next/link';
+import { MobileNavigation } from './MobileNavigation';
+import { site } from '@/content/site';
+export const destinations = [{ href: '/work/', label: 'Work' }, { href: '/about/', label: 'About' }, { href: '/notes/', label: 'Notes' }, { href: '/#contact', label: 'Contact' }];
+export function Masthead({ current, reduced = false }: {
+    current?: string;
+    reduced?: boolean;
+}) { return <header className="site-header"><div className="shell header-inner"><Link className="brand" href="/" aria-label="Sajeevan Veeriah, home"><Image src={site.logo} alt="" width={44} height={44} priority/><span>Sajeevan Veeriah</span></Link>{!reduced && <nav className="site-nav" aria-label="Primary">{destinations.map(d => <Link key={d.href} href={d.href} aria-current={current === d.label.toLowerCase() ? 'page' : undefined}>{d.label}</Link>)}</nav>}<a className="header-resume" href={site.resume}>Resume <span aria-hidden="true">↗</span></a>{!reduced && <MobileNavigation />}</div></header>; }
