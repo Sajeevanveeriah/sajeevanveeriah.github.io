@@ -17,9 +17,9 @@ export default function NotFound() {
         <section className="not-found shell" aria-labelledby="not-found-title">
           <span className="not-found-number" aria-hidden="true">404</span>
           <h1 id="not-found-title">This route is no longer part of the portfolio.</h1>
-          <p>The current site keeps the professional identity, systems map and three flagship engineering records in one clear path.</p>
+          <p>Explore the project catalogue or return to the homepage.</p>
           <Link className="button button-primary" href="/">Open the portfolio<ArrowUpRight /></Link>
-        </section>
+        <Link className="text-link" href="/work/">Browse engineering work</Link></section>
       </main>
       <SiteFooter />
     </>

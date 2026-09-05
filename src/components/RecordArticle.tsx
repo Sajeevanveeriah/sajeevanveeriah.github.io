@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import {ProjectMedia} from './ProjectMedia'
 import Link from 'next/link'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
@@ -26,7 +26,7 @@ function Tag({ children }: { readonly children: React.ReactNode }) {
 function EvidenceBoundary({ text }: { readonly text: string }) {
   return (
     <section className="boundary" aria-labelledby="boundary-heading">
-      <h2 id="boundary-heading">Evidence boundary</h2>
+      <h2 id="boundary-heading">Scope and limitations</h2>
       <p>{text}</p>
     </section>
   )
@@ -38,12 +38,12 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
   return (
     <>
       <article className="record shell">
-        <Link className="back-link" href="/#work"><ArrowLeft />Selected work</Link>
+        <Link prefetch={false} className="back-link" href="/work/"><ArrowLeft />Selected work</Link>
         <MetaStrip
           items={[
             { label: 'Record', value: `${pad(position)} of ${pad(total)}` },
             { label: 'Evidence class', value: project.evidence, accent: true },
-            { label: 'Status', value: 'Public evidence-bounded record' },
+            { label: 'Status', value: project.readiness },
           ]}
         />
         <header className="record-header">
@@ -51,10 +51,7 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
           <p>{project.system}</p>
         </header>
         {project.image ? (
-          <figure className="record-plate">
-            <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} priority sizes="100vw" />
-            <figcaption>{project.image.kind}</figcaption>
-          </figure>
+          <ProjectMedia image={project.image} priority/>
         ) : <SystemEvidence eyebrow="Verified system path" title={project.title} steps={project.systemPath} />}
       </article>
       <div className="record-grid shell">
@@ -95,7 +92,7 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
             <a href={`mailto:${site.email}`}>Email Saj <span aria-hidden="true">→</span></a>
             <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
             <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
-            <Link href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
+            <Link prefetch={false} href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>

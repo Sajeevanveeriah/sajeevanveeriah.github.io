@@ -2,10 +2,11 @@ import type { Metadata, Viewport } from 'next'
 import { archivoFont } from './fonts'
 import { site } from '@/content/site'
 import './globals.css'
-import './premium.css'
-import './premium-quality.css'
+
+
 
 export const metadata: Metadata = {
+  other: { 'portfolio-release': process.env.GITHUB_SHA ?? 'local' },
   metadataBase: new URL(site.url),
   title: {
     default: `${site.name} | ${site.jobTitle}`,
@@ -23,13 +24,13 @@ export const metadata: Metadata = {
     description: site.proposition,
     url: site.url,
     images: [{
-      url: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
-      width: 1200,
-      height: 630,
+      url: site.logo,
+      width: 512,
+      height: 512,
       alt: `${site.name}, ${site.jobTitle}`,
     }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary' },
   icons: { icon: '/favicon.png', apple: '/favicon.png' },
 }
 
@@ -60,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark')m='system';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
+              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='light';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
           }}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />

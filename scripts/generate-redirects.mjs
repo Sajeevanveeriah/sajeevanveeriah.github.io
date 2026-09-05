@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 
 const root = resolve('out')
-const hubs = ['about', 'atlas', 'contact', 'ecosystem', 'employers', 'lab', 'practice', 'skills', 'versatility']
+const hubs = ['atlas', 'contact', 'ecosystem', 'employers', 'lab', 'practice', 'skills', 'versatility']
 // Live engineering records are excluded so redirects never overwrite pages.
 const formerWork = [
   'upzy-supervised-routine-companion', 'modular-education-testing-robot',

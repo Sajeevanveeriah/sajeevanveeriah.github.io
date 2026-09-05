@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import {ThemeSegment} from './ThemeSegment'
 import { resumeFiles } from '@/content/resume'
 import { site } from '@/content/site'
 
@@ -7,7 +8,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <Link className="footer-name" href="/">{site.name}</Link>
+          <Link prefetch={false} className="footer-name" href="/">{site.name}</Link>
           <p>{site.jobTitle}</p>
         </div>
         <nav className="footer-links" aria-label="Professional links">
@@ -16,7 +17,7 @@ export function SiteFooter() {
           <a href={resumeFiles.docx} download>Resume DOCX</a>
           <a href={site.support.url} target="_blank" rel="noopener noreferrer">{site.support.label}</a>
         </nav>
-        <p className="copyright">© 2026 {site.name}</p>
+        <ThemeSegment/><p className="copyright">© 2026 {site.name}</p>
       </div>
     </footer>
   )

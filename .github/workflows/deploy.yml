@@ -81,6 +81,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             work/index.html \
+            about/index.html \
+            notes/index.html \
             work/autonomous-navigation-rover/index.html \
             work/ataxia-assessment-device/index.html \
             work/swl-pricing-inventory-control/index.html \
@@ -92,9 +94,9 @@ jobs:
           done
           unzip -t out/assets/Resume_Sajeevan_Veeriah.docx >/dev/null
           unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
-          grep -Fq 'Systems that solve real problems.' out/index.html
+          grep -Fq 'Different systems.' out/index.html
           grep -Fq 'Download resume' out/index.html
-          grep -Fq 'Build the stack. Prove the skill.' out/index.html
+          grep -Fq 'Engineering approach' out/index.html
           echo 'portfolio export verified'
 
       - uses: actions/configure-pages@v5
@@ -130,6 +132,8 @@ jobs:
           routes=(
             "/"
             "/work/"
+            "/about/"
+            "/notes/"
             "/work/autonomous-navigation-rover/"
             "/work/ataxia-assessment-device/"
             "/work/swl-pricing-inventory-control/"
@@ -171,9 +175,10 @@ jobs:
                [ "$pdf_status" = 200 ] && \
                [ "$docx_status" = 200 ] && \
                [ "$monogram_status" = 200 ] && \
-               grep -Fq 'Systems that solve real problems.' /tmp/portfolio-route-home.html && \
+               grep -Fq "$GITHUB_SHA" /tmp/portfolio-route-home.html && \
+               grep -Fq 'Different systems.' /tmp/portfolio-route-home.html && \
                grep -Fq 'Download resume' /tmp/portfolio-route-home.html && \
-               grep -Fq 'Build the stack. Prove the skill.' /tmp/portfolio-route-home.html && \
+               grep -Fq 'Engineering approach' /tmp/portfolio-route-home.html && \
                cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
                cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp && \
                unzip -t /tmp/resume-live.docx >/dev/null; then
