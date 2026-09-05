@@ -196,7 +196,7 @@ try {
   );
   await page.goto(baseURL + "/work/ataxia-assessment-device/");
   const imageHref = await page
-    .getByRole("link", { name: "Full-size image", exact: false })
+    .getByRole("link", { name: "Full-size image ↗", exact: true })
     .getAttribute("href");
   assert.ok(imageHref.endsWith(".webp"));
   const missing = await page.goto(baseURL + "/missing-route/");
