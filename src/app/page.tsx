@@ -1,7 +1,187 @@
-import Link from 'next/link';
-import { Masthead } from '@/components/Masthead';
-import { SiteFooter } from '@/components/SiteFooter';
-import { ProjectMedia } from '@/components/ProjectMedia';
-import { projects } from '@/content/projects';
-import { site, experience, foundation, humanNote, workingStyle } from '@/content/site';
-export default function Home() { return <><Masthead /><main id="main"><section className="shell hero"><div><h1>Sajeevan<br />Veeriah<span className="accent">.</span></h1><p className="hero-role">{site.jobTitle}</p><p className="hero-summary">I connect hardware, controls and software to build working systems - and test how they behave together.</p><div className="actions"><Link className="button" href="#work">Explore my work <span aria-hidden="true">↗</span></Link><a className="text-link" href={site.resume} download>Download resume ↓</a></div><p className="quiet">Geelong, Australia · Member, Engineers Australia</p></div><div className="hero-evidence"><ProjectMedia image={projects[2].image!} priority/><p><strong>From requirements to a working tool.</strong><br />Pricing and inventory software for Stan Wootton Locksmiths.</p><Link href="/work/swl-pricing-inventory-control/">Explore the software case study →</Link></div></section><section className="shell section" id="work"><div className="section-heading"><div><p className="kicker">Selected work</p><h2>Different systems.<br />The same engineering care.</h2></div><Link className="text-link" href="/work/">All engineering projects ↗</Link></div><div className="selected-projects">{projects.map((p, i) => <article key={p.slug} className={i === 0 ? 'project-feature' : 'project-secondary'}><ProjectMedia image={p.image!}/><div className="project-copy"><p className="kicker">{['Robotics and autonomy', 'Embedded mechatronics', 'Engineering software'][i]}</p><h3><Link href={`/work/${p.slug}/`}>{p.title} <span aria-hidden="true">↗</span></Link></h3><p>{p.proof}</p><p className="quiet">{p.evidence}</p></div></article>)}</div></section><section className="approach-band" id="practice"><div className="shell section"><div className="section-heading"><div><p className="kicker">Engineering approach</p><h2>The interfaces matter.</h2></div><p>{workingStyle}</p></div><div className="approach-grid">{[['Physical systems', 'Mechanisms, sensing and embedded acquisition.', 'ataxia-assessment-device'], ['Control and autonomy', 'Estimation, planning and motion working together.', 'autonomous-navigation-rover'], ['Software and verification', 'Clear operating rules, repeatable checks and traceable outputs.', 'swl-pricing-inventory-control']].map(([title, detail, slug], i) => <div key={title}><span className="number">0{i + 1}</span><h3>{title}</h3><p>{detail}</p><Link href={`/work/${slug}/`}>See the engineering →</Link></div>)}</div></div></section><section className="shell section" id="experience"><div className="section-heading"><div><p className="kicker">Professional experience</p><h2>Built on practical work.</h2></div><Link href="/about/#experience">Complete career timeline ↗</Link></div><div className="experience-summary">{experience.slice(0, 4).map(e => <div key={e.role}><p className="quiet">{e.period}</p><h3>{e.role}</h3><p>{e.context}</p></div>)}</div></section><section className="shell section about-preview"><div><p className="kicker">About Saj</p><h2>Engineering is personal.</h2><p>{humanNote}</p><Link href="/about/">More about me →</Link></div><div>{foundation.education.map(e => <p key={e}>{e}</p>)}<p>Member, Engineers Australia</p><Link id="learning" href="/notes/">Learning roadmap and notes →</Link></div></section><section className="contact-band" id="contact"><div className="shell section"><p className="kicker">Contact</p><h2>Have a system<br />to work through?</h2><a className="contact-email" href={`mailto:${site.email}`}>{site.email} ↗</a><p>{site.location}</p></div></section></main><SiteFooter /></>; }
+import Link from "next/link";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
+import { ProjectMedia } from "@/components/ProjectMedia";
+import { projects } from "@/content/projects";
+import {
+  site,
+  experience,
+  foundation,
+  humanNote,
+  workingStyle,
+} from "@/content/site";
+export default function Home() {
+  return (
+    <>
+      <Masthead />
+      <main id="main">
+        <section className="shell hero">
+          <div>
+            <h1>
+              Sajeevan
+              <br />
+              Veeriah<span className="accent">.</span>
+            </h1>
+            <p className="hero-role">{site.jobTitle}</p>
+            <p className="hero-summary">
+              I connect hardware, controls and software to build working systems
+              - and test how they behave together.
+            </p>
+            <div className="actions">
+              <Link className="button" href="#work">
+                Explore my work <span aria-hidden="true">↗</span>
+              </Link>
+              <a className="text-link" href={site.resume} download>
+                Download resume ↓
+              </a>
+            </div>
+            <p className="quiet">
+              Geelong, Australia · Member, Engineers Australia
+            </p>
+          </div>
+          <div className="hero-evidence">
+            <ProjectMedia image={projects[2].image!} priority />
+            <p>
+              <strong>From requirements to a working tool.</strong>
+              <br />
+              Pricing and inventory software for Stan Wootton Locksmiths.
+            </p>
+            <Link href="/work/swl-pricing-inventory-control/">
+              Explore the software case study →
+            </Link>
+          </div>
+        </section>
+        <section className="shell section" id="work">
+          <div className="section-heading">
+            <div>
+              <p className="kicker">Selected work</p>
+              <h2>
+                Different systems.
+                <br />
+                The same engineering care.
+              </h2>
+            </div>
+            <Link className="text-link" href="/work/">
+              All engineering projects ↗
+            </Link>
+          </div>
+          <div className="selected-projects">
+            {projects.map((p, i) => (
+              <article
+                key={p.slug}
+                className={i === 0 ? "project-feature" : "project-secondary"}
+              >
+                <ProjectMedia image={p.image!} />
+                <div className="project-copy">
+                  <p className="kicker">
+                    {
+                      [
+                        "Robotics and autonomy",
+                        "Embedded mechatronics",
+                        "Engineering software",
+                      ][i]
+                    }
+                  </p>
+                  <h3>
+                    <Link href={`/work/${p.slug}/`}>
+                      {p.title} <span aria-hidden="true">↗</span>
+                    </Link>
+                  </h3>
+                  <p>{p.proof}</p>
+                  <p className="quiet">{p.evidence}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="approach-band" id="practice">
+          <div className="shell section">
+            <div className="section-heading">
+              <div>
+                <p className="kicker">Engineering approach</p>
+                <h2>The interfaces matter.</h2>
+              </div>
+              <p>{workingStyle}</p>
+            </div>
+            <div className="approach-grid">
+              {[
+                [
+                  "Physical systems",
+                  "Mechanisms, sensing and embedded acquisition.",
+                  "ataxia-assessment-device",
+                ],
+                [
+                  "Control and autonomy",
+                  "Estimation, planning and motion working together.",
+                  "autonomous-navigation-rover",
+                ],
+                [
+                  "Software and verification",
+                  "Clear operating rules, repeatable checks and traceable outputs.",
+                  "swl-pricing-inventory-control",
+                ],
+              ].map(([title, detail, slug], i) => (
+                <div key={title}>
+                  <span className="number">0{i + 1}</span>
+                  <h3>{title}</h3>
+                  <p>{detail}</p>
+                  <Link href={`/work/${slug}/`}>See the engineering →</Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="shell section" id="experience">
+          <div className="section-heading">
+            <div>
+              <p className="kicker">Professional experience</p>
+              <h2>Built on practical work.</h2>
+            </div>
+            <Link href="/about/#experience">Complete career timeline ↗</Link>
+          </div>
+          <div className="experience-summary">
+            {experience.slice(0, 4).map((e) => (
+              <div key={e.role}>
+                <p className="quiet">{e.period}</p>
+                <h3>{e.role}</h3>
+                <p>{e.context}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="shell section about-preview">
+          <div>
+            <p className="kicker">About Saj</p>
+            <h2>Engineering is personal.</h2>
+            <p>{humanNote}</p>
+            <Link href="/about/">More about me →</Link>
+          </div>
+          <div>
+            {foundation.education.map((e) => (
+              <p key={e}>{e}</p>
+            ))}
+            <p>Member, Engineers Australia</p>
+            <Link id="learning" href="/notes/">
+              Learning roadmap and notes →
+            </Link>
+          </div>
+        </section>
+        <section className="contact-band" id="contact">
+          <div className="shell section">
+            <p className="kicker">Contact</p>
+            <h2>
+              Have a system
+              <br />
+              to work through?
+            </h2>
+            <a className="contact-email" href={`mailto:${site.email}`}>
+              {site.email} ↗
+            </a>
+            <p>{site.location}</p>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
