@@ -28,7 +28,7 @@ export default function Home() {
               - and test how they behave together.
             </p>
             <div className="actions">
-              <Link className="button" href="#work">
+              <Link prefetch={false} className="button" href="#work">
                 Explore my work <span aria-hidden="true">↗</span>
               </Link>
               <a className="text-link" href={site.resume} download>
@@ -46,7 +46,7 @@ export default function Home() {
               <br />
               Pricing and inventory software for Stan Wootton Locksmiths.
             </p>
-            <Link href="/work/swl-pricing-inventory-control/">
+            <Link prefetch={false} href="/work/swl-pricing-inventory-control/">
               Explore the software case study →
             </Link>
           </div>
@@ -61,7 +61,7 @@ export default function Home() {
                 The same engineering care.
               </h2>
             </div>
-            <Link className="text-link" href="/work/">
+            <Link prefetch={false} className="text-link" href="/work/">
               All engineering projects ↗
             </Link>
           </div>
@@ -83,7 +83,7 @@ export default function Home() {
                     }
                   </p>
                   <h3>
-                    <Link href={`/work/${p.slug}/`}>
+                    <Link prefetch={false} href={`/work/${p.slug}/`}>
                       {p.title} <span aria-hidden="true">↗</span>
                     </Link>
                   </h3>
@@ -125,7 +125,7 @@ export default function Home() {
                   <span className="number">0{i + 1}</span>
                   <h3>{title}</h3>
                   <p>{detail}</p>
-                  <Link href={`/work/${slug}/`}>See the engineering →</Link>
+                  <Link prefetch={false} href={`/work/${slug}/`}>See the engineering →</Link>
                 </div>
               ))}
             </div>
@@ -137,7 +137,7 @@ export default function Home() {
               <p className="kicker">Professional experience</p>
               <h2>Built on practical work.</h2>
             </div>
-            <Link href="/about/#experience">Complete career timeline ↗</Link>
+            <Link prefetch={false} href="/about/#experience">Complete career timeline ↗</Link>
           </div>
           <div className="experience-summary">
             {experience.slice(0, 4).map((e) => (
@@ -154,14 +154,14 @@ export default function Home() {
             <p className="kicker">About Saj</p>
             <h2>Engineering is personal.</h2>
             <p>{humanNote}</p>
-            <Link href="/about/">More about me →</Link>
+            <Link prefetch={false} href="/about/">More about me →</Link>
           </div>
           <div>
             {foundation.education.map((e) => (
               <p key={e}>{e}</p>
             ))}
             <p>Member, Engineers Australia</p>
-            <Link id="learning" href="/notes/">
+            <Link prefetch={false} id="learning" href="/notes/">
               Learning roadmap and notes →
             </Link>
           </div>

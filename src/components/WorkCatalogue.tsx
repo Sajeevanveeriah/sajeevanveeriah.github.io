@@ -85,7 +85,7 @@ export function WorkCatalogue() {
               <p className="kicker">{p.category}</p>
               <h2>
                 {p.slug ? (
-                  <Link href={`/work/${p.slug}/`}>{p.title} ↗</Link>
+                  <Link prefetch={false} href={`/work/${p.slug}/`}>{p.title} ↗</Link>
                 ) : (
                   p.title
                 )}
@@ -93,7 +93,7 @@ export function WorkCatalogue() {
               <p>{p.summary}</p>
               <p className="quiet">{p.evidence}</p>
               {p.slug && (
-                <Link href={`/work/${p.slug}/`}>Read case study →</Link>
+                <Link prefetch={false} href={`/work/${p.slug}/`}>Read case study →</Link>
               )}
             </div>
             {p.image && <ProjectMedia image={p.image} />}

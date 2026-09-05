@@ -24,7 +24,7 @@ export function MobileNavigation() {
             ["/#contact", "Contact"],
           ] as const
         ).map(([href, label]) => (
-          <Link
+          <Link prefetch={false}
             key={href}
             href={href}
             onClick={() => {

@@ -3,6 +3,7 @@ import lighthouse from 'lighthouse'
 import { launch } from 'chrome-launcher'
 import { chromium } from 'playwright'
 import { createServer } from 'node:http'
+import { gzipSync } from 'node:zlib'
 import { readFile, stat } from 'node:fs/promises'
 import { extname, join } from 'node:path'
 
@@ -12,8 +13,10 @@ const server = createServer(async (request, response) => {
   try {
     let file = join(root, decodeURIComponent((request.url ?? '/').split('?')[0]))
     try { if ((await stat(file)).isDirectory()) file = join(file, 'index.html') } catch { file = join(root, '404.html') }
-    response.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream' })
-    response.end(await readFile(file))
+    const bytes = await readFile(file)
+    const compress = /gzip/.test(request.headers['accept-encoding'] ?? '') && ['.html','.js','.css','.svg','.txt','.xml'].includes(extname(file))
+    response.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream', ...(compress ? {'content-encoding':'gzip','vary':'Accept-Encoding'} : {}) })
+    response.end(compress ? gzipSync(bytes) : bytes)
   } catch { response.writeHead(404).end('not found') }
 })
 await new Promise((ready) => server.listen(0, ready))
@@ -43,6 +46,7 @@ for (const route of routes) {
   if (!result) throw new Error(`Lighthouse did not return a result for ${route}`)
   const row = Object.fromEntries(Object.keys(minimum).map((key) => [key, Math.round((result.lhr.categories[key].score ?? 0) * 100)]))
   scores.push({ route, ...row })
+  console.log(JSON.stringify({route,metrics:Object.fromEntries(['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index'].map(k=>[k,result.lhr.audits[k]?.displayValue])),opportunities:Object.entries(result.lhr.audits).filter(([,a])=>a.score!==null&&a.score<0.9&&a.details?.type==='opportunity').map(([id,a])=>({id,value:a.displayValue}))}))
   console.log(route.padEnd(46) + String(row.performance).padStart(4) + String(row.accessibility).padStart(6) + String(row['best-practices']).padStart(6) + String(row.seo).padStart(5))
 }
 

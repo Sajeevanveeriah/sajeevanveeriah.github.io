@@ -38,7 +38,7 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
   return (
     <>
       <article className="record shell">
-        <Link className="back-link" href="/work/"><ArrowLeft />Selected work</Link>
+        <Link prefetch={false} className="back-link" href="/work/"><ArrowLeft />Selected work</Link>
         <MetaStrip
           items={[
             { label: 'Record', value: `${pad(position)} of ${pad(total)}` },
@@ -92,7 +92,7 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
             <a href={`mailto:${site.email}`}>Email Saj <span aria-hidden="true">→</span></a>
             <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
             <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
-            <Link href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
+            <Link prefetch={false} href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
       </section>

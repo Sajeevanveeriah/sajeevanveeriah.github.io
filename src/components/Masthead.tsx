@@ -18,14 +18,14 @@ export function Masthead({
   return (
     <header className="site-header">
       <div className="shell header-inner">
-        <Link className="brand" href="/" aria-label="Sajeevan Veeriah, home">
+        <Link prefetch={false} className="brand" href="/" aria-label="Sajeevan Veeriah, home">
           <Image src={site.logo} alt="" width={44} height={44} priority />
           <span>Sajeevan Veeriah</span>
         </Link>
         {!reduced && (
           <nav className="site-nav" aria-label="Primary">
             {destinations.map((d) => (
-              <Link
+              <Link prefetch={false}
                 key={d.href}
                 href={d.href}
                 aria-current={

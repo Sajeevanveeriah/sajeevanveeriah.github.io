@@ -8,7 +8,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="shell footer-grid">
         <div>
-          <Link className="footer-name" href="/">{site.name}</Link>
+          <Link prefetch={false} className="footer-name" href="/">{site.name}</Link>
           <p>{site.jobTitle}</p>
         </div>
         <nav className="footer-links" aria-label="Professional links">
