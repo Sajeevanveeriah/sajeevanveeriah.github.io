@@ -38,7 +38,7 @@ for (const route of routes) {
     onlyCategories: Object.keys(minimum),
     formFactor: 'mobile',
     screenEmulation: { mobile: true, width: 390, height: 844, deviceScaleFactor: 1, disabled: false },
-    throttling: { rttMs: 40, throughputKbps: 10240, cpuSlowdownMultiplier: 1 },
+    throttling: { rttMs: 150, throughputKbps: 1638.4, cpuSlowdownMultiplier: 4 },
   })
   if (!result) throw new Error(`Lighthouse did not return a result for ${route}`)
   const row = Object.fromEntries(Object.keys(minimum).map((key) => [key, Math.round((result.lhr.categories[key].score ?? 0) * 100)]))

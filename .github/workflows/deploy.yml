@@ -132,6 +132,8 @@ jobs:
           routes=(
             "/"
             "/work/"
+            "/about/"
+            "/notes/"
             "/work/autonomous-navigation-rover/"
             "/work/ataxia-assessment-device/"
             "/work/swl-pricing-inventory-control/"
@@ -173,6 +175,7 @@ jobs:
                [ "$pdf_status" = 200 ] && \
                [ "$docx_status" = 200 ] && \
                [ "$monogram_status" = 200 ] && \
+               grep -Fq "$GITHUB_SHA" /tmp/portfolio-route-home.html && \
                grep -Fq 'Different systems.' /tmp/portfolio-route-home.html && \
                grep -Fq 'Download resume' /tmp/portfolio-route-home.html && \
                grep -Fq 'Engineering approach' /tmp/portfolio-route-home.html && \

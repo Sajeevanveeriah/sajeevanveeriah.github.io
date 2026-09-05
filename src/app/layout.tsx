@@ -6,6 +6,7 @@ import './globals.css'
 
 
 export const metadata: Metadata = {
+  other: { 'portfolio-release': process.env.GITHUB_SHA ?? 'local' },
   metadataBase: new URL(site.url),
   title: {
     default: `${site.name} | ${site.jobTitle}`,

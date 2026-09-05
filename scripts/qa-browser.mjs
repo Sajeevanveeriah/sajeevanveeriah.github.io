@@ -26,6 +26,13 @@ const server = createServer(async (request, response) => {
     let pathname = decodeURIComponent(
       new URL(request.url ?? "/", baseURL).pathname,
     );
+    if (!pathname.endsWith("/") && !extname(pathname)) {
+      const info = await stat(join(root, pathname)).catch(() => null);
+      if (info?.isDirectory()) {
+        response.writeHead(301, { location: pathname + "/" });
+        response.end(); return;
+      }
+    }
     if (pathname.endsWith("/")) pathname += "index.html";
     const candidate = normalize(join(root, pathname));
     if (!candidate.startsWith(root) || !(await stat(candidate)).isFile())
@@ -170,6 +177,7 @@ try {
     .getByRole("link", { name: "About", exact: true })
     .click();
   await page.waitForURL(url => /^\/about\/?$/.test(url.pathname));
+  await page.getByRole("heading", {name:"Career timeline",exact:true}).waitFor();
   assert.equal(await page.locator(".timeline li").count(), 7);
   await page.getByText("Menu", { exact: true }).click();
   await page.getByText("Menu", { exact: true }).press("Escape");
