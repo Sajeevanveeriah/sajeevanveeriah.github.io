@@ -166,6 +166,32 @@ export default function Home() {
             </Link>
           </div>
         </section>
+        <section
+          className="shell section"
+          id="services"
+          aria-labelledby="services-heading"
+        >
+          <div className="section-heading">
+            <div>
+              <p className="kicker">Service requests</p>
+              <h2 id="services-heading">
+                Need a hand with
+                <br />
+                something technical?
+              </h2>
+            </div>
+            <p>
+              Have a technical problem to solve or a project in mind? Send me
+              the details through my service desk.
+            </p>
+          </div>
+          <a
+            className="button"
+            href="https://sajeevanveeriah.github.io/saj-service-desk/request/"
+          >
+            Request a service <span aria-hidden="true">↗</span>
+          </a>
+        </section>
         <section className="contact-band" id="contact">
           <div className="shell section">
             <p className="kicker">Contact</p>

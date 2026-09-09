@@ -21,6 +21,7 @@ export function MobileNavigation() {
             ["/work/", "Work"],
             ["/about/", "About"],
             ["/notes/", "Notes"],
+            ["/#services", "Services"],
             ["/#contact", "Contact"],
           ] as const
         ).map(([href, label]) => (

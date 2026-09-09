@@ -6,6 +6,7 @@ export const destinations = [
   { href: "/work/", label: "Work" },
   { href: "/about/", label: "About" },
   { href: "/notes/", label: "Notes" },
+  { href: "/#services", label: "Services" },
   { href: "/#contact", label: "Contact" },
 ];
 export function Masthead({

@@ -58,6 +58,7 @@ const routes = [
   "/work/ataxia-assessment-device/",
   "/work/swl-pricing-inventory-control/",
 ];
+const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 const failures = [];
 await mkdir("/tmp/portfolio-qa", { recursive: true });
 try {
@@ -93,6 +94,23 @@ try {
           });
         if(theme === "light" && ((route === "/" && [390,1440].includes(width)) || (width === 1440 && ["/work/","/work/ataxia-assessment-device/"].includes(route)))) {
           console.log("VISUAL_PREVIEW " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:65,fullPage:false})).toString("base64")}));
+        }
+        if (route === "/") {
+          const services = page.getByRole("region", {
+            name: "Need a hand with something technical?",
+          });
+          assert.equal(await services.count(), 1);
+          const requestLink = services.getByRole("link", {
+            name: "Request a service", exact: true,
+          });
+          assert.equal(await requestLink.getAttribute("href"), serviceRequestURL);
+          const bounds = await requestLink.boundingBox();
+          assert.ok(bounds && bounds.width >= 44 && bounds.height >= 44);
+          if ([390, 1440].includes(width)) {
+            await services.screenshot({
+              path: `/tmp/portfolio-qa/services-${width}-${theme}.png`,
+            });
+          }
         }
         const result = await page.evaluate(() => ({
           overflow: document.documentElement.scrollWidth > innerWidth,
@@ -144,6 +162,51 @@ try {
     viewport: { width: 390, height: 844 },
   });
   const page = await context.newPage();
+  await page.goto(baseURL + "/about/");
+  await page.getByText("Menu", { exact: true }).click();
+  await page.getByRole("navigation", { name: "Mobile primary" })
+    .getByRole("link", { name: "Services", exact: true }).click();
+  await page.waitForURL(baseURL + "/#services");
+  assert.equal(await page.locator(".nav-disclosure").getAttribute("open"), null);
+  const requestLink = page.getByRole("link", { name: "Request a service", exact: true });
+  await page.keyboard.press("Tab");
+  await requestLink.focus();
+  assert.equal(await requestLink.evaluate((el) => el === document.activeElement), true);
+  assert.notEqual(await requestLink.evaluate((el) => getComputedStyle(el).outlineStyle), "none");
+  let destinationRequested = false;
+  await page.route(serviceRequestURL, async (route) => {
+    destinationRequested = route.request().isNavigationRequest();
+    await route.fulfill({
+      contentType: "text/html",
+      body: "<!doctype html><html lang='en'><title>Navigation test</title><h1>Service request destination</h1></html>",
+    });
+  });
+  await Promise.all([
+    page.waitForURL(serviceRequestURL),
+    requestLink.press("Enter"),
+  ]);
+  assert.equal(destinationRequested, true);
+  await page.goBack({ waitUntil: "networkidle" });
+  assert.equal(await page.locator("#services").count(), 1);
+  await page.unroute(serviceRequestURL);
+  const destination = await page.goto(serviceRequestURL, {
+    waitUntil: "networkidle", timeout: 45000,
+  });
+  assert.equal(destination.status(), 200);
+  assert.equal(page.url(), serviceRequestURL);
+  await page.locator("#request-form").waitFor();
+  assert.ok((await page.title()).includes("Saj Service Desk"));
+  console.log("Live service request destination: HTTP 200, exact URL and request form verified; no request submitted");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(baseURL + "/work/");
+  await page.getByRole("navigation", { name: "Primary" })
+    .getByRole("link", { name: "Services", exact: true }).click();
+  await page.waitForURL(baseURL + "/#services");
+  assert.equal(await requestLink.isVisible(), true);
+  await page.setViewportSize({ width: 720, height: 500 });
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  await page.setViewportSize({ width: 390, height: 844 });
+  console.log("Service section, desktop/mobile navigation, keyboard destination request, back navigation and reflow passed");
   await page.goto(baseURL + "/work/");
   await page.getByRole("button", { name: "Software", exact: true }).click();
   assert.equal(await page.getByRole("status").textContent(), "7 projects");
@@ -209,6 +272,8 @@ try {
     viewport: { width: 390, height: 844 },
   });
   const plain = await nojs.newPage();
+  await plain.goto(baseURL + "/");
+  assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
   assert.equal(await plain.locator(".catalogue article").count(), 19);
   await nojs.close();
