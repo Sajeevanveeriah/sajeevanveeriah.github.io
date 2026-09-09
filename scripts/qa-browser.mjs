@@ -189,14 +189,17 @@ try {
   await page.goBack({ waitUntil: "networkidle" });
   assert.equal(await page.locator("#services").count(), 1);
   await page.unroute(serviceRequestURL);
-  const destination = await page.goto(serviceRequestURL, {
-    waitUntil: "networkidle", timeout: 45000,
-  });
-  assert.equal(destination.status(), 200);
-  assert.equal(page.url(), serviceRequestURL);
-  await page.locator("#request-form").waitFor();
-  assert.ok((await page.title()).includes("Saj Service Desk"));
-  console.log("Live service request destination: HTTP 200, exact URL and request form verified; no request submitted");
+  // Explicit integration check; normal portfolio QA must not depend on another deployment.
+  if (process.env.VERIFY_LIVE_SERVICE_DESK === "1") {
+    const destination = await page.goto(serviceRequestURL, {
+      waitUntil: "networkidle", timeout: 45000,
+    });
+    assert.equal(destination.status(), 200);
+    assert.equal(page.url(), serviceRequestURL);
+    await page.locator("#request-form").waitFor();
+    assert.ok((await page.title()).includes("Saj Service Desk"));
+    console.log("Live service request destination: HTTP 200, exact URL and request form verified; no request submitted");
+  }
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL + "/work/");
   await page.getByRole("navigation", { name: "Primary" })
