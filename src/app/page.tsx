@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { publishedPosts, formatPostDate } from "@/content/blog";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ProjectMedia } from "@/components/ProjectMedia";
@@ -191,6 +192,18 @@ export default function Home() {
           >
             Request a service <span aria-hidden="true">↗</span>
           </a>
+        </section>
+        <section className="shell section" id="blog" aria-labelledby="blog-heading">
+          <div className="section-heading">
+            <div><h2 id="blog-heading">From the blog</h2><p>Things I am learning, working through and thinking about.</p></div>
+            <Link prefetch={false} className="text-link" href="/blog/">All posts</Link>
+          </div>
+          <div className="blog-list">
+            {publishedPosts().slice(0, 3).map((post) => <article key={post.slug}>
+              <time className="quiet" dateTime={post.date}>{formatPostDate(post.date)}</time>
+              <div><h3><Link prefetch={false} href={`/blog/${post.slug}/`}>{post.title}</Link></h3><p>{post.description}</p></div>
+            </article>)}
+          </div>
         </section>
         <section className="contact-band" id="contact">
           <div className="shell section">
