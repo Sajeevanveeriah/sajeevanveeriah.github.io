@@ -63,7 +63,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
               </table>}
               {section.after?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {section.steps && <ol className="blog-routine">{section.steps.map(([label, detail]) => <li key={label}><strong>{label}</strong><span>{detail}</span></li>)}</ol>}
-              {section.sources && <p className="blog-citations">Sources: {section.sources.map((number) => <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${post.sources[number - 1].label}`}>[{number}]</a>)}</p>}
+              {section.sources && <p className="blog-citations">Sources: {section.sources.map((number) => { const source = post.sources[number - 1]; return source ? <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${source.label}`}>[{number}]</a> : null; })}</p>}
             </section>)}
             <section className="blog-sources" aria-labelledby="sources-heading">
               <h2 id="sources-heading">Sources and further reading</h2>

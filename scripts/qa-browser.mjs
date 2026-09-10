@@ -99,13 +99,13 @@ try {
         }
         if (route.startsWith("/blog/")) {
           assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io" + route);
-          assert.equal(await page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Blog", exact: true }).getAttribute("aria-current"), "page");
+          assert.equal(await page.locator('.site-nav a[href="/blog/"]').getAttribute("aria-current"), "page");
           if (route === "/blog/ai-without-the-jargon/") {
             assert.equal(await page.locator(".blog-body table").count(), 2);
             assert.equal(await page.locator(".blog-routine li").count(), 4);
             assert.equal(await page.locator(".blog-sources li").count(), 4);
             assert.equal(await page.locator('meta[property="og:type"]').getAttribute("content"), "article");
-            assert.equal(await page.locator(".blog-body").evaluate(el => /[\\u2013\\u2014]/.test(el.textContent)), false);
+            assert.equal(await page.locator(".blog-body").evaluate(el => /[\u2013\u2014]/.test(el.textContent)), false);
             const validAnchors = await page.locator('a[href^="#"]').evaluateAll(links => links.every(link => document.getElementById(link.getAttribute("href").slice(1))));
             assert.equal(validAnchors, true);
           }
