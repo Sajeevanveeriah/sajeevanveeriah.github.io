@@ -77,6 +77,8 @@ jobs:
             robots.txt \
             sitemap.xml \
             favicon.png \
+            blog/index.html \
+            blog/ai-without-the-jargon/index.html \
             work/index.html \
             work/autonomous-navigation-rover/index.html \
             work/ataxia-assessment-device/index.html \

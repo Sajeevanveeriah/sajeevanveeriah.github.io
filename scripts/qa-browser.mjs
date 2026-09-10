@@ -54,6 +54,8 @@ const routes = [
   "/work/",
   "/about/",
   "/notes/",
+  "/blog/",
+  "/blog/ai-without-the-jargon/",
   "/work/autonomous-navigation-rover/",
   "/work/ataxia-assessment-device/",
   "/work/swl-pricing-inventory-control/",
@@ -94,6 +96,22 @@ try {
           });
         if(theme === "light" && ((route === "/" && [390,1440].includes(width)) || (width === 1440 && ["/work/","/work/ataxia-assessment-device/"].includes(route)))) {
           console.log("VISUAL_PREVIEW " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:65,fullPage:false})).toString("base64")}));
+        }
+        if (route.startsWith("/blog/")) {
+          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io" + route);
+          assert.equal(await page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Blog", exact: true }).getAttribute("aria-current"), "page");
+          if (route === "/blog/ai-without-the-jargon/") {
+            assert.equal(await page.locator(".blog-body table").count(), 2);
+            assert.equal(await page.locator(".blog-routine li").count(), 4);
+            assert.equal(await page.locator(".blog-sources li").count(), 4);
+            assert.equal(await page.locator('meta[property="og:type"]').getAttribute("content"), "article");
+            assert.equal(await page.locator(".blog-body").evaluate(el => /[\\u2013\\u2014]/.test(el.textContent)), false);
+            const validAnchors = await page.locator('a[href^="#"]').evaluateAll(links => links.every(link => document.getElementById(link.getAttribute("href").slice(1))));
+            assert.equal(validAnchors, true);
+          }
+          if ([390, 1440].includes(width) && theme === "light") {
+            console.log("BLOG_VISUAL " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:70,fullPage:false})).toString("base64")}));
+          }
         }
         if (route === "/") {
           const services = page.getByRole("region", {
@@ -155,13 +173,29 @@ try {
       if (errors.length) failures.push({ width, theme, errors });
       await context.close();
     }
-    console.log(`Verified seven routes at ${width}px in light and dark`);
+    console.log(`Verified nine routes at ${width}px in light and dark`);
   }
   if(failures.length) throw new Error(JSON.stringify(failures));
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
   });
   const page = await context.newPage();
+  await page.goto(baseURL + "/");
+  await page.getByText("Menu", { exact: true }).click();
+  await page.getByRole("navigation", { name: "Mobile primary" }).getByRole("link", { name: "Blog", exact: true }).click();
+  await page.waitForURL(baseURL + "/blog/");
+  await page.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
+  await page.waitForURL(baseURL + "/blog/ai-without-the-jargon/");
+  await page.getByRole("navigation", { name: "In this article" }).getByRole("link", { name: "Privacy settings: four different questions" }).press("Enter");
+  assert.ok(page.url().endsWith("#privacy-settings"));
+  await page.getByRole("link", { name: "Back to all posts", exact: true }).click();
+  await page.waitForURL(baseURL + "/blog/");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(baseURL + "/");
+  await page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Blog", exact: true }).press("Enter");
+  await page.waitForURL(baseURL + "/blog/");
+  await page.setViewportSize({ width: 390, height: 844 });
+  console.log("Blog desktop/mobile navigation, article, keyboard contents and return path passed");
   await page.goto(baseURL + "/about/");
   await page.getByText("Menu", { exact: true }).click();
   await page.getByRole("navigation", { name: "Mobile primary" })
@@ -279,6 +313,11 @@ try {
   assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
   assert.equal(await plain.locator(".catalogue article").count(), 19);
+  await plain.goto(baseURL + "/blog/");
+  await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
+  assert.equal(await plain.locator(".blog-routine li").count(), 4);
+  assert.equal(await plain.locator(".blog-body table").count(), 2);
+  assert.ok((await readFile(join(root, "sitemap.xml"), "utf8")).includes("/blog/ai-without-the-jargon/"));
   await nojs.close();
   console.log(
     "Filters, URL persistence, search, empty recovery, theme, mobile menu, keyboard, reflow, full-size media, redirects and no-JS passed",
@@ -286,7 +325,7 @@ try {
   if (failures.length) {
     console.error(JSON.stringify(failures, null, 2));
     process.exitCode = 1;
-  } else console.log("All 98 route/viewport/theme checks passed");
+  } else console.log("All 126 route/viewport/theme checks passed");
 } finally {
   await browser.close();
   await new Promise((done) => server.close(done));

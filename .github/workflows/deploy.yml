@@ -80,6 +80,8 @@ jobs:
             robots.txt \
             sitemap.xml \
             favicon.png \
+            blog/index.html \
+            blog/ai-without-the-jargon/index.html \
             work/index.html \
             about/index.html \
             notes/index.html \
@@ -134,6 +136,8 @@ jobs:
             "/work/"
             "/about/"
             "/notes/"
+            "/blog/"
+            "/blog/ai-without-the-jargon/"
             "/work/autonomous-navigation-rover/"
             "/work/ataxia-assessment-device/"
             "/work/swl-pricing-inventory-control/"

@@ -21,6 +21,7 @@ export function MobileNavigation() {
             ["/work/", "Work"],
             ["/about/", "About"],
             ["/notes/", "Notes"],
+            ["/blog/", "Blog"],
             ["/#services", "Services"],
             ["/#contact", "Contact"],
           ] as const
