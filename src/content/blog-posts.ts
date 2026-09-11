@@ -5,6 +5,13 @@ export const engineeringPosts: BlogPost[] = [
     "category": "Robotics",
     "date": "2026-09-11",
     "description": "A practical way to separate coordinate-frame, timing and localisation faults before changing a navigation controller.",
+    "image": {
+      "alt": "Coordinate-frame tree: localisation corrects map to odom; odometry updates odom to base_link; the sensor is attached to the robot. Illustrative mounting and frame arrangement.",
+      "caption": "Coordinate-frame tree: localisation corrects map to odom; odometry updates odom to base_link; the sensor is attached to the robot. Illustrative mounting and frame arrangement.",
+      "height": 720,
+      "src": "/assets/blog/20260911-Robot-Frames-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "A robot turns in place, but the wall in its laser scan seems to slide across the room. It is tempting to open the controller settings and start changing gains. First, check whether the robot's picture of the world is consistent.",
       "My rover portfolio record combines a physical platform with simulation-validated autonomy. The distinction matters: simulation is useful for repeatable diagnosis, while physical testing introduces mounting errors, wheel slip and timing behaviour that a clean simulation may not reproduce. The diagnostic sequence below is a proposed method, not a report of additional tests on that rover."
@@ -88,19 +95,19 @@ export const engineeringPosts: BlogPost[] = [
         "url": "/work/autonomous-navigation-rover/"
       }
     ],
-    "title": "Before tuning a robot, check what it thinks is moving",
-    "image": {
-      "src": "/assets/blog/20260911-Robot-Frames-Rev00.svg",
-      "alt": "Coordinate-frame tree: localisation corrects map to odom; odometry updates odom to base_link; the sensor is attached to the robot. Illustrative mounting and frame arrangement.",
-      "caption": "Coordinate-frame tree: localisation corrects map to odom; odometry updates odom to base_link; the sensor is attached to the robot. Illustrative mounting and frame arrangement.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "Before tuning a robot, check what it thinks is moving"
   },
   {
     "category": "Embedded systems",
     "date": "2026-09-11",
     "description": "How hysteresis, debounce and explicit states turn a fluctuating measurement into a useful event without hiding the timing cost.",
+    "image": {
+      "alt": "Synthetic samples 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produce states inactive, active, active, active, active, inactive with thresholds 0.60 and 0.40. One activation and one release.",
+      "caption": "Synthetic samples 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produce states inactive, active, active, active, active, inactive with thresholds 0.60 and 0.40. One activation and one release.",
+      "height": 720,
+      "src": "/assets/blog/20260911-Sensor-Hysteresis-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "A sensor value sitting near a threshold can cross it repeatedly even when the physical situation has barely changed. If every crossing becomes an event, one movement can turn into several counts.",
       "My embedded assessment prototype uses Hall-effect sensing to observe movement. This article explores a general signal-processing problem relevant to that kind of system. The thresholds below are made-up normalised values, not settings or performance claims for the prototype."
@@ -120,7 +127,7 @@ export const engineeringPosts: BlogPost[] = [
         "paragraphs": [
           "Hysteresis uses different switching thresholds depending on the current state. Analog Devices describes how separating rising and falling thresholds can prevent repeated switching around a noisy boundary. The same state-dependent idea can be expressed in firmware.",
           "For an illustrative normalised signal, enter the active state at 0.60 or above. Stay active until the signal reaches 0.40 or below. Between those values, retain the previous state. Define the equality cases explicitly so tests at exactly 0.40 and 0.60 have predictable outcomes.",
-          "With an initial inactive state, the sequence 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produces one activation and one release. A single 0.50 threshold would alternate at several of those samples. These values demonstrate the rule only; choose real thresholds from measured noise, tolerances and the required operating range."
+          "With an initial inactive state, the sequence 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produces one activation and one release. A single 0.60 threshold would produce two activations and two releases in this sequence. These values demonstrate the rule only; choose real thresholds from measured noise, tolerances and the required operating range."
         ],
         "sources": [
           1
@@ -194,19 +201,19 @@ export const engineeringPosts: BlogPost[] = [
         "url": "/work/ataxia-assessment-device/"
       }
     ],
-    "title": "A noisy sensor needs a decision rule",
-    "image": {
-      "src": "/assets/blog/20260911-Sensor-Hysteresis-Rev00.svg",
-      "alt": "Synthetic samples 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produce states inactive, active, active, active, active, inactive with thresholds 0.60 and 0.40. One activation and one release.",
-      "caption": "Synthetic samples 0.39, 0.61, 0.58, 0.62, 0.41, 0.39 produce states inactive, active, active, active, active, inactive with thresholds 0.60 and 0.40. One activation and one release.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "A noisy sensor needs a decision rule"
   },
   {
     "category": "AI and software",
     "date": "2026-09-11",
     "description": "A practical design for checking retrieval, source quality and permission boundaries in an assistant that runs on your own hardware.",
+    "image": {
+      "alt": "Proposed document-assistant boundary: versioned documents feed retrieval and an answer. A separate application permission check governs tool actions; retrieved text cannot grant that permission.",
+      "caption": "Proposed document-assistant boundary: versioned documents feed retrieval and an answer. A separate application permission check governs tool actions; retrieved text cannot grant that permission.",
+      "height": 720,
+      "src": "/assets/blog/20260911-Local-AI-Evidence-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "Getting a language model to answer a question on your own computer is a useful milestone. It leaves several engineering questions open: which documents reached the model, whether they were current, and what the system is allowed to do with the answer.",
       "My portfolio describes VeerAI as a local small-language-model system with ingestion, retrieval, memory, tools and evaluation. This article explains a design approach for that wider system. It does not publish private configuration or claim a new benchmark result."
@@ -304,19 +311,19 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/"
       }
     ],
-    "title": "Local AI: the model is one part of the system",
-    "image": {
-      "src": "/assets/blog/20260911-Local-AI-Evidence-Rev00.svg",
-      "alt": "Proposed document-assistant boundary: versioned documents feed retrieval and an answer. A separate application permission check governs tool actions; retrieved text cannot grant that permission.",
-      "caption": "Proposed document-assistant boundary: versioned documents feed retrieval and an answer. A separate application permission check governs tool actions; retrieved text cannot grant that permission.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "Local AI: the model is one part of the system"
   },
   {
     "category": "Engineering software",
     "date": "2026-09-11",
     "description": "Preserving identifiers, resolving ambiguity and making an import reviewable before it changes an operational system.",
+    "image": {
+      "alt": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
+      "caption": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
+      "height": 720,
+      "src": "/assets/blog/20260911-CSV-Review-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "A CSV import can finish successfully and still damage the meaning of the data. An item code loses its leading zeros. A blank price becomes zero. Two similar descriptions are treated as the same product.",
       "The public record for my pricing and inventory project describes operator-reviewed imports and explicit matching rules. This article develops the general engineering questions behind that approach, using invented product records and prices. No client data or private implementation is included."
@@ -420,19 +427,19 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://sqlite.org/floatingpoint.html"
       }
     ],
-    "title": "The hard part of a CSV import is deciding what may change",
-    "image": {
-      "src": "/assets/blog/20260911-CSV-Review-Rev00.svg",
-      "alt": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
-      "caption": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "The hard part of a CSV import is deciding what may change"
   },
   {
     "category": "Product engineering",
     "date": "2026-09-11",
     "description": "Why offline use, saved data, export and recovery need separate acceptance tests in a small personal or business app.",
+    "image": {
+      "alt": "Proposed recovery path: a working copy is exported to an independent backup, validated and restored into a clean test instance. Compare restored values with the original; keep the working copy until recovery is verified.",
+      "caption": "Proposed recovery path: a working copy is exported to an independent backup, validated and restored into a clean test instance. Compare restored values with the original; keep the working copy until recovery is verified.",
+      "height": 720,
+      "src": "/assets/blog/20260911-Local-App-Recovery-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "A small app can feel complete when it saves an entry and brings it back after a refresh. The harder question arrives later: can the owner recover the data after replacing a device, losing a browser profile or moving to a new address?",
       "Several projects in my portfolio use local-first or static approaches. Those choices can keep a tool focused and reduce infrastructure. They also make the data boundary worth explaining in ordinary language. This article proposes a recovery design for a fictional equipment register."
@@ -531,19 +538,19 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://sqlite.org/backup.html"
       }
     ],
-    "title": "A local app needs a way back",
-    "image": {
-      "src": "/assets/blog/20260911-Local-App-Recovery-Rev00.svg",
-      "alt": "Proposed recovery path: a working copy is exported to an independent backup, validated and restored into a clean test instance. Compare restored values with the original; keep the working copy until recovery is verified.",
-      "caption": "Proposed recovery path: a working copy is exported to an independent backup, validated and restored into a clean test instance. Compare restored values with the original; keep the working copy until recovery is verified.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "A local app needs a way back"
   },
   {
     "category": "Automation",
     "date": "2026-09-11",
     "description": "Designing retries, operation records and human review for the uncertain gap between sending a request and seeing its result.",
+    "image": {
+      "alt": "Illustrative lost-response sequence: request operation A creates one job; the reply is lost. Retrying operation A returns the existing result under an idempotent API contract, rather than creating another job.",
+      "caption": "Illustrative lost-response sequence: request operation A creates one job; the reply is lost. Retrying operation A returns the existing result under an idempotent API contract, rather than creating another job.",
+      "height": 720,
+      "src": "/assets/blog/20260911-Automation-Retry-Rev00.svg",
+      "width": 1200
+    },
     "intro": [
       "An automation sends a request to create a job. The connection drops before a response arrives. The screen says the request timed out, but the receiving system may already have created the job.",
       "This is an awkward state because both immediate retry and immediate abandonment can be wrong. The following design uses a fictional service-request workflow to explain how to make that uncertainty visible and recoverable. It is not a claim about a particular deployed client system."
@@ -646,13 +653,6 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://sqlite.org/atomiccommit.html"
       }
     ],
-    "title": "When an automation times out, did the action happen?",
-    "image": {
-      "src": "/assets/blog/20260911-Automation-Retry-Rev00.svg",
-      "alt": "Illustrative lost-response sequence: request operation A creates one job; the reply is lost. Retrying operation A returns the existing result under an idempotent API contract, rather than creating another job.",
-      "caption": "Illustrative lost-response sequence: request operation A creates one job; the reply is lost. Retrying operation A returns the existing result under an idempotent API contract, rather than creating another job.",
-      "width": 1200,
-      "height": 720
-    }
+    "title": "When an automation times out, did the action happen?"
   }
 ];
