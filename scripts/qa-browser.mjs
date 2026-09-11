@@ -49,7 +49,9 @@ const server = createServer(async (request, response) => {
 
 await new Promise((ready) => server.listen(port, "127.0.0.1", ready));
 const browser = await chromium.launch({ headless: true });
+const blogRoutes = ["/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
 const routes = [
+  ...blogRoutes,
   "/",
   "/work/",
   "/about/",
@@ -113,6 +115,21 @@ try {
             console.log("BLOG_VISUAL " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:70,fullPage:false})).toString("base64")}));
           }
         }
+        if (blogRoutes.includes(route)) {
+          assert.equal(await page.locator(".blog-figure img").count(), 1);
+          assert.equal(await page.locator(".blog-sources li").count() >= 2, true);
+          assert.equal(await page.locator('meta[property="og:type"]').getAttribute("content"), "article");
+          assert.equal(await page.locator(".blog-body").evaluate(el => /[\u2013\u2014]/.test(el.textContent)), false);
+          assert.equal(await page.locator('a[href^="#"]').evaluateAll(links => links.every(link => document.getElementById(link.getAttribute("href").slice(1)))), true);
+          assert.ok((await readFile(join(root, "sitemap.xml"), "utf8")).includes(route));
+          const hero = await page.locator(".blog-figure img").getAttribute("src");
+          assert.equal(await page.locator('.blog-figure a').getAttribute("href"), hero);
+          assert.equal((await stat(join(root, hero.replace(".svg", ".png")))).size > 0, true);
+          const contentsLink = page.getByRole("navigation", { name: "In this article" }).getByRole("link").first();
+          const anchor = await contentsLink.getAttribute("href");
+          await contentsLink.press("Enter");
+          assert.ok(page.url().endsWith(anchor));
+        }
         if (route === "/") {
           const services = page.getByRole("region", {
             name: "Need a hand with something technical?",
@@ -173,7 +190,7 @@ try {
       if (errors.length) failures.push({ width, theme, errors });
       await context.close();
     }
-    console.log(`Verified nine routes at ${width}px in light and dark`);
+    console.log(`Verified ${routes.length} routes at ${width}px in light and dark`);
   }
   if(failures.length) throw new Error(JSON.stringify(failures));
   const context = await browser.newContext({
@@ -325,7 +342,7 @@ try {
   if (failures.length) {
     console.error(JSON.stringify(failures, null, 2));
     process.exitCode = 1;
-  } else console.log("All 126 route/viewport/theme checks passed");
+  } else console.log(`All ${routes.length * 14} route/viewport/theme checks passed`);
 } finally {
   await browser.close();
   await new Promise((done) => server.close(done));
