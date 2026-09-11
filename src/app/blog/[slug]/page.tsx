@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
-import { posts, formatPostDate } from "@/content/blog";
+import { posts, formatPostDate, readingMinutes } from "@/content/blog";
 import { site } from "@/content/site";
 
 export const dynamicParams = false;
@@ -21,9 +22,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       title: post.title, description: post.description,
       type: "article", url: `/blog/${post.slug}/`,
       publishedTime: post.date, authors: [site.name],
-      images: [{ url: site.logo, alt: site.name }],
+      images: [{ url: post.image?.src.replace(".svg", ".png") ?? site.logo, alt: post.image?.alt ?? site.name }],
     },
-    twitter: { card: "summary", title: post.title, description: post.description, images: [site.logo] },
+    twitter: { card: post.image ? "summary_large_image" : "summary", title: post.title, description: post.description, images: [post.image?.src.replace(".svg", ".png") ?? site.logo] },
   };
 }
 export default async function BlogArticle({ params }: { params: Promise<{ slug: string }> }) {
@@ -35,6 +36,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
     headline: post.title, description: post.description,
     datePublished: post.date, mainEntityOfPage: `${site.url}/blog/${post.slug}/`,
     author: { "@type": "Person", name: site.name, url: site.url },
+    image: post.image ? `${site.url}${post.image.src.replace(".svg", ".png")}` : `${site.url}${site.logo}`,
   };
   return <>
     <Masthead current="blog" />
@@ -43,9 +45,14 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
       <article>
         <header className="blog-header">
           <p className="quiet"><time dateTime={post.date}>{formatPostDate(post.date)}</time> · By Sajeevan (Saj) Veeriah</p>
+          <p className="blog-category">{post.category ?? "Everyday AI"} · {readingMinutes(post)} min read</p>
           <h1>{post.title}</h1>
           <p className="blog-deck">{post.description}</p>
         </header>
+        {post.image && <figure className="blog-figure">
+          <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />
+          <figcaption>{post.image.caption} <a href={post.image.src}>View full-size diagram</a></figcaption>
+        </figure>}
         <div className="blog-layout">
           <nav className="blog-contents" aria-label="In this article">
             <h2>In this article</h2>

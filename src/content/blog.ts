@@ -1,3 +1,5 @@
+import { engineeringPosts } from "./blog-posts";
+
 export type BlogSection = {
   id: string;
   title: string;
@@ -12,6 +14,8 @@ export type BlogPost = {
   title: string;
   date: string;
   description: string;
+  category?: string;
+  image?: { src: string; alt: string; caption: string; width: number; height: number };
   intro: string[];
   sections: BlogSection[];
   sources: { label: string; url: string }[];
@@ -20,6 +24,7 @@ export type BlogPost = {
 
 // Add a post here to publish its page, index entry and sitemap URL together.
 export const posts: BlogPost[] = [
+  ...engineeringPosts,
   {
     "slug": "ai-without-the-jargon",
     "title": "AI without the jargon: a practical starting point",
@@ -201,4 +206,9 @@ export function formatPostDate(date: string) {
   return new Intl.DateTimeFormat("en-AU", {
     day: "numeric", month: "long", year: "numeric", timeZone: "Australia/Melbourne",
   }).format(new Date(date + "T00:00:00Z"));
+}
+
+export function readingMinutes(post: BlogPost) {
+  const words = [...post.intro, ...post.sections.flatMap((section) => [section.title, ...section.paragraphs, ...(section.after ?? []), ...(section.table?.rows.flat() ?? []), ...(section.steps?.flat() ?? [])])].join(" ").trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / 200));
 }
