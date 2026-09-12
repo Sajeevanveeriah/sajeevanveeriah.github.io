@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Visible topic. Compatible endpoints?</title>
+  <desc id="desc">ROS 2 Humble reliability compatibility. A best-effort publisher can match a best-effort subscriber but cannot match a reliable subscriber. A reliable publisher can match either. All other QoS policies affecting compatibility must also pass.</desc>
+  <rect width="1200" height="720" fill="#f0f3f6"/>
+  <g font-family="Arial, sans-serif" fill="#17212b">
+    <text x="70" y="75" font-size="20" letter-spacing="2">ENGINEERING NOTES / ROS 2 HUMBLE</text>
+    <text x="70" y="145" font-size="46" font-weight="700">Visible topic. Compatible endpoints?</text>
+    <text x="70" y="190" font-size="24" fill="#56616d">Reliability compatibility is one part of the QoS contract.</text>
+    <text x="820" y="258" font-size="23" text-anchor="middle" font-weight="700">Subscriber requests</text>
+    <rect x="80" y="285" width="1040" height="275" rx="8" fill="#fff" stroke="#56616d" stroke-width="2"/>
+    <path d="M520 285V560M820 285V560M80 370H1120M80 465H1120" stroke="#56616d" stroke-width="2"/>
+    <text x="110" y="336" font-size="25" font-weight="700">Publisher offers</text>
+    <g font-size="25" text-anchor="middle" font-weight="700">
+      <text x="670" y="336">Best effort</text><text x="970" y="336">Reliable</text>
+    </g>
+    <g font-size="29"><text x="110" y="428">Best effort</text><text x="110" y="523">Reliable</text></g>
+    <g font-size="34" text-anchor="middle" font-weight="700">
+      <text x="670" y="430" fill="#215ad2">Yes</text><text x="970" y="430">No</text>
+      <text x="670" y="525" fill="#215ad2">Yes</text><text x="970" y="525" fill="#215ad2">Yes</text>
+    </g>
+    <text x="80" y="612" font-size="23">Other QoS policies must also be compatible.</text>
+    <text x="70" y="678" font-size="20" fill="#56616d">Sajeevan Veeriah / Source: ROS 2 Humble documentation</text>
+  </g>
+</svg>
