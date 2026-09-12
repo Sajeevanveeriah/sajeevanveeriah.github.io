@@ -1,6 +1,272 @@
 import type { BlogPost } from "./blog";
 
 export const engineeringPosts: BlogPost[] = [
+  {
+    "slug": "machine-vision-starts-with-the-image",
+    "title": "Before training the model, do the camera maths",
+    "date": "2026-09-13",
+    "category": "Machine vision",
+    "description": "A worked example of field of view, exposure and motion blur, and how to tell whether an inspection image contains enough evidence.",
+    "image": {
+      "src": "/assets/blog/20260913-Vision-Exposure-Rev00.svg",
+      "width": 1200,
+      "height": 720,
+      "alt": "Calculated motion during exposure at 1000 millimetres per second and 0.1 millimetres per pixel: 100 microseconds gives 1 pixel of travel; 500 microseconds gives 5 pixels. The example feature is 2 pixels wide.",
+      "caption": "Illustrative image budget: a 0.2 mm feature spans two pixels at this scale. During a 500 µs exposure, the object travels five pixels. These are geometric calculations, not measured detection results."
+    },
+    "intro": [
+      "A camera looks down at a moving part. The inspection model reports a defect with confidence. On the next batch, apparently similar defects are missed. Before changing the network or collecting thousands more labels, there is a cheaper question to answer: what evidence actually reached the sensor?",
+      "Consider a fictional conveyor inspecting a 0.2 mm surface feature at 1 m/s. The requirement sounds like a machine-learning problem. It is also an optics, lighting and timing problem. A few calculations help separate those parts before they become an expensive dataset."
+    ],
+    "sections": [
+      {
+        "id": "pixels",
+        "title": "Give the feature a pixel budget",
+        "paragraphs": [
+          "Suppose the camera sees 200 mm across the direction of travel, sampled by 2000 pixels. At the inspection plane, the nominal scale is 200 / 2000 = 0.1 mm per pixel. A 0.2 mm feature therefore spans just two pixels along that axis.",
+          "That ratio describes geometric sampling. It does not establish that the feature can be detected, measured or classified reliably. Focus, lens contrast, noise, feature orientation and the position of an edge relative to the pixel grid still matter. Two samples across a feature leave little room to distinguish its shape.",
+          "Write down the required decision first. Detecting a dark mark is different from measuring its width or deciding whether it is a crack. Set the required image scale through trials on representative parts and known features. Avoid treating a camera megapixel count as a complete inspection specification."
+        ]
+      },
+      {
+        "id": "exposure",
+        "title": "The part keeps moving while the shutter is open",
+        "paragraphs": [
+          "For uniform motion parallel to the image plane, projected travel in pixels is speed × exposure time / object-space millimetres per pixel. The quantities must use consistent units. At 1 m/s, the part moves at 1000 mm/s.",
+          "With a 500 µs exposure, it travels 1000 × 0.0005 = 0.5 mm, or five pixels at our chosen scale. The original feature was only two pixels wide. This does not calculate a detection probability; it shows that motion can spread its image across a distance larger than the feature itself.",
+          "At 100 µs, the travel is 0.1 mm, or one pixel. Basler recommends, as a general rule for moving objects, keeping movement during exposure to no more than one pixel. That is a useful starting constraint, not an acceptance test for every inspection."
+        ],
+        "table": {
+          "headings": [
+            "Exposure",
+            "Calculated travel at 1 m/s"
+          ],
+          "rows": [
+            [
+              "500 µs",
+              "0.5 mm = 5 pixels"
+            ],
+            [
+              "100 µs",
+              "0.1 mm = 1 pixel"
+            ],
+            [
+              "50 µs",
+              "0.05 mm = 0.5 pixels"
+            ]
+          ]
+        },
+        "sources": [
+          1
+        ]
+      },
+      {
+        "id": "light",
+        "title": "Shorter exposure creates a lighting decision",
+        "paragraphs": [
+          "Reducing exposure from 500 µs to 100 µs cuts the collection time to one fifth. With unchanged illumination and a linear, unsaturated response, the sensor collects approximately one fifth as many signal photons. Maintaining a similar photon count would require approximately five times the irradiance at the sensor, or another change to the optical arrangement.",
+          "That is an idealised exposure comparison, not a recommendation to turn a lamp up fivefold. The part may be reflective, the light may have thermal or pulse limits, and the lens aperture also affects focus tolerance. Confirm the actual lighting and camera limits.",
+          "Increasing gain makes the output brighter, but Basler notes that it amplifies signal and noise. It does not replace missing optical evidence. A useful lighting trial changes the angle and diffusion as well as intensity, then checks whether the feature remains distinguishable across the expected surface finishes."
+        ],
+        "sources": [
+          1
+        ]
+      },
+      {
+        "id": "timing",
+        "title": "Frame rate and exposure answer different questions",
+        "paragraphs": [
+          "A camera delivering 100 frames per second has a nominal 10 ms interval between frames. That number does not say whether each frame was exposed for 50 µs or 5 ms. The first controls sampling cadence; the second controls the duration over which motion is integrated.",
+          "Record the effective exposure and trigger behaviour for the selected camera, rather than assuming a requested setting is the complete timing contract. Basler documents model-dependent exposure ranges and cases where effective exposure differs from the set value. No camera model is being selected in this example.",
+          "For a triggered conveyor inspection, also check that the intended part is inside the useful field of view when exposure occurs. A sharp picture of the wrong location is still an unusable inspection."
+        ],
+        "sources": [
+          2
+        ]
+      },
+      {
+        "id": "experiment",
+        "title": "Run a capture experiment before a training experiment",
+        "paragraphs": [
+          "Use representative acceptable and defective test parts with an independently established reference. Capture them stationary first, then at the intended speeds. Keep the original images and acquisition settings, including any automatic settings, so a later comparison remains meaningful."
+        ],
+        "table": {
+          "headings": [
+            "Comparison",
+            "Question it answers"
+          ],
+          "rows": [
+            [
+              "Stationary versus moving, same settings",
+              "Does motion remove useful detail?"
+            ],
+            [
+              "Exposure sweep, lighting recorded",
+              "Can the motion limit be met with usable contrast?"
+            ],
+            [
+              "Expected part heights and surface finishes",
+              "Does the optical setup tolerate normal variation?"
+            ],
+            [
+              "Repeated passes and separate acquisition sessions",
+              "Does performance survive more than one convenient capture?"
+            ]
+          ]
+        },
+        "after": [
+          "When evaluating a model, keep repeated images of the same physical part together when separating training and test data. Also reserve genuinely separate parts or acquisition sessions appropriate to the deployment question. Otherwise, near-duplicate images can make the evaluation easier than the real task.",
+          "Measure missed defects and false rejects against the reference, with their sample counts. Inspect failures alongside the original images. A confidence score alone cannot tell you whether the camera supplied the evidence needed to make the decision.",
+          "The useful handover is a capture specification: required field of view, acceptable focus range, exposure and lighting conditions, timing behaviour, and measured inspection performance within those conditions. That gives the model a defined physical problem to solve."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "Basler AG: Optimizing Image Quality; undated live product documentation",
+        "url": "https://docs.baslerweb.com/optimizing-image-quality"
+      },
+      {
+        "label": "Basler AG: Exposure Time; live documentation, settings vary by camera model",
+        "url": "https://docs.baslerweb.com/exposure-time"
+      }
+    ],
+    "note": "Sources checked on 13 September 2026. Conveyor dimensions, speeds and test cases are illustrative. Calculations assume uniform projected motion and a constant image scale at the inspection plane; they are not camera qualification or production results."
+  },
+  {
+    "slug": "automation-queues-and-flow-time",
+    "title": "The hidden cost of keeping every machine busy",
+    "date": "2026-09-13",
+    "category": "Systems engineering",
+    "description": "What Little's Law and a simple queue model reveal about work in progress, waiting time and where automation can actually help.",
+    "image": {
+      "src": "/assets/blog/20260913-Queue-Delay-Rev00.svg",
+      "width": 1200,
+      "height": 720,
+      "alt": "M/M/1 model with mean service time of one minute: at 50 percent utilisation, mean waiting is one minute; at 80 percent, four minutes; at 95 percent, nineteen minutes. These are analytical model results, not operational measurements.",
+      "caption": "An M/M/1 illustration with a one-minute mean service time. Mean waiting grows from 1 to 4 to 19 minutes as utilisation rises from 50% to 80% to 95%. Service time is excluded from these waiting values."
+    },
+    "intro": [
+      "A machine finishes each operation faster after an upgrade. Orders still take days to get through the workshop. Both observations can be true: the operation improved, but most of the elapsed time may be spent waiting elsewhere.",
+      "This is a useful problem to examine before automating another step. The same question applies to a review inbox, a test bench or a software job queue: how much work is inside the process, how quickly does it leave, and where does its time go?"
+    ],
+    "sections": [
+      {
+        "id": "boundary",
+        "title": "Draw the boundary around the promised result",
+        "paragraphs": [
+          "For a fictional inspection service, define entry as the moment a job is accepted into the service and exit as the moment its result is released. Everything between those points counts towards the customer's flow time: waiting, processing, holds and any rework before release.",
+          "If the dashboard starts its clock only when the test bench becomes free, it measures a different promise. The reported number can improve while the customer's wait remains unchanged.",
+          "Choose one population and boundary before calculating. Do not combine the backlog for all jobs with the completion rate for only one easy category. Count cancelled and rejected jobs consistently, and keep their outcomes visible."
+        ]
+      },
+      {
+        "id": "little",
+        "title": "Turn work in progress into elapsed time",
+        "paragraphs": [
+          "Little's Law relates average work in progress L, average throughput λ and average time in the system W: L = λW. MIT's supply-chain material presents the same relationship as inventory = throughput rate × flow time.",
+          "Suppose the fictional service has a time-average of 12 accepted but unreleased jobs and completes an average of 4 jobs per hour over a representative stable period. Its average flow time is 12 / 4 = 3 hours. That result includes waiting and processing inside the chosen boundary.",
+          "If the bench needs only 10 minutes of active work per job, an operation-time chart cannot explain the whole three hours. Investigate the gaps: batching, approvals, unavailable fixtures, rework or a downstream release queue. Those are candidate explanations to measure, not conclusions from the equation.",
+          "Use averages from the same population and a period that represents its operation. A one-off backlog snapshot is not a time-average. A rapidly growing backlog also needs a transient analysis; do not present a steady-state calculation as a reliable completion forecast."
+        ],
+        "sources": [
+          1,
+          2
+        ]
+      },
+      {
+        "id": "utilisation",
+        "title": "A simple model explains the steep part",
+        "paragraphs": [
+          "Consider an M/M/1 queue: one server, independent Poisson arrivals, independent exponentially distributed service times, first-come-first-served handling and an unlimited waiting room. Assume steady state, with the arrival rate below the service rate. This is an analytical illustration, not a description of every factory.",
+          "Let the mean service time be one minute, so the mean service rate µ is 60 jobs per hour. Utilisation ρ is arrival rate divided by service rate. For this model, mean waiting before service is Wq = ρ / (1 - ρ) × mean service time."
+        ],
+        "table": {
+          "headings": [
+            "Utilisation and arrivals",
+            "Modelled mean waiting before service"
+          ],
+          "rows": [
+            [
+              "50%; 30 jobs/h",
+              "1 minute"
+            ],
+            [
+              "80%; 48 jobs/h",
+              "4 minutes"
+            ],
+            [
+              "95%; 57 jobs/h",
+              "19 minutes"
+            ]
+          ]
+        },
+        "after": [
+          "The service itself still averages one minute in every row. Total time in the system is therefore 2, 5 and 20 minutes respectively. As utilisation approaches 100%, this model has less spare capacity to absorb random bursts and long jobs. Its mean wait grows without bound.",
+          "Real processes can have bounded buffers, scheduled arrivals, several servers, breakdowns or very different service-time distributions. The numerical curve changes with those assumptions. The lesson to investigate is the effect of variation and spare capacity, not a universal rule that every process must target 80%."
+        ],
+        "sources": [
+          2
+        ]
+      },
+      {
+        "id": "automation",
+        "title": "Choose the change against the actual constraint",
+        "paragraphs": [
+          "In a separate simplified serial process, imagine an upstream operation capable of 60 jobs per hour feeding a downstream operation capable of 40. Assume one job follows the same route, both rates already represent usable capacity, and demand is sufficient. Increasing the first operation to 90 cannot by itself raise the downstream limit above 40. Releasing more work can instead build a queue.",
+          "That does not mean the upstream upgrade has no value. It might reduce labour, support another product or provide useful recovery capacity. Those benefits need their own evidence. A local speed increase is simply not enough to establish an end-to-end throughput increase.",
+          "A work-in-progress limit can make overload visible and prevent unlimited release into a constrained process. It cannot create missing capacity or erase demand. Record work waiting outside the limit as well, so an apparently cleaner internal queue does not conceal a longer customer wait."
+        ]
+      },
+      {
+        "id": "measure",
+        "title": "Measure one job all the way through",
+        "paragraphs": [
+          "Capture accepted, ready-for-service, service-start, service-end and released times against a stable job identifier. Add explicit hold and rework events where needed. For physical equipment, collect observations through approved interfaces; this analysis does not require changing machine interlocks or operating limits."
+        ],
+        "table": {
+          "headings": [
+            "Measure",
+            "Why it belongs in the review"
+          ],
+          "rows": [
+            [
+              "Throughput and time-average work in progress",
+              "Connect output rate with how much work remains inside."
+            ],
+            [
+              "Waiting and active service time",
+              "Show whether faster execution addresses the dominant delay."
+            ],
+            [
+              "Median and high-percentile flow time",
+              "Reveal long waits that an average can hide."
+            ],
+            [
+              "Rework, false rejects and cancellations",
+              "Check whether apparent speed comes from shifted work or poorer quality."
+            ]
+          ]
+        },
+        "after": [
+          "Compare a representative baseline with the changed process, using comparable job mix and operating conditions. Track the queue beyond the improved step. If it simply moves downstream, report that movement.",
+          "Little's Law is an accounting relationship, not a causal guarantee. Deleting half the visible backlog does not prove that useful flow time has halved; the throughput or system boundary may also have changed.",
+          "A worthwhile automation proposal should name the delay it expects to remove and the end-to-end measure that will show whether it did. “This machine is busier” is a useful observation. “The customer receives the correct result sooner” is the outcome to test."
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "MIT OpenCourseWare: D-Lab Supply Chains, Problem Set 2 - Process Analysis, Fall 2014",
+        "url": "https://ocw.mit.edu/courses/15-772j-d-lab-supply-chains-fall-2014/f17bfc0d70c0a4009931352e72ad7716_MIT15_772JF14_ProblemSet2.pdf"
+      },
+      {
+        "label": "Cathy Wu, MIT: Queuing models, Transportation: Foundations and Methods, Spring 2026",
+        "url": "https://web.mit.edu/1.041/www/lectures/L8-queuing-models-2026sp.pdf"
+      }
+    ],
+    "note": "Sources checked on 13 September 2026. All service, capacity and queue examples are invented teaching cases. The M/M/1 results are calculated steady-state means under the stated assumptions, not measurements, guarantees or a universal utilisation target."
+  },
 {
   "category": "Industrial data",
   "date": "2026-09-12",

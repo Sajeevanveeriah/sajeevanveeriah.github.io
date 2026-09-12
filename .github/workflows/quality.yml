@@ -78,6 +78,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/machine-vision-starts-with-the-image/index.html \
+            blog/automation-queues-and-flow-time/index.html \
             blog/ai-without-the-jargon/index.html \
             work/index.html \
             work/autonomous-navigation-rover/index.html \
