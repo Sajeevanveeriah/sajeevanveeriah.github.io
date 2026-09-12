@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Received now. Measured earlier.</title>
+  <desc id="desc">Synthetic timeline on a shared clock. A sample acquired at 10:00:00 arrives at 10:00:08 and is viewed at 10:00:10. Its acquisition age is 10 seconds; time since reception is only 2 seconds.</desc>
+  <rect width="1200" height="720" fill="#f0f3f6"/>
+  <g font-family="Arial, sans-serif" fill="#17212b">
+    <text x="70" y="75" font-size="20" letter-spacing="2">ENGINEERING NOTES / MQTT</text>
+    <text x="70" y="145" font-size="46" font-weight="700">Received now. Measured earlier.</text>
+    <text x="70" y="190" font-size="24" fill="#56616d">Illustrative timestamps on a shared clock</text>
+    <path d="M120 320H1080" stroke="#56616d" stroke-width="4"/>
+    <path d="M120 285V350M888 285V350M1080 285V350" stroke="#17212b" stroke-width="4"/>
+    <circle cx="120" cy="320" r="10" fill="#215ad2"/>
+    <circle cx="888" cy="320" r="10" fill="#215ad2"/>
+    <circle cx="1080" cy="320" r="10" fill="#17212b"/>
+    <g font-size="24" font-weight="700" text-anchor="middle">
+      <text x="120" y="265">Acquired</text><text x="888" y="265">Received</text><text x="1080" y="265">Viewed</text>
+    </g>
+    <g font-size="24" text-anchor="middle">
+      <text x="120" y="385">10:00:00</text><text x="888" y="385">10:00:08</text><text x="1080" y="385">10:00:10</text>
+    </g>
+    <path d="M120 435V455H1080V435" fill="none" stroke="#215ad2" stroke-width="4"/>
+    <text x="120" y="500" font-size="29" font-weight="700" fill="#215ad2">Age of measurement: 10 s</text>
+    <path d="M888 535V555H1080V535" fill="none" stroke="#56616d" stroke-width="4"/>
+    <text x="1080" y="600" font-size="27" text-anchor="end">Time since reception: 2 s</text>
+    <text x="70" y="678" font-size="20" fill="#56616d">Sajeevan Veeriah / A recent delivery does not make an old sample current.</text>
+  </g>
+</svg>

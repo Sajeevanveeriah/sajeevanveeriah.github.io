@@ -1,6 +1,235 @@
 import type { BlogPost } from "./blog";
 
 export const engineeringPosts: BlogPost[] = [
+{
+  "category": "Industrial data",
+  "date": "2026-09-12",
+  "description": "Separating connection health, measurement age and validity in an MQTT dashboard, with a practical stale-data test.",
+  "image": {
+    "alt": "Illustrative timeline: a sample acquired at 10:00:00 reaches the display at 10:00:08. At 10:00:10 its acquisition age is 10 seconds, although it arrived only 2 seconds ago.",
+    "caption": "Illustrative timestamps on a shared clock. A recent delivery does not make an old measurement current.",
+    "height": 720,
+    "src": "/assets/blog/20260912-MQTT-Data-Age-Rev00.svg",
+    "width": 1200
+  },
+  "intro": [
+    "The dashboard says connected. The temperature is a plausible 22.4 °C. Nothing is red. But when was that temperature actually measured?",
+    "A connection indicator can answer whether part of the communication path is available. It cannot, by itself, establish that the displayed value describes the present. This article proposes a way to keep those questions separate in an MQTT-based monitoring system. The device, numbers and tests are fictional examples."
+  ],
+  "note": "Sources checked on 12 September 2026. This is a proposed monitoring design with synthetic timestamps and a fictional 5 s limit, not a validated control or safety function.",
+  "sections": [
+    {
+      "id": "three-questions",
+      "paragraphs": [
+        "Start with connection status, measurement age and measurement validity. They can disagree without any contradiction. A device can remain online while its acquisition task is stuck. A healthy sample can arrive after a network interruption. An invalid sensor reading can arrive promptly.",
+        "For a proposed payload, include a value and unit, acquisition timestamp, quality flag, device identifier, boot identifier and sequence number. Keep reception time at the consumer as a separate field. Agree what each field means before building a green status badge around it.",
+        "A sequence number helps detect repetition or gaps, but needs a restart rule. Sequence 12 after sequence 800 could mean a reboot rather than an old packet. Pairing the counter with a boot identifier makes that distinction inspectable. A repeated numeric value alone is not evidence of a fault: the measured quantity may genuinely be steady."
+      ],
+      "title": "Give the display three separate answers"
+    },
+    {
+      "id": "retained-is-not-fresh",
+      "paragraphs": [
+        "MQTT retained messages let a broker provide a stored message to a later subscriber, subject to the subscription's retain-handling setting. That is useful for showing the last known observation when a dashboard opens. It does not establish when the physical measurement was acquired.",
+        "MQTT Keep Alive concerns the exchange of protocol control packets. A working ping exchange is not proof that the sensor acquisition task is advancing. Likewise, a Will message can signal a lost connection, but its timing depends on connection detection and configured delay.",
+        "Keep the last known value visible when it helps diagnosis, but label its age and quality. Do not turn a missing measurement into zero, or reset its age merely because the dashboard has reconnected."
+      ],
+      "sources": [
+        1
+      ],
+      "title": "Treat retained data as a saved observation"
+    },
+    {
+      "id": "two-clocks",
+      "paragraphs": [
+        "Suppose a sample is acquired at 10:00:00, received at 10:00:08 and viewed at 10:00:10. With synchronised clocks, acquisition age is 10 s. Time since reception is only 2 s. A fictional rule accepting samples up to 5 s old must therefore reject this sample as current.",
+        "That arithmetic assumes the timestamps refer to a comparable clock. If the device clock is ahead, subtracting timestamps can produce a negative age. Treat that as a clock-quality problem; silently clamping it to zero would make uncertain data look fresh.",
+        "For elapsed time within one running process, use an appropriate monotonic clock. Web performance timing is one documented example of a clock intended to avoid wall-clock adjustments. It does not synchronise a browser with a remote sensor. Cross-device age still needs a defined time reference and an acceptable clock-error bound."
+      ],
+      "sources": [
+        2
+      ],
+      "title": "Calculate the age you actually care about"
+    },
+    {
+      "after": [
+        "Connection status remains separate in every row. Evaluate age periodically, even when no messages arrive. Otherwise the display can remain current indefinitely after the publisher stops. Use text and an icon or shape as well as colour."
+      ],
+      "id": "state-policy",
+      "paragraphs": [
+        "This illustrative monitoring policy uses a 5 s age limit. Choose a real limit from how quickly the process changes and what the display is used for."
+      ],
+      "table": {
+        "headings": [
+          "Observed condition",
+          "Display and decision"
+        ],
+        "rows": [
+          [
+            "No accepted sample since startup",
+            "Show unknown; do not supply a default measurement."
+          ],
+          [
+            "Valid sample; trustworthy age from 0 to 5 s",
+            "Show the value, unit, age and current status."
+          ],
+          [
+            "Valid sample older than 5 s",
+            "Keep it as last known; clearly mark stale."
+          ],
+          [
+            "Bad quality or untrustworthy acquisition time",
+            "Mark invalid or age unknown; explain the reason."
+          ]
+        ]
+      },
+      "title": "Write a freshness rule before choosing colours"
+    },
+    {
+      "id": "expiry-and-tests",
+      "paragraphs": [
+        "MQTT 5 Message Expiry Interval can prevent onward delivery of messages whose protocol lifetime has elapsed. It does not define physical acquisition time, and it cannot invalidate a value already copied into your application's display state. Retain an application-level freshness check.",
+        "In an isolated test system, pause acquisition while leaving the MQTT client connected. The value should become stale. Then reconnect a dashboard to a retained old sample: it should show the original age, not a fresh-start timer.",
+        "Test a device restart, duplicate sequence, delayed older message, implausible future timestamp and invalid-quality reading. Check that an older observation cannot silently replace the current one. Finally, deliver a new valid sample and verify the defined recovery transition.",
+        "Record the displayed status and the underlying timestamps for each case. A screenshot of a connected badge proves very little about measurement freshness; an explicit age and quality policy gives the next engineer something concrete to test."
+      ],
+      "sources": [
+        1
+      ],
+      "title": "Test silence, replay and recovery"
+    }
+  ],
+  "slug": "mqtt-connected-does-not-mean-current",
+  "sources": [
+    {
+      "label": "OASIS: MQTT Version 5.0, OASIS Standard, 7 March 2019; Keep Alive, RETAIN, Will Delay and Message Expiry sections",
+      "url": "https://docs.oasis-open.org/mqtt/mqtt/v5.0/os/mqtt-v5.0-os.html"
+    },
+    {
+      "label": "W3C: High Resolution Time Level 3, Working Draft, 1 September 2026; monotonic clock and time-origin model",
+      "url": "https://www.w3.org/TR/2026/WD-hr-time-3-20260901/"
+    }
+  ],
+  "title": "A connected sensor can still be giving you old data"
+},
+{
+  "category": "Robotics",
+  "date": "2026-09-12",
+  "description": "A focused way to diagnose ROS 2 QoS mismatches, separate discovery from delivery, and test the actual subscriber.",
+  "image": {
+    "alt": "ROS 2 reliability compatibility: a best-effort publisher is compatible with a best-effort subscriber but not a reliable subscriber. A reliable publisher is compatible with either. Other QoS policies must also be compatible.",
+    "caption": "Reliability compatibility from ROS 2 Humble documentation. This matrix checks one policy; the full QoS profile still matters.",
+    "height": 720,
+    "src": "/assets/blog/20260912-ROS2-QoS-Rev00.svg",
+    "width": 1200
+  },
+  "intro": [
+    "The topic name appears in the ROS graph. The message type looks right. The subscriber's callback never runs. Before rewriting the callback, check whether the publisher and subscriber have agreed on how messages may be delivered.",
+    "ROS 2 Quality of Service, or QoS, is part of the interface between nodes. This note uses the Humble documentation and a hypothetical sensor stream. It describes a diagnostic method, not a new test result from my rover project."
+  ],
+  "note": "Humble documentation checked on 12 September 2026. The test sequence is proposed and was not executed on a ROS 2 runtime for this article. Check the effective settings and supported events in your installation.",
+  "sections": [
+    {
+      "id": "discovery-delivery",
+      "paragraphs": [
+        "Finding a topic establishes that the graph can report it. It does not prove that a particular subscriber receives samples, runs its callback or uses the result. Write down which of those observations is actually missing.",
+        "Inspect the topic's full name, message type and each endpoint's effective QoS profile. The ROS 2 topic-information tool offers verbose endpoint details; compare the running system with the intended configuration. Keep the ROS distribution and middleware implementation in the test record, because defaults and available behaviour may differ.",
+        "Also check whether the publisher is producing messages now. A discovered but idle publisher is a different case from an active publisher that cannot match a subscriber. Choose a controlled stream with a sequence field so progress is visible without relying on the payload changing."
+      ],
+      "sources": [
+        2
+      ],
+      "title": "Separate discovery from delivery"
+    },
+    {
+      "after": [
+        "Every other policy affecting compatibility must also pass. For example, changing reliability will not repair an incompatible durability requirement. A single green cell is not an end-to-end communication test."
+      ],
+      "id": "offered-requested",
+      "paragraphs": [
+        "ROS 2 uses an offered-versus-requested compatibility model. The publisher offers behaviour; the subscriber requests what it will accept. The settings need to be compatible, which does not always mean identical.",
+        "For reliability, a best-effort publisher cannot satisfy a subscriber requesting reliable delivery. A reliable publisher can match a subscriber accepting best effort. Treat the following table as a check of reliability alone."
+      ],
+      "sources": [
+        1
+      ],
+      "table": {
+        "headings": [
+          "Publisher offer → subscriber request",
+          "Reliability compatible?"
+        ],
+        "rows": [
+          [
+            "Best effort → best effort",
+            "Yes"
+          ],
+          [
+            "Best effort → reliable",
+            "No"
+          ],
+          [
+            "Reliable → best effort",
+            "Yes"
+          ],
+          [
+            "Reliable → reliable",
+            "Yes"
+          ]
+        ]
+      },
+      "title": "Read reliability in the right direction"
+    },
+    {
+      "id": "purpose-before-settings",
+      "paragraphs": [
+        "A live visualisation may value the newest sensor sample more than recovering every missed sample. ROS 2's sensor-data profile reflects that trade-off with best-effort reliability and a smaller queue. That makes it a candidate for some sensor streams, not a universal setting for every topic.",
+        "A retained configuration or map has a different use: a late subscriber may need previously published state. Humble documents transient-local durability for this purpose, with compatible publisher and subscriber settings. A volatile subscriber matched to a transient-local publisher receives new messages, without the same historical-data behaviour.",
+        "Write the consumer's requirement first: acceptable age, whether loss is tolerable, whether historical samples are useful, and what happens after a restart. Commands with side effects need their own application semantics. A transport setting cannot decide whether replaying a command is appropriate."
+      ],
+      "sources": [
+        1
+      ],
+      "title": "Choose the policy from the data's purpose"
+    },
+    {
+      "id": "diagnostic-subscriber",
+      "paragraphs": [
+        "A command-line echo or frequency tool creates another subscriber. Its behaviour is evidence about that observer, not automatically about the application you are diagnosing. Compare its QoS with the target subscriber before interpreting a successful echo as proof that the application must work.",
+        "The Humble topic tutorial notes that reported frequency is the tool's received rate and can be affected by resources and QoS. If the tool sees 20 Hz while the application misses callbacks, inspect the application's own reception and callback timing.",
+        "Track acquisition, reception and callback execution separately where possible. Once messages are arriving, investigate executor load, callback duration and queue behaviour. Increasing queue depth without measuring age can hide overload behind a growing backlog."
+      ],
+      "sources": [
+        2
+      ],
+      "title": "Check the observer as well as the application"
+    },
+    {
+      "id": "controlled-test",
+      "paragraphs": [
+        "Use a simulation or isolated test namespace with no connection to actuators. Create a known best-effort publisher and a reliable subscriber, keeping the remaining policies compatible. Predict no matching delivery. Then change only the subscriber's reliability to best effort and check that samples arrive.",
+        "Repeat with a reliable publisher and each subscriber reliability setting. Record matching events, received sequence numbers and timestamps. The compatibility table predicts which pairs may connect; it does not promise zero loss or bounded latency under every runtime condition.",
+        "Next, test late joining and restart behaviour separately from the reliability matrix. Confirm whether historical samples should appear and whether the first usable observation meets the consumer's age requirement. Use incompatible-QoS event callbacks where the selected implementation supports them.",
+        "Keep the smallest failing configuration and the corrected one together. The useful result is a demonstrable interface contract: which endpoint offers what, which endpoint accepts it, and what the application actually receives."
+      ],
+      "sources": [
+        1
+      ],
+      "title": "Make the mismatch reproducible"
+    }
+  ],
+  "slug": "ros2-topic-visible-but-no-messages",
+  "sources": [
+    {
+      "label": "ROS 2 Humble documentation: Quality of Service settings, compatibility tables and QoS events; official source",
+      "url": "https://github.com/ros2/ros2_documentation/blob/humble/source/Concepts/Intermediate/About-Quality-of-Service-Settings.rst"
+    },
+    {
+      "label": "ROS 2 Humble documentation: Understanding topics, verbose endpoint information and observer-rate limitations; official source",
+      "url": "https://github.com/ros2/ros2_documentation/blob/humble/source/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.rst"
+    }
+  ],
+  "title": "A ROS 2 topic can exist and still deliver nothing"
+},
   {
     "category": "Robotics",
     "date": "2026-09-11",
