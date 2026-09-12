@@ -28,7 +28,7 @@ const chrome = await launch({
   chromePath: process.env.BROWSER_EXECUTABLE_PATH || chromium.executablePath(),
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })
-const routes = ['/', '/about/', '/notes/', '/blog/', '/blog/ai-without-the-jargon/', '/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
+const routes = ["/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/",'/', '/about/', '/notes/', '/blog/', '/blog/ai-without-the-jargon/', '/work/', '/work/autonomous-navigation-rover/', '/work/ataxia-assessment-device/', '/work/swl-pricing-inventory-control/']
 const minimum = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 }
 const scores = []
 

@@ -49,7 +49,7 @@ const server = createServer(async (request, response) => {
 
 await new Promise((ready) => server.listen(port, "127.0.0.1", ready));
 const browser = await chromium.launch({ headless: true });
-const blogRoutes = ["/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
+const blogRoutes = ["/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
 const routes = [
   ...blogRoutes,
   "/",

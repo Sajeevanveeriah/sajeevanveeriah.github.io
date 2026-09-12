@@ -81,6 +81,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/machine-vision-starts-with-the-image/index.html \
+            blog/automation-queues-and-flow-time/index.html \
             blog/ai-without-the-jargon/index.html \
             work/index.html \
             about/index.html \
@@ -137,6 +139,8 @@ jobs:
             "/about/"
             "/notes/"
             "/blog/"
+            "/blog/machine-vision-starts-with-the-image/"
+            "/blog/automation-queues-and-flow-time/"
             "/blog/ai-without-the-jargon/"
             "/work/autonomous-navigation-rover/"
             "/work/ataxia-assessment-device/"
