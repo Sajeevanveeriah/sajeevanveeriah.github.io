@@ -12,9 +12,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...posts.map((post) => `/blog/${post.slug}/`),
     ...projects.map((project) => `/work/${project.slug}/`),
   ]
-  return routes.map((path) => ({
-    url: `${site.url}${path}`,
-    changeFrequency: path === '/' ? 'monthly' : 'yearly',
-    priority: path === '/' ? 1 : 0.75,
-  }))
+  return routes.map((path) => {
+    const post = posts.find((entry) => path === `/blog/${entry.slug}/`)
+    return {
+      url: `${site.url}${path}`,
+      ...(post ? { lastModified: post.date } : {}),
+    }
+  })
 }

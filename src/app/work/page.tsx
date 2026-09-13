@@ -1,11 +1,18 @@
+import { site } from "@/content/site";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WorkCatalogue } from "@/components/WorkCatalogue";
 export const metadata = {
-  title: "Engineering work",
-  description:
-    "Robotics, embedded systems, engineering software and industrial projects.",
+  title: "Robotics and engineering projects",
+  description: "Explore robotics, embedded systems, industrial automation and engineering software projects, with contributions, technical decisions and evidence.",
   alternates: { canonical: "/work/" },
+  openGraph: {
+    title: "Robotics and engineering projects | Sajeevan Veeriah",
+    description: "Explore robotics, embedded systems, industrial automation and engineering software projects, with contributions, technical decisions and evidence.",
+    url: "/work/", type: "website", siteName: site.name, locale: "en_AU",
+    images: [{ url: site.logo, alt: site.name }],
+  },
+  twitter: { card: "summary", title: "Robotics and engineering projects", description: "Explore robotics, embedded systems, industrial automation and engineering software projects, with contributions, technical decisions and evidence.", images: [site.logo] },
 };
 export default function Work() {
   return (
