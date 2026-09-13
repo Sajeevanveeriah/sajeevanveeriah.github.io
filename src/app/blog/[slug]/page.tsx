@@ -71,6 +71,10 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
                 <tbody>{section.table.rows.map(([label, detail]) => <tr key={label}><th scope="row">{label}</th><td>{detail}</td></tr>)}</tbody>
               </table>}
               {section.after?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {section.image && <figure className="blog-figure">
+                <Image src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height} />
+                <figcaption>{section.image.caption} <a href={section.image.src}>View full-size diagram</a></figcaption>
+              </figure>}
               {section.steps && <ol className="blog-routine">{section.steps.map(([label, detail]) => <li key={label}><strong>{label}</strong><span>{detail}</span></li>)}</ol>}
               {section.sources && <p className="blog-citations">Sources: {section.sources.map((number) => { const source = post.sources[number - 1]; return source ? <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${source.label}`}>[{number}]</a> : null; })}</p>}
             </section>)}

@@ -1,9 +1,11 @@
+import { careerPosts } from "./career-posts";
 import { engineeringPosts } from "./blog-posts";
 
 export type BlogSection = {
   id: string;
   title: string;
   paragraphs: string[];
+  image?: BlogPost["image"];
   table?: { headings: [string, string]; rows: [string, string][] };
   after?: string[];
   steps?: [string, string][];
@@ -24,6 +26,7 @@ export type BlogPost = {
 
 // Add a post here to publish its page, index entry and sitemap URL together.
 export const posts: BlogPost[] = [
+  ...careerPosts,
   ...engineeringPosts,
   {
     "slug": "ai-without-the-jargon",
