@@ -35,7 +35,9 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
     "@context": "https://schema.org", "@type": "BlogPosting",
     headline: post.title, description: post.description,
     datePublished: post.date, mainEntityOfPage: `${site.url}/blog/${post.slug}/`,
-    author: { "@type": "Person", name: site.name, url: site.url },
+    author: { "@type": "Person", "@id": `${site.url}/#person`, name: site.name, url: site.url },
+    inLanguage: "en-AU",
+    isPartOf: { "@id": `${site.url}/#website` },
     image: post.image ? `${site.url}${post.image.src.replace(".svg", ".png")}` : `${site.url}${site.logo}`,
   };
   return <>

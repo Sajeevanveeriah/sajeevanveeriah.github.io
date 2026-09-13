@@ -1,11 +1,18 @@
+import { site } from "@/content/site";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { learningGuide, learningMonths } from "@/content/learning";
 export const metadata = {
-  title: "Learning and notes",
-  description:
-    "A practical robotics learning roadmap and downloadable materials.",
+  title: "Robotics learning roadmap",
+  description: "A six-month robotics learning roadmap with practical projects, build and test milestones, and downloadable learning materials.",
   alternates: { canonical: "/notes/" },
+  openGraph: {
+    title: "Robotics learning roadmap | Sajeevan Veeriah",
+    description: "A six-month robotics learning roadmap with practical projects, build and test milestones, and downloadable learning materials.",
+    url: "/notes/", type: "website", siteName: site.name, locale: "en_AU",
+    images: [{ url: site.logo, alt: site.name }],
+  },
+  twitter: { card: "summary", title: "Robotics learning roadmap", description: "A six-month robotics learning roadmap with practical projects, build and test milestones, and downloadable learning materials.", images: [site.logo] },
 };
 export default function Notes() {
   return (

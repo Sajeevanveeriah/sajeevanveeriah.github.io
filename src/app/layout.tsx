@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     default: `${site.name} | ${site.jobTitle}`,
     template: `%s | ${site.name}`,
   },
-  description: site.proposition,
-  authors: [{ name: site.name }],
+  description: site.profile,
+  authors: [{ name: site.name, url: site.url }],
   alternates: { canonical: '/' },
   robots: { index: true, follow: true, 'max-image-preview': 'large' },
   openGraph: {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     locale: 'en_AU',
     siteName: site.name,
     title: `${site.name} | ${site.jobTitle}`,
-    description: site.proposition,
+    description: site.profile,
     url: site.url,
     images: [{
       url: site.logo,
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       alt: `${site.name}, ${site.jobTitle}`,
     }],
   },
-  twitter: { card: 'summary' },
+  twitter: { card: 'summary', title: `${site.name} | ${site.jobTitle}`, description: site.profile, images: [site.logo] },
   icons: { icon: '/favicon.png', apple: '/favicon.png' },
 }
 
@@ -46,6 +46,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${site.url}/#person`,
+    alternateName: 'Sajeevan (Saj) Veeriah',
     name: site.name,
     url: site.url,
     jobTitle: site.jobTitle,
@@ -64,7 +66,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='light';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
           }}
         />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([personSchema, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, inLanguage: 'en-AU', publisher: { '@id': `${site.url}/#person` } }]).replace(/</g, '\\u003c') }} />
       </head>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>

@@ -9,8 +9,15 @@ import {
 } from "@/content/site";
 export const metadata = {
   title: "About Saj",
-  description: "Engineering experience, education and working approach.",
+  description: "Meet Sajeevan Veeriah: engineering experience, mechatronics education, Engineers Australia membership and an approach to building complete systems.",
   alternates: { canonical: "/about/" },
+  openGraph: {
+    title: "About Saj | Sajeevan Veeriah",
+    description: "Meet Sajeevan Veeriah: engineering experience, mechatronics education, Engineers Australia membership and an approach to building complete systems.",
+    url: "/about/", type: "website", siteName: site.name, locale: "en_AU",
+    images: [{ url: site.logo, alt: site.name }],
+  },
+  twitter: { card: "summary", title: "About Saj", description: "Meet Sajeevan Veeriah: engineering experience, mechatronics education, Engineers Australia membership and an approach to building complete systems.", images: [site.logo] },
 };
 export default function About() {
   return (

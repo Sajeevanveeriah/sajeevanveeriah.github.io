@@ -5,14 +5,16 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { publishedPosts, formatPostDate, readingMinutes } from "@/content/blog";
 import { site } from "@/content/site";
 export const metadata = {
-  title: "Blog",
-  description: "Things I am learning, working through and thinking about.",
+  title: "Robotics, AI and software blog",
+  description: "Practical articles on robotics, embedded systems, AI, privacy and building dependable software by Sajeevan Veeriah.",
   alternates: { canonical: "/blog/" },
   openGraph: {
-    title: "Blog | Sajeevan Veeriah",
-    description: "Things I am learning, working through and thinking about.",
-    url: "/blog/", type: "website", images: [{ url: site.logo }],
+    title: "Robotics, AI and software blog | Sajeevan Veeriah",
+    description: "Practical articles on robotics, embedded systems, AI, privacy and building dependable software by Sajeevan Veeriah.",
+    url: "/blog/", type: "website", siteName: site.name, locale: "en_AU",
+    images: [{ url: site.logo, alt: site.name }],
   },
+  twitter: { card: "summary", title: "Robotics, AI and software blog", description: "Practical articles on robotics, embedded systems, AI, privacy and building dependable software by Sajeevan Veeriah.", images: [site.logo] },
 };
 export default function Blog() {
   return <>
