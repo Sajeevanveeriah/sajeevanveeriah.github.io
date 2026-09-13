@@ -49,7 +49,7 @@ const server = createServer(async (request, response) => {
 
 await new Promise((ready) => server.listen(port, "127.0.0.1", ready));
 const browser = await chromium.launch({ headless: true });
-const blogRoutes = ["/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
+const blogRoutes = ["/blog/the-experience-trap/","/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
 const routes = [
   ...blogRoutes,
   "/",
@@ -116,14 +116,14 @@ try {
           }
         }
         if (blogRoutes.includes(route)) {
-          assert.equal(await page.locator(".blog-figure img").count(), 1);
+          assert.equal(await page.locator(".blog-figure img").count(), route === "/blog/the-experience-trap/" ? 2 : 1);
           assert.equal(await page.locator(".blog-sources li").count() >= 2, true);
           assert.equal(await page.locator('meta[property="og:type"]').getAttribute("content"), "article");
           assert.equal(await page.locator(".blog-body").evaluate(el => /[\u2013\u2014]/.test(el.textContent)), false);
           assert.equal(await page.locator('a[href^="#"]').evaluateAll(links => links.every(link => document.getElementById(link.getAttribute("href").slice(1)))), true);
           assert.ok((await readFile(join(root, "sitemap.xml"), "utf8")).includes(route));
-          const hero = await page.locator(".blog-figure img").getAttribute("src");
-          assert.equal(await page.locator('.blog-figure a').getAttribute("href"), hero);
+          const hero = await page.locator(".blog-figure img").first().getAttribute("src");
+          assert.equal(await page.locator('.blog-figure a').first().getAttribute("href"), hero);
           assert.equal((await stat(join(root, hero.replace(".svg", ".png")))).size > 0, true);
           const contentsLink = page.getByRole("navigation", { name: "In this article" }).getByRole("link").first();
           const anchor = await contentsLink.getAttribute("href");
