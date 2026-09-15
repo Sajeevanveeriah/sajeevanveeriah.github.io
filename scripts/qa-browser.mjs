@@ -104,7 +104,7 @@ try {
           assert.equal(await page.locator(".project-trials > div").count(), 10);
           assert.equal(await page.locator(".evidence-figure").count(), 2);
           assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io/work/gendio-controller/");
-          assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.textContent)), false);
+          assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.innerText)), false);
           assert.ok((await page.locator(".boundary").innerText()).includes("No assembled board"));
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
         }
