@@ -80,6 +80,7 @@ export default function Home() {
                         "Robotics and autonomy",
                         "Embedded mechatronics",
                         "Engineering software",
+                        "PCB and embedded systems",
                       ][i]
                     }
                   </p>
