@@ -1,6 +1,239 @@
 import type { BlogPost } from "./blog";
 
 export const engineeringPosts: BlogPost[] = [
+{
+  "slug": "sampling-can-hide-real-motion",
+  "title": "A smooth sensor trace can hide real motion",
+  "date": "2026-09-16",
+  "category": "Sensing and signal processing",
+  "description": "How an 80 Hz signal becomes indistinguishable from 20 Hz when sampled at 100 samples per second, and what to check before trusting a trend.",
+  "image": {
+    "src": "/assets/blog/20260916-Sampling-Aliasing-Rev00.svg",
+    "width": 1200,
+    "height": 720,
+    "alt": "An 80 Hz cosine and a 20 Hz cosine have identical values at every 10 millisecond sample. Over 100 milliseconds the original completes eight cycles while the lower-frequency curve completes two.",
+    "caption": "Calculated example, not a sensor recording. Both curves pass through the same samples at 100 samples per second."
+  },
+  "intro": [
+    "A trend can look calm while the machine is doing something much faster. The display may be drawing every value it received correctly. The missing information can have disappeared before those values reached the screen.",
+    "Consider a fictional vibration measurement containing an 80 Hz component. A logger stores 100 samples per second. That sounds like a busy stream of data, but the numbers alone cannot distinguish this signal from a much slower one."
+  ],
+  "sections": [
+    {
+      "id": "same-samples",
+      "title": "Two motions, one set of numbers",
+      "paragraphs": [
+        "Take a unit-amplitude cosine: x(t) = cos(2π × 80 × t), with time in seconds. At 100 samples per second, the sample times are t = n / 100 for integer n.",
+        "The sampled values are cos(1.6πn). For integer n, these equal cos(2πn - 0.4πn), which equals cos(0.4πn). That is exactly the sequence produced by a 20 Hz cosine sampled at the same times. The chart shows both continuous curves and their shared sample points.",
+        "At 0, 10, 20, 30 and 40 ms, either signal produces approximately 1.000, 0.309, -0.809, -0.809 and 0.309. A smoother line between these dots cannot tell us which physical signal created them. This ambiguity is aliasing."
+      ],
+      "table": {
+        "headings": [
+          "Quantity",
+          "Value in this example"
+        ],
+        "rows": [
+          [
+            "Actual cosine frequency",
+            "80 Hz"
+          ],
+          [
+            "Sampling interval",
+            "10 ms"
+          ],
+          [
+            "Sampling rate",
+            "100 samples/s"
+          ],
+          [
+            "Indistinguishable lower frequency",
+            "20 Hz"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "bandwidth",
+      "title": "Specify the bandwidth before the rate",
+      "paragraphs": [
+        "For ordinary baseband acquisition of a band-limited signal, sample above twice its highest frequency. A practical design also needs room for the anti-alias filter's transition band. Analog Devices' MT-002 explains why unwanted input frequencies must be attenuated before sampling.",
+        "That requirement concerns everything that can reach the sampler, including interference. A process variable may change slowly while electrical noise or mechanical vibration adds faster components. Filtering after those components have folded into the useful band cannot uniquely recover the lost distinction."
+      ],
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": "rates",
+      "title": "Follow the value through every rate change",
+      "paragraphs": [
+        "For a proposed measurement chain, I would write a rate beside each stage: sensor conversion, internal filtering, bus delivery, application processing, stored records and screen updates. Then I would identify what happens when a stage discards values.",
+        "A hypothetical sensor could convert at 1000 samples/s while an application stores one value in every ten. That creates a new 100 samples/s sequence. An 80 Hz component must be removed before that reduction if the stored data is intended to represent only frequencies below 50 Hz.",
+        "Filtering and decimation are deliberate parts of converter design. Analog Devices' discussion of sigma-delta conversion describes digital filtering before lowering the output rate. Reading a register more often does not establish that it contains a new conversion."
+      ],
+      "sources": [
+        2
+      ],
+      "table": {
+        "headings": [
+          "Stage to inspect",
+          "Evidence to retain"
+        ],
+        "rows": [
+          [
+            "Sensor output",
+            "Configured rate, filter mode and data-ready behaviour"
+          ],
+          [
+            "Transport",
+            "Sequence numbers, dropped values and acquisition timestamps"
+          ],
+          [
+            "Stored series",
+            "Resampling rule and filtering before reduction"
+          ],
+          [
+            "Display",
+            "Whether points are selected, averaged or summarised"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "experiment",
+      "title": "Make the measurement disagree with itself",
+      "paragraphs": [
+        "A useful bench experiment starts with a known input, within the equipment's limits, and an independent reference. Sweep the input frequency while keeping amplitude and acquisition settings recorded. Compare the stored result with the reference, including frequencies outside the intended measurement band.",
+        "Repeat selected points with a different sample rate. In our ideal example, changing from 100 to 120 samples/s moves the 80 Hz component's lower-frequency alias from 20 to 40 Hz. That movement is a diagnostic clue, not proof that every changing peak is an alias.",
+        "The chart assumes uniform sampling, exact frequencies and no noise. Real tests must also inspect timing variation, clipping, filter response and sample loss. Keep raw acquisition timestamps wherever available so these effects can be separated.",
+        "The acceptance criterion should describe what the measurement must preserve: a defined frequency band, tolerable amplitude and timing error, and adequate rejection outside that band. A visually smooth trace is not an acceptance criterion."
+      ],
+      "sources": [
+        1
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Walt Kester, Analog Devices: MT-002, Nyquist criterion and sampled data design, Rev. A, October 2008",
+      "url": "https://www.analog.com/media/en/training-seminars/tutorials/MT-002.pdf"
+    },
+    {
+      "label": "Analog Devices: Practical Analog Design Techniques, Section 3, sigma-delta conversion, filtering and decimation",
+      "url": "https://www.analog.com/media/en/training-seminars/design-handbooks/Practical-Analog-Design-Techniques/Section3.pdf"
+    }
+  ],
+  "note": "References checked on 16 September 2026. The second reference is historical technical material with no publication date established here. Frequencies and curves are an original illustrative calculation, not a hardware test or product recommendation."
+},
+{
+  "slug": "inspection-accuracy-and-missed-defects",
+  "title": "99% accuracy can still miss every defect",
+  "date": "2026-09-16",
+  "category": "Applied machine learning",
+  "description": "A worked inspection example showing why defect recall, false rejects and review workload belong beside the headline accuracy score.",
+  "image": {
+    "src": "/assets/blog/20260916-Inspection-Outcomes-Rev00.svg",
+    "width": 1200,
+    "height": 720,
+    "alt": "For 10000 illustrative parts, including 100 defective parts, the classifier flags 90 defects and 99 good parts. It passes 10 defects and 9801 good parts. Recall is 90 percent and precision is 47.6 percent.",
+    "caption": "Illustrative counts, not model results. Rows represent the reference classification; columns show the inspection decision."
+  },
+  "intro": [
+    "Suppose an inspection batch contains 10000 parts, of which 100 are defective. A system that passes every part reports 99% accuracy. It also misses every defect.",
+    "That is a useful arithmetic check before anyone celebrates a model score. The operational question is which mistakes the system makes, how often it makes them, and what happens to the affected parts."
+  ],
+  "sections": [
+    {
+      "id": "counts",
+      "title": "Keep the four counts visible",
+      "paragraphs": [
+        "Now imagine a second classifier on the same batch. It flags 90 of the 100 defective parts and incorrectly flags 99 of the 9900 good parts. Ten defects escape, while 9801 good parts pass.",
+        "Its overall accuracy is (90 + 9801) / 10000 = 98.91%. That is lower than the pass-everything baseline, despite finding 90 defects. Whether it is useful depends on the actual requirements and the cost of each outcome.",
+        "Here, positive means flagged as defective. Recall is the fraction of actual defects flagged: 90 / 100 = 90%. Precision is the fraction of flagged parts that really are defective: 90 / (90 + 99), approximately 47.6%. The confusion matrix keeps the underlying counts available."
+      ],
+      "sources": [
+        1
+      ],
+      "table": {
+        "headings": [
+          "Outcome",
+          "Illustrative count"
+        ],
+        "rows": [
+          [
+            "Defect flagged: true positive",
+            "90"
+          ],
+          [
+            "Defect passed: false negative",
+            "10"
+          ],
+          [
+            "Good part flagged: false positive",
+            "99"
+          ],
+          [
+            "Good part passed: true negative",
+            "9801"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "workload",
+      "title": "Translate the score into work",
+      "paragraphs": [
+        "If every flagged part enters manual review, this batch creates 189 reviews. Of those, 99 concern good parts. That workload is invisible in the statement '90% of defects detected'.",
+        "For an illustrative review time of 30 seconds per part, 189 reviews require 5670 seconds, or 94.5 minutes. This is direct review time only; it excludes handling, interruptions, rework and any queue. A deployment decision needs measured timings, not this assumed value.",
+        "The ten escaped defects also need an explicit owner and consequence. A cosmetic mark and a structural defect cannot share an acceptance rule merely because they both have the label 'defective'. Separate the defect categories that lead to different decisions."
+      ]
+    },
+    {
+      "id": "prevalence",
+      "title": "A different defect rate changes the picture",
+      "paragraphs": [
+        "Consider a second hypothetical population with a 0.1% defect rate. In 100000 parts that means 100 defects and 99900 good parts. Assume, only for this calculation, that recall remains 90% and the false-positive rate remains 1%.",
+        "The expected counts become 90 flagged defects and 999 flagged good parts. Precision is then 90 / 1089, approximately 8.3%. The same assumed class-specific rates now produce more than eleven good-part reviews for each detected defect.",
+        "This is a population calculation, not a prediction that a deployed model will retain those rates. Changes in parts, lighting or defect types can change them too. Report the prevalence and sampling method behind an evaluation so readers know which population the score describes."
+      ]
+    },
+    {
+      "id": "threshold",
+      "title": "Treat the threshold as an operating decision",
+      "paragraphs": [
+        "For a classifier whose larger score means stronger evidence of a defect, lowering the flagging threshold generally increases recall while also flagging more good parts. The appropriate threshold depends on the application, not simply a default value.",
+        "Choose and validate it using data separate from model training, and keep a final test set untouched by threshold selection. Scikit-learn's threshold guidance explicitly warns about overfitting when the same data is used to train the classifier and tune the threshold."
+      ],
+      "sources": [
+        2
+      ],
+      "after": [
+        "For the proposed inspection, compare candidate thresholds using escaped defects by category, false rejects and reviews per batch. A score curve is useful when it helps choose between those concrete outcomes."
+      ]
+    },
+    {
+      "id": "handover",
+      "title": "Write an acceptance statement someone can test",
+      "paragraphs": [
+        "A useful report names the evaluated parts, the reference-labelling method, the defect counts, the selected threshold and the conditions of capture. Include the confusion matrix and failures that were inspected, rather than only the most flattering average.",
+        "My proposed acceptance template would state a maximum tolerated escape rate for each relevant defect class, a false-reject limit, and a review capacity. Those limits must come from the process owner and applicable requirements; the numbers in this article are not suggested limits.",
+        "Retain uncertain labels and unreadable images as explicit cases. Quietly excluding them can make an evaluation easier than the real inspection. A production system still has to decide where those parts go.",
+        "Before release, run an independent batch through the complete decision path and reconcile every part against its reference outcome. The handover should make it possible to answer: which defects escaped, which good parts were held, and could the team handle the resulting work?"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "scikit-learn 1.9.1 documentation: classification metrics, precision and recall; live undated documentation",
+      "url": "https://scikit-learn.org/stable/modules/model_evaluation.html#classification-metrics"
+    },
+    {
+      "label": "scikit-learn 1.9.1 documentation: tuning the decision threshold; live undated documentation",
+      "url": "https://scikit-learn.org/stable/modules/classification_threshold.html"
+    }
+  ],
+  "note": "Sources checked on 16 September 2026. All batches, predictions and review times are illustrative. No model was trained or evaluated for this article. The examples do not establish an acceptable defect escape rate or inspection qualification."
+},
   {
     "slug": "machine-vision-starts-with-the-image",
     "title": "Before training the model, do the camera maths",

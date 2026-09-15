@@ -81,6 +81,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/sampling-can-hide-real-motion/index.html \
+            blog/inspection-accuracy-and-missed-defects/index.html \
             blog/machine-vision-starts-with-the-image/index.html \
             blog/automation-queues-and-flow-time/index.html \
             blog/ai-without-the-jargon/index.html \
@@ -140,6 +142,8 @@ jobs:
             "/about/"
             "/notes/"
             "/blog/"
+            "/blog/sampling-can-hide-real-motion/"
+            "/blog/inspection-accuracy-and-missed-defects/"
             "/blog/machine-vision-starts-with-the-image/"
             "/blog/automation-queues-and-flow-time/"
             "/blog/ai-without-the-jargon/"
