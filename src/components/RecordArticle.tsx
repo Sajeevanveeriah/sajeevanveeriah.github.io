@@ -80,6 +80,22 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
             </ol>
           </section>
           <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
+          {project.trials && <section aria-labelledby="trials-heading">
+            <h2 id="trials-heading">Tests, trials and findings</h2>
+            <dl className="project-trials">
+              {project.trials.map((trial) => <div key={trial.area}>
+                <dt>{trial.area}</dt>
+                <dd><p>{trial.result}</p><p className="quiet">{trial.scope}</p></dd>
+              </div>)}
+            </dl>
+          </section>}
+          {project.gallery && <section aria-labelledby="gallery-heading">
+            <h2 id="gallery-heading">Selected development evidence</h2>
+            {project.gallery.map((item) => <div className="evidence-figure" key={item.src}>
+              <ProjectMedia image={item} />
+              <p>{item.caption}</p>
+            </div>)}
+          </section>}
           <section aria-labelledby="readiness-heading"><h2 id="readiness-heading">Current readiness</h2><p>{project.readiness}</p></section>
           <EvidenceBoundary text={project.boundary} />
         </div>

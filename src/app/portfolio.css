@@ -882,3 +882,11 @@ svg {
 }
 
 .record-header h1 { font-size: clamp(36px, 4.5vw, 64px); }
+
+.project-trials { margin: 1.5rem 0; }
+.project-trials > div { padding: 1.25rem 0; border-top: 1px solid currentColor; }
+.project-trials dt { font-weight: 600; }
+.project-trials dd { margin: .5rem 0 0; }
+.project-trials dd p + p { margin-top: .5rem; }
+.evidence-figure { margin: 2rem 0; }
+.evidence-figure .project-media img { max-height: 48rem; }

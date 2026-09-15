@@ -35,7 +35,7 @@ export function WorkCatalogue() {
       evidence: p.evidence,
       image: p.image,
       slug: p.slug,
-      category: ["Robotics", "Embedded", "Software"][i] ?? "Software",
+      category: p.category ?? (["Robotics", "Embedded", "Software"][i] ?? "Software"),
     })),
     ...projectIndex.flatMap((g, i) =>
       g.items.map((p) => ({

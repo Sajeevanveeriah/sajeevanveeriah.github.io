@@ -1,4 +1,7 @@
 export interface Project {
+  readonly category?: 'Embedded'
+  readonly trials?: readonly { readonly area: string; readonly result: string; readonly scope: string }[]
+  readonly gallery?: readonly { readonly src: string; readonly alt: string; readonly width: number; readonly height: number; readonly kind: string; readonly caption: string }[]
   readonly slug: string
   readonly title: string
   readonly evidence: string
@@ -18,11 +21,11 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Real interface screenshot' | 'Illustrative concept image - not build photography'
+    readonly kind: 'Real interface screenshot' | 'Illustrative concept image - not build photography' | 'Native CAD render - not an assembled board'
   }
 }
 
-export const projects: readonly [Project, Project, Project] = [
+export const projects: readonly Project[] = [
   {
     slug: 'autonomous-navigation-rover',
     title: 'Autonomous Navigation Rover on ROS 2',
@@ -115,6 +118,68 @@ export const projects: readonly [Project, Project, Project] = [
       height: 941,
       kind: 'Real interface screenshot',
     },
+  },
+  {
+    slug: 'gendio-controller',
+    title: 'Gendio Display Controller',
+    category: 'Embedded',
+    evidence: 'Engineering candidate with recorded design and software checks',
+    proof: 'Four-layer PCB, embedded firmware and a browser interface, supported by synthetic tests and bounded circuit studies.',
+    problem: 'Developing a replacement controller for an industrial weight display requires the electrical design, incoming data, display timing and commissioning workflow to agree. The original internal panel interface still needs measurement before compatibility can be established.',
+    system: 'An ESP32-S3 display-controller candidate combining a custom four-layer PCB, serial data handling, matrix-display firmware and a local browser interface for configuration and maintenance.',
+    architecture: 'Serial inputs feed a bounded parser and receiver state machine. Display formatting and scanning are separated from configuration and update handling. The PCB brings together power conversion, processing, serial interfaces, display buffering and a limited bench Ethernet path.',
+    ownership: 'Developed the controller across schematic and PCB design, embedded firmware, commissioning interface, mechanical exports and verification planning.',
+    decisions: [
+      'Kept display outputs disarmed after boot until a technician explicitly enables them. The panel interface must be checked before commissioning.',
+      'Used synthetic protocol fixtures to exercise fragmentation, corruption, timeouts and recovery without implying compatibility with untested physical indicators.',
+      'Reviewed footprints, connector drills and component dissipation alongside connectivity checks. Corrected a fuse footprint and increased the termination resistor rating after review.',
+      'Added regression coverage for unsupported-character fallback and invalid display rows, including fail-blank behaviour.',
+      'Separated bounded circuit models from full-regulator simulation. Unsuccessful vendor-model trials remain unresolved rather than being counted as passes.',
+    ],
+    verification: 'The following results were recorded in the supplied engineering evidence dated 15 September 2026. They are source-record results, not new hardware tests performed for this portfolio. Assertion counts include repeated synthetic cases and are not counts of independent physical trials.',
+    readiness: 'Engineering candidate. Physical bring-up and production acceptance remain outstanding.',
+    boundary: 'No assembled board was available in the evidence package. Original panel mapping and timing, full-regulator behaviour, enclosure fit, procurement, thermal performance, EMC, surge, radio behaviour, update recovery and endurance remain open. Native rule checks use configured exclusions and do not establish complete design acceptance. Full schematics, PCB source, manufacturing exports, BOM, firmware and raw diagnostic records remain private.',
+    stack: ['KiCad', 'ESP32-S3', 'C++', 'Serial protocols', 'Matrix displays', 'ngspice', 'GNU Octave', 'Browser testing'],
+    systemPath: [
+      { label: 'Receive', detail: 'Serial indicator data' },
+      { label: 'Interpret', detail: 'Parsing and receiver state' },
+      { label: 'Display', detail: 'Formatting and guarded scanning' },
+      { label: 'Configure', detail: 'Local commissioning interface' },
+    ],
+    image: {
+      src: '/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.png',
+      alt: 'Native CAD overview of the Gendio controller showing the processor, power section and interface connectors. This is a design render, not a photograph of an assembled board.',
+      width: 1568, height: 1176,
+      kind: 'Native CAD render - not an assembled board',
+    },
+    trials: [
+      { area: 'Schematic and PCB rules', result: 'Zero reported ERC and DRC violations; zero unconnected items and schematic parity errors.', scope: 'Recorded KiCad 10.0.6 checks with configured exclusions. Component-specific layout and assembly review remain open.' },
+      { area: 'Firmware build and image checks', result: 'ESP32-S3 build recorded successfully; offline image identity, partition placement and non-overlap checks passed.', scope: 'Build and file checks only. No physical flash, boot or interrupted-update recovery test.' },
+      { area: 'Protocol and recovery tests', result: '350 protocol assertions and 61,234 extended assertions passed across 31 synthetic profiles.', scope: 'Synthetic fixtures cover fragmentation, corruption, timeouts, recovery and counter wraparound. Real indicator captures are still required.' },
+      { area: 'Display regression tests', result: 'Glyph fallback, clipping, mirroring, row addressing, clock pulses, disarming and invalid-row blanking passed.', scope: 'Host framebuffer and GPIO simulation. Panel timing, brightness and electrical behaviour were not measured.' },
+      { area: 'Browser workflows', result: '31 protocol options and five POST workflows checked; no reported JavaScript errors or mobile horizontal overflow.', scope: 'Mocked API responses. Does not establish live authentication, radio operation or device update reliability.' },
+      { area: 'Bounded circuit studies', result: 'Ten ngspice studies passed their numerical bounds: divider corners, reset timing and six fixed-duty LC cases.', scope: 'Idealised subcircuits. The regulator control law, radio transients and display load are excluded.' },
+      { area: 'Numerical development model', result: 'GNU Octave execution completed with three numerical assertions passing.', scope: 'Analytical load-step and tolerance studies. The plotted waveform is a model response, not a board measurement.' },
+      { area: 'Regulator simulation trials', result: 'Vendor-model attempts failed to converge or produced invalid output; no validated full-regulator result.', scope: 'Requires a compatible model/simulator and physical power-stage verification.' },
+      { area: 'Layout, thermal and EMC review', result: 'Supplementary findings were triaged; layout and environmental acceptance remain open.', scope: 'Some automated flags were identified as false positives. The thermal report evaluated no components and is not a thermal pass.' },
+      { area: 'Mechanical and assembly checks', result: 'Board model and mounting exports prepared; 88 SMT designators matched the draft placement file.', scope: 'Simplified component envelopes, unverified enclosure/harness fit and unresolved procurement prevent production acceptance.' },
+    ],
+    gallery: [
+      {
+        src: '/assets/gendio/20260915-Gendio-Interface-Rev00.png',
+        alt: 'Desktop browser test screenshot of controller status, indicator settings, network configuration and firmware update controls using mocked responses.',
+        width: 1100, height: 3111,
+        kind: 'Recorded browser test screenshot - mocked API',
+        caption: 'The local interface groups commissioning and maintenance controls. This capture uses test responses with no connected board; visible values are test inputs, not deployment settings.',
+      },
+      {
+        src: '/assets/gendio/20260915-Gendio-Model-Study-Rev00.png',
+        alt: 'Four-panel Octave study showing an oscillatory fixed-duty load-step response, inductor current, an illustrative state sequence and selected voltage corners.',
+        width: 1308, height: 1010,
+        kind: 'Executed analytical model - not measured hardware',
+        caption: 'The load-step model oscillates and settles near 4.90 V. It excludes the regulator control loop. The state sequence is illustrative, and the corner values depend on selected study assumptions.',
+      },
+    ],
   },
 ] as const
 
