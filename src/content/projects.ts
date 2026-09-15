@@ -25,7 +25,7 @@ export interface Project {
   }
 }
 
-export const projects: readonly Project[] = [
+export const projects: readonly [Project, Project, Project, ...Project[]] = [
   {
     slug: 'autonomous-navigation-rover',
     title: 'Autonomous Navigation Rover on ROS 2',
