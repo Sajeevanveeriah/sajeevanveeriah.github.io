@@ -90,7 +90,6 @@ export default function Home() {
                     </Link>
                   </h3>
                   <p>{p.proof}</p>
-                  <p className="quiet">{p.evidence}</p>
                 </div>
               </article>
             ))}

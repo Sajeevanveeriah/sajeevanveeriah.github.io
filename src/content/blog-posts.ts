@@ -12,7 +12,7 @@ export const engineeringPosts: BlogPost[] = [
     "width": 1200,
     "height": 720,
     "alt": "An 80 Hz cosine and a 20 Hz cosine have identical values at every 10 millisecond sample. Over 100 milliseconds the original completes eight cycles while the lower-frequency curve completes two.",
-    "caption": "Calculated example, not a sensor recording. Both curves pass through the same samples at 100 samples per second."
+    "caption": "Calculated example: both curves pass through the same samples at 100 samples per second."
   },
   "intro": [
     "A trend can look calm while the machine is doing something much faster. The display may be drawing every value it received correctly. The missing information can have disappeared before those values reached the screen.",
@@ -123,7 +123,7 @@ export const engineeringPosts: BlogPost[] = [
       "url": "https://www.analog.com/media/en/training-seminars/design-handbooks/Practical-Analog-Design-Techniques/Section3.pdf"
     }
   ],
-  "note": "References checked on 16 September 2026. The second reference is historical technical material with no publication date established here. Frequencies and curves are an original illustrative calculation, not a hardware test or product recommendation."
+  "note": "References checked on 16 September 2026. Frequencies and curves are illustrative calculations."
 },
 {
   "slug": "inspection-accuracy-and-missed-defects",
@@ -136,7 +136,7 @@ export const engineeringPosts: BlogPost[] = [
     "width": 1200,
     "height": 720,
     "alt": "For 10000 illustrative parts, including 100 defective parts, the classifier flags 90 defects and 99 good parts. It passes 10 defects and 9801 good parts. Recall is 90 percent and precision is 47.6 percent.",
-    "caption": "Illustrative counts, not model results. Rows represent the reference classification; columns show the inspection decision."
+    "caption": "Illustrative counts: rows represent the reference classification; columns show the inspection decision."
   },
   "intro": [
     "Suppose an inspection batch contains 10000 parts, of which 100 are defective. A system that passes every part reports 99% accuracy. It also misses every defect.",
@@ -232,7 +232,7 @@ export const engineeringPosts: BlogPost[] = [
       "url": "https://scikit-learn.org/stable/modules/classification_threshold.html"
     }
   ],
-  "note": "Sources checked on 16 September 2026. All batches, predictions and review times are illustrative. No model was trained or evaluated for this article. The examples do not establish an acceptable defect escape rate or inspection qualification."
+  "note": "Sources checked on 16 September 2026. Batches, predictions and review times are worked examples."
 },
   {
     "slug": "machine-vision-starts-with-the-image",
@@ -245,7 +245,7 @@ export const engineeringPosts: BlogPost[] = [
       "width": 1200,
       "height": 720,
       "alt": "Calculated motion during exposure at 1000 millimetres per second and 0.1 millimetres per pixel: 100 microseconds gives 1 pixel of travel; 500 microseconds gives 5 pixels. The example feature is 2 pixels wide.",
-      "caption": "Illustrative image budget: a 0.2 mm feature spans two pixels at this scale. During a 500 µs exposure, the object travels five pixels. These are geometric calculations, not measured detection results."
+      "caption": "Calculated image budget: a 0.2 mm feature spans two pixels at this scale. During a 500 µs exposure, the object travels five pixels."
     },
     "intro": [
       "A camera looks down at a moving part. The inspection model reports a defect with confidence. On the next batch, apparently similar defects are missed. Before changing the network or collecting thousands more labels, there is a cheaper question to answer: what evidence actually reached the sensor?",
@@ -364,7 +364,7 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://docs.baslerweb.com/exposure-time"
       }
     ],
-    "note": "Sources checked on 13 September 2026. Conveyor dimensions, speeds and test cases are illustrative. Calculations assume uniform projected motion and a constant image scale at the inspection plane; they are not camera qualification or production results."
+    "note": "Sources checked on 13 September 2026. Calculated examples assume uniform projected motion and a constant image scale at the inspection plane."
   },
   {
     "slug": "automation-queues-and-flow-time",
@@ -498,7 +498,7 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://web.mit.edu/1.041/www/lectures/L8-queuing-models-2026sp.pdf"
       }
     ],
-    "note": "Sources checked on 13 September 2026. All service, capacity and queue examples are invented teaching cases. The M/M/1 results are calculated steady-state means under the stated assumptions, not measurements, guarantees or a universal utilisation target."
+    "note": "Sources checked on 13 September 2026. The service and queue examples use calculated steady-state means under the stated M/M/1 assumptions."
   },
 {
   "category": "Industrial data",
@@ -515,7 +515,7 @@ export const engineeringPosts: BlogPost[] = [
     "The dashboard says connected. The temperature is a plausible 22.4 °C. Nothing is red. But when was that temperature actually measured?",
     "A connection indicator can answer whether part of the communication path is available. It cannot, by itself, establish that the displayed value describes the present. This article proposes a way to keep those questions separate in an MQTT-based monitoring system. The device, numbers and tests are fictional examples."
   ],
-  "note": "Sources checked on 12 September 2026. This is a proposed monitoring design with synthetic timestamps and a fictional 5 s limit, not a validated control or safety function.",
+  "note": "Sources checked on 12 September 2026. This worked monitoring example uses synthetic timestamps and an illustrative 5 s freshness limit.",
   "sections": [
     {
       "id": "three-questions",
@@ -624,9 +624,9 @@ export const engineeringPosts: BlogPost[] = [
   },
   "intro": [
     "The topic name appears in the ROS graph. The message type looks right. The subscriber's callback never runs. Before rewriting the callback, check whether the publisher and subscriber have agreed on how messages may be delivered.",
-    "ROS 2 Quality of Service, or QoS, is part of the interface between nodes. This note uses the Humble documentation and a hypothetical sensor stream. It describes a diagnostic method, not a new test result from my rover project."
+    "ROS 2 Quality of Service, or QoS, is part of the interface between nodes. This diagnostic guide uses the Humble documentation and a hypothetical sensor stream."
   ],
-  "note": "Humble documentation checked on 12 September 2026. The test sequence is proposed and was not executed on a ROS 2 runtime for this article. Check the effective settings and supported events in your installation.",
+  "note": "Humble documentation checked on 12 September 2026. Use this diagnostic sequence to check the effective settings and supported events in your installation.",
   "sections": [
     {
       "id": "discovery-delivery",
@@ -742,9 +742,9 @@ export const engineeringPosts: BlogPost[] = [
     },
     "intro": [
       "A robot turns in place, but the wall in its laser scan seems to slide across the room. It is tempting to open the controller settings and start changing gains. First, check whether the robot's picture of the world is consistent.",
-      "My rover portfolio record combines a physical platform with simulation-validated autonomy. The distinction matters: simulation is useful for repeatable diagnosis, while physical testing introduces mounting errors, wheel slip and timing behaviour that a clean simulation may not reproduce. The diagnostic sequence below is a proposed method, not a report of additional tests on that rover."
+      "I built a differential-drive rover and used Gazebo and RViz to test its ROS 2 navigation stack. The diagnostic approach below starts with localisation: whether the robot has a consistent estimate of where it is."
     ],
-    "note": "Sources checked on 11 September 2026. The numeric example and diagnostic sequence are illustrative; they are not measured rover results.",
+    "note": "Sources checked on 11 September 2026. Includes an illustrative calculation and a localisation diagnostic sequence.",
     "sections": [
       {
         "id": "three-frames",
@@ -819,7 +819,7 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://github.com/ros-infrastructure/rep/blob/master/rep-0105.rst"
       },
       {
-        "label": "Portfolio project: Autonomous Navigation Rover on ROS 2 and its evidence boundary",
+        "label": "Project: Autonomous Navigation Rover on ROS 2",
         "url": "/work/autonomous-navigation-rover/"
       }
     ],
@@ -838,9 +838,9 @@ export const engineeringPosts: BlogPost[] = [
     },
     "intro": [
       "A sensor value sitting near a threshold can cross it repeatedly even when the physical situation has barely changed. If every crossing becomes an event, one movement can turn into several counts.",
-      "My embedded assessment prototype uses Hall-effect sensing to observe movement. This article explores a general signal-processing problem relevant to that kind of system. The thresholds below are made-up normalised values, not settings or performance claims for the prototype."
+      "My embedded assessment device uses Hall-effect sensing to observe movement. The normalised values below illustrate how hysteresis and debounce handle a noisy signal."
     ],
-    "note": "Sources checked on 11 September 2026. Signal values and timing calculations are teaching examples, not prototype measurements.",
+    "note": "Sources checked on 11 September 2026. Signal values and timing calculations are worked examples.",
     "sections": [
       {
         "id": "separate-measurement",
@@ -909,8 +909,7 @@ export const engineeringPosts: BlogPost[] = [
         "id": "test-the-boundary",
         "paragraphs": [
           "Replay recorded raw signals through the decision logic. Include slow crossings, noise near both thresholds, short valid pulses, reversals, startup inside the active region and missing samples. Compare accepted events with independently labelled physical events.",
-          "Report false events, missed events and detection delay separately. A configuration that removes false counts by rejecting every event is easy to make and useless in practice. Keep the raw data and the rule version together so a change can be checked against the same evidence.",
-          "For the portfolio assessment device, the published boundary remains an assessed engineering prototype. This discussion does not establish clinical efficacy or a certified medical device."
+          "Report false events, missed events and detection delay separately. A configuration that removes false counts by rejecting every event is easy to make and useless in practice. Keep the raw data and the rule version together so a change can be checked against the same evidence."
         ],
         "sources": [
           2
@@ -925,7 +924,7 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://www.analog.com/en/resources/analog-dialogue/articles/curing-comparator-instability-with-hysteresis.html"
       },
       {
-        "label": "Portfolio project: ESP32 Clinical Ataxia Assessment Device and prototype boundary",
+        "label": "Project: ESP32 Ataxia Assessment Device",
         "url": "/work/ataxia-assessment-device/"
       }
     ],
@@ -944,9 +943,9 @@ export const engineeringPosts: BlogPost[] = [
     },
     "intro": [
       "Getting a language model to answer a question on your own computer is a useful milestone. It leaves several engineering questions open: which documents reached the model, whether they were current, and what the system is allowed to do with the answer.",
-      "My portfolio describes VeerAI as a local small-language-model system with ingestion, retrieval, memory, tools and evaluation. This article explains a design approach for that wider system. It does not publish private configuration or claim a new benchmark result."
+      "I built VeerAI around a local small language model, with document ingestion, retrieval, memory, tools and evaluation. This article explains how those parts work together."
     ],
-    "note": "Sources checked on 11 September 2026. The fictional manuals and acceptance set are proposed examples, not VeerAI benchmark results.",
+    "note": "Sources checked on 11 September 2026. The worked examples use fictional maintenance manuals.",
     "sections": [
       {
         "id": "trace-the-answer",
@@ -1046,17 +1045,17 @@ export const engineeringPosts: BlogPost[] = [
     "date": "2026-09-11",
     "description": "Preserving identifiers, resolving ambiguity and making an import reviewable before it changes an operational system.",
     "image": {
-      "alt": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
-      "caption": "Fictional import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held. These are illustrative rows, not client data.",
+      "alt": "Illustrative import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held.",
+      "caption": "Illustrative import review: code 00127 retains its leading zeros; an approved change moves AUD 10.00 to AUD 13.00. Duplicate code 00418 is held.",
       "height": 720,
       "src": "/assets/blog/20260911-CSV-Review-Rev00.svg",
       "width": 1200
     },
     "intro": [
       "A CSV import can finish successfully and still damage the meaning of the data. An item code loses its leading zeros. A blank price becomes zero. Two similar descriptions are treated as the same product.",
-      "The public record for my pricing and inventory project describes operator-reviewed imports and explicit matching rules. This article develops the general engineering questions behind that approach, using invented product records and prices. No client data or private implementation is included."
+      "I built operator-reviewed imports and explicit matching rules into my pricing and inventory application. This article explains those design decisions through worked examples of product records and prices."
     ],
-    "note": "Sources checked on 11 September 2026. Catalogue rows and AUD amounts are invented teaching examples; this is software design guidance, not a pricing recommendation.",
+    "note": "Sources checked on 11 September 2026. Catalogue rows and AUD amounts are worked examples.",
     "sections": [
       {
         "id": "contract",
@@ -1147,7 +1146,7 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://www.rfc-editor.org/rfc/rfc4180"
       },
       {
-        "label": "Portfolio project: SWL Pricing and Inventory Control, public matching and review boundary",
+        "label": "Project: SWL Pricing and Inventory Control",
         "url": "/work/swl-pricing-inventory-control/"
       },
       {
@@ -1172,7 +1171,7 @@ export const engineeringPosts: BlogPost[] = [
       "A small app can feel complete when it saves an entry and brings it back after a refresh. The harder question arrives later: can the owner recover the data after replacing a device, losing a browser profile or moving to a new address?",
       "Several projects in my portfolio use local-first or static approaches. Those choices can keep a tool focused and reduce infrastructure. They also make the data boundary worth explaining in ordinary language. This article proposes a recovery design for a fictional equipment register."
     ],
-    "note": "Sources checked on 11 September 2026. The equipment register and restore drill are proposed examples, not claims that every portfolio application implements these features.",
+    "note": "Sources checked on 11 September 2026. The worked example uses a fictional equipment register.",
     "sections": [
       {
         "id": "four-promises",
@@ -1281,9 +1280,9 @@ export const engineeringPosts: BlogPost[] = [
     },
     "intro": [
       "An automation sends a request to create a job. The connection drops before a response arrives. The screen says the request timed out, but the receiving system may already have created the job.",
-      "This is an awkward state because both immediate retry and immediate abandonment can be wrong. The following design uses a fictional service-request workflow to explain how to make that uncertainty visible and recoverable. It is not a claim about a particular deployed client system."
+      "This is an awkward state because both immediate retry and immediate abandonment can be wrong. The following fictional service-request workflow shows how to make that uncertainty visible and recoverable."
     ],
-    "note": "Sources checked on 11 September 2026. The job workflow and fault-injection cases are proposed software examples, not measured production results.",
+    "note": "Sources checked on 11 September 2026. The workflow and fault-injection cases are worked software examples.",
     "sections": [
       {
         "id": "timeout",

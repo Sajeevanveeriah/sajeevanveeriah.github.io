@@ -15,7 +15,7 @@ export function ProjectIndex({ headingId }: { readonly headingId: string }) {
       <div className="further-heading">
         <p className="eyebrow">Complete project index</p>
         <h3 id={headingId}>{total} further engineering projects.</h3>
-        <p>A broader record of robotics, software, industrial and automotive delivery. Visuals appear only where an authentic interface capture or system diagram is available.</p>
+        <p>Robotics, software, industrial automation and automotive engineering projects.</p>
       </div>
       <div className="index-groups">
         {projectIndex.map((group, groupIndex) => (
@@ -31,7 +31,6 @@ export function ProjectIndex({ headingId }: { readonly headingId: string }) {
                   <div className="further-copy">
                     <span className="further-number" aria-hidden="true">{String(itemIndex + 1).padStart(2, '0')}</span>
                     <p className="further-title">{item.title}</p>
-                    <p className="further-evidence">{item.evidence}</p>
                     <p className="further-summary">{item.summary}</p>
                   </div>
                   {item.image ? (

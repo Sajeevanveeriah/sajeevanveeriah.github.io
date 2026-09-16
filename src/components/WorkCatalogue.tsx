@@ -29,13 +29,12 @@ export function WorkCatalogue() {
     history.replaceState(null, "", url);
   }
   const entries = [
-    ...projects.map((p, i) => ({
+    ...projects.map((p) => ({
       title: p.title,
       summary: p.proof,
-      evidence: p.evidence,
       image: p.image,
       slug: p.slug,
-      category: p.category ?? (["Robotics", "Embedded", "Software"][i] ?? "Software"),
+      category: p.category,
     })),
     ...projectIndex.flatMap((g, i) =>
       g.items.map((p) => ({
@@ -91,7 +90,6 @@ export function WorkCatalogue() {
                 )}
               </h2>
               <p>{p.summary}</p>
-              <p className="quiet">{p.evidence}</p>
               {p.slug && (
                 <Link prefetch={false} href={`/work/${p.slug}/`}>Read case study →</Link>
               )}

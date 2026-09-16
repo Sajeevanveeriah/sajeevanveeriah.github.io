@@ -118,7 +118,7 @@ z
    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #17212e" x="51.84" y="451.008" transform="rotate(-0 51.84 451.008)">Reference labels in rows. Inspection decisions in columns.</text>
   </g>
   <g id="text_20">
-   <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #344054" x="51.84" y="489.888" transform="rotate(-0 51.84 489.888)">Illustrative counts, not measured model performance.</text>
+   <text style="font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #344054" x="51.84" y="489.888" transform="rotate(-0 51.84 489.888)">Illustrative inspection outcomes.</text>
   </g>
  </g>
 </svg>

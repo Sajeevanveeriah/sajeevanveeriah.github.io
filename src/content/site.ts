@@ -79,12 +79,12 @@ export const experience: readonly ExperienceRecord[] = [
   },
   {
     period: 'Aug 2022 - Feb 2024',
-    role: 'Production Line Team Lead & Cellar Hand',
+    role: 'Production Line Worker / Supervisor / Commissioning Support; Cellar Hand',
     organisation: 'IDL Australia',
     employerUrl: 'https://www.idl.au/idl-story',
     context: 'Beverage manufacturing, packaging and traceable production',
     detail:
-      'Led day-to-day output, changeovers and shift handovers while maintaining batch quality, traceability and safe operation. Performed first-response fault recovery and supported installation and commissioning checks during WestRock and Fibre-King canning-line upgrades.',
+      'Led shift output, changeovers and handovers, maintained quality and traceability, recovered faults and supported WestRock and Fibre-King canning-line commissioning checks from August 2022 to September 2023. Worked as a cellar hand from September 2023 to February 2024, supporting sanitation, sampling, quality monitoring and production records.',
     tags: ['Team leadership', 'Production', 'Changeover', 'Traceability', 'Fault recovery', 'Commissioning support'],
   },
   {
@@ -217,5 +217,5 @@ export const beyond = [
   { title: 'Hockey', detail: 'A faster off-season field game, and another reason to enjoy team sport.' },
   { title: 'Long drives', detail: 'An open road, good music and somewhere new at the end is the best reset.' },
   { title: 'Music', detail: 'The soundtrack to those drives, late builds and most evenings.' },
-  { title: 'Robots in the garage', detail: 'There is usually a personal robotics or hardware build half-finished on the bench.' },
+  { title: 'Robots in the garage', detail: 'I enjoy working on personal robotics and hardware projects.' },
 ] as const

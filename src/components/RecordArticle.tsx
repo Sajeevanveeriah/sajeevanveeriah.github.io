@@ -23,15 +23,6 @@ function Tag({ children }: { readonly children: React.ReactNode }) {
   return <li className="tag">{children}</li>
 }
 
-function EvidenceBoundary({ text }: { readonly text: string }) {
-  return (
-    <section className="boundary" aria-labelledby="boundary-heading">
-      <h2 id="boundary-heading">Scope and limitations</h2>
-      <p>{text}</p>
-    </section>
-  )
-}
-
 export function RecordArticle({ project, nextProject, position, total }: { readonly project: Project; readonly nextProject: Project; readonly position: number; readonly total: number }) {
   const pad = (value: number) => String(value).padStart(2, '0')
 
@@ -41,9 +32,8 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
         <Link prefetch={false} className="back-link" href="/work/"><ArrowLeft />Selected work</Link>
         <MetaStrip
           items={[
-            { label: 'Record', value: `${pad(position)} of ${pad(total)}` },
-            { label: 'Evidence class', value: project.evidence, accent: true },
-            { label: 'Status', value: project.readiness },
+            { label: 'Project', value: `${pad(position)} of ${pad(total)}` },
+            { label: 'Discipline', value: project.category, accent: true },
           ]}
         />
         <header className="record-header">
@@ -52,7 +42,7 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
         </header>
         {project.image ? (
           <ProjectMedia image={project.image} priority/>
-        ) : <SystemEvidence eyebrow="Verified system path" title={project.title} steps={project.systemPath} />}
+        ) : <SystemEvidence eyebrow="System architecture" title={project.title} steps={project.systemPath} />}
       </article>
       <div className="record-grid shell">
         <aside className="record-rail">
@@ -66,10 +56,9 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
         </aside>
         <div className="record-body">
           <section aria-labelledby="problem-heading"><h2 id="problem-heading">Problem</h2><p>{project.problem}</p></section>
-          <section aria-labelledby="system-heading"><h2 id="system-heading">System boundary</h2><p>{project.system}</p></section>
           <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">Architecture</h2><p>{project.architecture}</p></section>
           <section aria-labelledby="decisions-heading">
-            <h2 id="decisions-heading">Constraints and decisions</h2>
+            <h2 id="decisions-heading">Design decisions</h2>
             <ol className="decisions">
               {project.decisions.map((decision, index) => (
                 <li key={decision}>
@@ -81,33 +70,23 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
           </section>
           <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
           {project.trials && <section aria-labelledby="trials-heading">
-            <h2 id="trials-heading">Tests, trials and findings</h2>
+            <h2 id="trials-heading">Development and testing</h2>
             <dl className="project-trials">
               {project.trials.map((trial) => <div key={trial.area}>
                 <dt>{trial.area}</dt>
-                <dd><p>{trial.result}</p><p className="quiet">{trial.scope}</p></dd>
+                <dd><p>{trial.result}</p></dd>
               </div>)}
             </dl>
           </section>}
-          {project.gallery && <section aria-labelledby="gallery-heading">
-            <h2 id="gallery-heading">Selected development evidence</h2>
-            {project.gallery.map((item) => <div className="evidence-figure" key={item.src}>
-              <ProjectMedia image={item} />
-              <p>{item.caption}</p>
-            </div>)}
-          </section>}
-          <section aria-labelledby="readiness-heading"><h2 id="readiness-heading">Current readiness</h2><p>{project.readiness}</p></section>
-          <EvidenceBoundary text={project.boundary} />
         </div>
       </div>
       <section className="record-actions" aria-labelledby="record-actions-title">
         <div className="shell">
           <h2 id="record-actions-title">Continue the conversation.</h2>
-          <p>Discuss this work, compare it with your engineering brief, or continue to the next evidence record.</p>
+          <p>Have a related engineering problem? Get in touch or explore another project.</p>
           <div>
             <a href={`mailto:${site.email}`}>Email Saj <span aria-hidden="true">→</span></a>
             <a href={resumeFiles.pdf} download>Resume PDF <span aria-hidden="true">→</span></a>
-            <a href={resumeFiles.docx} download>Resume DOCX <span aria-hidden="true">→</span></a>
             <Link prefetch={false} href={`/work/${nextProject.slug}/`} data-next-project>Next: {nextProject.title} <span aria-hidden="true">→</span></Link>
           </div>
         </div>
