@@ -104,7 +104,7 @@ try {
         }
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
-          assert.equal(await page.locator(".evidence-figure").count(), 1);
+          assert.equal(await page.locator(".evidence-figure").count(), 0);
           assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io/work/gendio-controller/");
           assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.innerText)), false);
           assert.equal(await page.locator(".boundary").count(), 0);

@@ -78,13 +78,6 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
               </div>)}
             </dl>
           </section>}
-          {project.gallery && <section aria-labelledby="gallery-heading">
-            <h2 id="gallery-heading">Interface</h2>
-            {project.gallery.map((item) => <div className="evidence-figure" key={item.src}>
-              <ProjectMedia image={item} />
-              <p>{item.caption}</p>
-            </div>)}
-          </section>}
         </div>
       </div>
       <section className="record-actions" aria-labelledby="record-actions-title">

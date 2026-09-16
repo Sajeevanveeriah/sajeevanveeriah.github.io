@@ -1,7 +1,6 @@
 export interface Project {
   readonly category: 'Robotics' | 'Embedded' | 'Software' | 'Industrial'
   readonly trials?: readonly { readonly area: string; readonly result: string }[]
-  readonly gallery?: readonly { readonly src: string; readonly alt: string; readonly width: number; readonly height: number; readonly kind: string; readonly caption: string }[]
   readonly slug: string
   readonly title: string
   readonly proof: string
@@ -147,15 +146,6 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { area: 'Browser interface', result: 'Tested 31 protocol options and five configuration workflows against a mocked API, including JavaScript error and mobile overflow checks.' },
       { area: 'Circuit modelling', result: 'Used ngspice for divider corners, reset timing and fixed-duty LC studies, with GNU Octave for analytical load-step and tolerance calculations.' },
       { area: 'Mechanical exports', result: 'Prepared the board model and mounting exports and matched 88 SMT designators against the placement file.' },
-    ],
-    gallery: [
-      {
-        src: '/assets/gendio/20260915-Gendio-Interface-Rev00.png',
-        alt: 'Browser interface test showing controller status, indicator settings, network configuration and firmware update controls.',
-        width: 1100, height: 3111,
-        kind: 'Browser interface test',
-        caption: 'Configuration and maintenance controls, grouped by task in the local browser interface.',
-      },
     ],
   },
 ] as const
