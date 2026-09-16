@@ -17,7 +17,7 @@ export const careerPosts: BlogPost[] = [
       "Which decisions must this person make independently? What must they already know? What could they learn with a capable colleague and a reasonable induction? If those questions have no clear answers, the number may be doing the thinking that the hiring process should have done.",
       "My concern is the opportunity we lose when time served becomes the default test of ability. A person can have useful, current skills and still be rejected before anyone examines their work."
     ],
-    "note": "Opinion by Sajeevan (Saj) Veeriah. Sources checked on 13 September 2026. Historical survey and working-paper findings are labelled by period and version; they do not establish causes across the whole labour market. Diagrams are conceptual proposals, not measured hiring outcomes.",
+    "note": "Opinion by Sajeevan (Saj) Veeriah. Sources checked on 13 September 2026. Historical survey and working-paper findings are labelled by period and version; they do not establish causes across the whole labour market. Diagrams illustrate the proposed approach.",
     "sections": [
       {
         "id": "what-years-measure",
@@ -85,7 +85,7 @@ export const careerPosts: BlogPost[] = [
         "id": "better-assessment",
         "image": {
           "alt": "A proposed hiring assessment examines work samples, learning and verification, then provides supervised responsibility. It retains genuine safety and licensing prerequisites.",
-          "caption": "A proposed assessment framework, not a validated scoring model. The table above provides its text equivalent.",
+          "caption": "Proposed assessment framework. The table above provides its text equivalent.",
           "height": 720,
           "src": "/assets/blog/20260913-Hiring-Evidence-Rev00.svg",
           "width": 1200

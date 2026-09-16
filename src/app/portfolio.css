@@ -548,7 +548,7 @@ button[aria-pressed="true"] {
 }
 .meta-strip {
   display: grid;
-  grid-template-columns: 100px 1fr 2fr;
+  grid-template-columns: 100px minmax(0, 1fr);
   gap: 32px;
   border-block: 1px solid var(--line);
   padding: 24px 0;

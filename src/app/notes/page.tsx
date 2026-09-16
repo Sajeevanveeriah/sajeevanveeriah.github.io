@@ -29,10 +29,6 @@ export default function Notes() {
             A practical robotics learning roadmap, organised around things to
             build and inspect.
           </p>
-          <p className="quiet">
-            A learning resource and proposed pathway, not a record of completed
-            qualifications.
-          </p>
           <a className="button" href={learningGuide.docx} download>
             Download roadmap (DOCX) ↓
           </a>

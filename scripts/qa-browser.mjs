@@ -86,6 +86,8 @@ try {
           waitUntil: "networkidle",
         });
         assert.equal(response.status(), 200);
+        assert.equal(await page.locator('a[href="/assets/Resume_Sajeevan_Veeriah.docx"]').count(), 0);
+        assert.ok(await page.locator('a[href="/assets/Resume_Sajeevan_Veeriah.pdf"]').count() > 0);
         await page.evaluate(async () => {
           for (const i of document.images) i.loading = "eager";
           await Promise.all(
@@ -101,11 +103,12 @@ try {
           console.log("VISUAL_PREVIEW " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:65,fullPage:false})).toString("base64")}));
         }
         if (route === "/work/gendio-controller/") {
-          assert.equal(await page.locator(".project-trials > div").count(), 10);
-          assert.equal(await page.locator(".evidence-figure").count(), 2);
+          assert.equal(await page.locator(".project-trials > div").count(), 7);
+          assert.equal(await page.locator(".evidence-figure").count(), 1);
           assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io/work/gendio-controller/");
           assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.innerText)), false);
-          assert.ok((await page.locator(".boundary").innerText()).includes("No assembled board"));
+          assert.equal(await page.locator(".boundary").count(), 0);
+          assert.equal(await page.getByRole("heading", { name: "Current readiness", exact: true }).count(), 0);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
         }
         if (route.startsWith("/blog/")) {
@@ -202,6 +205,8 @@ try {
     console.log(`Verified ${routes.length} routes at ${width}px in light and dark`);
   }
   if(failures.length) throw new Error(JSON.stringify(failures));
+  assert.equal(await stat(join(root, "assets/Resume_Sajeevan_Veeriah.docx")).catch(() => null), null);
+  assert.deepEqual(await readFile(join(root, "assets/Resume_Sajeevan_Veeriah.pdf")), await readFile("public/assets/Resume_Sajeevan_Veeriah.pdf"));
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
   });
@@ -276,10 +281,10 @@ try {
   assert.equal(await page.getByRole("status").textContent(), "1 project");
   await page.getByRole("link", { name: "Read case study", exact: false }).click();
   await page.waitForURL(baseURL + "/work/gendio-controller/");
-  assert.equal(await page.locator(".project-trials > div").count(), 10);
+  assert.equal(await page.locator(".project-trials > div").count(), 7);
   await page.goto(baseURL + "/work/");
   await page.getByRole("button", { name: "Software", exact: true }).click();
-  assert.equal(await page.getByRole("status").textContent(), "7 projects");
+  assert.equal(await page.getByRole("status").textContent(), "6 projects");
   assert.ok(page.url().includes("category=Software"));
   await page.reload();
   assert.equal(
@@ -291,7 +296,7 @@ try {
   await page.getByRole("searchbox").fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
-  assert.equal(await page.getByRole("status").textContent(), "20 projects");
+  assert.equal(await page.getByRole("status").textContent(), "19 projects");
   await page.getByRole("searchbox").fill("ataxia");
   assert.equal(await page.getByRole("status").textContent(), "1 project");
   await page.getByRole("button", { name: "Reset", exact: true }).click();
@@ -345,7 +350,7 @@ try {
   await plain.goto(baseURL + "/");
   assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
-  assert.equal(await plain.locator(".catalogue article").count(), 20);
+  assert.equal(await plain.locator(".catalogue article").count(), 19);
   await plain.goto(baseURL + "/blog/");
   await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
   assert.equal(await plain.locator(".blog-routine li").count(), 4);

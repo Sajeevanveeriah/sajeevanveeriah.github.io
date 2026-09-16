@@ -6,16 +6,16 @@ A static Next.js portfolio presenting robotics, embedded mechatronics, engineeri
 
 - Home: introduction, selected projects, engineering approach, experience summary and contact.
 - Work: all 19 records, category filters, search, shareable filter URLs and reset.
-- Case studies: contribution, architecture, decisions, verification and scope.
+- Case studies: contribution, architecture, design decisions and testing.
 - About: the complete seven-entry career timeline and education.
 - Notes: the existing six-month learning roadmap and download.
 - Blog: dated articles, a homepage preview, individual shareable URLs and source links.
 
-The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and download URLs are retained. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
+The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the approved general engineering PDF dated 11 September 2026, Rev00; update it from the approved source PDF. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
 
 ## Development and verification
 
-Node.js 22, npm, Python 3.12 for the existing resume generator.
+Node.js 22 and npm.
 
 ```sh
 npm ci

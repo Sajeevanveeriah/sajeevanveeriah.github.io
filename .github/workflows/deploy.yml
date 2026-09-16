@@ -27,18 +27,8 @@ jobs:
           node-version: 22
           cache: npm
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
       - name: Install dependencies
         run: npm ci
-
-      - name: Generate DOCX resume
-        run: |
-          python -m pip install --disable-pip-version-check --no-cache-dir \
-            python-docx==1.2.0 Pillow==12.3.0
-          python scripts/generate-public-resume-docx.py
 
       - name: Type check
         run: npm run typecheck
@@ -67,7 +57,7 @@ jobs:
       - name: Run Lighthouse quality gate
         run: npm run qa:lighthouse
 
-      - name: Verify portfolio export and resume formats
+      - name: Verify portfolio export and PDF resume
         shell: bash
         run: |
           set -euo pipefail
@@ -94,12 +84,12 @@ jobs:
             work/gendio-controller/index.html \
             work/swl-pricing-inventory-control/index.html \
             assets/Resume_Sajeevan_Veeriah.pdf \
-            assets/Resume_Sajeevan_Veeriah.docx \
             assets/20260903-Robotics-Learning-Roadmap-Rev00.docx \
             assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp; do
             test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
           done
-          unzip -t out/assets/Resume_Sajeevan_Veeriah.docx >/dev/null
+          test ! -e out/assets/Resume_Sajeevan_Veeriah.docx
+          cmp public/assets/Resume_Sajeevan_Veeriah.pdf out/assets/Resume_Sajeevan_Veeriah.pdf
           unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
           grep -Fq 'Different systems.' out/index.html
           grep -Fq 'Download resume' out/index.html
@@ -131,7 +121,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Wait for portfolio routes, both resumes and exact monogram
+      - name: Wait for portfolio routes, PDF resume and exact monogram
         shell: bash
         run: |
           set -euo pipefail
@@ -176,7 +166,7 @@ jobs:
               "$base_url/assets/Resume_Sajeevan_Veeriah.pdf?release=$cache_key")"
             docx_status="$(curl --silent --show-error --location \
               --header 'Cache-Control: no-cache' \
-              --output /tmp/resume-live.docx \
+              --output /dev/null \
               --write-out '%{http_code}' \
               "$base_url/assets/Resume_Sajeevan_Veeriah.docx?release=$cache_key")"
             monogram_status="$(curl --silent --show-error --location \
@@ -187,21 +177,18 @@ jobs:
 
             if [ "$route_failure" = 0 ] && \
                [ "$pdf_status" = 200 ] && \
-               [ "$docx_status" = 200 ] && \
+               [ "$docx_status" = 404 ] && \
                [ "$monogram_status" = 200 ] && \
                grep -Fq "$GITHUB_SHA" /tmp/portfolio-route-home.html && \
                grep -Fq 'Different systems.' /tmp/portfolio-route-home.html && \
                grep -Fq 'Download resume' /tmp/portfolio-route-home.html && \
                grep -Fq 'Engineering approach' /tmp/portfolio-route-home.html && \
                cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
-               cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp && \
-               unzip -t /tmp/resume-live.docx >/dev/null; then
-              python -c "from pathlib import Path; from zipfile import ZipFile; path=Path('/tmp/resume-live.docx'); assert path.stat().st_size >= 30000, 'Live DOCX resume is unexpectedly small'; document=ZipFile(path).read('word/document.xml').decode('utf-8'); required=('Farm Frites Australia','CONTRACT PENDING','Industrial IT Engineer'); assert all(phrase in document for phrase in required), 'Live DOCX missing required content'; print('Live DOCX package and Farm Frites content verified')"
-              printf 'Live portfolio, PDF resume, DOCX resume and exact monogram verified after attempt %s\n' "$attempt"
+               cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp; then
+              printf 'Live portfolio, exact PDF resume, DOCX removal and exact monogram verified after attempt %s\n' "$attempt"
               sha256sum \
                 /tmp/portfolio-route-home.html \
                 /tmp/resume-live.pdf \
-                /tmp/resume-live.docx \
                 /tmp/portfolio-monogram-live.webp
               exit 0
             fi
@@ -221,7 +208,6 @@ jobs:
           path: |
             /tmp/portfolio-route-*.html
             /tmp/resume-live.pdf
-            /tmp/resume-live.docx
             /tmp/portfolio-monogram-live.webp
           if-no-files-found: warn
           retention-days: 14
