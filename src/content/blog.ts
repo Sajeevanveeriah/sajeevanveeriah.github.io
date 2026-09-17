@@ -1,3 +1,4 @@
+import { designPosts } from "./design-posts";
 import { careerPosts } from "./career-posts";
 import { engineeringPosts } from "./blog-posts";
 
@@ -26,6 +27,7 @@ export type BlogPost = {
 
 // Add a post here to publish its page, index entry and sitemap URL together.
 export const posts: BlogPost[] = [
+  ...designPosts,
   ...careerPosts,
   ...engineeringPosts,
   {

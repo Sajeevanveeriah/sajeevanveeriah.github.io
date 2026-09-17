@@ -52,6 +52,8 @@ const browser = await chromium.launch({ headless: true });
 const blogRoutes = ["/blog/sampling-can-hide-real-motion/","/blog/inspection-accuracy-and-missed-defects/","/blog/the-experience-trap/","/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
 const routes = [
   ...blogRoutes,
+  "/blog/the-second-life-of-a-product/",
+  "/blog/in-praise-of-the-volume-knob/",
   "/",
   "/work/",
   "/about/",

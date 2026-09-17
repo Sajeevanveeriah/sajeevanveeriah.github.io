@@ -68,6 +68,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/the-second-life-of-a-product/index.html \
+            blog/in-praise-of-the-volume-knob/index.html \
             blog/sampling-can-hide-real-motion/index.html \
             blog/inspection-accuracy-and-missed-defects/index.html \
             blog/machine-vision-starts-with-the-image/index.html \
