@@ -68,6 +68,10 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/ros2-navigation-rover-case-study/index.html \
+            blog/esp32-movement-assessment-case-study/index.html \
+            blog/swl-pricing-inventory-case-study/index.html \
+            blog/gendio-display-controller-case-study/index.html \
             blog/the-second-life-of-a-product/index.html \
             blog/in-praise-of-the-volume-knob/index.html \
             blog/sampling-can-hide-real-motion/index.html \
