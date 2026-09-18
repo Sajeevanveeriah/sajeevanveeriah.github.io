@@ -47,7 +47,10 @@ export const caseStudyPosts: BlogPost[] = [
         paragraphs: ["This project made the interfaces between subsystems the centre of my debugging process. For future robotics work, I want an experimental question, observable intermediate states and a clear boundary between what a simulation demonstrates and what still requires a physical trial."],
       },
     ],
-    sources: [{ label: "My ROS 2 rover project record: architecture, ownership and simulation checks", url: "/work/autonomous-navigation-rover/" }],
+    sources: [
+      { label: "My ROS 2 rover project record: architecture, ownership and simulation checks", url: "/work/autonomous-navigation-rover/" },
+      { label: "Further reading: official Nav2 navigation concepts (Rolling documentation; project used Humble)", url: "https://docs.nav2.org/rolling/getting_started/navigation_concepts/" },
+    ],
     note: "First-person engineering case study based on my project record. This is not a peer-reviewed paper or a claim of a novel navigation algorithm. Published 18 September 2026; this is the article date, not the project start date.",
   },
   {
@@ -93,7 +96,10 @@ export const caseStudyPosts: BlogPost[] = [
         paragraphs: ["The most useful habit was tracing a result back through the entire measurement chain. Mechanical behaviour, sensing, firmware timing and analysis all influence what an apparent result means. That is the kind of integrated experimental work I want to pursue in robotics and embedded intelligence."],
       },
     ],
-    sources: [{ label: "My ESP32 assessment-device project record: sensing, implementation and validation scope", url: "/work/ataxia-assessment-device/" }],
+    sources: [
+      { label: "My ESP32 assessment-device project record: sensing, implementation and validation scope", url: "/work/ataxia-assessment-device/" },
+      { label: "Further reading: Espressif ESP32 Bluetooth API documentation (technical context)", url: "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/bluetooth/index.html" },
+    ],
     note: "First-person engineering case study, not a clinical study or peer-reviewed publication. Qualification details reflect my confirmed completion and award. The illustration is conceptual.",
   },
   {
@@ -141,7 +147,10 @@ export const caseStudyPosts: BlogPost[] = [
         paragraphs: ["The important design decision was to give uncertainty somewhere explicit to go. A pricing tool needs a clear relationship between an input, a rule, an operator decision and an output. That principle also applies to automation and AI systems where a plausible result should remain open to inspection.", "A future evaluation could compare reviewed runs using reconciliation outcomes, exception categories and operator effort. That would measure practical usefulness without confusing test coverage with a demonstrated business outcome."],
       },
     ],
-    sources: [{ label: "My SWL project record: requirements, architecture and testing strategy", url: "/work/swl-pricing-inventory-control/" }],
+    sources: [
+      { label: "My SWL project record: requirements, architecture and testing strategy", url: "/work/swl-pricing-inventory-control/" },
+      { label: "Further reading: official Tauri 2 architecture documentation", url: "https://v2.tauri.app/concept/architecture/" },
+    ],
     note: "Engineering case study based on the public project record. Client data, private implementation details and unsupported business metrics are omitted.",
   },
   {
@@ -194,7 +203,10 @@ export const caseStudyPosts: BlogPost[] = [
         paragraphs: ["This project reinforced the value of explicit activation and independently testable paths. A controller should make its operating state understandable to both the firmware and the person configuring it. That is a practical connection between embedded design, human use and verification."],
       },
     ],
-    sources: [{ label: "My Gendio controller record: design decisions, trials and verification scope", url: "/work/gendio-controller/" }],
+    sources: [
+      { label: "My Gendio controller record: design decisions, trials and verification scope", url: "/work/gendio-controller/" },
+      { label: "Further reading: KiCad 9 PCB Editor manual, including inspection and fabrication outputs", url: "https://docs.kicad.org/9.0/en/pcbnew/pcbnew.html" },
+    ],
     note: "Engineering design case study, not a field-validation report, certification statement or peer-reviewed paper. Future hardware work is labelled as proposed.",
   },
 ];
