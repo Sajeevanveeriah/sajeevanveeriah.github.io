@@ -53,7 +53,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
         </header>
         {post.image && <figure className="blog-figure">
           <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />
-          <figcaption>{post.image.caption} <a href={post.image.src}>View full-size diagram</a></figcaption>
+          <figcaption>{post.image.caption} <a href={post.image.src}>View full-size image</a></figcaption>
         </figure>}
         <div className="blog-layout">
           <nav className="blog-contents" aria-label="In this article">
@@ -73,7 +73,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
               {section.after?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {section.image && <figure className="blog-figure">
                 <Image src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height} />
-                <figcaption>{section.image.caption} <a href={section.image.src}>View full-size diagram</a></figcaption>
+                <figcaption>{section.image.caption} <a href={section.image.src}>View full-size image</a></figcaption>
               </figure>}
               {section.steps && <ol className="blog-routine">{section.steps.map(([label, detail]) => <li key={label}><strong>{label}</strong><span>{detail}</span></li>)}</ol>}
               {section.sources && <p className="blog-citations">Sources: {section.sources.map((number) => { const source = post.sources[number - 1]; return source ? <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${source.label}`}>[{number}]</a> : null; })}</p>}

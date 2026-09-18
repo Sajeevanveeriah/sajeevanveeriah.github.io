@@ -69,6 +69,11 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
             </ol>
           </section>
           <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
+          {project.caseStudy && <section aria-labelledby="case-study-heading">
+            <h2 id="case-study-heading">Engineering case study</h2>
+            <p>Read the design rationale, verification scope and proposed next experiments.</p>
+            <Link prefetch={false} className="text-link" href={project.caseStudy}>Read the {project.title} case study</Link>
+          </section>}
           {project.trials && <section aria-labelledby="trials-heading">
             <h2 id="trials-heading">Development and testing</h2>
             <dl className="project-trials">

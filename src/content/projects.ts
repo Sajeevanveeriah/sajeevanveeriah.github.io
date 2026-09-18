@@ -1,4 +1,5 @@
 export interface Project {
+  readonly caseStudy?: string
   readonly category: 'Robotics' | 'Embedded' | 'Software' | 'Industrial'
   readonly trials?: readonly { readonly area: string; readonly result: string }[]
   readonly slug: string
@@ -24,6 +25,7 @@ export interface Project {
 export const projects: readonly [Project, Project, Project, ...Project[]] = [
   {
     slug: 'autonomous-navigation-rover',
+    caseStudy: '/blog/ros2-navigation-rover-case-study/',
     category: 'Robotics',
     title: 'Autonomous Navigation Rover on ROS 2',
     proof: 'Repeatable localisation, planning and obstacle-aware navigation behaviour.',
@@ -53,6 +55,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
   },
   {
     slug: 'ataxia-assessment-device',
+    caseStudy: '/blog/esp32-movement-assessment-case-study/',
     category: 'Embedded',
     title: 'ESP32 Ataxia Assessment Device',
     proof: 'Real-time recording, Bluetooth display and CSV/PDF reporting.',
@@ -82,6 +85,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
   },
   {
     slug: 'swl-pricing-inventory-control',
+    caseStudy: '/blog/swl-pricing-inventory-case-study/',
     category: 'Software',
     title: 'SWL Pricing and Inventory Control',
     proof: 'Operator-reviewed imports with change, exception, rollback and audit reports.',
@@ -111,6 +115,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
   },
   {
     slug: 'gendio-controller',
+    caseStudy: '/blog/gendio-display-controller-case-study/',
     title: 'Gendio Display Controller',
     category: 'Embedded',
     proof: 'Four-layer PCB design, ESP32-S3 firmware and a browser-based configuration interface.',
