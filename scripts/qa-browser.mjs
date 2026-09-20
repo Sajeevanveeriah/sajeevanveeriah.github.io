@@ -363,7 +363,7 @@ try {
   await plain.goto(baseURL + "/");
   assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
-  assert.equal(await plain.locator(".catalogue article").count(), 19);
+  assert.equal(await plain.locator(".catalogue article").count(), 20);
   await plain.goto(baseURL + "/blog/");
   await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
   assert.equal(await plain.locator(".blog-routine li").count(), 4);
