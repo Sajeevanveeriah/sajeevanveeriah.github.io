@@ -71,6 +71,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/gendio-control-board-and-radar-positioning/index.html \
+            blog/solar-panel-cleaning-robot-design-study/index.html \
             blog/the-second-life-of-a-product/index.html \
             blog/in-praise-of-the-volume-knob/index.html \
             blog/sampling-can-hide-real-motion/index.html \
@@ -134,6 +136,8 @@ jobs:
             "/about/"
             "/notes/"
             "/blog/"
+            "/blog/gendio-control-board-and-radar-positioning/"
+            "/blog/solar-panel-cleaning-robot-design-study/"
             "/blog/the-second-life-of-a-product/"
             "/blog/in-praise-of-the-volume-knob/"
             "/blog/sampling-can-hide-real-motion/"
