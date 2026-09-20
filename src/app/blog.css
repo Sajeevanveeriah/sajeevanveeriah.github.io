@@ -58,3 +58,6 @@
 @media (min-width:761px) { .blog-index .blog-list article { grid-template-columns:260px minmax(0,1fr); } }
 @media (max-width:760px) { .blog-thumbnail { max-width:360px; } .blog-figure { margin-bottom:32px; } }
 @media print { .blog-figure { break-inside:avoid; } }
+
+.blog-downloads { padding-left:22px; margin:24px 0; }
+.blog-downloads a { display:inline-flex; align-items:center; min-height:44px; padding-block:8px; overflow-wrap:anywhere; }

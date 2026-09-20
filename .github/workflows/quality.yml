@@ -68,6 +68,8 @@ jobs:
             sitemap.xml \
             favicon.png \
             blog/index.html \
+            blog/gendio-control-board-and-radar-positioning/index.html \
+            blog/solar-panel-cleaning-robot-design-study/index.html \
             blog/ros2-navigation-rover-case-study/index.html \
             blog/esp32-movement-assessment-case-study/index.html \
             blog/swl-pricing-inventory-case-study/index.html \

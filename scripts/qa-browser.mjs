@@ -49,7 +49,8 @@ const server = createServer(async (request, response) => {
 
 await new Promise((ready) => server.listen(port, "127.0.0.1", ready));
 const browser = await chromium.launch({ headless: true });
-const blogRoutes = ["/blog/ros2-navigation-rover-case-study/", "/blog/esp32-movement-assessment-case-study/", "/blog/swl-pricing-inventory-case-study/", "/blog/gendio-display-controller-case-study/", "/blog/sampling-can-hide-real-motion/","/blog/inspection-accuracy-and-missed-defects/","/blog/the-experience-trap/","/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
+const developmentRoutes = ["/blog/gendio-control-board-and-radar-positioning/", "/blog/solar-panel-cleaning-robot-design-study/"];
+const blogRoutes = [...developmentRoutes, "/blog/ros2-navigation-rover-case-study/", "/blog/esp32-movement-assessment-case-study/", "/blog/swl-pricing-inventory-case-study/", "/blog/gendio-display-controller-case-study/", "/blog/sampling-can-hide-real-motion/","/blog/inspection-accuracy-and-missed-defects/","/blog/the-experience-trap/","/blog/machine-vision-starts-with-the-image/","/blog/automation-queues-and-flow-time/","/blog/mqtt-connected-does-not-mean-current/","/blog/ros2-topic-visible-but-no-messages/","/blog/robot-localisation-before-controller-tuning/","/blog/noisy-sensors-hysteresis-and-debounce/","/blog/local-ai-beyond-the-model/","/blog/csv-imports-that-deserve-trust/","/blog/local-first-apps-need-a-restore-path/","/blog/automation-retries-without-duplicate-actions/"];
 const routes = [
   ...blogRoutes,
   "/blog/the-second-life-of-a-product/",
@@ -130,7 +131,7 @@ try {
           }
         }
         if (blogRoutes.includes(route)) {
-          assert.equal(await page.locator(".blog-figure img").count(), route === "/blog/the-experience-trap/" ? 2 : 1);
+          assert.equal(await page.locator(".blog-figure img").count(), route === developmentRoutes[0] ? 6 : route === developmentRoutes[1] ? 5 : route === "/blog/the-experience-trap/" ? 2 : 1);
           assert.equal(await page.locator(".blog-sources li").count() >= 2, true);
           assert.equal(await page.locator('meta[property="og:type"]').getAttribute("content"), "article");
           assert.equal(await page.locator(".blog-body").evaluate(el => /[\u2013\u2014]/.test(el.textContent)), false);
@@ -143,6 +144,12 @@ try {
           const anchor = await contentsLink.getAttribute("href");
           await contentsLink.press("Enter");
           assert.ok(page.url().endsWith(anchor));
+        }
+        if (developmentRoutes.includes(route)) {
+          const downloads = await page.locator('.blog-downloads a').evaluateAll(links => links.map(a => a.getAttribute('href')));
+          assert.equal(downloads.length, route === developmentRoutes[0] ? 3 : 4);
+          for (const download of downloads) assert.ok((await stat(join(root, download))).size > 0);
+          assert.ok((await page.locator('.blog-body').innerText()).includes('Stay Hungry; Stay Foolish'));
         }
         if (route === "/") {
           const services = page.getByRole("region", {
