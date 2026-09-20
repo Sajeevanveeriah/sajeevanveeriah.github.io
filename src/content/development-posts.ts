@@ -273,9 +273,15 @@ export const developmentPosts: BlogPost[] = [
     "intro": [
       "A solar-panel cleaner must remove contamination while protecting the surface that produces the energy. Adding a brush to a mobile platform leaves most of that problem unresolved: contact force, embedded grit, wheel slip, edge detection and power-loss retention all interact.",
       "My new design explores a waterless crawler with replaceable track pods, a 420 mm roller and separate docking and loading modules. The goal is a system that can adapt within a qualified installation class. It cannot responsibly mean driving onto any unfamiliar panel and learning its safety limits by trial and error.",
-      "This is a development design study. The package contains FreeCAD and STEP models, first-pass calculations, an interface schematic, a tested host-side supervisor and an offline rectangular coverage planner. It does not contain a production-ready robot, a completed electrical safety circuit or evidence of physical cleaning performance."
+      "I have built and tested the hardware, and it is operating as intended. My 96-page independent research paper, Modular Waterless Photovoltaic Cleaning, is now available as Revision 02 on Zenodo. This article preserves the earlier Rev00 design study; its CAD, software records and development actions describe that archived baseline."
     ],
     "sections": [
+      {
+        "id": "research-paper",
+        "title": "Read the research paper",
+        "paragraphs": ["Revision 02 brings together the mechanical design, electronics, contact mechanics, coverage planning and computational analysis. The paper records the built and tested prototype alongside the analytical methods and archived engineering evidence."],
+        "links": [{ "label": "Read Modular Waterless Photovoltaic Cleaning - Revision 02", "url": "https://zenodo.org/records/22865101" }]
+      },
       {
         "id": "question",
         "title": "1. Frame the research question around useful cleaning",
@@ -442,7 +448,7 @@ export const developmentPosts: BlogPost[] = [
       },
       {
         "id": "states",
-        "title": "9. The supervisor is implemented; the robot is not yet autonomous",
+        "title": "9. Supervisor implementation in the archived Rev00 baseline",
         "paragraphs": [
           "The host-side control logic defines Disarmed, Ready, Cleaning, Docked and Fault states. It checks profile bounds, sample freshness, interlocks, edge agreement, driver condition, tilt, battery, current and temperature. Faults latch, and removing the cause does not automatically restart motion.",
           "Arming, starting and resetting are separate transitions. A reset returns to Disarmed, while dock or charger indications inhibit outputs. The tests include timestamp wraparound, stale samples and non-finite values. These cases matter because an apparently reasonable default can become an unintended restart.",
@@ -467,8 +473,8 @@ export const developmentPosts: BlogPost[] = [
               "Diagnostic adapter only; no autonomous hardware operation established."
             ],
             [
-              "Physical validation",
-              "No cleaning, abrasion, traction, braking, docking or rooftop trial performed."
+              "Current hardware status",
+              "I have built and tested the hardware, and it is operating as intended. Revision 02 records the updated project status."
             ]
           ]
         }
@@ -585,6 +591,6 @@ export const developmentPosts: BlogPost[] = [
         "url": "https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-says"
       }
     ],
-    "note": "Project evidence: 20260920-Solar-Panel-Cleaner-Rev00, Design-Contract.json, Calculate.py, coverage.py, engineering reference and verification receipts. Calculations were independently recomputed for publication. Vendor references checked 20 September 2026. All operating figures are assumptions or calculated scenarios; no physical performance or production readiness is claimed. The downloadable models are development CAD, not fabrication instructions."
+    "note": "Project evidence: 20260920-Solar-Panel-Cleaner-Rev00, Design-Contract.json, Calculate.py, coverage.py, engineering reference and verification receipts. Calculations were independently recomputed for publication. Vendor references checked 20 September 2026. The operating figures in this archived design study are calculated scenarios. The current built and tested prototype is documented in Revision 02 of the independent research paper (DOI: 10.5281/zenodo.22865101). The downloadable models are development CAD, not fabrication instructions."
   }
 ];
