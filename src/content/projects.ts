@@ -1,4 +1,5 @@
 export interface Project {
+  readonly publication?: { readonly url: string; readonly label: string }
   readonly caseStudy?: string
   readonly category: 'Robotics' | 'Embedded' | 'Software' | 'Industrial'
   readonly trials?: readonly { readonly area: string; readonly result: string }[]
@@ -152,6 +153,32 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { area: 'Circuit modelling', result: 'Used ngspice for divider corners, reset timing and fixed-duty LC studies, with GNU Octave for analytical load-step and tolerance calculations.' },
       { area: 'Mechanical exports', result: 'Prepared the board model and mounting exports and matched 88 SMT designators against the placement file.' },
     ],
+  },
+  {
+    slug: 'deadline-aware-runtime-assurance',
+    category: 'Robotics',
+    title: 'Deadline-Aware Runtime Assurance for Autonomous Mobile Robots Under Sensor Degradation',
+    proof: 'Joint sensing-and-timing recovery analysis with 32,400 navigation episodes.',
+    problem: 'A mobile robot can lose its ability to recover safely before an immediate collision warning. Localisation uncertainty, ageing measurements and delayed commands must be considered together.',
+    system: 'An independent research study combining a mathematical recoverability model, a conservative braking supervisor, numerical simulation and measured software execution.',
+    architecture: 'Timestamped observations and command records form a bounded position estimate. A recovery certificate combines uncertainty, geometry, response delay and braking capability to select continue, restrict or recover. Command leases and a separately scheduled watchdog trigger braking when an approved command expires.',
+    ownership: 'Developed the mathematical formulation, simulation benchmark, supervisory software, comparative analysis and research monograph.',
+    decisions: [
+      'Preserved a feasible braking manoeuvre through a state-dependent clearance envelope and admissible-speed limit.',
+      'Propagated measurement age and outstanding commands into the recovery calculation.',
+      'Kept the simulated plant moving during delayed computation and compared matched fault schedules across six supervisor variants.',
+      'Evaluated learned anticipation separately from the model-based safety certificate.',
+    ],
+    verification: 'Evaluated 100,000 sampled boundary states, 32,400 navigation episodes, 3,900 supplementary episodes, 24,000 wall approaches and four process-based timing cases. Joint supervision completed 5,268 of 5,400 navigation episodes versus 2,674 for a global worst-case supervisor. Both recorded zero collisions in 3,000 bounded wall approaches; beyond-bound tests exposed failures when braking or response-delay assumptions were violated. The study uses a reduced-order model and static obstacles.',
+    stack: ['Python', 'NumPy', 'Robust control', 'Uncertainty propagation', 'Fault injection', 'Software-in-the-loop', 'LaTeX'],
+    systemPath: [
+      { label: 'Observe', detail: 'Timestamped position and command records' },
+      { label: 'Estimate', detail: 'Bounded state and information age' },
+      { label: 'Supervise', detail: 'Continue, restrict or recover' },
+      { label: 'Execute', detail: 'Command lease and braking watchdog' },
+    ],
+    image: { src: '/assets/image/20260921-Recoverability-Architecture-Rev00.png', alt: 'Research architecture: timestamped observations and command records feed a recoverability supervisor, command lease and braking watchdog, with a separate evaluator.', width: 1440, height: 940, kind: 'System illustration' },
+    publication: { url: 'https://doi.org/10.5281/zenodo.22865084', label: 'Read the research report on Zenodo' },
   },
 ] as const
 
