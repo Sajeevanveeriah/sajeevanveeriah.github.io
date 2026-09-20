@@ -8,7 +8,7 @@ export const developmentPosts: BlogPost[] = [
     "category": "Electronics / embedded systems / instrumentation",
     "description": "A detailed design study of the ESP32-S3 controller, its power and protocol boundaries, and a radar-based positioning extension that preserves the existing PCB.",
     "image": {
-      "src": "/assets/blog/20260920-engineering/Gendio-Controller.png",
+      "src": "/assets/blog/20260920-engineering/Gendio-Controller.webp",
       "alt": "Isometric CAD render of the Gendio controller, with the ESP32 module, Ethernet connector, power converters, diagnostic LEDs and panel connector.",
       "caption": "Actual project PCB CAD render from the 18 September package. Nominal component models; no assembled-hardware test is implied.",
       "width": 2184,
