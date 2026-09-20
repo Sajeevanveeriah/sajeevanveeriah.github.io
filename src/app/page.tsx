@@ -81,7 +81,7 @@ export default function Home() {
                         "Embedded mechatronics",
                         "Engineering software",
                         "PCB and embedded systems",
-                      ][i]
+                      ][i] ?? p.category
                     }
                   </p>
                   <h3>
