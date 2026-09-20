@@ -66,6 +66,7 @@ const routes = [
   "/work/swl-pricing-inventory-control/",
   "/work/gendio-controller/",
   "/work/waterless-solar-panel-cleaner/",
+  "/work/deadline-aware-runtime-assurance/",
 ];
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 const failures = [];
@@ -105,6 +106,9 @@ try {
           });
         if(theme === "light" && ((route === "/" && [390,1440].includes(width)) || (width === 1440 && ["/work/","/work/ataxia-assessment-device/"].includes(route)))) {
           console.log("VISUAL_PREVIEW " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:65,fullPage:false})).toString("base64")}));
+        }
+        if (route === "/work/deadline-aware-runtime-assurance/") {
+          assert.equal(await page.getByRole("link", { name: "Read the research report on Zenodo", exact: true }).getAttribute("href"), "https://doi.org/10.5281/zenodo.22865084");
         }
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
@@ -298,7 +302,7 @@ try {
   assert.equal(await page.getByRole("status").textContent(), "1 project");
   await page.getByRole("link", { name: "Read case study", exact: false }).click();
   await page.waitForURL(baseURL + "/work/waterless-solar-panel-cleaner/");
-  assert.equal(await page.getByRole("link", { name: "Read the research paper on Zenodo" }).getAttribute("href"), "https://zenodo.org/records/22865101");
+  assert.equal(await page.getByRole("link", { name: "Read the research paper on Zenodo - Revision 02" }).getAttribute("href"), "https://zenodo.org/records/22865101");
   await page.goto(baseURL + "/work/");
   await page.getByRole("button", { name: "Software", exact: true }).click();
   assert.equal(await page.getByRole("status").textContent(), "6 projects");
@@ -313,7 +317,7 @@ try {
   await page.getByRole("searchbox").fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
-  assert.equal(await page.getByRole("status").textContent(), "20 projects");
+  assert.equal(await page.getByRole("status").textContent(), "21 projects");
   await page.getByRole("searchbox").fill("ataxia");
   assert.equal(await page.getByRole("status").textContent(), "1 project");
   await page.getByRole("button", { name: "Reset", exact: true }).click();
@@ -367,7 +371,7 @@ try {
   await plain.goto(baseURL + "/");
   assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
-  assert.equal(await plain.locator(".catalogue article").count(), 20);
+  assert.equal(await plain.locator(".catalogue article").count(), 21);
   await plain.goto(baseURL + "/blog/");
   await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
   assert.equal(await plain.locator(".blog-routine li").count(), 4);

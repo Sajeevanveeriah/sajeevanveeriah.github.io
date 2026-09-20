@@ -70,9 +70,8 @@ export function RecordArticle({ project, nextProject, position, total }: { reado
           </section>
           <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
           {project.publication && <section aria-labelledby="publication-heading">
-            <h2 id="publication-heading">Research paper</h2>
-            <p>{project.publication.title}. {project.publication.version}, openly available on Zenodo under CC BY 4.0.</p>
-            <a className="text-link" href={project.publication.url}>Read the research paper on Zenodo</a>
+            <h2 id="publication-heading">Research publication</h2>
+            <p><a className="text-link" href={project.publication.url}>{project.publication.label}</a></p>
           </section>}
           {project.caseStudy && <section aria-labelledby="case-study-heading">
             <h2 id="case-study-heading">Engineering case study</h2>
