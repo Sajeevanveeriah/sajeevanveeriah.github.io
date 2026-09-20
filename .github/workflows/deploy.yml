@@ -86,6 +86,7 @@ jobs:
             work/autonomous-navigation-rover/index.html \
             work/ataxia-assessment-device/index.html \
             work/gendio-controller/index.html \
+            work/waterless-solar-panel-cleaner/index.html \
             work/swl-pricing-inventory-control/index.html \
             assets/Resume_Sajeevan_Veeriah.pdf \
             assets/20260903-Robotics-Learning-Roadmap-Rev00.docx \
@@ -148,6 +149,7 @@ jobs:
             "/work/autonomous-navigation-rover/"
             "/work/ataxia-assessment-device/"
             "/work/gendio-controller/"
+            "/work/waterless-solar-panel-cleaner/"
             "/work/swl-pricing-inventory-control/"
           )
 

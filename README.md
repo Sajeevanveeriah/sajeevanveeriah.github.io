@@ -5,7 +5,7 @@ A static Next.js portfolio presenting robotics, embedded mechatronics, engineeri
 ## Experience
 
 - Home: introduction, selected projects, engineering approach, experience summary and contact.
-- Work: all 19 records, category filters, search, shareable filter URLs and reset.
+- Work: all 20 records, category filters, search, shareable filter URLs and reset.
 - Case studies: contribution, architecture, design decisions and testing.
 - About: the complete seven-entry career timeline and education.
 - Notes: the existing six-month learning roadmap and download.

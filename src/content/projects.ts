@@ -1,4 +1,5 @@
 export interface Project {
+  readonly publication?: { readonly title: string; readonly url: string; readonly version: string }
   readonly caseStudy?: string
   readonly category: 'Robotics' | 'Embedded' | 'Software' | 'Industrial'
   readonly trials?: readonly { readonly area: string; readonly result: string }[]
@@ -152,6 +153,37 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { area: 'Circuit modelling', result: 'Used ngspice for divider corners, reset timing and fixed-duty LC studies, with GNU Octave for analytical load-step and tolerance calculations.' },
       { area: 'Mechanical exports', result: 'Prepared the board model and mounting exports and matched 88 SMT designators against the placement file.' },
     ],
+  },
+  {
+    slug: 'waterless-solar-panel-cleaner',
+    category: 'Robotics',
+    title: 'SPC-001 Waterless Solar-Panel Cleaner',
+    caseStudy: '/blog/solar-panel-cleaning-robot-design-study/',
+    publication: { title: 'Modular Waterless Photovoltaic Cleaning', url: 'https://zenodo.org/records/22865101', version: 'Revision 02' },
+    proof: 'Built and tested hardware, supported by a 96-page independent research paper.',
+    problem: 'Cleaning solar panels without water couples surface contact, traction, cleaning reach and motion control.',
+    system: 'A modular waterless solar-panel cleaning robot combining a tracked platform, dry-cleaning roller, electronic interfaces and supervisory control. I have built and tested the hardware, and it is operating as intended.',
+    architecture: 'The mechanical design separates the chassis, track pods and cleaning roller, with docking and loading interfaces. Supervisory control manages operating states and fault handling, while the analytical work examines contact forces, drive torque, energy and coverage geometry.',
+    ownership: 'Designed and built the prototype, integrated the mechanical and electronic systems, tested its operation and authored the independent research paper.',
+    decisions: [
+      'Considered brush loading and traction together because cleaning contact changes both resistance and available track loading.',
+      'Examined the trade-off between keeping the platform inside a panel boundary and allowing the brush to reach its edges.',
+      'Kept mechanical modules and control interfaces explicit to support inspection, maintenance and further development.',
+    ],
+    verification: 'The hardware has been built and functionally tested. The paper separately presents reproducible analytical calculations and archived software checks: 40,184 supervisor assertions and 870 coverage-planner assertions. Numerical force, torque, energy and coverage figures are modelled results.',
+    stack: ['Mechanical design', 'Electronics', 'FreeCAD', 'KiCad', 'Supervisory control', 'Python', 'Contact mechanics', 'Coverage planning'],
+    systemPath: [
+      { label: 'Contact', detail: 'Dry-cleaning roller' },
+      { label: 'Move', detail: 'Modular tracked platform' },
+      { label: 'Supervise', detail: 'Operating states and fault handling' },
+      { label: 'Analyse', detail: 'Traction, energy and coverage' },
+    ],
+    image: {
+      src: '/assets/blog/20260920-engineering/Cleaner-Cutaway.png',
+      alt: 'SPC-001 development CAD cutaway showing the chassis, track pods, dry-cleaning roller and internal component allocations.',
+      width: 1600, height: 1100,
+      kind: 'System illustration',
+    },
   },
 ] as const
 
