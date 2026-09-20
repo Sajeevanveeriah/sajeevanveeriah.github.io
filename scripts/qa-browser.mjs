@@ -65,6 +65,7 @@ const routes = [
   "/work/ataxia-assessment-device/",
   "/work/swl-pricing-inventory-control/",
   "/work/gendio-controller/",
+  "/work/deadline-aware-runtime-assurance/",
 ];
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 const failures = [];
@@ -104,6 +105,9 @@ try {
           });
         if(theme === "light" && ((route === "/" && [390,1440].includes(width)) || (width === 1440 && ["/work/","/work/ataxia-assessment-device/"].includes(route)))) {
           console.log("VISUAL_PREVIEW " + JSON.stringify({route,width,image:(await page.screenshot({type:"jpeg",quality:65,fullPage:false})).toString("base64")}));
+        }
+        if (route === "/work/deadline-aware-runtime-assurance/") {
+          assert.equal(await page.getByRole("link", { name: "Read the research report on Zenodo", exact: true }).getAttribute("href"), "https://doi.org/10.5281/zenodo.22865084");
         }
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
@@ -305,7 +309,7 @@ try {
   await page.getByRole("searchbox").fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
-  assert.equal(await page.getByRole("status").textContent(), "19 projects");
+  assert.equal(await page.getByRole("status").textContent(), "20 projects");
   await page.getByRole("searchbox").fill("ataxia");
   assert.equal(await page.getByRole("status").textContent(), "1 project");
   await page.getByRole("button", { name: "Reset", exact: true }).click();
