@@ -120,7 +120,7 @@ try {
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
         }
         if (route.startsWith("/blog/")) {
-          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io" + route);
+          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sv.sajeevanveeriah.workers.dev" + route);
           assert.equal(await page.locator('.site-nav a[href="/blog/"]').getAttribute("aria-current"), "page");
           if (route === "/blog/ai-without-the-jargon/") {
             assert.equal(await page.locator(".blog-body table").count(), 2);
