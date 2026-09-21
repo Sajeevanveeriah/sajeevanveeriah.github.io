@@ -41,7 +41,7 @@ function destination(segments) {
 for (const segments of routes) {
   const directory = join(root, ...segments)
   const target = destination(segments)
-  const html = `<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta http-equiv="refresh" content="0;url=${target}"><link rel="canonical" href="https://sajeevanveeriah.github.io${target}"><title>Page moved | Sajeevan Veeriah</title></head><body><main><h1>This material now continues in the concise portfolio.</h1><p><a href="${target}">Continue to the portfolio</a></p></main></body></html>`
+  const html = `<!doctype html><html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta http-equiv="refresh" content="0;url=${target}"><link rel="canonical" href="https://sv.sajeevanveeriah.workers.dev${target}"><title>Page moved | Sajeevan Veeriah</title></head><body><main><h1>This material now continues in the concise portfolio.</h1><p><a href="${target}">Continue to the portfolio</a></p></main></body></html>`
   await mkdir(directory, { recursive: true })
   await writeFile(join(directory, 'index.html'), html)
 }

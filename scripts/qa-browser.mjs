@@ -113,7 +113,7 @@ try {
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator(".evidence-figure").count(), 0);
-          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io/work/gendio-controller/");
+          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sv.sajeevanveeriah.workers.dev/work/gendio-controller/");
           assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.innerText)), false);
           assert.equal(await page.locator(".boundary").count(), 0);
           assert.equal(await page.getByRole("heading", { name: "Current readiness", exact: true }).count(), 0);
@@ -337,7 +337,7 @@ try {
     .click();
   await page.waitForURL(url => /^\/about\/?$/.test(url.pathname));
   await page.getByRole("heading", {name:"Career timeline",exact:true}).waitFor();
-  assert.equal(await page.locator(".timeline li").count(), 7);
+  assert.equal(await page.locator(".timeline li").count(), 8);
   await page.getByText("Menu", { exact: true }).click();
   await page.getByText("Menu", { exact: true }).press("Escape");
   assert.equal(await page.locator("details").getAttribute("open"), null);

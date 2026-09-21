@@ -2,12 +2,19 @@ name: Deploy to Cloudflare
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'public/assets/Resume_Sajeevan_Veeriah.pdf'
+      - 'src/content/site.ts'
+      - 'wrangler.jsonc'
+      - '.github/workflows/cloudflare.yml'
 
 permissions:
   contents: read
 
 concurrency:
-  group: cloudflare-sv-portfolio-production
+  group: cloudflare-sv-production
   cancel-in-progress: false
 
 jobs:
@@ -40,7 +47,7 @@ jobs:
       - run: npm run qa:lighthouse
       - name: Validate Wrangler deployment
         run: npm run cloudflare:check
-      - name: Deploy sv-portfolio
+      - name: Deploy sv
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

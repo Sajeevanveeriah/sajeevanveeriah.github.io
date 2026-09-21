@@ -11,7 +11,7 @@ A static Next.js portfolio presenting robotics, embedded mechatronics, engineeri
 - Notes: the existing six-month learning roadmap and download.
 - Blog: dated articles, a homepage preview, individual shareable URLs and source links.
 
-The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the approved general engineering PDF dated 11 September 2026, Rev00; update it from the approved source PDF. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
+The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the general engineering PDF dated 21 September 2026, Rev00. Update it from the reviewed source PDF with scripts/generate-public-resume.py --source PATH. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
 
 ## Development and verification
 
