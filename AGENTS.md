@@ -3,8 +3,8 @@
 This repository is Sajeevan Veeriah's personal engineering portfolio.
 
 The active product is a deliberately concise static Next.js 15 site. It is
-exported with the App Router and deployed to the root of the GitHub user Pages
-domain. Keep output: 'export', trailingSlash: true, images.unoptimized: true,
+exported with the App Router and deployed to
+https://sv.sajeevanveeriah.workers.dev/. GitHub Pages remains a secondary deployment. Keep output: 'export', trailingSlash: true, images.unoptimized: true,
 public/.nojekyll, the static robots and sitemap routes, and the generated
 404.html path working.
 
@@ -23,8 +23,9 @@ Do not recreate the legacy route tree, skills directory or legacy visual
 system. The previous implementation is preserved under
 archive/20260810-legacy-portfolio/.
 
-Do not include Ford, Ford Motor Company, Invenio or JAG Process Solutions in
-public content. Do not infer undisclosed technology, client details, metrics,
+Saj explicitly approved naming JAG Process Solutions and Ford Motor Company via
+Invenio in the public portfolio and resume on 21 September 2026.
+Do not infer undisclosed technology, client details, metrics,
 certification or outcomes. Project evidence boundaries are part of the claim.
 
 Keep the site static-first. No API routes, runtime data fetching, database,

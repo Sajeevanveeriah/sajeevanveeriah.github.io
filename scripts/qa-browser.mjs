@@ -113,14 +113,14 @@ try {
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator(".evidence-figure").count(), 0);
-          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io/work/gendio-controller/");
+          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sv.sajeevanveeriah.workers.dev/work/gendio-controller/");
           assert.equal(await page.locator("main").evaluate(el => /\bRev\d{2}\b|[\u2013\u2014]/.test(el.innerText)), false);
           assert.equal(await page.locator(".boundary").count(), 0);
           assert.equal(await page.getByRole("heading", { name: "Current readiness", exact: true }).count(), 0);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
         }
         if (route.startsWith("/blog/")) {
-          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sajeevanveeriah.github.io" + route);
+          assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://sv.sajeevanveeriah.workers.dev" + route);
           assert.equal(await page.locator('.site-nav a[href="/blog/"]').getAttribute("aria-current"), "page");
           if (route === "/blog/ai-without-the-jargon/") {
             assert.equal(await page.locator(".blog-body table").count(), 2);
@@ -337,7 +337,7 @@ try {
     .click();
   await page.waitForURL(url => /^\/about\/?$/.test(url.pathname));
   await page.getByRole("heading", {name:"Career timeline",exact:true}).waitFor();
-  assert.equal(await page.locator(".timeline li").count(), 7);
+  assert.equal(await page.locator(".timeline li").count(), 8);
   await page.getByText("Menu", { exact: true }).click();
   await page.getByText("Menu", { exact: true }).press("Escape");
   assert.equal(await page.locator("details").getAttribute("open"), null);

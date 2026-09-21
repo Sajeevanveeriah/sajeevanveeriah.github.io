@@ -7,11 +7,11 @@ A static Next.js portfolio presenting robotics, embedded mechatronics, engineeri
 - Home: introduction, selected projects, engineering approach, experience summary and contact.
 - Work: all 21 records, category filters, search, shareable filter URLs and reset.
 - Case studies: contribution, architecture, design decisions and testing.
-- About: the complete seven-entry career timeline and education.
+- About: the complete eight-entry career timeline and education.
 - Notes: the existing six-month learning roadmap and download.
 - Blog: dated articles, a homepage preview, individual shareable URLs and source links.
 
-The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the approved general engineering PDF dated 11 September 2026, Rev00; update it from the approved source PDF. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
+The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the general engineering PDF dated 21 September 2026, Rev00. Update it from the reviewed source PDF with scripts/generate-public-resume.py --source PATH. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
 
 ## Development and verification
 
@@ -33,8 +33,8 @@ Browser QA checks nine routes at seven widths in both themes, axe accessibility,
 
 ### Cloudflare Workers
 
-The production Worker is `sv-portfolio`, serving
-https://sv-portfolio.sajeevanveeriah.workers.dev/ from the static `out/` export.
+The production Worker is `sv`, serving
+https://sv.sajeevanveeriah.workers.dev/ from the static `out/` export.
 Wrangler is pinned in the development dependencies. The commands below explicitly
 use `wrangler.jsonc`; the legacy TOML configuration remains compatible.
 
@@ -43,6 +43,10 @@ For a manual deployment from GitHub, add repository Actions secrets named
 Workers Scripts Edit permission scoped to the intended account. Do not commit
 credentials. Then open **Actions > Deploy to Cloudflare > Run workflow**, choose
 `main` and run it. This manual workflow checks the site before deploying.
+The 21 September resume/domain release also permits a main-branch push whose
+commit message contains `[deploy-approved:resume-domain-20260921]`, reflecting
+Saj's explicit approval for this release. Do not reuse that marker for future
+changes; obtain current approval and use the manual workflow.
 It does not require Cloudflare's dashboard file uploader.
 
 For local deployment with Node.js 22 and npm, run from the repository root:

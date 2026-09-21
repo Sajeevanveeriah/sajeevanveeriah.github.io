@@ -7,7 +7,7 @@ export const site = {
     'I engineer complete systems across the physical, control, digital and operational boundary - then verify them as one working system.',
   profile:
     'Robotics, industrial automation, embedded systems, industrial IT/OT, AI/ML and engineering software, integrated from requirements through commissioning and handover.',
-  url: 'https://sajeevanveeriah.github.io',
+  url: 'https://sv.sajeevanveeriah.workers.dev',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
   location: 'Geelong, Victoria, Australia',
@@ -33,16 +33,23 @@ export interface ExperienceRecord {
 }
 
 /**
- * Role titles follow the verified public resume. The first two organisations
- * remain anonymised to respect programme confidentiality and contract
- * boundaries. Employer links establish company context only; every personal
- * contribution below is grounded in the resume and portfolio record.
+ * Role titles and organisations follow the current resume.
+ * Employer links provide company context, not evidence of personal contributions.
  */
 export const experience: readonly ExperienceRecord[] = [
   {
+    period: 'Jun 2026 - present',
+    role: 'Independent Consultant Engineer',
+    organisation: 'SV Tech Solutions',
+    context: 'Client engineering for Stan Wootton Locksmiths and Gendio',
+    detail:
+      'Develop client systems across requirements, electronics, embedded firmware, software and release documentation. Work includes SWL pricing and inventory control, Gendio controller and serial-adapter PCB design, display firmware, browser configuration and vehicle-position sensing. Fabrication reviews and software verification are distinct from assembled-system and field validation.',
+    tags: ['Consulting', 'PCB design', 'Embedded systems', 'Software delivery', 'Verification'],
+  },
+  {
     period: 'Jan 2026 - Jun 2026',
     role: 'Automation and Controls Engineer',
-    organisation: 'Process automation systems integrator',
+    organisation: 'JAG Process Solutions',
     context: 'Regulated pharmaceutical, biotechnology and food production',
     detail:
       'Delivered controls and integration work across PLC logic, HMI/SCADA, field devices, drives, MES and production data. Migrated validated application content from iFIX to PVI+, completed functional checks, and supported FAT, SAT, commissioning, handover and MiR mobile-robot fault tracing under GMP controls.',
@@ -51,7 +58,7 @@ export const experience: readonly ExperienceRecord[] = [
   {
     period: 'Oct 2025 - Jan 2026',
     role: 'Product Development Test Engineer (Contract)',
-    organisation: 'Global automotive OEM via engineering consultancy',
+    organisation: 'Ford Motor Company via Invenio',
     context: 'Vehicle software integration and ADAS product development',
     detail:
       'Validated vehicle-software integration and ADAS behaviour through feature-vehicle, breadboard and regression testing. Instrumented test vehicles, conducted structured drives, and used Vector CANoe and CANalyzer to capture CAN and CAN FD data for fault isolation, defect evidence and software-readiness verification.',
