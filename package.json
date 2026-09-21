@@ -10,7 +10,10 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "qa:browser": "node scripts/qa-browser.mjs",
-    "qa:lighthouse": "node scripts/lighthouse.mjs"
+    "qa:lighthouse": "node scripts/lighthouse.mjs",
+    "cloudflare:login": "wrangler login",
+    "cloudflare:check": "wrangler deploy --config wrangler.jsonc --dry-run",
+    "cloudflare:deploy": "wrangler deploy --config wrangler.jsonc"
   },
   "dependencies": {
     "next": "15.5.23",
@@ -28,6 +31,7 @@
     "eslint-config-next": "15.5.23",
     "lighthouse": "^13.4.1",
     "playwright": "^1.62.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "wrangler": "4.135.0"
   }
 }

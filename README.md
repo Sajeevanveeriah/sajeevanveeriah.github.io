@@ -31,6 +31,40 @@ Browser QA checks nine routes at seven widths in both themes, axe accessibility,
 
 ## Deployment
 
+### Cloudflare Workers
+
+The production Worker is `sv-portfolio`, serving
+https://sv-portfolio.sajeevanveeriah.workers.dev/ from the static `out/` export.
+Wrangler is pinned in the development dependencies. The commands below explicitly
+use `wrangler.jsonc`; the legacy TOML configuration remains compatible.
+
+For a manual deployment from GitHub, add repository Actions secrets named
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Use a Cloudflare token with
+Workers Scripts Edit permission scoped to the intended account. Do not commit
+credentials. Then open **Actions > Deploy to Cloudflare > Run workflow**, choose
+`main` and run it. This manual workflow checks the site before deploying.
+It does not require Cloudflare's dashboard file uploader.
+
+For local deployment with Node.js 22 and npm, run from the repository root:
+
+```sh
+npm ci
+npm run cloudflare:login
+npm run typecheck
+npm run lint
+npm run build
+npm run cloudflare:check
+npm run cloudflare:deploy
+```
+
+The login command uses Cloudflare's browser authorisation flow. The deploy command
+publishes the existing `out/` directory, so always build first. For Cloudflare's
+own Git integration, use `npm run build` as the build command and
+`npm run cloudflare:deploy` as the deploy command. Keep only the intended deployment
+route active to avoid overlapping deployments.
+
+### Existing GitHub Pages deployment
+
 The existing GitHub Pages workflow publishes the static `out/` directory after verification. No backend, tracking, database or runtime third-party requests are needed. About is excluded from the legacy redirect generator so the built page cannot be overwritten.
 
 The earlier portfolio remains under `archive/20260810-legacy-portfolio/`. Unused previous style files are retained but are not imported by the active application.
