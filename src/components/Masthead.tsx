@@ -4,10 +4,9 @@ import { MobileNavigation } from "./MobileNavigation";
 import { site } from "@/content/site";
 export const destinations = [
   { href: "/work/", label: "Work" },
+  { href: "/#capabilities", label: "Capabilities" },
   { href: "/about/", label: "About" },
-  { href: "/notes/", label: "Notes" },
-  { href: "/blog/", label: "Blog" },
-  { href: "/#services", label: "Services" },
+  { href: "/blog/", label: "Journal" },
   { href: "/#contact", label: "Contact" },
 ];
 export function Masthead({
@@ -31,7 +30,7 @@ export function Masthead({
                 key={d.href}
                 href={d.href}
                 aria-current={
-                  current === d.label.toLowerCase() ? "page" : undefined
+                  current === (d.label === "Journal" ? "blog" : d.label.toLowerCase()) ? "page" : undefined
                 }
               >
                 {d.label}
@@ -47,3 +46,4 @@ export function Masthead({
     </header>
   );
 }
+

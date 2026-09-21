@@ -96,9 +96,9 @@ jobs:
           test ! -e out/assets/Resume_Sajeevan_Veeriah.docx
           cmp public/assets/Resume_Sajeevan_Veeriah.pdf out/assets/Resume_Sajeevan_Veeriah.pdf
           unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
-          grep -Fq 'Different systems.' out/index.html
-          grep -Fq 'Download resume' out/index.html
-          grep -Fq 'Engineering approach' out/index.html
+          grep -Fq 'Hardware. Intelligence. Software.' out/index.html
+          grep -Fq 'Resume_Sajeevan_Veeriah.pdf' out/index.html
+          grep -Fq 'Different disciplines.' out/index.html
           echo 'portfolio export verified'
 
       - uses: actions/configure-pages@v5
@@ -190,9 +190,9 @@ jobs:
                [ "$docx_status" = 404 ] && \
                [ "$monogram_status" = 200 ] && \
                grep -Fq "$GITHUB_SHA" /tmp/portfolio-route-home.html && \
-               grep -Fq 'Different systems.' /tmp/portfolio-route-home.html && \
-               grep -Fq 'Download resume' /tmp/portfolio-route-home.html && \
-               grep -Fq 'Engineering approach' /tmp/portfolio-route-home.html && \
+               grep -Fq 'Hardware. Intelligence. Software.' /tmp/portfolio-route-home.html && \
+               grep -Fq 'Resume_Sajeevan_Veeriah.pdf' /tmp/portfolio-route-home.html && \
+               grep -Fq 'Different disciplines.' /tmp/portfolio-route-home.html && \
                cmp --silent public/assets/Resume_Sajeevan_Veeriah.pdf /tmp/resume-live.pdf && \
                cmp --silent public/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp /tmp/portfolio-monogram-live.webp; then
               printf 'Live portfolio, exact PDF resume, DOCX removal and exact monogram verified after attempt %s\n' "$attempt"
@@ -221,3 +221,4 @@ jobs:
             /tmp/portfolio-monogram-live.webp
           if-no-files-found: warn
           retention-days: 14
+

@@ -12,7 +12,7 @@ html {
   scroll-padding-top: 100px;
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-archivo), Arial, sans-serif;
+  font-family: var(--font-archivo), system-ui, sans-serif;
 }
 html[data-theme="dark"] {
   --bg: #13191f;
@@ -890,3 +890,4 @@ svg {
 .project-trials dd p + p { margin-top: .5rem; }
 .evidence-figure { margin: 2rem 0; }
 .evidence-figure .project-media img { max-height: 48rem; }
+

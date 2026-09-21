@@ -19,9 +19,10 @@ export function MobileNavigation() {
         {(
           [
             ["/work/", "Work"],
+            ["/#capabilities", "Capabilities"],
             ["/about/", "About"],
             ["/notes/", "Notes"],
-            ["/blog/", "Blog"],
+            ["/blog/", "Journal"],
             ["/#services", "Services"],
             ["/#contact", "Contact"],
           ] as const
@@ -40,3 +41,4 @@ export function MobileNavigation() {
     </details>
   );
 }
+

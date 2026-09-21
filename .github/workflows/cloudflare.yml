@@ -22,7 +22,8 @@ jobs:
     if: >-
       github.ref == 'refs/heads/main' &&
       (github.event_name == 'workflow_dispatch' ||
-       contains(github.event.head_commit.message, '[deploy-approved:resume-domain-20260921]'))
+       contains(github.event.head_commit.message, '[deploy-approved:resume-domain-20260921]') ||
+       contains(github.event.head_commit.message, '[deploy-approved:portfolio-redesign-20260921]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -55,3 +56,4 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npm run cloudflare:deploy
+

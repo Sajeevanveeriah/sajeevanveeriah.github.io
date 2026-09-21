@@ -159,7 +159,7 @@ try {
         }
         if (route === "/") {
           const services = page.getByRole("region", {
-            name: "Need a hand with something technical?",
+            name: "Need technical help?",
           });
           assert.equal(await services.count(), 1);
           const requestLink = services.getByRole("link", {
@@ -228,7 +228,7 @@ try {
   const page = await context.newPage();
   await page.goto(baseURL + "/");
   await page.getByText("Menu", { exact: true }).click();
-  await page.getByRole("navigation", { name: "Mobile primary" }).getByRole("link", { name: "Blog", exact: true }).click();
+  await page.getByRole("navigation", { name: "Mobile primary" }).getByRole("link", { name: "Journal", exact: true }).click();
   await page.waitForURL(baseURL + "/blog/");
   await page.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
   await page.waitForURL(baseURL + "/blog/ai-without-the-jargon/");
@@ -238,7 +238,7 @@ try {
   await page.waitForURL(baseURL + "/blog/");
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL + "/");
-  await page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Blog", exact: true }).press("Enter");
+  await page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Journal", exact: true }).press("Enter");
   await page.waitForURL(baseURL + "/blog/");
   await page.setViewportSize({ width: 390, height: 844 });
   console.log("Blog desktop/mobile navigation, article, keyboard contents and return path passed");
@@ -283,8 +283,8 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL + "/work/");
   await page.getByRole("navigation", { name: "Primary" })
-    .getByRole("link", { name: "Services", exact: true }).click();
-  await page.waitForURL(baseURL + "/#services");
+    .getByRole("link", { name: "Contact", exact: true }).click();
+  await page.waitForURL(baseURL + "/#contact");
   assert.equal(await requestLink.isVisible(), true);
   await page.setViewportSize({ width: 720, height: 500 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
@@ -362,6 +362,23 @@ try {
   assert.equal(missing.status(), 404);
   await page.goto(baseURL + "/work/panelogram/");
   await page.waitForURL(baseURL + "/work/");
+  await page.goto(baseURL + "/");
+  await page.getByRole("tab", { name: "SWL Pricing and Inventory Control", exact: true }).click();
+  assert.ok((await page.getByRole("tabpanel", { name: "SWL Pricing and Inventory Control", exact: true }).innerText()).includes("Operator-reviewed imports"));
+  await page.getByRole("tab", { name: "Electronics", exact: true }).click();
+  await page.getByRole("tab", { name: "Electronics", exact: true }).press("ArrowRight");
+  assert.equal(await page.getByRole("tab", { name: "Controls", exact: true }).getAttribute("aria-selected"), "true");
+  await page.getByRole("searchbox", { name: "Search projects", exact: true }).fill("Gendio");
+  await page.waitForFunction(() => document.querySelector('[role="status"]')?.textContent === "1 project");
+  assert.equal(await page.getByRole("status").innerText(), "1 project");
+  await page.getByRole("searchbox", { name: "Search projects", exact: true }).fill("no-such-project");
+  await page.getByRole("heading", { name: "No matching projects", exact: true }).waitFor();
+  await page.getByRole("button", { name: "Clear filters", exact: true }).click();
+  await page.getByRole("button", { name: "Show all 21 projects", exact: true }).click();
+  assert.equal(await page.locator(".project-row").count(), 21);
+  await page.getByRole("tab", { name: "Community", exact: true }).click();
+  assert.ok((await page.getByRole("tabpanel", { name: "Community", exact: true }).innerText()).includes("Newcomb and District Cricket Club"));
+  console.log("Homepage project selection, keyboard tabs, search, reset, complete index and community passed");
   await context.close();
   const nojs = await browser.newContext({
     javaScriptEnabled: false,
