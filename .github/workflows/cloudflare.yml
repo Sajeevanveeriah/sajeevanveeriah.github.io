@@ -23,7 +23,8 @@ jobs:
       github.ref == 'refs/heads/main' &&
       (github.event_name == 'workflow_dispatch' ||
        contains(github.event.head_commit.message, '[deploy-approved:resume-domain-20260921]') ||
-       contains(github.event.head_commit.message, '[deploy-approved:portfolio-redesign-20260921]'))
+       contains(github.event.head_commit.message, '[deploy-approved:portfolio-redesign-20260921]') ||
+       contains(github.event.head_commit.message, '[deploy-approved:solar-image-20260922]'))
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:

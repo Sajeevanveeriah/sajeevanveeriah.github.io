@@ -19,7 +19,7 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render'
+    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation'
   }
 }
 
@@ -179,10 +179,10 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Analyse', detail: 'Traction, energy and coverage' },
     ],
     image: {
-      src: '/assets/blog/20260920-engineering/Cleaner-Cutaway.png',
-      alt: 'SPC-001 development CAD cutaway showing the chassis, track pods, dry-cleaning roller and internal component allocations.',
-      width: 1600, height: 1100,
-      kind: 'System illustration',
+      src: '/assets/image/20260922-Solar-Panel-Cleaner-Concept-Rev00.webp',
+      alt: 'Solar-panel cleaning robot concept with a full-width brush at the outer guide-arm ends and a photovoltaic charging panel on top.',
+      width: 1536, height: 1024,
+      kind: 'Production design concept - generated visualisation',
     },
   },
   {

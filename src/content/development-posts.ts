@@ -264,11 +264,11 @@ export const developmentPosts: BlogPost[] = [
     "category": "Robotics / mechatronics / design study",
     "description": "CAD, traction and energy calculations, conservative coverage planning and an experimental roadmap for a modular dry-cleaning crawler.",
     "image": {
-      "src": "/assets/blog/20260920-engineering/Cleaner-Cutaway.png",
-      "alt": "Cover-off CAD view of a tracked solar-panel cleaner with a front roller, central battery envelope and rear electronics tray.",
-      "caption": "Actual development CAD from SPC-001 Rev00. The 27-solid assembly contains nominal allocation envelopes, not a manufactured or qualified robot.",
-      "width": 1600,
-      "height": 1100
+      "src": "/assets/image/20260922-Solar-Panel-Cleaner-Concept-Rev00.webp",
+      "alt": "Solar-panel cleaning robot concept with a full-width brush at the outer guide-arm ends and a photovoltaic charging panel on top.",
+      "caption": "Production design concept based on my prototype, showing the proposed brush arrangement and onboard solar charging panel. Generated visualisation, not a photograph of the built hardware. The archived development CAD remains below.",
+      "width": 1536,
+      "height": 1024
     },
     "intro": [
       "A solar-panel cleaner must remove contamination while protecting the surface that produces the energy. Adding a brush to a mobile platform leaves most of that problem unresolved: contact force, embedded grit, wheel slip, edge detection and power-loss retention all interact.",
