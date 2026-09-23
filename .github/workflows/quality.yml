@@ -15,34 +15,26 @@ concurrency:
 jobs:
   quality:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      WRANGLER_SEND_METRICS: 'false'
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Type check
-        run: npm run typecheck
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Build static export
-        run: npm run build
-
-      - name: Install browser
-        run: npx playwright install --with-deps chromium
-
-      - name: Run rendered portfolio QA
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - name: Verify static export
+        run: npm run qa:export
+      - run: npx playwright install --with-deps chromium
+      - name: Rendered QA (routes from sitemap, 7 widths, both themes, axe)
         run: npm run qa:browser
-
-      - name: Upload rendered portfolio evidence
+      - name: Upload rendered evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -50,52 +42,9 @@ jobs:
           path: /tmp/portfolio-qa
           if-no-files-found: warn
           retention-days: 14
-
-      - name: Run Lighthouse quality gate
+      - name: Lighthouse gate
         run: npm run qa:lighthouse
-
-      - name: Verify portfolio export and PDF resume
-        shell: bash
-        run: |
-          set -euo pipefail
-          for file in \
-            index.html \
-            404.html \
-            .nojekyll \
-            BingSiteAuth.xml \
-            googlebcce96f6b520ab1f.html \
-            robots.txt \
-            sitemap.xml \
-            favicon.png \
-            blog/index.html \
-            blog/gendio-control-board-and-radar-positioning/index.html \
-            blog/solar-panel-cleaning-robot-design-study/index.html \
-            blog/ros2-navigation-rover-case-study/index.html \
-            blog/esp32-movement-assessment-case-study/index.html \
-            blog/swl-pricing-inventory-case-study/index.html \
-            blog/gendio-display-controller-case-study/index.html \
-            blog/the-second-life-of-a-product/index.html \
-            blog/in-praise-of-the-volume-knob/index.html \
-            blog/sampling-can-hide-real-motion/index.html \
-            blog/inspection-accuracy-and-missed-defects/index.html \
-            blog/machine-vision-starts-with-the-image/index.html \
-            blog/automation-queues-and-flow-time/index.html \
-            blog/ai-without-the-jargon/index.html \
-            work/index.html \
-            work/autonomous-navigation-rover/index.html \
-            work/ataxia-assessment-device/index.html \
-            work/gendio-controller/index.html \
-            work/waterless-solar-panel-cleaner/index.html \
-            work/swl-pricing-inventory-control/index.html \
-            assets/Resume_Sajeevan_Veeriah.pdf \
-            assets/20260903-Robotics-Learning-Roadmap-Rev00.docx \
-            assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp; do
-            test -s "out/$file" || { echo "missing or empty out/$file"; exit 1; }
-          done
-          test ! -e out/assets/Resume_Sajeevan_Veeriah.docx
-          cmp public/assets/Resume_Sajeevan_Veeriah.pdf out/assets/Resume_Sajeevan_Veeriah.pdf
-          unzip -t out/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx >/dev/null
-          grep -Fq 'Different systems.' out/index.html
-          grep -Fq 'Download resume' out/index.html
-          grep -Fq 'Engineering approach' out/index.html
-          echo 'portfolio export verified'
+      - name: Validate Wrangler deployment
+        run: npm run cloudflare:check
+      - name: Build GitHub Pages mirror
+        run: npm run pages:mirror

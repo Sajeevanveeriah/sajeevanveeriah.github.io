@@ -12,14 +12,17 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <Masthead reduced />
-      <main id="main">
-        <section className="not-found shell" aria-labelledby="not-found-title">
-          <span className="not-found-number" aria-hidden="true">404</span>
-          <h1 id="not-found-title">This route is no longer part of the portfolio.</h1>
-          <p>Explore the project catalogue or return to the homepage.</p>
-          <Link className="button button-primary" href="/">Open the portfolio<ArrowUpRight /></Link>
-        <Link className="text-link" href="/work/">Browse engineering work</Link></section>
+      <Masthead />
+      <main id="main" className="container">
+        <section className="not-found" aria-labelledby="not-found-title">
+          <p className="eyebrow">Error 404</p>
+          <h1 id="not-found-title">This page is no longer part of the portfolio.</h1>
+          <p>The project catalogue and journal hold everything that is currently published.</p>
+          <div className="hero-actions">
+            <Link className="btn btn-primary" href="/work/" prefetch={false}>Browse my work <ArrowUpRight /></Link>
+            <Link className="btn btn-secondary" href="/" prefetch={false}>Go to the home page</Link>
+          </div>
+        </section>
       </main>
       <SiteFooter />
     </>

@@ -2,7 +2,7 @@
   "name": "sajeevanveeriah-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "My engineering portfolio, exported as a static Next.js site for GitHub Pages.",
+  "description": "My engineering portfolio: a static Next.js export deployed to Cloudflare Workers, with a GitHub Pages redirect mirror.",
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
     "build": "next build",
@@ -13,7 +13,10 @@
     "qa:lighthouse": "node scripts/lighthouse.mjs",
     "cloudflare:login": "wrangler login",
     "cloudflare:check": "wrangler deploy --config wrangler.jsonc --dry-run",
-    "cloudflare:deploy": "wrangler deploy --config wrangler.jsonc"
+    "cloudflare:deploy": "wrangler deploy --config wrangler.jsonc",
+    "qa:export": "node scripts/verify-export.mjs",
+    "verify:live": "node scripts/verify-live.mjs",
+    "pages:mirror": "node scripts/build-pages-mirror.mjs"
   },
   "dependencies": {
     "next": "15.5.23",

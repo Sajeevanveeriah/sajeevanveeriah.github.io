@@ -1,14 +1,13 @@
+# Production: https://sv.sajeevanveeriah.workers.dev/
+# Every change reaches main through a reviewed pull request, so merging is the
+# release approval. This workflow re-runs the full checks, deploys and then
+# verifies the live Worker against the exact commit.
 name: Deploy to Cloudflare
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - 'public/assets/Resume_Sajeevan_Veeriah.pdf'
-      - 'src/content/site.ts'
-      - 'wrangler.jsonc'
-      - '.github/workflows/cloudflare.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -19,14 +18,12 @@ concurrency:
 
 jobs:
   deploy:
-    if: >-
-      github.ref == 'refs/heads/main' &&
-      (github.event_name == 'workflow_dispatch' ||
-       contains(github.event.head_commit.message, '[deploy-approved:resume-domain-20260921]') ||
-       contains(github.event.head_commit.message, '[deploy-approved:portfolio-redesign-20260921]') ||
-       contains(github.event.head_commit.message, '[deploy-approved:solar-image-20260922]'))
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
+    environment:
+      name: cloudflare-production
+      url: https://sv.sajeevanveeriah.workers.dev/
     env:
       NEXT_TELEMETRY_DISABLED: '1'
       WRANGLER_SEND_METRICS: 'false'
@@ -47,6 +44,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+      - run: npm run qa:export
       - run: npx playwright install --with-deps chromium
       - run: npm run qa:browser
       - run: npm run qa:lighthouse
@@ -57,4 +55,5 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: npm run cloudflare:deploy
-
+      - name: Verify the live Worker serves this commit
+        run: npm run verify:live

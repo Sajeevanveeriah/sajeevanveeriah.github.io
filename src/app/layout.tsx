@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from 'next'
 import { archivoFont } from './fonts'
 import { site } from '@/content/site'
+import { defaultShareImage } from '@/content/seo'
 import './globals.css'
-
-
 
 export const metadata: Metadata = {
   other: { 'portfolio-release': process.env.GITHUB_SHA ?? 'local' },
@@ -14,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: site.profile,
   authors: [{ name: site.name, url: site.url }],
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', types: { 'application/rss+xml': '/blog/feed.xml' } },
   robots: { index: true, follow: true, 'max-image-preview': 'large' },
   openGraph: {
     type: 'website',
@@ -23,22 +22,17 @@ export const metadata: Metadata = {
     title: `${site.name} | ${site.jobTitle}`,
     description: site.profile,
     url: site.url,
-    images: [{
-      url: site.logo,
-      width: 512,
-      height: 512,
-      alt: `${site.name}, ${site.jobTitle}`,
-    }],
+    images: [defaultShareImage],
   },
-  twitter: { card: 'summary', title: `${site.name} | ${site.jobTitle}`, description: site.profile, images: [site.logo] },
+  twitter: { card: 'summary_large_image', title: `${site.name} | ${site.jobTitle}`, description: site.profile, images: [defaultShareImage.url] },
   icons: { icon: '/favicon.png', apple: '/favicon.png' },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f5f5f4' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#fafbfc' },
+    { media: '(prefers-color-scheme: dark)', color: '#13191f' },
   ],
 }
 

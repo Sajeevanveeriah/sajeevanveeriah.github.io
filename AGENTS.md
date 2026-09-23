@@ -4,9 +4,15 @@ This repository is Sajeevan Veeriah's personal engineering portfolio.
 
 The active product is a deliberately concise static Next.js 15 site. It is
 exported with the App Router and deployed to
-https://sv.sajeevanveeriah.workers.dev/. GitHub Pages remains a secondary deployment. Keep output: 'export', trailingSlash: true, images.unoptimized: true,
-public/.nojekyll, the static robots and sitemap routes, and the generated
-404.html path working.
+https://sv.sajeevanveeriah.workers.dev/, the only primary domain. GitHub Pages
+(sajeevanveeriah.github.io) is a redirect mirror built by
+scripts/build-pages-mirror.mjs. Keep output: 'export', trailingSlash: true,
+images.unoptimized: true, public/.nojekyll, public/_headers, the static robots,
+sitemap and RSS routes, and the generated 404.html path working.
+
+Merging to main deploys both targets automatically, so a merge is a release.
+Route lists for QA, Lighthouse and deployment checks come from the exported
+sitemap (scripts/routes.mjs); do not hard-code them again.
 
 The public identity is exactly:
 
@@ -16,7 +22,7 @@ The home-page information path is:
 
 identity -> integrated systems visual -> featured project -> compact project
 band -> complete career timeline and learning pathway -> professional
-foundation -> contact -> complete project index.
+foundation -> recent journal posts -> contact -> complete project index.
 
 Keep the detailed project index and career timeline in the active product.
 Do not recreate the legacy route tree, skills directory or legacy visual

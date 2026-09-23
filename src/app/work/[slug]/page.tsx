@@ -1,4 +1,5 @@
 import { site } from '@/content/site'
+import { defaultShareImage } from '@/content/seo'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Masthead } from '@/components/Masthead'
@@ -16,9 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const project = getProject((await params).slug)
   if (!project) return {}
   const image = project.image && !/\.(svg|avif)$/i.test(project.image.src) ? project.image : {
-    src: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
-    width: 1200,
-    height: 630,
+    ...defaultShareImage,
+    src: defaultShareImage.url,
     alt: `${project.title} engineering record by Sajeevan Veeriah.`,
   }
   return {
@@ -40,8 +40,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { slug } = await params
   const project = getProject(slug)
   if (!project) notFound()
-  const position = featuredProjects.findIndex((entry) => entry.slug === slug) + 1
-  const nextProject = featuredProjects[position % featuredProjects.length] ?? featuredProjects[0]
+  const index = featuredProjects.findIndex((entry) => entry.slug === slug)
+  const total = featuredProjects.length
+  const previous = featuredProjects[(index + total - 1) % total] ?? featuredProjects[0]
+  const next = featuredProjects[(index + 1) % total] ?? featuredProjects[0]
 
   return (
     <>
@@ -55,7 +57,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           author: { '@type': 'Person', '@id': `${site.url}/#person`, name: site.name, url: site.url },
           ...(project.image ? { image: `${site.url}${project.image.src}` } : {}),
         }).replace(/</g, '\\u003c') }} />
-        <RecordArticle project={project} nextProject={nextProject} position={position} total={featuredProjects.length} />
+        <RecordArticle project={project} previous={previous} next={next} position={index + 1} total={total} />
       </main>
       <SiteFooter />
     </>

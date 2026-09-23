@@ -4,7 +4,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
-import { posts, formatPostDate, readingMinutes } from "@/content/blog";
+import { posts, formatPostDate, readingMinutes, postCategory, postTopic } from "@/content/blog";
+import { ArrowLeft } from "@/components/icons";
 import { site } from "@/content/site";
 
 export const dynamicParams = false;
@@ -42,14 +43,14 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
   };
   return <>
     <Masthead current="blog" />
-    <main id="main" className="shell blog-article">
-      <Link prefetch={false} className="back-link" href="/blog/">Back to blog</Link>
+    <main id="main" className="container blog-article">
+      <Link prefetch={false} className="back-link" href="/blog/"><ArrowLeft />Journal</Link>
       <article>
         <header className="blog-header">
-          <p className="quiet"><time dateTime={post.date}>{formatPostDate(post.date)}</time> · By Sajeevan (Saj) Veeriah</p>
-          <p className="blog-category">{post.category ?? "Everyday AI"} · {readingMinutes(post)} min read</p>
+          <p className="post-meta"><Link prefetch={false} className="topic" href={`/blog/?topic=${encodeURIComponent(postTopic(post))}`}>{postTopic(post)}</Link><span>{postCategory(post)}</span><span>{readingMinutes(post)} min read</span></p>
           <h1>{post.title}</h1>
           <p className="blog-deck">{post.description}</p>
+          <p className="blog-byline">By Sajeevan (Saj) Veeriah · <time dateTime={post.date}>{formatPostDate(post.date)}</time></p>
         </header>
         {post.image && <figure className="blog-figure">
           <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />
