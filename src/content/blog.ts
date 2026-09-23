@@ -169,7 +169,14 @@ export const posts: BlogPost[] = [
       "url": "https://api.nav2.org/nav2-humble/html/md_nav2_collision_monitor_README.html"
     }
   ],
-  "note": "Sources checked on 23 September 2026. This is a proposed verification approach with illustrative calculations, not a report of completed testing or a safety certification."
+  "note": "Sources checked on 23 September 2026. This is a proposed verification approach with illustrative calculations, not a report of completed testing or a safety certification.",
+  "image": {
+    "src": "/assets/blog/20260923-Robot-Fault-Response-Rev00.svg",
+    "width": 1200,
+    "height": 720,
+    "alt": "Illustrative travel at 0.8 metres per second with constant braking deceleration of 1 metre per second squared: 100, 250 and 500 milliseconds of delay give total travel of 0.40, 0.52 and 0.72 metres. Braking contributes 0.32 metres in every case.",
+    "caption": "Calculated travel during the assumed delay plus ideal braking distance. Values and assumptions are explained below; these are not safety limits."
+  }
 },
   ...developmentPosts,
   ...caseStudyPosts,
