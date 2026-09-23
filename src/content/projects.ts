@@ -139,7 +139,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Configure', detail: 'Local browser interface' },
     ],
     image: {
-      src: '/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.png',
+      src: '/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.webp',
       alt: 'PCB design render showing the ESP32-S3 processor, power section and interface connectors.',
       width: 1568, height: 1176,
       kind: 'PCB design render',
