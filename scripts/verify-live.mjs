@@ -48,7 +48,13 @@ async function checkMirror(base) {
 }
 
 for (let attempt = 1; attempt <= attempts; attempt += 1) {
-  const problems = mirror ? await checkMirror(mirror.replace(/\/$/, '')) : await checkProduction()
+  let problems
+  try {
+    problems = mirror ? await checkMirror(mirror.replace(/\/$/, '')) : await checkProduction()
+  } catch (error) {
+    // DNS, TLS or connection failures are retryable, like a stale edge response.
+    problems = [`request failed: ${error.cause?.code ?? error.message}`]
+  }
   if (!problems.length) {
     console.log(`${mirror ? `Mirror ${mirror}` : siteURL}: ${routes.length} routes verified on attempt ${attempt}${release ? ` for release ${release}` : ''}`)
     process.exit(0)
