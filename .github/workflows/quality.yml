@@ -36,7 +36,7 @@ jobs:
         run: npm run qa:browser
       - name: Upload rendered evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: portfolio-rendered-qa-${{ github.sha }}
           path: /tmp/portfolio-qa

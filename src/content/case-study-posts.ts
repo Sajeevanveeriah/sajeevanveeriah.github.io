@@ -160,7 +160,7 @@ export const caseStudyPosts: BlogPost[] = [
     category: "Engineering case study",
     description: "An ESP32-S3 display-controller design connecting serial parsing, guarded display output, a four-layer PCB and browser configuration.",
     image: {
-      src: "/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.png",
+      src: "/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.webp",
       alt: "Gendio PCB design render showing the processor, power circuitry and interface connectors.",
       caption: "Render of the actual PCB design. This is a CAD view, not a photograph of assembled hardware.",
       width: 1568, height: 1176,

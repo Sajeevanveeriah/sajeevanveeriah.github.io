@@ -33,8 +33,11 @@ const routes = sitemapRoutes()
 const minimum = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 }
 const scores = []
 
-console.log('Route'.padEnd(46) + 'Perf  A11y  Best  SEO')
-for (const route of routes) {
+// One Lighthouse sample on a shared CI runner can spike (for example a single
+// 1,100 ms blocking-time outlier on an otherwise 20 ms page). A route that
+// misses a threshold is measured twice more and judged on the median of the
+// three samples, so the gate reflects the page rather than runner contention.
+async function measure(route) {
   const result = await lighthouse(base + route, {
     port: chrome.port,
     output: 'json',
@@ -45,9 +48,21 @@ for (const route of routes) {
     throttling: { rttMs: 150, throughputKbps: 1638.4, cpuSlowdownMultiplier: 4 },
   })
   if (!result) throw new Error(`Lighthouse did not return a result for ${route}`)
-  const row = Object.fromEntries(Object.keys(minimum).map((key) => [key, Math.round((result.lhr.categories[key].score ?? 0) * 100)]))
-  scores.push({ route, ...row })
   console.log(JSON.stringify({route,metrics:Object.fromEntries(['first-contentful-paint','largest-contentful-paint','total-blocking-time','cumulative-layout-shift','speed-index'].map(k=>[k,result.lhr.audits[k]?.displayValue])),opportunities:Object.entries(result.lhr.audits).filter(([,a])=>a.score!==null&&a.score<0.9&&a.details?.type==='opportunity').map(([id,a])=>({id,value:a.displayValue}))}))
+  return Object.fromEntries(Object.keys(minimum).map((key) => [key, Math.round((result.lhr.categories[key].score ?? 0) * 100)]))
+}
+const misses = (row) => Object.entries(minimum).some(([key, threshold]) => row[key] < threshold)
+const median = (values) => [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)]
+
+console.log('Route'.padEnd(46) + 'Perf  A11y  Best  SEO')
+for (const route of routes) {
+  let row = await measure(route)
+  if (misses(row)) {
+    const samples = [row, await measure(route), await measure(route)]
+    console.log(`${route}: below threshold on the first sample; judging the median of ${samples.length} samples ${JSON.stringify(samples)}`)
+    row = Object.fromEntries(Object.keys(minimum).map((key) => [key, median(samples.map((sample) => sample[key]))]))
+  }
+  scores.push({ route, ...row })
   console.log(route.padEnd(46) + String(row.performance).padStart(4) + String(row.accessibility).padStart(6) + String(row['best-practices']).padStart(6) + String(row.seo).padStart(5))
 }
 
