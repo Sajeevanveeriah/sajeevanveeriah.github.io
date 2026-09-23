@@ -135,10 +135,10 @@ try {
           title: document.querySelectorAll("h1").length,
           theme: document.documentElement.dataset.theme,
           media: [...document.querySelectorAll(".project-media img, .media-frame img")].every((i) => getComputedStyle(i).objectFit === "contain"),
-          smallTargets: [...document.querySelectorAll("header a, header button, header summary, .filters button, .footer-links a, .services a")]
+          smallTargets: [...document.querySelectorAll("header a, header button, header summary, .filters button, .filters input, .footer-links a, .services a, .theme-label select")]
             .filter((el) => el.offsetParent !== null)
             .map((el) => [el.textContent.trim() || el.getAttribute("aria-label"), el.getBoundingClientRect().height])
-            .filter(([, h]) => h < 40),
+            .filter(([, h]) => h < 44),
         }));
         if (result.overflow || !result.images || !result.logo || result.title !== 1 || result.theme !== theme || !result.media || result.smallTargets.length)
           failures.push({ width, theme, route, result });

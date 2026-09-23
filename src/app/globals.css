@@ -106,7 +106,7 @@ button, select, summary { cursor: pointer; }
 .site-nav a:hover { color: var(--ink); background: var(--surface); }
 .site-nav a[aria-current="page"] { color: var(--ink); font-weight: 600; background: var(--surface); }
 .header-actions { display: flex; align-items: center; gap: 8px; }
-.header-actions .btn { min-height: 40px; padding: 8px 16px; font-size: 15px; }
+.header-actions .btn { min-height: 44px; padding: 8px 18px; font-size: 15px; }
 .theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; border: 1px solid transparent; background: transparent; color: var(--muted); }
 .theme-toggle:hover { color: var(--ink); background: var(--surface); }
 .nav-disclosure { display: none; position: relative; }
@@ -200,7 +200,7 @@ button, select, summary { cursor: pointer; }
 .blog-index, .work-index { padding-bottom: clamp(56px, 8vw, 104px); }
 .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 16px; }
 .segmented { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px; border-radius: 999px; background: var(--surface); }
-.segmented button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 15px; }
+.segmented button { min-height: 44px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-size: 15px; }
 .segmented button:hover { color: var(--ink); }
 .segmented button[aria-pressed="true"] { background: var(--raised); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgb(23 33 43 / 0.14); }
 .filters .search { flex: 1 1 240px; display: flex; }
