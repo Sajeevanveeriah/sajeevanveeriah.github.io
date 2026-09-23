@@ -222,3 +222,26 @@ export function readingMinutes(post: BlogPost) {
   const words = [...post.intro, ...post.sections.flatMap((section) => [section.title, ...section.paragraphs, ...(section.after ?? []), ...(section.table?.rows.flat() ?? []), ...(section.steps?.flat() ?? [])])].join(" ").trim().split(/\s+/).length;
   return Math.max(1, Math.ceil(words / 200));
 }
+
+/** Reader-facing topics. Post categories stay descriptive; topics keep the filter short. */
+export const blogTopics = ["Case studies", "Robotics and embedded", "AI and software", "Design and careers"] as const;
+export type BlogTopic = (typeof blogTopics)[number];
+const topicByCategory: Record<string, BlogTopic> = {
+  "Engineering case study": "Case studies",
+  "Electronics / embedded systems / instrumentation": "Case studies",
+  "Robotics / mechatronics / design study": "Case studies",
+  "Robotics": "Robotics and embedded",
+  "Embedded systems": "Robotics and embedded",
+  "Sensing and signal processing": "Robotics and embedded",
+  "Machine vision": "Robotics and embedded",
+  "Industrial data": "Robotics and embedded",
+  "Design and ownership": "Design and careers",
+  "Everyday interfaces": "Design and careers",
+  "Engineering and work": "Design and careers",
+};
+export function postCategory(post: BlogPost) {
+  return post.category ?? "Everyday AI";
+}
+export function postTopic(post: BlogPost): BlogTopic {
+  return topicByCategory[postCategory(post)] ?? "AI and software";
+}

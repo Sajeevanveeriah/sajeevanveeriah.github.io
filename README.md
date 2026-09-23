@@ -1,19 +1,24 @@
 # Sajeevan Veeriah - Engineering Portfolio
 
-A static Next.js portfolio presenting robotics, embedded mechatronics, engineering software and professional experience.
+A static Next.js portfolio for robotics, embedded mechatronics, industrial automation and engineering software.
 
-## Experience
+- Production: https://sv.sajeevanveeriah.workers.dev/ (Cloudflare Worker `sv`, static assets)
+- Mirror: https://sajeevanveeriah.github.io/ redirects every page to the same path on the Worker
 
-- Home: introduction, selected projects, engineering approach, experience summary and contact.
-- Work: all 21 records, category filters, search, shareable filter URLs and reset.
-- Case studies: contribution, architecture, design decisions and testing.
-- About: the complete eight-entry career timeline and education.
-- Notes: the existing six-month learning roadmap and download.
-- Blog: dated articles, a homepage preview, individual shareable URLs and source links.
+## Site map
 
-The shared design uses locally hosted Archivo, a soft white canvas, charcoal text, blue accents and original-colour media. The existing monogram and canonical PDF resume URL are retained. The public resume is the general engineering PDF dated 21 September 2026, Rev00. Update it from the reviewed source PDF with scripts/generate-public-resume.py --source PATH. The site and deployment checks publish only the PDF resume. Full-size image links preserve engineering detail. Light is the initial theme; System and Dark are explicit persistent choices.
+| Route | Content |
+| --- | --- |
+| `/` | Identity, six-layer systems visual, featured project, project band, career and learning, foundation, recent writing, contact, complete project index |
+| `/work/` | All 21 projects: case-study cards and the delivery list, with category filters, search and shareable URLs |
+| `/work/<slug>/` | Case studies: contribution, architecture, decisions, verification, previous and next |
+| `/about/` | Full career timeline, education, community and life beyond work |
+| `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
+| `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
 
-## Development and verification
+The design uses one stylesheet (`src/app/globals.css`) built on colour tokens for light and dark themes, self-hosted Archivo and the existing monogram. The header toggles light and dark; the footer offers Light, System and Dark.
+
+## Development and checks
 
 Node.js 22 and npm.
 
@@ -21,60 +26,31 @@ Node.js 22 and npm.
 npm ci
 npm run typecheck
 npm run lint
-npm run build
+npm run build            # static export to out/
+npm run qa:export        # required files, resume bytes, RSS and every sitemap route
 npx playwright install --with-deps chromium
-npm run qa:browser
-npm run qa:lighthouse
+npm run qa:browser       # every sitemap route at 7 widths in both themes, axe WCAG 2.2 AA, flows
+npm run qa:lighthouse    # every sitemap route, mobile emulation
+npm run cloudflare:check # Wrangler dry run
 ```
 
-Browser QA checks nine routes at seven widths in both themes, axe accessibility, filters, search recovery, URL persistence, keyboard navigation, mobile menu, downloads/media links, legacy routes and the no-JavaScript catalogue. Lighthouse checks every active content route in mobile emulation. QA screenshots are CI artifacts, not application files.
+All route lists come from `out/sitemap.xml` through `scripts/routes.mjs`, so adding a post or case study automatically adds it to every check. To use an already-installed Chromium, set `BROWSER_EXECUTABLE_PATH`.
 
 ## Deployment
 
-### Cloudflare Workers
+Changes reach `main` through a reviewed pull request. Merging is the release:
 
-The production Worker is `sv`, serving
-https://sv.sajeevanveeriah.workers.dev/ from the static `out/` export.
-Wrangler is pinned in the development dependencies. The commands below explicitly
-use `wrangler.jsonc`; the legacy TOML configuration remains compatible.
+1. **Deploy to Cloudflare** (`.github/workflows/cloudflare.yml`) re-runs every check, deploys with Wrangler and then runs `npm run verify:live`. This confirms every route, canonical URLs, security headers, the resume PDF, the RSS feed, the 404 behaviour and that the home page carries the deployed commit SHA.
+2. **Deploy GitHub Pages mirror** (`.github/workflows/deploy.yml`) builds `out-pages/`, where each HTML page redirects to the Worker with a canonical link. It then confirms that every route redirects.
 
-For a manual deployment from GitHub, add repository Actions secrets named
-`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Use a Cloudflare token with
-Workers Scripts Edit permission scoped to the intended account. Do not commit
-credentials. Then open **Actions > Deploy to Cloudflare > Run workflow**, choose
-`main` and run it. This manual workflow checks the site before deploying.
-The 21 September resume/domain release also permits a main-branch push whose
-commit message contains `[deploy-approved:resume-domain-20260921]`, reflecting
-Saj's explicit approval for this release. Do not reuse that marker for future
-changes; obtain current approval and use the manual workflow.
-It does not require Cloudflare's dashboard file uploader.
+The Cloudflare workflow needs the repository secrets `CLOUDFLARE_API_TOKEN` (Workers Scripts Edit, scoped to the account) and `CLOUDFLARE_ACCOUNT_ID`. It can also be run manually from **Actions > Deploy to Cloudflare**.
 
-For local deployment with Node.js 22 and npm, run from the repository root:
+Local deployment: `npm run cloudflare:login`, build, then `npm run cloudflare:deploy`.
 
-```sh
-npm ci
-npm run cloudflare:login
-npm run typecheck
-npm run lint
-npm run build
-npm run cloudflare:check
-npm run cloudflare:deploy
-```
+`public/_headers` sets security headers and long-lived caching for hashed build files and fonts on the Worker.
 
-The login command uses Cloudflare's browser authorisation flow. The deploy command
-publishes the existing `out/` directory, so always build first. For Cloudflare's
-own Git integration, use `npm run build` as the build command and
-`npm run cloudflare:deploy` as the deploy command. Keep only the intended deployment
-route active to avoid overlapping deployments.
+## Publishing a journal post
 
-### Existing GitHub Pages deployment
+Add an entry to one of the post files in `src/content/` (collected in `src/content/blog.ts`). Use a unique lowercase, hyphenated slug, an ISO date (`YYYY-MM-DD`), a title, a description, an introduction, sections, sources and a `category`. The category maps to one of the four journal topics in `blog.ts`; add a mapping when you introduce a new category. The index, home preview, sitemap, RSS feed and every QA route update from the same content.
 
-The existing GitHub Pages workflow publishes the static `out/` directory after verification. No backend, tracking, database or runtime third-party requests are needed. About is excluded from the legacy redirect generator so the built page cannot be overwritten.
-
-The earlier portfolio remains under `archive/20260810-legacy-portfolio/`. Unused previous style files are retained but are not imported by the active application.
-
-## Publishing a blog post
-
-Add an entry to `posts` in `src/content/blog.ts`. Give it a unique lowercase, hyphenated slug, an ISO date (`YYYY-MM-DD`), title, description, introduction and sections. Sections support paragraphs, two-column tables, numbered steps and references to the post's source list (numbered from 1). Include a checked-on note when the guidance can change.
-
-The blog index and homepage preview sort newest first. Static article routes and sitemap entries are generated from the same content. Run the existing checks, then publish through a reviewed pull request with Saj's approval. Add the new route to the browser QA, Lighthouse and deployment route lists to keep release coverage complete.
+The earlier portfolio remains under `archive/20260810-legacy-portfolio/` and is not part of the build.

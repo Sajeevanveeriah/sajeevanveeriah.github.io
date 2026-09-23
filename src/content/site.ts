@@ -12,6 +12,9 @@ export const site = {
   phone: '+61 498 586 654',
   location: 'Geelong, Victoria, Australia',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
+  serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
+  /** Last content review; used for sitemap dates on routes without their own date. */
+  updated: '2026-09-23',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
   support: {
@@ -135,41 +138,7 @@ export const systemLayers = [
   { index: '06', title: 'Verification and deployment', detail: 'Simulation, integration, commissioning, field checks and handover.', colour: 'rose' },
 ] as const
 
-export const roleLenses = [
-  {
-    title: 'Industrial IT, OT and Automation',
-    detail: 'I connect PLC and HMI/SCADA systems with production data, MES interfaces, industrial networking, commissioning, traceability and operational handover.',
-    href: '/open-industrial-automation/',
-    action: 'Explore industrial systems work',
-  },
-  {
-    title: 'Robotics and Mechatronics',
-    detail: 'I connect mechanisms, sensing, embedded control and autonomy so physical systems can move from build to verified behaviour.',
-    href: '/work/autonomous-navigation-rover/',
-    action: 'See robotics evidence',
-  },
-  {
-    title: 'AI/ML and Engineering Software',
-    detail: 'My work spans local AI systems, computer vision, engineering data and production-grade software with explicit requirements, tests and release boundaries.',
-    href: '/work/swl-pricing-inventory-control/',
-    action: 'See software evidence',
-  },
-] as const
 
-export const professionalProof = [
-  {
-    title: 'Industrial automation and operational systems',
-    detail: 'Controls and integration across PLC logic, HMI/SCADA, field devices, drives, MES and production data, including validated migration, FAT, SAT, commissioning, handover and mobile-robot fault tracing under GMP controls.',
-  },
-  {
-    title: 'Field robotics, IoT and telemetry',
-    detail: 'Physical and field-to-dashboard systems using ROS 2, ESP32, LoRaWAN, MQTT, ChirpStack, InfluxDB and Grafana, plus CAN, GPS, custom PCB, connectivity and Linux support.',
-  },
-  {
-    title: 'Verification across regulated and vehicle systems',
-    detail: 'Traceable validation across automation, automotive software and compliance testing, with calibrated instrumentation, CAN and CAN FD captures, regression evidence and auditable quality records.',
-  },
-] as const
 
 export const workingStyle =
   'My working pattern is consistent: understand the whole system, isolate faults and leave clear evidence for verification, commissioning and handover.'
