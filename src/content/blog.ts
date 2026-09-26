@@ -152,7 +152,8 @@ export const posts: BlogPost[] = [
       "id": "protection",
       "title": "Do not let the reading be the only protection",
       "paragraphs": [
-        "An open, shorted or detached thermistor can still produce a number. In firmware I would treat readings at either end of the valid window as faults and switch the heater off, rather than clamping them to a plausible temperature.",
+        "An open, shorted or detached thermistor can still produce a number. In firmware I would not clamp an out-of-window reading to a plausible temperature. With the thermistor on the low side, a short pulls the output towards 0 V and reads as extreme heat, so a reading below the window should switch the heater off.",
+        "The top of the window is harder. With a 4.7 kΩ or 1 kΩ resistor, a healthy sensor at room temperature already reads above 2450 mV, about 3.27 V at 25 °C with 1 kΩ, and an open thermistor reads close to 3.3 V as well. A divider sized for the heat therefore needs a cold-start strategy that can tell a cold sensor from an open one, such as a second divider range or a separate open-circuit check, before the heater is allowed to run under closed-loop control.",
         "My controller also showed why the output side needs the same scrutiny: the element was reported to stay powered while the displayed PWM value was zero. A displayed control output is an instruction, not evidence that the element is off. For a heater that can exceed its sensor's rating, I would want an independent over-temperature cut-out that does not rely on the microcontroller, specified and rated for that element."
       ]
     }
