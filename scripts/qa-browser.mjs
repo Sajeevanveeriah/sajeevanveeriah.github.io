@@ -57,7 +57,7 @@ const routes = sitemapRoutes(root);
 const blogPosts = routes.filter((route) => /^\/blog\/.+\/$/.test(route));
 const developmentRoutes = ["/blog/gendio-control-board-and-radar-positioning/", "/blog/solar-panel-cleaning-robot-design-study/"];
 const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-praise-of-the-volume-knob/", "/blog/ai-without-the-jargon/"];
-const figureCounts = { [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
+const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
