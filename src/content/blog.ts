@@ -31,6 +31,182 @@ export type BlogPost = {
 // Add a post here to publish its page, index entry and sitemap URL together.
 export const posts: BlogPost[] = [
 {
+  "slug": "bridge-humanoid-hardware-and-control",
+  "title": "BRIDGE: designing the robot body and controller together",
+  "date": "2026-09-27",
+  "category": "Robotics",
+  "description": "A September humanoid study puts mechanical design inside the learning loop. A look at its reported results, an arithmetic check, and what is actually available to reproduce.",
+  "image": {
+    "src": "/assets/blog/20260927-BRIDGE-Benchmark-Rev00.svg",
+    "width": 1200,
+    "height": 720,
+    "alt": "Authors-reported simulated motion success: BRIDGE 94.83%, K1 92.66%, Bumi 91.87%, ToddlerBot 88.23%. The BRIDGE advantage over K1 is 2.17 percentage points.",
+    "caption": "Original chart from Table 5 of Wang et al., BRIDGE, arXiv:2609.03497v1. Published simulation results, not tests performed on my hardware."
+  },
+  "intro": [
+    "A learned controller still has to move a physical machine. Joint placement, inertia and actuator limits decide which motions it can attempt. Training a better policy cannot make those constraints disappear.",
+    "BRIDGE, a preprint published on 3 September 2026, explores designing the body and controller together. The useful engineering question is how a failed motion should change the next mechanical design."
+  ],
+  "sections": [
+    {
+      "id": "design-loop",
+      "title": "Put the mechanical design inside the loop",
+      "paragraphs": [
+        "The authors iterate through motion retargeting, actuator-aware construction and learned control, using failures to refine the next design. Their approach includes calibrated torque-speed limits and rebuilding the model after actuator changes. [1]",
+        "The engineering implication is practical: changing a motor changes more than available torque. Its mass and mounting envelope can alter the whole machine. I would treat the updated geometry, inertia and controller configuration as one revision, then rerun the same motion set."
+      ],
+      "image": {
+        "src": "/assets/blog/20260927-BRIDGE-Research-Rev00.webp",
+        "width": 1600,
+        "height": 813,
+        "alt": "The BRIDGE researchers’ Figure 1 shows an actuator library feeding URDF generation and motion evaluation, with failed coverage feeding back to actuator replacement and model regeneration. Beneath it is a sequence of the robot performing a backflip. These are the authors’ images, not my robot or tests.",
+        "caption": "Figure 1, Jianren Wang et al., BRIDGE (2026), CC BY 4.0. Resized and compressed as WebP for the web; content unchanged. Source and licence are linked below."
+      },
+      "sources": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": "reported-results",
+      "title": "What the reported testing shows",
+      "paragraphs": [
+        "Table 5 evaluates SONIC policies in MuJoCo on a combined LaFAN1 and bones_seed motion benchmark, including early terminations. The reported success rates are below. These are simulated benchmark results; the paper also presents separate physical demonstrations. [1]"
+      ],
+      "table": {
+        "headings": [
+          "Platform",
+          "Reported motion success"
+        ],
+        "rows": [
+          [
+            "BRIDGE",
+            "94.83%"
+          ],
+          [
+            "K1",
+            "92.66%"
+          ],
+          [
+            "Bumi",
+            "91.87%"
+          ],
+          [
+            "ToddlerBot",
+            "88.23%"
+          ]
+        ]
+      },
+      "after": [
+        "A demonstration and an aggregate success rate answer different questions. A video shows that a motion happened under those conditions. A benchmark needs its failure rule, trial population and evaluation procedure before the percentage can be interpreted."
+      ],
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": "arithmetic-check",
+      "title": "The check reproduced for this article",
+      "paragraphs": [
+        "The accompanying Python script was executed for this article. It checks the published human-likeness score calculation for all four platforms and two comparisons of BRIDGE with K1. All six assertions passed. This is an arithmetic audit of rounded table values, not an independent run of the robotics benchmark.",
+        "The score is exp(-(0.5 × kinematic error + 0.5 × dynamic error) / 0.05). Recomputing it gives 0.432142 for Bumi, 0.419790 for K1, 0.388291 for ToddlerBot and 0.525187 for BRIDGE. Each agrees with the printed score within a tolerance derived from four-decimal input rounding. [1]"
+      ],
+      "table": {
+        "headings": [
+          "Comparison with K1",
+          "Calculated result"
+        ],
+        "rows": [
+          [
+            "Success-rate difference",
+            "94.83 - 92.66 = 2.17 percentage points"
+          ],
+          [
+            "Relative success increase",
+            "2.17 / 92.66 = 2.34%"
+          ],
+          [
+            "Relative failure-rate reduction",
+            "(7.34 - 5.17) / 7.34 = 29.56%"
+          ]
+        ]
+      },
+      "after": [
+        "The 29.56% number is mathematically valid but easy to oversell. Its denominator is the baseline failure rate of 7.34%, not all evaluated motions. I would lead with the 2.17 percentage-point difference and show the underlying rates alongside it.",
+        "These aggregate checks cannot establish statistical significance, performance across random seeds or repeatability on another machine. Trial-level outcomes and the complete evaluation setup are needed for that. The script uses only the Python standard library and prints the same JSON results linked here."
+      ],
+      "links": [
+        {
+          "label": "Download the reproducible Python arithmetic check",
+          "url": "/assets/blog/20260927-BRIDGE-Results-Rev00.py"
+        },
+        {
+          "label": "Download the executed check results (JSON)",
+          "url": "/assets/blog/20260927-BRIDGE-Results-Rev00.json"
+        }
+      ],
+      "sources": [
+        1
+      ]
+    },
+    {
+      "id": "release-status",
+      "title": "Check the release before planning a reproduction",
+      "paragraphs": [
+        "On 27 September, the project page offers a STEP CAD download but labels code and tutorial links as coming soon. It says assembly guidance, electrical specifications, BOM, and training and deployment code will follow acceptance. A complete reproduction is therefore not established by the current release. [2]",
+        "There are also inconsistent size and mass figures across the paper and project page. I would verify the actual CAD revision and bill of materials before using headline specifications for a build."
+      ],
+      "sources": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "next-test",
+      "title": "What I would test next",
+      "paragraphs": [
+        "For a simulation-first investigation, I would freeze the reference motion set and evaluation rules before comparing two mechanical variants. Each run should record the exact model, policy checkpoint, training budget and random seed."
+      ],
+      "steps": [
+        [
+          "Establish the baseline",
+          "Run the unchanged model and retain all failures, including early terminations. Separate training motions from evaluation motions."
+        ],
+        [
+          "Change one mechanical factor",
+          "Adjust one actuator limit or joint offset, then update the affected inertial and collision model. Keep the remaining setup fixed."
+        ],
+        [
+          "Inspect the failure",
+          "Record tracking error, contact loss and actuator saturation. A saturation trace is a lead to investigate, not proof of the cause."
+        ],
+        [
+          "Repeat and report",
+          "Use multiple seeds and report trial counts, variation, compute cost and regressions as well as the best result."
+        ]
+      ],
+      "after": [
+        "That would test whether a mechanical change helps under a controlled evaluation. Until the missing release materials arrive, this remains a proposed experiment. The published result is encouraging; the next useful evidence is a reproduction that exposes its failures as clearly as its successful motions."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wang et al., BRIDGE preprint v1, 3 September 2026. Tables 4 and 5; Equation 22; Figure 1.",
+      "url": "https://arxiv.org/html/2609.03497v1"
+    },
+    {
+      "label": "BRIDGE project page: CAD, demonstrations and release status, checked 27 September 2026.",
+      "url": "https://sites.google.com/view/bridgerobot"
+    },
+    {
+      "label": "Creative Commons Attribution 4.0 International licence for the reproduced paper figure.",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "note": "Research review and arithmetic audit, prepared 27 September 2026. The six numerical checks were executed; no policy training, MuJoCo evaluation or physical robot test was performed for this article. Benchmark values are attributed to the preprint authors. No statistical significance or production readiness is claimed."
+},
+{
   "slug": "size-the-thermistor-divider-for-the-heat",
   "title": "A thermistor divider only works across the range it was sized for",
   "date": "2026-09-26",

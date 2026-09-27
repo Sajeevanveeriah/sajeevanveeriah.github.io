@@ -1,0 +1,70 @@
+{
+  "scope": "Arithmetic audit of published rounded aggregates; no independent robotics benchmark",
+  "source": "https://arxiv.org/html/2609.03497v1",
+  "published_results": {
+    "Bumi": {
+      "success_percent": 91.87,
+      "kinematic_error": 0.0381,
+      "dynamic_error": 0.0458,
+      "human_likeness": 0.4321
+    },
+    "K1": {
+      "success_percent": 92.66,
+      "kinematic_error": 0.0396,
+      "dynamic_error": 0.0472,
+      "human_likeness": 0.4198
+    },
+    "ToddlerBot": {
+      "success_percent": 88.23,
+      "kinematic_error": 0.0413,
+      "dynamic_error": 0.0533,
+      "human_likeness": 0.3883
+    },
+    "BRIDGE": {
+      "success_percent": 94.83,
+      "kinematic_error": 0.026,
+      "dynamic_error": 0.0384,
+      "human_likeness": 0.5252
+    }
+  },
+  "score_checks": [
+    {
+      "platform": "Bumi",
+      "recomputed_score": 0.432142,
+      "reported_score": 0.4321,
+      "absolute_difference": 4.2e-05,
+      "rounding_tolerance": 0.000482,
+      "within_rounding_tolerance": true
+    },
+    {
+      "platform": "K1",
+      "recomputed_score": 0.41979,
+      "reported_score": 0.4198,
+      "absolute_difference": 1e-05,
+      "rounding_tolerance": 0.00047,
+      "within_rounding_tolerance": true
+    },
+    {
+      "platform": "ToddlerBot",
+      "recomputed_score": 0.388291,
+      "reported_score": 0.3883,
+      "absolute_difference": 9e-06,
+      "rounding_tolerance": 0.000438,
+      "within_rounding_tolerance": true
+    },
+    {
+      "platform": "BRIDGE",
+      "recomputed_score": 0.525187,
+      "reported_score": 0.5252,
+      "absolute_difference": 1.3e-05,
+      "rounding_tolerance": 0.000575,
+      "within_rounding_tolerance": true
+    }
+  ],
+  "bridge_vs_k1": {
+    "success_gap_percentage_points": 2.17,
+    "relative_success_gain_percent": 2.34,
+    "relative_failure_reduction_percent": 29.56
+  },
+  "checks_passed": 6
+}

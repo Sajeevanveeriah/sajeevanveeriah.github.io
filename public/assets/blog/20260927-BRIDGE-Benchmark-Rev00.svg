@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="864pt" height="518.4pt" viewBox="0 0 864 518.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-26T21:31:14.216523</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 518.4
+L 864 518.4
+L 864 0
+L 0 0
+z
+" style="fill: #f6f5f1"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 164.16 378.432
+L 786.24 378.432
+L 786.24 119.232
+L 164.16 119.232
+z
+" style="fill: #f6f5f1"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 164.16 131.013818
+L 725.987109 131.013818
+L 725.987109 165.823736
+L 164.16 165.823736
+z
+" clip-path="url(#p1a8755693d)" style="fill: #176252"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 164.16 197.955967
+L 713.130789 197.955967
+L 713.130789 232.765884
+L 164.16 232.765884
+z
+" clip-path="url(#p1a8755693d)" style="fill: #737b81"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 164.16 264.898116
+L 708.450377 264.898116
+L 708.450377 299.708033
+L 164.16 299.708033
+z
+" clip-path="url(#p1a8755693d)" style="fill: #737b81"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 164.16 331.840264
+L 686.884937 331.840264
+L 686.884937 366.650182
+L 164.16 366.650182
+z
+" clip-path="url(#p1a8755693d)" style="fill: #737b81"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1"/>
+     <g id="text_1">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="164.16" y="402.5895" transform="rotate(-0 164.16 402.5895)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2"/>
+     <g id="text_2">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="312.274286" y="402.5895" transform="rotate(-0 312.274286 402.5895)">25</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3"/>
+     <g id="text_3">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="460.388571" y="402.5895" transform="rotate(-0 460.388571 402.5895)">50</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4"/>
+     <g id="text_4">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="608.502857" y="402.5895" transform="rotate(-0 608.502857 402.5895)">75</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5"/>
+     <g id="text_5">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="756.617143" y="402.5895" transform="rotate(-0 756.617143 402.5895)">100</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle" x="475.2" y="438.0745" transform="rotate(-0 475.2 438.0745)">Motion success rate (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6"/>
+     <g id="text_7">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: end" x="152.16" y="154.497527" transform="rotate(-0 152.16 154.497527)">BRIDGE</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7"/>
+     <g id="text_8">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: end" x="152.16" y="221.439676" transform="rotate(-0 152.16 221.439676)">K1</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8"/>
+     <g id="text_9">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: end" x="152.16" y="288.381824" transform="rotate(-0 152.16 288.381824)">Bumi</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_9"/>
+     <g id="text_10">
+      <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: end" x="152.16" y="355.323973" transform="rotate(-0 152.16 355.323973)">ToddlerBot</text>
+     </g>
+    </g>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222629" x="731.91168" y="153.109714" transform="rotate(-0 731.91168 153.109714)">94.83%</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222629" x="719.05536" y="220.051863" transform="rotate(-0 719.05536 220.051863)">92.66%</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222629" x="714.374949" y="286.994012" transform="rotate(-0 714.374949 286.994012)">91.87%</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 17px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222629" x="692.809509" y="353.936161" transform="rotate(-0 692.809509 353.936161)">88.23%</text>
+   </g>
+  </g>
+  <g id="text_15">
+   <text style="font-weight: 700; font-size: 26px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222629" x="51.84" y="36.288" transform="rotate(-0 51.84 36.288)">BRIDGE: hardware meets learned control</text>
+  </g>
+  <g id="text_16">
+   <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4a5257" x="51.84" y="67.392" transform="rotate(-0 51.84 67.392)">Authors’ reported MuJoCo benchmark | SONIC policies</text>
+  </g>
+  <g id="text_17">
+   <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #176252" x="51.84" y="456.192" transform="rotate(-0 51.84 456.192)">BRIDGE vs K1: +2.17 percentage points</text>
+  </g>
+  <g id="text_18">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4a5257" x="51.84" y="484.704" transform="rotate(-0 51.84 484.704)">Source: Wang et al., arXiv:2609.03497v1, Table 5 (3 Sep 2026).</text>
+  </g>
+  <g id="text_19">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4a5257" x="51.84" y="503.8848" transform="rotate(-0 51.84 503.8848)">Original chart of published results. No independent policy or robot test.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1a8755693d">
+   <rect x="164.16" y="119.232" width="622.08" height="259.2"/>
+  </clipPath>
+ </defs>
+</svg>
