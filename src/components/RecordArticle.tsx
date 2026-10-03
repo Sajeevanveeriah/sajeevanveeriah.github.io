@@ -40,6 +40,12 @@ export function RecordArticle({ project, previous, next, position, total }: { re
                 ))}
               </ol>
             </section>
+            {project.sections?.map((section) => <section key={section.id} aria-labelledby={`${section.id}-heading`} className="record-section">
+              <h2 id={`${section.id}-heading`}>{section.title}</h2>
+              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {section.image && <ProjectMedia image={section.image} />}
+              {section.links && <ul className="record-links">{section.links.map((link) => <li key={link.href}><a className="text-link" href={link.href}>{link.label}</a></li>)}</ul>}
+            </section>)}
             <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
             {project.publication && <section aria-labelledby="publication-heading">
               <h2 id="publication-heading">Research publication</h2>

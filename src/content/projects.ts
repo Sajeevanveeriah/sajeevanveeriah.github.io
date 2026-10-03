@@ -1,4 +1,20 @@
 export interface Project {
+  readonly sections?: readonly {
+    readonly id: string
+    readonly title: string
+    readonly paragraphs: readonly string[]
+    readonly image?: {
+      readonly src: string
+      readonly mobileSrc?: string
+      readonly mobileWidth?: number
+      readonly mobileHeight?: number
+      readonly alt: string
+      readonly width: number
+      readonly height: number
+      readonly kind: string
+    }
+    readonly links?: readonly { readonly label: string; readonly href: string }[]
+  }[]
   readonly publication?: { readonly url: string; readonly label: string }
   readonly caseStudy?: string
   readonly category: 'Robotics' | 'Embedded' | 'Software' | 'Industrial'
@@ -19,11 +35,75 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation'
+    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation' | 'Project scope'
   }
 }
 
 export const projects: readonly [Project, Project, Project, ...Project[]] = [
+  {
+    slug: 'ndcc-community-systems',
+    category: 'Software',
+    title: 'NDCC Digital Platform & Public WiFi',
+    proof: 'Club website, committee workflows, event operations and a public WiFi upgrade at Grinter Reserve.',
+    problem: 'A community club depends on volunteers keeping information, orders and events organised. My work at Newcomb and District Cricket Club spans the digital tools people use and the connectivity that supports them at the ground.',
+    system: 'I build and maintain NDCC\'s digital platform, support club communications and operations, and have completed a public WiFi network upgrade at Grinter Reserve.',
+    architecture: 'The website combines a Next.js and TypeScript application with Supabase-backed content, operational records and media. Committee permissions control administrative workflows. PlayHQ supplies fixtures and supported cricket data; Resend handles application email. Payment paths are configuration-dependent, with manual bank transfer and a separately gated Stripe Checkout integration.',
+    ownership: 'Website development and maintenance, committee and member workflows, event communications, operational tools and the recent public WiFi network upgrade. I also prepared the outdoor network expansion guide and pilot design.',
+    decisions: [
+      'Keep public content and committee administration connected through a shared content system, with server-enforced permissions for sensitive actions.',
+      'Use PlayHQ as the fixture source and retain review steps for imported data, orders and payments.',
+      'Keep the existing internet gateway in the outdoor expansion design, with a wired root access point and a separately powered remote mesh access point.',
+      'Separate the completed WiFi upgrade from the proposed outdoor pilot. Equipment options and acceptance targets are design records, not measured coverage results.',
+    ],
+    verification: 'The digital-platform scope is documented in the NDCC source repository. The network expansion guide contains 27 installation and handover steps, a connection diagram and proposed acceptance checks. The recent public WiFi upgrade is complete; this case study does not claim measured throughput, reserve-wide coverage or a verified installed equipment inventory.',
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'PlayHQ', 'Resend', 'Vercel', 'Network planning', 'WiFi'],
+    systemPath: [
+      { label: 'Inform', detail: 'Club website and communications' },
+      { label: 'Operate', detail: 'Committee, orders and events' },
+      { label: 'Connect', detail: 'Public WiFi upgrade' },
+      { label: 'Document', detail: 'Network design and handover' },
+    ],
+    image: { src: '/assets/image/20261003-NDCC-Community-Systems-Rev00.svg', alt: 'NDCC project scope: digital platform and club operations alongside the completed public WiFi upgrade and a separately documented outdoor expansion design.', width: 1200, height: 600, kind: 'Project scope' },
+    sections: [
+      {
+        id: 'club-platform', title: 'A platform for the people running the club',
+        paragraphs: [
+          'The public website brings together news, events, fixtures, sponsors, gallery content and club information. Behind it, the committee tools support content updates, seasonal administration, registrations and member services.',
+          'The operational scope includes kitchen and merchandise ordering, supplier exports, payment records and receipts, fundraising, calendars and fantasy cricket administration. These workflows sit alongside the public site so that club information and the work of maintaining it belong to the same system.',
+        ],
+        links: [{ label: 'Visit the NDCC website', href: 'https://www.ndcc.com.au/' }, { label: 'Explore the platform source', href: 'https://github.com/Sajeevanveeriah/ndcc-website' }],
+      },
+      {
+        id: 'club-operations', title: 'The work around the software',
+        paragraphs: [
+          'My club contribution also includes event artwork and communications, kitchen-order consolidation, member and mailing-list organisation, and fixture comparison for potential ground clashes. The aim is practical: give volunteers clear information they can use on the day.',
+          'This is ongoing community work. The website, event material and operational documents need to stay aligned as committee decisions and club requirements change.',
+        ],
+      },
+      {
+        id: 'public-wifi', title: 'Public WiFi at Grinter Reserve',
+        paragraphs: [
+          'I recently completed a public WiFi network upgrade for the club. Alongside that work, I developed a documented approach to extending outdoor connectivity, covering equipment selection, connection paths, site checks, troubleshooting and handover.',
+          'The available network map below is the expansion concept from that guide. It shows a wired root access point, a wireless backhaul to a remote access point, and separate local power at the remote end. It is a topology diagram, not an as-built site map or a radio-coverage survey.',
+        ],
+        image: {
+          src: '/assets/image/20261003-NDCC-Network-Plan-Rev00.svg',
+          mobileSrc: '/assets/image/20261003-NDCC-Network-Plan-Mobile-Rev00.svg',
+          mobileWidth: 600, mobileHeight: 1220,
+          alt: 'Proposed outdoor pilot: the existing internet gateway feeds LAN ports or a switch. Wired branches connect an Omada controller, a root outdoor access point through its injector, and an optional indoor access point. Wireless backhaul connects the root to a remote outdoor access point with its own local power and injector. Locations and coverage require on-site validation.',
+          width: 1200, height: 850, kind: 'Outdoor expansion concept - not an as-built or coverage map',
+        },
+      },
+      {
+        id: 'network-handover', title: 'Design, acceptance and handover',
+        paragraphs: [
+          'The September 2026 guide proposes a two-AP EAP225-Outdoor pilot with an Omada Software Controller on an existing computer, or an optional OC200 controller. Those are documented design options, not a statement of the equipment installed in the completed upgrade.',
+          'The handover plan covers equipment records, authorised mounting positions, power and cable routes, guest separation, repeatable walk tests and restart recovery. It treats wired internet performance, local network performance and radio coverage as separate checks.',
+          'The guide also includes an equipment calculator, a 27-step checklist and a field notebook. Site measurements determine whether the design should expand and where additional access points belong.',
+        ],
+      },
+    ],
+  },
   {
     slug: 'autonomous-navigation-rover',
     caseStudy: '/blog/ros2-navigation-rover-case-study/',
@@ -260,10 +340,6 @@ export const projectIndex: readonly ProjectGroup[] = [
       {
         title: 'VeerAI: Local SLM System', summary: 'A complete local AI system: an open-weight small language model on personally owned hardware inside a governed ingestion, retrieval, memory, tools and evaluation pipeline.',
         image: { src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.avif', alt: 'System diagram of the VeerAI local SLM system.', width: 1672, height: 941, kind: 'System diagram' },
-      },
-      {
-        title: 'Newcomb and District Cricket Club Platform', summary: 'The official NDCC digital platform, combining the public club website with committee content, membership, merchandise, gallery, sponsor and administration workflows.',
-        image: { src: '/assets/image/20260803-NDCC-Website-Platform-Rev00.svg', alt: 'System diagram of the NDCC digital platform architecture.', width: 1435, height: 660, kind: 'System diagram' },
       },
     ],
   },
