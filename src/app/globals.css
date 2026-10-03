@@ -266,6 +266,10 @@ button, select, summary { cursor: pointer; }
 .record-body { display: grid; gap: 40px; max-width: 760px; }
 .record-body h2 { font-size: 24px; letter-spacing: -0.025em; margin-bottom: 12px; }
 .record-body p { color: var(--muted); }
+.record-section > p + p { margin-top: 16px; }
+.record-section .project-media { margin-top: 24px; }
+.record-section .project-media img { max-height: none; }
+.record-links { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 16px; }
 .decisions { display: grid; gap: 12px; counter-reset: decision; }
 .decisions li { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 16px; border-radius: var(--radius-small); background: var(--surface); }
 .decision-index { font-size: 13px; font-weight: 600; color: var(--accent); padding-top: 3px; }

@@ -176,7 +176,7 @@ export const practiceDomains = [
 export const community = [
   {
     title: 'Newcomb and District Cricket Club',
-    detail: 'Playing club cricket, helping the club run and building its digital platform for members, committees, sponsors and supporters.',
+    detail: 'Playing club cricket, building and maintaining the digital platform, supporting event communications and club operations, and upgrading public WiFi at Grinter Reserve.',
   },
   {
     title: 'Deakin Mars Rover Team',

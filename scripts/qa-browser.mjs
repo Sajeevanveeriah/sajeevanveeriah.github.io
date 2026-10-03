@@ -89,7 +89,16 @@ try {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator("main").evaluate((el) => /\bRev\d{2}\b/.test(el.innerText)), false);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
-          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 4 of 6"));
+          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 5 of 7"));
+        }
+        if (route === "/work/ndcc-community-systems/") {
+          assert.equal(await page.locator(".record-section").count(), 4);
+          const network = page.locator('#public-wifi-heading').locator('..').locator('img');
+          assert.ok((await network.evaluate((img) => img.currentSrc)).endsWith(width <= 760
+            ? "20261003-NDCC-Network-Plan-Mobile-Rev00.svg"
+            : "20261003-NDCC-Network-Plan-Rev00.svg"));
+          assert.ok((await page.locator('#public-wifi-heading').locator('..').innerText()).includes('not an as-built site map'));
+          assert.equal(await page.getByRole('link', { name: 'Visit the NDCC website', exact: true }).getAttribute('href'), 'https://www.ndcc.com.au/');
         }
         if (route.startsWith("/blog/"))
           assert.equal(await page.locator('.site-nav a[href="/blog/"]').getAttribute("aria-current"), "page");
@@ -219,6 +228,12 @@ try {
   // Work catalogue: filters, search, URL persistence, empty state and case study links.
   await page.goto(baseURL + "/work/");
   assert.equal(await status(page).textContent(), "21 projects");
+  await page.getByRole("searchbox", { name: "Search projects" }).fill("WiFi");
+  assert.equal(await status(page).textContent(), "1 project");
+  await page.getByRole("link", { name: "NDCC Digital Platform & Public WiFi", exact: true }).press("Enter");
+  await page.waitForURL(baseURL + "/work/ndcc-community-systems/");
+  await page.getByRole("link", { name: "All work", exact: true }).click();
+  await page.waitForURL(baseURL + "/work/");
   await page.getByRole("button", { name: "Embedded", exact: true }).click();
   await page.getByRole("searchbox", { name: "Search projects" }).fill("Gendio");
   assert.equal(await status(page).textContent(), "1 project");
