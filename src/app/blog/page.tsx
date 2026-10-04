@@ -30,7 +30,7 @@ export default function Blog() {
       <header className="page-head">
         <p className="eyebrow">Journal</p>
         <h1>Notes from the bench.</h1>
-        <p>Practical writing on robotics, embedded systems, AI and software people can trust, plus detailed case studies of my own projects.</p>
+        <p>Design choices, calculations and lessons from robotics, embedded systems, industrial automation and software. Follow a worked example, investigate a failure or look inside one of my projects.</p>
       </header>
       <noscript><style>{".journal-controls{display:none}"}</style></noscript>
       <JournalIndex entries={entries} topics={blogTopics} />

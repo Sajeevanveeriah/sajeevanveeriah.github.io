@@ -8,8 +8,8 @@ export function ContactBand() {
     <section className="contact-band" id="contact" aria-labelledby="contact-title">
       <div className="container contact-inner">
         <div>
-          <h2 id="contact-title">Have a system to work through?</h2>
-          <p>Talk to me about an engineering problem, a project or a role.</p>
+          <h2 id="contact-title">Let&apos;s make the next system work.</h2>
+          <p>Discuss an engineering role, a project or a research collaboration. Tell me what you are building, where it gets difficult and what a useful result would look like.</p>
         </div>
         <div className="contact-actions">
           <a className="btn btn-primary" href={`mailto:${site.email}`}>Email Saj <ArrowUpRight /></a>

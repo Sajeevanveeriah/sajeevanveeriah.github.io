@@ -61,7 +61,8 @@ const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [develo
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
-await mkdir("/tmp/portfolio-qa", { recursive: true });
+const screenshotDir = resolve(process.env.PORTFOLIO_QA_OUTPUT_DIR || "work/portfolio-qa");
+await mkdir(screenshotDir, { recursive: true });
 try {
   for (const width of [320, 390, 768, 1024, 1440, 1920, 2560]) {
     for (const theme of ["light", "dark"]) {
@@ -82,14 +83,14 @@ try {
           await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
         });
         if ([390, 1440].includes(width) && theme === "light")
-          await page.screenshot({ path: `/tmp/portfolio-qa/${route.replaceAll("/", "_")}-${width}.png`, fullPage: true });
+          await page.screenshot({ path: join(screenshotDir, `${route.replaceAll("/", "_")}-${width}.png`), fullPage: true });
         if (route === "/work/deadline-aware-runtime-assurance/")
           assert.equal(await page.getByRole("link", { name: "Read the research report on Zenodo", exact: true }).getAttribute("href"), "https://doi.org/10.5281/zenodo.22865084");
         if (route === "/work/gendio-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator("main").evaluate((el) => /\bRev\d{2}\b/.test(el.innerText)), false);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
-          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 5 of 7"));
+          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 5 of 8"));
         }
         if (route === "/work/ndcc-community-systems/") {
           assert.equal(await page.locator(".record-section").count(), 4);
@@ -227,7 +228,14 @@ try {
 
   // Work catalogue: filters, search, URL persistence, empty state and case study links.
   await page.goto(baseURL + "/work/");
-  assert.equal(await status(page).textContent(), "21 projects");
+  assert.equal(await status(page).textContent(), "23 projects");
+  await page.getByRole("searchbox", { name: "Search projects" }).fill("potato");
+  assert.equal(await status(page).textContent(), "1 project");
+  await page.getByRole("link", { name: "Industrial Process Simulation", exact: true }).click();
+  await page.waitForURL(baseURL + "/work/industrial-process-simulation/");
+  assert.ok((await page.locator(".record-meta").innerText()).includes("Independent illustrative simulation"));
+  await page.getByRole("link", { name: "All work", exact: true }).click();
+  await page.waitForURL(baseURL + "/work/");
   await page.getByRole("searchbox", { name: "Search projects" }).fill("WiFi");
   assert.equal(await status(page).textContent(), "1 project");
   await page.getByRole("link", { name: "NDCC Digital Platform & Public WiFi", exact: true }).press("Enter");
@@ -244,18 +252,18 @@ try {
   assert.equal(await page.getByRole("link", { name: "Read the research paper on Zenodo - Revision 02" }).getAttribute("href"), "https://zenodo.org/records/22865101");
   await page.goto(baseURL + "/work/");
   await page.getByRole("button", { name: "Software", exact: true }).click();
-  assert.equal(await status(page).textContent(), "6 projects");
+  assert.equal(await status(page).textContent(), "7 projects");
   assert.ok(page.url().includes("category=Software"));
   await page.reload();
   assert.equal(await page.getByRole("button", { name: "Software", exact: true }).getAttribute("aria-pressed"), "true");
   await page.getByRole("searchbox", { name: "Search projects" }).fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
-  assert.equal(await status(page).textContent(), "21 projects");
+  assert.equal(await status(page).textContent(), "23 projects");
   await page.getByRole("searchbox", { name: "Search projects" }).fill("ataxia");
   assert.equal(await status(page).textContent(), "1 project");
   await page.getByRole("button", { name: "Reset", exact: true }).click();
-  assert.equal(await status(page).textContent(), "21 projects");
+  assert.equal(await status(page).textContent(), "23 projects");
   await page.goto(baseURL + "/work/?q=" + encodeURIComponent("Panelogram Retail Shelf Planner"));
   assert.equal(await status(page).textContent(), "1 project");
   console.log("Catalogue filters, search, URL persistence, empty recovery and case study navigation passed");
@@ -278,7 +286,10 @@ try {
   // Home page structure follows the agreed information path.
   const order = await page.evaluate(() => ["#hero-title", "#featured-title", ".card-grid.compact", "#experience", "#foundation-title", "#contact", "#project-index"].map((s) => document.querySelector(s)?.getBoundingClientRect().top + scrollY));
   assert.ok(order.every((top, i) => Number.isFinite(top) && (i === 0 || top > order[i - 1])), `home order ${order}`);
-  assert.equal(await page.locator("#project-index li").count(), 21);
+  assert.equal(await page.locator("#project-index li").count(), 23);
+  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 3);
+  assert.equal(await page.locator("#research li").count(), 2);
+  assert.equal(await page.locator('#research a[href^="https://"]').count(), 2);
   assert.equal(await page.locator(".compact-timeline").first().locator("li").count(), 8);
   await page.goto(baseURL + "/about/");
   assert.equal(await page.locator(".timeline > li").count(), 8);
@@ -292,7 +303,7 @@ try {
   await page.locator(":focus").press("Enter");
   assert.ok(page.url().endsWith("#main"));
   await page.goto(baseURL + "/work/ataxia-assessment-device/");
-  assert.ok((await page.getByRole("link", { name: "Full-size image ↗", exact: true }).getAttribute("href")).endsWith(".webp"));
+  assert.ok((await page.getByRole("link", { name: "Full-size image ↗", exact: true }).getAttribute("href")).endsWith(".svg"));
   assert.equal((await page.goto(baseURL + "/missing-route/")).status(), 404);
   await page.goto(baseURL + "/work/panelogram/");
   await page.waitForURL(baseURL + "/work/");
@@ -306,7 +317,7 @@ try {
   await plain.goto(baseURL + "/");
   assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
   await plain.goto(baseURL + "/work/");
-  assert.equal(await plain.locator("[data-project]").count(), 21);
+  assert.equal(await plain.locator("[data-project]").count(), 23);
   await plain.goto(baseURL + "/blog/");
   assert.equal(await plain.locator(".post-feature, .post-card").count(), blogPosts.length);
   await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();

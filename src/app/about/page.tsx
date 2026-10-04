@@ -2,6 +2,7 @@ import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { site, experience, foundation, humanNote, workingStyle, community, beyond } from "@/content/site";
 import { pageMetadata } from "@/content/seo";
+import Link from "next/link";
 
 export const metadata = pageMetadata({
   title: "About Saj",
@@ -16,12 +17,13 @@ export default function About() {
       <main id="main" className="container">
         <header className="page-head">
           <p className="eyebrow">About</p>
-          <h1>Engineering across the whole system.</h1>
+          <h1>At home between the workshop and the software.</h1>
           <p>{site.profile}</p>
           <p>{workingStyle}</p>
+          <div className="hero-actions"><Link className="btn btn-primary" href="/work/" prefetch={false}>Explore my work</Link><a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a></div>
         </header>
         <section className="section" id="experience" aria-labelledby="timeline-title">
-          <div className="section-head"><div><h2 id="timeline-title">Career timeline</h2><p>Roles and organisations follow my current resume.</p></div></div>
+          <div className="section-head"><div><h2 id="timeline-title">Career timeline</h2><p>From manufacturing and quality to automotive testing, industrial controls and independent consulting.</p></div></div>
           <ol className="timeline">
             {experience.map((e) => (
               <li key={e.role}>
@@ -29,6 +31,7 @@ export default function About() {
                 <div>
                   <h3>{e.role}</h3>
                   <p className="organisation">{e.organisation}</p>
+                  <p>{e.context}</p>
                   <p>{e.detail}</p>
                   <ul className="chips" aria-label="Focus areas">{e.tags.map((t) => <li className="chip" key={t}>{t}</li>)}</ul>
                 </div>

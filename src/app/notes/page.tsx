@@ -21,7 +21,7 @@ export default function Notes() {
           <a className="btn btn-primary" href={learningGuide.docx} download>Download the roadmap (DOCX)</a>
         </header>
         <section className="section" aria-labelledby="pathway-title">
-          <div className="section-head"><div><h2 id="pathway-title">A six-month pathway</h2><p>Each month pairs a focus area with something to build and a short list of free resources.</p></div></div>
+          <div className="section-head"><div><h2 id="pathway-title">A six-month pathway</h2><p>Each stage pairs a focus area with a build and supporting resources. Treat the months as a suggested pace: progress when you can explain the result and repeat the test.</p><p>This is a learning plan, not a record of completed projects or a formal qualification.</p></div></div>
           <ol className="roadmap">
             {learningMonths.map((m) => (
               <li key={m.month}>

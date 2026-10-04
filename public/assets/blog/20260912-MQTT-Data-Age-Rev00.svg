@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
   <title id="title">Received now. Measured earlier.</title>
   <desc id="desc">Synthetic timeline on a shared clock. A sample acquired at 10:00:00 arrives at 10:00:08 and is viewed at 10:00:10. Its acquisition age is 10 seconds; time since reception is only 2 seconds.</desc>
-  <rect width="1200" height="720" fill="#f0f3f6"/>
-  <g font-family="Arial, sans-serif" fill="#17212b">
+  <rect width="1200" height="720" fill="#f5f7fa"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#17212b">
     <text x="70" y="75" font-size="20" letter-spacing="2">ENGINEERING NOTES / MQTT</text>
     <text x="70" y="145" font-size="46" font-weight="700">Received now. Measured earlier.</text>
     <text x="70" y="190" font-size="24" fill="#56616d">Illustrative timestamps on a shared clock</text>

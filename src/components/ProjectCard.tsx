@@ -15,6 +15,7 @@ export function ProjectCard({ project, headingLevel = 3 }: { project: Project; h
         <p className="card-kicker">{project.category}</p>
         <Heading><Link prefetch={false} href={`/work/${project.slug}/`}>{project.title}</Link></Heading>
         <p>{project.proof}</p>
+        <p className="project-status">{project.status}</p>
       </div>
     </article>
   )

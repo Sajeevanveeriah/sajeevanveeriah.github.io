@@ -3,7 +3,7 @@ import { site } from './site'
 
 /** Default social card for routes without their own engineering visual. */
 export const defaultShareImage = {
-  url: '/assets/image/20260827-Sajeevan-Veeriah-Portfolio-OG-Rev00.png',
+  url: '/assets/image/20261004-Portfolio-Share-Rev00.png',
   width: 1200,
   height: 630,
   alt: `${site.name}, ${site.jobTitle}`,

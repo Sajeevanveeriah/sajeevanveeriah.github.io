@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: portfolio-rendered-qa-${{ github.sha }}
-          path: /tmp/portfolio-qa
+          path: work/portfolio-qa
           if-no-files-found: warn
           retention-days: 14
       - name: Lighthouse gate

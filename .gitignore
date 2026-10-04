@@ -13,3 +13,4 @@ next-env.d.ts
 # editor and OS noise
 .DS_Store
 /out-pages
+/work
