@@ -67,7 +67,7 @@ export function WorkCatalogue() {
           <ul className="project-list">
             {more.map((p) => (
               <li key={p.title} data-project={p.title}>
-                <h3>{p.title}</h3>
+                <h3>{p.href ? <Link href={p.href} prefetch={false}>{p.title}</Link> : p.title}</h3>
                 <p>{p.summary}</p>
                 <span className="card-kicker">{p.category}</span>
               </li>

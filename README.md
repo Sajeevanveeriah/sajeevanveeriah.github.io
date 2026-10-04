@@ -10,7 +10,7 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 | Route | Content |
 | --- | --- |
 | `/` | Identity, six-layer systems visual, featured project, project band, career and learning, foundation, recent writing, contact, complete project index |
-| `/work/` | All 21 projects: case-study cards and the delivery list, with category filters, search and shareable URLs |
+| `/work/` | All 23 projects: eight case studies and the delivery list, with category filters, search and shareable URLs |
 | `/work/<slug>/` | Case studies: contribution, architecture, decisions, verification, previous and next |
 | `/about/` | Full career timeline, education, community and life beyond work |
 | `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
@@ -18,9 +18,13 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 
 The design uses one stylesheet (`src/app/globals.css`) built on colour tokens for light and dark themes, self-hosted Archivo and the existing monogram. The header toggles light and dark; the footer offers Light, System and Dark.
 
+Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
+
+The October 2026 image refresh replaces conceptual hardware scenes with original SVG engineering diagrams. The Gendio graphic embeds the actual PCB CAD render. Existing analytical chart values, archive CAD and attributed research figures are preserved. SVG journal covers have matching PNG files for social previews. The logo is unchanged.
+
 ## Development and checks
 
-Node.js 22 and npm.
+Node.js 22 and npm. On Windows, put the existing Git for Windows `usr/bin` directory on the shell's PATH for the `unzip` archive check.
 
 ```sh
 npm ci

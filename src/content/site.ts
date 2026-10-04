@@ -4,9 +4,9 @@ export const site = {
   initials: 'SV',
   jobTitle: 'Robotics, Mechatronics, AI/ML & End-To-End Automation Engineer',
   proposition:
-    'I engineer complete systems across the physical, control, digital and operational boundary - then verify them as one working system.',
+    'I turn engineering problems into working hardware, controls and software, with the testing and documentation needed to understand the result.',
   profile:
-    'Robotics, industrial automation, embedded systems, industrial IT/OT, AI/ML and engineering software, integrated from requirements through commissioning and handover.',
+    'I build and integrate robotics, embedded systems, industrial automation and engineering software, from the first requirement to testing and handover.',
   url: 'https://sv.sajeevanveeriah.workers.dev',
   email: 'sajeevanveeriah@gmail.com',
   phone: '+61 498 586 654',
@@ -14,7 +14,7 @@ export const site = {
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
   /** Last content review; used for sitemap dates on routes without their own date. */
-  updated: '2026-09-23',
+  updated: '2026-10-04',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
   support: {
@@ -141,7 +141,7 @@ export const systemLayers = [
 
 
 export const workingStyle =
-  'My working pattern is consistent: understand the whole system, isolate faults and leave clear evidence for verification, commissioning and handover.'
+  'My experience spans production floors, vehicle testing, industrial controls and independent engineering. I bring that practical perspective to each project: understand the process, make the interfaces clear, investigate failures and leave useful evidence for the next person.'
 
 export const humanNote =
   'Beyond project delivery, I play and help run my cricket club, mentor fellow students, and usually have a personal robotics or hardware build on the bench.'

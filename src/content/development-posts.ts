@@ -262,14 +262,8 @@ export const developmentPosts: BlogPost[] = [
     "title": "Designing a waterless solar-panel cleaning robot",
     "date": "2026-09-20",
     "category": "Robotics / mechatronics / design study",
-    "description": "CAD, traction and energy calculations, conservative coverage planning and an experimental roadmap for a modular dry-cleaning crawler.",
-    "image": {
-      "src": "/assets/image/20260922-Solar-Panel-Cleaner-Concept-Rev00.webp",
-      "alt": "Solar-panel cleaning robot concept with a full-width brush at the outer guide-arm ends and a photovoltaic charging panel on top.",
-      "caption": "Production design concept based on my prototype, showing the proposed brush arrangement and onboard solar charging panel. Generated visualisation, not a photograph of the built hardware. The archived development CAD remains below.",
-      "width": 1536,
-      "height": 1024
-    },
+    "description": "Inside the SPC-001 cleaner: the built prototype, its independent research paper, and the archived CAD, traction, energy and coverage study.",
+    "image": { "src": "/assets/image/20261004-Solar-Cleaner-Rev00.svg", "alt": "Functional schematic showing the SPC-001 chassis, tracks, dry-cleaning roller and the contact, traction and coverage questions.", "caption": "Original functional schematic based on the documented system. Not to scale and not a photograph of the built prototype. Archived CAD and analytical figures remain below.", "width": 1200, "height": 720 },
     "intro": [
       "A solar-panel cleaner must remove contamination while protecting the surface that produces the energy. Adding a brush to a mobile platform leaves most of that problem unresolved: contact force, embedded grit, wheel slip, edge detection and power-loss retention all interact.",
       "My new design explores a waterless crawler with replaceable track pods, a 420 mm roller and separate docking and loading modules. The goal is a system that can adapt within a qualified installation class. It cannot responsibly mean driving onto any unfamiliar panel and learning its safety limits by trial and error.",

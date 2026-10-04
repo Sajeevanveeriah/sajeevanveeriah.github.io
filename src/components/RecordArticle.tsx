@@ -17,7 +17,7 @@ export function RecordArticle({ project, previous, next, position, total }: { re
           <p className="eyebrow">{project.category}</p>
           <h1>{project.title}</h1>
           <p>{project.system}</p>
-          <p className="record-meta"><span>Case study <strong>{position} of {total}</strong></span></p>
+          <p className="record-meta"><span>{project.status}</span><span>Case study <strong>{position} of {total}</strong></span></p>
         </header>
         {project.image ? (
           <ProjectMedia image={project.image} priority />
@@ -30,8 +30,8 @@ export function RecordArticle({ project, previous, next, position, total }: { re
             <ul className="chips">{project.stack.map((item) => <li className="chip" key={item}>{item}</li>)}</ul>
           </aside>
           <div className="record-body">
-            <section aria-labelledby="problem-heading"><h2 id="problem-heading">Problem</h2><p>{project.problem}</p></section>
-            <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">Architecture</h2><p>{project.architecture}</p></section>
+            <section aria-labelledby="problem-heading"><h2 id="problem-heading">The challenge</h2><p>{project.problem}</p></section>
+            <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">How the system works</h2><p>{project.architecture}</p></section>
             <section aria-labelledby="decisions-heading">
               <h2 id="decisions-heading">Design decisions</h2>
               <ol className="decisions">
@@ -46,14 +46,14 @@ export function RecordArticle({ project, previous, next, position, total }: { re
               {section.image && <ProjectMedia image={section.image} />}
               {section.links && <ul className="record-links">{section.links.map((link) => <li key={link.href}><a className="text-link" href={link.href}>{link.label}</a></li>)}</ul>}
             </section>)}
-            <section aria-labelledby="verification-heading"><h2 id="verification-heading">Verification</h2><p>{project.verification}</p></section>
+            <section aria-labelledby="verification-heading"><h2 id="verification-heading">What the evidence shows</h2><p>{project.verification}</p></section>
             {project.publication && <section aria-labelledby="publication-heading">
               <h2 id="publication-heading">Research publication</h2>
               <p><a className="text-link" href={project.publication.url}>{project.publication.label}</a></p>
             </section>}
             {project.caseStudy && <section aria-labelledby="case-study-heading">
               <h2 id="case-study-heading">Engineering case study</h2>
-              <p>Read the design rationale, verification scope and proposed next experiments.</p>
+              <p>Go deeper into the design choices, tests and lessons from the project.</p>
               <Link prefetch={false} className="text-link" href={project.caseStudy}>Read the {project.title} case study</Link>
             </section>}
             {project.trials && <section aria-labelledby="trials-heading">

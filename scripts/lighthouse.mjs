@@ -4,11 +4,12 @@ import { launch } from 'chrome-launcher'
 import { chromium } from 'playwright'
 import { createServer } from 'node:http'
 import { gzipSync } from 'node:zlib'
-import { readFile, stat } from 'node:fs/promises'
-import { extname, join } from 'node:path'
+import { readFile, stat, mkdir, mkdtemp } from 'node:fs/promises'
+import { extname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { sitemapRoutes } from './routes.mjs'
 
-const root = new URL('../out/', import.meta.url).pathname
+const root = fileURLToPath(new URL('../out/', import.meta.url))
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.avif': 'image/avif', '.txt': 'text/plain', '.xml': 'application/xml', '.pdf': 'application/pdf' }
 const server = createServer(async (request, response) => {
   try {
@@ -25,7 +26,10 @@ const address = server.address()
 if (!address || typeof address === 'string') throw new Error('Lighthouse server did not start')
 const base = `http://127.0.0.1:${address.port}`
 
+await mkdir(resolve('work'), { recursive: true })
 const chrome = await launch({
+  // ponytail: retain isolated QA profiles in ignored work/; prune if disk usage matters.
+  userDataDir: await mkdtemp(resolve('work/lighthouse-')),
   chromePath: process.env.BROWSER_EXECUTABLE_PATH || chromium.executablePath(),
   chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
 })

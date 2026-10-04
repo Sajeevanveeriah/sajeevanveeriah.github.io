@@ -7,12 +7,7 @@ export const caseStudyPosts: BlogPost[] = [
     date: "2026-09-18",
     category: "Engineering case study",
     description: "How I organised sensing, estimation, planning and control for a differential-drive rover, and what simulation could establish.",
-    image: {
-      src: "/assets/blog/20260918-Rover-Case-Study-Rev00.webp",
-      alt: "Conceptual illustration of a rover beside a translucent sensing plane and a suggested navigation path.",
-      caption: "AI-generated conceptual illustration. It is not a photograph of my rover or a recorded navigation result.",
-      width: 1536, height: 1024,
-    },
+    image: { src: "/assets/image/20261004-ROS2-Navigation-Rev00.svg", alt: "ROS 2 architecture diagram showing an illustrative route alongside sensing, estimation, planning and simulation inspection.", caption: "Original architecture diagram. The route is illustrative; the validation described in this article is simulation-based.", width: 1200, height: 720 },
     intro: [
       "A robot reaching a goal is only part of the engineering problem. I also need to understand how it estimated its position, why it chose a path and what happened when that path became difficult to follow.",
       "For this project, I built a differential-drive platform and integrated a modular navigation stack using ROS 2 Humble, Nav2, LiDAR SLAM, IMU sensing and EKF state estimation. Gazebo Fortress and RViz gave me a repeatable environment for checking the interactions between those parts. The validation described here is simulation-based.",
@@ -59,12 +54,7 @@ export const caseStudyPosts: BlogPost[] = [
     date: "2026-09-18",
     category: "Engineering case study",
     description: "Integrating Hall-effect sensing, embedded acquisition, Bluetooth and MATLAB into a movement-assessment prototype.",
-    image: {
-      src: "/assets/blog/20260918-Movement-Sensing-Rev00.webp",
-      alt: "Conceptual laboratory illustration of a compact instrument, circuit board, magnetic elements and a mechanical arm.",
-      caption: "AI-generated conceptual illustration of movement sensing. It does not reproduce the actual capstone device.",
-      width: 1536, height: 1024,
-    },
+    image: { src: "/assets/image/20261004-Movement-Measurement-Rev00.svg", alt: "Signal-path diagram: four Hall-effect channels feed ESP32 acquisition at 100 Hz, Bluetooth feedback, MATLAB comparison and reports.", caption: "Original signal-path diagram of the documented measurement prototype. It is not a device photograph or clinical result.", width: 1200, height: 720 },
     intro: ["For my mechatronics honours capstone at Deakin University, I developed an ESP32 movement-assessment prototype. The work brought mechanical design, a custom PCB, embedded acquisition and analysis into one measurement workflow.", "The central challenge was making the measurement path repeatable and inspectable. A live display is useful, but understanding the sensor behaviour requires a reference and a way to examine the recorded data."],
     sections: [
       {
@@ -108,12 +98,7 @@ export const caseStudyPosts: BlogPost[] = [
     date: "2026-09-18",
     category: "Engineering case study",
     description: "A local-first pricing workflow with deterministic matching, exact money handling and an operator-reviewed ServiceM8 export.",
-    image: {
-      src: "/assets/image/20260826-SWL-Pricing-Run-Rev00.png",
-      alt: "SWL application new-run screen showing the seven-stage workflow from file input to a reviewed export.",
-      caption: "Application screenshot from the existing project record, showing the pricing workflow and business-rules panel.",
-      width: 1672, height: 941,
-    },
+    image: { src: "/assets/image/20261004-SWL-Pricing-Rev00.svg", alt: "Workflow diagram connecting supplier exports, exact pricing rules, operator review and a ServiceM8 import with exception and recovery reports.", caption: "Original workflow diagram of the documented pricing and review process. No live client data is shown.", width: 1200, height: 720 },
     intro: ["Stan Wootton Locksmiths needs to reprice a ServiceM8 materials catalogue using supplier exports. A spreadsheet can perform the arithmetic, but the harder problems are preserving identifiers, matching the right items and ensuring that someone reviews the changes before import.", "I developed a local-first application spanning requirements, pricing rules, desktop and browser builds, testing and release packaging. I treated the import file as a controlled output of a review process."],
     sections: [
       {
@@ -159,12 +144,7 @@ export const caseStudyPosts: BlogPost[] = [
     date: "2026-09-18",
     category: "Engineering case study",
     description: "An ESP32-S3 display-controller design connecting serial parsing, guarded display output, a four-layer PCB and browser configuration.",
-    image: {
-      src: "/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.webp",
-      alt: "Gendio PCB design render showing the processor, power circuitry and interface connectors.",
-      caption: "Render of the actual PCB design. This is a CAD view, not a photograph of assembled hardware.",
-      width: 1568, height: 1176,
-    },
+    image: { src: "/assets/image/20261004-Gendio-Controller-Rev00.svg", alt: "Actual Gendio PCB CAD render beside the serial input, guarded parsing, display and local configuration architecture.", caption: "Original architecture graphic incorporating the actual PCB CAD render. CAD is not a photograph of assembled hardware.", width: 1200, height: 720 },
     intro: ["An industrial weight display needs a dependable path from incoming serial data to a readable output. For Gendio, I developed an ESP32-S3 controller design with a custom four-layer PCB, embedded firmware and a local browser configuration interface.", "My work covered schematics, PCB layout, firmware, the configuration interface, mechanical exports and automated checks. The public record supports design and software verification; it does not establish assembled-hardware or field validation."],
     sections: [
       {

@@ -23,5 +23,12 @@ for (const text of ['Robotics, Mechatronics, AI/ML &amp; End-To-End Automation E
   assert.ok(home.includes(text), `home page is missing "${text}"`)
 }
 const feed = readFileSync(join(root, 'blog/feed.xml'), 'utf8')
+for (const route of routes) {
+  const html = readFileSync(join(root, route, 'index.html'), 'utf8')
+  for (const [, imageURL] of html.matchAll(/<meta property="og:image" content="([^"]+)"/g)) {
+    const imagePath = new URL(imageURL).pathname
+    assert.ok(statSync(join(root, imagePath), { throwIfNoEntry: false })?.size > 0, `missing social image: ${route} -> ${imagePath}`)
+  }
+}
 assert.equal((feed.match(/<item>/g) ?? []).length, routes.filter((r) => /^\/blog\/.+\//.test(r)).length, 'RSS items must match published posts')
 console.log(`Export verified: ${routes.length} sitemap routes, ${required.length} required files`)

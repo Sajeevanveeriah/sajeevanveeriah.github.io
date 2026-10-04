@@ -1,7 +1,7 @@
 export const learningGuide = {
   title: 'Six-month robotics capability plan',
   description:
-    'A build-first pathway across electronics, embedded control, mechanical design, ROS 2, controls, perception and robot learning. Each month ends with evidence that can survive an engineering interview.',
+    'A practical six-month pathway through electronics, embedded control, mechanical design, ROS 2, perception and robot learning. Build something at each stage, test it and keep a record you can explain and reproduce.',
   docx: '/assets/20260903-Robotics-Learning-Roadmap-Rev00.docx',
 } as const
 

@@ -21,6 +21,7 @@ export interface Project {
   readonly trials?: readonly { readonly area: string; readonly result: string }[]
   readonly slug: string
   readonly title: string
+  readonly status: string
   readonly proof: string
   readonly problem: string
   readonly system: string
@@ -35,7 +36,7 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation' | 'Project scope'
+    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation' | 'Project scope' | 'Engineering diagram'
   }
 }
 
@@ -44,7 +45,8 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     slug: 'ndcc-community-systems',
     category: 'Software',
     title: 'NDCC Digital Platform & Public WiFi',
-    proof: 'Club website, committee workflows, event operations and a public WiFi upgrade at Grinter Reserve.',
+    status: 'Community platform and completed WiFi upgrade',
+    proof: 'Helping volunteers run the club through connected website, committee and event workflows, with public WiFi at the ground.',
     problem: 'A community club depends on volunteers keeping information, orders and events organised. My work at Newcomb and District Cricket Club spans the digital tools people use and the connectivity that supports them at the ground.',
     system: 'I build and maintain NDCC\'s digital platform, support club communications and operations, and have completed a public WiFi network upgrade at Grinter Reserve.',
     architecture: 'The website combines a Next.js and TypeScript application with Supabase-backed content, operational records and media. Committee permissions control administrative workflows. PlayHQ supplies fixtures and supported cricket data; Resend handles application email. Payment paths are configuration-dependent, with manual bank transfer and a separately gated Stripe Checkout integration.',
@@ -63,7 +65,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Connect', detail: 'Public WiFi upgrade' },
       { label: 'Document', detail: 'Network design and handover' },
     ],
-    image: { src: '/assets/image/20261003-NDCC-Community-Systems-Rev00.svg', alt: 'NDCC project scope: digital platform and club operations alongside the completed public WiFi upgrade and a separately documented outdoor expansion design.', width: 1200, height: 600, kind: 'Project scope' },
+    image: { src: '/assets/image/20261004-NDCC-Systems-Rev00.svg', alt: 'Diagram connecting the NDCC public website, committee tools and public WiFi upgrade. The outdoor expansion remains planned.', width: 1200, height: 720, kind: 'Engineering diagram' },
     sections: [
       {
         id: 'club-platform', title: 'A platform for the people running the club',
@@ -109,7 +111,8 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     caseStudy: '/blog/ros2-navigation-rover-case-study/',
     category: 'Robotics',
     title: 'Autonomous Navigation Rover on ROS 2',
-    proof: 'Repeatable localisation, planning and obstacle-aware navigation behaviour.',
+    status: 'Built platform; navigation checked in simulation',
+    proof: 'A navigation stack that makes sensing, localisation, planning and recovery behaviour inspectable in simulation.',
     problem: 'Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before higher-level behaviour matters.',
     system: 'A differential-drive platform with LiDAR and IMU sensing, running ROS 2 Humble, Nav2, SLAM, EKF state estimation and motion control.',
     architecture: 'LiDAR and IMU inputs feed modular ROS 2 nodes for mapping and EKF state estimation. Nav2 consumes the resulting map and fused pose for costmaps, planning, control and recovery behaviour, with Gazebo Fortress and RViz providing repeatable inspection.',
@@ -126,20 +129,15 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Plan', detail: 'Nav2 and costmaps' },
       { label: 'Act', detail: 'Motion control and recovery' },
     ],
-    image: {
-      src: '/assets/image/Autonomous_Navigation_ROS2_Robotics_Rev00.webp',
-      alt: 'Illustrative system visual showing an autonomous rover moving through a mapped environment with navigation and sensing layers.',
-      width: 1448,
-      height: 1086,
-      kind: 'System illustration',
-    },
+    image: { src: '/assets/image/20261004-ROS2-Navigation-Rev00.svg', alt: 'ROS 2 architecture diagram showing an illustrative route alongside sensing, estimation, planning and simulation inspection.', width: 1200, height: 720, kind: 'Engineering diagram' },
   },
   {
     slug: 'ataxia-assessment-device',
     caseStudy: '/blog/esp32-movement-assessment-case-study/',
     category: 'Embedded',
     title: 'ESP32 Ataxia Assessment Device',
-    proof: 'Real-time recording, Bluetooth display and CSV/PDF reporting.',
+    status: 'Honours measurement prototype',
+    proof: 'From physical movement to recorded measurements: four sensing channels, 100 Hz acquisition, Bluetooth and MATLAB analysis.',
     problem: 'Movement and coordination assessment benefits from repeatable sensor-based measurement rather than observation alone.',
     system: 'An ESP32 device with a custom PCB, enclosure, four Hall-effect sensors, 100 Hz acquisition, Bluetooth connectivity and MATLAB validation.',
     architecture: 'Four Hall-effect sensing channels feed deterministic 100 Hz acquisition on the ESP32. The embedded path supports recording and Bluetooth live display, while MATLAB provides the auditable reference-instrument comparison and reporting workflow.',
@@ -148,7 +146,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Used four Hall-effect sensing channels and deterministic 100 Hz acquisition to capture direction, reversal and movement behaviour consistently.',
       'Kept acquisition and live display responsive on the embedded system while retaining MATLAB for auditable reference-instrument comparison.',
     ],
-    verification: 'Accuracy, direction, reversal, drift and temperature behaviour were checked against reference instruments in MATLAB.',
+    verification: 'Accuracy, direction, reversal, drift and temperature behaviour were checked against reference instruments in MATLAB. This is an engineering measurement prototype; these checks do not establish clinical effectiveness or medical-device certification.',
     stack: ['ESP32', 'C/C++', 'BLE', 'Altium', 'MATLAB', 'Hall-effect sensing', 'PCB design', 'Enclosure design'],
     systemPath: [
       { label: 'Measure', detail: 'Four Hall-effect channels' },
@@ -156,20 +154,15 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Transmit', detail: 'BLE live display and CSV' },
       { label: 'Validate', detail: 'MATLAB comparison and reporting' },
     ],
-    image: {
-      src: '/assets/image/Embedded_Clinical_Ataxia_Assessment_Rev00.webp',
-      alt: 'Illustrative system visual of an embedded movement-assessment prototype and its sensing and analysis path.',
-      width: 1448,
-      height: 1086,
-      kind: 'System illustration',
-    },
+    image: { src: '/assets/image/20261004-Movement-Measurement-Rev00.svg', alt: 'Signal-path diagram: four Hall-effect channels feed ESP32 acquisition at 100 Hz, Bluetooth feedback, MATLAB comparison and reports.', width: 1200, height: 720, kind: 'Engineering diagram' },
   },
   {
     slug: 'swl-pricing-inventory-control',
     caseStudy: '/blog/swl-pricing-inventory-case-study/',
     category: 'Software',
     title: 'SWL Pricing and Inventory Control',
-    proof: 'Operator-reviewed imports with change, exception, rollback and audit reports.',
+    status: 'Client software with automated verification',
+    proof: 'Turning supplier files into reviewed catalogue updates, with exact pricing, visible exceptions and a rollback trail.',
     problem: 'Stan Wootton Locksmiths reprices its ServiceM8 materials catalogue from supplier price exports. Doing that by spreadsheet risks damaged item numbers and barcodes, an inconsistent markup and unreviewed price changes reaching the job system.',
     system: 'A local-first pricing and inventory control application with a Windows desktop surface and a browser surface. It compares an untouched supplier export against the current ServiceM8 materials list, applies the confirmed 30 percent markup on GST-exclusive cost, and produces an operator-reviewed import CSV in ServiceM8\'s exact format, with change, exception, rollback and audit reports.',
     architecture: 'A shared React and TypeScript interface over pure domain modules for money, pricing, comparison, mapping and output. A typed platform adapter selects the backend: scoped Tauri commands with bundled SQLite on the Rust desktop build, a loopback Node server for local web use, and a session-only store for the static demonstration.',
@@ -186,18 +179,13 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Review', detail: 'Changes, exceptions and rollback' },
       { label: 'Deliver', detail: 'Audited ServiceM8 import' },
     ],
-    image: {
-      src: '/assets/image/20260826-SWL-Pricing-Run-Rev00.png',
-      alt: 'Screenshot of the SWL Pricing and Inventory Control new-run screen showing the seven-stage workflow from adding files to a reviewed export, with the current business rules panel.',
-      width: 1672,
-      height: 941,
-      kind: 'Application interface',
-    },
+    image: { src: '/assets/image/20261004-SWL-Pricing-Rev00.svg', alt: 'Workflow diagram connecting supplier exports, exact pricing rules, operator review and a ServiceM8 import with exception and recovery reports.', width: 1200, height: 720, kind: 'Engineering diagram' },
   },
   {
     slug: 'gendio-controller',
     caseStudy: '/blog/gendio-display-controller-case-study/',
     title: 'Gendio Display Controller',
+    status: 'PCB design and software verification',
     category: 'Embedded',
     proof: 'Four-layer PCB design, ESP32-S3 firmware and a browser-based configuration interface.',
     problem: 'An industrial weight display needs a controller that translates serial data into clear, consistent readings and gives technicians a straightforward way to configure it.',
@@ -210,7 +198,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Reviewed footprints, connector drills and component dissipation. Corrected a fuse footprint and increased the termination resistor rating.',
       'Added fallback glyphs and blanking for invalid display rows, with host-based regression tests.',
     ],
-    verification: 'Verification covered the firmware build, synthetic serial-protocol fixtures, host-based display tests, browser workflows and circuit modelling. These checks supported the PCB and software development.',
+    verification: 'Verification covered the firmware build, synthetic serial-protocol fixtures, host-based display tests, browser workflows and circuit modelling. These checks support the PCB design and software behaviour; assembled-board measurements and field validation remain separate work.',
     stack: ['KiCad', 'ESP32-S3', 'C++', 'Serial protocols', 'Matrix displays', 'ngspice', 'GNU Octave', 'Browser testing'],
     systemPath: [
       { label: 'Receive', detail: 'Serial indicator data' },
@@ -218,12 +206,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Display', detail: 'Formatting and guarded scanning' },
       { label: 'Configure', detail: 'Local browser interface' },
     ],
-    image: {
-      src: '/assets/gendio/20260915-Gendio-CAD-Overview-Rev00.webp',
-      alt: 'PCB design render showing the ESP32-S3 processor, power section and interface connectors.',
-      width: 1568, height: 1176,
-      kind: 'PCB design render',
-    },
+    image: { src: '/assets/image/20261004-Gendio-Controller-Rev00.svg', alt: 'Actual Gendio PCB CAD render beside the serial input, guarded parsing, display and local configuration architecture.', width: 1200, height: 720, kind: 'Engineering diagram' },
     trials: [
       { area: 'Schematic and PCB review', result: 'Reviewed schematic connectivity, footprints and connector drills in KiCad, including corrections to the fuse footprint and termination resistor rating.' },
       { area: 'Firmware build', result: 'Compiled the ESP32-S3 firmware and checked image identity, partition placement and non-overlap.' },
@@ -238,9 +221,10 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     slug: 'waterless-solar-panel-cleaner',
     category: 'Robotics',
     title: 'SPC-001 Waterless Solar-Panel Cleaner',
+    status: 'Functionally tested prototype and independent research',
     caseStudy: '/blog/solar-panel-cleaning-robot-design-study/',
     publication: { url: 'https://zenodo.org/records/22865101', label: 'Read the research paper on Zenodo - Revision 02' },
-    proof: 'Built and tested hardware, supported by a 96-page independent research paper.',
+    proof: 'A built cleaning prototype and an independent paper connecting mechanical design, traction, control and coverage planning.',
     problem: 'Cleaning solar panels without water couples surface contact, traction, cleaning reach and motion control.',
     system: 'A modular waterless solar-panel cleaning robot combining a tracked platform, dry-cleaning roller, electronic interfaces and supervisory control. I have built and tested the hardware, and it is operating as intended.',
     architecture: 'The mechanical design separates the chassis, track pods and cleaning roller, with docking and loading interfaces. Supervisory control manages operating states and fault handling, while the analytical work examines contact forces, drive torque, energy and coverage geometry.',
@@ -258,18 +242,14 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Supervise', detail: 'Operating states and fault handling' },
       { label: 'Analyse', detail: 'Traction, energy and coverage' },
     ],
-    image: {
-      src: '/assets/image/20260922-Solar-Panel-Cleaner-Concept-Rev00.webp',
-      alt: 'Solar-panel cleaning robot concept with a full-width brush at the outer guide-arm ends and a photovoltaic charging panel on top.',
-      width: 1536, height: 1024,
-      kind: 'Production design concept - generated visualisation',
-    },
+    image: { src: '/assets/image/20261004-Solar-Cleaner-Rev00.svg', alt: 'Functional top-view schematic of the SPC-001 chassis, tracks and dry-cleaning roller, with contact, traction and coverage considerations.', width: 1200, height: 720, kind: 'Engineering diagram' },
   },
   {
     slug: 'deadline-aware-runtime-assurance',
     category: 'Robotics',
     title: 'Deadline-Aware Runtime Assurance for Autonomous Mobile Robots Under Sensor Degradation',
-    proof: 'Joint sensing-and-timing recovery analysis with 32,400 navigation episodes.',
+    status: 'Reduced-order simulation research',
+    proof: 'Investigating when a robot should slow down or brake as sensing and command timing degrade, across 32,400 simulated navigation episodes.',
     problem: 'A mobile robot can lose its ability to recover safely before an immediate collision warning. Localisation uncertainty, ageing measurements and delayed commands must be considered together.',
     system: 'An independent research study combining a mathematical recoverability model, a conservative braking supervisor, numerical simulation and measured software execution.',
     architecture: 'Timestamped observations and command records form a bounded position estimate. A recovery certificate combines uncertainty, geometry, response delay and braking capability to select continue, restrict or recover. Command leases and a separately scheduled watchdog trigger braking when an approved command expires.',
@@ -288,8 +268,40 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Supervise', detail: 'Continue, restrict or recover' },
       { label: 'Execute', detail: 'Command lease and braking watchdog' },
     ],
-    image: { src: '/assets/image/20260921-Recoverability-Architecture-Rev00.png', alt: 'Research architecture: timestamped observations and command records feed a recoverability supervisor, command lease and braking watchdog, with a separate evaluator.', width: 1440, height: 940, kind: 'System illustration' },
+    image: { src: '/assets/image/20261004-Runtime-Assurance-Rev00.svg', alt: 'Research architecture connecting timestamped observations to a recovery certificate and command-lease braking watchdog.', width: 1200, height: 720, kind: 'Engineering diagram' },
     publication: { url: 'https://doi.org/10.5281/zenodo.22865084', label: 'Read the research report on Zenodo' },
+  },
+  {
+    slug: 'industrial-process-simulation',
+    category: 'Industrial',
+    title: 'Industrial Process Simulation',
+    status: 'Independent illustrative simulation',
+    proof: 'Explore a connected potato-processing line, inject faults and follow their effect on flow, quality and dispatch.',
+    problem: 'A production line is a connected process. A change at one machine can affect buffers, downstream throughput, quality release and the work of the operator.',
+    system: 'An interactive browser simulation of a potato-processing plant, with a selectable 3D layout, process controls, production records, alarms and fault scenarios.',
+    architecture: 'A deterministic process model supplies a shared plant state to the 3D view, flow schematic, asset register and operational workspaces. Equipment selection stays consistent between views. A vector renderer preserves access when WebGL 2 is unavailable.',
+    ownership: 'Developed the simulation, operator interface, connected process views, scenario workflows and delivery checks as an independent engineering study.',
+    decisions: [
+      'Keep one process state behind the equipment views, quality records and operator controls so a scenario can be followed across the plant.',
+      'Distinguish stopping, holding and draining the line, preserving material and operator intent through state changes.',
+      'Make model assumptions visible and use synthetic operating values and records. No real PLC or production plant is connected.',
+      'Provide keyboard navigation, selectable overlays and a vector fallback so the model remains usable across different devices.',
+    ],
+    verification: 'The public repository includes deterministic model tests, build checks and browser suites covering commands, quality and dispatch, exports, navigation and saved preferences. These are software and simulation checks. The model is illustrative, not a calibrated plant replica or an endorsed control system, and does not establish factory performance.',
+    stack: ['Process modelling', 'Browser simulation', '3D visualisation', 'Fault scenarios', 'Quality traceability', 'Automated testing'],
+    systemPath: [
+      { label: 'Receive', detail: 'Intake and material records' },
+      { label: 'Process', detail: 'Connected equipment and buffers' },
+      { label: 'Inspect', detail: 'Quality, genealogy and alarms' },
+      { label: 'Release', detail: 'Packing, cold store and dispatch' },
+    ],
+    image: { src: '/assets/image/20261004-Process-Simulation-Rev00.svg', alt: 'Illustrative potato-processing flow from intake through preparation, processing, packing, quality release and dispatch, with shared equipment and alarm views.', width: 1200, height: 720, kind: 'Engineering diagram' },
+    sections: [{
+      id: 'explore-model',
+      title: 'Explore the model and its assumptions',
+      paragraphs: ['Follow the material journey from receiving and washing through cutting, thermal processing, freezing, packing and dispatch. The source documents the controls, test suites and model boundary.'],
+      links: [{ label: 'Open the simulation source and guide', href: 'https://github.com/Sajeevanveeriah/open-industrial-automation' }],
+    }],
   },
 ] as const
 
@@ -298,6 +310,7 @@ export const featuredProjects = projects
 export interface IndexedProject {
   readonly title: string
   readonly summary: string
+  readonly href?: string
   readonly image?: {
     readonly src: string
     readonly alt: string
@@ -330,16 +343,24 @@ export const projectIndex: readonly ProjectGroup[] = [
         image: { src: '/assets/image/20260826-Panelogram-Bay-Layout-Rev00.png', alt: 'Screenshot of Panelogram rendering a six-shelf bay to scale with millimetre rulers and per-shelf capacity figures.', width: 1672, height: 941, kind: 'Interface visual' },
       },
       {
-        title: 'Snail Race Fundraising Platform', summary: 'A versioned fundraising event platform with a seeded, replayable race engine, QR donations, tote board and moderator reconciliation.',
+        title: 'Snail Race Fundraising Platform', summary: 'An event platform with replayable races, a projector stage, QR donations and moderator reconciliation to support club fundraising.',
+        href: 'https://github.com/Sajeevanveeriah/SnailRace',
         image: { src: '/assets/image/20260826-Snail-Race-Stage-Rev00.png', alt: 'Screenshot of the Snail Race projector stage showing the animated track and play-chip tote board.', width: 1672, height: 941, kind: 'Interface visual' },
       },
       {
-        title: 'Engineering Mastery Lab', summary: 'A browser-first engineering workbench combining input-validated calculators, bounded parametric CAD, guided learning labs and evidence-focused project workflows.',
+        title: 'Engineering Mastery Lab', summary: 'An engineering learning platform with 175 lessons across five courses, guided laboratories, project briefs, analysis tools and evidence exports. Learning, building and demonstrating capability share one workflow.',
+        href: 'https://github.com/Sajeevanveeriah/Engineering-Mastery-Lab',
         image: { src: '/assets/image/Engineering_Mastery_Lab_Command_Centre_Rev00.svg', alt: 'Interface visual of the Engineering Mastery Lab dashboard.', width: 1435, height: 660, kind: 'Interface visual' },
       },
       {
-        title: 'VeerAI: Local SLM System', summary: 'A complete local AI system: an open-weight small language model on personally owned hardware inside a governed ingestion, retrieval, memory, tools and evaluation pipeline.',
+        title: 'VeerAI: Local SLM System', summary: 'A local AI project connecting an open-weight language model with document ingestion, retrieval, memory, controlled tools and evaluation on personally owned hardware.',
+        href: '/blog/local-ai-beyond-the-model/',
         image: { src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.avif', alt: 'System diagram of the VeerAI local SLM system.', width: 1672, height: 941, kind: 'System diagram' },
+      },
+      {
+        title: 'Saj Service Desk',
+        summary: 'A service-management application connecting requests, jobs, quotes, invoices and follow-up records. The public request page prepares an email for the visitor to review and send; the full server application is a separate deployment.',
+        href: 'https://github.com/Sajeevanveeriah/saj-service-desk',
       },
     ],
   },

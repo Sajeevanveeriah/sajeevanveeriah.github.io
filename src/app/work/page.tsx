@@ -16,8 +16,9 @@ export default function Work() {
       <main id="main" className="container work-index">
         <header className="page-head">
           <p className="eyebrow">Work</p>
-          <h1>Work across the whole system.</h1>
-          <p>Robotics, embedded devices, industrial delivery and software. Each case study covers the problem, my contribution and how the result was tested.</p>
+          <h1>See what I build. See how I think.</h1>
+          <p>Robots, embedded devices, industrial systems and software for the people using them. Explore the challenge, my contribution, the design decisions and the evidence behind each case study.</p>
+          <p>Project labels distinguish prototypes, simulations, research and client work. Search by a project, tool or discipline to find the work most relevant to you.</p>
         </header>
         <noscript><style>{".catalogue-controls{display:none}"}</style><p className="result-count">All projects are listed below. Turn on JavaScript to search and filter.</p></noscript>
         <WorkCatalogue />
