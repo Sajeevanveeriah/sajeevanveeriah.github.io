@@ -11,6 +11,14 @@ from shutil import copyfile
 from pypdf import PdfReader
 
 
+CLIENT_NAMES = ['gendio', 'stan wootton', 'stan-wootton', 'locksmith', 'upzy']
+
+
+def names_client(value: str) -> bool:
+    lowered = value.lower()
+    return any(name in lowered for name in CLIENT_NAMES) or re.search(r'\bswl\b', lowered) is not None
+
+
 def publish_resume(source: Path, output: Path) -> None:
     reader = PdfReader(source)
     if len(reader.pages) != 2:
@@ -25,13 +33,12 @@ def publish_resume(source: Path, output: Path) -> None:
     forbidden = ['sajeevanveeriah.github.io', 'CONTRACT PENDING', '\u2013', '\u2014']
     if any(value in text for value in forbidden):
         raise ValueError('Stale domain, appointment claim or unsupported punctuation found.')
-    # Client work is published anonymously; a resume that names a client must not ship.
-    client_names = ['gendio', 'stan wootton', 'locksmith', 'upzy']
-    lowered = text.lower()
-    if any(name in lowered for name in client_names) or re.search(r'\bSWL\b', text, re.IGNORECASE):
-        raise ValueError('A client name was found; publish only the anonymised resume.')
     links = [str(ref.get_object().get('/A', {}).get('/URI', ''))
              for page in reader.pages for ref in page.get('/Annots', [])]
+    # Client work is published anonymously; a resume that names a client, in its
+    # text or in a link target, must not ship.
+    if names_client(text) or any(names_client(url) for url in links):
+        raise ValueError('A client name was found; publish only the anonymised resume.')
     if not any(url.rstrip('/') == 'https://sv.sajeevanveeriah.workers.dev' for url in links):
         raise ValueError('The portfolio hyperlink is missing or outdated.')
     if any('sajeevanveeriah.github.io' in url for url in links):
