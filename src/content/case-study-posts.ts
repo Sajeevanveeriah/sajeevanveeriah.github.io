@@ -93,13 +93,13 @@ export const caseStudyPosts: BlogPost[] = [
     note: "First-person engineering case study, not a clinical study or peer-reviewed publication. Qualification details reflect my confirmed completion and award. The illustration is conceptual.",
   },
   {
-    slug: "swl-pricing-inventory-case-study",
-    title: "Making catalogue repricing reviewable at SWL",
+    slug: "pricing-inventory-case-study",
+    title: "Making catalogue repricing reviewable for a trade services client",
     date: "2026-09-18",
     category: "Engineering case study",
     description: "A local-first pricing workflow with deterministic matching, exact money handling and an operator-reviewed ServiceM8 export.",
-    image: { src: "/assets/image/20261004-SWL-Pricing-Rev00.svg", alt: "Workflow diagram connecting supplier exports, exact pricing rules, operator review and a ServiceM8 import with exception and recovery reports.", caption: "Original workflow diagram of the documented pricing and review process. No live client data is shown.", width: 1200, height: 720 },
-    intro: ["Stan Wootton Locksmiths needs to reprice a ServiceM8 materials catalogue using supplier exports. A spreadsheet can perform the arithmetic, but the harder problems are preserving identifiers, matching the right items and ensuring that someone reviews the changes before import.", "I developed a local-first application spanning requirements, pricing rules, desktop and browser builds, testing and release packaging. I treated the import file as a controlled output of a review process."],
+    image: { src: "/assets/image/20261004-Pricing-Inventory-Rev00.svg", alt: "Workflow diagram connecting supplier exports, exact pricing rules, operator review and a ServiceM8 import with exception and recovery reports.", caption: "Original workflow diagram of the documented pricing and review process. No live client data is shown.", width: 1200, height: 720 },
+    intro: ["A trade services client needs to reprice a ServiceM8 materials catalogue using supplier exports. A spreadsheet can perform the arithmetic, but the harder problems are preserving identifiers, matching the right items and ensuring that someone reviews the changes before import.", "I developed a local-first application spanning requirements, pricing rules, desktop and browser builds, testing and release packaging. I treated the import file as a controlled output of a review process."],
     sections: [
       {
         id: "constraints", title: "The rules shaped the software",
@@ -133,19 +133,19 @@ export const caseStudyPosts: BlogPost[] = [
       },
     ],
     sources: [
-      { label: "My SWL project record: requirements, architecture and testing strategy", url: "/work/swl-pricing-inventory-control/" },
+      { label: "My pricing and inventory project record: requirements, architecture and testing strategy", url: "/work/pricing-inventory-control/" },
       { label: "Further reading: official Tauri 2 architecture documentation", url: "https://v2.tauri.app/concept/architecture/" },
     ],
     note: "Engineering case study based on the public project record. Client data, private implementation details and unsupported business metrics are omitted.",
   },
   {
-    slug: "gendio-display-controller-case-study",
-    title: "Designing the Gendio controller around explicit states",
+    slug: "industrial-display-controller-case-study",
+    title: "Designing an industrial display controller around explicit states",
     date: "2026-09-18",
     category: "Engineering case study",
     description: "An ESP32-S3 display-controller design connecting serial parsing, guarded display output, a four-layer PCB and browser configuration.",
-    image: { src: "/assets/image/20261004-Gendio-Controller-Rev00.svg", alt: "Actual Gendio PCB CAD render beside the serial input, guarded parsing, display and local configuration architecture.", caption: "Original architecture graphic incorporating the actual PCB CAD render. CAD is not a photograph of assembled hardware.", width: 1200, height: 720 },
-    intro: ["An industrial weight display needs a dependable path from incoming serial data to a readable output. For Gendio, I developed an ESP32-S3 controller design with a custom four-layer PCB, embedded firmware and a local browser configuration interface.", "My work covered schematics, PCB layout, firmware, the configuration interface, mechanical exports and automated checks. The public record supports design and software verification; it does not establish assembled-hardware or field validation."],
+    image: { src: "/assets/image/20261004-Display-Controller-Rev00.svg", alt: "Actual controller PCB CAD render beside the serial input, guarded parsing, display and local configuration architecture.", caption: "Original architecture graphic incorporating the actual PCB CAD render. CAD is not a photograph of assembled hardware.", width: 1200, height: 720 },
+    intro: ["An industrial weight display needs a dependable path from incoming serial data to a readable output. For an industrial weighing client, I developed an ESP32-S3 controller design with a custom four-layer PCB, embedded firmware and a local browser configuration interface.", "My work covered schematics, PCB layout, firmware, the configuration interface, mechanical exports and automated checks. The public record supports design and software verification; it does not establish assembled-hardware or field validation."],
     sections: [
       {
         id: "architecture", title: "Separating reception from display output",
@@ -184,7 +184,7 @@ export const caseStudyPosts: BlogPost[] = [
       },
     ],
     sources: [
-      { label: "My Gendio controller record: design decisions, trials and verification scope", url: "/work/gendio-controller/" },
+      { label: "My controller record: design decisions, trials and verification scope", url: "/work/industrial-display-controller/" },
       { label: "Further reading: KiCad 9 PCB Editor manual, including inspection and fabrication outputs", url: "https://docs.kicad.org/9.0/en/pcbnew/pcbnew.html" },
     ],
     note: "Engineering design case study, not a field-validation report, certification statement or peer-reviewed paper. Future hardware work is labelled as proposed.",

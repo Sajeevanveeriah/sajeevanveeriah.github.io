@@ -1146,8 +1146,8 @@ export const engineeringPosts: BlogPost[] = [
         "url": "https://www.rfc-editor.org/rfc/rfc4180"
       },
       {
-        "label": "Project: SWL Pricing and Inventory Control",
-        "url": "/work/swl-pricing-inventory-control/"
+        "label": "Project: Pricing and Inventory Control",
+        "url": "/work/pricing-inventory-control/"
       },
       {
         "label": "SQLite: Floating Point Numbers; live documentation",

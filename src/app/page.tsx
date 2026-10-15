@@ -9,11 +9,11 @@ import { publishedPosts, formatPostDate, postTopic } from '@/content/blog'
 import { learningMonths } from '@/content/learning'
 import { site, systemLayers, experience, foundation, practiceDomains } from '@/content/site'
 
-const featuredSlug = 'gendio-controller'
+const featuredSlug = 'industrial-display-controller'
 
 export default function Home() {
   const featured = projects.find((p) => p.slug === featuredSlug)!
-  const band = projects.filter((p) => ['ndcc-community-systems', 'swl-pricing-inventory-control', 'autonomous-navigation-rover'].includes(p.slug))
+  const band = projects.filter((p) => ['ndcc-community-systems', 'pricing-inventory-control', 'autonomous-navigation-rover'].includes(p.slug))
   const research = projects.filter((p) => p.publication)
   const posts = publishedPosts().slice(0, 3)
   return <>
