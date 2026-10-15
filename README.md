@@ -57,4 +57,4 @@ Local deployment: `npm run cloudflare:login`, build, then `npm run cloudflare:de
 
 Add an entry to one of the post files in `src/content/` (collected in `src/content/blog.ts`). Use a unique lowercase, hyphenated slug, an ISO date (`YYYY-MM-DD`), a title, a description, an introduction, sections, sources and a `category`. The category maps to one of the four journal topics in `blog.ts`; add a mapping when you introduce a new category. The index, home preview, sitemap, RSS feed and every QA route update from the same content.
 
-The earlier portfolio remains under `archive/20260810-legacy-portfolio/` and is not part of the build.
+The earlier portfolio was removed from the tree on 15 October 2026 and remains available in git history.

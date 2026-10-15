@@ -26,8 +26,8 @@ foundation -> recent journal posts -> contact -> complete project index.
 
 Keep the detailed project index and career timeline in the active product.
 Do not recreate the legacy route tree, skills directory or legacy visual
-system. The previous implementation is preserved under
-archive/20260810-legacy-portfolio/.
+system. The previous implementation was removed from the tree on 15 October
+2026; it remains in git history (last changed in commit c814e20).
 
 Saj explicitly approved naming JAG Process Solutions and Ford Motor Company via
 Invenio in the public portfolio and resume on 21 September 2026.
