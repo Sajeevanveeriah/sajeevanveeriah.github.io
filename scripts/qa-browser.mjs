@@ -55,7 +55,7 @@ await new Promise((ready) => server.listen(port, "127.0.0.1", ready));
 const browser = await chromium.launch({ headless: true, executablePath: process.env.BROWSER_EXECUTABLE_PATH || undefined });
 const routes = sitemapRoutes(root);
 const blogPosts = routes.filter((route) => /^\/blog\/.+\/$/.test(route));
-const developmentRoutes = ["/blog/gendio-control-board-and-radar-positioning/", "/blog/solar-panel-cleaning-robot-design-study/"];
+const developmentRoutes = ["/blog/display-control-board-and-radar-positioning/", "/blog/solar-panel-cleaning-robot-design-study/"];
 const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-praise-of-the-volume-knob/", "/blog/ai-without-the-jargon/"];
 const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
@@ -86,7 +86,7 @@ try {
           await page.screenshot({ path: join(screenshotDir, `${route.replaceAll("/", "_")}-${width}.png`), fullPage: true });
         if (route === "/work/deadline-aware-runtime-assurance/")
           assert.equal(await page.getByRole("link", { name: "Read the research report on Zenodo", exact: true }).getAttribute("href"), "https://doi.org/10.5281/zenodo.22865084");
-        if (route === "/work/gendio-controller/") {
+        if (route === "/work/industrial-display-controller/") {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator("main").evaluate((el) => /\bRev\d{2}\b/.test(el.innerText)), false);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
@@ -243,10 +243,10 @@ try {
   await page.getByRole("link", { name: "All work", exact: true }).click();
   await page.waitForURL(baseURL + "/work/");
   await page.getByRole("button", { name: "Embedded", exact: true }).click();
-  await page.getByRole("searchbox", { name: "Search projects" }).fill("Gendio");
+  await page.getByRole("searchbox", { name: "Search projects" }).fill("Industrial Display");
   assert.equal(await status(page).textContent(), "1 project");
-  await page.getByRole("link", { name: "Gendio Display Controller", exact: true }).click();
-  await page.waitForURL(baseURL + "/work/gendio-controller/");
+  await page.getByRole("link", { name: "Industrial Display Controller", exact: true }).click();
+  await page.waitForURL(baseURL + "/work/industrial-display-controller/");
   await page.getByRole("navigation", { name: "More case studies" }).getByRole("link", { name: /Next case study/ }).click();
   await page.waitForURL(baseURL + "/work/waterless-solar-panel-cleaner/");
   assert.equal(await page.getByRole("link", { name: "Read the research paper on Zenodo - Revision 02" }).getAttribute("href"), "https://zenodo.org/records/22865101");
@@ -307,6 +307,16 @@ try {
   assert.equal((await page.goto(baseURL + "/missing-route/")).status(), 404);
   await page.goto(baseURL + "/work/panelogram/");
   await page.waitForURL(baseURL + "/work/");
+  for (const [from, to] of [
+    ["/work/swl-pricing-inventory-control/", "/work/pricing-inventory-control/"],
+    ["/work/gendio-controller/", "/work/industrial-display-controller/"],
+    ["/blog/swl-pricing-inventory-case-study/", "/blog/pricing-inventory-case-study/"],
+    ["/blog/gendio-display-controller-case-study/", "/blog/industrial-display-controller-case-study/"],
+    ["/blog/gendio-control-board-and-radar-positioning/", "/blog/display-control-board-and-radar-positioning/"],
+  ]) {
+    await page.goto(baseURL + from);
+    await page.waitForURL(baseURL + to);
+  }
   if (pageErrors.length) throw new Error(pageErrors.join("\n"));
   console.log("Home structure, timelines, menu, skip link, full-size media, 404 and legacy redirects passed");
   await context.close();

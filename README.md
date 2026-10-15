@@ -20,7 +20,7 @@ The design uses one stylesheet (`src/app/globals.css`) built on colour tokens fo
 
 Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
 
-The October 2026 image refresh replaces conceptual hardware scenes with original SVG engineering diagrams. The Gendio graphic embeds the actual PCB CAD render. Existing analytical chart values, archive CAD and attributed research figures are preserved. SVG journal covers have matching PNG files for social previews. The logo is unchanged.
+The October 2026 image refresh replaces conceptual hardware scenes with original SVG engineering diagrams. The industrial display controller graphic embeds the actual PCB CAD render. Existing analytical chart values, archive CAD and attributed research figures are preserved. SVG journal covers have matching PNG files for social previews. The logo is unchanged.
 
 ## Development and checks
 

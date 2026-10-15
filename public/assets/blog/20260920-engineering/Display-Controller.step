@@ -107527,7 +107527,7 @@ SHAPE_REPRESENTATION_RELATIONSHIP() );
 #104017 = PRODUCT_DEFINITION_SHAPE('','',#104018);
 #104018 = PRODUCT_DEFINITION('design','',#104019,#104022);
 #104019 = PRODUCT_DEFINITION_FORMATION('','',#104020);
-#104020 = PRODUCT('Gendio-Controller_PCB','Gendio-Controller_PCB','',(
+#104020 = PRODUCT('Display-Controller_PCB','Display-Controller_PCB','',(
     #104021));
 #104021 = PRODUCT_CONTEXT('',#2,'mechanical');
 #104022 = PRODUCT_DEFINITION_CONTEXT('part definition',#2,'design');

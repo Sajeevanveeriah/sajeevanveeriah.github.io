@@ -28153,7 +28153,7 @@ SHAPE_REPRESENTATION_RELATIONSHIP() );
 #27028 = PRODUCT_DEFINITION_SHAPE('','',#27029);
 #27029 = PRODUCT_DEFINITION('design','',#27030,#27033);
 #27030 = PRODUCT_DEFINITION_FORMATION('','',#27031);
-#27031 = PRODUCT('Gendio-Serial-Adapter_PCB','Gendio-Serial-Adapter_PCB'
+#27031 = PRODUCT('Serial-Adapter_PCB','Serial-Adapter_PCB'
   ,'',(#27032));
 #27032 = PRODUCT_CONTEXT('',#2,'mechanical');
 #27033 = PRODUCT_DEFINITION_CONTEXT('part definition',#2,'design');

@@ -5,6 +5,7 @@ The editable master is maintained separately; only its reviewed PDF is public.
 Usage: python scripts/generate-public-resume.py --source /path/to/reviewed.pdf
 """
 import argparse
+import re
 from pathlib import Path
 from shutil import copyfile
 from pypdf import PdfReader
@@ -16,7 +17,7 @@ def publish_resume(source: Path, output: Path) -> None:
         raise ValueError('The reviewed general resume must contain two pages.')
     text = '\n'.join(page.extract_text() or '' for page in reader.pages)
     required = ['Sajeevan Veeriah', 'SV Tech Solutions', 'JAG Process Solutions',
-                'Ford Motor Company via Invenio', 'Gendio', 'Dino Coach',
+                'Ford Motor Company via Invenio',
                 'SPC-001', 'Deakin University', 'sv.sajeevanveeriah.workers.dev']
     missing = [value for value in required if value not in text]
     if missing:
@@ -24,6 +25,11 @@ def publish_resume(source: Path, output: Path) -> None:
     forbidden = ['sajeevanveeriah.github.io', 'CONTRACT PENDING', '\u2013', '\u2014']
     if any(value in text for value in forbidden):
         raise ValueError('Stale domain, appointment claim or unsupported punctuation found.')
+    # Client work is published anonymously; a resume that names a client must not ship.
+    client_names = ['gendio', 'stan wootton', 'locksmith', 'upzy']
+    lowered = text.lower()
+    if any(name in lowered for name in client_names) or re.search(r'\bSWL\b', text, re.IGNORECASE):
+        raise ValueError('A client name was found; publish only the anonymised resume.')
     links = [str(ref.get_object().get('/A', {}).get('/URI', ''))
              for page in reader.pages for ref in page.get('/Annots', [])]
     if not any(url.rstrip('/') == 'https://sv.sajeevanveeriah.workers.dev' for url in links):
