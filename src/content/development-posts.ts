@@ -2,21 +2,21 @@ import type { BlogPost } from "./blog";
 
 export const developmentPosts: BlogPost[] = [
   {
-    "slug": "gendio-control-board-and-radar-positioning",
-    "title": "Inside the Gendio control board: power, protocols and radar positioning",
+    "slug": "display-control-board-and-radar-positioning",
+    "title": "Inside an industrial display control board: power, protocols and radar positioning",
     "date": "2026-09-20",
     "category": "Electronics / embedded systems / instrumentation",
     "description": "A detailed design study of the ESP32-S3 controller, its power and protocol boundaries, and a radar-based positioning extension that preserves the existing PCB.",
     "image": {
-      "src": "/assets/blog/20260920-engineering/Gendio-Controller.webp",
-      "alt": "Isometric CAD render of the Gendio controller, with the ESP32 module, Ethernet connector, power converters, diagnostic LEDs and panel connector.",
+      "src": "/assets/blog/20260920-engineering/Display-Controller.webp",
+      "alt": "Isometric CAD render of the display controller, with the ESP32 module, Ethernet connector, power converters, diagnostic LEDs and panel connector.",
       "caption": "Actual project PCB CAD render from the 18 September package. Nominal component models; no assembled-hardware test is implied.",
       "width": 2184,
       "height": 1544
     },
     "intro": [
       "The difficult part of a weighbridge scoreboard is deciding what a displayed value is allowed to mean. A serial port can receive bytes while the weight is invalid. A network link can remain active while its data is stale. A vehicle can produce a steady distance reading without being correctly positioned on the deck.",
-      "My Gendio design treats these as separate engineering questions. The controller receives and checks an existing indicator's weight messages, then drives a selected display. The V2 extension adds a measured-position advisory through industrial radar and a gateway, without changing the controller PCB. This article follows the design from power conversion and CAD to packet freshness and experimental acceptance.",
+      "My controller design treats these as separate engineering questions. The controller receives and checks an existing indicator's weight messages, then drives a selected display. The V2 extension adds a measured-position advisory through industrial radar and a gateway, without changing the controller PCB. This article follows the design from power conversion and CAD to packet freshness and experimental acceptance.",
       "The evidence is a manufacturing-oriented board package and a later development release for vehicle positioning. It includes native designs, compiled firmware and recorded software checks. Physical board operation, vehicle trials and environmental qualification remain unverified."
     ],
     "sections": [
@@ -24,7 +24,7 @@ export const developmentPosts: BlogPost[] = [
         "id": "scope",
         "title": "1. Define the claim before choosing the circuit",
         "paragraphs": [
-          "The weighing indicator remains the measurement instrument. Gendio does not excite load cells or independently measure mass. It interprets an indicator's message, tracks its validity and presents the result. This boundary avoids confusing a display-controller project with a certified weighing system.",
+          "The weighing indicator remains the measurement instrument. The controller does not excite load cells or independently measure mass. It interprets an indicator's message, tracks its validity and presents the result. This boundary avoids confusing a display-controller project with a certified weighing system.",
           "The base design accepts one selected input: RS232, RS485, Wi-Fi TCP, Wi-Fi UDP or Ethernet UDP. Bluetooth LE is a service interface. The matrix connector carries logic and ground; the display needs its own power supply. A separate serial adapter supports a remote serial display. Each path has a distinct interface and acceptance test."
         ],
         "table": {
@@ -62,8 +62,8 @@ export const developmentPosts: BlogPost[] = [
           "The rail corner screen is 3.2864-3.4142 V before dynamics. Adding the allocated ±150 mV transient, ripple and distribution envelope gives 3.1364-3.5642 V. That allowance is a requirement on the physical implementation, not a demonstrated waveform."
         ],
         "image": {
-          "src": "/assets/blog/20260920-engineering/Gendio-Top.png",
-          "alt": "Top-down Gendio CAD view showing the distribution of connectors, power conversion and logic circuitry.",
+          "src": "/assets/blog/20260920-engineering/Display-Controller-Top.png",
+          "alt": "Top-down controller CAD view showing the distribution of connectors, power conversion and logic circuitry.",
           "caption": "Board placement view. The logic rail, upstream current limit and component thermal paths must be assessed together.",
           "width": 1992,
           "height": 1376
@@ -83,7 +83,7 @@ export const developmentPosts: BlogPost[] = [
           "Thermal screening is equally conditional. At approximately 0.693 W estimated loss, a 60 °C ambient and a 125 °C junction target require a thermal resistance below roughly 94 K/W. Board copper, enclosure conditions and airflow determine whether the assembled product meets that requirement. The correct next step is a measured worst-case thermal test, including the inductor and connector temperatures."
         ],
         "image": {
-          "src": "/assets/blog/20260920-engineering/Gendio-Transient-Sensitivity.png",
+          "src": "/assets/blog/20260920-engineering/Display-Controller-Transient-Sensitivity.png",
           "alt": "Calculated droop rises with recovery time and load-step size; the 0.5 A case exceeds the 150 mV allocation near 18 microseconds.",
           "caption": "Recomputed analytical sensitivity. All curves depend on the stated assumptions; they are not physical test results.",
           "width": 1440,
@@ -99,8 +99,8 @@ export const developmentPosts: BlogPost[] = [
           "The controller and serial adapter remain separate assemblies. Their short internal harness has its own pin and load contract. That modularity makes the output interface explicit and keeps a field-system BOM distinct from a board assembly BOM."
         ],
         "image": {
-          "src": "/assets/blog/20260920-engineering/Gendio-Mounting.png",
-          "alt": "Controller mounting drawing from the supplied Gendio CAD package.",
+          "src": "/assets/blog/20260920-engineering/Display-Controller-Mounting.png",
+          "alt": "Controller mounting drawing from the supplied controller CAD package.",
           "caption": "Supplied mounting reference. Assembly models use nominal library bodies and must be checked against the final enclosure and purchased parts.",
           "width": 1800,
           "height": 1476
@@ -108,11 +108,11 @@ export const developmentPosts: BlogPost[] = [
         "links": [
           {
             "label": "Controller assembly CAD (STEP, nominal model)",
-            "url": "/assets/blog/20260920-engineering/Gendio-Controller.step"
+            "url": "/assets/blog/20260920-engineering/Display-Controller.step"
           },
           {
             "label": "Serial adapter CAD (STEP, nominal model)",
-            "url": "/assets/blog/20260920-engineering/Gendio-Adapter.step"
+            "url": "/assets/blog/20260920-engineering/Display-Controller-Adapter.step"
           }
         ]
       },
@@ -135,7 +135,7 @@ export const developmentPosts: BlogPost[] = [
           "The architecture below leaves the weighing input separate. V2 adds a position line to the candidate matrix and a dashboard card. Existing serial Ranger output remains weight-only. A serial-only installation therefore needs a separately supported advisory display."
         ],
         "image": {
-          "src": "/assets/blog/20260920-engineering/Gendio-V2-Architecture.png",
+          "src": "/assets/blog/20260920-engineering/Display-Controller-V2-Architecture.png",
           "alt": "Radar feeds an industrial analogue input and Python gateway, which sends UDP position packets to the unchanged controller and matrix scoreboard. Weight reception stays separate.",
           "caption": "V2 architecture from the supplied design. The external gateway is required and the position function is advisory.",
           "width": 1400,
@@ -156,7 +156,7 @@ export const developmentPosts: BlogPost[] = [
           "The package uses a 3000 mm centre and ±250 mm window as commissioning examples. They are not a universal stop location. The bracket drawing likewise represents a mounting concept, with its height and orientation still dependent on the fleet and site survey."
         ],
         "image": {
-          "src": "/assets/blog/20260920-engineering/Gendio-Site-Layout.png",
+          "src": "/assets/blog/20260920-engineering/Display-Controller-Site-Layout.png",
           "alt": "Plan-view concept of a scoreboard-mounted radar looking towards a vehicle on a weighbridge, with an example taught position.",
           "caption": "Illustrative site layout. Example distances must be replaced by surveyed installation values.",
           "width": 1400,
@@ -168,7 +168,7 @@ export const developmentPosts: BlogPost[] = [
         "links": [
           {
             "label": "Sensor bracket concept CAD (STEP)",
-            "url": "/assets/blog/20260920-engineering/Gendio-Sensor-Mount.step"
+            "url": "/assets/blog/20260920-engineering/Display-Controller-Sensor-Mount.step"
           }
         ]
       },
@@ -255,7 +255,7 @@ export const developmentPosts: BlogPost[] = [
         "url": "https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-says"
       }
     ],
-    "note": "Project evidence: 20260918-Gendio-Control-Board-Rev00 and 20260920-Gendio-Scoreboard-Position-V2-Rev00, including engineering references, design contracts and verification records. Primary vendor pages checked 20 September 2026; the Advantech reference was inspected from the retained manual. This is an engineering design study, not a peer-reviewed paper or a field-performance report. CAD downloads are review models, not a complete fabrication release."
+    "note": "Project evidence: the controller board design record (18 September 2026) and the V2 scoreboard-position record (20 September 2026), including engineering references, design contracts and verification records. Primary vendor pages checked 20 September 2026; the Advantech reference was inspected from the retained manual. This is an engineering design study, not a peer-reviewed paper or a field-performance report. CAD downloads are review models, not a complete fabrication release."
   },
   {
     "slug": "solar-panel-cleaning-robot-design-study",

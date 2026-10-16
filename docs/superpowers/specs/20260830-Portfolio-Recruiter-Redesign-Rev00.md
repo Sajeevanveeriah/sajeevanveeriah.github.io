@@ -149,7 +149,7 @@ Show exactly these existing routed records:
 
 1. Autonomous Navigation Rover on ROS 2.
 2. ESP32 Clinical Ataxia Assessment Device.
-3. SWL Pricing and Inventory Control.
+3. Pricing and Inventory Control.
 
 Each preview shows a bounded outcome, Saj's contribution, verification and one evidence label. Technology tags are secondary.
 
