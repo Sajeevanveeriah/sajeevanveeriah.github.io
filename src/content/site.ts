@@ -43,7 +43,7 @@ export const experience: readonly ExperienceRecord[] = [
   {
     period: 'Jun 2026 - present',
     role: 'Independent Consultant Engineer',
-    organisation: 'SV Tech Solutions',
+    organisation: 'Voltwyn',
     context: 'Client engineering for Stan Wootton Locksmiths and Gendio',
     detail:
       'Develop client systems across requirements, electronics, embedded firmware, software and release documentation. Work includes SWL pricing and inventory control, Gendio controller and serial-adapter PCB design, display firmware, browser configuration and vehicle-position sensing. Fabrication reviews and software verification are distinct from assembled-system and field validation.',

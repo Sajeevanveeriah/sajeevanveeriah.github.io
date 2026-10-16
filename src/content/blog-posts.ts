@@ -943,7 +943,7 @@ export const engineeringPosts: BlogPost[] = [
     },
     "intro": [
       "Getting a language model to answer a question on your own computer is a useful milestone. It leaves several engineering questions open: which documents reached the model, whether they were current, and what the system is allowed to do with the answer.",
-      "I built VeerAI around a local small language model, with document ingestion, retrieval, memory, tools and evaluation. This article explains how those parts work together."
+      "I built Voltwyn (formerly VeerAI) around a local small language model, with document ingestion, retrieval, memory, tools and evaluation. This article explains how those parts work together."
     ],
     "note": "Sources checked on 11 September 2026. The worked examples use fictional maintenance manuals.",
     "sections": [

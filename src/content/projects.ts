@@ -353,9 +353,9 @@ export const projectIndex: readonly ProjectGroup[] = [
         image: { src: '/assets/image/Engineering_Mastery_Lab_Command_Centre_Rev00.svg', alt: 'Interface visual of the Engineering Mastery Lab dashboard.', width: 1435, height: 660, kind: 'Interface visual' },
       },
       {
-        title: 'VeerAI: Local SLM System', summary: 'A local AI project connecting an open-weight language model with document ingestion, retrieval, memory, controlled tools and evaluation on personally owned hardware.',
+        title: 'Voltwyn: Local SLM System', summary: 'A local AI project connecting an open-weight language model with document ingestion, retrieval, memory, controlled tools and evaluation on personally owned hardware.',
         href: '/blog/local-ai-beyond-the-model/',
-        image: { src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.avif', alt: 'System diagram of the VeerAI local SLM system.', width: 1672, height: 941, kind: 'System diagram' },
+        image: { src: '/assets/image/20260802-VeerAI-SLM-Project-Visual-Rev00.avif', alt: 'System diagram of the Voltwyn local SLM system.', width: 1672, height: 941, kind: 'System diagram' },
       },
       {
         title: 'Saj Service Desk',
