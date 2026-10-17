@@ -46,5 +46,8 @@ colour-only meaning. Every engineering visual must have a text equivalent.
 Use Australian and UK spelling. Use only ASCII hyphens, never Unicode en or em
 dashes. Keep copy factual, concise and in first person where Saj is speaking.
 
-Do not commit, push, merge or deploy without Saj's current target-specific
-approval.
+Saj's standing authority (17 October 2026): when a task changes this repository,
+commit, push, open the PR, merge once required checks pass, let the deploy run and
+verify the live site without asking. The task is complete only when the live
+deployment is verified. This does not cover force-pushing, bypassing checks or
+branch protection, or changing repository settings or secrets.

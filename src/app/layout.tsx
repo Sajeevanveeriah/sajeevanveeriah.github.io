@@ -25,7 +25,8 @@ export const metadata: Metadata = {
     images: [defaultShareImage],
   },
   twitter: { card: 'summary_large_image', title: `${site.name} | ${site.jobTitle}`, description: site.profile, images: [defaultShareImage.url] },
-  icons: { icon: '/favicon.png', apple: '/favicon.png' },
+  // Versioned URL: browsers cache favicons by URL and ignore Cache-Control, so a new icon needs a new URL.
+  icons: { icon: '/favicon.png?v=voltwyn-20261017', apple: '/favicon.png?v=voltwyn-20261017' },
 }
 
 export const viewport: Viewport = {
