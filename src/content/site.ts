@@ -16,7 +16,7 @@ export const site = {
   /** Last content review; used for sitemap dates on routes without their own date. */
   updated: '2026-10-04',
   github: 'https://github.com/Sajeevanveeriah',
-  logo: '/assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
+  logo: '/assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   support: {
     label: 'Optional project support',
     description: 'Optional support for the open engineering work and learning resources I publish.',

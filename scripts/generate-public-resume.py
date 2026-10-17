@@ -24,7 +24,7 @@ def publish_resume(source: Path, output: Path) -> None:
     if len(reader.pages) != 2:
         raise ValueError('The reviewed general resume must contain two pages.')
     text = '\n'.join(page.extract_text() or '' for page in reader.pages)
-    required = ['Sajeevan Veeriah', 'SV Tech Solutions', 'JAG Process Solutions',
+    required = ['Sajeevan Veeriah', 'Voltwyn', 'JAG Process Solutions',
                 'Ford Motor Company via Invenio',
                 'SPC-001', 'Deakin University', 'sv.sajeevanveeriah.workers.dev']
     missing = [value for value in required if value not in text]

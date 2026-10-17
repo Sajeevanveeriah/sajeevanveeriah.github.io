@@ -11,7 +11,7 @@ const required = [
   '404.html', '.nojekyll', '_headers', 'BingSiteAuth.xml', 'googlebcce96f6b520ab1f.html',
   'robots.txt', 'sitemap.xml', 'blog/feed.xml', 'favicon.png',
   'assets/Resume_Sajeevan_Veeriah.pdf', 'assets/20260903-Robotics-Learning-Roadmap-Rev00.docx',
-  'assets/image/20260827-Sajeevan-Veeriah-SV-Logo-Rev00.webp',
+  'assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   ...routes.map((route) => join(route, 'index.html').replace(/^\//, '')),
 ]
 for (const file of required) assert.ok(statSync(join(root, file), { throwIfNoEntry: false })?.size > 0 || file === '.nojekyll' && existsSync(join(root, file)), `missing or empty out/${file}`)
