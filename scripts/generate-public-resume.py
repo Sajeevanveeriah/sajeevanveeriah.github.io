@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Validate and publish a reviewed PDF, preserving its layout and career claims.
 
-The editable master is maintained separately; only its reviewed PDF is public.
+The public PDF is the portfolio edition built by scripts/build-portfolio-resume.py.
+It carries no phone number, email address or social profile: the website's
+contact form is the only contact route.
 Usage: python scripts/generate-public-resume.py --source /path/to/reviewed.pdf
 """
 import argparse
@@ -11,6 +13,7 @@ from shutil import copyfile
 from pypdf import PdfReader
 
 
+CONTACT_DETAILS = [r'@', r'\+?61\s*4\d\d', r'\b04\d\d\s?\d{3}\s?\d{3}\b', r'linkedin', r'mailto:', r'tel:']
 CLIENT_NAMES = ['gendio', 'stan wootton', 'stan-wootton', 'locksmith', 'upzy']
 
 
@@ -39,6 +42,10 @@ def publish_resume(source: Path, output: Path) -> None:
     # text or in a link target, must not ship.
     if names_client(text) or any(names_client(url) for url in links):
         raise ValueError('A client name was found; publish only the anonymised resume.')
+    # The portfolio edition must not publish any direct contact detail.
+    if any(re.search(pattern, value, re.IGNORECASE)
+           for pattern in CONTACT_DETAILS for value in [text, *links]):
+        raise ValueError('A contact detail was found; publish only the portfolio edition.')
     if not any(url.rstrip('/') == 'https://sv.sajeevanveeriah.workers.dev' for url in links):
         raise ValueError('The portfolio hyperlink is missing or outdated.')
     if any('sajeevanveeriah.github.io' in url for url in links):

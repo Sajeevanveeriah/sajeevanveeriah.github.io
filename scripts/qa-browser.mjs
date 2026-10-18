@@ -76,6 +76,7 @@ try {
         assert.equal(response.status(), 200, route);
         assert.equal(await page.locator('a[href="/assets/Resume_Sajeevan_Veeriah.docx"]').count(), 0);
         assert.ok(await page.locator('a[href="/assets/Resume_Sajeevan_Veeriah.pdf"]').count() > 0, `${route} resume link`);
+        assert.equal(await page.locator('a[href^="mailto:"], a[href^="tel:"]').count(), 0, `${route} publishes a contact detail`);
         assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), siteURL + route);
         assert.equal(await page.locator("main").evaluate((el) => /[–—]/.test(el.innerText)), false, `${route} contains an en or em dash`);
         await page.evaluate(async () => {
@@ -218,13 +219,25 @@ try {
     await page.locator("#request-form").waitFor();
     console.log("Live service request destination verified; no request submitted");
   }
+  await page.goto(baseURL + "/#contact");
+  const contactForm = page.locator("#contact form");
+  assert.equal(await contactForm.count(), 1);
+  assert.equal(await page.locator("#contact").evaluate((el) => /@|\+61|linkedin/i.test(el.innerText)), false, "contact section shows a contact detail");
+  await contactForm.getByRole("button", { name: "Send message", exact: true }).click();
+  assert.equal(await contactForm.getByLabel("Name").evaluate((el) => el.matches(":invalid")), true, "empty contact form must not send");
+  assert.equal(await contactForm.locator(".form-status").first().textContent(), "");
+  await contactForm.getByLabel("Name").fill("QA Visitor");
+  await contactForm.getByLabel("Your email").fill("qa@example.com");
+  await contactForm.getByLabel("Message").fill("Contact form check.");
+  await contactForm.getByRole("button", { name: "Send message", exact: true }).click();
+  assert.match(await contactForm.locator(".form-status").first().textContent(), /email app should now open/);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL + "/about/");
   await page.getByText("Menu", { exact: true }).click();
   await page.getByRole("navigation", { name: "Mobile primary" }).getByRole("link", { name: "Services", exact: true }).click();
   await page.waitForURL(baseURL + "/#services");
   assert.equal(await page.locator(".nav-disclosure").getAttribute("open"), null);
-  console.log("Header contact, service destination, back navigation and mobile services link passed");
+  console.log("Header contact, contact form, service destination, back navigation and mobile services link passed");
 
   // Work catalogue: filters, search, URL persistence, empty state and case study links.
   await page.goto(baseURL + "/work/");

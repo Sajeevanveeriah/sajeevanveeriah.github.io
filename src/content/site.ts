@@ -8,8 +8,6 @@ export const site = {
   profile:
     'I build and integrate robotics, embedded systems, industrial automation and engineering software, from the first requirement to testing and handover.',
   url: 'https://sv.sajeevanveeriah.workers.dev',
-  email: 'sajeevanveeriah@gmail.com',
-  phone: '+61 498 586 654',
   location: 'Geelong, Victoria, Australia',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',

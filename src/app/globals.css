@@ -242,7 +242,17 @@ button, select, summary { cursor: pointer; }
 .contact-inner { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px 64px; align-items: center; padding-block: clamp(56px, 8vw, 88px); }
 .contact-inner h2 { font-size: clamp(28px, 3.4vw, 40px); }
 .contact-inner > div > p { color: var(--muted); margin-top: 12px; }
-.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+.contact-inner { align-items: start; }
+.contact-form { display: grid; gap: 16px; }
+.form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.contact-form label { display: grid; gap: 6px; font-size: 15px; font-weight: 600; }
+.contact-form label em { font-style: normal; font-weight: 400; color: var(--muted); }
+.contact-form input, .contact-form select, .contact-form textarea { width: 100%; min-height: 44px; padding: 10px 14px; border: 1px solid var(--muted); border-radius: var(--radius-small); background: var(--raised); color: var(--ink); font: inherit; font-weight: 400; }
+.contact-form textarea { resize: vertical; min-height: 132px; }
+.contact-form input:focus-visible, .contact-form select:focus-visible, .contact-form textarea:focus-visible { border-color: var(--accent); }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.form-actions p, .form-status { color: var(--muted); font-size: 14px; }
+.form-status:empty { display: none; }
 .services { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 15px; scroll-margin-top: var(--header); }
 .services > span { color: var(--muted); }
 .services a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 44px; font-weight: 600; }
@@ -385,7 +395,6 @@ button, select, summary { cursor: pointer; }
   .site-nav, .header-actions .btn { display: none; }
   .nav-disclosure { display: block; }
   .hero, .featured, .post-feature, .split, .foundation, .contact-inner, .research-band { grid-template-columns: minmax(0, 1fr); }
-  .contact-actions { justify-content: flex-start; }
   .record-grid, .blog-layout { grid-template-columns: minmax(0, 1fr); }
   .record-rail, .blog-contents { position: static; }
   .blog-contents ol { border-left: 0; border-top: 1px solid var(--line); }
@@ -400,7 +409,7 @@ button, select, summary { cursor: pointer; }
   .project-list .card-kicker { text-align: left; order: -1; }
   .record-nav { grid-template-columns: minmax(0, 1fr); }
   .record-nav a:last-child { text-align: left; }
-  .footer-grid { grid-template-columns: minmax(0, 1fr); }
+  .footer-grid, .form-row { grid-template-columns: minmax(0, 1fr); }
   .footer-links { justify-content: flex-start; }
   .blog-body { font-size: 17px; }
   .blog-body > p:first-child { font-size: 18px; }
