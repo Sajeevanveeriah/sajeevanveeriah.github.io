@@ -247,7 +247,7 @@ button, select, summary { cursor: pointer; }
 .form-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .contact-form label { display: grid; gap: 6px; font-size: 15px; font-weight: 600; }
 .contact-form label em { font-style: normal; font-weight: 400; color: var(--muted); }
-.contact-form input, .contact-form select, .contact-form textarea { width: 100%; min-height: 44px; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: var(--radius-small); background: var(--raised); color: var(--ink); font: inherit; font-weight: 400; }
+.contact-form input, .contact-form select, .contact-form textarea { width: 100%; min-height: 44px; padding: 10px 14px; border: 1px solid var(--muted); border-radius: var(--radius-small); background: var(--raised); color: var(--ink); font: inherit; font-weight: 400; }
 .contact-form textarea { resize: vertical; min-height: 132px; }
 .contact-form input:focus-visible, .contact-form select:focus-visible, .contact-form textarea:focus-visible { border-color: var(--accent); }
 .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
