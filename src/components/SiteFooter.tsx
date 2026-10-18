@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { ArrowUpRight } from './icons'
 import { ThemeSelect } from './Theme'
+import { ContactForm } from './ContactForm'
 import { site } from '@/content/site'
 
 export function ContactBand() {
@@ -11,10 +12,7 @@ export function ContactBand() {
           <h2 id="contact-title">Let&apos;s make the next system work.</h2>
           <p>Discuss an engineering role, a project or a research collaboration. Tell me what you are building, where it gets difficult and what a useful result would look like.</p>
         </div>
-        <div className="contact-actions">
-          <a className="btn btn-primary" href={`mailto:${site.email}`}>Email Saj <ArrowUpRight /></a>
-          <a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a>
-        </div>
+        <ContactForm />
         <div className="services" id="services" role="region" aria-labelledby="services-title">
           <span id="services-title">Need technical help?</span>
           <a href={site.serviceDesk}>Request a service <ArrowUpRight /></a>
