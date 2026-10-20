@@ -6,6 +6,7 @@ import { site } from "@/content/site";
 
 export const destinations = [
   { href: "/work/", label: "Work", key: "work" },
+  { href: "/services/", label: "Services", key: "services" },
   { href: "/about/", label: "About", key: "about" },
   { href: "/blog/", label: "Journal", key: "blog" },
   { href: "/notes/", label: "Notes", key: "notes" },
