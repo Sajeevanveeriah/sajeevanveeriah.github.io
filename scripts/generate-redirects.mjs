@@ -5,7 +5,7 @@ const root = resolve('out')
 const hubs = ['atlas', 'contact', 'ecosystem', 'employers', 'lab', 'practice', 'skills', 'versatility']
 // Live engineering records are excluded so redirects never overwrite pages.
 const formerWork = [
-  'upzy-supervised-routine-companion', 'modular-education-testing-robot',
+  'modular-education-testing-robot',
   'engineering-mastery-lab', 'veerai-slm', 'adas-can-validation', 'emissions-compliance-testing',
   'iot-monitoring-platform', 'digital-twin-industrial-ai', 'manufacturing-qa-foundation',
   'carbon-revolution-rim-layup', 'idl-canning-line', 'ndcc-website',
@@ -24,25 +24,14 @@ const formerAtlas = [
   'project-delivery-commissioning-and-handover',
 ]
 const formerLabs = ['path-planner', 'pid-tuning', 'kalman-filter', 'occupancy-mapping']
-// Records renamed when client names were removed: each old URL forwards to its new page.
-const renamed = {
-  'work/swl-pricing-inventory-control': '/work/pricing-inventory-control/',
-  'work/gendio-controller': '/work/industrial-display-controller/',
-  'blog/swl-pricing-inventory-case-study': '/blog/pricing-inventory-case-study/',
-  'blog/gendio-display-controller-case-study': '/blog/industrial-display-controller-case-study/',
-  'blog/gendio-control-board-and-radar-positioning': '/blog/display-control-board-and-radar-positioning/',
-}
 const routes = [
   ...hubs.map((hub) => [hub]),
   ...formerWork.map((slug) => ['work', slug]),
   ...formerAtlas.map((slug) => ['atlas', slug]),
   ...formerLabs.map((slug) => ['lab', slug]),
-  ...Object.keys(renamed).map((path) => path.split('/')),
 ]
 
 function destination(segments) {
-  const moved = renamed[segments.join('/')]
-  if (moved) return moved
   if (segments[0] === 'contact') return '/#contact'
   if (segments[0] === 'work') return '/work/'
   if (['atlas', 'ecosystem', 'lab', 'practice', 'skills', 'versatility'].includes(segments[0])) return '/#practice'

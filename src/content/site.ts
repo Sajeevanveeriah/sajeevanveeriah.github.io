@@ -12,7 +12,7 @@ export const site = {
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
   /** Last content review; used for sitemap dates on routes without their own date. */
-  updated: '2026-10-04',
+  updated: '2026-10-20',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   support: {

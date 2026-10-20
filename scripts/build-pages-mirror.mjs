@@ -49,7 +49,7 @@ for await (const file of walk(target)) {
     await writeFile(file, stub(`${siteURL}/`).replace(`location.replace(${JSON.stringify(`${siteURL}/`)} + location.search + location.hash)`, `location.replace(${JSON.stringify(siteURL)} + location.pathname + location.search + location.hash)`))
   } else {
     const route = '/' + path.replace(/index\.html$/, '').replace(/\.html$/, '/')
-    // Legacy and renamed paths already forward on the Worker; send them straight to the final page.
+    // Legacy paths already forward on the Worker; send them straight to the final page.
     const moved = (await readFile(file, 'utf8')).match(/<meta http-equiv="refresh" content="0;url=(\/[^"]*)">/)
     await writeFile(file, stub(siteURL + (moved ? moved[1] : route)))
   }
