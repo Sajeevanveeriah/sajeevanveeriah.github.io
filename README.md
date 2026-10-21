@@ -12,7 +12,7 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 | `/` | Identity, six-layer systems visual, featured project, project band, career and learning, foundation, recent writing, contact, complete project index |
 | `/work/` | All 23 projects: eight case studies and the delivery list, with category filters, search and shareable URLs |
 | `/work/<slug>/` | Case studies: contribution, architecture, decisions, verification, previous and next |
-| `/services/` | Voltwyn offer: controller and sensor-interface boards, the Define phase, the rate basis and an enquiry form |
+| `/services/` | Voltwyn services: four service areas with proof links, the Define phase, the rate basis and an enquiry form |
 | `/about/` | Full career timeline, education, community and life beyond work |
 | `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
 | `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
