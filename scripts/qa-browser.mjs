@@ -60,13 +60,15 @@ const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-prais
 const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 // Pricing Saj published on 21 October 2026; the services page must show each figure and no bracketed placeholder.
-const servicesFigures = ["A$140 per hour", "A$1,400", "ABN 17 630 081 594", "Robotics, mechatronics and AI/ML engineering, from concept to working prototype."];
+const servicesFigures = ["A$140 per hour", "A$1,400", "ABN 17 630 081 594", "Robotics, mechatronics and AI/ML engineering, from concept to commissioned system.", "Not listed?"];
 // Each service area and the project records that prove it.
 const servicesAreas = {
   robotics: ["/work/autonomous-navigation-rover/"],
   mechatronics: ["/work/waterless-solar-panel-cleaner/"],
   embedded: ["/work/industrial-display-controller/"],
+  automation: ["/work/?q=Regulated%20Smart%20Factory%20and%20SCADA%20Migration", "/work/?q=IDL%3A%20Canning%20Line%20Upgrade%20and%20Commissioning"],
   "ai-ml": ["/work/deadline-aware-runtime-assurance/", "/work/pricing-inventory-control/"],
+  "software-test": ["/work/?q=ADAS%20and%20CAN%20Validation", "/work/?q=ABMARC%20Emissions%20and%20Compliance%20Testing"],
 };
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
@@ -146,12 +148,11 @@ try {
           const text = await page.locator("main").innerText();
           assert.deepEqual(text.match(/\[[^\]]+\]/g) ?? [], [], `${route} shows a placeholder`);
           for (const figure of servicesFigures) assert.ok(text.includes(figure), `${route} is missing ${figure}`);
-          assert.equal(/\b(PLC|SCADA|MES)\b/.test(text), false, `${route} mentions plant-controls integration`);
-          assert.equal(await page.locator(".service-area").count(), 4);
+          assert.equal(await page.locator(".service-area").count(), 6);
           for (const [id, hrefs] of Object.entries(servicesAreas)) {
             const links = await page.locator(`#${id} .area-proof a`).evaluateAll((items) => items.map((a) => a.getAttribute("href")));
             assert.deepEqual(links, hrefs, `${route} ${id} proof links`);
-            for (const href of hrefs) assert.ok(routes.includes(href), `${route} ${id} links to ${href}, which is not a published route`);
+            for (const href of hrefs) assert.ok(routes.includes(href.split("?")[0]), `${route} ${id} links to ${href}, which is not a published route`);
           }
           assert.equal(/gendio/i.test(text), false, `${route} names a client`);
           assert.equal(await page.locator("#enquire form").count(), 1, `${route} enquiry form`);
@@ -302,6 +303,11 @@ try {
   assert.equal(await status(page).textContent(), "25 projects");
   await page.goto(baseURL + "/work/?q=" + encodeURIComponent("Panelogram Retail Shelf Planner"));
   assert.equal(await status(page).textContent(), "1 project");
+  for (const href of Object.values(servicesAreas).flat().filter((h) => h.includes("?q="))) {
+    await page.goto(baseURL + href);
+    // The catalogue applies ?q= after hydration, so wait for the filtered count instead of reading it once.
+    await page.locator('[role="status"]', { hasText: /^1 project$/ }).first().waitFor({ timeout: 10000 }).catch(() => { throw new Error(`services proof search ${href} did not narrow to one project`); });
+  }
   console.log("Catalogue filters, search, URL persistence, empty recovery and case study navigation passed");
 
   // Theme controls stay in step and persist.

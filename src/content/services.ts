@@ -1,10 +1,10 @@
 /**
- * Voltwyn services page: four service areas, a paid Define phase as the entry
+ * Voltwyn services page: six service areas, a paid Define phase as the entry
  * step and the rate basis. Pricing set by Saj on 21 October 2026 from
  * Australian market rates; amounts are Australian dollars excluding GST.
- * Change them only on his instruction. Each area links to a project already on
- * the site and shows that record's own evidence stage. Clients are not named,
- * and plant-controls integration is deliberately left off this page.
+ * Change them only on his instruction. Each area links to work already on the
+ * site: a case-study slug, or the exact title of a project-index entry, which
+ * links to the catalogue search. Clients are not named.
  */
 export const pricing = {
   rate: 'A$140',
@@ -17,11 +17,11 @@ export const servicesPage = {
   updated: '2026-10-21',
   brand: 'Voltwyn',
   tagline: 'Electronics, controls and software',
-  title: 'Robotics, mechatronics and AI/ML engineering, from concept to working prototype.',
+  title: 'Robotics, mechatronics and AI/ML engineering, from concept to commissioned system.',
   lede:
-    'Voltwyn is my engineering practice. I take robotics, mechatronic, embedded and AI/ML problems from the first requirement to a working prototype, with the tests and records that show what the result does and does not prove.',
+    'Voltwyn is my engineering practice. I take on engineering problems across domains, from robots and prototypes to embedded electronics, automation, data and test, and carry them from the first requirement to a working system, with the tests and records that show what it does and does not prove.',
   description:
-    'Robotics, mechatronics, embedded electronics and AI/ML engineering, from concept to working prototype, with a paid Define phase first and a published rate.',
+    'Robotics, mechatronics, embedded electronics, automation and controls, AI/ML and test engineering, from concept to commissioned system, with a paid Define phase first and a published rate.',
   location: 'Victoria, Australia, remote and on-site',
 } as const
 
@@ -31,7 +31,7 @@ export interface ServiceArea {
   readonly scope: string
   readonly detail: string
   readonly start: string
-  /** Project records on the site that back the area. */
+  /** Work on the site that backs the area: case-study slugs or project-index titles. */
   readonly proof: readonly string[]
   /** Evidence limit quoted from the proof record, where it matters to the claim. */
   readonly boundary?: string
@@ -64,6 +64,14 @@ export const areas: readonly ServiceArea[] = [
     boundary: 'These checks support the PCB design and software behaviour; assembled-board measurements and field validation remain separate work.',
   },
   {
+    id: 'automation',
+    title: 'Automation and controls',
+    scope: 'PLC, HMI/SCADA, MES and production data, drives, instrumentation, FAT/SAT and commissioning.',
+    detail: 'Control logic, operator screens and production-data links built to a functional specification, then checked through factory and site acceptance before handover.',
+    start: 'A Define phase that agrees the process, the control philosophy, the interfaces and the acceptance tests.',
+    proof: ['Regulated Smart Factory and SCADA Migration', 'IDL: Canning Line Upgrade and Commissioning'],
+  },
+  {
     id: 'ai-ml',
     title: 'AI/ML, vision and data',
     scope: 'Perception, inspection, time-series analysis and decision tools.',
@@ -71,7 +79,17 @@ export const areas: readonly ServiceArea[] = [
     start: 'A Define phase that agrees the data available, the decision it should support and how the results will be judged.',
     proof: ['deadline-aware-runtime-assurance', 'pricing-inventory-control'],
   },
+  {
+    id: 'software-test',
+    title: 'Software, test and validation',
+    scope: 'Industrial IT, engineering tools, test rigs, CAN and automotive validation, and verification evidence.',
+    detail: 'Tests and tools that leave evidence someone else can audit: instrumented runs, logged data, defect records and the software that ties them together.',
+    start: 'A Define phase that sets what must be proved, the test method and the records the result has to leave.',
+    proof: ['ADAS and CAN Validation', 'ABMARC Emissions and Compliance Testing'],
+  },
 ] as const
+
+export const notListed = 'Not listed? I take on engineering problems in other domains too. Describe yours in the enquiry form and I will tell you plainly whether I am the right fit.'
 
 export const fit = {
   forWhom: {
