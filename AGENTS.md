@@ -34,11 +34,12 @@ Invenio in the public portfolio and resume on 21 September 2026.
 Do not infer undisclosed technology, client details, metrics,
 certification or outcomes. Project evidence boundaries are part of the claim.
 
-The /services/ page is Voltwyn's single offer. The hourly rate, the Define phase
-fee and the business name and ABN line are undecided and appear as the
-placeholders [RATE PER HOUR], [DEFINE PHASE FEE] and [BUSINESS NAME AND ABN LINE].
-Keep them visible until Saj supplies the figures; never fill them with invented
-values. Clients stay unnamed there as everywhere else.
+The /services/ page is Voltwyn's single offer. Saj set its pricing on 21 October
+2026: A$140 per hour, a A$1,400 fixed Define phase fee per board, amounts
+excluding GST, invoiced by Sajeevan Veeriah, sole trader, ABN 17 630 081 594.
+Change these figures only on his instruction. No business name is registered
+for Voltwyn yet, so invoices name him, not Voltwyn. Clients stay unnamed there
+as everywhere else.
 
 Keep the site static-first. No API routes, runtime data fetching, database,
 authentication, analytics, tracking or third-party runtime requests. A backend

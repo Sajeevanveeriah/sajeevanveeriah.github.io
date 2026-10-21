@@ -59,9 +59,8 @@ const developmentRoutes = ["/blog/display-control-board-and-radar-positioning/",
 const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-praise-of-the-volume-knob/", "/blog/ai-without-the-jargon/"];
 const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
-// Figures Saj has not decided yet. Each must stay visible on the services page until he supplies it, and no other
-// bracketed token may appear; remove an entry here (and in AGENTS.md) when its figure lands.
-const servicesPlaceholders = ["[RATE PER HOUR]", "[DEFINE PHASE FEE]", "[BUSINESS NAME AND ABN LINE]"];
+// Pricing Saj published on 21 October 2026; the services page must show each figure and no bracketed placeholder.
+const servicesFigures = ["A$140 per hour", "A$1,400", "ABN 17 630 081 594"];
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
 const screenshotDir = resolve(process.env.PORTFOLIO_QA_OUTPUT_DIR || "work/portfolio-qa");
@@ -138,9 +137,8 @@ try {
         }
         if (route === "/services/") {
           const text = await page.locator("main").innerText();
-          const tokens = text.match(/\[[^\]]+\]/g) ?? [];
-          for (const token of tokens) assert.ok(servicesPlaceholders.includes(token), `${route} shows an unexpected placeholder ${token}`);
-          for (const token of servicesPlaceholders) assert.ok(tokens.includes(token), `${route} no longer shows ${token}; remove it from servicesPlaceholders once the figure is supplied`);
+          assert.deepEqual(text.match(/\[[^\]]+\]/g) ?? [], [], `${route} shows a placeholder`);
+          for (const figure of servicesFigures) assert.ok(text.includes(figure), `${route} is missing ${figure}`);
           assert.equal(/gendio/i.test(text), false, `${route} names a client`);
           assert.equal(await page.locator("#enquire form").count(), 1, `${route} enquiry form`);
           assert.equal(await page.locator("#enquire select[name=topic]").inputValue(), "Project or consulting work");
