@@ -1,19 +1,19 @@
 /**
  * Voltwyn services page: one offer, a paid Define phase as the entry step and
- * the rate basis. Figures Saj has not yet decided are square-bracket
- * placeholders that the page renders visibly; they are never replaced with
- * invented numbers. Clients are not named anywhere on the site, so the proof
- * points at the anonymised Industrial Display Controller record.
+ * the rate basis. Pricing set by Saj on 21 October 2026 from Australian market
+ * rates; amounts are Australian dollars excluding GST. Change them only on his
+ * instruction. Clients are not named anywhere on the site, so the proof points
+ * at the anonymised Industrial Display Controller record.
  */
-export const placeholders = {
-  rate: '[RATE PER HOUR]',
-  defineFee: '[DEFINE PHASE FEE]',
-  business: '[BUSINESS NAME AND ABN LINE]',
+export const pricing = {
+  rate: 'A$140',
+  defineFee: 'A$1,400',
+  invoicer: 'Sajeevan Veeriah, sole trader, ABN 17 630 081 594',
 } as const
 
 export const servicesPage = {
   /** Content date; the sitemap uses it for this route. */
-  updated: '2026-10-20',
+  updated: '2026-10-21',
   brand: 'Voltwyn',
   tagline: 'Electronics, controls and software',
   title: 'Controller and sensor-interface boards for industrial equipment.',
@@ -69,7 +69,7 @@ export const phases = [
     detail:
       'A short, paid study before any design work. We agree what the board must do, what it connects to, the environment it lives in, the limits on size, power and cost, and the acceptance criteria.',
     deliver: 'A written specification, interface list, block diagram, risk register and a fixed-price quote for the Design phase.',
-    basis: `Fixed fee of ${placeholders.defineFee} agreed before work starts.`,
+    basis: `Fixed fee of ${pricing.defineFee} for one board, agreed before work starts.`,
   },
   {
     label: 'Phase 2',
@@ -85,21 +85,21 @@ export const phases = [
     detail:
       'Assembled boards measured against the specification: power rails, interfaces, timing and thermal behaviour. The firmware is then commissioned on real inputs, on site where the equipment needs it.',
     deliver: 'Verification pack, measurement record, commissioning notes and handover.',
-    basis: `Hourly at ${placeholders.rate} per hour, with a cap agreed in writing before the phase starts.`,
+    basis: `Hourly at ${pricing.rate} per hour, with a cap agreed in writing before the phase starts.`,
   },
 ] as const
 
 export const supportNote = 'After handover: changes, further revisions and production questions at the hourly rate, by arrangement.'
 
 export const rateCard = [
-  { item: 'Engineering time', basis: `${placeholders.rate} per hour. Time is recorded against each task and reported with the invoice.` },
-  { item: 'Define phase', basis: `Fixed fee of ${placeholders.defineFee} agreed before work starts.` },
+  { item: 'Engineering time', basis: `${pricing.rate} per hour. Time is recorded against each task and reported with the invoice.` },
+  { item: 'Define phase', basis: `Fixed fee of ${pricing.defineFee} for one board, agreed before work starts.` },
   { item: 'Design phase', basis: 'Fixed price, quoted from the Define phase specification. Board fabrication and assembly costs are separate.' },
   { item: 'Bring-up and verification', basis: 'Hourly at the engineering rate, with a cap agreed in writing before the phase starts.' },
   { item: 'Support after handover', basis: 'Hourly at the engineering rate, by arrangement.' },
   { item: 'On-site work', basis: 'Victoria, Australia. Travel is agreed in the quote.' },
   { item: 'Files and ownership', basis: 'Design files, firmware source and the verification pack are delivered with each phase. Ownership terms are set out in the quote.' },
-  { item: 'Invoicing', basis: `Invoices are issued by ${placeholders.business} and show GST separately. Prices are in Australian dollars and exclude GST.` },
+  { item: 'Invoicing', basis: `Invoices are issued by ${pricing.invoicer}, registered for GST, and show GST separately. Prices are in Australian dollars and exclude GST.` },
 ] as const
 
 export const enquiry = {

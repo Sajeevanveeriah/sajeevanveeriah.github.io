@@ -14,7 +14,6 @@
   --accent-hover: #1749b2;
   --on-accent: #ffffff;
   --media: #eef1f5;
-  --volt: #f5b700;
   --shadow: 0 1px 2px rgb(23 33 43 / 0.05), 0 8px 24px rgb(23 33 43 / 0.06);
   --radius: 14px;
   --radius-small: 8px;
@@ -355,7 +354,6 @@ button, select, summary { cursor: pointer; }
 .rate-card > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; padding-block: 18px; border-bottom: 1px solid var(--line); }
 .rate-card dt { font-weight: 600; }
 .rate-card dd { color: var(--muted); }
-.placeholder { background: color-mix(in srgb, var(--volt) 28%, var(--raised)); color: var(--ink); padding: 1px 5px; border-radius: 4px; font-weight: 600; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
 /* Journal article */
 .blog-article { max-width: 1080px; }

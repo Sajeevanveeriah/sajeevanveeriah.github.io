@@ -16,11 +16,6 @@ export const metadata = pageMetadata({
   path: '/services/',
 })
 
-/** Undecided figures stay visible as [PLACEHOLDER] tokens until Saj sets them. */
-function highlight(text: string) {
-  return text.split(/(\[[A-Z ]+\])/).map((part, index) => (/^\[[A-Z ]+\]$/.test(part) ? <mark className="placeholder" key={index}>{part}</mark> : part))
-}
-
 export default function Services() {
   const proof = getProject(servicesPage.proofSlug)!
   return (
@@ -65,7 +60,7 @@ export default function Services() {
                   <h3>{p.title}</h3>
                   <p>{p.detail}</p>
                   <p className="build"><strong>You receive:</strong> {p.deliver}</p>
-                  <p className="build"><strong>Basis:</strong> {highlight(p.basis)}</p>
+                  <p className="build"><strong>Basis:</strong> {p.basis}</p>
                 </div>
               </li>
             ))}
@@ -94,7 +89,7 @@ export default function Services() {
         <section className="section container" id="rates" aria-labelledby="rates-title">
           <div className="section-head"><div><p className="eyebrow">Rate basis</p><h2 id="rates-title">Fixed price where the scope is fixed. Hourly, and capped, where it is not.</h2><p>Australian dollars, excluding GST. Every quote states the basis, the cap and what you receive.</p></div></div>
           <dl className="rate-card">
-            {rateCard.map((r) => <div key={r.item}><dt>{r.item}</dt><dd>{highlight(r.basis)}</dd></div>)}
+            {rateCard.map((r) => <div key={r.item}><dt>{r.item}</dt><dd>{r.basis}</dd></div>)}
           </dl>
         </section>
 
