@@ -4,16 +4,25 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { ContactForm } from '@/components/ContactForm'
 import { VoltwynLockup } from '@/components/VoltwynLockup'
 import { ArrowUpRight } from '@/components/icons'
-import { getProject } from '@/content/projects'
+import { getProject, projectIndex } from '@/content/projects'
 import { site } from '@/content/site'
 import { pageMetadata } from '@/content/seo'
-import { servicesPage, areas, fit, phases, supportNote, rateCard, enquiry } from '@/content/services'
+import { servicesPage, areas, notListed, fit, phases, supportNote, rateCard, enquiry } from '@/content/services'
 
 export const metadata = pageMetadata({
   title: 'Services and rates',
   description: servicesPage.description,
   path: '/services/',
 })
+
+/** A case-study slug links to its record; an index title links to the catalogue search, as the home page does. */
+function resolveProof(ref: string) {
+  const project = getProject(ref)
+  if (project) return { title: project.title, href: `/work/${project.slug}/`, note: project.status }
+  const item = projectIndex.flatMap((group) => group.items).find((entry) => entry.title === ref)
+  if (!item) throw new Error(`Services proof "${ref}" is not a case study or project-index title`)
+  return { title: item.title, href: `/work/?q=${encodeURIComponent(item.title)}`, note: item.summary }
+}
 
 export default function Services() {
   return (
@@ -38,7 +47,7 @@ export default function Services() {
         </div>
 
         <section className="section container" id="areas" aria-labelledby="areas-title">
-          <div className="section-head"><div><p className="eyebrow">Service areas</p><h2 id="areas-title">Four areas, one way of working.</h2><p>Each area starts with a paid Define phase and ends with a tested prototype and the records behind it. Each links to work already on this site, labelled with its evidence stage.</p></div></div>
+          <div className="section-head"><div><p className="eyebrow">Service areas</p><h2 id="areas-title">Six areas, one way of working.</h2><p>Each area starts with a paid Define phase and ends with a tested system and the records behind it. Each links to work already on this site, with its own description of what it covers.</p></div></div>
           <div className="service-areas">
             {areas.map((area) => (
               <article className="panel service-area" id={area.id} key={area.id} aria-labelledby={`${area.id}-title`}>
@@ -49,12 +58,12 @@ export default function Services() {
                 <div className="area-proof">
                   <p className="card-kicker">Proof on this site</p>
                   <ul>
-                    {area.proof.map((slug) => {
-                      const project = getProject(slug)!
+                    {area.proof.map((ref) => {
+                      const proof = resolveProof(ref)
                       return (
-                        <li key={slug}>
-                          <Link className="text-link" href={`/work/${slug}/`} prefetch={false}>{project.title} <ArrowUpRight /></Link>
-                          <span>{project.status}</span>
+                        <li key={ref}>
+                          <Link className="text-link" href={proof.href} prefetch={false}>{proof.title} <ArrowUpRight /></Link>
+                          <span>{proof.note}</span>
                         </li>
                       )
                     })}
@@ -64,6 +73,7 @@ export default function Services() {
               </article>
             ))}
           </div>
+          <p className="section-note not-listed">{notListed} <a className="text-link" href="#enquire">Go to the enquiry form</a></p>
           <div className="split fit">
             <div><h3>{fit.forWhom.title}</h3><p>{fit.forWhom.detail}</p></div>
             <div><h3>{fit.outside.title}</h3><p>{fit.outside.detail}</p></div>

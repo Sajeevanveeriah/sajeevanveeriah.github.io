@@ -34,16 +34,17 @@ Invenio in the public portfolio and resume on 21 September 2026.
 Do not infer undisclosed technology, client details, metrics,
 certification or outcomes. Project evidence boundaries are part of the claim.
 
-The /services/ page offers four service areas: robotics and autonomy,
-mechatronic design and prototypes, embedded electronics, and AI/ML, vision and
-data. Each links to its proof record on the site and shows that record's
-evidence stage. Saj set the pricing on 21 October 2026: A$140 per hour and a
+The /services/ page offers six service areas: robotics and autonomy,
+mechatronic design and prototypes, embedded electronics, automation and
+controls, AI/ML, vision and data, and software, test and validation, plus a
+"Not listed?" line for other domains. Each area links to work already on the
+site: a case-study record with its evidence stage, or a project-index entry
+through the catalogue search. Saj set the pricing on 21 October 2026: A$140 per hour and a
 A$1,400 fixed Define phase fee per system or prototype, amounts excluding GST,
 invoiced by Sajeevan Veeriah, sole trader, ABN 17 630 081 594. Change these
 figures only on his instruction. No business name is registered for Voltwyn
-yet, so invoices name him, not Voltwyn. Leave PLC, SCADA, MES and plant-controls
-integration off the services page. Clients stay unnamed there as everywhere
-else.
+yet, so invoices name him, not Voltwyn. Clients stay unnamed there as
+everywhere else, including the clients of former employers.
 
 Keep the site static-first. No API routes, runtime data fetching, database,
 authentication, analytics, tracking or third-party runtime requests. A backend
