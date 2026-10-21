@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { Masthead } from '@/components/Masthead'
 import { SiteFooter } from '@/components/SiteFooter'
@@ -8,7 +7,7 @@ import { ArrowUpRight } from '@/components/icons'
 import { getProject } from '@/content/projects'
 import { site } from '@/content/site'
 import { pageMetadata } from '@/content/seo'
-import { servicesPage, deliverables, fit, phases, supportNote, rateCard, enquiry } from '@/content/services'
+import { servicesPage, areas, fit, phases, supportNote, rateCard, enquiry } from '@/content/services'
 
 export const metadata = pageMetadata({
   title: 'Services and rates',
@@ -17,7 +16,6 @@ export const metadata = pageMetadata({
 })
 
 export default function Services() {
-  const proof = getProject(servicesPage.proofSlug)!
   return (
     <>
       <Masthead current="services" />
@@ -30,7 +28,7 @@ export default function Services() {
             <p>{servicesPage.lede}</p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#enquire">Start with a Define phase</a>
-              <Link className="btn btn-secondary" href={`/work/${proof.slug}/`} prefetch={false}>See the latest board</Link>
+              <Link className="btn btn-secondary" href="/work/" prefetch={false}>See the work</Link>
             </div>
             <ul className="hero-credentials">
               <li>{servicesPage.location}</li>
@@ -39,10 +37,32 @@ export default function Services() {
           </header>
         </div>
 
-        <section className="section container" id="offer" aria-labelledby="offer-title">
-          <div className="section-head"><div><p className="eyebrow">The offer</p><h2 id="offer-title">One board, from schematic to verification pack.</h2><p>Every engagement covers the same five deliverables, so you know what you are buying before the Define phase starts.</p></div></div>
-          <div className="about-grid">
-            {deliverables.map((d) => <div className="panel" key={d.title}><h3>{d.title}</h3><p>{d.detail}</p></div>)}
+        <section className="section container" id="areas" aria-labelledby="areas-title">
+          <div className="section-head"><div><p className="eyebrow">Service areas</p><h2 id="areas-title">Four areas, one way of working.</h2><p>Each area starts with a paid Define phase and ends with a tested prototype and the records behind it. Each links to work already on this site, labelled with its evidence stage.</p></div></div>
+          <div className="service-areas">
+            {areas.map((area) => (
+              <article className="panel service-area" id={area.id} key={area.id} aria-labelledby={`${area.id}-title`}>
+                <h3 id={`${area.id}-title`}>{area.title}</h3>
+                <p className="area-scope">{area.scope}</p>
+                <p>{area.detail}</p>
+                <p className="build"><strong>Start with:</strong> {area.start}</p>
+                <div className="area-proof">
+                  <p className="card-kicker">Proof on this site</p>
+                  <ul>
+                    {area.proof.map((slug) => {
+                      const project = getProject(slug)!
+                      return (
+                        <li key={slug}>
+                          <Link className="text-link" href={`/work/${slug}/`} prefetch={false}>{project.title} <ArrowUpRight /></Link>
+                          <span>{project.status}</span>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                  {area.boundary && <p className="area-boundary">{area.boundary}</p>}
+                </div>
+              </article>
+            ))}
           </div>
           <div className="split fit">
             <div><h3>{fit.forWhom.title}</h3><p>{fit.forWhom.detail}</p></div>
@@ -66,24 +86,6 @@ export default function Services() {
             ))}
           </ol>
           <p className="section-note">{supportNote}</p>
-        </section>
-
-        <section className="section container" id="proof" aria-labelledby="proof-title">
-          <div className="section-head"><div><p className="eyebrow">Proof</p><h2 id="proof-title">The latest board: an industrial display controller.</h2><p>Clients are not named on this site. Each record says what was done, what was checked and what the checks do and do not prove.</p></div></div>
-          <article className="featured">
-            {proof.image && <div className="media-frame"><Image src={proof.image.src} alt={proof.image.alt} width={proof.image.width} height={proof.image.height} sizes="(max-width: 1024px) 92vw, 620px" /></div>}
-            <div>
-              <p className="card-kicker">{proof.category}</p>
-              <h3>{proof.title}</h3>
-              <p>{proof.system}</p>
-              <p>{proof.verification}</p>
-              <ul className="chips">{proof.stack.slice(0, 5).map((s) => <li className="chip" key={s}>{s}</li>)}</ul>
-              <div className="record-links">
-                <Link className="text-link" href={`/work/${proof.slug}/`} prefetch={false}>Project record <ArrowUpRight /></Link>
-                <Link className="text-link" href={servicesPage.proofStory} prefetch={false}>Design case study <ArrowUpRight /></Link>
-              </div>
-            </div>
-          </article>
         </section>
 
         <section className="section container" id="rates" aria-labelledby="rates-title">

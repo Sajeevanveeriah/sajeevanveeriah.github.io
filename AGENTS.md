@@ -34,12 +34,16 @@ Invenio in the public portfolio and resume on 21 September 2026.
 Do not infer undisclosed technology, client details, metrics,
 certification or outcomes. Project evidence boundaries are part of the claim.
 
-The /services/ page is Voltwyn's single offer. Saj set its pricing on 21 October
-2026: A$140 per hour, a A$1,400 fixed Define phase fee per board, amounts
-excluding GST, invoiced by Sajeevan Veeriah, sole trader, ABN 17 630 081 594.
-Change these figures only on his instruction. No business name is registered
-for Voltwyn yet, so invoices name him, not Voltwyn. Clients stay unnamed there
-as everywhere else.
+The /services/ page offers four service areas: robotics and autonomy,
+mechatronic design and prototypes, embedded electronics, and AI/ML, vision and
+data. Each links to its proof record on the site and shows that record's
+evidence stage. Saj set the pricing on 21 October 2026: A$140 per hour and a
+A$1,400 fixed Define phase fee per system or prototype, amounts excluding GST,
+invoiced by Sajeevan Veeriah, sole trader, ABN 17 630 081 594. Change these
+figures only on his instruction. No business name is registered for Voltwyn
+yet, so invoices name him, not Voltwyn. Leave PLC, SCADA, MES and plant-controls
+integration off the services page. Clients stay unnamed there as everywhere
+else.
 
 Keep the site static-first. No API routes, runtime data fetching, database,
 authentication, analytics, tracking or third-party runtime requests. A backend

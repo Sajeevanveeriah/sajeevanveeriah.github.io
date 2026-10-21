@@ -350,6 +350,18 @@ button, select, summary { cursor: pointer; }
 .fit h3 { margin-bottom: 10px; }
 .fit p { color: var(--muted); }
 .section-note { margin-top: 20px; font-size: 15px; color: var(--muted); }
+.service-areas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 20px; }
+.service-area { display: flex; flex-direction: column; gap: 12px; scroll-margin-top: calc(var(--header) + 24px); }
+.service-area h3 { margin-bottom: 0; }
+.service-area p { color: var(--muted); }
+.service-area .area-scope { color: var(--ink); font-weight: 600; }
+.service-area .build { color: var(--ink); }
+.service-area p + p { margin-top: 0; }
+.area-proof { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+.area-proof li + li { margin-top: 8px; }
+.area-proof li span { display: block; font-size: 14px; color: var(--muted); }
+.area-proof .text-link { min-height: 44px; }
+.area-boundary { margin-top: 10px; font-size: 14px; }
 .rate-card { border-top: 1px solid var(--line); }
 .rate-card > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; padding-block: 18px; border-bottom: 1px solid var(--line); }
 .rate-card dt { font-weight: 600; }

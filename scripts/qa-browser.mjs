@@ -60,7 +60,14 @@ const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-prais
 const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
 // Pricing Saj published on 21 October 2026; the services page must show each figure and no bracketed placeholder.
-const servicesFigures = ["A$140 per hour", "A$1,400", "ABN 17 630 081 594"];
+const servicesFigures = ["A$140 per hour", "A$1,400", "ABN 17 630 081 594", "Robotics, mechatronics and AI/ML engineering, from concept to working prototype."];
+// Each service area and the project records that prove it.
+const servicesAreas = {
+  robotics: ["/work/autonomous-navigation-rover/"],
+  mechatronics: ["/work/waterless-solar-panel-cleaner/"],
+  embedded: ["/work/industrial-display-controller/"],
+  "ai-ml": ["/work/deadline-aware-runtime-assurance/", "/work/pricing-inventory-control/"],
+};
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
 const screenshotDir = resolve(process.env.PORTFOLIO_QA_OUTPUT_DIR || "work/portfolio-qa");
@@ -139,6 +146,13 @@ try {
           const text = await page.locator("main").innerText();
           assert.deepEqual(text.match(/\[[^\]]+\]/g) ?? [], [], `${route} shows a placeholder`);
           for (const figure of servicesFigures) assert.ok(text.includes(figure), `${route} is missing ${figure}`);
+          assert.equal(/\b(PLC|SCADA|MES)\b/.test(text), false, `${route} mentions plant-controls integration`);
+          assert.equal(await page.locator(".service-area").count(), 4);
+          for (const [id, hrefs] of Object.entries(servicesAreas)) {
+            const links = await page.locator(`#${id} .area-proof a`).evaluateAll((items) => items.map((a) => a.getAttribute("href")));
+            assert.deepEqual(links, hrefs, `${route} ${id} proof links`);
+            for (const href of hrefs) assert.ok(routes.includes(href), `${route} ${id} links to ${href}, which is not a published route`);
+          }
           assert.equal(/gendio/i.test(text), false, `${route} names a client`);
           assert.equal(await page.locator("#enquire form").count(), 1, `${route} enquiry form`);
           assert.equal(await page.locator("#enquire select[name=topic]").inputValue(), "Project or consulting work");
