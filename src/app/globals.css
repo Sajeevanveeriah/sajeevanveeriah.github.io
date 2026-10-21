@@ -14,6 +14,7 @@
   --accent-hover: #1749b2;
   --on-accent: #ffffff;
   --media: #eef1f5;
+  --volt: #f5b700;
   --shadow: 0 1px 2px rgb(23 33 43 / 0.05), 0 8px 24px rgb(23 33 43 / 0.06);
   --radius: 14px;
   --radius-small: 8px;
@@ -331,13 +332,30 @@ button, select, summary { cursor: pointer; }
 .panel li span { display: block; color: var(--muted); font-size: 15px; }
 .roadmap { display: grid; gap: 16px; }
 .roadmap > li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px 32px; padding: clamp(20px, 3vw, 32px); border-radius: 20px; background: var(--surface); }
-.roadmap .month { font-size: 14px; font-weight: 600; color: var(--accent); }
+.roadmap .month, .roadmap .phase { font-size: 14px; font-weight: 600; color: var(--accent); }
 .roadmap h3 { font-size: 22px; margin-bottom: 8px; }
 .roadmap p { color: var(--muted); font-size: 16px; }
 .roadmap .build { color: var(--ink); margin-top: 12px; }
 .roadmap .build strong { font-weight: 600; }
 .roadmap ul { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 12px; }
 .roadmap ul a { display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; }
+
+/* Services */
+.services-head .lockup { display: block; width: min(100%, 240px); height: auto; color: var(--ink); margin-bottom: 24px; }
+:root[data-theme="dark"] .lockup-tile { display: none; }
+.services-head h1 { font-size: clamp(36px, 4.8vw, 60px); }
+.services-head .btn { margin-top: 0; }
+.services-head .hero-credentials { margin-top: 28px; }
+.panel h3 { font-size: 22px; letter-spacing: -0.025em; margin-bottom: 12px; }
+.fit { margin-top: clamp(28px, 4vw, 44px); }
+.fit h3 { margin-bottom: 10px; }
+.fit p { color: var(--muted); }
+.section-note { margin-top: 20px; font-size: 15px; color: var(--muted); }
+.rate-card { border-top: 1px solid var(--line); }
+.rate-card > div { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 8px 32px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.rate-card dt { font-weight: 600; }
+.rate-card dd { color: var(--muted); }
+.placeholder { background: color-mix(in srgb, var(--volt) 28%, var(--raised)); color: var(--ink); padding: 1px 5px; border-radius: 4px; font-weight: 600; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
 /* Journal article */
 .blog-article { max-width: 1080px; }
@@ -404,7 +422,7 @@ button, select, summary { cursor: pointer; }
   body { font-size: 16px; }
   .header-inner { gap: 8px; }
   .brand span { font-size: 15px; }
-  .compact-timeline li, .timeline li, .roadmap > li, .project-trials > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .compact-timeline li, .timeline li, .roadmap > li, .project-trials > div, .rate-card > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .project-list li { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .project-list .card-kicker { text-align: left; order: -1; }
   .record-nav { grid-template-columns: minmax(0, 1fr); }

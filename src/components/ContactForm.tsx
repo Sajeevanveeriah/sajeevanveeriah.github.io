@@ -9,7 +9,7 @@ import { useState, type FormEvent } from "react";
 const inbox = ["sajeevanveeriah", "gmail.com"];
 const topics = ["Engineering role", "Project or consulting work", "Research collaboration", "Something else"] as const;
 
-export function ContactForm() {
+export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopic?: (typeof topics)[number] }) {
   const [status, setStatus] = useState("");
 
   function submit(event: FormEvent<HTMLFormElement>) {
@@ -48,7 +48,7 @@ export function ContactForm() {
         </label>
         <label>
           <span>Topic</span>
-          <select name="topic" defaultValue={topics[0]}>
+          <select name="topic" defaultValue={defaultTopic}>
             {topics.map((topic) => <option key={topic}>{topic}</option>)}
           </select>
         </label>

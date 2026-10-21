@@ -4,10 +4,10 @@ import { useRef } from "react";
 
 const links = [
   ["/work/", "Work"],
+  ["/services/", "Services"],
   ["/about/", "About"],
   ["/blog/", "Journal"],
   ["/notes/", "Notes"],
-  ["/#services", "Services"],
   ["/#contact", "Contact"],
 ] as const;
 

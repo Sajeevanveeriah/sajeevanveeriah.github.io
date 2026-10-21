@@ -15,7 +15,7 @@ export function ContactBand() {
         <ContactForm />
         <div className="services" id="services" role="region" aria-labelledby="services-title">
           <span id="services-title">Need technical help?</span>
-          <a href={site.serviceDesk}>Request a service <ArrowUpRight /></a>
+          <Link href="/services/" prefetch={false}>Request a service <ArrowUpRight /></Link>
           <Link href="/notes/" prefetch={false}>Learning resources <ArrowUpRight /></Link>
         </div>
       </div>

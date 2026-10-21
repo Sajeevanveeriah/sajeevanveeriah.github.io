@@ -59,6 +59,9 @@ const developmentRoutes = ["/blog/display-control-board-and-radar-positioning/",
 const postsWithoutHero = ["/blog/the-second-life-of-a-product/", "/blog/in-praise-of-the-volume-knob/", "/blog/ai-without-the-jargon/"];
 const figureCounts = { "/blog/bridge-humanoid-hardware-and-control/": 2, [developmentRoutes[0]]: 6, [developmentRoutes[1]]: 5, "/blog/the-experience-trap/": 2 };
 const serviceRequestURL = "https://sajeevanveeriah.github.io/saj-service-desk/request/";
+// Figures Saj has not decided yet. Each must stay visible on the services page until he supplies it, and no other
+// bracketed token may appear; remove an entry here (and in AGENTS.md) when its figure lands.
+const servicesPlaceholders = ["[RATE PER HOUR]", "[DEFINE PHASE FEE]", "[BUSINESS NAME AND ABN LINE]"];
 const failures = [];
 const status = (page) => page.locator('[role="status"]').first();
 const screenshotDir = resolve(process.env.PORTFOLIO_QA_OUTPUT_DIR || "work/portfolio-qa");
@@ -133,12 +136,24 @@ try {
           assert.equal(downloads.length, route === developmentRoutes[0] ? 3 : 4);
           for (const download of downloads) assert.ok((await stat(join(root, download))).size > 0);
         }
-        const services = page.getByRole("region", { name: "Need technical help?" });
-        assert.equal(await services.count(), 1, `${route} services region`);
-        const requestLink = services.getByRole("link", { name: "Request a service", exact: true });
-        assert.equal(await requestLink.getAttribute("href"), serviceRequestURL);
-        const bounds = await requestLink.boundingBox();
-        assert.ok(bounds && bounds.width >= 44 && bounds.height >= 44);
+        if (route === "/services/") {
+          const text = await page.locator("main").innerText();
+          const tokens = text.match(/\[[^\]]+\]/g) ?? [];
+          for (const token of tokens) assert.ok(servicesPlaceholders.includes(token), `${route} shows an unexpected placeholder ${token}`);
+          for (const token of servicesPlaceholders) assert.ok(tokens.includes(token), `${route} no longer shows ${token}; remove it from servicesPlaceholders once the figure is supplied`);
+          assert.equal(/gendio/i.test(text), false, `${route} names a client`);
+          assert.equal(await page.locator("#enquire form").count(), 1, `${route} enquiry form`);
+          assert.equal(await page.locator("#enquire select[name=topic]").inputValue(), "Project or consulting work");
+          assert.equal(await page.locator(".rate-card > div").count(), 8);
+          assert.equal(await page.locator('.site-nav a[href="/services/"]').getAttribute("aria-current"), "page");
+        } else {
+          const services = page.getByRole("region", { name: "Need technical help?" });
+          assert.equal(await services.count(), 1, `${route} services region`);
+          const requestLink = services.getByRole("link", { name: "Request a service", exact: true });
+          assert.equal(await requestLink.getAttribute("href"), "/services/");
+          const bounds = await requestLink.boundingBox();
+          assert.ok(bounds && bounds.width >= 44 && bounds.height >= 44);
+        }
         const result = await page.evaluate(() => ({
           overflow: document.documentElement.scrollWidth > innerWidth,
           images: [...document.images].every((i) => i.complete && i.naturalWidth > 0),
@@ -204,15 +219,11 @@ try {
   assert.equal(await requestLink.isVisible(), true);
   await requestLink.focus();
   assert.notEqual(await requestLink.evaluate((el) => getComputedStyle(el).outlineStyle), "none");
-  let destinationRequested = false;
-  await page.route(serviceRequestURL, async (route) => {
-    destinationRequested = route.request().isNavigationRequest();
-    await route.fulfill({ contentType: "text/html", body: "<!doctype html><html lang='en'><title>Navigation test</title><h1>Service request destination</h1></html>" });
-  });
-  await Promise.all([page.waitForURL(serviceRequestURL), requestLink.press("Enter")]);
-  assert.equal(destinationRequested, true);
+  await Promise.all([page.waitForURL(baseURL + "/services/"), requestLink.press("Enter")]);
+  assert.equal(await page.getByRole("link", { name: "Start with a Define phase", exact: true }).getAttribute("href"), "#enquire");
+  assert.equal(await page.locator("#enquire select[name=topic]").inputValue(), "Project or consulting work");
   await page.goBack({ waitUntil: "networkidle" });
-  await page.unroute(serviceRequestURL);
+  assert.ok(page.url().endsWith("/#contact"), `back navigation returned to ${page.url()}`);
   if (process.env.VERIFY_LIVE_SERVICE_DESK === "1") {
     const destination = await page.goto(serviceRequestURL, { waitUntil: "networkidle", timeout: 45000 });
     assert.equal(destination.status(), 200);
@@ -235,9 +246,9 @@ try {
   await page.goto(baseURL + "/about/");
   await page.getByText("Menu", { exact: true }).click();
   await page.getByRole("navigation", { name: "Mobile primary" }).getByRole("link", { name: "Services", exact: true }).click();
-  await page.waitForURL(baseURL + "/#services");
+  await page.waitForURL(baseURL + "/services/");
   assert.equal(await page.locator(".nav-disclosure").getAttribute("open"), null);
-  console.log("Header contact, contact form, service destination, back navigation and mobile services link passed");
+  console.log("Header contact, contact form, services page link, back navigation and mobile services link passed");
 
   // Work catalogue: filters, search, URL persistence, empty state and case study links.
   await page.goto(baseURL + "/work/");
@@ -328,7 +339,9 @@ try {
   const nojs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const plain = await nojs.newPage();
   await plain.goto(baseURL + "/");
-  assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), serviceRequestURL);
+  assert.equal(await plain.getByRole("link", { name: "Request a service", exact: true }).getAttribute("href"), "/services/");
+  await plain.goto(baseURL + "/services/");
+  assert.equal(await plain.locator(".rate-card > div").count(), 8);
   await plain.goto(baseURL + "/work/");
   assert.equal(await plain.locator("[data-project]").count(), 25);
   await plain.goto(baseURL + "/blog/");
