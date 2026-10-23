@@ -6,6 +6,7 @@ import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { posts, formatPostDate, readingMinutes, postCategory, postTopic } from "@/content/blog";
 import { ArrowLeft } from "@/components/icons";
+import { ReadingProgress, ShareButton } from "@/components/ArticleTools";
 import { site } from "@/content/site";
 
 export const dynamicParams = false;
@@ -43,6 +44,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
   };
   return <>
     <Masthead current="blog" />
+    <ReadingProgress />
     <main id="main" className="container blog-article">
       <Link prefetch={false} className="back-link" href="/blog/"><ArrowLeft />Journal</Link>
       <article>
@@ -51,6 +53,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
           <h1>{post.title}</h1>
           <p className="blog-deck">{post.description}</p>
           <p className="blog-byline">By Sajeevan (Saj) Veeriah · <time dateTime={post.date}>{formatPostDate(post.date)}</time></p>
+          <ShareButton title={post.title} />
         </header>
         {post.image && <figure className="blog-figure">
           <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />

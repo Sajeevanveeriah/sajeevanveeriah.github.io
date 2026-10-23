@@ -2,35 +2,57 @@
 import { useState, type FormEvent } from "react";
 
 /**
- * The site is a static export with no backend, so the form prepares the
- * message in the visitor's own email app for them to review and send. The
- * address is assembled only at submit time and is never rendered on the page.
+ * The form posts to /api/contact on the `sv` Worker (worker/index.ts), which
+ * relays the message through Resend. The inbox address is a Worker secret, so
+ * it is never rendered, bundled or sent to the browser. If the relay is
+ * unavailable the message stays in the form for the visitor to send later.
  */
-const inbox = ["sajeevanveeriah", "gmail.com"];
 const topics = ["Engineering role", "Project or consulting work", "Research collaboration", "Something else"] as const;
+const messageLimit = 4000;
+
+type State = { kind: "idle" | "sending" | "sent" | "unavailable"; text: string };
 
 export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopic?: (typeof topics)[number] }) {
-  const [status, setStatus] = useState("");
+  const [state, setState] = useState<State>({ kind: "idle", text: "" });
+  const [length, setLength] = useState(0);
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const value = (key: string) => String(data.get(key) ?? "").trim();
-    const subject = `${value("topic")} - ${value("name")}`;
-    const body = [
-      value("message"),
-      "",
-      `Name: ${value("name")}`,
-      `Reply to: ${value("email")}`,
-      value("organisation") && `Organisation: ${value("organisation")}`,
-      "Sent from the portfolio contact form",
-    ].filter((line) => line !== "").join("\n");
-    window.location.href = `mailto:${inbox.join("@")}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setStatus("Your email app should now open with the message ready. Review it and press send to reach me.");
+    const payload = {
+      name: value("name"),
+      email: value("email"),
+      organisation: value("organisation"),
+      topic: value("topic"),
+      message: value("message"),
+      leave_blank: value("leave_blank"),
+    };
+    setState({ kind: "sending", text: "Sending your message..." });
+    try {
+      const response = await fetch("/api/contact", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+      const result = (await response.json().catch(() => ({}))) as { ok?: boolean; reason?: string };
+      if (response.ok && result.ok) {
+        form.reset();
+        setLength(0);
+        setState({ kind: "sent", text: "Thank you. Your message has been sent and I will reply to the address you gave." });
+        return;
+      }
+      if (result.reason === "limited") {
+        setState({ kind: "unavailable", text: "Several messages have just been sent from your connection. Your message is still in the form, so please wait a minute and send it again." });
+        return;
+      }
+      if (result.reason === "invalid") {
+        setState({ kind: "idle", text: "Please check your name, email address and message, then try again." });
+        return;
+      }
+    } catch {}
+    setState({ kind: "unavailable", text: "Your message could not be sent right now. It is still in the form, so please try again a little later." });
   }
 
   return (
-    <form className="contact-form" onSubmit={submit} aria-describedby="contact-form-note">
+    <form className="contact-form" onSubmit={submit} aria-describedby="contact-form-note" data-state={state.kind}>
       <div className="form-row">
         <label>
           <span>Name</span>
@@ -53,16 +75,23 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
           </select>
         </label>
       </div>
-      <label>
-        <span>Message</span>
-        <textarea name="message" required rows={5} maxLength={4000} />
+      <div className="message-field">
+        <label>
+          <span>Message</span>
+          <textarea name="message" required rows={5} maxLength={messageLimit} aria-describedby="message-count" onChange={(e) => setLength(e.target.value.length)} />
+        </label>
+        <p id="message-count" className="counter">{length} of {messageLimit} characters</p>
+      </div>
+      <label className="trap" aria-hidden="true">
+        <span>Leave this field empty</span>
+        <input name="leave_blank" tabIndex={-1} autoComplete="off" />
       </label>
       <div className="form-actions">
-        <button className="btn btn-primary" type="submit">Send message</button>
-        <p id="contact-form-note">Sending opens your email app with the message ready to review.</p>
+        <button className="btn btn-primary" type="submit" disabled={state.kind === "sending"}>{state.kind === "sending" ? "Sending..." : "Send message"}</button>
+        <p id="contact-form-note">Sent from this page, so my email address is never published.</p>
       </div>
-      <p className="form-status" role="status">{status}</p>
-      <noscript><p className="form-status">The form needs JavaScript to prepare your message.</p></noscript>
+      <p className="form-status" role="status">{state.text}</p>
+      <noscript><p className="form-status">The form needs JavaScript to send your message.</p></noscript>
     </form>
   );
 }

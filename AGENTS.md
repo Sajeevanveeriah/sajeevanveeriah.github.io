@@ -46,10 +46,20 @@ figures only on his instruction. No business name is registered for Voltwyn
 yet, so invoices name him, not Voltwyn. Clients stay unnamed there as
 everywhere else, including the clients of former employers.
 
-Keep the site static-first. No API routes, runtime data fetching, database,
-authentication, analytics, tracking or third-party runtime requests. A backend
-is not applicable unless a later verified requirement changes the system
+Keep the site static-first. No runtime data fetching, database,
+authentication, analytics, tracking or third-party runtime requests from the
+browser. The one exception is the contact relay: on 23 October 2026 Saj asked
+for the contact form to work without exposing his email address, so the `sv`
+Worker (worker/index.ts) answers POST /api/contact and relays the message
+through Resend. The inbox address and API key live only in Worker secrets
+(RESEND_API_KEY, CONTACT_TO, CONTACT_FROM); never put them in the repository,
+the page or the bundle. Every other path is served as static assets. Do not add
+further API routes unless a later verified requirement changes the system
 boundary.
+
+The visual system follows the Voltwyn palette: Night Navy #0F1E33 and Volt
+Amber #F5B700. Amber is a fill paired with navy text; it is never small text on
+a light surface. Keep the monogram and lockup unchanged.
 
 Use semantic HTML, WCAG 2.2 AA contrast, visible focus, 44px touch targets,
 reduced-motion support, responsive reflow from 320px to ultrawide, and no
