@@ -254,7 +254,20 @@ try {
   await contactForm.getByLabel("Your email").fill("qa@example.com");
   await contactForm.getByLabel("Message").fill("Contact form check.");
   await contactForm.getByRole("button", { name: "Send message", exact: true }).click();
+  // The static QA server has no /api/contact, so the form must fall back without revealing an address on the page.
+  await contactForm.locator('.form-status', { hasText: /not available right now/ }).waitFor();
+  assert.equal(await page.locator("#contact").evaluate((el) => /@/.test(el.innerText)), false, "fallback shows a contact detail");
+  await contactForm.getByRole("button", { name: "Open in my email app", exact: true }).click();
   assert.match(await contactForm.locator(".form-status").first().textContent(), /email app should now open/);
+  // Header search opens from the keyboard and goes to the chosen result.
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(baseURL + "/about/");
+  await page.keyboard.press("Control+k");
+  const search = page.getByRole("combobox", { name: "Search the site" });
+  await search.fill("navigation rover");
+  await search.press("Enter");
+  await page.waitForURL(baseURL + "/work/autonomous-navigation-rover/");
+  console.log("Header search passed");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL + "/about/");
   await page.getByText("Menu", { exact: true }).click();

@@ -16,28 +16,41 @@ export default function Home() {
   const band = projects.filter((p) => ['ndcc-community-systems', 'pricing-inventory-control', 'autonomous-navigation-rover'].includes(p.slug))
   const research = projects.filter((p) => p.publication)
   const posts = publishedPosts().slice(0, 3)
+  const totalProjects = projects.length + projectIndex.reduce((n, g) => n + g.items.length, 0)
+  const firstYear = experience.at(-1)?.period.match(/\d{4}/)?.[0]
   return <>
     <Masthead />
     <main id="main">
-      <section className="container hero" aria-labelledby="hero-title">
-        <div>
-          <p className="eyebrow">Hardware. Controls. Software.</p>
-          <h1 id="hero-title">Sajeevan<br />Veeriah<span>.</span></h1>
-          <p className="hero-role">{site.jobTitle}</p>
-          <p className="hero-lede">{site.proposition}</p>
-          <div className="hero-actions">
-            <Link className="btn btn-primary" href="/work/" prefetch={false}>Explore my work <ArrowUpRight /></Link>
-            <a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a>
+      <div className="hero-band">
+        <section className="container hero" aria-labelledby="hero-title">
+          <div>
+            <p className="eyebrow">Hardware. Controls. Software.</p>
+            <h1 id="hero-title">Sajeevan<br />Veeriah<span>.</span></h1>
+            <p className="hero-role">{site.jobTitle}</p>
+            <p className="hero-lede">{site.proposition}</p>
+            <div className="hero-actions">
+              <Link className="btn btn-primary" href="/work/" prefetch={false}>Explore my work <ArrowUpRight /></Link>
+              <a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a>
+            </div>
+            <ul className="hero-credentials">{site.credentials.map((c) => <li key={c}>{c}</li>)}</ul>
+            <nav className="hero-routes" aria-label="Explore the portfolio">
+              <a href="#experience">Experience</a><a href="#research">Research</a><Link href="/services/" prefetch={false}>Services</Link><a href="#contact">Work with me</a>
+            </nav>
           </div>
-          <ul className="hero-credentials">{site.credentials.map((c) => <li key={c}>{c}</li>)}</ul>
-          <nav className="hero-routes" aria-label="Explore the portfolio">
-            <a href="#experience">Experience</a><a href="#research">Research</a><a href="#contact">Work with me</a>
-          </nav>
-        </div>
-        <figure className="system-stack">
-          <figcaption><strong>One system, six layers</strong><span>How I approach an engineering system, from the physical build to verified handover.</span></figcaption>
-          <ol>{systemLayers.map((layer) => <li key={layer.index}><span aria-hidden="true">{layer.index}</span><div><strong>{layer.title}</strong><small>{layer.detail}</small></div></li>)}</ol>
-        </figure>
+          <figure className="system-stack">
+            <figcaption><strong>One system, six layers</strong><span>How I approach an engineering system, from the physical build to verified handover.</span></figcaption>
+            <ol>{systemLayers.map((layer) => <li key={layer.index}><span aria-hidden="true">{layer.index}</span><div><strong>{layer.title}</strong><small>{layer.detail}</small></div></li>)}</ol>
+          </figure>
+        </section>
+      </div>
+
+      <section className="container stats" aria-label="Portfolio at a glance">
+        <dl>
+          <div><dt>Case studies</dt><dd>{projects.length}</dd></div>
+          <div><dt>Projects in the index</dt><dd>{totalProjects}</dd></div>
+          <div><dt>Journal articles</dt><dd>{publishedPosts().length}</dd></div>
+          <div><dt>In industry since</dt><dd>{firstYear}</dd></div>
+        </dl>
       </section>
 
       <section className="section container" id="work" aria-labelledby="featured-title">
@@ -54,7 +67,7 @@ export default function Home() {
           </div>
         </article>
         <div className="card-grid compact">{band.map((p) => <ProjectCard key={p.slug} project={p} />)}</div>
-        <Link className="text-link" href="/work/" prefetch={false}>See all {projects.length + projectIndex.reduce((n, g) => n + g.items.length, 0)} projects <ArrowUpRight /></Link>
+        <Link className="text-link" href="/work/" prefetch={false}>See all {totalProjects} projects <ArrowUpRight /></Link>
         <section className="research-band" id="research" aria-labelledby="research-title">
           <div><p className="eyebrow">Independent research</p><h2 id="research-title">From a working question to a published method.</h2><p>Two reports with methods, results and explicit limits. Published on Zenodo as independent research, without a claim of peer review.</p></div>
           <ul>{research.map((p) => <li key={p.slug}>

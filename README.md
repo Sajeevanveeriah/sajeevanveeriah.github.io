@@ -2,7 +2,7 @@
 
 A static Next.js portfolio for robotics, embedded mechatronics, industrial automation and engineering software.
 
-- Production: https://sv.sajeevanveeriah.workers.dev/ (Cloudflare Worker `sv`, static assets)
+- Production: https://sv.sajeevanveeriah.workers.dev/ (Cloudflare Worker `sv`: static assets plus the `/api/contact` relay)
 - Mirror: https://sajeevanveeriah.github.io/ redirects every page to the same path on the Worker
 
 ## Site map
@@ -17,7 +17,19 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 | `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
 | `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
 
-The design uses one stylesheet (`src/app/globals.css`) built on colour tokens for light and dark themes, self-hosted Archivo and the existing monogram. The header toggles light and dark; the footer offers Light, System and Dark.
+The design uses one stylesheet (`src/app/globals.css`) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`) for light and dark themes, self-hosted Archivo and the existing monogram. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
+
+## Contact form
+
+The form posts to `/api/contact` on the `sv` Worker (`worker/index.ts`), which validates the message, drops obvious bots (hidden field and fill-time check) and relays it through Resend with the visitor as Reply-To. The inbox address is never in the page or bundle. Delivery needs three Worker secrets:
+
+```sh
+npx wrangler secret put RESEND_API_KEY   # Resend key with sending access
+npx wrangler secret put CONTACT_TO       # inbox that receives enquiries
+npx wrangler secret put CONTACT_FROM     # e.g. "Portfolio <forms@your-verified-domain>"
+```
+
+Until they are set the endpoint answers 503 and the form offers the visitor's own email app as a fallback.
 
 Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
 

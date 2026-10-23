@@ -32,6 +32,10 @@ async function checkProduction() {
   if (feed.response.status !== 200 || !feed.body.toString().includes('<rss')) problems.push('RSS feed unavailable')
   const missing = await get(siteURL + '/missing-route-check/')
   if (missing.response.status !== 404) problems.push(`404 route returned HTTP ${missing.response.status}`)
+  // The contact relay must answer without sending anything: a submission that fails the bot timing check is dropped with a 200.
+  const relay = await fetch(siteURL + '/api/contact', { method: 'POST', headers: { 'content-type': 'application/json', origin: siteURL }, body: JSON.stringify({ started: 0 }) })
+  const relayBody = await relay.json().catch(() => ({}))
+  if (relay.status !== 200 || relayBody.ok !== true) problems.push(`contact relay: HTTP ${relay.status}`)
   return problems
 }
 
