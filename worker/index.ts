@@ -43,8 +43,6 @@ async function contact(request: Request, env: Env) {
   if (origin && !allowedOrigins.has(origin) && !origin.startsWith('http://localhost') && !origin.startsWith('http://127.0.0.1'))
     return json(403, { ok: false, reason: 'origin' })
   if (!(request.headers.get('content-type') ?? '').includes('application/json')) return json(415, { ok: false, reason: 'type' })
-  const visitor = request.headers.get('cf-connecting-ip') ?? 'unknown'
-  if (env.CONTACT_LIMIT && !(await env.CONTACT_LIMIT.limit({ key: visitor })).success) return json(429, { ok: false, reason: 'limited' })
 
   let input: Record<string, unknown>
   try {
@@ -55,6 +53,10 @@ async function contact(request: Request, env: Env) {
 
   // The hidden field is off-screen and never filled by a person; a bot that fills it is told the message was sent.
   if (text(input.leave_blank, 200)) return json(200, { ok: true })
+
+  // Throttle after the honeypot so dropped bot posts and the post-deploy probe never use a visitor's allowance.
+  const visitor = request.headers.get('cf-connecting-ip') ?? 'unknown'
+  if (env.CONTACT_LIMIT && !(await env.CONTACT_LIMIT.limit({ key: visitor })).success) return json(429, { ok: false, reason: 'limited' })
 
   const name = oneLine(text(input.name, limits.name))
   const email = oneLine(text(input.email, limits.email))
