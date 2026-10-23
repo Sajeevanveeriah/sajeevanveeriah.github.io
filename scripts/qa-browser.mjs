@@ -262,8 +262,12 @@ try {
   // Header search opens from the keyboard and goes to the chosen result.
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL + "/about/");
-  await page.keyboard.press("Control+k");
   const search = page.getByRole("combobox", { name: "Search the site" });
+  // The shortcut listener attaches on hydration, so a press straight after load can be lost. Retry until the dialog opens.
+  for (let attempt = 0; attempt < 20 && !(await search.isVisible()); attempt++) {
+    await page.keyboard.press("Control+k");
+    await page.waitForTimeout(250);
+  }
   await search.fill("navigation rover");
   await search.press("Enter");
   await page.waitForURL(baseURL + "/work/autonomous-navigation-rover/");
