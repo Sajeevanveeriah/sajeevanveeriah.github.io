@@ -36,6 +36,12 @@ async function checkProduction() {
   const relay = await fetch(siteURL + '/api/contact', { method: 'POST', headers: { 'content-type': 'application/json', origin: siteURL }, body: JSON.stringify({ leave_blank: 'live-check' }) })
   const relayBody = await relay.json().catch(() => ({}))
   if (relay.status !== 200 || relayBody.ok !== true) problems.push(`contact relay: HTTP ${relay.status}`)
+  // Delivery needs Worker secrets that are set outside the repository. Report their state without sending an email;
+  // set REQUIRE_CONTACT_DELIVERY=1 once they exist so a release that loses them fails.
+  const state = (await get(siteURL + '/api/contact/status')).body.toString()
+  const isConfigured = JSON.parse(state || '{}').configured === true
+  if (!isConfigured && process.env.REQUIRE_CONTACT_DELIVERY === '1') problems.push('contact relay: delivery secrets missing')
+  else if (!isConfigured) console.warn('::warning::Contact relay is live but RESEND_API_KEY, CONTACT_TO or CONTACT_FROM is not set, so enquiries cannot be delivered.')
   return problems
 }
 

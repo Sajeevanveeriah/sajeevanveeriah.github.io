@@ -39,6 +39,10 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
         setState({ kind: "sent", text: "Thank you. Your message has been sent and I will reply to the address you gave." });
         return;
       }
+      if (result.reason === "limited") {
+        setState({ kind: "unavailable", text: "Several messages have just been sent from your connection. Your message is still in the form, so please wait a minute and send it again." });
+        return;
+      }
       if (result.reason === "invalid") {
         setState({ kind: "idle", text: "Please check your name, email address and message, then try again." });
         return;

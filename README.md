@@ -29,6 +29,8 @@ npx wrangler secret put CONTACT_TO       # inbox that receives enquiries
 npx wrangler secret put CONTACT_FROM     # e.g. "Portfolio <forms@your-verified-domain>"
 ```
 
+`GET /api/contact/status` reports only whether the three values are present; post-deploy verification warns while they are missing (set `REQUIRE_CONTACT_DELIVERY=1` to make it fail instead). The relay also limits each visitor IP to three submissions a minute with a Cloudflare rate-limiting binding.
+
 Until they are set the endpoint answers 503 and the form tells the visitor to try again later, keeping their message in the form. No address is ever sent to the browser.
 
 Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.

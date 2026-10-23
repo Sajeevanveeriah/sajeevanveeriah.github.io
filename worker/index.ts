@@ -10,10 +10,15 @@
  *   CONTACT_FROM    a sender on a domain verified in Resend, e.g. "Portfolio <forms@example.com>"
  * Until all three exist the endpoint answers 503 and the form asks the
  * visitor to try again later. No address is ever sent to the browser.
+ *
+ * GET /api/contact/status reports only whether those values are present, so
+ * post-deploy checks can see the relay state without sending an email.
  */
 
 interface Env {
   readonly ASSETS: { fetch(request: Request): Promise<Response> }
+  /** Cloudflare rate limiting binding, keyed by visitor IP (wrangler.jsonc ratelimits). */
+  readonly CONTACT_LIMIT?: { limit(options: { key: string }): Promise<{ success: boolean }> }
   readonly RESEND_API_KEY?: string
   readonly CONTACT_TO?: string
   readonly CONTACT_FROM?: string
@@ -22,6 +27,8 @@ interface Env {
 const allowedOrigins = new Set(['https://sv.sajeevanveeriah.workers.dev', 'https://sajeevanveeriah.github.io'])
 const topics = new Set(['Engineering role', 'Project or consulting work', 'Research collaboration', 'Something else'])
 const limits = { name: 120, email: 200, organisation: 160, message: 4000 } as const
+
+const configured = (env: Env) => Boolean(env.RESEND_API_KEY && env.CONTACT_TO && env.CONTACT_FROM)
 
 const json = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } })
@@ -34,6 +41,8 @@ async function contact(request: Request, env: Env) {
   if (origin && !allowedOrigins.has(origin) && !origin.startsWith('http://localhost') && !origin.startsWith('http://127.0.0.1'))
     return json(403, { ok: false, reason: 'origin' })
   if (!(request.headers.get('content-type') ?? '').includes('application/json')) return json(415, { ok: false, reason: 'type' })
+  const visitor = request.headers.get('cf-connecting-ip') ?? 'unknown'
+  if (env.CONTACT_LIMIT && !(await env.CONTACT_LIMIT.limit({ key: visitor })).success) return json(429, { ok: false, reason: 'limited' })
 
   let input: Record<string, unknown>
   try {
@@ -52,7 +61,7 @@ async function contact(request: Request, env: Env) {
   const topic = topics.has(String(input.topic)) ? String(input.topic) : 'Something else'
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json(400, { ok: false, reason: 'invalid' })
 
-  if (!env.RESEND_API_KEY || !env.CONTACT_TO || !env.CONTACT_FROM) return json(503, { ok: false, reason: 'unconfigured' })
+  if (!configured(env)) return json(503, { ok: false, reason: 'unconfigured' })
 
   const body = [message, '', `Name: ${name}`, `Reply to: ${email}`, organisation && `Organisation: ${organisation}`, `Topic: ${topic}`, 'Sent from the portfolio contact form']
     .filter((line) => line !== '')
@@ -69,6 +78,7 @@ async function contact(request: Request, env: Env) {
 const worker = {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
+    if (pathname === '/api/contact/status') return json(200, { configured: configured(env) })
     if (pathname === '/api/contact') {
       if (request.method !== 'POST') return new Response(null, { status: 405, headers: { allow: 'POST' } })
       return contact(request, env)
