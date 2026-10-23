@@ -11,8 +11,10 @@
  * Until all three exist the endpoint answers 503 and the form asks the
  * visitor to try again later. No address is ever sent to the browser.
  *
- * GET /api/contact/status reports only whether those values are present, so
- * post-deploy checks can see the relay state without sending an email.
+ * GET /api/contact/status reports only whether those values are present and
+ * whether the rate limiter is bound, so post-deploy checks can see the relay
+ * state without sending an email. Worker previews do not carry the rate limit
+ * binding, so only production enforces it.
  */
 
 interface Env {
@@ -78,7 +80,7 @@ async function contact(request: Request, env: Env) {
 const worker = {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
-    if (pathname === '/api/contact/status') return json(200, { configured: configured(env) })
+    if (pathname === '/api/contact/status') return json(200, { configured: configured(env), throttled: Boolean(env.CONTACT_LIMIT) })
     if (pathname === '/api/contact') {
       if (request.method !== 'POST') return new Response(null, { status: 405, headers: { allow: 'POST' } })
       return contact(request, env)
