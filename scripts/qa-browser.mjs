@@ -254,11 +254,11 @@ try {
   await contactForm.getByLabel("Your email").fill("qa@example.com");
   await contactForm.getByLabel("Message").fill("Contact form check.");
   await contactForm.getByRole("button", { name: "Send message", exact: true }).click();
-  // The static QA server has no /api/contact, so the form must fall back without revealing an address on the page.
-  await contactForm.locator('.form-status', { hasText: /not available right now/ }).waitFor();
-  assert.equal(await page.locator("#contact").evaluate((el) => /@/.test(el.innerText)), false, "fallback shows a contact detail");
-  await contactForm.getByRole("button", { name: "Open in my email app", exact: true }).click();
-  assert.match(await contactForm.locator(".form-status").first().textContent(), /email app should now open/);
+  // The static QA server has no /api/contact, so the form must report the failure, keep the message and reveal no address.
+  await contactForm.locator('.form-status', { hasText: /could not be sent right now/ }).waitFor();
+  assert.equal(await contactForm.getByLabel("Message").inputValue(), "Contact form check.");
+  assert.equal(await page.locator("#contact").evaluate((el) => /@/.test(el.innerText)), false, "contact section shows a contact detail");
+  assert.equal(await page.locator('a[href^="mailto:"]').count(), 0);
   // Header search opens from the keyboard and goes to the chosen result.
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL + "/about/");

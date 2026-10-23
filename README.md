@@ -21,7 +21,7 @@ The design uses one stylesheet (`src/app/globals.css`) built on Voltwyn colour t
 
 ## Contact form
 
-The form posts to `/api/contact` on the `sv` Worker (`worker/index.ts`), which validates the message, drops obvious bots (hidden field and fill-time check) and relays it through Resend with the visitor as Reply-To. The inbox address is never in the page or bundle. Delivery needs three Worker secrets:
+The form posts to `/api/contact` on the `sv` Worker (`worker/index.ts`), which validates the message, drops obvious bots (an off-screen field that only bots fill) and relays it through Resend with the visitor as Reply-To. The inbox address is never in the page or bundle. Delivery needs three Worker secrets:
 
 ```sh
 npx wrangler secret put RESEND_API_KEY   # Resend key with sending access
@@ -29,7 +29,7 @@ npx wrangler secret put CONTACT_TO       # inbox that receives enquiries
 npx wrangler secret put CONTACT_FROM     # e.g. "Portfolio <forms@your-verified-domain>"
 ```
 
-Until they are set the endpoint answers 503 and the form offers the visitor's own email app as a fallback.
+Until they are set the endpoint answers 503 and the form tells the visitor to try again later, keeping their message in the form. No address is ever sent to the browser.
 
 Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
 

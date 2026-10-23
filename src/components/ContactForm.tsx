@@ -1,29 +1,20 @@
 "use client";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 
 /**
  * The form posts to /api/contact on the `sv` Worker (worker/index.ts), which
  * relays the message through Resend. The inbox address is a Worker secret, so
- * it is never rendered, bundled or sent to the browser.
- *
- * If the relay is unavailable (not yet configured, or offline) the visitor can
- * still choose to open their own email app. Only that explicit fallback
- * assembles the address, and only at the moment it is used.
+ * it is never rendered, bundled or sent to the browser. If the relay is
+ * unavailable the message stays in the form for the visitor to send later.
  */
-const fallbackInbox = ["sajeevanveeriah", "gmail.com"];
 const topics = ["Engineering role", "Project or consulting work", "Research collaboration", "Something else"] as const;
 const messageLimit = 4000;
 
-type State = { kind: "idle" | "sending" | "sent" | "fallback"; text: string };
+type State = { kind: "idle" | "sending" | "sent" | "unavailable"; text: string };
 
 export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopic?: (typeof topics)[number] }) {
   const [state, setState] = useState<State>({ kind: "idle", text: "" });
   const [length, setLength] = useState(0);
-  const started = useRef(0);
-  const draft = useRef<{ subject: string; body: string } | null>(null);
-  useEffect(() => {
-    started.current = Date.now();
-  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,14 +27,7 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
       organisation: value("organisation"),
       topic: value("topic"),
       message: value("message"),
-      website: value("website"),
-      started: started.current,
-    };
-    draft.current = {
-      subject: `${payload.topic} - ${payload.name}`,
-      body: [payload.message, "", `Name: ${payload.name}`, `Reply to: ${payload.email}`, payload.organisation && `Organisation: ${payload.organisation}`, "Sent from the portfolio contact form"]
-        .filter((line) => line !== "")
-        .join("\n"),
+      leave_blank: value("leave_blank"),
     };
     setState({ kind: "sending", text: "Sending your message..." });
     try {
@@ -60,13 +44,7 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
         return;
       }
     } catch {}
-    setState({ kind: "fallback", text: "The message service is not available right now. Your message is still in the form: try again shortly, or open it in your own email app to send it from there." });
-  }
-
-  function openEmailApp() {
-    if (!draft.current) return;
-    window.location.href = `mailto:${fallbackInbox.join("@")}?subject=${encodeURIComponent(draft.current.subject)}&body=${encodeURIComponent(draft.current.body)}`;
-    setState({ kind: "fallback", text: "Your email app should now open with the message ready. Review it and press send to reach me." });
+    setState({ kind: "unavailable", text: "Your message could not be sent right now. It is still in the form, so please try again a little later." });
   }
 
   return (
@@ -102,14 +80,13 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
       </div>
       <label className="trap" aria-hidden="true">
         <span>Leave this field empty</span>
-        <input name="website" tabIndex={-1} autoComplete="off" />
+        <input name="leave_blank" tabIndex={-1} autoComplete="off" />
       </label>
       <div className="form-actions">
         <button className="btn btn-primary" type="submit" disabled={state.kind === "sending"}>{state.kind === "sending" ? "Sending..." : "Send message"}</button>
         <p id="contact-form-note">Sent from this page, so my email address is never published.</p>
       </div>
       <p className="form-status" role="status">{state.text}</p>
-      {state.kind === "fallback" && <button type="button" className="btn btn-secondary fallback" onClick={openEmailApp}>Open in my email app</button>}
       <noscript><p className="form-status">The form needs JavaScript to send your message.</p></noscript>
     </form>
   );

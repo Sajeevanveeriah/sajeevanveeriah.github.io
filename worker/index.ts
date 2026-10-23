@@ -8,8 +8,8 @@
  *   RESEND_API_KEY  Resend key with sending access
  *   CONTACT_TO      the inbox that receives enquiries
  *   CONTACT_FROM    a sender on a domain verified in Resend, e.g. "Portfolio <forms@example.com>"
- * Until all three exist the endpoint answers 503 and the form offers the
- * visitor's own email app instead.
+ * Until all three exist the endpoint answers 503 and the form asks the
+ * visitor to try again later. No address is ever sent to the browser.
  */
 
 interface Env {
@@ -22,8 +22,6 @@ interface Env {
 const allowedOrigins = new Set(['https://sv.sajeevanveeriah.workers.dev', 'https://sajeevanveeriah.github.io'])
 const topics = new Set(['Engineering role', 'Project or consulting work', 'Research collaboration', 'Something else'])
 const limits = { name: 120, email: 200, organisation: 160, message: 4000 } as const
-/** A person needs a few seconds to fill the form; scripts that post instantly are dropped. */
-const minimumFillMs = 3000
 
 const json = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } })
@@ -44,9 +42,8 @@ async function contact(request: Request, env: Env) {
     return json(400, { ok: false, reason: 'invalid' })
   }
 
-  // Honeypot and timing checks answer as if the message was sent, so a bot learns nothing.
-  const started = Number(input.started)
-  if (text(input.website, 200) || !Number.isFinite(started) || Date.now() - started < minimumFillMs) return json(200, { ok: true })
+  // The hidden field is off-screen and never filled by a person; a bot that fills it is told the message was sent.
+  if (text(input.leave_blank, 200)) return json(200, { ok: true })
 
   const name = oneLine(text(input.name, limits.name))
   const email = oneLine(text(input.email, limits.email))

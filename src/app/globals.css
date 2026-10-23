@@ -329,8 +329,7 @@ kbd { font: 600 12px/1 var(--font-archivo), system-ui, sans-serif; padding: 4px 
 .form-actions p, .form-status { color: var(--muted); font-size: 14px; }
 .form-status:empty { display: none; }
 .contact-form[data-state="sent"] .form-status { padding: 14px 16px; border-radius: var(--radius-small); background: var(--surface); border-left: 4px solid var(--amber); color: var(--ink); font-weight: 600; }
-.contact-form[data-state="fallback"] .form-status { padding: 14px 16px; border-radius: var(--radius-small); background: var(--surface); border-left: 4px solid var(--muted); color: var(--ink); }
-.contact-form .fallback { justify-self: start; }
+.contact-form[data-state="unavailable"] .form-status { padding: 14px 16px; border-radius: var(--radius-small); background: var(--surface); border-left: 4px solid var(--muted); color: var(--ink); }
 .services { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 15px; scroll-margin-top: var(--header); }
 .services > span { color: var(--muted); }
 .services a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; min-width: 44px; font-weight: 600; }
