@@ -211,7 +211,8 @@ try {
   assert.ok(page.url().includes("topic=Case+studies") || page.url().includes("topic=Case%20studies"));
   assert.equal(await status(page).textContent(), "6 posts");
   await page.reload();
-  assert.equal(await page.getByRole("button", { name: "Case studies", exact: true }).getAttribute("aria-pressed"), "true");
+  // The journal applies ?topic= after hydration, so wait for the pressed state instead of reading it once.
+  await page.locator('button[aria-pressed="true"]', { hasText: /^Case studies$/ }).waitFor({ timeout: 10000 });
   await page.getByRole("button", { name: "All", exact: true }).click();
   await page.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();
   await page.waitForURL(baseURL + "/blog/ai-without-the-jargon/");
@@ -309,7 +310,7 @@ try {
   assert.equal(await status(page).textContent(), "7 projects");
   assert.ok(page.url().includes("category=Software"));
   await page.reload();
-  assert.equal(await page.getByRole("button", { name: "Software", exact: true }).getAttribute("aria-pressed"), "true");
+  await page.locator('button[aria-pressed="true"]', { hasText: /^Software$/ }).waitFor({ timeout: 10000 });
   await page.getByRole("searchbox", { name: "Search projects" }).fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
