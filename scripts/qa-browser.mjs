@@ -329,17 +329,18 @@ try {
 
   // Theme controls stay in step and persist.
   await page.setViewportSize({ width: 1440, height: 1000 });
+  // A first visit opens in the dark presentation.
   await page.goto(baseURL + "/");
-  assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-  await page.getByRole("button", { name: "Switch to dark theme" }).click();
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
-  assert.equal(await page.getByLabel("Colour theme").inputValue(), "dark");
+  await page.getByRole("button", { name: "Switch to light theme" }).click();
+  assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
+  assert.equal(await page.getByLabel("Colour theme").inputValue(), "light");
   await page.reload();
-  assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
-  await page.getByLabel("Colour theme").selectOption("system");
-  await page.getByLabel("Colour theme").selectOption("light");
   assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-  assert.ok(await page.getByRole("button", { name: "Switch to dark theme" }).isVisible());
+  await page.getByLabel("Colour theme").selectOption("system");
+  await page.getByLabel("Colour theme").selectOption("dark");
+  assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
+  assert.ok(await page.getByRole("button", { name: "Switch to light theme" }).isVisible());
   console.log("Header toggle and footer appearance control passed");
 
   // Home page structure follows the agreed information path.

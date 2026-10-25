@@ -4,6 +4,8 @@ import { Masthead } from '@/components/Masthead'
 import { ContactBand, SiteFooter } from '@/components/SiteFooter'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ArrowUpRight } from '@/components/icons'
+import { DecodeText } from '@/components/DecodeText'
+import { ScanField } from '@/components/ScanField'
 import { projects, projectIndex } from '@/content/projects'
 import { publishedPosts, formatPostDate, postTopic } from '@/content/blog'
 import { learningMonths } from '@/content/learning'
@@ -23,8 +25,8 @@ export default function Home() {
     <main id="main">
       <div className="hero-band">
         <section className="container hero" aria-labelledby="hero-title">
-          <div>
-            <p className="eyebrow">Hardware. Controls. Software.</p>
+          <div className="hero-copy">
+            <p className="eyebrow"><DecodeText text="Hardware / Controls / Software" /></p>
             <h1 id="hero-title">Sajeevan<br />Veeriah<span>.</span></h1>
             <p className="hero-role">{site.jobTitle}</p>
             <p className="hero-lede">{site.proposition}</p>
@@ -38,20 +40,28 @@ export default function Home() {
             </nav>
           </div>
           <figure className="system-stack">
-            <figcaption><strong>One system, six layers</strong><span>How I approach an engineering system, from the physical build to verified handover.</span></figcaption>
+            <div className="scan-stage">
+              <ScanField className="scan-field" />
+              <span className="sheet-label" aria-hidden="true">Fig. 01 / scan</span>
+              <span className="sheet-label sheet-label-end" aria-hidden="true">Sense &gt; decide &gt; act</span>
+            </div>
+            <figcaption>
+              <strong>One system, six layers</strong>
+              <span>How I approach an engineering system, from the physical build to verified handover.</span>
+              <span className="sr-only">Above the layers, an animated illustration shows a LiDAR-style sweep returning points from the ground, two boxes and a wall around a robot.</span>
+            </figcaption>
             <ol>{systemLayers.map((layer) => <li key={layer.index}><span aria-hidden="true">{layer.index}</span><div><strong>{layer.title}</strong><small>{layer.detail}</small></div></li>)}</ol>
           </figure>
         </section>
+        <section className="container stats" aria-label="Portfolio at a glance">
+          <dl>
+            <div><dt>Case studies</dt><dd>{projects.length}</dd></div>
+            <div><dt>Projects in the index</dt><dd>{totalProjects}</dd></div>
+            <div><dt>Journal articles</dt><dd>{publishedPosts().length}</dd></div>
+            <div><dt>In industry since</dt><dd>{firstYear}</dd></div>
+          </dl>
+        </section>
       </div>
-
-      <section className="container stats" aria-label="Portfolio at a glance">
-        <dl>
-          <div><dt>Case studies</dt><dd>{projects.length}</dd></div>
-          <div><dt>Projects in the index</dt><dd>{totalProjects}</dd></div>
-          <div><dt>Journal articles</dt><dd>{publishedPosts().length}</dd></div>
-          <div><dt>In industry since</dt><dd>{firstYear}</dd></div>
-        </dl>
-      </section>
 
       <section className="section container" id="work" aria-labelledby="featured-title">
         <div className="section-head"><div><p className="eyebrow">Featured project</p><h2 id="featured-title">From circuit board to browser.</h2><p>One project, connected disciplines: electronics, firmware and an interface a technician can use.</p></div></div>

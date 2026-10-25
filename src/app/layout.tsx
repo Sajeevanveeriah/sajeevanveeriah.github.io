@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { archivoFont } from './fonts'
+import { Motion } from '@/components/Motion'
 import { site } from '@/content/site'
 import { defaultShareImage } from '@/content/seo'
 import './globals.css'
@@ -32,8 +33,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f6f7f9' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f1e33' },
+    { media: '(prefers-color-scheme: light)', color: '#08111f' },
+    { media: '(prefers-color-scheme: dark)', color: '#08111f' },
   ],
 }
 
@@ -58,7 +59,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='light';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
+              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='dark';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
           }}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([personSchema, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, inLanguage: 'en-AU', publisher: { '@id': `${site.url}/#person` } }]).replace(/</g, '\\u003c') }} />
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
         {children}
+        <Motion />
       </body>
     </html>
   )
