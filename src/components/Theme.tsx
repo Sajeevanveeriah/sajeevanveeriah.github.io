@@ -8,9 +8,9 @@ const EVENT = "sv-theme-change";
 function stored(): Choice {
   try {
     const value = localStorage.getItem(KEY);
-    if (value === "dark" || value === "system") return value;
+    if (value === "light" || value === "system") return value;
   } catch {}
-  return "light";
+  return "dark";
 }
 function resolve(choice: Choice): "light" | "dark" {
   if (choice !== "system") return choice;
@@ -26,8 +26,8 @@ function choose(choice: Choice) {
 
 /** Keeps every theme control in step and follows the OS while "System" is chosen. */
 function useTheme() {
-  const [choice, setChoice] = useState<Choice>("light");
-  const [resolved, setResolved] = useState<"light" | "dark">("light");
+  const [choice, setChoice] = useState<Choice>("dark");
+  const [resolved, setResolved] = useState<"light" | "dark">("dark");
   useEffect(() => {
     const media = matchMedia("(prefers-color-scheme: dark)");
     const sync = () => {

@@ -17,7 +17,7 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 | `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
 | `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
 
-The design uses one stylesheet (`src/app/globals.css`) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`) for light and dark themes, self-hosted Archivo and the existing monogram. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
+The design uses one stylesheet (`src/app/globals.css`) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`) for light and dark themes, self-hosted Archivo, a system monospace for sheet labels, and the existing monogram. Pages are drawn like an engineering sheet: two hairline rails frame the page, section boundaries carry registration crosses and content sits in square hairline cells. A first visit opens in the dark theme. Motion is local and decorative: a canvas LiDAR-style sweep in the hero (`ScanField`), a signal pulse through the six layers, scroll reveals and pointer spotlights (`Motion`) and circuit traces above the contact band; all of it stops under reduced motion and pauses off screen. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
 
 ## Contact form
 

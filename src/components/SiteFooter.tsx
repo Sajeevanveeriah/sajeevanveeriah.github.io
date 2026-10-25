@@ -3,11 +3,13 @@ import Link from 'next/link'
 import { ArrowUpRight } from './icons'
 import { ThemeSelect } from './Theme'
 import { ContactForm } from './ContactForm'
+import { TraceBackdrop } from './TraceBackdrop'
 import { site } from '@/content/site'
 
 export function ContactBand() {
   return (
     <section className="contact-band" id="contact" aria-labelledby="contact-title">
+      <TraceBackdrop />
       <div className="container contact-inner">
         <div className="contact-intro">
           <p className="eyebrow">Contact</p>
