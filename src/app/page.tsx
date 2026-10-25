@@ -27,7 +27,7 @@ export default function Home() {
         <section className="container hero" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow"><DecodeText text="Hardware / Controls / Software" /></p>
-            <h1 id="hero-title">Sajeevan<br />Veeriah<span>.</span></h1>
+            <h1 id="hero-title"><span className="line"><span>Sajeevan</span></span><span className="line"><span>Veeriah<span className="dot">.</span></span></span></h1>
             <p className="hero-role">{site.jobTitle}</p>
             <p className="hero-lede">{site.proposition}</p>
             <div className="hero-actions">
