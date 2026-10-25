@@ -68,14 +68,28 @@ export function ScanField({ className }: { className?: string }) {
         const p = 7 / (7 + depth);
         return [cx + rx * scale * p, cy - up * scale * p, p] as const;
       };
-      // Beam: a faint amber line from the sensor to the edge of the range.
-      const [bx, by] = project(Math.cos(sweep) * 6.2, Math.sin(sweep) * 6.2, 0);
       const [ox, oy] = project(0, 0, 0);
+      // Sweep wedge: a soft amber fan trailing the beam across the ground.
+      ctx.beginPath();
+      ctx.moveTo(ox, oy);
+      for (let i = 0; i <= 16; i++) {
+        const t = sweep - (i / 16) * 0.7;
+        const [wx, wy] = project(Math.cos(t) * 6.2, Math.sin(t) * 6.2, 0);
+        ctx.lineTo(wx, wy);
+      }
+      ctx.closePath();
+      const fan = ctx.createRadialGradient(ox, oy, 0, ox, oy, scale * 6);
+      fan.addColorStop(0, "rgba(245,183,0,0.22)");
+      fan.addColorStop(1, "rgba(245,183,0,0.02)");
+      ctx.fillStyle = fan;
+      ctx.fill();
+      // Beam: an amber line from the sensor to the edge of the range.
+      const [bx, by] = project(Math.cos(sweep) * 6.2, Math.sin(sweep) * 6.2, 0);
       const beam = ctx.createLinearGradient(ox, oy, bx, by);
-      beam.addColorStop(0, "rgba(245,183,0,0.55)");
-      beam.addColorStop(1, "rgba(245,183,0,0)");
+      beam.addColorStop(0, "rgba(245,183,0,0.95)");
+      beam.addColorStop(1, "rgba(245,183,0,0.1)");
       ctx.strokeStyle = beam;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(ox, oy);
       ctx.lineTo(bx, by);
@@ -83,16 +97,21 @@ export function ScanField({ className }: { className?: string }) {
       for (const pt of points) {
         let behind = sweep - pt.a;
         behind -= Math.floor(behind / (Math.PI * 2)) * Math.PI * 2;
-        const glow = Math.exp(-behind / 1.1);
+        const glow = Math.exp(-behind / 1.6);
         const [px, py, p] = project(pt.x, pt.y, pt.z);
-        const size = (pt.z > 0 ? 1.6 : 1.2) * p;
-        if (glow > 0.35) ctx.fillStyle = `rgba(245,183,0,${(0.2 + glow * 0.75).toFixed(3)})`;
-        else ctx.fillStyle = `rgba(196,212,234,${(0.2 + glow * 0.8).toFixed(3)})`;
+        const size = (pt.z > 0 ? 2.6 : 2) * p * (1 + glow * 0.5);
+        if (glow > 0.3) ctx.fillStyle = `rgba(245,183,0,${(0.45 + glow * 0.55).toFixed(3)})`;
+        else ctx.fillStyle = `rgba(206,222,244,${(0.42 + glow * 0.58).toFixed(3)})`;
         ctx.fillRect(px - size / 2, py - size / 2, size, size);
       }
-      // Sensor: the robot at the origin.
+      // Sensor: the robot at the origin, with a soft halo.
+      const halo = ctx.createRadialGradient(ox, oy, 0, ox, oy, 18);
+      halo.addColorStop(0, "rgba(245,183,0,0.5)");
+      halo.addColorStop(1, "rgba(245,183,0,0)");
+      ctx.fillStyle = halo;
+      ctx.fillRect(ox - 18, oy - 18, 36, 36);
       ctx.fillStyle = "#f5b700";
-      ctx.fillRect(ox - 3, oy - 3, 6, 6);
+      ctx.fillRect(ox - 4, oy - 4, 8, 8);
     };
 
     const tick = (now: number) => {
