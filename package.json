@@ -41,8 +41,6 @@
     "next": {
       "postcss": "8.5.31"
     },
-    "miniflare": {
-      "undici": "7.30.1"
-    }
+    "undici": "7.30.1"
   }
 }
