@@ -12,7 +12,7 @@ export const site = {
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
   /** Last content review; used for sitemap dates on routes without their own date. */
-  updated: '2026-10-20',
+  updated: '2026-10-26',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   support: {
@@ -38,6 +38,16 @@ export interface ExperienceRecord {
  * Employer links provide company context, not evidence of personal contributions.
  */
 export const experience: readonly ExperienceRecord[] = [
+  {
+    period: 'Incoming, start TBC',
+    role: 'IT/OT and Systems Engineer',
+    organisation: 'Farm Frites Australia',
+    employerUrl: 'https://farmfrites.com.au/',
+    context: 'Greenfield food manufacturing plant, Dooen, Victoria',
+    detail:
+      'Role scope from the position description: support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability; MES-ERP integration for production orders, inventory and master data; and SCADA, PLC and historian interfaces. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity, and coordinate integrators and suppliers through FAT, SAT, commissioning, validation and documentation. Employment has not started; the start date follows the issued contract.',
+    tags: ['MES', 'ERP integration', 'SCADA/PLC', 'Historian', 'OT networks', 'OT cybersecurity', 'Commissioning'],
+  },
   {
     period: 'Jun 2026 - present',
     role: 'Independent Consultant Engineer',
