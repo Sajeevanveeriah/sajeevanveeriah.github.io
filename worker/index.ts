@@ -13,8 +13,14 @@
  *
  * GET /api/contact/status reports only whether those values are present and
  * whether the rate limiter is bound, so post-deploy checks can see the relay
- * state without sending an email. Worker previews do not carry the rate limit
- * binding, so only production enforces it.
+ * state without sending an email.
+ *
+ * The relay fails closed: without the rate limit binding (for example a Worker
+ * preview) it answers 503 and sends nothing. Requests need an allowed Origin,
+ * and a message sent less than three seconds after the form appeared is
+ * refused. Local development may set CONTACT_DEV="true" (wrangler dev --var
+ * CONTACT_DEV:true) to accept localhost origins and a missing limiter; never
+ * set it on the deployed Worker.
  */
 
 interface Env {
@@ -24,11 +30,28 @@ interface Env {
   readonly RESEND_API_KEY?: string
   readonly CONTACT_TO?: string
   readonly CONTACT_FROM?: string
+  /** Local development only: accept localhost origins and a missing rate limiter. */
+  readonly CONTACT_DEV?: string
 }
 
 const allowedOrigins = new Set(['https://sv.sajeevanveeriah.workers.dev', 'https://sajeevanveeriah.github.io'])
 const topics = new Set(['Engineering role', 'Project or consulting work', 'Research collaboration', 'Something else'])
 const limits = { name: 120, email: 200, organisation: 160, message: 4000 } as const
+/** A person needs longer than this to fill in the form; scripted posts usually do not wait. */
+const minimumFillMs = 3000
+
+const devMode = (env: Env) => env.CONTACT_DEV === 'true'
+const originAllowed = (origin: string | null, env: Env) => {
+  if (!origin) return false
+  if (allowedOrigins.has(origin)) return true
+  if (!devMode(env)) return false
+  try {
+    const { protocol, hostname } = new URL(origin)
+    return protocol === 'http:' && (hostname === 'localhost' || hostname === '127.0.0.1')
+  } catch {
+    return false
+  }
+}
 
 const configured = (env: Env) => Boolean(env.RESEND_API_KEY && env.CONTACT_TO && env.CONTACT_FROM)
 
@@ -39,9 +62,7 @@ const text = (value: unknown, max: number) => (typeof value === 'string' ? value
 const oneLine = (value: string) => value.replace(/[\r\n]+/g, ' ')
 
 async function contact(request: Request, env: Env) {
-  const origin = request.headers.get('origin')
-  if (origin && !allowedOrigins.has(origin) && !origin.startsWith('http://localhost') && !origin.startsWith('http://127.0.0.1'))
-    return json(403, { ok: false, reason: 'origin' })
+  if (!originAllowed(request.headers.get('origin'), env)) return json(403, { ok: false, reason: 'origin' })
   if (!(request.headers.get('content-type') ?? '').includes('application/json')) return json(415, { ok: false, reason: 'type' })
 
   let input: Record<string, unknown>
@@ -55,8 +76,14 @@ async function contact(request: Request, env: Env) {
   if (text(input.leave_blank, 200)) return json(200, { ok: true })
 
   // Throttle after the honeypot so dropped bot posts and the post-deploy probe never use a visitor's allowance.
+  // Fail closed: never relay a message when the per-visitor limit cannot be enforced.
+  if (!env.CONTACT_LIMIT && !devMode(env)) return json(503, { ok: false, reason: 'unavailable' })
   const visitor = request.headers.get('cf-connecting-ip') ?? 'unknown'
   if (env.CONTACT_LIMIT && !(await env.CONTACT_LIMIT.limit({ key: visitor })).success) return json(429, { ok: false, reason: 'limited' })
+
+  // The form reports how long it was open before sending; scripted posts that skip it or send instantly are refused.
+  const elapsed = Number(input.elapsed_ms)
+  if (!Number.isFinite(elapsed) || elapsed < minimumFillMs) return json(400, { ok: false, reason: 'too-fast' })
 
   const name = oneLine(text(input.name, limits.name))
   const email = oneLine(text(input.email, limits.email))

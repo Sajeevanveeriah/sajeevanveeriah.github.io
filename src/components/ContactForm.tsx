@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 
 /**
  * The form posts to /api/contact on the `sv` Worker (worker/index.ts), which
@@ -15,6 +15,11 @@ type State = { kind: "idle" | "sending" | "sent" | "unavailable"; text: string }
 export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopic?: (typeof topics)[number] }) {
   const [state, setState] = useState<State>({ kind: "idle", text: "" });
   const [length, setLength] = useState(0);
+  // When the form became usable; the relay refuses messages sent within a few seconds of this.
+  const openedAt = useRef(0);
+  useEffect(() => {
+    openedAt.current = Date.now();
+  }, []);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -28,6 +33,7 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
       topic: value("topic"),
       message: value("message"),
       leave_blank: value("leave_blank"),
+      elapsed_ms: openedAt.current ? Date.now() - openedAt.current : 0,
     };
     setState({ kind: "sending", text: "Sending your message..." });
     try {
@@ -36,11 +42,16 @@ export function ContactForm({ defaultTopic = topics[0] }: { readonly defaultTopi
       if (response.ok && result.ok) {
         form.reset();
         setLength(0);
+        openedAt.current = Date.now();
         setState({ kind: "sent", text: "Thank you. Your message has been sent and I will reply to the address you gave." });
         return;
       }
       if (result.reason === "limited") {
         setState({ kind: "unavailable", text: "Several messages have just been sent from your connection. Your message is still in the form, so please wait a minute and send it again." });
+        return;
+      }
+      if (result.reason === "too-fast") {
+        setState({ kind: "idle", text: "That was sent very quickly. Your message is still in the form, so please check it and send it again." });
         return;
       }
       if (result.reason === "invalid") {
