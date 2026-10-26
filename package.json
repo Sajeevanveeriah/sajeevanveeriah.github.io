@@ -19,7 +19,7 @@
     "pages:mirror": "node scripts/build-pages-mirror.mjs"
   },
   "dependencies": {
-    "next": "15.5.23",
+    "next": "15.5.28",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
@@ -31,10 +31,16 @@
     "axe-core": "^4.12.1",
     "chrome-launcher": "^1.2.1",
     "eslint": "^9.36.0",
-    "eslint-config-next": "15.5.23",
+    "eslint-config-next": "15.5.28",
     "lighthouse": "^13.4.1",
     "playwright": "^1.62.0",
     "typescript": "^5.9.2",
-    "wrangler": "4.135.0"
+    "wrangler": "4.152.0"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.31"
+    },
+    "undici": "7.30.1"
   }
 }

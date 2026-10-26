@@ -29,7 +29,7 @@ npx wrangler secret put CONTACT_TO       # inbox that receives enquiries
 npx wrangler secret put CONTACT_FROM     # e.g. "Portfolio <forms@your-verified-domain>"
 ```
 
-`GET /api/contact/status` reports only whether the three values are present; post-deploy verification warns while they are missing (set `REQUIRE_CONTACT_DELIVERY=1` to make it fail instead). The relay also limits each visitor IP to three submissions a minute with a Cloudflare rate-limiting binding.
+`GET /api/contact/status` reports only whether the three values are present; post-deploy verification warns while they are missing (set `REQUIRE_CONTACT_DELIVERY=1` to make it fail instead). The relay also limits each visitor IP to three submissions a minute with a Cloudflare rate-limiting binding, and fails closed with a 503 if that binding is missing. It only accepts requests whose `Origin` is the Worker or the GitHub Pages mirror, and refuses a message sent less than three seconds after the form appeared. For local development, `wrangler dev --var CONTACT_DEV:true` also accepts `http://localhost` and `http://127.0.0.1` origins; never set `CONTACT_DEV` on the deployed Worker. There is no CAPTCHA: adding Cloudflare Turnstile needs a site key and secret created in the Cloudflare dashboard.
 
 Until they are set the endpoint answers 503 and the form tells the visitor to try again later, keeping their message in the form. No address is ever sent to the browser.
 
