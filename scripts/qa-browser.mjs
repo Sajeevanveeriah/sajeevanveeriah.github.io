@@ -351,9 +351,9 @@ try {
   assert.equal(await page.locator(".card-grid.compact .project-card").count(), 3);
   assert.equal(await page.locator("#research li").count(), 2);
   assert.equal(await page.locator('#research a[href^="https://"]').count(), 2);
-  assert.equal(await page.locator(".compact-timeline").first().locator("li").count(), 8);
+  assert.equal(await page.locator(".compact-timeline").first().locator("li").count(), 9);
   await page.goto(baseURL + "/about/");
-  assert.equal(await page.locator(".timeline > li").count(), 8);
+  assert.equal(await page.locator(".timeline > li").count(), 9);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByText("Menu", { exact: true }).click();
   await page.getByText("Menu", { exact: true }).press("Escape");
