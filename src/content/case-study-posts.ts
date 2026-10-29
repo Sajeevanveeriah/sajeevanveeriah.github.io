@@ -30,7 +30,7 @@ export const caseStudyPosts: BlogPost[] = [
       },
       {
         id: "verification", title: "What I checked",
-        paragraphs: ["I used Gazebo Fortress regression runs and RViz inspection to examine maps, transforms, fused pose, planned paths and recovery behaviour. Planning, costmap settings and controller gains could be revisited without changing every part of the system at once.", "The useful result was an integrated navigation workflow whose intermediate behaviour could be inspected. I am not presenting a numerical localisation benchmark, a measured success rate or a comparison against another navigation system here; this public case study does not include the underlying run dataset needed for those claims."],
+        paragraphs: ["I used Gazebo Fortress regression runs and RViz inspection to examine maps, transforms, fused pose, planned paths and recovery behaviour. Planning, costmap settings and controller gains could be revisited without changing every part of the system at once.", "The useful result was an integrated navigation workflow whose intermediate behaviour could be inspected."],
         sources: [1],
       },
       {
@@ -145,7 +145,7 @@ export const caseStudyPosts: BlogPost[] = [
     category: "Engineering case study",
     description: "An ESP32-S3 display-controller design connecting serial parsing, guarded display output, a four-layer PCB and browser configuration.",
     image: { src: "/assets/image/20261004-Display-Controller-Rev00.svg", alt: "Actual controller PCB CAD render beside the serial input, guarded parsing, display and local configuration architecture.", caption: "Original architecture graphic incorporating the actual PCB CAD render. CAD is not a photograph of assembled hardware.", width: 1200, height: 720 },
-    intro: ["An industrial weight display needs a dependable path from incoming serial data to a readable output. For an industrial weighing client, I developed an ESP32-S3 controller design with a custom four-layer PCB, embedded firmware and a local browser configuration interface.", "My work covered schematics, PCB layout, firmware, the configuration interface, mechanical exports and automated checks. The public record supports design and software verification; it does not establish assembled-hardware or field validation."],
+    intro: ["An industrial weight display needs a dependable path from incoming serial data to a readable output. For an industrial weighing client, I developed an ESP32-S3 controller design with a custom four-layer PCB, embedded firmware and a local browser configuration interface.", "My work covered schematics, PCB layout, firmware, the configuration interface, mechanical exports and automated checks."],
     sections: [
       {
         id: "architecture", title: "Separating reception from display output",

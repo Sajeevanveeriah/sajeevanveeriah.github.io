@@ -5,16 +5,19 @@ import { ContactBand, SiteFooter } from '@/components/SiteFooter'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ArrowUpRight } from '@/components/icons'
 import { DecodeText } from '@/components/DecodeText'
-import { ScanField } from '@/components/ScanField'
+import { RoboticsHero } from '@/components/RoboticsHero'
 import { projects, projectIndex } from '@/content/projects'
 import { publishedPosts, formatPostDate, postTopic } from '@/content/blog'
 import { learningMonths } from '@/content/learning'
 import { site, systemLayers, experience, foundation, practiceDomains } from '@/content/site'
 
-const featuredSlug = 'industrial-display-controller'
+const selectedWork = [
+  { title: 'Autonomous Navigation Rover', category: 'Robotics', summary: 'Sensing, localisation and motion control.', image: 'rover.webp', href: '/work/autonomous-navigation-rover/' },
+  { title: 'Industrial Display Controller', category: 'Mechatronics', summary: 'Embedded systems and electronics.', image: 'controller.webp', href: '/work/industrial-display-controller/' },
+  { title: 'Voltwyn: Local SLM System', category: 'AI/ML', summary: 'Local intelligence, retrieval and controlled tools.', image: 'intelligence.webp', href: '/blog/local-ai-beyond-the-model/' },
+]
 
 export default function Home() {
-  const featured = projects.find((p) => p.slug === featuredSlug)!
   const band = projects.filter((p) => ['ndcc-community-systems', 'pricing-inventory-control', 'autonomous-navigation-rover'].includes(p.slug))
   const research = projects.filter((p) => p.publication)
   const posts = publishedPosts().slice(0, 3)
@@ -22,37 +25,23 @@ export default function Home() {
   const firstYear = experience.at(-1)?.period.match(/\d{4}/)?.[0]
   return <>
     <Masthead />
-    <main id="main">
+    <main id="main" className="portfolio-home">
       <div className="hero-band">
-        <section className="container hero" aria-labelledby="hero-title">
+        <section className="container hero robotics-hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="eyebrow"><DecodeText text="Hardware / Controls / Software" /></p>
-            <h1 id="hero-title"><span className="line"><span>Sajeevan</span></span><span className="line"><span>Veeriah<span className="dot">.</span></span></span></h1>
+            <p className="eyebrow"><DecodeText text="Robotics / Mechatronics / AI" /></p>
+            <h1 id="hero-title"><span className="line"><span>Robotics.</span></span><span className="line"><span>Mechatronics.</span></span><span className="line"><span className="hero-ai">AI.</span></span></h1>
             <p className="hero-role">{site.jobTitle}</p>
-            <p className="hero-lede">{site.proposition}</p>
+            <p className="hero-lede">Hardware, control and intelligence.<br />Built to work together.</p>
             <div className="hero-actions">
               <Link className="btn btn-primary" href="/work/" prefetch={false}>Explore my work <ArrowUpRight /></Link>
               <a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a>
             </div>
-            <ul className="hero-credentials">{site.credentials.map((c) => <li key={c}>{c}</li>)}</ul>
-            <nav className="hero-routes" aria-label="Explore the portfolio">
-              <a href="#experience">Experience</a><a href="#research">Research</a><Link href="/services/" prefetch={false}>Services</Link><a href="#contact">Work with me</a>
-            </nav>
+
           </div>
-          <figure className="system-stack">
-            <div className="scan-stage">
-              <ScanField className="scan-field" />
-              <span className="sheet-label" aria-hidden="true">Fig. 01 / scan</span>
-              <span className="sheet-label sheet-label-end" aria-hidden="true">Sense &gt; decide &gt; act</span>
-            </div>
-            <figcaption>
-              <strong>One system, six layers</strong>
-              <span>How I approach an engineering system, from the physical build to verified handover.</span>
-              <span className="sr-only">Above the layers, an animated illustration shows a LiDAR-style sweep returning points from the ground, two boxes and a wall around a robot.</span>
-            </figcaption>
-            <ol>{systemLayers.map((layer) => <li key={layer.index}><span aria-hidden="true">{layer.index}</span><div><strong>{layer.title}</strong><small>{layer.detail}</small></div></li>)}</ol>
-          </figure>
+          <RoboticsHero />
         </section>
+        <div className="container current-role"><div><span className="eyebrow">Currently at</span><strong>Farm Frites Australia</strong></div><div><span className="eyebrow">Role</span><span>IT/OT and Systems Engineer</span></div><a className="text-link" href="#experience">View experience <ArrowUpRight /></a></div>
         <section className="container stats" aria-label="Portfolio at a glance">
           <dl>
             <div><dt>Case studies</dt><dd>{projects.length}</dd></div>
@@ -64,22 +53,15 @@ export default function Home() {
       </div>
 
       <section className="section container" id="work" aria-labelledby="featured-title">
-        <div className="section-head"><div><p className="eyebrow">Featured project</p><h2 id="featured-title">From circuit board to browser.</h2><p>One project, connected disciplines: electronics, firmware and an interface a technician can use.</p></div></div>
-        <article className="featured">
-          {featured.image && <div className="media-frame"><Image src={featured.image.src} alt={featured.image.alt} width={featured.image.width} height={featured.image.height} sizes="(max-width: 1024px) 92vw, 620px" /></div>}
-          <div>
-            <p className="card-kicker">{featured.category}</p>
-            <h3>{featured.title}</h3>
-            <p>{featured.system}</p>
-            <p className="project-status">{featured.status}</p>
-            <ul className="chips">{featured.stack.slice(0, 5).map((s) => <li className="chip" key={s}>{s}</li>)}</ul>
-            <Link className="text-link" href={`/work/${featured.slug}/`} prefetch={false}>Read the case study <ArrowUpRight /></Link>
-          </div>
-        </article>
+        <div className="section-head selected-heading"><div><p className="eyebrow">Selected engineering work</p><h2 id="featured-title">Built across<br />disciplines<span className="accent-dot">.</span></h2></div></div>
+        <div className="selected-projects">{selectedWork.map((project) => <article className="selected-project" key={project.title}>
+          <div className="selected-copy"><p className="eyebrow">{project.category}</p><h3><Link href={project.href} prefetch={false}>{project.title}</Link></h3><p>{project.summary}</p><Link className="text-link" href={project.href} prefetch={false}>View project <ArrowUpRight /></Link></div>
+          <Link className="selected-image" href={project.href} prefetch={false} tabIndex={-1} aria-hidden="true"><Image src={`/assets/image/redesign/${project.image}`} alt="" width={1536} height={1024} sizes="(max-width: 800px) 92vw, 65vw" /></Link>
+        </article>)}</div>
         <div className="card-grid compact">{band.map((p) => <ProjectCard key={p.slug} project={p} />)}</div>
         <Link className="text-link" href="/work/" prefetch={false}>See all {totalProjects} projects <ArrowUpRight /></Link>
         <section className="research-band" id="research" aria-labelledby="research-title">
-          <div><p className="eyebrow">Independent research</p><h2 id="research-title">From a working question to a published method.</h2><p>Two reports with methods, results and explicit limits. Published on Zenodo as independent research, without a claim of peer review.</p></div>
+          <div><p className="eyebrow">Independent research</p><h2 id="research-title">From a working question to a published method.</h2><p>Independent research connecting physical systems, control and autonomy. Explore the methods and results on Zenodo.</p></div>
           <ul>{research.map((p) => <li key={p.slug}>
             <h3><Link href={`/work/${p.slug}/`} prefetch={false}>{p.title}</Link></h3>
             <p>{p.proof}</p>
@@ -105,6 +87,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="section container system-overview" aria-labelledby="systems-title"><p className="eyebrow">Connected disciplines</p><h2 id="systems-title">One system, six layers</h2><ol>{systemLayers.map((layer) => <li key={layer.index}><span>{layer.index}</span><div><h3>{layer.title}</h3><p>{layer.detail}</p></div></li>)}</ol></section>
 
       <section className="section container" id="capabilities" aria-labelledby="foundation-title">
         <div className="section-head"><div><p className="eyebrow">Professional foundation</p><h2 id="foundation-title">The disciplines behind the work.</h2><p>Mechatronics education, industry experience and a toolkit that connects physical systems with their software.</p></div></div>

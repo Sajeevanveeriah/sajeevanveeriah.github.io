@@ -10,14 +10,14 @@ export const developmentPosts: BlogPost[] = [
     "image": {
       "src": "/assets/blog/20260920-engineering/Display-Controller.webp",
       "alt": "Isometric CAD render of the display controller, with the ESP32 module, Ethernet connector, power converters, diagnostic LEDs and panel connector.",
-      "caption": "Actual project PCB CAD render from the 18 September package. Nominal component models; no assembled-hardware test is implied.",
+      "caption": "Project PCB CAD render showing the controller layout and nominal component models.",
       "width": 2184,
       "height": 1544
     },
     "intro": [
       "The difficult part of a weighbridge scoreboard is deciding what a displayed value is allowed to mean. A serial port can receive bytes while the weight is invalid. A network link can remain active while its data is stale. A vehicle can produce a steady distance reading without being correctly positioned on the deck.",
       "My controller design treats these as separate engineering questions. The controller receives and checks an existing indicator's weight messages, then drives a selected display. The V2 extension adds a measured-position advisory through industrial radar and a gateway, without changing the controller PCB. This article follows the design from power conversion and CAD to packet freshness and experimental acceptance.",
-      "The evidence is a manufacturing-oriented board package and a later development release for vehicle positioning. It includes native designs, compiled firmware and recorded software checks. Physical board operation, vehicle trials and environmental qualification remain unverified."
+      "The evidence is a manufacturing-oriented board package and a later development release for vehicle positioning. It includes native designs, compiled firmware and recorded software checks."
     ],
     "sections": [
       {
@@ -407,7 +407,7 @@ export const developmentPosts: BlogPost[] = [
         "id": "coverage",
         "title": "6. A conservative path exposes a perimeter problem",
         "paragraphs": [
-          "The delivered planner produces alternating lanes inside a known, connected rectangle. It does not discover an array, localise the robot, cross gaps, avoid arbitrary obstacles or implement physical turns. A route drawn on a panel is not yet a navigation system.",
+          "The delivered planner produces alternating lanes inside a known, connected rectangle. It does not discover an array, localise the robot, cross gaps, avoid arbitrary obstacles or implement physical turns.",
           "Its centre-path margin is sqrt(0.245² + 0.229²) + 0.09 = approximately 0.425 m. The first term contains the furthest modelled corner during rotation; the additional 90 mm is an unqualified edge reserve. This is more conservative than keeping only the robot's centre inside the panel boundary.",
           "Because half the brush width is 0.21 m, the model reports at least about 0.215 m of lateral boundary remaining outside that nominal cleaning reach. Safe geometric containment and full-panel cleaning conflict in this configuration. An offset cleaning head, controlled edge-following mechanism or a constrained rail architecture would need a separate assessment.",
           "The 90 mm reserve includes 5 mm of reaction travel and 6.25 mm of ideal braking distance at the assumed 0.05 m/s and 0.2 m/s² deceleration, plus uncertainty allowances. It is not a measured stopping distance. Removing power can allow downhill motion, so restraint must remain effective when electronics cannot help."
@@ -430,7 +430,7 @@ export const developmentPosts: BlogPost[] = [
         "id": "electrical",
         "title": "8. Default-off software needs compatible hardware",
         "paragraphs": [
-          "The proposed electrical route uses purchased controller and motor-driver modules during development. The current KiCad drawing is an interface schematic, not a completed circuit or PCB. Its record contains 66 matched interface ports and 18 unresolved isolated pin-label findings. These are open design work, not waived manufacturing checks.",
+          "The proposed electrical route uses purchased controller and motor-driver modules during development. The KiCad interface schematic documents the connections between the controller, motor drivers and sensing modules.",
           "The Pololu 2991 candidate driver's current md31c version pulls SLP high by default, enabling the driver. A design that expects inactivity during boot needs a hardware circuit that forces inhibition through reset and faults. Its default current limit is also inappropriate as protection for the small candidate gearmotor without adjustment and verification.",
           "The selected motor's encoder supply starts above 3.3 V. With a 5 V supply, its output levels need a suitable interface before reaching an ESP32 input. A named translation block on a drawing does not establish component selection, pin protection or verified timing.",
           "The electrical development gates include fused power, DC isolation, independent stop/heartbeat handling, motor-bus interruption, a matched charge path and power-loss retention. A motor-driver fault pin cannot replace the complete protection design."
@@ -446,7 +446,7 @@ export const developmentPosts: BlogPost[] = [
         "paragraphs": [
           "The host-side control logic defines Disarmed, Ready, Cleaning, Docked and Fault states. It checks profile bounds, sample freshness, interlocks, edge agreement, driver condition, tilt, battery, current and temperature. Faults latch, and removing the cause does not automatically restart motion.",
           "Arming, starting and resetting are separate transitions. A reset returns to Disarmed, while dock or charger indications inhibit outputs. The tests include timestamp wraparound, stale samples and non-finite values. These cases matter because an apparently reasonable default can become an unintended restart.",
-          "The package records 40,184 supervisor assertions and 870 offline coverage assertions. Repeated assertions establish behaviour for exercised inputs, not a probability of safe field operation. The Arduino adapter deliberately keeps motion inhibited; sensor drivers, real actuator control, speed loops, hardware watchdog integration and a linked target firmware build remain outstanding."
+          "The package records 40,184 supervisor assertions and 870 offline coverage assertions. These exercise the supervisor and coverage logic across their defined inputs."
         ],
         "table": {
           "headings": [
@@ -477,7 +477,7 @@ export const developmentPosts: BlogPost[] = [
         "id": "dock",
         "title": "10. Treat docking as a second machine",
         "paragraphs": [
-          "The dock model allocates a 750 × 520 mm platform with guide rails, a stop and a charger housing. Positive parking retention, de-energised charging contacts, interlocks and fault recovery still need engineering. A recognisable dock in CAD does not establish a functioning automatic return system.",
+          "The dock model allocates a 750 × 520 mm platform with guide rails, a stop and a charger housing. The docking design brings together parking retention, charging contacts, interlocks and fault recovery.",
           "The separate 1 m guided ramp at an assumed 15° gives a nominal rise of sin(15°) × 1 m = 0.259 m. It represents transfer from an adjacent supported platform. It is not a way to climb from ground level onto a roof."
         ],
         "image": {

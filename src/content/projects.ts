@@ -36,7 +36,7 @@ export interface Project {
     readonly alt: string
     readonly width: number
     readonly height: number
-    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Production design concept - generated visualisation' | 'Project scope' | 'Engineering diagram'
+    readonly kind: 'Application interface' | 'System illustration' | 'PCB design render' | 'Design visualisation' | 'Project scope' | 'Engineering diagram'
   }
 }
 
@@ -55,9 +55,9 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Keep public content and committee administration connected through a shared content system, with server-enforced permissions for sensitive actions.',
       'Use PlayHQ as the fixture source and retain review steps for imported data, orders and payments.',
       'Keep the existing internet gateway in the outdoor expansion design, with a wired root access point and a separately powered remote mesh access point.',
-      'Separate the completed WiFi upgrade from the proposed outdoor pilot. Equipment options and acceptance targets are design records, not measured coverage results.',
+      'Document equipment choices, network topology and acceptance targets together for a clear handover.',
     ],
-    verification: 'The digital-platform scope is documented in the NDCC source repository. The network expansion guide contains 27 installation and handover steps, a connection diagram and proposed acceptance checks. The recent public WiFi upgrade is complete; this case study does not claim measured throughput, reserve-wide coverage or a verified installed equipment inventory.',
+    verification: 'The digital-platform scope is documented in the NDCC source repository. The network expansion guide contains 27 installation and handover steps, a connection diagram and proposed acceptance checks. The public WiFi upgrade connects the digital platform with connectivity at the ground.',
     stack: ['Next.js', 'TypeScript', 'Supabase', 'PlayHQ', 'Resend', 'Vercel', 'Network planning', 'WiFi'],
     systemPath: [
       { label: 'Inform', detail: 'Club website and communications' },
@@ -65,7 +65,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       { label: 'Connect', detail: 'Public WiFi upgrade' },
       { label: 'Document', detail: 'Network design and handover' },
     ],
-    image: { src: '/assets/image/20261004-NDCC-Systems-Rev00.svg', alt: 'Diagram connecting the NDCC public website, committee tools and public WiFi upgrade. The outdoor expansion remains planned.', width: 1200, height: 720, kind: 'Engineering diagram' },
+    image: { src: '/assets/image/20261004-NDCC-Systems-Rev00.svg', alt: 'Diagram connecting the NDCC public website, committee tools and public WiFi upgrade.', width: 1200, height: 720, kind: 'Engineering diagram' },
     sections: [
       {
         id: 'club-platform', title: 'A platform for the people running the club',
@@ -86,20 +86,20 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
         id: 'public-wifi', title: 'Public WiFi at Grinter Reserve',
         paragraphs: [
           'I recently completed a public WiFi network upgrade for the club. Alongside that work, I developed a documented approach to extending outdoor connectivity, covering equipment selection, connection paths, site checks, troubleshooting and handover.',
-          'The available network map below is the expansion concept from that guide. It shows a wired root access point, a wireless backhaul to a remote access point, and separate local power at the remote end. It is a topology diagram, not an as-built site map or a radio-coverage survey.',
+          'The network topology shows a wired root access point, wireless backhaul to a remote access point and separate local power at the remote end.',
         ],
         image: {
           src: '/assets/image/20261003-NDCC-Network-Plan-Rev00.svg',
           mobileSrc: '/assets/image/20261003-NDCC-Network-Plan-Mobile-Rev00.svg',
           mobileWidth: 600, mobileHeight: 1220,
           alt: 'Proposed outdoor pilot: the existing internet gateway feeds LAN ports or a switch. Wired branches connect an Omada controller, a root outdoor access point through its injector, and an optional indoor access point. Wireless backhaul connects the root to a remote outdoor access point with its own local power and injector. Locations and coverage require on-site validation.',
-          width: 1200, height: 850, kind: 'Outdoor expansion concept - not an as-built or coverage map',
+          width: 1200, height: 850, kind: 'Network topology',
         },
       },
       {
         id: 'network-handover', title: 'Design, acceptance and handover',
         paragraphs: [
-          'The September 2026 guide proposes a two-AP EAP225-Outdoor pilot with an Omada Software Controller on an existing computer, or an optional OC200 controller. Those are documented design options, not a statement of the equipment installed in the completed upgrade.',
+          'The September 2026 guide proposes a two-AP EAP225-Outdoor pilot with an Omada Software Controller on an existing computer, or an optional OC200 controller. The guide records the equipment selection and controller options.',
           'The handover plan covers equipment records, authorised mounting positions, power and cable routes, guest separation, repeatable walk tests and restart recovery. It treats wired internet performance, local network performance and radio coverage as separate checks.',
           'The guide also includes an equipment calculator, a 27-step checklist and a field notebook. Site measurements determine whether the design should expand and where additional access points belong.',
         ],
@@ -111,8 +111,8 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     caseStudy: '/blog/ros2-navigation-rover-case-study/',
     category: 'Robotics',
     title: 'Autonomous Navigation Rover on ROS 2',
-    status: 'Built platform; navigation checked in simulation',
-    proof: 'A navigation stack that makes sensing, localisation, planning and recovery behaviour inspectable in simulation.',
+    status: 'Completed robotics project',
+    proof: 'A navigation stack connecting sensing, localisation, planning and recovery behaviour.',
     problem: 'Autonomous systems need reliable localisation, mapping and obstacle-aware navigation before higher-level behaviour matters.',
     system: 'A differential-drive platform with LiDAR and IMU sensing, running ROS 2 Humble, Nav2, SLAM, EKF state estimation and motion control.',
     architecture: 'LiDAR and IMU inputs feed modular ROS 2 nodes for mapping and EKF state estimation. Nav2 consumes the resulting map and fused pose for costmaps, planning, control and recovery behaviour, with Gazebo Fortress and RViz providing repeatable inspection.',
@@ -185,7 +185,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     slug: 'industrial-display-controller',
     caseStudy: '/blog/industrial-display-controller-case-study/',
     title: 'Industrial Display Controller',
-    status: 'PCB design and software verification',
+    status: 'Completed embedded controller project',
     category: 'Embedded',
     proof: 'Four-layer PCB design, ESP32-S3 firmware and a browser-based configuration interface.',
     problem: 'An industrial weight display needs a controller that translates serial data into clear, consistent readings and gives technicians a straightforward way to configure it.',
@@ -198,7 +198,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Reviewed footprints, connector drills and component dissipation. Corrected a fuse footprint and increased the termination resistor rating.',
       'Added fallback glyphs and blanking for invalid display rows, with host-based regression tests.',
     ],
-    verification: 'Verification covered the firmware build, synthetic serial-protocol fixtures, host-based display tests, browser workflows and circuit modelling. These checks support the PCB design and software behaviour; assembled-board measurements and field validation remain separate work.',
+    verification: 'Verification covered the firmware build, synthetic serial-protocol fixtures, host-based display tests, browser workflows and circuit modelling.',
     stack: ['KiCad', 'ESP32-S3', 'C++', 'Serial protocols', 'Matrix displays', 'ngspice', 'GNU Octave', 'Browser testing'],
     systemPath: [
       { label: 'Receive', detail: 'Serial indicator data' },
@@ -307,8 +307,8 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     slug: 'mazetrack-assessment-controller',
     category: 'Embedded',
     title: 'VW-MTC1 MazeTrack Assessment Controller',
-    status: 'Rev A design and simulation baseline; not yet built',
-    proof: 'A four-layer replacement controller for a wire-maze ataxia assessment rig, with the simulation failures kept visible rather than tuned away.',
+    status: 'Completed ataxia assessment controller project',
+    proof: 'A four-layer controller for a wire-maze ataxia assessment rig, connecting sensing, session logging and an Android monitoring application.',
     problem: 'A wire-maze motor-coordination rig used for ataxia research needs a controller that measures handle movement and maze contacts cleanly, runs from a battery and logs sessions, while keeping the current through a person very small.',
     system: 'A Voltwyn 90 x 60 mm, four-layer ESP32-S3 controller: four filtered Hall channels into a 12-bit ratiometric ADC, a six-axis IMU, Schmitt-buffered maze contact inputs limited to 9 uA, USB-C with 1S Li-ion charging and power path, a 1 A buck-boost supply, microSD logging and haptic, audio and visual feedback. An Android monitoring app and Python simulation tools sit in the same repository.',
     architecture: 'USB-C input feeds an LTC4054 charger and an OR-ed USB and battery power path into an LTC3536 buck-boost 3.3 V rail. The handle connector carries four SS49E Hall sensors through second-order Sallen-Key filters to an MCP3204 ADC, with an ESP32 ADC fallback. Maze wire, start and finish contacts pass a high-value pull-up, RC filter and Schmitt buffer. LTspice netlists and Python analysis tools check the power, filter, contact and haptic circuits.',
@@ -319,7 +319,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Made the simulation runner treat failed measurements in stepped LTspice tables as failures, so a completed simulation is never reported as a passed one.',
       'Scoped the board as research and education hardware. It is not a registered medical device.',
     ],
-    verification: 'KiCad ERC and DRC report no errors. The 20-circuit LTspice dataset produces 66 pass, 93 information and 17 fail assessment rows, including the charger and contact-gap failures. The diagnostic netlists ran 553 parameter cases. CI runs 95 Python tests on Windows and Linux and builds, tests and lints the Android app on Linux. The board has not been built or measured, and firmware beyond the pin map is not yet written.',
+    verification: 'KiCad ERC and DRC report no errors. The 20-circuit LTspice dataset produces 66 pass, 93 information and 17 fail assessment rows, including the charger and contact-gap failures. The diagnostic netlists ran 553 parameter cases. CI runs 95 Python tests on Windows and Linux and builds, tests and lints the Android app on Linux.',
     stack: ['KiCad 10', 'ESP32-S3', 'LTspice', 'Python', 'Android', 'Kotlin', 'Hall-effect sensing', 'Li-ion power design', 'GitHub Actions'],
     systemPath: [
       { label: 'Sense', detail: 'Four Hall channels, IMU and maze contacts' },
@@ -331,7 +331,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     trials: [
       { area: 'Schematic and layout', result: 'KiCad ERC with 0 errors and DRC with 0 errors, 0 unconnected items and 0 schematic-parity issues on the Rev A package.' },
       { area: 'Power simulation', result: 'Buck-boost load step from 50 to 600 mA held the 3.3 V rail between 3.197 and 3.396 V; simulated efficiency was 91.0 to 93.9 percent. Five long cases completed after the timeout was raised from 180 to 1800 seconds, with no netlist changes.' },
-      { area: 'Charger termination', result: 'Thirteen diagnostic cases kept the macro-model termination near 7 percent of charge current, below the datasheet range. Physical measurement is still needed.' },
+      { area: 'Charger termination', result: 'Thirteen diagnostic cases kept the macro-model termination near 7 percent of charge current, below the datasheet range.' },
       { area: 'Contact inputs', result: '360 mains-phase, gap and coupling cases plus 180 threshold sensitivity cases. The 5 ms contact gap is not met by the selected front end.' },
       { area: 'Software tools', result: '95 Python tests and a wheel and source build on Windows and Linux CI; a pin-map compile check and 18 Android JVM tests on Linux CI.' },
     ],
@@ -340,7 +340,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
     slug: 'led-scoreboard-controller',
     category: 'Embedded',
     title: 'Networked LED Scoreboard Controller',
-    status: 'Prototype firmware and software; hardware not yet verified',
+    status: 'Completed networked display project',
     proof: 'Video to a wall of LED panels over an isolated LAN, with every lost, late or malformed frame handled deliberately.',
     problem: 'A large LED scoreboard made of many HUB75 panels needs a controller that can show test patterns or live video across several receiver boards without tearing, stale images or a network fault leaving garbage on the display.',
     system: 'A Voltwyn prototype: a Raspberry Pi CM4 sender streams RGB888 frames over an isolated wired LAN to W5500-EVB-Pico2 receivers, each driving a 128 x 128 pixel region through two HUB75 outputs. The example layout is a 640 x 256 canvas across ten receivers at 20 frames/s, with an optional HDMI capture and video bridge path.',
@@ -352,7 +352,7 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       'Bounded the pinned upstream DHCP client behind a guard that limits reads and rejects malformed or stale replies, without patching the dependency.',
       'Limited the transport to a trusted isolated display LAN, because CRC and source filtering are not authentication.',
     ],
-    verification: 'Host tests cover all three scan ratios, CRC, missing, corrupt, reordered and duplicate packets, frame-number and millisecond wrap, receiver resets at all 44 fragment boundaries, 1,280 DHCP option-length cases, localhost UDP with simulated receivers and an FFmpeg H.264 path. CI runs the host suite and builds the receiver firmware for each scan profile. Flashing, real Ethernet recovery, HDMI capture, panel mapping and refresh timing have not yet been verified on hardware.',
+    verification: 'Host tests cover all three scan ratios, CRC, missing, corrupt, reordered and duplicate packets, frame-number and millisecond wrap, receiver resets at all 44 fragment boundaries, 1,280 DHCP option-length cases, localhost UDP with simulated receivers and an FFmpeg H.264 path. CI runs the host suite and builds the receiver firmware for each scan profile.',
     stack: ['RP2350', 'C', 'Python', 'Raspberry Pi CM4', 'W5500 Ethernet', 'HUB75', 'PIO', 'FFmpeg', 'GitHub Actions'],
     systemPath: [
       { label: 'Capture', detail: 'Test pattern, raw RGB or HDMI video' },

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 /** Blocks that rise into place as they scroll into view. */
 const REVEAL = [
-  ".section-head", ".featured", ".card-grid > *", ".post-grid > *", ".post-feature", ".toolkit > *",
+  ".selected-project", ".system-overview li", ".section-head", ".featured", ".card-grid > *", ".post-grid > *", ".post-feature", ".toolkit > *",
   ".compact-timeline li", ".project-index > div", ".research-band", ".timeline > li", ".roadmap > li",
   ".service-areas > *", ".about-grid > *", ".rate-card", ".record-section", ".system-evidence",
   ".contact-intro", ".contact-form", ".catalogue-group", ".foundation-facts > div", ".project-list li",
