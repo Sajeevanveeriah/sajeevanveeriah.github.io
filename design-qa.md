@@ -6,4 +6,8 @@ Reviewed the rendered homepage at 1440 x 1000 and 390 x 844. Desktop preserves t
 
 Sense / Think / Act changes the image and supporting explanation. Arrow-key navigation switches tabs and moves focus. Motion has a pause control and respects reduced-motion preferences. Both colour themes retain accessible hero contrast.
 
-Typecheck, lint and production build passed. Full route, accessibility, Lighthouse and deployment gates are recorded by the pull request quality workflow.
+Typecheck, lint, production build and static export passed. The rendered sweep passed all 41 routes at seven widths in both themes, including axe accessibility checks. A catalogue-search regression found by the final interaction checks was corrected by retaining ataxia in the MazeTrack summary; the complete interaction portion then passed on the rebuilt output. Lighthouse passed all 41 routes (homepage: performance 90, accessibility 100, best practices 100, SEO 100). Wrangler dry run and Pages mirror generation passed.
+
+The PR quality workflow is manually disabled. Repository rules prohibit deletion and force-push but do not require status checks. Its checks were run locally; the active production workflow repeats them before deploying. No repository settings were changed.
+
+Final design result: passed. Release and live verification are tracked in PR #141.
