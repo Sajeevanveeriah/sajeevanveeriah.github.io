@@ -1,8 +1,8 @@
 /* Robotics portfolio: typography and imagery lead; existing site utilities remain shared. */
 .portfolio-home .hero-band { background: #0b1523; }
 .robotics-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; gap: 0; padding-top: 24px; }
-.robotics-hero .hero-copy { position: relative; z-index: 2; padding: 32px 0 80px; }
-.robotics-hero h1 { font-size: clamp(44px, 6.1vw, 92px); font-weight: 800; line-height: .99; letter-spacing: -.055em; text-wrap: nowrap; }
+.robotics-hero .hero-copy { container-type: inline-size; position: relative; z-index: 2; padding: 32px 0 80px; }
+.robotics-hero h1 { font-size: min(clamp(44px, 6.1vw, 92px), 15cqw); font-weight: 800; line-height: .99; letter-spacing: -.055em; text-wrap: nowrap; }
 .robotics-hero h1 .line:nth-child(3) > span { animation-delay: 240ms; }
 .robotics-hero .hero-ai { color: #f5b700; }
 .robotics-hero .eyebrow { font-size: 11px; letter-spacing: .18em; margin-bottom: 24px; }
@@ -53,7 +53,7 @@
 @keyframes robot-breathe { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.015); } }
 @media (max-width: 1024px) and (min-width: 801px) {
   .robotics-hero { grid-template-columns: 1fr 1fr; }
-  .robotics-hero h1 { font-size: 5.8vw; }
+  .robotics-hero h1 { font-size: min(5.8vw, 15cqw); }
   .robotics-hero .hero-copy { padding-bottom: 32px; }
   .robotics-hero .hero-role { font-size: 18px; }
   .current-role { gap: 24px; }
@@ -63,7 +63,7 @@
 @media (max-width: 800px) {
   .robotics-hero { grid-template-columns: minmax(0, 1fr); padding-top: 20px; }
   .robotics-hero .hero-copy { padding: 28px 0 0; }
-  .robotics-hero h1 { font-size: clamp(39px, 10.8vw, 80px); }
+  .robotics-hero h1 { font-size: min(clamp(39px, 10.8vw, 80px), 15cqw); }
   .robotics-hero .hero-role { max-width: 580px; margin-top: 24px; }
   .robotics-stage { padding: 0; }
   .robotics-art { max-height: 620px; margin: 0 auto; }

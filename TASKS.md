@@ -14,3 +14,11 @@ Release follow-through (merge, deploy and verify both live targets) is tracked i
 Base: 71e99e5e65051f297d1720ab99ee7a524c92f447.
 Approved direction: bold robotics headline, exploded rover, Sense / Think / Act, navy and amber, original monogram.
 Keep the existing static architecture, contact relay, full catalogue and career history.
+
+## Heading clipping correction
+
+- [x] Reproduce the 2560px clipped Mechatronics heading and measure its text bounds.
+- [x] Constrain font sizing to the available text column.
+- [x] Add a regression assertion for text hidden inside the line wrapper.
+- [x] Pass typecheck, lint, build and targeted homepage/axe checks at 12 widths in both themes.
+- Release and live verification are tracked in the correction PR.
