@@ -94,6 +94,12 @@ try {
           for (const i of document.images) i.loading = "eager";
           await Promise.all([...document.images].map((i) => i.decode().catch(() => {})));
         });
+        if (route === "/") {
+          const clippedHeadlines = await page.locator(".hero h1 .line").evaluateAll((lines) => lines
+            .filter((line) => line.firstElementChild.getBoundingClientRect().width > line.clientWidth + 1)
+            .map((line) => line.textContent));
+          assert.deepEqual(clippedHeadlines, [], `clipped hero text at ${width}px in ${theme}`);
+        }
         if ([390, 1440].includes(width) && theme === "light")
           await page.screenshot({ path: join(screenshotDir, `${route.replaceAll("/", "_")}-${width}.png`), fullPage: true });
         if (route === "/work/deadline-aware-runtime-assurance/")
