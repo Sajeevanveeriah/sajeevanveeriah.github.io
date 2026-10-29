@@ -110,7 +110,7 @@ try {
           assert.ok((await network.evaluate((img) => img.currentSrc)).endsWith(width <= 760
             ? "20261003-NDCC-Network-Plan-Mobile-Rev00.svg"
             : "20261003-NDCC-Network-Plan-Rev00.svg"));
-          assert.ok((await page.locator('#public-wifi-heading').locator('..').innerText()).includes('not an as-built site map'));
+          assert.ok((await page.locator('#public-wifi-heading').locator('..').innerText()).includes('wireless backhaul'));
           assert.equal(await page.getByRole('link', { name: 'Visit the NDCC website', exact: true }).getAttribute('href'), 'https://www.ndcc.com.au/');
         }
         if (route.startsWith("/blog/"))

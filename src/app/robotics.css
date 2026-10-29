@@ -1,0 +1,92 @@
+/* Robotics portfolio: typography and imagery lead; existing site utilities remain shared. */
+.portfolio-home .hero-band { background: #0b1523; }
+.robotics-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); align-items: center; gap: 0; padding-top: 24px; }
+.robotics-hero .hero-copy { position: relative; z-index: 2; padding: 32px 0 80px; }
+.robotics-hero h1 { font-size: clamp(44px, 6.1vw, 92px); font-weight: 800; line-height: .99; letter-spacing: -.055em; text-wrap: nowrap; }
+.robotics-hero h1 .line:nth-child(3) > span { animation-delay: 240ms; }
+.robotics-hero .hero-ai { color: #f5b700; }
+.robotics-hero .eyebrow { font-size: 11px; letter-spacing: .18em; margin-bottom: 24px; }
+.robotics-hero .hero-role { font-size: clamp(18px, 1.8vw, 25px); max-width: 580px; margin-top: 30px; }
+.robotics-hero .hero-lede { font-size: clamp(17px, 1.55vw, 21px); line-height: 1.5; }
+.robotics-hero .hero-actions { gap: 14px; margin-top: 32px; }
+.robotics-stage { min-width: 0; padding: 0 0 24px 16px; }
+.robotics-art { position: relative; aspect-ratio: 1; overflow: hidden; background: #0b1523; }
+.robotics-image { width: 100%; height: 100%; object-fit: contain; animation: robot-arrive 700ms ease-out, robot-breathe 8s ease-in-out 700ms infinite; transform-origin: 50% 60%; }
+.motion-paused .robotics-image { animation-play-state: paused; }
+.motion-toggle { position: absolute; bottom: 8px; right: 8px; padding: 8px 12px; min-height: 44px; border: 1px solid #34496a; background: #0b1523; color: #b3bfcf; font-size: 12px; }
+.motion-toggle:hover { color: white; border-color: #f5b700; }
+.robotics-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid #34496a; gap: 16px; }
+.robotics-tabs button { position: relative; min-height: 56px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: #b3bfcf; font-size: 18px; transition: color 200ms, border-color 200ms; }
+.robotics-tabs button[aria-selected="true"] { color: #fff; border-bottom-color: #f5b700; font-weight: 600; }
+.robotics-tabs button:hover { color: #fff; }
+.robotics-caption { min-height: 106px; padding: 18px 4px 0; font-size: 14px; color: #b3bfcf; line-height: 1.55; }
+.robotics-caption strong { color: #eef1f6; font-weight: 600; }
+.robotics-caption p { margin-top: 4px; }
+.current-role { display: flex; align-items: center; gap: 40px; padding-block: 28px; border-block: 1px solid #34496a; }
+.current-role > div { display: grid; gap: 6px; }
+.current-role > div:nth-child(2) { border-left: 1px solid #34496a; padding-left: 40px; }
+.current-role .eyebrow { margin: 0; color: #b3bfcf; font-size: 10px; letter-spacing: .2em; }
+.current-role strong { font-size: 23px; letter-spacing: -.025em; }
+.current-role > a { margin-left: auto; font-size: 14px; }
+.portfolio-home .stats { padding-top: 24px; padding-bottom: 24px; }
+.portfolio-home .stats dl { border: 0; }
+.portfolio-home .stats dd { font-size: 24px; }
+.selected-heading { margin-bottom: 32px; }
+.selected-heading h2 { font-weight: 600; font-size: clamp(38px, 4.6vw, 62px); }
+.accent-dot { color: var(--accent-text); }
+.selected-project { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); align-items: center; gap: clamp(24px, 5vw, 72px); padding-block: 40px; border-bottom: 1px solid var(--line); }
+.selected-copy h3 { font-size: clamp(26px, 3.1vw, 42px); line-height: 1.12; letter-spacing: -.04em; }
+.selected-copy h3 a { text-decoration: none; }
+.selected-copy > p:not(.eyebrow) { color: var(--muted); margin-block: 18px 28px; max-width: 30ch; }
+.selected-copy .eyebrow { font-size: 11px; margin-bottom: 20px; color: var(--accent-text); }
+.selected-image { display: block; overflow: hidden; background: #0b1523; aspect-ratio: 3 / 2; }
+.selected-image img { height: 100%; width: 100%; object-fit: cover; transition: transform 800ms var(--ease); }
+.selected-project:hover .selected-image img { transform: scale(1.035); }
+.selected-projects + .compact { margin-top: 64px; }
+.system-overview h2 { margin-bottom: 32px; }
+.system-overview ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.system-overview li { display: flex; gap: 18px; border-top: 1px solid var(--line); padding-top: 24px; }
+.system-overview li > span { font: 12px var(--mono); color: var(--accent-text); padding-top: 5px; }
+.system-overview h3 { font-size: 19px; }
+.system-overview p { font-size: 15px; margin-top: 10px; color: var(--muted); }
+@keyframes robot-arrive { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes robot-breathe { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.015); } }
+@media (max-width: 1024px) and (min-width: 801px) {
+  .robotics-hero { grid-template-columns: 1fr 1fr; }
+  .robotics-hero h1 { font-size: 5.8vw; }
+  .robotics-hero .hero-copy { padding-bottom: 32px; }
+  .robotics-hero .hero-role { font-size: 18px; }
+  .current-role { gap: 24px; }
+  .current-role > div:nth-child(2) { padding-left: 24px; }
+  .current-role > a { display: none; }
+}
+@media (max-width: 800px) {
+  .robotics-hero { grid-template-columns: minmax(0, 1fr); padding-top: 20px; }
+  .robotics-hero .hero-copy { padding: 28px 0 0; }
+  .robotics-hero h1 { font-size: clamp(39px, 10.8vw, 80px); }
+  .robotics-hero .hero-role { max-width: 580px; margin-top: 24px; }
+  .robotics-stage { padding: 0; }
+  .robotics-art { max-height: 620px; margin: 0 auto; }
+  .robotics-caption { min-height: 112px; }
+  .current-role { flex-wrap: wrap; gap: 20px; padding-block: 24px; }
+  .current-role > div:nth-child(2) { border: 0; padding: 0; }
+  .current-role > a { margin: 0; }
+  .current-role strong { font-size: 22px; }
+  .selected-project { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 32px; }
+  .selected-copy { order: 2; }
+  .selected-image { order: 1; }
+  .selected-copy > p:not(.eyebrow) { max-width: 100%; margin-block: 12px 16px; }
+  .selected-copy .eyebrow { margin-bottom: 12px; }
+  .system-overview ol { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .current-role { display: grid; }
+  .system-overview ol { grid-template-columns: 1fr; }
+  .robotics-hero .hero-actions .btn { min-height: 48px; padding: 12px 16px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .robotics-image { animation: none; }
+  .motion-toggle { display: none; }
+  .selected-image img, .robotics-tabs button { transition: none; }
+  .selected-project:hover .selected-image img { transform: none; }
+}

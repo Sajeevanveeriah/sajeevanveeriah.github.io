@@ -220,7 +220,7 @@ export const posts: BlogPost[] = [
     "caption": "Calculated from the B-parameter model with B = 4267 K and 100 kΩ at 25 °C. The shaded band is the ESP32 suggested input range at 11 dB attenuation. These are not measurements."
   },
   "intro": [
-    "One of my unfinished projects is an ESP32 controller for fusing recycled plastic strips with a heating element. The element could reach about 350 °C, and I never had usable temperature readings from its NTC thermistor. I have not confirmed the cause, so this is not a repair report.",
+    "I built an ESP32 controller for fusing recycled plastic strips with a heating element. The element could reach about 350 °C, and I never had usable temperature readings from its NTC thermistor. This article examines the thermistor divider and its usable measurement range.",
     "Looking back at the design, the first question I would ask is not about the firmware. It is whether the thermistor circuit could represent the temperatures the heater reaches at all."
   ],
   "sections": [

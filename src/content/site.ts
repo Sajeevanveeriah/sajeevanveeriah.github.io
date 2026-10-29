@@ -12,7 +12,7 @@ export const site = {
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
   /** Last content review; used for sitemap dates on routes without their own date. */
-  updated: '2026-10-26',
+  updated: '2026-10-29',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   support: {
@@ -39,13 +39,13 @@ export interface ExperienceRecord {
  */
 export const experience: readonly ExperienceRecord[] = [
   {
-    period: 'Incoming, start TBC',
+    period: 'Current',
     role: 'IT/OT and Systems Engineer',
     organisation: 'Farm Frites Australia',
     employerUrl: 'https://farmfrites.com.au/',
     context: 'Greenfield food manufacturing plant, Dooen, Victoria',
     detail:
-      'Role scope from the position description: support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability; MES-ERP integration for production orders, inventory and master data; and SCADA, PLC and historian interfaces. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity, and coordinate integrators and suppliers through FAT, SAT, commissioning, validation and documentation. Employment has not started; the start date follows the issued contract.',
+      'Support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability; MES-ERP integration for production orders, inventory and master data; and SCADA, PLC and historian interfaces. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity, and coordinate integrators and suppliers through FAT, SAT, commissioning, validation and documentation.',
     tags: ['MES', 'ERP integration', 'SCADA/PLC', 'Historian', 'OT networks', 'OT cybersecurity', 'Commissioning'],
   },
   {
@@ -54,7 +54,7 @@ export const experience: readonly ExperienceRecord[] = [
     organisation: 'Voltwyn',
     context: 'Client engineering for industrial and trade services clients',
     detail:
-      'Develop client systems across requirements, electronics, embedded firmware, software and release documentation. Work includes pricing and inventory control software, industrial display controller and serial-adapter PCB design, display firmware, browser configuration and vehicle-position sensing. Fabrication reviews and software verification are distinct from assembled-system and field validation.',
+      'Develop client systems across requirements, electronics, embedded firmware, software and release documentation. Work includes pricing and inventory control software, industrial display controller and serial-adapter PCB design, display firmware, browser configuration and vehicle-position sensing.',
     tags: ['Consulting', 'PCB design', 'Embedded systems', 'Software delivery', 'Verification'],
   },
   {
