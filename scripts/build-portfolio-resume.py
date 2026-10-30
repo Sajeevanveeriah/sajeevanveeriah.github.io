@@ -3,7 +3,8 @@
 
 The portfolio edition carries no phone number, email address or social
 profile links: the website's contact form is the only contact route. Career
-claims follow the reviewed general resume of 18 October 2026 word for word.
+claims follow the reviewed general resume of 30 October 2026; the Farm Frites entry
+is condensed so the edition stays at two pages.
 
 Usage: python scripts/build-portfolio-resume.py [--output path]
 Then validate: python scripts/generate-public-resume.py --source <output>
@@ -22,7 +23,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont as PdfFont
-from reportlab.platypus import (BaseDocTemplate, Frame, KeepTogether, PageBreak, PageTemplate,
+from reportlab.platypus import (BaseDocTemplate, Frame, KeepTogether, PageTemplate,
                                 Paragraph, Spacer, Table, TableStyle)
 from reportlab.platypus.flowables import HRFlowable
 
@@ -37,10 +38,11 @@ SITE = 'https://sv.sajeevanveeriah.workers.dev'
 ROLE = 'Robotics, Mechatronics, AI/ML &amp; End-To-End Automation Engineer'
 FOCUS = 'MES/ERP Integration, Embedded Design &amp; Control | Applied R&amp;D'
 
-PROFILE = ('Mechatronics engineer (Honours, Distinction) who integrated PLC/SCADA and MES systems in GMP '
-           'manufacturing at JAG Process Solutions and validated vehicle software and ADAS at Ford. Since June '
-           '2026, client work through Voltwyn has spanned vehicle electronics, firmware and full-stack software. '
-           'Also brings industrial networking, commissioning, embedded systems, PCB design and ROS 2 robotics skills.')
+PROFILE = ('Mechatronics engineer (Honours, Distinction) working as IT/OT and Systems Engineer on Farm Frites '
+           "Australia's greenfield potato-processing plant at Dooen, VIC, across MES, SCADA, ERP integration, "
+           'industrial networks and commissioning. Previously integrated PLC/SCADA and MES systems in GMP '
+           'manufacturing at JAG Process Solutions and validated vehicle software and ADAS at Ford. Client work '
+           'through Voltwyn spans vehicle electronics, firmware and full-stack software.')
 STRENGTHS = ('Industrial IT/OT and MES/ERP integration | Industrial automation and controls | Robotics and autonomy | '
              'Embedded systems and PCB design | Vehicle test and validation | Software, AI/ML and data | '
              'Commissioning, quality and compliance')
@@ -61,6 +63,11 @@ SKILLS = [
 ]
 
 EXPERIENCE = [
+    ('IT/OT and Systems Engineer', 'Oct 2026 - present', 'Farm Frites Australia, Dooen VIC', [
+        'Industrial IT for a greenfield potato-processing plant through commissioning into 24-hour production: MES, '
+        'SCADA, PLC interfaces, historians and MES-ERP integration for orders, inventory and traceability.',
+        'OT networks, servers, cyber security, backup and disaster recovery with Corporate IT; testing, '
+        'commissioning, documentation and user training.']),
     ('Automation and Controls Engineer', 'Jan 2026 - Jun 2026', 'JAG Process Solutions', [
         'Integrated PLC logic, HMI/SCADA, field devices, drives and manufacturing execution system (MES) data for '
         'pharmaceutical, biotech and food plants.',
@@ -188,11 +195,10 @@ def dated(title: str, date: str, s) -> Table:
     return row
 
 
-def role_block(title: str, date: str, org: str, bullets: list[str], s) -> KeepTogether:
-    items = [dated(title, date, s), Paragraph(org, s['org'])]
-    items += [Paragraph(text, s['bullet'], bulletText='•') for text in bullets]
-    items.append(Spacer(1, 4))
-    return KeepTogether(items)
+def role_block(title: str, date: str, org: str, bullets: list[str], s) -> list:
+    # Keep the heading with its first bullet; later bullets may continue on the next page.
+    items = [Paragraph(text, s['bullet'], bulletText='•') for text in bullets]
+    return [KeepTogether([dated(title, date, s), Paragraph(org, s['org']), items[0]]), *items[1:], Spacer(1, 4)]
 
 
 def project_block(title: str, kind: str, text: str, s) -> KeepTogether:
@@ -254,20 +260,18 @@ def build(output: Path) -> None:
         story += [Paragraph(f'<font name="Archivo-SemiBold" color="#0F1E33">{label}:</font> {text}', s['body'],
                             ) for label, text in SKILLS]
         story += section('Professional experience', s)
-        story += [role_block(*role, s) for role in EXPERIENCE]
-        story.append(PageBreak())
+        story += [part for role in EXPERIENCE for part in role_block(*role, s)]
         story += section('Voltwyn: client projects', s, '(Jun 2026 - present)')
         story += [project_block(*item, s) for item in CLIENT_PROJECTS]
         story += section('Manufacturing and quality experience', s)
-        story += [role_block(*role, s) for role in MANUFACTURING]
+        story += [part for role in MANUFACTURING for part in role_block(*role, s)]
         story += section('Selected engineering projects', s,
                          f'Full portfolio: <link href="{SITE}/work/" color="#215AD2">'
                          'sv.sajeevanveeriah.workers.dev/work</link>')
         story += [project_block(*item, s) for item in PROJECTS]
-        story += section('Education', s)
+        story += section('Education and membership', s)
         story += [KeepTogether([dated(title, year, s), Paragraph(org, s['org']), Spacer(1, 3)])
                   for title, year, org in EDUCATION]
-        story += section('Membership and languages', s)
         story.append(Paragraph(separators(MEMBERSHIP), s['body']))
         doc.build(story)
     print(f'Built portfolio resume: {output}')
