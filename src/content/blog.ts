@@ -3,6 +3,7 @@ import { designPosts } from "./design-posts";
 import { careerPosts } from "./career-posts";
 import { engineeringPosts } from "./blog-posts";
 import { caseStudyPosts } from "./case-study-posts";
+import { researchPosts } from "./research-posts";
 
 export type BlogSection = {
   id: string;
@@ -494,6 +495,7 @@ export const posts: BlogPost[] = [
     "caption": "Calculated travel during the assumed delay plus ideal braking distance. Values and assumptions are explained below; these are not safety limits."
   }
 },
+  ...researchPosts,
   ...developmentPosts,
   ...caseStudyPosts,
   ...designPosts,
@@ -695,6 +697,8 @@ const topicByCategory: Record<string, BlogTopic> = {
   "Electronics / embedded systems / instrumentation": "Case studies",
   "Robotics / mechatronics / design study": "Case studies",
   "Robotics": "Robotics and embedded",
+  "Mechatronics": "Robotics and embedded",
+  "Control systems": "Robotics and embedded",
   "Embedded systems": "Robotics and embedded",
   "Sensing and signal processing": "Robotics and embedded",
   "Machine vision": "Robotics and embedded",

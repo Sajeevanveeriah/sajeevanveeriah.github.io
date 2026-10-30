@@ -1,0 +1,101 @@
+{
+  "odometry": {
+    "wheelbase_m": 0.3,
+    "cases": {
+      "0.10%": {
+        "lateral_at_5m_m": 0.0416,
+        "lateral_at_10m_m": 0.1665,
+        "lateral_at_20m_m": 0.6661,
+        "heading_at_10m_deg": 1.91,
+        "small_angle_at_10m_m": 0.1667
+      },
+      "0.25%": {
+        "lateral_at_5m_m": 0.1039,
+        "lateral_at_10m_m": 0.416,
+        "lateral_at_20m_m": 1.662,
+        "heading_at_10m_deg": 4.775,
+        "small_angle_at_10m_m": 0.4167
+      },
+      "0.50%": {
+        "lateral_at_5m_m": 0.2078,
+        "lateral_at_10m_m": 0.8306,
+        "lateral_at_20m_m": 3.3009,
+        "heading_at_10m_deg": 9.549,
+        "small_angle_at_10m_m": 0.8333
+      }
+    }
+  },
+  "windup": {
+    "tau_s": 0.5,
+    "kp": 2.0,
+    "ki_per_s": 4.0,
+    "setpoint": 0.9,
+    "dt_s": 0.001,
+    "cases": {
+      "none": {
+        "peak": 0.9826,
+        "overshoot_pct": 9.18,
+        "settling_2pct_s": 3.125
+      },
+      "clamp": {
+        "peak": 0.9,
+        "overshoot_pct": -0.0,
+        "settling_2pct_s": 1.811
+      },
+      "back": {
+        "peak": 0.9,
+        "overshoot_pct": -0.0,
+        "settling_2pct_s": 1.593
+      }
+    }
+  },
+  "motor": {
+    "inputs": {
+      "mass_kg": 20.0,
+      "pitch_m": 0.01,
+      "efficiency": 0.9,
+      "friction_coefficient": 0.05,
+      "screw_diameter_m": 0.016,
+      "screw_length_m": 0.5,
+      "assumed_rotor_inertia_kgm2": 2.6e-05,
+      "stroke_m": 0.2,
+      "accel_s": 0.15,
+      "constant_s": 0.3,
+      "decel_s": 0.15,
+      "dwell_s": 0.4
+    },
+    "v_max_m_s": 0.4444,
+    "speed_rpm": 2666.7,
+    "alpha_rad_s2": 1861.7,
+    "j_screw_kgm2": 2.5253378386616196e-05,
+    "j_load_reflected_kgm2": 5.06605918211689e-05,
+    "inertia_ratio": 3.14,
+    "torque_friction_Nm": 0.0173,
+    "torque_accel_Nm": 0.2176,
+    "torque_decel_Nm": -0.1829,
+    "torque_rms_Nm": 0.1105,
+    "check_distance_m": 0.2
+  },
+  "nasa_table8": {
+    "Requirements": [
+      1,
+      1
+    ],
+    "Design": [
+      3,
+      4
+    ],
+    "Build": [
+      13,
+      16
+    ],
+    "Test": [
+      61,
+      78
+    ],
+    "Operations": [
+      157,
+      186
+    ]
+  }
+}
