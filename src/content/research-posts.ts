@@ -314,10 +314,10 @@ export const researchPosts: BlogPost[] = [
         "title": "Two standard fixes",
         "paragraphs": [
           "Conditional integration stops the integrator accumulating whenever the output is saturated and the error would drive it further into saturation. It is a few lines of code and needs no extra tuning.",
-          "Back-calculation feeds the difference between the requested and the actual actuator output back into the integrator through a tracking time constant Tt. When the drive is not saturated the term is zero; when it is, the integrator is pulled back towards a value consistent with what the actuator can actually do. Åström and Murray describe this scheme in their chapter on PID control, with a worked example that removes a large overshoot. [1]",
+          "Back-calculation feeds the difference between the requested and the actual actuator output back into the integrator through a tracking time constant Tt. When the drive is not saturated the term is zero; when it is, the integrator is pulled back towards a value consistent with what the actuator can actually do. Åström and Murray describe this scheme in their chapter on PID control, with a worked example that removes a large overshoot. [1] Simulink's PID Controller block offers both clamping and back-calculation as built-in options. [2]",
           "In this example both fixes remove the overshoot. Back-calculation settles slightly faster because it keeps the integrator closer to the value it will need at the setpoint."
         ],
-        "sources": [1]
+        "sources": [1, 2]
       },
       {
         "id": "in-practice",
@@ -333,6 +333,10 @@ export const researchPosts: BlogPost[] = [
       {
         "label": "Åström and Murray, Feedback Systems: An Introduction for Scientists and Engineers, second edition, chapter 11 (PID Control), section 11.4 Integrator Windup",
         "url": "https://www.cds.caltech.edu/~murray/books/AM08/pdf/fbs-public_15Oct16.pdf"
+      },
+      {
+        "label": "MathWorks, Anti-Windup Control Using PID Controller Block (MATLAB and Simulink documentation)",
+        "url": "https://www.mathworks.com/help/simulink/slref/anti-windup-control-using-a-pid-controller.html"
       }
     ],
     "note": "Responses are simulated with a 1 ms Euler step using the plant, gains and limit stated in the article. The script and the computed values are linked above."
