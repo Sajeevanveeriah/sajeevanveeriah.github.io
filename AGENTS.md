@@ -76,3 +76,7 @@ commit, push, open the PR, merge once required checks pass, let the deploy run a
 verify the live site without asking. The task is complete only when the live
 deployment is verified. This does not cover force-pushing, bypassing checks or
 branch protection, or changing repository settings or secrets.
+
+## Project handoff
+
+Read [HANDOFF.md](HANDOFF.md) when starting or resuming work. Before switching between Claude and Codex, record the current task, changes, checks and next step there.
