@@ -467,6 +467,7 @@ body::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; z-
 .record-section > p + p { margin-top: 16px; }
 .record-section .project-media { margin-top: 24px; }
 .record-section .project-media img { max-height: none; }
+.project-video video { display: block; width: 100%; height: auto; background: var(--media); border: 1px solid var(--line); }
 .record-links { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 16px; }
 .decisions { display: grid; border-top: 1px solid var(--line); counter-reset: decision; }
 .decisions li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--line); }
