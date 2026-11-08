@@ -2,6 +2,10 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 8 November 2026
+
+Branch `work/dooen-plant-showcase`: adds the Dooen Plant Process Model case study (`/work/dooen-plant-process-model/`) with a 2 min 57 s walkthrough video in `public/assets/video` (9.5 MB, H.264, no audio). `ProjectVideo` renders an optional `video` on a case-study section; it does not autoplay and preloads nothing until played. Browser QA counts moved from 25 to 26 projects and from 10 to 11 case studies, and the "potato" search now returns 2 projects. Local checks: typecheck, lint, build, qa:export (47 routes) and qa:browser (658 checks) passed; the video played in a local browser.
+
 ## Work at 5 November 2026
 
 Source baseline: [main at 56bda9ab](https://github.com/Sajeevanveeriah/sajeevanveeriah.github.io/commit/56bda9ab05361450b50e3c1eac8c15db3b690985). Use the linked revision to distinguish these changes from later work.

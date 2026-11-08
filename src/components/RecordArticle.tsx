@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { ProjectMedia } from './ProjectMedia'
+import { ProjectVideo } from './ProjectVideo'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
@@ -44,6 +45,7 @@ export function RecordArticle({ project, previous, next, position, total }: { re
               <h2 id={`${section.id}-heading`}>{section.title}</h2>
               {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
               {section.image && <ProjectMedia image={section.image} />}
+              {section.video && <ProjectVideo video={section.video} />}
               {section.links && <ul className="record-links">{section.links.map((link) => <li key={link.href}><a className="text-link" href={link.href}>{link.label}</a></li>)}</ul>}
             </section>)}
             <section aria-labelledby="verification-heading"><h2 id="verification-heading">What the evidence shows</h2><p>{project.verification}</p></section>

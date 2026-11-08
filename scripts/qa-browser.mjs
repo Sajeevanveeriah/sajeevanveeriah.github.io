@@ -108,7 +108,7 @@ try {
           assert.equal(await page.locator(".project-trials > div").count(), 7);
           assert.equal(await page.locator("main").evaluate((el) => /\bRev\d{2}\b/.test(el.innerText)), false);
           assert.equal(await page.locator('a[href$=".zip"], a[href$=".bin"], a[href$=".kicad_pcb"], a[href$=".kicad_sch"]').count(), 0);
-          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 5 of 10"));
+          assert.ok((await page.locator(".record-meta").innerText()).includes("Case study 5 of 11"));
         }
         if (route === "/work/ndcc-community-systems/") {
           assert.equal(await page.locator(".record-section").count(), 4);
@@ -289,9 +289,9 @@ try {
 
   // Work catalogue: filters, search, URL persistence, empty state and case study links.
   await page.goto(baseURL + "/work/");
-  assert.equal(await status(page).textContent(), "25 projects");
+  assert.equal(await status(page).textContent(), "26 projects");
   await page.getByRole("searchbox", { name: "Search projects" }).fill("potato");
-  assert.equal(await status(page).textContent(), "1 project");
+  assert.equal(await status(page).textContent(), "2 projects");
   await page.getByRole("link", { name: "Industrial Process Simulation", exact: true }).click();
   await page.waitForURL(baseURL + "/work/industrial-process-simulation/");
   assert.ok((await page.locator(".record-meta").innerText()).includes("Independent illustrative simulation"));
@@ -320,11 +320,11 @@ try {
   await page.getByRole("searchbox", { name: "Search projects" }).fill("no-such-system");
   await page.getByRole("heading", { name: "No matching projects" }).waitFor();
   await page.getByRole("button", { name: "Show all projects" }).click();
-  assert.equal(await status(page).textContent(), "25 projects");
+  assert.equal(await status(page).textContent(), "26 projects");
   await page.getByRole("searchbox", { name: "Search projects" }).fill("ataxia");
   assert.equal(await status(page).textContent(), "2 projects");
   await page.getByRole("button", { name: "Reset", exact: true }).click();
-  assert.equal(await status(page).textContent(), "25 projects");
+  assert.equal(await status(page).textContent(), "26 projects");
   await page.goto(baseURL + "/work/?q=" + encodeURIComponent("Panelogram Retail Shelf Planner"));
   assert.equal(await status(page).textContent(), "1 project");
   for (const href of Object.values(servicesAreas).flat().filter((h) => h.includes("?q="))) {
@@ -353,7 +353,7 @@ try {
   // Home page structure follows the agreed information path.
   const order = await page.evaluate(() => ["#hero-title", "#featured-title", ".card-grid.compact", "#experience", "#foundation-title", "#contact", "#project-index"].map((s) => document.querySelector(s)?.getBoundingClientRect().top + scrollY));
   assert.ok(order.every((top, i) => Number.isFinite(top) && (i === 0 || top > order[i - 1])), `home order ${order}`);
-  assert.equal(await page.locator("#project-index li").count(), 25);
+  assert.equal(await page.locator("#project-index li").count(), 26);
   assert.equal(await page.locator(".card-grid.compact .project-card").count(), 3);
   assert.equal(await page.locator("#research li").count(), 2);
   assert.equal(await page.locator('#research a[href^="https://"]').count(), 2);
@@ -386,7 +386,7 @@ try {
   await plain.goto(baseURL + "/services/");
   assert.equal(await plain.locator(".rate-card > div").count(), 8);
   await plain.goto(baseURL + "/work/");
-  assert.equal(await plain.locator("[data-project]").count(), 25);
+  assert.equal(await plain.locator("[data-project]").count(), 26);
   await plain.goto(baseURL + "/blog/");
   assert.equal(await plain.locator(".post-feature, .post-card").count(), blogPosts.length);
   await plain.getByRole("link", { name: "AI without the jargon: a practical starting point", exact: true }).click();

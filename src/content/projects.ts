@@ -13,6 +13,14 @@ export interface Project {
       readonly height: number
       readonly kind: string
     }
+    readonly video?: {
+      readonly src: string
+      readonly poster: string
+      readonly width: number
+      readonly height: number
+      readonly label: string
+      readonly kind: string
+    }
     readonly links?: readonly { readonly label: string; readonly href: string }[]
   }[]
   readonly publication?: { readonly url: string; readonly label: string }
@@ -301,6 +309,41 @@ export const projects: readonly [Project, Project, Project, ...Project[]] = [
       title: 'Explore the model and its assumptions',
       paragraphs: ['Follow the material journey from receiving and washing through cutting, thermal processing, freezing, packing and dispatch. The source documents the controls, test suites and model boundary.'],
       links: [{ label: 'Open the simulation source and guide', href: 'https://github.com/Sajeevanveeriah/open-industrial-automation' }],
+    }],
+  },
+  {
+    slug: 'dooen-plant-process-model',
+    category: 'Industrial',
+    title: 'Dooen Plant Process Model',
+    status: 'Independent study model',
+    proof: 'One set of plant equations behind a web app, an Octave window and an NVIDIA Isaac Sim scene, with local forecasting and a local assistant.',
+    problem: 'A frozen potato plant is a chain of 15 process stations across two trains, tied to cold storage, utilities, water treatment and site services. Studying campaigns, trips and restarts needs a model that answers what happens where and when, and a way for someone else to explore it without reading the equations.',
+    system: 'A discrete 10 s process model of a two-train frozen potato plant with 14 campaigns and 67 recorded metrics, presented through a browser app, a GNU Octave and MATLAB window and a 3D playback scene in NVIDIA Isaac Sim 4.5.',
+    architecture: 'The engine was written in Octave and MATLAB, with a Simulink model, and ported to JavaScript so the full model runs in the browser. A local FastAPI server adds Chronos-2 forecasts of the next hour and a Qwen3-4B assistant running in 4-bit on the laptop GPU; neither sends data off the machine. A run exporter feeds the same results to an Isaac Sim scene built in OpenUSD, which colours each station by state and shows hold-up and product flow.',
+    ownership: 'Developed the process model, the JavaScript port and its cross-check against Octave, the web interface, the local forecasting and assistant services, the Isaac Sim scene and the Octave window, and recorded the walkthrough video.',
+    decisions: [
+      'Kept Octave as the reference and checked the JavaScript port against its exported results, so the browser app can be trusted to show the same plant.',
+      'Ran the forecaster and assistant locally and gave the assistant only the current run and the model guide, so answers point back to numbers on screen.',
+      'Labelled every view as study data, because all figures are assumptions from public sources, not site records.',
+      'Used Isaac Sim 4.5 with a minimal app profile, the release that fits an 8 GB laptop GPU.',
+    ],
+    verification: 'The JavaScript engine matches the Octave reference across all 14 campaigns: 1,956,878 values, none outside a 1e-6 relative tolerance. The video shows each front end running on one laptop. The Octave window was tested in GNU Octave 11.3; MATLAB and Simulink were not available for this check. Chronos-2 forecasts are statistical extrapolations that cannot anticipate scheduled events, and the 4B assistant can quote numbers loosely, so the charts remain the reference. All figures are study assumptions from public sources, not site records or company data.',
+    stack: ['GNU Octave', 'MATLAB and Simulink', 'JavaScript', 'Chart.js', 'FastAPI', 'Chronos-2', 'Qwen3-4B', 'NVIDIA Isaac Sim', 'OpenUSD'],
+    systemPath: [
+      { label: 'Model', detail: '15 stations, two trains, 10 s step' },
+      { label: 'Explore', detail: 'Web app and Octave window' },
+      { label: 'Predict', detail: 'Local Chronos-2 and Qwen3-4B' },
+      { label: 'Visualise', detail: '3D playback in Isaac Sim' },
+    ],
+    image: { src: '/assets/image/20261108-Dooen-Plant-Model-Isaac-Rev00.webp', alt: 'NVIDIA Isaac Sim render of two parallel process trains of 15 stations each, coloured green where product is flowing and purple where the recipe bypasses a station, with blue hold-up bars above the stations.', width: 1600, height: 900, kind: 'Design visualisation' },
+    sections: [{
+      id: 'walkthrough',
+      title: 'Walkthrough video',
+      paragraphs: [
+        'The three-minute video has no sound; on-screen captions name each feature. The web app section plays a run, scrubs through time, selects stations and trains, switches to an electrical trip and restart campaign and jumps to its events. It then steps through the seven chart views, forecasts the next hour and compares the forecast with the model, asks the assistant why product was quarantined, raises the feed rate and re-runs, changes the run length, exports CSV and shows the light theme and phone layout.',
+        'The Isaac Sim section plays the trip and restart campaign in 3D while the camera circles the plant. The Octave section steps through its seven views and three campaigns.',
+      ],
+      video: { src: '/assets/video/20261108-Dooen-Plant-Model-Showcase-Rev00.mp4', poster: '/assets/image/20261108-Dooen-Plant-Model-Web-App-Rev00.webp', width: 1920, height: 1200, label: 'Walkthrough of the Dooen plant model: web app, phone layout, Isaac Sim playback and Octave window', kind: 'Walkthrough video, 2 min 57 s' },
     }],
   },
   {
