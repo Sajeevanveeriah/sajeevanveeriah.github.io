@@ -4,7 +4,9 @@ Maintain the engineering portfolio, journal and contact relay.
 
 ## Work at 8 November 2026
 
-Branch `work/dooen-plant-showcase`: adds the Dooen Plant Process Model case study (`/work/dooen-plant-process-model/`) with a 2 min 57 s walkthrough video in `public/assets/video` (9.5 MB, H.264, no audio). `ProjectVideo` renders an optional `video` on a case-study section; it does not autoplay and preloads nothing until played. Browser QA counts moved from 25 to 26 projects and from 10 to 11 case studies, and the "potato" search now returns 2 projects. Local checks: typecheck, lint, build, qa:export (47 routes) and qa:browser (658 checks) passed; the video played in a local browser.
+Merged as #147 (0a416ad): adds the Dooen Plant Process Model case study (`/work/dooen-plant-process-model/`) with a 2 min 57 s walkthrough video in `public/assets/video` (9.5 MB, H.264, no audio). `ProjectVideo` renders an optional `video` on a case-study section; it does not autoplay and preloads nothing until played. Browser QA counts moved from 25 to 26 projects and from 10 to 11 case studies, and the "potato" search now returns 2 projects. Local checks: typecheck, lint, build, qa:export (47 routes) and qa:browser (658 checks) passed; the video played in a local browser.
+
+Follow-up branch `work/video-range-requests`: live static assets answered a byte-range request with 200 and the whole file, which stops Safari on iPhone and iPad playing video. `wrangler.jsonc` now runs the Worker first for `/assets/video/*`, and `worker/index.ts` serves single byte ranges with 206, suffix ranges, 416 for unsatisfiable ranges and HEAD. Tested with `wrangler dev`: full GET 200, `bytes=0-1`, `bytes=0-`, `bytes=-500` and an end beyond the file all 206 with correct lengths; a start beyond the file 416; a missing video 404. Safari itself was not tested; no Apple device is available here.
 
 ## Work at 5 November 2026
 

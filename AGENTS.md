@@ -56,7 +56,10 @@ for the contact form to work without exposing his email address, so the `sv`
 Worker (worker/index.ts) answers POST /api/contact and relays the message
 through Resend. The inbox address and API key live only in Worker secrets
 (RESEND_API_KEY, CONTACT_TO, CONTACT_FROM); never put them in the repository,
-the page or the bundle. Every other path is served as static assets. Do not add
+the page or the bundle. The Worker also serves /assets/video/* so that byte
+range requests get 206 Partial Content, which Safari on iPhone and iPad needs
+to play video; static assets alone return the whole file. Every other path is
+served as static assets. Do not add
 further API routes unless a later verified requirement changes the system
 boundary.
 
