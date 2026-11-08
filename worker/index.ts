@@ -1,6 +1,6 @@
 /**
- * The `sv` Worker. Static assets answer every request except /api/*, which
- * wrangler.jsonc routes here first (assets.run_worker_first).
+ * The `sv` Worker. Static assets answer every request except /api/* and
+ * /assets/video/*, which wrangler.jsonc routes here first (assets.run_worker_first).
  *
  * POST /api/contact relays the contact form through Resend, so the inbox
  * address lives only in Worker secrets and never reaches the page or the
@@ -106,9 +106,47 @@ async function contact(request: Request, env: Env) {
   return json(200, { ok: true })
 }
 
+/**
+ * Static assets answer byte-range requests with the whole file, and Safari on
+ * iPhone and iPad will not play a video without 206 Partial Content. Videos
+ * under /assets/video/ come through here so a single range can be served.
+ */
+async function video(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'GET' && request.method !== 'HEAD') return new Response(null, { status: 405, headers: { allow: 'GET, HEAD' } })
+  const asset = await env.ASSETS.fetch(new Request(request.url, { method: 'GET' }))
+  if (!asset.ok) return asset
+  const body = await asset.arrayBuffer()
+  const size = body.byteLength
+  const headers = new Headers(asset.headers)
+  headers.set('accept-ranges', 'bytes')
+  headers.delete('content-length')
+  const range = request.headers.get('range')
+  const match = range?.trim().match(/^bytes=(\d*)-(\d*)$/)
+  if (!range || !match || (match[1] === '' && match[2] === '')) {
+    headers.set('content-length', String(size))
+    return new Response(request.method === 'HEAD' ? null : body, { status: 200, headers })
+  }
+  let start: number
+  let end: number
+  if (match[1] === '') {
+    start = Math.max(0, size - Number(match[2]))
+    end = size - 1
+  } else {
+    start = Number(match[1])
+    end = match[2] === '' ? size - 1 : Math.min(Number(match[2]), size - 1)
+  }
+  if (start >= size || start > end || (match[1] === '' && Number(match[2]) === 0)) {
+    return new Response(null, { status: 416, headers: { 'content-range': `bytes */${size}`, 'accept-ranges': 'bytes' } })
+  }
+  headers.set('content-range', `bytes ${start}-${end}/${size}`)
+  headers.set('content-length', String(end - start + 1))
+  return new Response(request.method === 'HEAD' ? null : body.slice(start, end + 1), { status: 206, headers })
+}
+
 const worker = {
   async fetch(request: Request, env: Env): Promise<Response> {
     const { pathname } = new URL(request.url)
+    if (pathname.startsWith('/assets/video/')) return video(request, env)
     if (pathname === '/api/contact/status') return json(200, { configured: configured(env), throttled: Boolean(env.CONTACT_LIMIT) })
     if (pathname === '/api/contact') {
       if (request.method !== 'POST') return new Response(null, { status: 405, headers: { allow: 'POST' } })
