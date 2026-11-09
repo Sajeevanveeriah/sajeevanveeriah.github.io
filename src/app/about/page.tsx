@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { site, experience, foundation, humanNote, workingStyle, community, beyond } from "@/content/site";
 import { pageMetadata } from "@/content/seo";
 import Link from "next/link";
+import { CareerChart } from "@/components/figures/Figure";
 
 export const metadata = pageMetadata({
   title: "About Saj",
@@ -24,6 +25,7 @@ export default function About() {
         </header>
         <section className="section" id="experience" aria-labelledby="timeline-title">
           <div className="section-head"><div><h2 id="timeline-title">Career timeline</h2><p>From manufacturing and quality to automotive testing, industrial controls and independent consulting.</p></div></div>
+          <figure className="fig-frame section-figure"><CareerChart /></figure>
           <ol className="timeline">
             {experience.map((e) => (
               <li key={e.role}>

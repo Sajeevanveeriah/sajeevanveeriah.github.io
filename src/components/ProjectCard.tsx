@@ -1,12 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/content/projects'
+import { Diagram } from './figures/kit'
+import { projectFigure } from './figures/Figure'
 
 export function ProjectCard({ project, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
+  const figure = projectFigure(project.slug)
   return (
     <article className="project-card" data-project={project.slug}>
-      {project.image && (
+      {figure ? <div className="fig-frame card-fig"><Diagram spec={figure} /></div> : project.image && (
         <div className="media-frame">
           <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 720px) 92vw, (max-width: 1200px) 45vw, 380px" />
         </div>

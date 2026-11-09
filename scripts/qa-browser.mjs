@@ -354,7 +354,7 @@ try {
   const order = await page.evaluate(() => ["#hero-title", "#featured-title", ".card-grid.compact", "#experience", "#foundation-title", "#contact", "#project-index"].map((s) => document.querySelector(s)?.getBoundingClientRect().top + scrollY));
   assert.ok(order.every((top, i) => Number.isFinite(top) && (i === 0 || top > order[i - 1])), `home order ${order}`);
   assert.equal(await page.locator("#project-index li").count(), 26);
-  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 3);
+  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 4);
   assert.equal(await page.locator("#research li").count(), 2);
   assert.equal(await page.locator('#research a[href^="https://"]').count(), 2);
   assert.equal(await page.locator(".compact-timeline").first().locator("li").count(), 9);
@@ -370,7 +370,7 @@ try {
   await page.locator(":focus").press("Enter");
   assert.ok(page.url().endsWith("#main"));
   await page.goto(baseURL + "/work/ataxia-assessment-device/");
-  assert.ok((await page.getByRole("link", { name: "Full-size image ↗", exact: true }).getAttribute("href")).endsWith(".svg"));
+  assert.equal(await page.locator('.record-figure svg[role="img"]').count(), 1);
   assert.equal((await page.goto(baseURL + "/missing-route/")).status(), 404);
   await page.goto(baseURL + "/work/panelogram/");
   await page.waitForURL(baseURL + "/work/");

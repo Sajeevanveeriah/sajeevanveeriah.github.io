@@ -1,0 +1,84 @@
+/* Figures: inline diagrams drawn from the project records. They take the page
+   typeface and follow the colour theme through the variables below. */
+:root { --fig-bg: #ffffff; --fig-box: #f1f4f8; --fig-stroke: #a3afbf; --fig-wire: #46566b; --fig-dot: rgb(15 30 51 / 0.07); }
+:root[data-theme="dark"], .hero-band, .research-band { --fig-bg: #0a1524; --fig-box: #13243d; --fig-stroke: #3d5478; --fig-wire: #9aa9be; --fig-dot: rgb(160 180 210 / 0.08); }
+:root[data-theme="light"] .research-band { --fig-bg: #0a1524; }
+
+.fig { display: block; width: 100%; height: auto; overflow: visible; }
+.fig text { font-family: inherit; }
+.fig-frame { margin: 0; padding: clamp(10px, 1.6vw, 20px); border: 1px solid var(--line); background: var(--fig-bg) radial-gradient(var(--fig-dot) 1px, transparent 1.5px) 0 0 / 16px 16px; }
+.fig-frame figcaption { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.5; color: var(--muted); }
+.fig-box { fill: var(--fig-box); stroke: var(--fig-stroke); stroke-width: 1.25; }
+.fig-box.ghost, .ghost > .fig-box { fill: none; stroke-dasharray: 5 4; }
+.accent > .fig-box { fill: var(--amber); stroke: var(--amber); }
+.fig-t { fill: var(--ink); font-weight: 600; letter-spacing: -0.01em; }
+.fig-s { fill: var(--muted); font-size: 12.5px; }
+.fig-k { fill: var(--accent-text); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; }
+.accent > .fig-t, .accent > .fig-s, .accent > .fig-k, .fig-on-accent { fill: #0f1e33; }
+.fig-on-accent { font-size: 12.5px; font-weight: 600; }
+.fig-glyph { fill: none; stroke: var(--fig-wire); stroke-width: 1.6; stroke-linecap: square; }
+.accent > .fig-glyph { stroke: #0f1e33; }
+.fig-edge { fill: none; stroke: var(--fig-wire); stroke-width: 1.5; }
+.fig-edge.dash { stroke-dasharray: 5 4; }
+.fig-head { fill: var(--fig-wire); }
+.fig-edge-label { fill: var(--muted); font-size: 11.5px; paint-order: stroke; stroke: var(--fig-bg); stroke-width: 4px; }
+.fig-note { fill: var(--muted); font-size: 11.5px; }
+.fig-grid { stroke: var(--fig-stroke); stroke-width: 1; stroke-dasharray: 2 4; opacity: 0.7; }
+.fig-track { fill: var(--fig-box); stroke: var(--fig-stroke); stroke-width: 1; }
+.fig-fill { fill: var(--fig-wire); }
+.fig-fill.accent { fill: var(--amber); }
+.fig-slab { fill: var(--fig-box); stroke: var(--fig-stroke); stroke-width: 1.25; stroke-linejoin: round; }
+.fig-slab.base { fill: var(--amber); stroke: var(--amber); }
+.fig-slab-side { fill: var(--fig-bg); stroke: var(--fig-stroke); stroke-width: 1.25; stroke-linejoin: round; }
+.fig-node { transition: opacity 0.35s var(--ease); }
+.fig-node.dim { opacity: 0.32; }
+
+/* The hero loop: a signal travels the arrows until motion is paused. */
+.fig-live .fig-edge { stroke-dasharray: 7 5; animation: fig-flow 1.4s linear infinite; }
+.motion-paused .fig-live .fig-edge { animation-play-state: paused; }
+@keyframes fig-flow { to { stroke-dashoffset: -24; } }
+
+/* Figures in cards, lists and sections */
+.card-fig { border-width: 0 0 1px; padding: 12px; }
+.project-card .project-shot { border-bottom: 1px solid var(--line); }
+.selected-figure { min-width: 0; }
+.selected-figure .fig-frame { transition: border-color 0.3s; }
+.selected-project:hover .selected-figure .fig-frame { border-color: var(--line-strong); }
+.record-figure { max-width: 940px; }
+.record-figure + .project-media { margin-top: 24px; }
+.record-body .project-media figcaption { align-items: baseline; }
+.section-figure { margin-bottom: 28px; }
+.layers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.system-overview .layers ol { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.system-overview .layers li { padding-block: 14px; }
+.system-overview .layers li:last-child { border-bottom: 1px solid var(--line); }
+.system-overview .layers p { margin-top: 4px; }
+.post-card .card-fig { margin: -26px -24px 10px; }
+.post-feature .fig-frame { align-self: center; }
+.blog-figure .fig-frame { padding: clamp(10px, 2vw, 24px); }
+.service-area .fig-frame { margin: -4px 0 4px; padding: 10px; }
+.project-list.with-figures { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr)); border-left: 1px solid var(--line); }
+.project-list.with-figures li { display: flex; flex-direction: column; gap: 8px; padding: 0 22px 24px; border-right: 1px solid var(--line); }
+.project-list.with-figures .list-fig { display: grid; align-items: center; margin: 0 -22px 12px; padding: 12px; min-height: 0; border-bottom: 1px solid var(--line); background: var(--fig-bg) radial-gradient(var(--fig-dot) 1px, transparent 1.5px) 0 0 / 16px 16px; aspect-ratio: 560 / 200; }
+.project-list.with-figures .list-fig:has(img) { aspect-ratio: 16 / 9; padding: 0; background: var(--media); }
+.project-list.with-figures .list-fig img { width: 100%; height: 100%; object-fit: contain; }
+.project-list.with-figures .card-kicker { text-align: left; }
+.card-grid, .card-grid.compact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr)); }
+.research-band { grid-template-columns: minmax(0, 1fr); }
+.research-band > div { max-width: 640px; }
+.research-band ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.research-band li { display: grid; gap: 18px; align-content: start; }
+.research-band li + li { border-top: 0; padding-top: 0; margin-top: 0; }
+.robotics-art.fig-frame { aspect-ratio: auto; background-color: var(--fig-bg); }
+.motion-toggle { z-index: 1; }
+
+@media (max-width: 1024px) {
+  .layers, .research-band ul { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-live .fig-edge { animation: none; stroke-dasharray: none; }
+}
+@media print {
+  .fig-frame { background: none; }
+}
+@media (max-width: 720px) { .fig-frame { padding: 6px; } .card-fig, .project-list.with-figures .list-fig { padding: 8px; } }

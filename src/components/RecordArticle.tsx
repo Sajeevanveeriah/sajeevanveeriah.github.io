@@ -4,10 +4,13 @@ import { ProjectVideo } from './ProjectVideo'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
+import { Figure, projectFigure } from './figures/Figure'
 
 const pad = (value: number) => String(value).padStart(2, '0')
 
 export function RecordArticle({ project, previous, next, position, total }: { readonly project: Project; readonly previous: Project; readonly next: Project; readonly position: number; readonly total: number }) {
+  const figure = projectFigure(project.slug)
+  const photo = project.image && !project.image.src.endsWith('.svg') ? project.image : undefined
   return (
     <>
       <article className="container">
@@ -20,9 +23,9 @@ export function RecordArticle({ project, previous, next, position, total }: { re
           <p>{project.system}</p>
           <p className="record-meta"><span>{project.status}</span><span>Case study <strong>{position} of {total}</strong></span></p>
         </header>
-        {project.image ? (
-          <ProjectMedia image={project.image} priority />
-        ) : <SystemEvidence eyebrow="System architecture" title={project.title} steps={project.systemPath} />}
+        {figure
+          ? <Figure spec={figure} className="record-figure" caption="System diagram drawn from this record. Labels and numbers restate the text below." />
+          : project.image ? <ProjectMedia image={project.image} priority /> : <SystemEvidence eyebrow="System architecture" title={project.title} steps={project.systemPath} />}
         <div className="record-grid">
           <aside className="record-rail" aria-label="Contribution and technology">
             <h2>My contribution</h2>
@@ -32,7 +35,7 @@ export function RecordArticle({ project, previous, next, position, total }: { re
           </aside>
           <div className="record-body">
             <section aria-labelledby="problem-heading"><h2 id="problem-heading">The challenge</h2><p>{project.problem}</p></section>
-            <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">How the system works</h2><p>{project.architecture}</p></section>
+            <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">How the system works</h2><p>{project.architecture}</p>{figure && photo && <ProjectMedia image={photo} />}</section>
             <section aria-labelledby="decisions-heading">
               <h2 id="decisions-heading">Design decisions</h2>
               <ol className="decisions">
