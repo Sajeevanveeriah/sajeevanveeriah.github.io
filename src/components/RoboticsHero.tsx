@@ -1,14 +1,16 @@
 'use client'
 
-import Image from 'next/image'
 import { useRef, useState, type KeyboardEvent } from 'react'
+import { Diagram } from './figures/kit'
+import { loopFigure } from './figures/specs'
 
 const stages = [
-  { name: 'Sense', title: 'Understand the physical world.', detail: 'Sensors, electronics and perception turn physical signals into useful information.', image: 'hero.webp', alt: 'Exploded rover illustration showing the LiDAR sensor, stereo camera, controller and mechanical platform.' },
-  { name: 'Think', title: 'Turn information into decisions.', detail: 'State estimation, control and AI connect observations to purposeful behaviour.', image: 'controller.webp', alt: 'Close-up illustration of an embedded controller and its electronic interfaces.' },
-  { name: 'Act', title: 'Make the system move.', detail: 'Mechanisms, drives and embedded software bring those decisions into the real world.', image: 'rover.webp', alt: 'Assembled autonomous rover illustration with sensing paths around its chassis.' },
+  { name: 'Sense', title: 'Understand the physical world.', detail: 'Sensors, electronics and perception turn physical signals into useful information.' },
+  { name: 'Think', title: 'Turn information into decisions.', detail: 'State estimation, control and AI connect observations to purposeful behaviour.' },
+  { name: 'Act', title: 'Make the system move.', detail: 'Mechanisms, drives and embedded software bring those decisions into the real world.' },
 ] as const
 
+/** The hero figure: one closed loop, with a tab for each third of it. */
 export function RoboticsHero() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -22,8 +24,8 @@ export function RoboticsHero() {
     buttons.current[next]?.focus()
   }
   return <div className={`robotics-stage${paused ? ' motion-paused' : ''}`}>
-    <div className="robotics-art" role="tabpanel" id="robotics-panel" aria-labelledby={`robotics-tab-${active}`} tabIndex={0}>
-      <Image key={stage.image} src={`/assets/image/redesign/${stage.image}`} alt={stage.alt} width={1254} height={1254} priority={active === 0} sizes="(max-width: 800px) 95vw, 55vw" className="robotics-image" />
+    <div className="robotics-art fig-frame" role="tabpanel" id="robotics-panel" aria-labelledby={`robotics-tab-${active}`} tabIndex={0}>
+      <Diagram spec={loopFigure} focus={stage.name} className="fig-live" />
       <button className="motion-toggle" type="button" aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? 'Resume motion' : 'Pause motion'}</button>
     </div>
     <div className="robotics-tabs" role="tablist" aria-label="Explore the engineering system">

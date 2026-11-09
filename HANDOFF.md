@@ -2,6 +2,10 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 10 November 2026
+
+Branch `saj/lucid-ride-ormfwg`: portfolio redesign around informative figures. A diagram kit (`src/components/figures/`) draws inline SVG figures from short specifications; every case study, project-index entry, service area and image-less journal post now has one, and the home page hero, career, learning and six-layer sections each lead with a figure. The decorative hero and feature renders in `public/assets/image/redesign/` and the October SVG project diagrams are no longer shown on project cards or record pages (journal posts still use four of the SVGs). Work catalogue and home cards are two-up so figure text is readable. Browser QA changes: the home band holds 4 cards, and the ataxia record is checked for its inline figure instead of a full-size SVG link. Checks run and results are recorded in the pull request.
+
 ## Work at 8 November 2026
 
 Merged as #147 (0a416ad): adds the Dooen Plant Process Model case study (`/work/dooen-plant-process-model/`) with a 2 min 57 s walkthrough video in `public/assets/video` (9.5 MB, H.264, no audio). `ProjectVideo` renders an optional `video` on a case-study section; it does not autoplay and preloads nothing until played. Browser QA counts moved from 25 to 26 projects and from 10 to 11 case studies, and the "potato" search now returns 2 projects. Local checks: typecheck, lint, build, qa:export (47 routes) and qa:browser (658 checks) passed; the video played in a local browser.

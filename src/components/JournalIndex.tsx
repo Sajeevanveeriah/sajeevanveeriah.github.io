@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Diagram } from "./figures/kit";
+import { postFigure } from "./figures/Figure";
 
 export type JournalEntry = {
   slug: string;
@@ -56,7 +58,7 @@ export function JournalIndex({ entries, topics }: { entries: JournalEntry[]; top
       <p className="result-count" role="status">{shown.length} {shown.length === 1 ? "post" : "posts"}</p>
       {lead && (
         <article className="post-feature">
-          {lead.image && <div className="media-frame"><Image src={lead.image.src} alt="" width={lead.image.width} height={lead.image.height} sizes="(max-width: 1024px) 92vw, 600px" priority /></div>}
+          {lead.image ? <div className="media-frame"><Image src={lead.image.src} alt="" width={lead.image.width} height={lead.image.height} sizes="(max-width: 1024px) 92vw, 600px" priority /></div> : postFigure(lead.slug) && <div className="fig-frame"><Diagram spec={postFigure(lead.slug)!} /></div>}
           <div>
             <Meta entry={lead} />
             <h2><Link prefetch={false} href={`/blog/${lead.slug}/`}>{lead.title}</Link></h2>
@@ -67,7 +69,7 @@ export function JournalIndex({ entries, topics }: { entries: JournalEntry[]; top
       <div className="post-grid">
         {rest.filter((e): e is JournalEntry => Boolean(e)).map((entry) => (
           <article className="post-card" key={entry.slug}>
-            {entry.image && <div className="media-frame"><Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 720px) 92vw, 380px" /></div>}
+            {entry.image ? <div className="media-frame"><Image src={entry.image.src} alt="" width={entry.image.width} height={entry.image.height} sizes="(max-width: 720px) 92vw, 380px" /></div> : postFigure(entry.slug) && <div className="fig-frame card-fig"><Diagram spec={postFigure(entry.slug)!} /></div>}
             <Meta entry={entry} />
             <h2 className="post-card-title"><Link prefetch={false} href={`/blog/${entry.slug}/`}>{entry.title}</Link></h2>
             <p>{entry.description}</p>

@@ -2,7 +2,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { projects, projectIndex, type Project } from "@/content/projects";
+import Image from "next/image";
 import { ProjectCard } from "./ProjectCard";
+import { Diagram } from "./figures/kit";
+import { indexFigure } from "./figures/Figure";
 
 const categories = ["All", "Robotics", "Embedded", "Software", "Industrial"] as const;
 const groupCategory = ["Robotics", "Software", "Industrial"] as const;
@@ -64,12 +67,13 @@ export function WorkCatalogue() {
       {more.length > 0 && (
         <section className="catalogue-group" aria-labelledby="more-title">
           <h2 id="more-title">More projects and delivery</h2>
-          <ul className="project-list">
+          <ul className="project-list with-figures">
             {more.map((p) => (
               <li key={p.title} data-project={p.title}>
+                <div className="list-fig">{p.image ? <Image src={p.image.src} alt={p.image.alt} width={p.image.width} height={p.image.height} sizes="(max-width: 720px) 92vw, 560px" /> : indexFigure(p.title) && <Diagram spec={indexFigure(p.title)!} />}</div>
+                <span className="card-kicker">{p.category}</span>
                 <h3>{p.href ? <Link href={p.href} prefetch={false}>{p.title}</Link> : p.title}</h3>
                 <p>{p.summary}</p>
-                <span className="card-kicker">{p.category}</span>
               </li>
             ))}
           </ul>

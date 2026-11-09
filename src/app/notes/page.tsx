@@ -2,6 +2,8 @@ import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { learningGuide, learningMonths } from "@/content/learning";
 import { pageMetadata } from "@/content/seo";
+import { Figure } from "@/components/figures/Figure";
+import { learningFigure } from "@/components/figures/specs";
 
 export const metadata = pageMetadata({
   title: "Robotics learning roadmap",
@@ -22,6 +24,7 @@ export default function Notes() {
         </header>
         <section className="section" aria-labelledby="pathway-title">
           <div className="section-head"><div><h2 id="pathway-title">A six-month pathway</h2><p>Each stage pairs a focus area with a build and supporting resources. Treat the months as a suggested pace: progress when you can explain the result and repeat the test.</p><p>This is a learning plan, not a record of completed projects or a formal qualification.</p></div></div>
+          <Figure spec={learningFigure} className="section-figure" caption="The six builds in order. Each box names the month, the stage and what you make." />
           <ol className="roadmap">
             {learningMonths.map((m) => (
               <li key={m.month}>

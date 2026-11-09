@@ -8,6 +8,7 @@ import { posts, formatPostDate, readingMinutes, postCategory, postTopic } from "
 import { ArrowLeft } from "@/components/icons";
 import { ReadingProgress, ShareButton } from "@/components/ArticleTools";
 import { site } from "@/content/site";
+import { Figure, postFigure } from "@/components/figures/Figure";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -59,6 +60,7 @@ export default async function BlogArticle({ params }: { params: Promise<{ slug: 
           <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />
           <figcaption>{post.image.caption} <a href={post.image.src}>View full-size image</a></figcaption>
         </figure>}
+        {!post.image && postFigure(post.slug) && <div className="blog-figure"><Figure spec={postFigure(post.slug)!} caption="Drawn from the article below." /></div>}
         <div className="blog-layout">
           <nav className="blog-contents" aria-label="In this article">
             <h2>In this article</h2>

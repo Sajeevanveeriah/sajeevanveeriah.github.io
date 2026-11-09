@@ -6,6 +6,8 @@ import { VoltwynLockup } from '@/components/VoltwynLockup'
 import { ArrowUpRight } from '@/components/icons'
 import { getProject, projectIndex } from '@/content/projects'
 import { site } from '@/content/site'
+import { Figure, indexFigure, projectFigure } from '@/components/figures/Figure'
+import { phasesFigure } from '@/components/figures/specs'
 import { pageMetadata } from '@/content/seo'
 import { servicesPage, areas, notListed, fit, phases, supportNote, rateCard, enquiry } from '@/content/services'
 
@@ -18,10 +20,10 @@ export const metadata = pageMetadata({
 /** A case-study slug links to its record; an index title links to the catalogue search, as the home page does. */
 function resolveProof(ref: string) {
   const project = getProject(ref)
-  if (project) return { title: project.title, href: `/work/${project.slug}/`, note: project.status }
+  if (project) return { title: project.title, href: `/work/${project.slug}/`, note: project.status, figure: projectFigure(project.slug) }
   const item = projectIndex.flatMap((group) => group.items).find((entry) => entry.title === ref)
   if (!item) throw new Error(`Services proof "${ref}" is not a case study or project-index title`)
-  return { title: item.title, href: `/work/?q=${encodeURIComponent(item.title)}`, note: item.summary }
+  return { title: item.title, href: `/work/?q=${encodeURIComponent(item.title)}`, note: item.summary, figure: indexFigure(item.title) }
 }
 
 export default function Services() {
@@ -49,8 +51,9 @@ export default function Services() {
         <section className="section container" id="areas" aria-labelledby="areas-title">
           <div className="section-head"><div><p className="eyebrow">Service areas</p><h2 id="areas-title">Six areas, one way of working.</h2><p>Each area starts with a paid Define phase and ends with a tested system and the records behind it. Each links to work already on this site, with its own description of what it covers.</p></div></div>
           <div className="service-areas">
-            {areas.map((area) => (
+            {areas.map((area) => { const lead = resolveProof(area.proof[0]!); return (
               <article className="panel service-area" id={area.id} key={area.id} aria-labelledby={`${area.id}-title`}>
+                {lead.figure && <Figure spec={lead.figure} caption={`From the record: ${lead.title}`} />}
                 <h3 id={`${area.id}-title`}>{area.title}</h3>
                 <p className="area-scope">{area.scope}</p>
                 <p>{area.detail}</p>
@@ -71,7 +74,7 @@ export default function Services() {
                   {area.boundary && <p className="area-boundary">{area.boundary}</p>}
                 </div>
               </article>
-            ))}
+            )})}
           </div>
           <p className="section-note not-listed">{notListed} <a className="text-link" href="#enquire">Go to the enquiry form</a></p>
           <div className="split fit">
@@ -82,6 +85,7 @@ export default function Services() {
 
         <section className="section container" id="phases" aria-labelledby="phases-title">
           <div className="section-head"><div><p className="eyebrow">How it runs</p><h2 id="phases-title">A short Define phase first. Then fixed-price design work.</h2><p>Each phase ends with something you keep, and the next phase is quoted from it.</p></div></div>
+          <Figure spec={phasesFigure} className="section-figure" />
           <ol className="roadmap">
             {phases.map((p) => (
               <li key={p.title}>

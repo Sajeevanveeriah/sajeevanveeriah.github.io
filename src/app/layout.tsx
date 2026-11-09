@@ -5,6 +5,7 @@ import { site } from '@/content/site'
 import { defaultShareImage } from '@/content/seo'
 import './globals.css'
 import './robotics.css'
+import './figures.css'
 
 export const metadata: Metadata = {
   other: { 'portfolio-release': process.env.GITHUB_SHA ?? 'local' },

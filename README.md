@@ -9,15 +9,15 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 
 | Route | Content |
 | --- | --- |
-| `/` | Identity, six-layer systems visual, featured project, project band, career and learning, foundation, recent writing, contact, complete project index |
-| `/work/` | All 23 projects: eight case studies and the delivery list, with category filters, search and shareable URLs |
+| `/` | Identity and the sense, think and act loop figure, three featured projects, a four-project band, research, career and learning, the six-layer stack, foundation, recent writing, contact, complete project index |
+| `/work/` | All 26 projects: eleven case studies and the delivery list, each with a figure or screenshot, with category filters, search and shareable URLs |
 | `/work/<slug>/` | Case studies: contribution, architecture, decisions, verification, previous and next |
 | `/services/` | Voltwyn services: six service areas with proof links, the Define phase, the rate basis and an enquiry form |
 | `/about/` | Full career timeline, education, community and life beyond work |
 | `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
 | `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
 
-The design uses one stylesheet (`src/app/globals.css`) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`) for light and dark themes, self-hosted Archivo, a system monospace for sheet labels, and the existing monogram. Pages are drawn like an engineering sheet: two hairline rails frame the page, section boundaries carry registration crosses and content sits in square hairline cells. A first visit opens in the dark theme. Motion is local and decorative: a canvas LiDAR-style sweep in the hero (`ScanField`), a signal pulse through the six layers, scroll reveals and pointer spotlights (`Motion`) and circuit traces above the contact band; all of it stops under reduced motion and pauses off screen. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
+The design uses a shared stylesheet (`src/app/globals.css`, with `robotics.css` for the home page and `figures.css` for diagrams) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`) for light and dark themes, self-hosted Archivo, a system monospace for sheet labels, and the existing monogram. Pages are drawn like an engineering sheet: two hairline rails frame the page, section boundaries carry registration crosses and content sits in square hairline cells. A first visit opens in the dark theme. Motion is local and decorative: a canvas LiDAR-style sweep in the hero (`ScanField`), a signal pulse through the six layers, scroll reveals and pointer spotlights (`Motion`) and circuit traces above the contact band; all of it stops under reduced motion and pauses off screen. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
 
 ## Contact form
 
@@ -33,9 +33,11 @@ npx wrangler secret put CONTACT_FROM     # e.g. "Portfolio <forms@your-verified-
 
 Until they are set the endpoint answers 503 and the form tells the visitor to try again later, keeping their message in the form. No address is ever sent to the browser.
 
-Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates three supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
+Project cards identify the evidence stage, from simulation and prototypes to client work. The home page curates four supporting projects and links to both independent research reports. New process-simulation and service-desk entries are grounded in their public repositories; they do not imply a connected factory or a deployed business backend.
 
-The October 2026 image refresh replaces conceptual hardware scenes with original SVG engineering diagrams. The industrial display controller graphic embeds the actual PCB CAD render. Existing analytical chart values, archive CAD and attributed research figures are preserved. SVG journal covers have matching PNG files for social previews. The logo is unchanged.
+The November 2026 redesign gives every piece of work a figure. Figures are inline SVG diagrams built from a small kit (`src/components/figures/kit.tsx`): a grid of labelled boxes and arrows that takes the page typeface and both colour themes. Each figure is a short specification in `src/components/figures/specs.tsx`, keyed by case-study slug, project-index title or post slug, and its labels and numbers restate the record it sits beside. The kit fails the build if a label does not fit its box, so text is never cut. The hero is a closed sense, think and act loop; the career section draws roles to scale from their dates; the six layers are an exploded stack. Screenshots and CAD renders that show real work stay as images. Styles for figures are in `src/app/figures.css`.
+
+The October 2026 image refresh replaced conceptual hardware scenes with original SVG engineering diagrams. The industrial display controller graphic embeds the actual PCB CAD render. Existing analytical chart values, archive CAD and attributed research figures are preserved. SVG journal covers have matching PNG files for social previews. The logo is unchanged.
 
 ## Development and checks
 

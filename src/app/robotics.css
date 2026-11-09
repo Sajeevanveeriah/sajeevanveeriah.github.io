@@ -10,9 +10,7 @@
 .robotics-hero .hero-lede { font-size: clamp(17px, 1.55vw, 21px); line-height: 1.5; }
 .robotics-hero .hero-actions { gap: 14px; margin-top: 32px; }
 .robotics-stage { min-width: 0; padding: 0 0 24px 16px; }
-.robotics-art { position: relative; aspect-ratio: 1; overflow: hidden; background: #0b1523; }
-.robotics-image { width: 100%; height: 100%; object-fit: contain; animation: robot-arrive 700ms ease-out, robot-breathe 8s ease-in-out 700ms infinite; transform-origin: 50% 60%; }
-.motion-paused .robotics-image { animation-play-state: paused; }
+.robotics-art { position: relative; }
 .motion-toggle { position: absolute; bottom: 8px; right: 8px; padding: 8px 12px; min-height: 44px; border: 1px solid #34496a; background: #0b1523; color: #b3bfcf; font-size: 12px; }
 .motion-toggle:hover { color: white; border-color: #f5b700; }
 .robotics-tabs { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid #34496a; gap: 16px; }
@@ -39,9 +37,6 @@
 .selected-copy h3 a { text-decoration: none; }
 .selected-copy > p:not(.eyebrow) { color: var(--muted); margin-block: 18px 28px; max-width: 30ch; }
 .selected-copy .eyebrow { font-size: 11px; margin-bottom: 20px; color: var(--accent-text); }
-.selected-image { display: block; overflow: hidden; background: #0b1523; aspect-ratio: 3 / 2; }
-.selected-image img { height: 100%; width: 100%; object-fit: cover; transition: transform 800ms var(--ease); }
-.selected-project:hover .selected-image img { transform: scale(1.035); }
 .selected-projects + .compact { margin-top: 64px; }
 .system-overview h2 { margin-bottom: 32px; }
 .system-overview ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -49,8 +44,6 @@
 .system-overview li > span { font: 12px var(--mono); color: var(--accent-text); padding-top: 5px; }
 .system-overview h3 { font-size: 19px; }
 .system-overview p { font-size: 15px; margin-top: 10px; color: var(--muted); }
-@keyframes robot-arrive { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
-@keyframes robot-breathe { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-7px) scale(1.015); } }
 @media (max-width: 1024px) and (min-width: 801px) {
   .robotics-hero { grid-template-columns: 1fr 1fr; }
   .robotics-hero h1 { font-size: min(5.8vw, 15cqw); }
@@ -66,7 +59,6 @@
   .robotics-hero h1 { font-size: min(clamp(39px, 10.8vw, 80px), 15cqw); }
   .robotics-hero .hero-role { max-width: 580px; margin-top: 24px; }
   .robotics-stage { padding: 0; }
-  .robotics-art { max-height: 620px; margin: 0 auto; }
   .robotics-caption { min-height: 112px; }
   .current-role { flex-wrap: wrap; gap: 20px; padding-block: 24px; }
   .current-role > div:nth-child(2) { border: 0; padding: 0; }
@@ -74,7 +66,7 @@
   .current-role strong { font-size: 22px; }
   .selected-project { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 32px; }
   .selected-copy { order: 2; }
-  .selected-image { order: 1; }
+  .selected-figure { order: 1; }
   .selected-copy > p:not(.eyebrow) { max-width: 100%; margin-block: 12px 16px; }
   .selected-copy .eyebrow { margin-bottom: 12px; }
   .system-overview ol { grid-template-columns: repeat(2, 1fr); }
@@ -85,8 +77,6 @@
   .robotics-hero .hero-actions .btn { min-height: 48px; padding: 12px 16px; font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .robotics-image { animation: none; }
   .motion-toggle { display: none; }
-  .selected-image img, .robotics-tabs button { transition: none; }
-  .selected-project:hover .selected-image img { transform: none; }
+  .robotics-tabs button { transition: none; }
 }
