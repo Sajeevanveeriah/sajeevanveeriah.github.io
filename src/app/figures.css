@@ -30,8 +30,8 @@
 .fig-slab { fill: var(--fig-box); stroke: var(--fig-stroke); stroke-width: 1.25; stroke-linejoin: round; }
 .fig-slab.base { fill: var(--amber); stroke: var(--amber); }
 .fig-slab-side { fill: var(--fig-bg); stroke: var(--fig-stroke); stroke-width: 1.25; stroke-linejoin: round; }
-.fig-node { transition: opacity 0.35s var(--ease); }
-.fig-node.dim { opacity: 0.32; }
+.fig-node > .fig-box { transition: stroke 0.3s var(--ease), stroke-width 0.3s var(--ease); }
+.fig-node.on > .fig-box { stroke: var(--amber); stroke-width: 3; }
 
 /* The hero loop: a signal travels the arrows until motion is paused. */
 .fig-live .fig-edge { stroke-dasharray: 7 5; animation: fig-flow 1.4s linear infinite; }

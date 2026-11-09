@@ -152,7 +152,7 @@ export function Diagram({ spec, focus, className = '' }: { readonly spec: FigSpe
         let y = box.y + (box.h - height(size, title.length)) / 2
         const x = box.x + 11
         return (
-          <g key={n.id} className={`fig-node${n.tone ? ` ${n.tone}` : ''}${focus && n.grp && n.grp !== focus ? ' dim' : ''}`}>
+          <g key={n.id} className={`fig-node${n.tone ? ` ${n.tone}` : ''}${focus && n.grp === focus ? ' on' : ''}`}>
             <rect className="fig-box" x={box.x} y={box.y} width={box.w} height={box.h} />
             {n.g && <path className="fig-glyph" d={glyphs[n.g]} transform={`translate(${box.x + box.w - 27} ${box.y + 8}) scale(0.8)`} />}
             {n.k && <text className="fig-k" x={x} y={(y += 15) - 4}>{n.k}</text>}
