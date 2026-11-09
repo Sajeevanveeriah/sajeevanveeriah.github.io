@@ -326,7 +326,8 @@ try {
   await page.getByRole("button", { name: "Reset", exact: true }).click();
   assert.equal(await status(page).textContent(), "26 projects");
   await page.goto(baseURL + "/work/?q=" + encodeURIComponent("Panelogram Retail Shelf Planner"));
-  assert.equal(await status(page).textContent(), "1 project");
+  // The catalogue applies ?q= after hydration, so wait for the filtered count instead of reading it once.
+  await page.locator('[role="status"]', { hasText: /^1 project$/ }).first().waitFor({ timeout: 10000 });
   for (const href of Object.values(servicesAreas).flat().filter((h) => h.includes("?q="))) {
     await page.goto(baseURL + href);
     // The catalogue applies ?q= after hydration, so wait for the filtered count instead of reading it once.
