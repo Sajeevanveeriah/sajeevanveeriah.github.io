@@ -2,6 +2,12 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 14 November 2026
+
+Branch `saj/great-wozniak-h3k6ed`: positioning now leads with robotics, mechatronics, controls and automation. `src/content/site.ts` (profile line, Farm Frites role description and tags, review date), the Person schema topics in `src/app/layout.tsx`, and the resume content in `scripts/build-portfolio-resume.py` (focus line, profile, strengths, skills order, Farm Frites bullets) were reordered; no employer, date, tool or result was added. `public/assets/Resume_Sajeevan_Veeriah.pdf` was rebuilt and validated with `scripts/generate-public-resume.py` (two pages, no contact details). Checks run and results are recorded in the pull request.
+
+Outside the repository: resume Rev02 (DOCX, PDF) and LinkedIn and SEEK profile copy Rev05 (DOCX, PDF), all dated 20261114, are in OneDrive under `2026_Employment-Files/01-Resume-Main/01-Documents`. The live LinkedIn and SEEK profiles were not changed; that needs a signed-in browser.
+
 ## Work at 10 November 2026
 
 Branch `saj/lucid-ride-ormfwg`: portfolio redesign around informative figures. A diagram kit (`src/components/figures/`) draws inline SVG figures from short specifications; every case study, project-index entry, service area and image-less journal post now has one, and the home page hero, career, learning and six-layer sections each lead with a figure. The decorative hero and feature renders in `public/assets/image/redesign/` and the October SVG project diagrams are no longer shown on project cards or record pages (journal posts still use four of the SVGs). Work catalogue and home cards are two-up so figure text is readable. Browser QA changes: the home band holds 4 cards, and the ataxia record is checked for its inline figure instead of a full-size SVG link. Checks run and results are recorded in the pull request.

@@ -52,7 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     sameAs: [site.github],
     alumniOf: { '@type': 'CollegeOrUniversity', name: 'Deakin University' },
     memberOf: { '@type': 'Organization', name: 'Engineers Australia' },
-    knowsAbout: ['Robotics', 'Mechatronics', 'Industrial automation', 'Industrial IT', 'Operational technology', 'Embedded systems', 'Controls', 'Automotive validation', 'IoT', 'AI and machine learning', 'Engineering software'],
+    knowsAbout: ['Robotics', 'Mechatronics', 'Control systems', 'Industrial automation', 'Embedded systems', 'Industrial IT', 'Operational technology', 'Automotive validation', 'IoT', 'AI and machine learning', 'Engineering software'],
   }
 
   return (
