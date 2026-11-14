@@ -16,11 +16,17 @@ function resolve(choice: Choice): "light" | "dark" {
   if (choice !== "system") return choice;
   return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
+/** Applies the theme to the page and to the browser chrome colour, which otherwise follows only the OS setting. */
+function paint(theme: "light" | "dark") {
+  document.documentElement.dataset.theme = theme;
+  const colour = theme === "dark" ? "#0a1422" : "#ffffff";
+  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.setAttribute("content", colour);
+}
 function choose(choice: Choice) {
   try {
     localStorage.setItem(KEY, choice);
   } catch {}
-  document.documentElement.dataset.theme = resolve(choice);
+  paint(resolve(choice));
   dispatchEvent(new CustomEvent(EVENT));
 }
 
@@ -34,7 +40,7 @@ function useTheme() {
       const next = stored();
       setChoice(next);
       setResolved(resolve(next));
-      document.documentElement.dataset.theme = resolve(next);
+      paint(resolve(next));
     };
     sync();
     addEventListener(EVENT, sync);

@@ -131,7 +131,7 @@ kbd { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 6px; border
 .header-inner { display: flex; align-items: center; gap: 20px; min-height: var(--header); }
 .brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-weight: 600; font-size: 16px; letter-spacing: -0.02em; text-decoration: none; margin-right: auto; }
 .brand:hover { text-decoration: none; }
-.brand img { width: 36px; height: 36px; object-fit: contain; border-radius: 10px; }
+.brand img { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
 .brand-text { display: grid; line-height: 1.2; }
 .brand-text small { font-size: 12px; font-weight: 400; line-height: 1.4; color: var(--muted); }
 .site-nav { display: flex; gap: 2px; }
