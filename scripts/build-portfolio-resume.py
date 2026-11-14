@@ -3,8 +3,9 @@
 
 The portfolio edition carries no phone number, email address or social
 profile links: the website's contact form is the only contact route. Career
-claims follow the reviewed general resume of 30 October 2026; the Farm Frites entry
-is condensed so the edition stays at two pages.
+claims follow the reviewed general resume of 30 October 2026, reordered on
+14 November 2026 to lead with robotics, mechatronics, controls and automation;
+the Farm Frites entry is condensed so the edition stays at two pages.
 
 Usage: python scripts/build-portfolio-resume.py [--output path]
 Then validate: python scripts/generate-public-resume.py --source <output>
@@ -36,38 +37,38 @@ RULE = HexColor('#D5DCE3')
 SITE = 'https://sv.sajeevanveeriah.workers.dev'
 
 ROLE = 'Robotics, Mechatronics, AI/ML &amp; End-To-End Automation Engineer'
-FOCUS = 'MES/ERP Integration, Embedded Design &amp; Control | Applied R&amp;D'
+FOCUS = 'Control Systems, Embedded Design &amp; MES/SCADA Integration | Applied R&amp;D'
 
-PROFILE = ('Mechatronics engineer (Honours, Distinction) working as IT/OT and Systems Engineer on Farm Frites '
-           "Australia's greenfield potato-processing plant at Dooen, VIC, across MES, SCADA, ERP integration, "
-           'industrial networks and commissioning. Previously integrated PLC/SCADA and MES systems in GMP '
-           'manufacturing at JAG Process Solutions and validated vehicle software and ADAS at Ford. Client work '
-           'through Voltwyn spans vehicle electronics, firmware and full-stack software.')
-STRENGTHS = ('Industrial IT/OT and MES/ERP integration | Industrial automation and controls | Robotics and autonomy | '
-             'Embedded systems and PCB design | Vehicle test and validation | Software, AI/ML and data | '
-             'Commissioning, quality and compliance')
+PROFILE = ('Mechatronics engineer (Honours, Distinction) building robotics, control and automation systems from first '
+           'requirement to tested hardware and software. Currently IT/OT and Systems Engineer on Farm Frites '
+           "Australia's greenfield potato-processing plant at Dooen, VIC, across SCADA, PLC interfaces, MES and "
+           'commissioning. Previously integrated PLC logic, HMI/SCADA and drives in GMP manufacturing at JAG Process '
+           'Solutions and validated vehicle software and ADAS at Ford. Robotics and mechatronics work includes a '
+           'ROS 2 navigation rover, embedded sensing hardware and Voltwyn client electronics and firmware.')
+STRENGTHS = ('Robotics and autonomy | Mechatronics and embedded design | Control systems | Industrial automation and '
+             'commissioning | MES/SCADA and IT/OT integration | Test and validation | Software, AI/ML and data')
 
 SKILLS = [
-    ('Industrial IT/OT and systems', 'Manufacturing execution systems (MES), ERP integration, SCADA and historian '
-     'platforms, OEE, downtime and production reporting, traceability and master data, industrial networking '
-     '(Ethernet, switches, servers), OT cyber security, backup and disaster recovery, system testing and '
-     'validation, vendor coordination.'),
+    ('Robotics and autonomy', 'ROS 2, Nav2, SLAM, EKF sensor fusion, localisation, planning, PID control, Gazebo, '
+     'RViz, LiDAR and IMU integration, C++ and Python.'),
+    ('Mechatronics and embedded', 'ESP32/ESP32-S3, STM32, FreeRTOS, C/C++, PCB and enclosure design (Altium, KiCad, '
+     'SolidWorks, Fusion 360), motors and drives, CAN/CAN FD, UART, I2C, SPI, BLE and 3D printing.'),
     ('Automation and controls', 'PLC logic and integration, Siemens TIA Portal, HMI/SCADA (iFIX, PVI+), drives, '
      'Modbus, PROFINET, FAT/SAT, commissioning, GMP, ITPs, MDRs and AS/NZS compliance.'),
-    ('Robotics and embedded', 'ROS 2, Nav2, SLAM, EKF sensor fusion, Gazebo, RViz, C/C++, ESP32/ESP32-S3, STM32, '
-     'FreeRTOS, CAN/CAN FD, UART, I2C, SPI and BLE.'),
-    ('Software, AI and data', 'Python, MATLAB/Simulink, TypeScript, React, Rust (Tauri), SQL/SQLite, Git, CI/CD, '
-     'OpenCV, scikit-learn and local language-model retrieval, memory and evaluation workflows.'),
-    ('Hardware, IoT and test', 'Altium, KiCad, SolidWorks, Fusion 360, PCB and enclosure design, 3D printing, '
-     'Linux, LoRaWAN, ChirpStack, MQTT, InfluxDB, Grafana, CANoe, CANalyzer and calibrated data acquisition.'),
+    ('Industrial IT/OT and systems', 'MES, ERP integration, SCADA and historian platforms, OEE, downtime and '
+     'traceability reporting, industrial networking, OT cyber security, backup and disaster recovery.'),
+    ('Software, AI, data and test', 'Python, MATLAB/Simulink, TypeScript, React, Rust (Tauri), SQL/SQLite, Git, '
+     'CI/CD, OpenCV, scikit-learn, local language-model retrieval and evaluation, Linux, LoRaWAN, MQTT, InfluxDB, '
+     'Grafana, CANoe, CANalyzer and calibrated data acquisition.'),
 ]
 
 EXPERIENCE = [
     ('IT/OT and Systems Engineer', 'Oct 2026 - present', 'Farm Frites Australia, Dooen VIC', [
-        'Industrial IT for a greenfield potato-processing plant through commissioning into 24-hour production: MES, '
-        'SCADA, PLC interfaces, historians and MES-ERP integration for orders, inventory and traceability.',
-        'OT networks, servers, cyber security, backup and disaster recovery with Corporate IT; testing, '
-        'commissioning, documentation and user training.']),
+        'Plant automation and control layers for a greenfield potato-processing plant through commissioning into '
+        '24-hour production: SCADA, PLC interfaces and historians, with FAT, SAT and validation alongside '
+        'integrators and suppliers.',
+        'MES and MES-ERP integration for orders, inventory and traceability; OT networks, servers, cyber security '
+        'and backup with Corporate IT; documentation and user training.']),
     ('Automation and Controls Engineer', 'Jan 2026 - Jun 2026', 'JAG Process Solutions', [
         'Integrated PLC logic, HMI/SCADA, field devices, drives and manufacturing execution system (MES) data for '
         'pharmaceutical, biotech and food plants.',

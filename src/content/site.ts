@@ -6,13 +6,13 @@ export const site = {
   proposition:
     'I turn engineering problems into working hardware, controls and software, with the testing and documentation needed to understand the result.',
   profile:
-    'I build and integrate robotics, embedded systems, industrial automation and engineering software, from the first requirement to testing and handover.',
+    'I build and integrate robotics, mechatronic systems, controls and industrial automation, with the embedded electronics and software around them, from the first requirement to testing and handover.',
   url: 'https://sv.sajeevanveeriah.workers.dev',
   location: 'Geelong, Victoria, Australia',
   resume: '/assets/Resume_Sajeevan_Veeriah.pdf',
   serviceDesk: 'https://sajeevanveeriah.github.io/saj-service-desk/request/',
   /** Last content review; used for sitemap dates on routes without their own date. */
-  updated: '2026-10-29',
+  updated: '2026-11-14',
   github: 'https://github.com/Sajeevanveeriah',
   logo: '/assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
   support: {
@@ -45,8 +45,8 @@ export const experience: readonly ExperienceRecord[] = [
     employerUrl: 'https://farmfrites.com.au/',
     context: 'Greenfield food manufacturing plant, Dooen, Victoria',
     detail:
-      'Support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability; MES-ERP integration for production orders, inventory and master data; and SCADA, PLC and historian interfaces. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity, and coordinate integrators and suppliers through FAT, SAT, commissioning, validation and documentation.',
-    tags: ['MES', 'ERP integration', 'SCADA/PLC', 'Historian', 'OT networks', 'OT cybersecurity', 'Commissioning'],
+      'Work across the plant automation and control layers: SCADA, PLC and historian interfaces, and coordination of integrators and suppliers through FAT, SAT, commissioning, validation and documentation. Support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability, and MES-ERP integration for production orders, inventory and master data. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity.',
+    tags: ['SCADA/PLC', 'Commissioning', 'FAT/SAT', 'Historian', 'MES', 'ERP integration', 'OT networks'],
   },
   {
     period: 'Jun 2026 - present',
