@@ -2,7 +2,11 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
-## Work at 14 November 2026
+## Work at 14 November 2026: whole-site redesign
+
+Branch `saj/great-wozniak-h3k6ed`: a new look across every page, chosen by Saj as "whole site, new look, you decide". Light-first and quiet: white canvas, navy ink, amber as a sparing highlight, soft rounded cards in place of the hairline grid, no drafting rails, registration crosses or monospace labels. `src/app/globals.css` and `src/app/robotics.css` were rewritten and `src/app/figures.css` adjusted; the page structure, routes, content, contact relay and resume are unchanged. A first visit now opens in the light theme (`Theme.tsx`, the inline script in `layout.tsx`, and the matching browser QA assertion). The home headline reads Robotics. Mechatronics. Controls., and the third selected project is the Dooen Plant Process Model. `TraceBackdrop` and the pointer spotlight were removed. Checks run and results are recorded in the pull request.
+
+## Work at 14 November 2026: positioning
 
 Branch `saj/great-wozniak-h3k6ed`: positioning now leads with robotics, mechatronics, controls and automation. `src/content/site.ts` (profile line, Farm Frites role description and tags, review date), the Person schema topics in `src/app/layout.tsx`, and the resume content in `scripts/build-portfolio-resume.py` (focus line, profile, strengths, skills order, Farm Frites bullets) were reordered; no employer, date, tool or result was added. `public/assets/Resume_Sajeevan_Veeriah.pdf` was rebuilt and validated with `scripts/generate-public-resume.py` (two pages, no contact details). Checks run and results are recorded in the pull request.
 

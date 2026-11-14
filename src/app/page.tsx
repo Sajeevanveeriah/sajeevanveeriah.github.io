@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Diagram } from '@/components/figures/kit'
-import { CareerChart, Figure, LayerStack, indexFigure, postFigure, projectFigure } from '@/components/figures/Figure'
+import { CareerChart, Figure, LayerStack, postFigure, projectFigure } from '@/components/figures/Figure'
 import { learningFigure } from '@/components/figures/specs'
 import { Masthead } from '@/components/Masthead'
 import { ContactBand, SiteFooter } from '@/components/SiteFooter'
@@ -17,7 +17,7 @@ import { site, systemLayers, experience, foundation, practiceDomains } from '@/c
 const selectedWork = [
   { title: 'Autonomous Navigation Rover', category: 'Robotics', summary: 'Sensing, localisation and motion control.', figure: projectFigure('autonomous-navigation-rover'), href: '/work/autonomous-navigation-rover/' },
   { title: 'Industrial Display Controller', category: 'Mechatronics', summary: 'Embedded systems and electronics.', figure: projectFigure('industrial-display-controller'), href: '/work/industrial-display-controller/' },
-  { title: 'Voltwyn: Local SLM System', category: 'AI/ML', summary: 'Local intelligence, retrieval and controlled tools.', figure: indexFigure('Voltwyn: Local SLM System'), href: '/blog/local-ai-beyond-the-model/' },
+  { title: 'Dooen Plant Process Model', category: 'Automation', summary: 'Process modelling, simulation and plant visualisation.', figure: projectFigure('dooen-plant-process-model'), href: '/work/dooen-plant-process-model/' },
 ]
 
 export default function Home() {
@@ -32,10 +32,10 @@ export default function Home() {
       <div className="hero-band">
         <section className="container hero robotics-hero" aria-labelledby="hero-title">
           <div className="hero-copy">
-            <p className="eyebrow"><DecodeText text="Robotics / Mechatronics / AI" /></p>
-            <h1 id="hero-title"><span className="line"><span>Robotics.</span></span><span className="line"><span>Mechatronics.</span></span><span className="line"><span className="hero-ai">AI.</span></span></h1>
+            <p className="eyebrow"><DecodeText text="Robotics, mechatronics, controls and automation" /></p>
+            <h1 id="hero-title"><span className="line"><span>Robotics.</span></span><span className="line"><span>Mechatronics.</span></span><span className="line"><span className="hero-mark">Controls.</span></span></h1>
             <p className="hero-role">{site.jobTitle}</p>
-            <p className="hero-lede">Hardware, control and intelligence.<br />Built to work together.</p>
+            <p className="hero-lede">Hardware, control and software.<br />Built to work together.</p>
             <div className="hero-actions">
               <Link className="btn btn-primary" href="/work/" prefetch={false}>Explore my work <ArrowUpRight /></Link>
               <a className="btn btn-secondary" href={site.resume}>Resume (PDF)</a>
