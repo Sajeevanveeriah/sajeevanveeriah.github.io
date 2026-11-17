@@ -40,9 +40,9 @@ ROLE = 'Robotics, Mechatronics, AI/ML &amp; End-To-End Automation Engineer'
 FOCUS = 'Control Systems, Embedded Design &amp; MES/SCADA Integration | Applied R&amp;D'
 
 PROFILE = ('Mechatronics engineer (Honours, Distinction) building robotics, control and automation systems from first '
-           'requirement to tested hardware and software. Currently IT/OT and Systems Engineer on Farm Frites '
-           "Australia's greenfield potato-processing plant at Dooen, VIC, across SCADA, PLC interfaces, MES and "
-           'commissioning. Previously integrated PLC logic, HMI/SCADA and drives in GMP manufacturing at JAG Process '
+           'requirement to tested hardware and software. Currently Industrial IT/OT/IIoT &amp; Systems Engineer on '
+           "Farm Frites Australia's greenfield potato-processing plant at Dooen, VIC, across MES, SCADA, historians, "
+           'OT networks and commissioning. Previously integrated PLC logic, HMI/SCADA and drives in GMP manufacturing at JAG Process '
            'Solutions and validated vehicle software and ADAS at Ford. Robotics and mechatronics work includes a '
            'ROS 2 navigation rover, embedded sensing hardware and Voltwyn client electronics and firmware.')
 STRENGTHS = ('Robotics and autonomy | Mechatronics and embedded design | Control systems | Industrial automation and '
@@ -63,12 +63,12 @@ SKILLS = [
 ]
 
 EXPERIENCE = [
-    ('IT/OT and Systems Engineer', 'Oct 2026 - present', 'Farm Frites Australia, Dooen VIC', [
-        'Plant automation and control layers for a greenfield potato-processing plant through commissioning into '
-        '24-hour production: SCADA, PLC interfaces and historians, with FAT, SAT and validation alongside '
-        'integrators and suppliers.',
-        'MES and MES-ERP integration for orders, inventory and traceability; OT networks, servers, cyber security '
-        'and backup with Corporate IT; documentation and user training.']),
+    ('Industrial IT/OT/IIoT &amp; Systems Engineer', 'Oct 2026 - present', 'Farm Frites Australia, Dooen VIC', [
+        'Industrial IT, OT and IIoT systems for a greenfield potato-processing plant through commissioning into '
+        '24-hour production: MES, SCADA, PLC interfaces, historians and MES-ERP integration for orders, inventory, '
+        'traceability and OEE reporting.',
+        'OT networks, servers, cyber security, backup and disaster recovery with Corporate IT; FAT, SAT and '
+        'validation with integrators and suppliers; documentation and user training.']),
     ('Automation and Controls Engineer', 'Jan 2026 - Jun 2026', 'JAG Process Solutions', [
         'Integrated PLC logic, HMI/SCADA, field devices, drives and manufacturing execution system (MES) data for '
         'pharmaceutical, biotech and food plants.',

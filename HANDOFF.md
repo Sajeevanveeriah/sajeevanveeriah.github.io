@@ -2,6 +2,14 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 17 November 2026: Farm Frites title and description
+
+- Farm Frites Australia role retitled Industrial IT/OT/IIoT & Systems Engineer at Saj's request; description rewritten to lead with industrial IT, OT and IIoT systems (MES, MES-ERP, SCADA, PLC interfaces, historians, OT networks, cyber security, backup and DR, commissioning). Headline identity unchanged.
+- Changed: src/content/site.ts, src/app/page.tsx, scripts/build-portfolio-resume.py, public/assets/Resume_Sajeevan_Veeriah.pdf (two pages, validated), AGENTS.md.
+- Checks: tsc, eslint, next build, verify-export (47 routes, 59 files), qa-browser (658 checks passed).
+- OneDrive: 20261117-Personal-Sajeevan-Veeriah-Resume-Rev03 (DOCX, PDF) and 20261117-Personal-Sajeevan-Veeriah-LinkedIn-SEEK-Facebook-Rev06 (DOCX, PDF) in 01-Resume-Main/01-Documents.
+- Open: LinkedIn, SEEK and Facebook live edits need Saj signed in on his PC; paste-ready copy is in the Rev06 document.
+
 ## Work at 14 November 2026: whole-site redesign
 
 Branch `saj/great-wozniak-h3k6ed`: a new look across every page, chosen by Saj as "whole site, new look, you decide". Light-first and quiet: white canvas, navy ink, amber as a sparing highlight, soft rounded cards in place of the hairline grid, no drafting rails, registration crosses or monospace labels. `src/app/globals.css` and `src/app/robotics.css` were rewritten and `src/app/figures.css` adjusted; the page structure, routes, content, contact relay and resume are unchanged. A first visit now opens in the light theme (`Theme.tsx`, the inline script in `layout.tsx`, and the matching browser QA assertion). The home headline reads Robotics. Mechatronics. Controls., and the third selected project is the Dooen Plant Process Model. `TraceBackdrop` and the pointer spotlight were removed. Checks run and results are recorded in the pull request.
