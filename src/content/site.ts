@@ -40,13 +40,13 @@ export interface ExperienceRecord {
 export const experience: readonly ExperienceRecord[] = [
   {
     period: 'Current',
-    role: 'IT/OT and Systems Engineer',
+    role: 'Industrial IT/OT/IIoT & Systems Engineer',
     organisation: 'Farm Frites Australia',
     employerUrl: 'https://farmfrites.com.au/',
     context: 'Greenfield food manufacturing plant, Dooen, Victoria',
     detail:
-      'Work across the plant automation and control layers: SCADA, PLC and historian interfaces, and coordination of integrators and suppliers through FAT, SAT, commissioning, validation and documentation. Support MES implementation and production workflows, including production tracking, recipes, OEE, downtime and traceability, and MES-ERP integration for production orders, inventory and master data. Work with Corporate IT on servers, industrial networks, backups, disaster recovery and OT cybersecurity.',
-    tags: ['SCADA/PLC', 'Commissioning', 'FAT/SAT', 'Historian', 'MES', 'ERP integration', 'OT networks'],
+      'Industrial IT, OT and IIoT systems for a greenfield potato-processing plant through construction, commissioning and handover into 24-hour production. Cover MES, SCADA, PLC interfaces and historians, and MES-ERP integration for production orders, inventory movements and traceability, with OEE, downtime and performance reporting for Supply Chain and Finance. Work with Corporate IT on OT networks, servers, OT cybersecurity, backup and disaster recovery, and with integrators and suppliers on FAT, SAT, commissioning and validation, plus documentation and user training.',
+    tags: ['Industrial IT/OT', 'IIoT', 'MES', 'ERP integration', 'SCADA/PLC', 'Historian', 'OT networks', 'OT cybersecurity', 'Commissioning'],
   },
   {
     period: 'Jun 2026 - present',

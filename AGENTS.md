@@ -34,6 +34,8 @@ Invenio in the public portfolio and resume on 21 September 2026.
 On 26 October 2026 Saj asked to add his incoming Farm Frites Australia role
 (IT/OT and Systems Engineer, Dooen). Its scope follows the position
 description. Saj confirmed on 29 October 2026 that this is his current role.
+On 17 November 2026 Saj set the title to Industrial IT/OT/IIoT & Systems
+Engineer and asked for the description to lead with industrial IT/OT systems.
 Do not infer undisclosed technology, client details, metrics,
 certification or outcomes. Project evidence boundaries are part of the claim.
 

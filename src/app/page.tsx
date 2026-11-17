@@ -44,7 +44,7 @@ export default function Home() {
           </div>
           <RoboticsHero />
         </section>
-        <div className="container current-role"><div><span className="eyebrow">Currently at</span><strong>Farm Frites Australia</strong></div><div><span className="eyebrow">Role</span><span>IT/OT and Systems Engineer</span></div><a className="text-link" href="#experience">View experience <ArrowUpRight /></a></div>
+        <div className="container current-role"><div><span className="eyebrow">Currently at</span><strong>Farm Frites Australia</strong></div><div><span className="eyebrow">Role</span><span>Industrial IT/OT/IIoT &amp; Systems Engineer</span></div><a className="text-link" href="#experience">View experience <ArrowUpRight /></a></div>
         <section className="container stats" aria-label="Portfolio at a glance">
           <dl>
             <div><dt>Case studies</dt><dd>{projects.length}</dd></div>
