@@ -1,5 +1,7 @@
 # Sajeevan Veeriah - Engineering Portfolio
 
+Project instructions for Claude Code and Codex are in [AGENTS.md](AGENTS.md).
+
 A static Next.js portfolio for robotics, embedded mechatronics, industrial automation and engineering software.
 
 - Production: https://sv.sajeevanveeriah.workers.dev/ (Cloudflare Worker `sv`: static assets plus the `/api/contact` relay)
