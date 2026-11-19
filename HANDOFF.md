@@ -2,6 +2,10 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 19 November 2026 - project instructions
+
+Claude Code loads the project instructions through the `@AGENTS.md` import in CLAUDE.md. A fresh session identified a project-specific rule from AGENTS.md with tools disabled. Maintain shared project instructions in AGENTS.md.
+
 ## Work at 17 November 2026: Farm Frites title and description
 
 - Farm Frites Australia role retitled Industrial IT/OT/IIoT & Systems Engineer at Saj's request; description rewritten to lead with industrial IT, OT and IIoT systems (MES, MES-ERP, SCADA, PLC interfaces, historians, OT networks, cyber security, backup and DR, commissioning). Headline identity unchanged.
