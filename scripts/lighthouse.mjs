@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url'
 import { sitemapRoutes } from './routes.mjs'
 
 const root = fileURLToPath(new URL('../out/', import.meta.url))
-const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.avif': 'image/avif', '.txt': 'text/plain', '.xml': 'application/xml', '.pdf': 'application/pdf' }
+const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.avif': 'image/avif', '.mp4': 'video/mp4', '.webm': 'video/webm', '.txt': 'text/plain', '.xml': 'application/xml', '.pdf': 'application/pdf' }
 const server = createServer(async (request, response) => {
   try {
     let file = join(root, decodeURIComponent((request.url ?? '/').split('?')[0]))

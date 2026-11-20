@@ -1,24 +1,40 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/content/projects'
-import { Diagram } from './figures/kit'
-import { projectFigure } from './figures/Figure'
+import { getProjectMedia } from '@/content/media'
+import { PictureMedia } from './PictureMedia'
 
-export function ProjectCard({ project, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
+export function ProjectCard({
+  project,
+  headingLevel = 3,
+  onInspect,
+}: {
+  readonly project: Project
+  readonly headingLevel?: 2 | 3
+  readonly onInspect?: () => void
+}) {
   const Heading = headingLevel === 2 ? 'h2' : 'h3'
-  const figure = projectFigure(project.slug)
+  const media = getProjectMedia(project.slug)
   return (
     <article className="project-card" data-project={project.slug}>
-      {figure ? <div className="fig-frame card-fig"><Diagram spec={figure} /></div> : project.image && (
-        <div className="media-frame">
-          <Image src={project.image.src} alt={project.image.alt} width={project.image.width} height={project.image.height} sizes="(max-width: 720px) 92vw, (max-width: 1200px) 45vw, 380px" />
-        </div>
-      )}
+      <div className="media-frame">
+        <PictureMedia media={media.image} />
+      </div>
       <div className="project-card-body">
         <p className="card-kicker">{project.category}</p>
-        <Heading><Link prefetch={false} href={`/work/${project.slug}/`}>{project.title}</Link></Heading>
+        <Heading>
+          <Link prefetch={false} href={`/work/${project.slug}/`}>
+            {project.title}
+          </Link>
+        </Heading>
         <p>{project.proof}</p>
         <p className="project-status">{project.status}</p>
+        {onInspect && (
+          <div className="card-actions js-only">
+            <button type="button" className="btn btn-secondary btn-small" onClick={onInspect}>
+              Inspect dossier
+            </button>
+          </div>
+        )}
       </div>
     </article>
   )

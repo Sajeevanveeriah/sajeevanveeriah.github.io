@@ -1,101 +1,237 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { Masthead } from "@/components/Masthead";
-import { SiteFooter } from "@/components/SiteFooter";
-import { posts, formatPostDate, readingMinutes, postCategory, postTopic } from "@/content/blog";
-import { ArrowLeft } from "@/components/icons";
-import { ReadingProgress, ShareButton } from "@/components/ArticleTools";
-import { site } from "@/content/site";
-import { Figure, postFigure } from "@/components/figures/Figure";
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
+import { Masthead } from '@/components/Masthead'
+import { SiteFooter } from '@/components/SiteFooter'
+import { posts, formatPostDate, readingMinutes, postCategory, postTopic } from '@/content/blog'
+import { getPostMedia } from '@/content/media'
+import { ArrowLeft } from '@/components/icons'
+import { ReadingProgress, ShareButton } from '@/components/ArticleTools'
+import { PictureMedia } from '@/components/PictureMedia'
+import { LoopingVideo } from '@/components/LoopingVideo'
+import { QueueSimulator } from '@/components/QueueSimulator'
+import { site } from '@/content/site'
+import { Figure, postFigure } from '@/components/figures/Figure'
 
-export const dynamicParams = false;
+export const dynamicParams = false
 export function generateStaticParams() {
-  return posts.map(({ slug }) => ({ slug }));
+  return posts.map(({ slug }) => ({ slug }))
 }
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const post = posts.find((entry) => entry.slug === slug);
-  if (!post) return {};
+  const { slug } = await params
+  const post = posts.find((entry) => entry.slug === slug)
+  if (!post) return {}
   return {
-    title: post.title, description: post.description,
+    title: post.title,
+    description: post.description,
     alternates: { canonical: `/blog/${post.slug}/` },
     openGraph: {
-      title: post.title, description: post.description,
-      type: "article", url: `/blog/${post.slug}/`,
-      publishedTime: post.date, authors: [site.name],
-      images: [{ url: post.image?.src.replace(".svg", ".png") ?? site.logo, alt: post.image?.alt ?? site.name }],
+      title: post.title,
+      description: post.description,
+      type: 'article',
+      url: `/blog/${post.slug}/`,
+      publishedTime: post.date,
+      authors: [site.name],
+      images: [{ url: post.image?.src.replace('.svg', '.png') ?? site.logo, alt: post.image?.alt ?? site.name }],
     },
-    twitter: { card: post.image ? "summary_large_image" : "summary", title: post.title, description: post.description, images: [post.image?.src.replace(".svg", ".png") ?? site.logo] },
-  };
+    twitter: {
+      card: post.image ? 'summary_large_image' : 'summary',
+      title: post.title,
+      description: post.description,
+      images: [post.image?.src.replace('.svg', '.png') ?? site.logo],
+    },
+  }
 }
+
 export default async function BlogArticle({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = posts.find((entry) => entry.slug === slug);
-  if (!post) notFound();
+  const { slug } = await params
+  const post = posts.find((entry) => entry.slug === slug)
+  if (!post) notFound()
+  const richMedia = getPostMedia(post.slug)
   const schema = {
-    "@context": "https://schema.org", "@type": "BlogPosting",
-    headline: post.title, description: post.description,
-    datePublished: post.date, mainEntityOfPage: `${site.url}/blog/${post.slug}/`,
-    author: { "@type": "Person", "@id": `${site.url}/#person`, name: site.name, url: site.url },
-    inLanguage: "en-AU",
-    isPartOf: { "@id": `${site.url}/#website` },
-    image: post.image ? `${site.url}${post.image.src.replace(".svg", ".png")}` : `${site.url}${site.logo}`,
-  };
-  return <>
-    <Masthead current="blog" />
-    <ReadingProgress />
-    <main id="main" className="container blog-article">
-      <Link prefetch={false} className="back-link" href="/blog/"><ArrowLeft />Journal</Link>
-      <article>
-        <header className="blog-header">
-          <p className="post-meta"><Link prefetch={false} className="topic" href={`/blog/?topic=${encodeURIComponent(postTopic(post))}`}>{postTopic(post)}</Link><span>{postCategory(post)}</span><span>{readingMinutes(post)} min read</span></p>
-          <h1>{post.title}</h1>
-          <p className="blog-deck">{post.description}</p>
-          <p className="blog-byline">By Sajeevan (Saj) Veeriah · <time dateTime={post.date}>{formatPostDate(post.date)}</time></p>
-          <ShareButton title={post.title} />
-        </header>
-        {post.image && <figure className="blog-figure">
-          <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} priority />
-          <figcaption>{post.image.caption} <a href={post.image.src}>View full-size image</a></figcaption>
-        </figure>}
-        {!post.image && postFigure(post.slug) && <div className="blog-figure"><Figure spec={postFigure(post.slug)!} caption="Drawn from the article below." /></div>}
-        <div className="blog-layout">
-          <nav className="blog-contents" aria-label="In this article">
-            <h2>In this article</h2>
-            <ol>{post.sections.map((section) => <li key={section.id}><a href={`#${section.id}`}>{section.title}</a></li>)}</ol>
-          </nav>
-          <div className="blog-body">
-            {post.intro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            {post.sections.map((section) => <section key={section.id} id={section.id} aria-labelledby={`${section.id}-heading`}>
-              <h2 id={`${section.id}-heading`}>{section.title}</h2>
-              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              {section.table && <table>
-                <caption className="sr-only">{section.title}</caption>
-                <thead><tr>{section.table.headings.map((heading) => <th key={heading} scope="col">{heading}</th>)}</tr></thead>
-                <tbody>{section.table.rows.map(([label, detail]) => <tr key={label}><th scope="row">{label}</th><td>{detail}</td></tr>)}</tbody>
-              </table>}
-              {section.after?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              {section.image && <figure className="blog-figure">
-                <Image src={section.image.src} alt={section.image.alt} width={section.image.width} height={section.image.height} />
-                <figcaption>{section.image.caption} <a href={section.image.src}>View full-size image</a></figcaption>
-              </figure>}
-              {section.steps && <ol className="blog-routine">{section.steps.map(([label, detail]) => <li key={label}><strong>{label}</strong><span>{detail}</span></li>)}</ol>}
-              {section.links && <ul className="blog-downloads">{section.links.map((link) => <li key={link.url}><a href={link.url} download>{link.label}</a></li>)}</ul>}
-              {section.sources && <p className="blog-citations">Sources: {section.sources.map((number) => { const source = post.sources[number - 1]; return source ? <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${source.label}`}>[{number}]</a> : null; })}</p>}
-            </section>)}
-            <section className="blog-sources" aria-labelledby="sources-heading">
-              <h2 id="sources-heading">Sources and further reading</h2>
-              {post.note && <p>{post.note}</p>}
-              <ol>{post.sources.map((source, i) => <li key={source.url} id={`source-${i + 1}`}><a href={source.url}>{source.label}</a></li>)}</ol>
-            </section>
-            <Link prefetch={false} className="text-link" href="/blog/">Back to all posts</Link>
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    mainEntityOfPage: `${site.url}/blog/${post.slug}/`,
+    author: { '@type': 'Person', '@id': `${site.url}/#person`, name: site.name, url: site.url },
+    inLanguage: 'en-AU',
+    isPartOf: { '@id': `${site.url}/#website` },
+    image: post.image ? `${site.url}${post.image.src.replace('.svg', '.png')}` : `${site.url}${richMedia.image.jpg}`,
+  }
+  return (
+    <>
+      <Masthead current="blog" />
+      <ReadingProgress />
+      <main id="main" className="container blog-article">
+        <Link prefetch={false} className="back-link" href="/blog/">
+          <ArrowLeft />
+          Journal
+        </Link>
+        <article>
+          <header className="blog-header">
+            <p className="post-meta">
+              <Link prefetch={false} className="topic" href={`/blog/?topic=${encodeURIComponent(postTopic(post))}`}>
+                {postTopic(post)}
+              </Link>
+              <span>{postCategory(post)}</span>
+              <span>{readingMinutes(post)} min read</span>
+            </p>
+            <h1>{post.title}</h1>
+            <p className="blog-deck">{post.description}</p>
+            <p className="blog-byline">
+              By Sajeevan (Saj) Veeriah · <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+            </p>
+            <ShareButton title={post.title} />
+          </header>
+          <div className="blog-media-hero media-frame">
+            {richMedia.video ? (
+              <LoopingVideo video={richMedia.video} priority />
+            ) : (
+              <PictureMedia media={richMedia.image} priority />
+            )}
           </div>
-        </div>
-      </article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
-    </main>
-    <SiteFooter />
-  </>;
+          {post.image && (
+            <figure className="blog-figure">
+              <a href={post.image.src}>
+                <Image src={post.image.src} alt={post.image.alt} width={post.image.width} height={post.image.height} />
+              </a>
+              <figcaption>
+                {post.image.caption} <a href={post.image.src}>View full-size image</a>
+              </figcaption>
+            </figure>
+          )}
+          {!post.image && postFigure(post.slug) && (
+            <div className="blog-figure">
+              <Figure spec={postFigure(post.slug)!} caption="Drawn from the article below." />
+            </div>
+          )}
+          <div className="blog-layout">
+            <nav className="blog-contents" aria-label="In this article">
+              <h2>In this article</h2>
+              <ol>
+                {post.sections.map((section) => (
+                  <li key={section.id}>
+                    <a href={`#${section.id}`}>{section.title}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+            <div className="blog-body">
+              {post.intro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              {post.sections.map((section) => (
+                <section key={section.id} id={section.id} aria-labelledby={`${section.id}-heading`}>
+                  <h2 id={`${section.id}-heading`}>{section.title}</h2>
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                  {section.table && (
+                    <table>
+                      <caption className="sr-only">{section.title}</caption>
+                      <thead>
+                        <tr>
+                          {section.table.headings.map((heading) => (
+                            <th key={heading} scope="col">
+                              {heading}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {section.table.rows.map(([label, detail]) => (
+                          <tr key={label}>
+                            <th scope="row">{label}</th>
+                            <td>{detail}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
+                  {post.slug === 'automation-queues-and-flow-time' && section.id === 'utilisation' && (
+                    <div className="blog-sim-inline">
+                      <QueueSimulator />
+                    </div>
+                  )}
+                  {section.after?.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                  {section.image && (
+                    <figure className="blog-figure">
+                      <Image
+                        src={section.image.src}
+                        alt={section.image.alt}
+                        width={section.image.width}
+                        height={section.image.height}
+                      />
+                      <figcaption>
+                        {section.image.caption} <a href={section.image.src}>View full-size image</a>
+                      </figcaption>
+                    </figure>
+                  )}
+                  {section.steps && (
+                    <ol className="blog-routine">
+                      {section.steps.map(([label, detail]) => (
+                        <li key={label}>
+                          <strong>{label}</strong>
+                          <span>{detail}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                  {section.links && (
+                    <ul className="blog-downloads">
+                      {section.links.map((link) => (
+                        <li key={link.url}>
+                          <a href={link.url} download>
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {section.sources && (
+                    <p className="blog-citations">
+                      Sources:{' '}
+                      {section.sources.map((number) => {
+                        const source = post.sources[number - 1]
+                        return source ? (
+                          <a key={number} href={`#source-${number}`} aria-label={`Source ${number}: ${source.label}`}>
+                            [{number}]
+                          </a>
+                        ) : null
+                      })}
+                    </p>
+                  )}
+                </section>
+              ))}
+              <section className="blog-sources" aria-labelledby="sources-heading">
+                <h2 id="sources-heading">Sources and further reading</h2>
+                {post.note && <p>{post.note}</p>}
+                <ol>
+                  {post.sources.map((source, i) => (
+                    <li key={source.url} id={`source-${i + 1}`}>
+                      <a href={source.url}>{source.label}</a>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+              <Link prefetch={false} className="text-link" href="/blog/">
+                Back to all posts
+              </Link>
+            </div>
+          </div>
+        </article>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
+        />
+      </main>
+      <SiteFooter />
+    </>
+  )
 }

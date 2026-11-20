@@ -15,9 +15,11 @@ const mime = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript",
   ".jpg": "image/jpeg",
+  ".mp4": "video/mp4",
   ".pdf": "application/pdf",
   ".png": "image/png",
   ".svg": "image/svg+xml",
+  ".webm": "video/webm",
   ".woff2": "font/woff2",
   ".xml": "application/xml",
   ".webp": "image/webp",
@@ -38,12 +40,51 @@ const server = createServer(async (request, response) => {
     }
     if (pathname.endsWith("/")) pathname += "index.html";
     const candidate = normalize(join(root, pathname));
-    if (!candidate.startsWith(root) || !(await stat(candidate)).isFile())
+    const info = await stat(candidate).catch(() => null);
+    if (!candidate.startsWith(root) || !info?.isFile())
       throw new Error("not found");
+    const contentType = mime[extname(candidate)] ?? "application/octet-stream";
+    const data = await readFile(candidate);
+    const range = request.headers.range;
+    if (range) {
+      const m = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+      if (!m || (!m[1] && !m[2])) {
+        response.writeHead(416, { "content-range": `bytes */${data.length}` }).end();
+        return;
+      }
+      let start;
+      let end;
+      if (!m[1]) {
+        const suffix = Number.parseInt(m[2], 10);
+        if (!Number.isFinite(suffix) || suffix <= 0) {
+          response.writeHead(416, { "content-range": `bytes */${data.length}` }).end();
+          return;
+        }
+        start = Math.max(0, data.length - suffix);
+        end = data.length - 1;
+      } else {
+        start = Number.parseInt(m[1], 10);
+        end = m[2] ? Math.min(data.length - 1, Number.parseInt(m[2], 10)) : data.length - 1;
+      }
+      if (!Number.isFinite(start) || !Number.isFinite(end) || start < 0 || start >= data.length || start > end) {
+        response.writeHead(416, { "content-range": `bytes */${data.length}` }).end();
+        return;
+      }
+      response.writeHead(206, {
+        "content-type": contentType,
+        "accept-ranges": "bytes",
+        "content-range": `bytes ${start}-${end}/${data.length}`,
+        "content-length": end - start + 1,
+      });
+      response.end(data.subarray(start, end + 1));
+      return;
+    }
     response.writeHead(200, {
-      "content-type": mime[extname(candidate)] ?? "application/octet-stream",
+      "content-type": contentType,
+      "accept-ranges": "bytes",
+      "content-length": data.length,
     });
-    response.end(await readFile(candidate));
+    response.end(data);
   } catch {
     response.writeHead(404, { "content-type": "text/html; charset=utf-8" });
     response.end(await readFile(join(root, "404.html")));
@@ -337,8 +378,9 @@ try {
 
   // Theme controls stay in step and persist.
   await page.setViewportSize({ width: 1440, height: 1000 });
-  // A first visit opens in the light presentation.
+  // A first visit defaults to system appearance (light under default Playwright context).
   await page.goto(baseURL + "/");
+  assert.equal(await page.getByLabel("Colour theme").inputValue(), "system");
   assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
@@ -346,16 +388,76 @@ try {
   await page.reload();
   assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
   await page.getByLabel("Colour theme").selectOption("system");
+  assert.equal(await page.getByLabel("Colour theme").inputValue(), "system");
   await page.getByLabel("Colour theme").selectOption("light");
   assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
   assert.ok(await page.getByRole("button", { name: "Switch to dark theme" }).isVisible());
   console.log("Header toggle and footer appearance control passed");
 
+  // Interactive engineering lab, bus, dossier drawer, queue simulator and roadmap.
+  await page.locator("#lab-tab-slam").click();
+  const slamBefore = await page.getByTestId("slam-telemetry").innerText();
+  const canvasBox = await page.locator(".eng-lab-canvas").boundingBox();
+  assert.ok(canvasBox && canvasBox.width > 200);
+  await page.mouse.click(canvasBox.x + canvasBox.width * 0.78, canvasBox.y + canvasBox.height * 0.30);
+  await page.waitForTimeout(350);
+  const slamAfter = await page.getByTestId("slam-telemetry").innerText();
+  assert.notEqual(slamAfter, slamBefore, "SLAM telemetry should update after waypoint click");
+
+  await page.locator("#lab-tab-kinematics").click();
+  const armBefore = await page.getByTestId("kinematics-telemetry").innerText();
+  await page.mouse.move(canvasBox.x + canvasBox.width * 0.32, canvasBox.y + canvasBox.height * 0.35);
+  await page.waitForTimeout(150);
+  const armAfter = await page.getByTestId("kinematics-telemetry").innerText();
+  assert.equal(await page.locator(".eng-lab").getAttribute("data-lab-mode"), "kinematics");
+  assert.notEqual(armAfter, armBefore, "3-DOF telemetry should update after pointer move");
+
+  await page.locator("#lab-tab-pid").click();
+  await page.getByRole("button", { name: "Underdamped", exact: true }).click();
+  assert.equal(await page.getByTestId("pid-regime").textContent(), "Underdamped");
+  await page.getByRole("button", { name: "Overdamped", exact: true }).click();
+  assert.equal(await page.getByTestId("pid-regime").textContent(), "Overdamped");
+  await page.locator("#lab-tab-slam").click();
+
+  await page.locator(".bus-node").nth(3).click();
+  assert.ok((await page.locator(".bus-inspector-head h3").textContent())?.toLowerCase().includes("autonomy"));
+
+  await page.getByRole("button", { name: /All verified \(26\)/ }).click();
+  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 26);
+  await page.getByRole("button", { name: /Case studies \(11\)/ }).click();
+  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 11);
+
+  await page.getByRole("button", { name: "Inspect dossier" }).first().click();
+  const dialog = page.locator('[role="dialog"]');
+  await dialog.waitFor();
+  for (let i = 0; i < 6; i += 1) await page.keyboard.press("Tab");
+  assert.equal(await dialog.evaluate((el) => el.contains(document.activeElement)), true, "Focus must remain trapped inside open dossier");
+  await page.keyboard.press("Escape");
+  assert.equal(await dialog.count(), 0);
+
+  const queueSection = page.locator(".queue-sim");
+  await queueSection.scrollIntoViewIfNeeded();
+  await queueSection.getByRole("button", { name: "50%", exact: true }).click();
+  assert.equal(await queueSection.getByTestId("queue-wait").textContent(), "1.0 min");
+  await queueSection.getByRole("button", { name: "80%", exact: true }).click();
+  assert.equal(await queueSection.getByTestId("queue-wait").textContent(), "4.0 min");
+  await queueSection.getByRole("button", { name: "95%", exact: true }).click();
+  assert.equal(await queueSection.getByTestId("queue-wait").textContent(), "19.0 min");
+
+  await page.locator(".roadmap-phase-btn").nth(2).click();
+  assert.equal(await page.locator(".roadmap-phase-btn").nth(2).getAttribute("aria-selected"), "true");
+
+  const videoProps = await page.locator("video").evaluateAll((els) =>
+    els.map((v) => ({ muted: v.muted, loop: v.loop, playsInline: v.playsInline, hasPoster: Boolean(v.getAttribute("poster")) })),
+  );
+  assert.ok(videoProps.length >= 4 && videoProps.every((v) => v.muted && v.loop && v.playsInline && v.hasPoster));
+  console.log("Interactive lab, bus, dossiers, queue simulator, roadmap and video checks passed");
+
   // Home page structure follows the agreed information path.
   const order = await page.evaluate(() => ["#hero-title", "#featured-title", ".card-grid.compact", "#experience", "#foundation-title", "#contact", "#project-index"].map((s) => document.querySelector(s)?.getBoundingClientRect().top + scrollY));
   assert.ok(order.every((top, i) => Number.isFinite(top) && (i === 0 || top > order[i - 1])), `home order ${order}`);
   assert.equal(await page.locator("#project-index li").count(), 26);
-  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 4);
+  assert.equal(await page.locator(".card-grid.compact .project-card").count(), 11);
   assert.equal(await page.locator("#research li").count(), 2);
   assert.equal(await page.locator('#research a[href^="https://"]').count(), 2);
   assert.equal(await page.locator(".compact-timeline").first().locator("li").count(), 9);

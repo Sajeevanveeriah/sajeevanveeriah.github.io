@@ -2,6 +2,20 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 20 November 2026 - Hardware-grade robotics redesign and media pipeline
+
+- Redesigned the portfolio around interactive engineering subsystems while preserving verified project records, monogram/brand assets, Night Navy (`#0F1E33`), deep dark canvas (`#091320`), Volt Amber (`#F5B700`) and both Light/Dark themes (defaulting initial visits to `system` in `src/app/layout.tsx` and `src/components/Theme.tsx`, synced between the header toggle and footer selector).
+- Added interactive components:
+  - `src/components/EngineeringLab.tsx`: 60 FPS hero lab with 3 switchable modes (`ROS 2 SLAM` 36-ray LiDAR + EKF covariance + Nav2 waypoints; `3-DOF Arm` planar IK + joint angle arcs + reach envelope; `PID Scope` live `Kp`/`Ki`/`Kd` sliders calculating overshoot %, 2% settling time ms, steady-state error % and damping regime) plus the hero launch reel.
+  - `src/components/SystemsBus.tsx`: animated 6-layer systems architecture bus (`01 Physical System` through `06 Verification`) linking interfaces, toolchains, proof metrics and matching projects.
+  - `src/components/ProjectShowcaseGrid.tsx` and `src/components/ProjectDossierDrawer.tsx`: filterable grid covering all 26 verified projects (11 case studies + 15 index records) with slide-over dossier drawers (`Escape`, backdrop click and focus return).
+  - `src/components/QueueSimulator.tsx`: interactive Little's Law M/M/1 queue model (50% to 95% utilisation checkpoints `1.0 min`, `4.0 min`, `19.0 min`) on `/` and journal articles (`/blog/automation-queues-and-flow-time/`, `/blog/`).
+  - `src/components/InteractiveRoadmap.tsx`: clickable 6-month robotics roadmap on `/` and `/notes/`.
+- Built the 16:9 image and silent looping video pipeline:
+  - Added `src/content/media.ts`, `src/components/PictureMedia.tsx` and `src/components/LoopingVideo.tsx` (`IntersectionObserver` off-screen pause, `prefers-reduced-motion: reduce` static poster fallback, `preload="none"`, HTTP 206 range support via `worker/index.ts`).
+  - Generated and optimised 21 x `1280x720` stems (`public/assets/media/20261120-Voltwyn-*-Rev00.{avif,webp,jpg}`) and 5 silent `< 1.5 MB` H.264/VP9 loops (`public/assets/video/20261120-Voltwyn-*-Loop-Rev00.{mp4,webm}`).
+- Updated QA (`scripts/qa-browser.mjs`, `scripts/verify-export.mjs`, `scripts/lighthouse.mjs`) to verify all media assets, interactive widgets, default `system` theme, Light/Dark toggles, range requests and mobile Lighthouse thresholds.
+
 ## Work at 19 November 2026 - project instructions
 
 Claude Code loads the project instructions through the `@AGENTS.md` import in CLAUDE.md. A fresh session identified a project-specific rule from AGENTS.md with tools disabled. Maintain shared project instructions in AGENTS.md.

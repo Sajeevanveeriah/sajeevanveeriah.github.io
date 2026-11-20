@@ -1,78 +1,177 @@
 import Link from 'next/link'
 import { ProjectMedia } from './ProjectMedia'
 import { ProjectVideo } from './ProjectVideo'
+import { PictureMedia } from './PictureMedia'
+import { LoopingVideo } from './LoopingVideo'
 import { ArrowLeft } from '@/components/icons'
 import { SystemEvidence } from '@/components/SystemEvidence'
 import type { Project } from '@/content/projects'
+import { getProjectMedia } from '@/content/media'
 import { Figure, projectFigure } from './figures/Figure'
 
 const pad = (value: number) => String(value).padStart(2, '0')
 
-export function RecordArticle({ project, previous, next, position, total }: { readonly project: Project; readonly previous: Project; readonly next: Project; readonly position: number; readonly total: number }) {
+export function RecordArticle({
+  project,
+  previous,
+  next,
+  position,
+  total,
+}: {
+  readonly project: Project
+  readonly previous: Project
+  readonly next: Project
+  readonly position: number
+  readonly total: number
+}) {
   const figure = projectFigure(project.slug)
   const photo = project.image && !project.image.src.endsWith('.svg') ? project.image : undefined
+  const richMedia = getProjectMedia(project.slug)
   return (
     <>
       <article className="container">
         <nav className="breadcrumb" aria-label="Breadcrumb">
-          <Link prefetch={false} href="/work/"><ArrowLeft />All work</Link>
+          <Link prefetch={false} href="/work/">
+            <ArrowLeft />
+            All work
+          </Link>
         </nav>
         <header className="record-head">
           <p className="eyebrow">{project.category}</p>
           <h1>{project.title}</h1>
           <p>{project.system}</p>
-          <p className="record-meta"><span>{project.status}</span><span>Case study <strong>{position} of {total}</strong></span></p>
+          <p className="record-meta">
+            <span>{project.status}</span>
+            <span>
+              Case study <strong>{position} of {total}</strong>
+            </span>
+          </p>
         </header>
-        {figure
-          ? <Figure spec={figure} className="record-figure" caption="System diagram drawn from this record. Labels and numbers restate the text below." />
-          : project.image ? <ProjectMedia image={project.image} priority /> : <SystemEvidence eyebrow="System architecture" title={project.title} steps={project.systemPath} />}
+        <div className="record-media-hero media-frame">
+          {richMedia.video ? (
+            <LoopingVideo video={richMedia.video} priority />
+          ) : (
+            <PictureMedia media={richMedia.image} priority />
+          )}
+        </div>
+        {figure ? (
+          <Figure
+            spec={figure}
+            className="record-figure"
+            caption="System diagram drawn from this record. Labels and numbers restate the text below."
+          />
+        ) : project.image ? (
+          <ProjectMedia image={project.image} />
+        ) : (
+          <SystemEvidence eyebrow="System architecture" title={project.title} steps={project.systemPath} />
+        )}
         <div className="record-grid">
           <aside className="record-rail" aria-label="Contribution and technology">
             <h2>My contribution</h2>
             <p>{project.ownership}</p>
             <h2>Technology</h2>
-            <ul className="chips">{project.stack.map((item) => <li className="chip" key={item}>{item}</li>)}</ul>
+            <ul className="chips">
+              {project.stack.map((item) => (
+                <li className="chip" key={item}>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </aside>
           <div className="record-body">
-            <section aria-labelledby="problem-heading"><h2 id="problem-heading">The challenge</h2><p>{project.problem}</p></section>
-            <section aria-labelledby="architecture-heading"><h2 id="architecture-heading">How the system works</h2><p>{project.architecture}</p>{figure && photo && <ProjectMedia image={photo} />}</section>
+            <section aria-labelledby="problem-heading">
+              <h2 id="problem-heading">The challenge</h2>
+              <p>{project.problem}</p>
+            </section>
+            <section aria-labelledby="architecture-heading">
+              <h2 id="architecture-heading">How the system works</h2>
+              <p>{project.architecture}</p>
+              {figure && photo && <ProjectMedia image={photo} />}
+            </section>
             <section aria-labelledby="decisions-heading">
               <h2 id="decisions-heading">Design decisions</h2>
               <ol className="decisions">
                 {project.decisions.map((decision, index) => (
-                  <li key={decision}><span className="decision-index" aria-hidden="true">{pad(index + 1)}</span><span>{decision}</span></li>
+                  <li key={decision}>
+                    <span className="decision-index" aria-hidden="true">
+                      {pad(index + 1)}
+                    </span>
+                    <span>{decision}</span>
+                  </li>
                 ))}
               </ol>
             </section>
-            {project.sections?.map((section) => <section key={section.id} aria-labelledby={`${section.id}-heading`} className="record-section">
-              <h2 id={`${section.id}-heading`}>{section.title}</h2>
-              {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              {section.image && <ProjectMedia image={section.image} />}
-              {section.video && <ProjectVideo video={section.video} />}
-              {section.links && <ul className="record-links">{section.links.map((link) => <li key={link.href}><a className="text-link" href={link.href}>{link.label}</a></li>)}</ul>}
-            </section>)}
-            <section aria-labelledby="verification-heading"><h2 id="verification-heading">What the evidence shows</h2><p>{project.verification}</p></section>
-            {project.publication && <section aria-labelledby="publication-heading">
-              <h2 id="publication-heading">Research publication</h2>
-              <p><a className="text-link" href={project.publication.url}>{project.publication.label}</a></p>
-            </section>}
-            {project.caseStudy && <section aria-labelledby="case-study-heading">
-              <h2 id="case-study-heading">Engineering case study</h2>
-              <p>Go deeper into the design choices, tests and lessons from the project.</p>
-              <Link prefetch={false} className="text-link" href={project.caseStudy}>Read the {project.title} case study</Link>
-            </section>}
-            {project.trials && <section aria-labelledby="trials-heading">
-              <h2 id="trials-heading">Development and testing</h2>
-              <dl className="project-trials">
-                {project.trials.map((trial) => <div key={trial.area}><dt>{trial.area}</dt><dd><p>{trial.result}</p></dd></div>)}
-              </dl>
-            </section>}
+            {project.sections?.map((section) => (
+              <section key={section.id} aria-labelledby={`${section.id}-heading`} className="record-section">
+                <h2 id={`${section.id}-heading`}>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {section.image && <ProjectMedia image={section.image} />}
+                {section.video && <ProjectVideo video={section.video} />}
+                {section.links && (
+                  <ul className="record-links">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a className="text-link" href={link.href}>
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))}
+            <section aria-labelledby="verification-heading">
+              <h2 id="verification-heading">What the evidence shows</h2>
+              <p>{project.verification}</p>
+            </section>
+            {project.publication && (
+              <section aria-labelledby="publication-heading">
+                <h2 id="publication-heading">Research publication</h2>
+                <p>
+                  <a className="text-link" href={project.publication.url}>
+                    {project.publication.label}
+                  </a>
+                </p>
+              </section>
+            )}
+            {project.caseStudy && (
+              <section aria-labelledby="case-study-heading">
+                <h2 id="case-study-heading">Engineering case study</h2>
+                <p>Go deeper into the design choices, tests and lessons from the project.</p>
+                <Link prefetch={false} className="text-link" href={project.caseStudy}>
+                  Read the {project.title} case study
+                </Link>
+              </section>
+            )}
+            {project.trials && (
+              <section aria-labelledby="trials-heading">
+                <h2 id="trials-heading">Development and testing</h2>
+                <dl className="project-trials">
+                  {project.trials.map((trial) => (
+                    <div key={trial.area}>
+                      <dt>{trial.area}</dt>
+                      <dd>
+                        <p>{trial.result}</p>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            )}
           </div>
         </div>
       </article>
       <nav className="container record-nav" aria-label="More case studies">
-        <Link prefetch={false} href={`/work/${previous.slug}/`}><span>Previous case study</span><strong>{previous.title}</strong></Link>
-        <Link prefetch={false} href={`/work/${next.slug}/`} data-next-project><span>Next case study</span><strong>{next.title}</strong></Link>
+        <Link prefetch={false} href={`/work/${previous.slug}/`}>
+          <span>Previous case study</span>
+          <strong>{previous.title}</strong>
+        </Link>
+        <Link prefetch={false} href={`/work/${next.slug}/`} data-next-project>
+          <span>Next case study</span>
+          <strong>{next.title}</strong>
+        </Link>
       </nav>
     </>
   )
