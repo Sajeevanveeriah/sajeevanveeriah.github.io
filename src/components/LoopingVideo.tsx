@@ -75,7 +75,7 @@ export function LoopingVideo({
         <PictureMedia media={video.poster} priority={priority} />
       ) : (
         <>
-          <PictureMedia media={video.poster} priority={priority} className="loop-poster-fallback" />
+          <PictureMedia media={video.poster} className="loop-poster-fallback" />
           <video
             ref={videoRef}
             autoPlay

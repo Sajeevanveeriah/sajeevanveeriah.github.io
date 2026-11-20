@@ -6,7 +6,6 @@ import { projects, projectIndex } from '@/content/projects'
 import { getIndexedProjectMedia, getProjectMedia } from '@/content/media'
 import { ArrowUpRight } from './icons'
 import { PictureMedia } from './PictureMedia'
-import { LoopingVideo } from './LoopingVideo'
 import { ProjectDossierDrawer, type DossierEntry } from './ProjectDossierDrawer'
 
 const CATEGORIES = ['All', 'Robotics', 'Embedded', 'Industrial', 'Software'] as const
@@ -108,11 +107,7 @@ export function ProjectShowcaseGrid() {
         {filtered.map((entry) => (
           <article className="project-card showcase-card" key={entry.id} data-project={entry.id}>
             <div className="media-frame">
-              {entry.video && scope === 'case-studies' ? (
-                <LoopingVideo video={entry.video} showCaption={false} />
-              ) : (
-                <PictureMedia media={entry.media} />
-              )}
+              <PictureMedia media={entry.media} />
             </div>
             <div className="project-card-body">
               <div className="card-meta-row">

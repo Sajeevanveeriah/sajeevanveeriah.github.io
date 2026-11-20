@@ -450,7 +450,7 @@ try {
   const videoProps = await page.locator("video").evaluateAll((els) =>
     els.map((v) => ({ muted: v.muted, loop: v.loop, playsInline: v.playsInline, hasPoster: Boolean(v.getAttribute("poster")) })),
   );
-  assert.ok(videoProps.length >= 3 && videoProps.every((v) => v.muted && v.loop && v.playsInline && v.hasPoster));
+  assert.ok(videoProps.length >= 2 && videoProps.every((v) => v.muted && v.loop && v.playsInline && v.hasPoster));
   console.log("Interactive lab, bus, dossiers, queue simulator, roadmap and video checks passed");
 
   // Home page structure follows the agreed information path.
