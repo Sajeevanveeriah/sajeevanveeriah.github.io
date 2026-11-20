@@ -36,7 +36,7 @@ export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a1422' },
+    { media: '(prefers-color-scheme: dark)', color: '#091320' },
   ],
 }
 
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='light';var d=matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=m==='system'?(d?'dark':'light'):m}catch(e){}",
+              "try{document.documentElement.dataset.js='1';var m=localStorage.getItem('sv-theme');if(m!=='light'&&m!=='dark'&&m!=='system')m='system';var d=matchMedia('(prefers-color-scheme:dark)').matches;var t=m==='system'?(d?'dark':'light'):m;document.documentElement.dataset.theme=t;if(m!=='system'){var c=t==='dark'?'#091320':'#ffffff';document.querySelectorAll('meta[name=\"theme-color\"]').forEach(function(e){e.setAttribute('content',c)})}}catch(e){}",
           }}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([personSchema, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${site.url}/#website`, url: `${site.url}/`, name: site.name, inLanguage: 'en-AU', publisher: { '@id': `${site.url}/#person` } }]).replace(/</g, '\\u003c') }} />

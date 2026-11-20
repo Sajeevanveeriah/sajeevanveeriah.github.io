@@ -1,5 +1,5 @@
 // Checks the static export before any deployment.
-import { readFileSync, statSync, existsSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, resolve } from 'node:path'
 import assert from 'node:assert/strict'
@@ -7,11 +7,21 @@ import { sitemapRoutes } from './routes.mjs'
 
 const root = resolve('out')
 const routes = sitemapRoutes(root)
+const mediaSrc = readFileSync('src/content/media.ts', 'utf8')
+const referencedAssets = [...mediaSrc.matchAll(/asset\(\s*'([^']+)'/g)].flatMap(([, stem]) => [
+  `assets/media/${stem}.avif`,
+  `assets/media/${stem}.webp`,
+  `assets/media/${stem}.jpg`,
+])
+const referencedVideos = [...mediaSrc.matchAll(/\/assets\/video\/([^']+)/g)].map(([, file]) => `assets/video/${file}`)
+const mediaFiles = readdirSync('public/assets/media').map((name) => `assets/media/${name}`)
+const videoFiles = readdirSync('public/assets/video').map((name) => `assets/video/${name}`)
 const required = [
   '404.html', '.nojekyll', '_headers', 'BingSiteAuth.xml', 'googlebcce96f6b520ab1f.html',
   'robots.txt', 'sitemap.xml', 'blog/feed.xml', 'favicon.png',
   'assets/Resume_Sajeevan_Veeriah.pdf', 'assets/20260903-Robotics-Learning-Roadmap-Rev00.docx',
   'assets/image/20261017-Voltwyn-Monogram-Rev00.webp',
+  ...new Set([...referencedAssets, ...referencedVideos, ...mediaFiles, ...videoFiles]),
   ...routes.map((route) => join(route, 'index.html').replace(/^\//, '')),
 ]
 for (const file of required) assert.ok(statSync(join(root, file), { throwIfNoEntry: false })?.size > 0 || file === '.nojekyll' && existsSync(join(root, file)), `missing or empty out/${file}`)

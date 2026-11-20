@@ -1,15 +1,17 @@
-import { Masthead } from "@/components/Masthead";
-import { SiteFooter } from "@/components/SiteFooter";
-import { learningGuide, learningMonths } from "@/content/learning";
-import { pageMetadata } from "@/content/seo";
-import { Figure } from "@/components/figures/Figure";
-import { learningFigure } from "@/components/figures/specs";
+import { Masthead } from '@/components/Masthead'
+import { SiteFooter } from '@/components/SiteFooter'
+import { InteractiveRoadmap } from '@/components/InteractiveRoadmap'
+import { learningGuide, learningMonths } from '@/content/learning'
+import { pageMetadata } from '@/content/seo'
+import { Figure } from '@/components/figures/Figure'
+import { learningFigure } from '@/components/figures/specs'
 
 export const metadata = pageMetadata({
-  title: "Robotics learning roadmap",
-  description: "A six-month robotics learning roadmap with practical projects, build and test milestones, and downloadable learning materials.",
-  path: "/notes/",
-});
+  title: 'Robotics learning roadmap',
+  description:
+    'A six-month robotics learning roadmap with practical projects, build and test milestones, and downloadable learning materials.',
+  path: '/notes/',
+})
 
 export default function Notes() {
   return (
@@ -20,11 +22,26 @@ export default function Notes() {
           <p className="eyebrow">Notes</p>
           <h1>Build. Test. Understand.</h1>
           <p>{learningGuide.description}</p>
-          <a className="btn btn-primary" href={learningGuide.docx} download>Download the roadmap (DOCX)</a>
+          <a className="btn btn-primary" href={learningGuide.docx} download>
+            Download the roadmap (DOCX)
+          </a>
         </header>
         <section className="section" aria-labelledby="pathway-title">
-          <div className="section-head"><div><h2 id="pathway-title">A six-month pathway</h2><p>Each stage pairs a focus area with a build and supporting resources. Treat the months as a suggested pace: progress when you can explain the result and repeat the test.</p><p>This is a learning plan, not a record of completed projects or a formal qualification.</p></div></div>
-          <Figure spec={learningFigure} className="section-figure" caption="The six builds in order. Each box names the month, the stage and what you make." />
+          <div className="section-head">
+            <div>
+              <h2 id="pathway-title">A six-month pathway</h2>
+              <p>
+                Each stage pairs a focus area with a build and supporting resources. Treat the months as a suggested pace: progress when you can explain the result and repeat the test.
+              </p>
+              <p>This is a learning plan, not a record of completed projects or a formal qualification.</p>
+            </div>
+          </div>
+          <InteractiveRoadmap />
+          <Figure
+            spec={learningFigure}
+            className="section-figure"
+            caption="The six builds in order. Each box names the month, the stage and what you make."
+          />
           <ol className="roadmap">
             {learningMonths.map((m) => (
               <li key={m.month}>
@@ -32,8 +49,16 @@ export default function Notes() {
                 <div>
                   <h3>{m.title}</h3>
                   <p>{m.focus}</p>
-                  <p className="build"><strong>Build:</strong> {m.build}</p>
-                  <ul aria-label={`Month ${m.month} resources`}>{m.resources.map(([label, url]) => <li key={url}><a href={url}>{label}</a></li>)}</ul>
+                  <p className="build">
+                    <strong>Build:</strong> {m.build}
+                  </p>
+                  <ul aria-label={`Month ${m.month} resources`}>
+                    {m.resources.map(([label, url]) => (
+                      <li key={url}>
+                        <a href={url}>{label}</a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </li>
             ))}
@@ -42,5 +67,5 @@ export default function Notes() {
       </main>
       <SiteFooter />
     </>
-  );
+  )
 }

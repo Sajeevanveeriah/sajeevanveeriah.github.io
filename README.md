@@ -11,15 +11,20 @@ A static Next.js portfolio for robotics, embedded mechatronics, industrial autom
 
 | Route | Content |
 | --- | --- |
-| `/` | Identity and the sense, think and act loop figure, three featured projects, a four-project band, research, career and learning, the six-layer stack, foundation, recent writing, contact, complete project index |
-| `/work/` | All 26 projects: eleven case studies and the delivery list, each with a figure or screenshot, with category filters, search and shareable URLs |
-| `/work/<slug>/` | Case studies: contribution, architecture, decisions, verification, previous and next |
+| `/` | Hero 60 FPS interactive engineering lab (`ROS 2 SLAM`, `3-DOF Arm`, `PID Scope`) plus launch reel, current role, selected projects, filterable showcase with slide-over dossiers, research, animated 6-layer systems bus, career timeline, interactive 6-month roadmap, foundation, recent posts with Little's Law M/M/1 simulator, contact and complete 26-project index |
+| `/work/` | All 26 projects: eleven case studies and the delivery list, each with dedicated 16:9 media, category filters, search and shareable URLs |
+| `/work/<slug>/` | Case studies: 16:9 media/looping demo header, inline system diagram, contribution, architecture, decisions, verification, previous and next |
 | `/services/` | Voltwyn services: six service areas with proof links, the Define phase, the rate basis and an enquiry form |
 | `/about/` | Full career timeline, education, community and life beyond work |
-| `/notes/` | Six-month robotics roadmap with builds, resources and the DOCX download |
-| `/blog/` | Journal with topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
+| `/notes/` | Interactive six-month robotics roadmap with clickable monthly phases, builds, resources and the DOCX download |
+| `/blog/` | Journal with dedicated 16:9 post media, interactive M/M/1 Queue Simulator on queue articles, topic filters (`?topic=`), individual articles and an RSS feed at `/blog/feed.xml` |
 
-The design uses a shared stylesheet (`src/app/globals.css`, with `robotics.css` for the home page and `figures.css` for diagrams) built on Voltwyn colour tokens (Night Navy `#0F1E33`, Volt Amber `#F5B700`, Cloud `#F4F6F9`) for light and dark themes, self-hosted Archivo and the existing monogram. The 14 November 2026 redesign is light-first and quiet: a white canvas, navy ink, amber as a sparing highlight under navy text, and content in soft rounded cards separated by space. A first visit opens in the light theme. Motion is local and decorative: the signal travelling the hero loop, scroll reveals (`Motion`) and a small lift on cards under the pointer; all of it stops under reduced motion. The header toggles light and dark and opens a site search (Ctrl+K, Cmd+K or `/`) across pages, projects, services and journal posts; the footer offers Light, System and Dark. Journal articles show a reading-progress bar and a share button.
+The design uses shared stylesheets (`src/app/globals.css`, `src/app/robotics.css` and `src/app/figures.css`) built on Voltwyn colour tokens (Night Navy `#0F1E33`, deep canvas `#091320`, Volt Amber `#F5B700`, Cloud `#F4F6F9`) with working Light and Dark themes. A first visit defaults to `system` (`prefers-color-scheme`), with a header Light/Dark toggle and a footer Light/System/Dark selector. Interactive canvas simulations (`EngineeringLab`), the animated 6-layer `SystemsBus`, `QueueSimulator`, `ProjectDossierDrawer` and `LoopingVideo` respect `prefers-reduced-motion: reduce` (falling back to static 16:9 poster images). Every video asset is served with HTTP 206 byte-range support via `worker/index.ts`.
+
+### Media layout
+
+- `public/assets/media/`: 21 curated 16:9 stems (`1280x720`), each pre-optimised into AVIF, WebP and JPG (`20261120-Voltwyn-*-Rev00.{avif,webp,jpg}`) and mapped in `src/content/media.ts`. Rendered through `PictureMedia` (`<picture>`, `object-fit: contain`, `loading="lazy"` except above-the-fold priority headers).
+- `public/assets/video/`: 5 silent looping hardware and simulation clips (`20261120-Voltwyn-{Launch,SLAM,Kinematics,PID-Scope,Queue-Sim}-Loop-Rev00.{mp4,webm}`, all `< 1.5 MB`) plus the Dooen Plant walkthrough MP4. Rendered through `LoopingVideo` (`autoplay muted loop playsinline`, `IntersectionObserver` off-screen pause, `prefers-reduced-motion: reduce` poster fallback).
 
 ## Contact form
 
