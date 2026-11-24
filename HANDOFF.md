@@ -2,6 +2,11 @@
 
 Maintain the engineering portfolio, journal and contact relay.
 
+## Work at 24 November 2026 - Next.js security update
+
+- Raised `next` and `eslint-config-next` from 15.5.28 to 15.5.29 (`package.json`, `package-lock.json`) to clear the GitHub security alert for next 15.0.0 to 15.5.28. This replaces Dependabot pull request 155.
+- Open: `npm audit` still reports a moderate minimatch advisory (GHSA-g3hv-75wg-m249) in the lint toolchain only (`@typescript-eslint`); `npm audit --omit=dev` reports 0.
+
 ## Work at 20 November 2026 - Hardware-grade robotics redesign and media pipeline
 
 - Redesigned the portfolio around interactive engineering subsystems while preserving verified project records, monogram/brand assets, Night Navy (`#0F1E33`), deep dark canvas (`#091320`), Volt Amber (`#F5B700`) and both Light/Dark themes (defaulting initial visits to `system` in `src/app/layout.tsx` and `src/components/Theme.tsx`, synced between the header toggle and footer selector).
