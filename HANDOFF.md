@@ -6,7 +6,7 @@ Maintain the engineering portfolio, journal and contact relay.
 
 - Raised `next` and `eslint-config-next` from 15.5.28 to 15.5.29 (`package.json`, `package-lock.json`) to clear the GitHub security alert for next 15.0.0 to 15.5.28. This replaces Dependabot pull request 155.
 - Follow-up the same day: `npm audit fix` raised the `@typescript-eslint` packages from 8.65.0 to 8.74.0 and their minimatch from 10.2.5 to 11.0.9 (`package-lock.json` only), clearing GHSA-g3hv-75wg-m249. `npm audit` reports 0.
-- Open: the Portfolio quality workflow (`.github/workflows/quality.yml`) has been manually disabled in the repository's Actions settings since 29 October 2026, so it does not run on pull requests. The file itself is sound; the deploy workflow runs the same checks after merge.
+- At Saj's request the Portfolio quality workflow was renamed from `.github/workflows/quality.yml` to `.github/workflows/portfolio-quality.yml` so that GitHub registers it as a new, active workflow. The old entry had been manually disabled in the Actions settings since 29 October 2026, so it did not run on pull requests; its run history stays under the old, disabled entry.
 
 ## Work at 20 November 2026 - Hardware-grade robotics redesign and media pipeline
 
